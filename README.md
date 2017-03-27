@@ -2,7 +2,7 @@
 
 ## Result
 
-![Rails vs Crystal(Kemal and route.cr)](https://cloud.githubusercontent.com/assets/3483230/24363926/3cb31198-134c-11e7-8a09-24fb69180b38.png)
+<img src="https://cloud.githubusercontent.com/assets/3483230/24363926/3cb31198-134c-11e7-8a09-24fb69180b38.png" width="400" />
 
 ### How to run server
 ```bash
