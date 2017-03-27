@@ -1,12 +1,8 @@
-# Which is the fastest? (Rails vs Crystal)
-
-## Regulation and Rule
- - Each server has no logics
- - There are only 3 routes; GET '/', GET '/user/:id' and POST '/user'.
+# Which is the fastest?
 
 ## Result
 
-result here
+![Rails vs Crystal(Kemal and route.cr)](https://cloud.githubusercontent.com/assets/3483230/24363926/3cb31198-134c-11e7-8a09-24fb69180b38.png)
 
 ### How to run server
 ```bash
@@ -23,6 +19,10 @@ time bin/client -t 16 -r 3000 # 144000 requests in total
 time bin/client -t 16 -r 4000 # 192000 requests in total
 time bin/client -t 16 -r 5000 # 240000 requests in total
 ```
+
+## Regulation and Rule
+ - Each server has no logics
+ - There are only 3 routes; GET '/', GET '/user/:id' and POST '/user'.
 
 ## Installation
 
