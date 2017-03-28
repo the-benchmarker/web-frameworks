@@ -1,15 +1,18 @@
 require "kemal"
 
 get "/" do |env|
-  # no logics
+  env.response.status_code = 200
+  nil
 end
 
 get "/user/:id" do |env|
-  # no logics
+  env.response.status_code = 200
+  env.params.url["id"]
 end
 
 post "/user" do |env|
-  # no logics
+  env.response.status_code = 200
+  nil
 end
 
 Kemal.run

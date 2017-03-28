@@ -2,7 +2,7 @@
 
 ## Result
 
-<img src="https://cloud.githubusercontent.com/assets/3483230/24363926/3cb31198-134c-11e7-8a09-24fb69180b38.png" width="400" />
+<img src="https://cloud.githubusercontent.com/assets/3483230/24412688/1aeefd06-1414-11e7-84bf-fda7bde4bb23.png" width="400" />
 
 ### How to run server
 ```bash
@@ -22,12 +22,15 @@ time bin/client -t 16 -r 5000 # 240000 requests in total
 
 ## Regulation and Rule
  - Each server has no logics
- - There are only 3 routes; GET '/', GET '/user/:id' and POST '/user'.
+ - There are only 3 routes
+  - GET  '/'         return status code 200 with empty body
+  - GET  '/user/:id' return status code 200 with the id
+  - POST '/user'     return status code 200 with empty body
 
 ## Installation
 
 You need
- - crystal(0.21.1)
+ - crystal
  - rails
 
 To compile servers,
@@ -63,7 +66,7 @@ So 48000 requests are sent in total.
 
 ## Development
  - **Give me PR when you want to add other web frameworks**
- - **Give me PR when you can turning each framework**
+ - **Give me PR when you can tuning each framework (under the regulation)**
 
 ## Contributing
 

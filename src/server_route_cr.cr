@@ -12,17 +12,18 @@ class Routecr
   end
 
   def index(context : Context, uriParams : UriParams) : Context
-    # no logics
+    context.response.status_code = 200
     context
   end
 
   def user(context : Context, uriParams : UriParams) : Context
-    # no logics
+    context.response.status_code = 200
+    context.response.print uriParams["id"]
     context
   end
 
   def registerUser(context : Context, uriParams : UriParams) : Context
-    # no logics
+    context.response.status_code = 200
     context
   end
 

@@ -5,7 +5,7 @@ class ApiController < ApplicationController
   end
 
   def user
-    head 200
+    render text: params["id"]
   end
 
   def register_user

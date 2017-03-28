@@ -28,10 +28,16 @@ class Client
       c = HTTP::Client.new "localhost", 3000
 
       @requests.times do |t|
-        c.get  "/"
-        c.get  "/user/3"
-        c.post "/user"
+        r = c.get  "/"
+        abort "status code should be 200 when GET /" if r.status_code != 200
+        r = c.get  "/user/#{t}"
+        abort "status code should be 200 when GET /user/:id" if r.status_code != 200
+        abort "body should be '#{t}'" if r.body.lines.first != t.to_s
+        r = c.post "/user"
+        abort "status code should be 200 when POST /user" if r.status_code != 200
       end
+
+      c.close
 
       channel.send(nil)
     end
