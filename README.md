@@ -23,9 +23,9 @@ time bin/client -t 16 -r 5000 # 240000 requests in total
 ## Regulation and Rule
  - Each server has no logics
  - There are only 3 routes
-  - GET  '/'         return status code 200 with empty body
-  - GET  '/user/:id' return status code 200 with the id
-  - POST '/user'     return status code 200 with empty body
+   - GET  '/'         return status code 200 with empty body
+   - GET  '/user/:id' return status code 200 with the id
+   - POST '/user'     return status code 200 with empty body
 
 ## Installation
 
