@@ -2,7 +2,7 @@
 
 ## Result
 
-<img src="https://cloud.githubusercontent.com/assets/3483230/24412688/1aeefd06-1414-11e7-84bf-fda7bde4bb23.png" width="400" />
+<img src="https://cloud.githubusercontent.com/assets/3483230/24460663/f1fffc12-14d9-11e7-88e4-2d882d598c44.png" width="400" />
 
 **Current target frameworks**
  - Ruby
