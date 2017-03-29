@@ -2,37 +2,34 @@ require "route"
 
 class Routecr
 
+  @index = API.new do |context|
+    context.response.status_code = 200
+    context
+  end
+
+  @user = API.new do |context, params|
+    context.response.status_code = 200
+    context.response.print params["id"].to_s
+    context
+  end
+
+  @register_user = API.new do |context|
+    context.response.status_code = 200
+    context
+  end
+
   def initialize
     route_log_level(Production)
 
     # routing
-    get  "/", index
-    get  "/user/:id", user
-    post "/user", registerUser
-  end
-
-  def index(context : Context, uriParams : UriParams) : Context
-    context.response.status_code = 200
-    context
-  end
-
-  def user(context : Context, uriParams : UriParams) : Context
-    context.response.status_code = 200
-    context.response.print uriParams["id"]
-    context
-  end
-
-  def registerUser(context : Context, uriParams : UriParams) : Context
-    context.response.status_code = 200
-    context
+    get  "/",         @index
+    get  "/user/:id", @user
+    post "/user",     @register_user
   end
 
   def run
-    # run 4 servers concurrently
-    spawn_server(4) do
-      server = HTTP::Server.new(3000){ |context| routing(context) }
-      server.listen(true) # reuse the port
-    end
+    server = HTTP::Server.new(3000, routeHandler)
+    server.listen
   end
 
   include Route
