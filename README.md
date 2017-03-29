@@ -38,8 +38,7 @@ time bin/client -t 16 -r 5000 # 240000 requests in total
 ## Installation
 
 You need
- - Ruby
-   - rails
+ - Ruby(bundler)
  - crystal
 
 To compile servers,
