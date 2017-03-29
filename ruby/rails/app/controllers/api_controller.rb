@@ -5,7 +5,7 @@ class ApiController < ApplicationController
   end
 
   def user
-    render text: params["id"]
+    render plain: params["id"]
   end
 
   def register_user

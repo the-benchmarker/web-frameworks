@@ -4,6 +4,13 @@
 
 <img src="https://cloud.githubusercontent.com/assets/3483230/24412688/1aeefd06-1414-11e7-84bf-fda7bde4bb23.png" width="400" />
 
+**Current target frameworks**
+ - Ruby
+   - [Rails](https://github.com/rails/rails)
+ - Crystal
+   - [Kemal](https://github.com/kemalcr/kemal)
+   - [route.cr](https://github.com/tbrand/route.cr)
+
 ### How to run server
 ```bash
 bin/server_rails # for rails
@@ -22,6 +29,7 @@ time bin/client -t 16 -r 5000 # 240000 requests in total
 
 ## Regulation and Rule
  - Each server has no logics
+ - Each executables are `server_[Lauguage]_[Framework]`
  - There are only 3 routes
    - GET  '/'         return status code 200 with empty body
    - GET  '/user/:id' return status code 200 with the id
@@ -30,8 +38,9 @@ time bin/client -t 16 -r 5000 # 240000 requests in total
 ## Installation
 
 You need
+ - Ruby
+   - rails
  - crystal
- - rails
 
 To compile servers,
 ```
@@ -43,8 +52,8 @@ To compile servers,
 To run server
 ```bash
 ./bin/server_rails
-./bin/server_kemal
-./bin/server_route_cr
+./bin/server_crystal_kemal
+./bin/server_crystal_route_cr
 ```
 
 To run client
@@ -58,11 +67,6 @@ time ./bin/client -t 16 -r 1000
 ```
 In the above example, 16 threads requests 1000 * 3 times.
 So 48000 requests are sent in total.
-
-## Thanks for
- - [Rails](https://github.com/rails/rails)
- - [Kemal](https://github.com/kemalcr/kemal)
- - [route.cr](https://github.com/tbrand/route.cr)
 
 ## Development
  - **Give me PR when you want to add other web frameworks**
