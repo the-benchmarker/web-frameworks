@@ -1,5 +1,7 @@
 require "kemal"
 
+logging false
+
 get "/" do |env|
   env.response.status_code = 200
   nil
