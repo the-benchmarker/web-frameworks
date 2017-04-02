@@ -1,1 +1,1 @@
-cd ruby/sinatra; bundle exec rackup -p 3000 -q
+cd ruby/sinatra; bundle exec rackup -p 3000 -q -E production
