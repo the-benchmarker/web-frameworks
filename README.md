@@ -2,34 +2,41 @@
 
 ## Result
 
-<img src="https://cloud.githubusercontent.com/assets/3483230/24460663/f1fffc12-14d9-11e7-88e4-2d882d598c44.png" width="400" />
+<img src="https://cloud.githubusercontent.com/assets/3483230/24584152/89b2beb6-179e-11e7-8340-abf785e380fd.png" width="400"/>
+<img src="https://cloud.githubusercontent.com/assets/3483230/24584153/8b0debe6-179e-11e7-92fa-fb2c7da739f7.png" width="400"/>
 
 **Current target frameworks**
  - Ruby
    - [Rails](https://github.com/rails/rails)
+   - [Sinatra](https://github.com/sinatra/sinatra)
  - Crystal
    - [Kemal](https://github.com/kemalcr/kemal)
    - [route.cr](https://github.com/tbrand/route.cr)
+ - Go
+   - [Echo](https://github.com/labstack/echo)
 
 ### How to run server
 ```bash
-bin/server_rails # for rails
-bin/server_kemal # for Kemal
-bin/server_route_cr # for route.cr
+bin/server_ruby_rails   # for Rails
+bin/server_ruby_sinatra # for Sinatra
+bin/server_kemal        # for Kemal
+bin/server_route_cr     # for route.cr
+bin/server_go_echo      # for Echo
 ```
 
 ### How to run client
 ```bash
-time bin/client -t 16 -r 1000 # 48000 requests in total
-time bin/client -t 16 -r 2000 # 96000 requests in total
+time bin/client -t 16 -r 1000 # 48000  requests in total
+time bin/client -t 16 -r 2000 # 96000  requests in total
 time bin/client -t 16 -r 3000 # 144000 requests in total
 time bin/client -t 16 -r 4000 # 192000 requests in total
 time bin/client -t 16 -r 5000 # 240000 requests in total
 ```
 
 ## Regulation and Rule
+I want to know a response time, not a usability. So full-stack framework is at a disadvantage.
  - Each server has no logics
- - Each executables are `server_[Lauguage]_[Framework]`
+ - Each server executable is `server_[Lauguage]_[Framework]`
  - There are only 3 routes
    - GET  '/'         return status code 200 with empty body
    - GET  '/user/:id' return status code 200 with the id
@@ -40,6 +47,7 @@ time bin/client -t 16 -r 5000 # 240000 requests in total
 You need
  - Ruby(bundler)
  - crystal
+ - Go(glide)
 
 To compile servers,
 ```
@@ -50,19 +58,17 @@ To compile servers,
 
 To run server
 ```bash
-./bin/server_rails
-./bin/server_crystal_kemal
-./bin/server_crystal_route_cr
+bin/server_[Language]_[Framework]
 ```
 
 To run client
 ```bash
-time ./bin/client
+time bin/client
 ```
 
 You can set # of threads and # of request loops(each loop requests 3 times) by
 ```bash
-time ./bin/client -t 16 -r 1000
+time bin/client -t 16 -r 1000
 ```
 In the above example, 16 threads requests 1000 * 3 times.
 So 48000 requests are sent in total.

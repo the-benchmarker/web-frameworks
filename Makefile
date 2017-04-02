@@ -1,34 +1,52 @@
-
-all: ruby crystal client
+all: ruby crystal go client
 
 # --- Ruby ---
 # 
 # Rails
-ruby: rails
+ruby: rails sinatra
 
 rails:
 	cd ruby/rails; bundle install --path vendor/bundle
 	ln -s -f ../ruby/rails/bin/server_ruby_rails bin/.
 
+sinatra:
+	cd ruby/sinatra; bundle install --path vendor/bundle
+	ln -s -f ../ruby/sinatra/server_ruby_sinatra bin/.
+
 # --- Crystal ---
 # 
 # Kemal route.cr
-crystal: kemal route_cr
+crystal: crystal-deps kemal route_cr
+
+crystal-deps:
+	cd crystal; shards update
 
 # Kemal
-kemal: src/server_kemal.cr
-	crystal build src/server_kemal.cr -o bin/server_crystal_kemal --release
+kemal: crystal/src/server_kemal.cr
+	cd crystal; crystal build src/server_kemal.cr -o bin/server_crystal_kemal --release
+	ln -s -f ../crystal/bin/server_crystal_kemal bin/.
 
 # route.cr
-route_cr: src/server_route_cr.cr
-	crystal build src/server_route_cr.cr -o bin/server_crystal_route_cr --release
+route_cr: crystal/src/server_route_cr.cr
+	cd crystal; crystal build src/server_route_cr.cr -o bin/server_crystal_route_cr --release
+	ln -s -f ../crystal/bin/server_crystal_route_cr bin/.
 
+# --- Go ---
+#
+# Echo Gin
+go: echo
+
+echo:
+	cd go/echo; glide install
+	cd go/echo; go build -o server_go_echo main.go
+	ln -s -f ../go/echo/server_go_echo bin/.
 
 #
 # Client -> bin/client
 #
-client: src/client.cr
-	crystal build src/client.cr -o bin/client --release
+client: crystal/src/client.cr
+	cd crystal; crystal build src/client.cr -o bin/client --release
+	ln -s -f ../crystal/bin/client bin/.
 
 # Cleaning all executables
 clean:
