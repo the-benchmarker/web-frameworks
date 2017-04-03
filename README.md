@@ -2,8 +2,7 @@
 
 ## Result
 
-<img src="https://cloud.githubusercontent.com/assets/3483230/24584152/89b2beb6-179e-11e7-8340-abf785e380fd.png" width="400"/>
-<img src="https://cloud.githubusercontent.com/assets/3483230/24584153/8b0debe6-179e-11e7-92fa-fb2c7da739f7.png" width="400"/>
+<img src="https://cloud.githubusercontent.com/assets/3483230/24611869/78ce3c9e-18be-11e7-811e-139a4554bcce.png" width="800"/>
 
 **Current target frameworks**
  - Ruby
@@ -36,7 +35,7 @@ time bin/client -t 16 -r 5000 # 240000 requests in total
 ```
 
 ## Regulation and Rule
-I want to know a response time, not a usability. So full-stack framework is at a disadvantage.
+I want to know the response time, not a usability. So full-stack framework is at a disadvantage.
  - Each server has no logics
  - Each server executable is `server_[Lauguage]_[Framework]`
  - There are only 3 routes
@@ -47,13 +46,21 @@ I want to know a response time, not a usability. So full-stack framework is at a
 ## Installation
 
 You need
- - Ruby(bundler)
+ - Ruby (bundler)
  - crystal
- - Go(glide)
+ - Go (glide)
 
 To compile servers,
 ```
 > make
+```
+For each language,
+```
+> make ruby
+```
+For each framework,
+```
+> make rails
 ```
 
 ## Usage
