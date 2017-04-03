@@ -1,0 +1,44 @@
+= New Features
+
+* A multi_view plugin has been added, for easily setting up routing
+  for rendering multiple views:
+
+    plugin :multi_view
+
+    route do |r|
+      r.multi_view(['foo', 'bar', 'baz'])
+    end
+
+    # or:
+
+    route do |r|
+      r.multi_view(/(foo|bar|baz)/)
+    end
+
+    # or:
+
+    regexp = multi_view_compile(['foo', 'bar', 'baz'])
+    route do |r|
+      r.multi_view(regexp)
+    end
+
+    # all are equivalent to:
+
+    route do |r|
+      r.get 'foo' do
+        view('foo')
+      end
+ 
+      r.get 'bar' do
+        view('bar')
+      end
+
+      r.get 'baz' do
+        view('baz')
+      end
+    end
+
+= Other Improvements
+
+* The content_for plugin now supports haml templates.  Previous only
+  erb templates were supported.

@@ -1,0 +1,6 @@
+= New Features
+
+* The content_for plugin now supports passing the content as a
+  string argument instead of a block:
+
+    <% content_for :foo, "Some content" %>

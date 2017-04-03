@@ -1,0 +1,97 @@
+= New Plugins
+
+* A shared_vars plugin has been added, for sharing variables between
+  multiple Roda apps.  Example:
+
+    class API < Roda
+      plugin :shared_vars
+      route do |r|
+        user = shared[:user]
+        # ...
+      end
+    end
+ 
+    class App < Roda
+      plugin :shared_vars
+ 
+      route do |r|
+        r.on :user_id do |user_id|
+          shared[:user] = User[user_id]
+          r.run API
+        end
+      end
+    end
+ 
+  If you pass a hash to shared, it will update the shared
+  variables with the content of the hash:
+ 
+    route do |r|
+      r.on :user_id do |user_id|
+        shared(:user => User[user_id])
+        r.run API
+      end
+    end
+ 
+  You can also pass a block to shared, which will set the
+  shared variables only for the given block, restoring the
+  previous shared variables afterward:
+ 
+    route do |r|
+      r.on :user_id do |user_id|
+        shared(:user => User[user_id]) do
+          r.run API
+        end
+      end
+    end
+
+* The partials method added by the padrino_render plugin has been
+  extracted into a partials plugin, for users who want to use the
+  partials method without having render use a layout by default.
+
+= Other New Features
+
+* The render plugin when using the :escape option now additionally
+  supports an :escape_safe_classes option, which accepts a class or
+  array of classes that should not be automatically escaped when using
+  <%= %> tags.  This makes easier to integrate with helpers or
+  external libraries that return already html escaped strings, without
+  using <%== %> tags.
+
+  For complete control, an :escaper option is also supported, which
+  will be used for escaping <%= %> strings.  The value of this option
+  should be an object that responds to escape_xml with a single
+  argument and returns an output string.
+
+* A Roda#delay method has been added to the chunked plugin, which
+  delays execution of the given block until right before the content
+  template is rendered.  This allows you to continue to use the
+  routing tree to DRY up your code even when streaming template
+  rendering.  Example:
+
+    r.on 'albums/:d' do |album_id|
+      delay do
+        @album = Album[album_id]
+      end
+      r.get 'info' do
+        chunked(:info)
+      end
+      r.get 'tracks' do
+        chunked(:tracks)
+      end
+    end
+
+* The path plugin now supports a :by_name option, which makes lookup
+  of the class be by name as opposed to by reference.  This is
+  designed for use in development when doing code reloading.
+
+* Roda.path_block has been added to the path plugin for returning the
+  block associated with the given class.
+
+= Other Improvements
+
+* The default_headers plugin now defaults to the same headers that
+  Roda uses by default (just the Content-Type header with text/html
+  value).  Previously, it did not set a Content-Type header if you
+  didn't specify one.
+
+* In the path plugin, Roda#path now works correctly in subclasses.

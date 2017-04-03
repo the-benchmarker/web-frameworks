@@ -1,0 +1,984 @@
+= Roda
+
+Roda is a routing tree web toolkit, designed for building fast and
+maintainable web applications in ruby.
+
+= Installation
+
+  $ gem install roda
+
+== Resources
+
+Website :: http://roda.jeremyevans.net
+Source :: http://github.com/jeremyevans/roda
+Bugs :: http://github.com/jeremyevans/roda/issues
+Google Group :: http://groups.google.com/group/ruby-roda
+IRC :: irc://chat.freenode.net/#roda
+
+== Goals
+
+* Simplicity
+* Reliability
+* Extensibility
+* Performance
+
+=== Simplicity
+
+Roda is designed to be simple, both internally and externally.
+It uses a routing tree to enable you to write simpler and DRYer
+code.
+
+=== Reliability
+
+Roda supports and encourages immutability.  Roda apps are designed
+to be frozen in production, which eliminates possible thread safety issues.
+Additionally, Roda limits the instance variables, constants, and
+methods that it uses, so that they do not conflict with the ones
+you use for your application.
+
+=== Extensibility
+
+Roda is built completely out of plugins, which makes it very
+extensible.  You can override any part of Roda and call super
+to get the default behavior.
+
+=== Performance
+
+Roda has low per-request overhead, and the use of a routing tree
+and intelligent caching of internal datastructures makes it 
+significantly faster than other popular ruby web frameworks.
+
+== Usage
+
+Here's a simple application, showing how the routing tree works:
+
+  # cat config.ru
+  require "roda"
+
+  class App < Roda
+    route do |r|
+      # GET / request
+      r.root do
+        r.redirect "/hello"
+      end
+
+      # /hello branch
+      r.on "hello" do
+        # Set variable for all routes in /hello branch
+        @greeting = 'Hello'
+
+        # GET /hello/world request
+        r.get "world" do
+          "#{@greeting} world!"
+        end
+
+        # /hello request
+        r.is do
+          # GET /hello request
+          r.get do
+            "#{@greeting}!"
+          end
+
+          # POST /hello request
+          r.post do
+            puts "Someone said #{@greeting}!"
+            r.redirect
+          end
+        end
+      end
+    end
+  end
+
+  run App.freeze.app
+
+Here's a breakdown of what is going on in the block above:
+
+The +route+ block is called whenever a new request comes in. 
+It is yielded an instance of a subclass of <tt>Rack::Request</tt>
+with some additional methods for matching routes.
+By convention, this argument should be named +r+.
+
+The primary way routes are matched in Roda is by calling
++r.on+, +r.is+, +r.root+, +r.get+, or +r.post+.
+Each of these "routing methods" takes a "match block".
+
+Each routing method takes each of the arguments (called matchers)
+that is given and tries to match it to the current request.
+If the method is able to match all of the arguments, it yields to the match block;
+otherwise, the block is skipped and execution continues.
+
+- +r.on+ matches if all of the arguments match.
+- +r.is+ matches if all of the arguments match and there are no
+  further entries in the path after matching.
+- +r.get+ matches any +GET+ request when called without arguments.
+- +r.get+ (when called with any arguments) matches only if the
+  current request is a +GET+ request and there are no further entries
+  in the path after matching.
+- +r.root+ only matches a +GET+ request where the current path is +/+.
+
+If a routing method matches and control is yielded to the match block,
+whenever the match block returns, Roda will return the Rack response array
+(containing status, headers, and body) to the caller.
+
+If the match block returns a string
+and the response body hasn't already been written to,
+the block return value will be interpreted as the body for the response.
+If none of the routing methods match and the route block returns a string,
+it will be interpreted as the body for the response.
+
++r.redirect+ immediately returns the response,
+allowing for code such as <tt>r.redirect(path) if some_condition</tt>.
+If +r.redirect+ is called without arguments
+and the current request method is not +GET+, it redirects to the current path.
+
+The +.freeze.app+ at the end is optional.  Freezing the app avoids any possible
+thread safety issues inside the application at runtime, which shouldn't be possible
+anyway.  This generally should only be done in production mode.
+The +.app+ is an optimization, which saves a few method calls for every request.
+
+== The Routing Tree
+
+Roda is called a routing tree web toolkit because the way most sites are structured,
+routing takes the form of a tree (based on the URL structure of the site).
+In general:
+
+- +r.on+ is used to split the tree into different branches.
+- +r.is+ finalizes the routing path.
+- +r.get+ and +r.post+ handle specific request methods.
+
+So, a simple routing tree might look something like this:
+
+  r.on "a" do           # /a branch
+    r.on "b" do         # /a/b branch
+      r.is "c" do       # /a/b/c request
+        r.get do end    # GET  /a/b/c request
+        r.post do end   # POST /a/b/c request
+      end
+      r.get "d" do end  # GET  /a/b/d request
+      r.post "e" do end # POST /a/b/e request
+    end
+  end
+
+It's also possible to handle the same requests,
+but structure the routing tree by first branching on the request method:
+
+  r.get do              # GET 
+    r.on "a" do         # GET /a branch
+      r.on "b" do       # GET /a/b branch
+        r.is "c" do end # GET /a/b/c request
+        r.is "d" do end # GET /a/b/d request
+      end
+    end
+  end
+
+  r.post do             # POST
+    r.on "a" do         # POST /a branch
+      r.on "b" do       # POST /a/b branch
+        r.is "c" do end # POST /a/b/c request
+        r.is "e" do end # POST /a/b/e request
+      end
+    end
+  end
+
+This allows you to easily separate your +GET+ request handling
+from your +POST+ request handling.
+If you only have a small number of +POST+ request URLs
+and a large number of +GET+ request URLs, this may make things easier.
+
+However, routing first by the path and last by the request method
+is likely to lead to simpler and DRYer code.
+This is because you can act on the request at any point during the routing.
+For example, if all requests in the +/a+ branch need access permission +A+
+and all requests in the +/a/b+ branch need access permission +B+,
+you can easily handle this in the routing tree:
+
+  r.on "a" do           # /a branch
+    check_perm(:A)  
+    r.on "b" do         # /a/b branch
+      check_perm(:B)  
+      r.is "c" do       # /a/b/c request
+        r.get do end    # GET  /a/b/c request
+        r.post do end   # POST /a/b/c request
+      end
+      r.get "d" do end  # GET  /a/b/d request
+      r.post "e" do end # POST /a/b/e request
+    end
+  end
+
+Being able to operate on the request at any point during the routing
+is one of the major advantages of Roda.
+
+== Matchers
+
+Other than +r.root+, the routing methods all take arguments called matchers.
+If all of the matchers match, the routing method yields to the match block.
+Here's an example showcasing how different matchers work:
+
+  class App < Roda
+    route do |r|
+      # GET /
+      r.root do
+        "Home"
+      end
+
+      # GET /about
+      r.get "about" do
+        "About"
+      end
+
+      # GET /post/2011/02/16/hello
+      r.get "post", :y, :m, :d, :slug do |y, m, d, slug|
+        "#{y}-#{m}-#{d} #{slug}" #=> "2011-02-16 hello"
+      end
+
+      # GET /username/foobar branch
+      r.on "username", :username, :method=>:get do |username|
+        user = User.find_by_username(username)
+
+        # GET /username/foobar/posts
+        r.is "posts" do
+          # You can access user here, because the blocks are closures.
+          "Total Posts: #{user.posts.size}" #=> "Total Posts: 6"
+        end
+
+        # GET /username/foobar/following
+        r.is "following" do
+          user.following.size.to_s #=> "1301"
+        end
+      end
+
+      # /search?q=barbaz
+      r.get "search" do
+        "Searched for #{r['q']}" #=> "Searched for barbaz"
+      end
+
+      r.is "login" do
+        # GET /login
+        r.get do
+          "Login"
+        end
+
+        # POST /login?user=foo&password=baz
+        r.post do
+          "#{r['user']}:#{r['password']}" #=> "foo:baz"
+        end
+      end
+    end
+  end
+
+Here's a description of the matchers.
+Note that "segment", as used here, means one part of the path preceded by a +/+.
+So, a path such as +/foo/bar//baz+ has four segments: +/foo+, +/bar+, +/+, and +/baz+.
+The +/+ here is considered the empty segment.
+
+=== String
+
+If a string does not contain a colon or slash, it matches a single segment
+containing the text of the string, preceded by a slash.
+
+  ""    # matches "/"
+  "foo" # matches "/foo"
+  "foo" # does not match "/food"
+
+If a string contains any slashes, it matches one additional segment for each slash:
+
+  "foo/bar" # matches "/foo/bar"
+  "foo/bar" # does not match "/foo/bard"
+
+For backwards compatibility, if a string contains a colon followed by any
+<tt>\\w</tt> characters, the colon and remaining <tt>\\w</tt> characters match any
+nonempty segment that contains at least one character:
+
+  "foo/:id" # matches "/foo/bar", "/foo/baz", etc.
+  "foo/:id" # does not match "/fo/bar"
+
+You can use multiple colons in a string:
+
+  ":x/:y" # matches "/foo/bar", "/bar/foo" etc.
+  ":x/:y" # does not match "/foo", "/bar/"
+
+Note that instead of using colons in strings, it is recommended to use separate
+symbol arguments, as it is faster and simpler:
+
+  "foo", :id # instead of "foo/:id"
+  :x, :y     # instead of ":x/:y"
+
+It is possible in future versions of Roda, colons will not be treated specially
+in strings, and will just match a literal colon character.
+
+Note that other than colons followed by a <tt>\\w</tt> character, strings do no
+handle regular expression syntax, they are matched verbatim:
+
+  "\\d+(/\\w+)?" # matches "/\d+(/\w+)?"
+  "\\d+(/\\w+)?" # does not match "/123/abc"
+
+=== Regexp
+
+Regexps match one or more segments by looking for the pattern,
+preceded by a slash:
+
+  /foo\w+/ # matches "/foobar"
+  /foo\w+/ # does not match "/foo/bar"
+
+If any patterns are captured by the Regexp, they are yielded:
+
+  /foo\w+/   # matches "/foobar", yields nothing
+  /foo(\w+)/ # matches "/foobar", yields "bar" 
+
+=== Symbol
+
+Symbols match any nonempty segment,
+yielding the segment except for the preceding slash:
+
+  :id # matches "/foo" yields "foo"
+  :id # does not match "/"
+
+=== Proc
+
+Procs match unless they return false or nil:
+
+  proc{true}  # matches anything
+  proc{false} # does not match anything
+
+Procs don't capture anything by default,
+but they can do so if you add the captured text to +r.captures+.
+
+=== Arrays
+
+Arrays match when any of their elements match.
+If multiple matchers are given to +r.on+, they all must match (an AND condition).
+If an array of matchers is given, only one needs to match (an OR condition).
+Evaluation stops at the first matcher that matches.
+
+Additionally, if the matched object is a String, the string is yielded.
+This makes it easy to handle multiple strings without a Regexp:
+
+  ['page1', 'page2'] # matches "/page1", "/page2"
+  []                 # does not match anything
+
+=== Hash
+
+Hashes allow easily calling specialized match methods on the request.
+The default registered matchers included with Roda are documented below.
+Some plugins add additional hash matchers, and the hash_matcher plugin
+allows for easily defining your own:
+
+  class App < Roda
+    plugin :hash_matcher
+
+    hash_matcher(:foo) do |v|
+      # ...
+    end
+    
+    route do |r|
+      r.on :foo=>'bar' do
+        # ...
+      end
+    end
+  end
+
+==== :all
+
+The +:all+ matcher matches if all of the entries in the given array match, so
+
+  r.on :all=>[:a, :b] do
+    # ...
+  end
+
+is the same as:
+
+  r.on :a, :b do
+    # ...
+  end
+
+The reason it also exists as a separate hash matcher
+is so you can use it inside an array matcher, so:
+
+  r.on ['foo', {:all=>['foos', :id]}] do
+  end
+
+would match +/foo+ and +/foos/10+, but not +/foos+.
+
+==== :method
+
+The +:method+ matcher matches the method of the request.
+You can provide an array to specify multiple request methods and match on any of them:
+
+  {:method => :post}             # matches POST
+  {:method => ['post', 'patch']} # matches POST and PATCH
+
+=== false, nil
+
+If +false+ or +nil+ is given directly as a matcher, it doesn't match anything.
+
+=== Everything else
+
+Everything else matches anything.
+
+== Status codes
+
+When it comes time to finalize a response,
+if a status code has not been set manually and anything has been written to the response,
+the response will use a 200 status code.
+Otherwise, it will use a 404 status code.
+This enables the principle of least surprise to work:
+if you don't handle an action, a 404 response is assumed.
+
+You can always set the status code manually,
+via the +status+ attribute for the response.
+
+  route do |r|
+    r.get "hello" do
+      response.status = 200
+    end
+  end
+
+When redirecting, the response will use a 302 status code by default.
+You can change this by passing a second argument to +r.redirect+:
+
+  route do |r|
+    r.get "hello" do
+      r.redirect "/other", 301 # use 301 Moved Permanently
+    end
+  end
+
+== Verb Methods
+
+As displayed above, Roda has +r.get+ and +r.post+ methods
+for matching based on the HTTP request method.  If you want
+to match on other HTTP request methods, use the all_verbs
+plugin.
+
+When called without any arguments, these match as long
+as the request has the appropriate method, so:
+
+  r.get do end
+
+matches any +GET+ request, and
+
+  r.post do end
+
+matches any +POST+ request
+
+If any arguments are given to the method, these match only
+if the request method matches, all arguments match, and
+the path has been fully matched by the arguments, so:
+
+  r.post "" do end
+
+matches only +POST+ requests where the current path is +/+.
+
+  r.get "a/b" do end
+
+matches only +GET+ requests where the current path is +/a/b+.
+
+The reason for this difference in behavior is that
+if you are not providing any arguments, you probably don't want
+to also test for an exact match with the current path.
+If that is something you do want, you can provide +true+ as an argument:
+
+  r.on "foo" do
+    r.get true do # Matches GET /foo, not GET /foo/.*
+    end
+  end
+
+If you want to match the request method
+and do only a partial match on the request path,
+you need to use +r.on+ with the <tt>:method</tt> hash matcher:
+
+  r.on "foo", :method=>:get do # Matches GET /foo(/.*)?
+  end
+
+== Root Method
+
+As displayed above, you can also use +r.root+ as a match method.
+This method matches +GET+ requests where the current path is +/+.
++r.root+ is similar to <tt>r.get ""</tt>,
+except that it does not consume the +/+ from the path.
+
+Unlike the other matching methods, +r.root+ takes no arguments.
+
+Note that +r.root+ does not match if the path is empty;
+you should use <tt>r.get true</tt> for that.
+If you want to match either the the empty path or +/+,
+you can use <tt>r.get ["", true]</tt>, or use the slash_path_empty
+plugin.
+
+Note that +r.root+ only matches +GET+ requests.
+So, to handle <tt>POST /</tt> requests, use <tt>r.post ''</tt>.
+
+== Request and Response
+
+While the request object is yielded to the +route+ block,
+it is also available via the +request+ method.
+Likewise, the response object is available via the +response+ method.
+
+The request object is an instance of a subclass of <tt>Rack::Request</tt>,
+with some additional methods.
+
+If you want to extend the request and response objects with additional modules,
+you can use the module_include plugin.
+
+== Pollution
+
+Roda tries very hard to avoid polluting the scope of the +route+ block.
+This should make it unlikely that Roda will cause namespace issues
+with your application code.  Some of the things Roda does:
+
+- The only instance variables defined by default in the scope of the +route+ block
+  are <tt>@_request</tt> and <tt>@_response</tt>.  All instance variables in the
+  scope of the +route+ block used by plugins that ship with Roda are prefixed
+  with an underscore.
+- The only methods defined (beyond the default methods for +Object+) are:
+  +call+, +env+, +opts+, +request+, +response+, and +session+.
+- Constants inside the Roda namespace are all prefixed with +Roda+
+  (e.g., <tt>Roda::RodaRequest</tt>).
+
+== Composition
+
+You can mount any Rack app (including another Roda app), with its own middlewares,
+inside a Roda app, using +r.run+:
+
+  class API < Roda
+    route do |r|
+      r.is do
+        # ...
+      end
+    end
+  end
+
+  class App < Roda
+    route do |r|
+      r.on "api" do
+        r.run API
+      end
+    end
+  end
+
+  run App.app
+
+This will take any path starting with +/api+ and send it to +API+.
+In this example, +API+ is a Roda app, but it could easily be
+a Sinatra, Rails, or other Rack app.
+
+When you use +r.run+, Roda calls the given Rack app (+API+ in this case);
+whatever the Rack app returns will be returned
+as the response for the current application.
+
+If you have a lot of rack applications that you want to dispatch to, and
+which one to dispatch to is based on the request path prefix, look into the
++multi_run+ plugin.
+
+=== multi_route plugin
+
+If you are just looking to split up the main route block up by branches,
+you should use the +multi_route+ plugin,
+which keeps the current scope of the +route+ block:
+
+  class App < Roda
+    plugin :multi_route
+
+    route "api" do |r|
+      r.is do
+        # ...
+      end
+    end
+
+    route do |r|
+      r.on "api" do
+        r.route "api"
+      end
+    end
+  end
+
+  run App.app
+
+This allows you to set instance variables in the main +route+ block
+and still have access to them inside the +api+ +route+ block.
+
+== Testing
+
+It is very easy to test Roda with {Rack::Test}[https://github.com/brynary/rack-test]
+or {Capybara}[https://github.com/jnicklas/capybara].
+Roda's own tests use {minitest/spec}[https://github.com/seattlerb/minitest].
+The default Rake task will run the specs for Roda.
+
+== Settings
+
+Each Roda app can store settings in the +opts+ hash.
+The settings are inherited if you happen to subclass +Roda+.  
+
+  Roda.opts[:layout] = "guest"
+
+  class Users < Roda; end
+  class Admin < Roda
+    opts[:layout] = "admin"
+  end
+
+  Users.opts[:layout] # => 'guest'
+  Admin.opts[:layout] # => 'admin'
+
+Feel free to store whatever you find convenient.
+Note that when subclassing, Roda only does a shallow clone of the settings.
+
+If you store nested structures and plan to mutate them in subclasses,
+it is your responsibility to dup the nested structures inside +Roda.inherited+
+(making sure to call +super+).  This should be is done so that that modifications
+to the parent class made after subclassing do _not_ affect the subclass, and
+vice-versa.
+
+The plugins that ship with Roda freeze their settings and only allow modification
+to their settings by reloading the plugin, and external plugins are encouraged
+to follow this approach.
+
+The following options are respected by the default library or multiple plugins:
+
+:add_script_name :: Prepend the SCRIPT_NAME for the request to paths.  This is
+                    useful if you mount the app as a path under another app.
+:freeze_middleware :: Whether to freeze all middleware when building the rack app.
+:root :: Set the root path for the app.  This defaults to the current working
+         directory of the process.
+:unsupported_block_result :: If set to :raise, raises an error if a match or
+                             route block returns an object that is not handled.
+                             By default, String, nil, and false are handled,
+                             and other types can be handled via plugins. Setting
+                             this option can alert you to possible issues in your
+                             application.
+:unsupported_matcher :: If set to :raise, raises an error if a matcher is used that
+                        is not handled.  By default, String, Symbol, Regexp, Hash,
+                        Array, Proc, true, false, and nil are handled.  Setting
+                        this option can alert you to possible issues in your
+                        application.
+:verbatim_string_matcher :: If set to true, makes all string matchers match
+                            verbatim strings, disallowing the use of colons
+                            for placeholders.  In general, it is recommended
+                            to use separate symbol matchers instead of
+                            embedding placeholders in string matchers.
+
+There may be other options supported by individual plugins, if so it will be
+mentioned in the documentation for the plugin.
+
+== Rendering
+
+Roda ships with a +render+ plugin that provides helpers for rendering templates.
+It uses {Tilt}[https://github.com/rtomayko/tilt],
+a gem that interfaces with many template engines.
+The +erb+ engine is used by default.
+
+Note that in order to use this plugin you need to have Tilt installed,
+along with the templating engines you want to use.
+
+This plugin adds the +render+ and +view+ methods, for rendering templates.
+By default, +view+ will render the template inside the default layout template;
++render+ will just render the template.
+
+  class App < Roda
+    plugin :render
+
+    route do |r|
+      @var = '1'
+
+      r.get "render" do
+        # Renders the views/home.erb template, which will have access to
+        # the instance variable @var, as well as local variable content.
+        render("home", :locals=>{:content => "hello, world"})
+      end
+
+      r.get "view" do
+        @var2 = '1'
+
+        # Renders the views/home.erb template, which will have access to the
+        # instance variables @var and @var2, and takes the output of that and
+        # renders it inside views/layout.erb (which should yield where the
+        # content should be inserted).
+        view("home")
+      end
+    end
+  end
+
+You can override the default rendering options by passing a hash to the plugin:
+
+  class App < Roda
+    plugin :render,
+      :escape => true, # Automatically escape output in erb templates using Erubis
+                       # can use :erubi instead of true to use Erubi instead of Erubis
+      :views => 'admin_views', # Default views directory
+      :layout_opts => {:template=>'admin_layout',
+                       :ext=>'html.erb'},    # Default layout template options
+      :template_opts => {:default_encoding=>'UTF-8'} # Default template options
+  end
+
+== Sessions
+
+By default, Roda doesn't turn on sessions,
+but most users are going to want to turn on session support.
+The simplest way to do this is to use the <tt>Rack::Session::Cookie</tt> middleware
+that comes with Rack:
+
+  require "roda"
+
+  class App < Roda
+    use Rack::Session::Cookie, :secret => ENV['SECRET']
+  end
+
+== Security
+
+Web application security is a very large topic,
+but here are some things you can do with Roda
+to prevent some common web application vulnerabilities.
+
+=== Session Security
+
+If you are using sessions, you should also always set a session secret,
+using the +:secret+ option as shown above.
+Make sure that this secret is not disclosed,
+because if an attacker knows the +:secret+ value,
+they can inject arbitrary session values.
+In the worst case scenario, this can lead to remote code execution.
+
+Keep in mind that with <tt>Rack::Session::Cookie</tt>,
+the content in the session cookie is not encrypted,
+just signed to prevent tampering.
+This means you should not store any secret data in the session.
+
+=== Cross Site Request Forgery (CSRF)
+
+CSRF can be prevented by using the +csrf+ plugin that ships with Roda,
+which uses the {rack_csrf}[https://github.com/baldowl/rack_csrf] library.
+Just make sure that you include the CSRF token tags in your HTML, as appropriate.
+
+It's also possible to use the <tt>Rack::Csrf</tt> middleware directly;
+you don't have to use the +csrf+ plugin.
+
+=== Cross Site Scripting (XSS)
+
+The easiest way to prevent XSS with Roda is to use a template library
+that automatically escapes output by default.
+The +:escape+ option to the +render+ plugin sets the ERb template processor
+to escape by default, so that in your templates:
+
+  <%= '<>' %>  # outputs &lt;&gt; 
+  <%== '<>' %> # outputs <>
+
+When using the +:escape+ option, you will need to ensure that your layouts
+are not escaping the output of the content template:
+
+  <%== yield %> # not <%= yield %>
+
+You can also provide a +:escape_safe_classes+ option, which will
+make <tt><%= %></tt> not escape certain string subclasses, useful
+if you have helpers that already return escaped output using a
+string subclass instance.
+
+This support requires {Erubis}[http://www.kuwata-lab.com/erubis/].
+You can use <tt>:escape=>:erubi</tt> to use {Erubi}[https://github.com/jeremyevans/erubi],
+a simplified fork of Erubis.
+
+=== Security Related HTTP Headers
+
+You may want to look into setting the following HTTP headers, which
+can be done at the web server level, but can also be done at the
+application level using using the +default_headers+ plugin:
+
+Content-Security-Policy/X-Content-Security-Policy :: Defines policy for how javascript and other
+                                                     types of content can be used on the page.
+Frame-Options/X-Frame-Options :: Provides click-jacking protection by not allowing usage inside
+                                 a frame.
+Strict-Transport-Security :: Enforces SSL/TLS Connections to the application.
+X-Content-Type-Options :: Forces some browsers to respect a declared Content-Type header.
+X-XSS-Protection :: Enables an XSS mitigation filter in some browsers.
+
+Example:
+
+  class App < Roda
+    plugin :default_headers,
+      'Content-Type'=>'text/html',
+      'Content-Security-Policy'=>"default-src 'self'",
+      'Strict-Transport-Security'=>'max-age=16070400;',
+      'X-Frame-Options'=>'deny',
+      'X-Content-Type-Options'=>'nosniff',
+      'X-XSS-Protection'=>'1; mode=block'
+  end
+
+=== Rendering Templates Derived From User Input
+
+Roda's rendering plugin assumes that template paths given to it are trusted by default.
+If you provide a path to the +render+/+view+ methods that is derived from user input, you
+are opening yourself for people rendering arbitrary files on the system that that have a
+file name ending in the default template extension.  For example, if you do:
+
+  class App < Roda
+    plugin :render
+    route do |r|
+      view(r['page'])
+    end
+  end
+
+Then attackers can submit a <tt>page</tt> parameter such as <tt>'../../../../tmp/upload'</tt>
+to render the <tt>/tmp/upload.erb</tt> file.  If you have another part of your system that
+allows users to create files with arbitrary extensions (even temporary files), then it may
+be possible to combine these two issues into a remote code execution exploit.
+
+To mitigate against this issue, you can use the <tt>:check_paths => true</tt> render
+option, which will check that the full path of the template to be rendered begins with the
++:views+ directory, and raises an exception if not.  You can also use the +:allowed_paths+
+render option to specify which paths are allowed.  While
+<tt>:check_paths => true</tt> is not currently the default, it will become the default in
+Roda 3.  Note that when specifying the +:path+ option when rendering a template, Roda will
+not check paths, as it assumes that users and libraries that use this option will be checking
+such paths manually.
+
+== Code Reloading
+
+Roda does not ship with integrated support for code reloading, as it is a toolkit and not a
+framework, but there are rack-based reloaders that will work with Roda apps.
+
+For most applications, {rack-unreloader}[https://github.com/jeremyevans/rack-unreloader]
+is probably the fastest approach to reloading while still being fairly safe, as it
+reloads just files that have been modified, and unloads constants defined in the files
+before reloading them.  However, it requires modifying your application code to use
+rack-unreloader specific APIs.
+
+A similar solution that reloads files and unloads constants is ActiveSupport::Dependencies.
+ActiveSupport::Dependencies doesn't require modifying your application code, but it modifies
+some core methods, including +require+ and +const_missing+. It requires less configuration,
+but depends that you follow Rails' file and class naming conventions. It also provides
+autoloading (on the fly) of files when a missing constant is accessed. If your application
+does not rely on autoloading then +require_dependency+ must be used to require the dependencies
+or they won't be reloaded.
+
+{AutoReloader}[https://github.com/rosenfeld/auto_reloader] provides transparent reloading for
+all files reached from one of the +reloadable_paths+ option entries, by detecting new top-level
+constants and removing them when any of the reloadable loaded files changes. It overrides
++require+ and +require_relative+ when activated (usually in the development environment). No
+configurations other than +reloadable_paths+ are required.
+
+Both {rerun}[https://github.com/alexch/rerun] and
+{shotgun}[https://github.com/rtomayko/shotgun] use a fork/exec approach for loading new
+versions of your app.  rerun is faster as it only reloads the app on changes, whereas
+shotgun reloads the app on every request.  Both work without any changes to application
+code, but may be slower as they have to reload the entire application on every change.
+However, for small apps that load quickly, either may be a good approach.
+
+{Rack::Reloader}[https://github.com/rack/rack/blob/master/lib/rack/reloader.rb] ships
+with rack and just reloads monitored files when they change, without unloading constants.
+It's fast but may cause issues in cases where you remove classes, constants, or methods,
+or when you are not clearing out cached data manually when files are reloaded.
+
+There is no one reloading solution that is the best for all applications and development
+approaches.  Consider your needs and the the tradeoffs of each of the reloading approaches,
+and pick the one you think will work best.
+
+If you are unsure where to start, it may be best to start with rerun or shotgun
+(unless you're running on JRuby or Windows), and only consider other options if rerun or
+shotgun are not fast enough.
+
+== Plugins
+
+By design, Roda has a very small core, providing only the essentials.
+All nonessential features are added via plugins.
+
+Roda's plugins can override any Roda method and call +super+
+to get the default behavior, which makes Roda very extensible.
+
+{Roda ships with a large number of plugins}[http://roda.jeremyevans.net/documentation.html#included-plugins],
+and {some other libraries ship with support for Roda}[http://roda.jeremyevans.net/documentation.html#external].
+
+=== How to create plugins
+
+Authoring your own plugins is pretty straightforward.
+Plugins are just modules, which may contain any of the following modules:
+
+InstanceMethods :: module included in the Roda class
+ClassMethods :: module that extends the Roda class
+RequestMethods :: module included in the class of the request
+RequestClassMethods :: module extending the class of the request
+ResponseMethods :: module included in the class of the response
+ResponseClassMethods :: module extending the class of the response
+
+If the plugin responds to +load_dependencies+, it will be called first,
+and should be used if the plugin depends on another plugin.
+
+If the plugin responds to +configure+, it will be called last,
+and should be used to configure the plugin.
+
+Both +load_dependencies+ and +configure+ are called
+with the additional arguments and block that was given to the plugin call.
+
+So, a simple plugin to add an instance method would be:
+
+  module MarkdownHelper
+    module InstanceMethods
+      def markdown(str)
+        BlueCloth.new(str).to_html
+      end
+    end
+  end
+
+  Roda.plugin MarkdownHelper
+
+=== Registering plugins
+
+If you want to ship a Roda plugin in a gem,
+but still have Roda load it automatically via <tt>Roda.plugin :plugin_name</tt>,
+you should place it where it can be required via +roda/plugins/plugin_name+
+and then have the file register it as a plugin via
+<tt>Roda::RodaPlugins.register_plugin</tt>.
+It's recommended, but not required, that you store your plugin module
+in the <tt>Roda::RodaPlugins</tt> namespace:
+
+  class Roda
+    module RodaPlugins
+      module Markdown
+        module InstanceMethods
+          def markdown(str)
+            BlueCloth.new(str).to_html
+          end
+        end
+      end
+
+      register_plugin :markdown, Markdown
+    end
+  end
+
+To avoid namespace pollution,
+you should avoid creating your module directly in the +Roda+ namespace.
+Additionally, any instance variables created inside +InstanceMethods+
+should be prefixed with an underscore (e.g., <tt>@_variable</tt>)
+to avoid polluting the scope.  Finally, do not add any constants inside
+the InstanceMethods module, add constants to the plugin module itself
+(+Markdown+ in the above example).
+
+If you are planning on shipping your plugin in an external gem, it is recommended that you follow 
+{standard gem naming conventions for extensions}[http://guides.rubygems.org/name-your-gem/].
+So if your plugin module is named +FooBar+, your gem name should be <tt>roda-foo_bar</tt>.
+
+== No Introspection
+
+Because a routing tree does not store the routes in a data structure, but
+directly executes the routing tree block, you cannot introspect the routes
+when using a routing tree.
+
+If you would like to introspect your routes when using Roda, there is an
+external plugin named {roda-route_list}[https://github.com/jeremyevans/roda-route_list],
+which allows you to add appropriate comments to your routing files, and
+has a parser that will parse those comments into routing metadata that
+you can then introspect.
+
+== Inspiration
+
+Roda was inspired by {Sinatra}[http://www.sinatrarb.com] and {Cuba}[http://cuba.is].
+It started out as a fork of Cuba, from which it borrows the idea of using a routing tree
+(which Cuba in turn took from {Rum}[https://github.com/chneukirchen/rum]).
+From Sinatra, it takes the ideas that route blocks should return the request bodies
+and that routes should be canonical.
+It pilfers the idea for an extensible plugin system from the Ruby database library
+{Sequel}[http://sequel.jeremyevans.net].
+
+== License
+
+MIT
+
+== Maintainer
+
+Jeremy Evans <code@jeremyevans.net>

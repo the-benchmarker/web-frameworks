@@ -1,0 +1,75 @@
+= Backwards Compatibility
+
+* RodaResponse#set_cookie and #delete_cookie have been removed.
+
+* Roda.request_module and .response_module have been removed.
+
+* Roda.hash_matcher has been removed.
+
+* The :extension hash matcher has been removed.
+
+* The :param and :param! hash matchers have been removed.
+
+* RodaRequest#full_path_info has been removed.
+
+* The :opts render plugin option is no longer respected, Use the
+  :template_opts option instead.
+
+* Plugin option hashes for the chunked, default_headers,
+  error_email, and render plugins are now frozen.
+
+* The :header hash matcher in the header_matchers plugin now
+  yields the header value to the block.
+
+* Roda.json_result_classes in the json plugin is now frozen.
+
+* The PATH_INFO and SCRIPT_NAME env variables are no longer modified
+  during routing.
+
+* Roda#initialize now takes an env hash, and #call now takes the
+  route block.  The private #_route method has been removed.
+  
+* RodaRequest#keep_remaining_path/#updating_remaining_path private
+  methods have been removed.
+
+* The render plugin's :layout option is now always set to true or
+  false, specifying whether a layout should be used by default.
+  The template used for a layout is now located as the :template
+  option inside :layout_opts.
+
+= New Plugins
+
+* A padrino_render plugin has been added, which adds render/partial
+  methods that work similarly to Padrino's.
+
+= Other New Features
+
+* A Roda#render_template private method has been added to the render
+  plugin.  All internal users of render should switch to calling
+  render_template.
+
+* The halt plugin now integrates with the symbol_views and json
+  plugins, allowing things like:
+
+    r.halt(:template)
+    r.halt('key'=>'value')
+
+= Other Improvements
+
+* The error_handler plugin now rescues ScriptError in addition to
+  StandardError.  This handles SyntaxError (raised by ERB),
+  LoadError (raised by require), and NotImplementedError (raised
+  by TSort).
+
+* Using a :layout=>true option to the render plugin's view method
+  now uses the default layout template, instead of a template named
+  'true'.  It can be used to force a layout even if the render
+  plugin has been configured to not use a layout by default.
+
+* Roda apps that use the middleware plugin can now be used as regular
+  rack apps.  Previously, using the middleware plugin made it
+  impossible to use the app as a regular rack app.
+
+* Roda#request and #response are now faster.
+
+* Roda avoids creating unnecessary hashes in more places now.

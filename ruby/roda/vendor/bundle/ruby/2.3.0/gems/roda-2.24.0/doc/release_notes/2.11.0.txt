@@ -1,0 +1,70 @@
+= New Features
+
+* A params_capturing plugin has been added, which makes string and
+  symbol matchers update the request params with the value of the
+  captured segments, using the matcher as the key:
+  
+    plugin :params_capturing
+ 
+    route do |r|
+      # GET /foo/123/abc/67
+      r.on("foo/:bar/:baz", :quux) do
+        r[:bar] #=> '123'
+        r[:baz] #=> 'abc'
+        r[:quux] #=> '67'
+      end
+    end
+  
+  Note that this updating of the request params using the matcher as
+  the key is only done if all arguments to the matcher are symbols
+  or strings.
+  
+  All matchers will update the request params by adding all
+  captured segments to the captures key, including
+  symbol and string matchers:
+ 
+    r.on(:x, /(\d+)\/(\w+)/, ':y') do
+      r[:x] #=> nil
+      r[:y] #=> nil
+      r[:captures] #=> ["foo", "123", "abc", "67"]
+    end
+  
+  Note that the request params captures entry will be appended to with
+  each nested match:
+ 
+    r.on(:w) do
+      r.on(:x) do
+        r.on(:y) do
+          r.on(:z) do
+            r[:captures] # => ["foo", "123", "abc", "67"]
+          end
+        end
+      end
+    end
+ 
+  Note that any existing params captures entry will be overwritten
+  by this plugin.  You can use r.GET or r.POST to get the underlying
+  entry, depending on how it was submitted.
+  
+  Also note that the param keys are actually stored in r.params as
+  strings and not symbols (r[] converts the argument to a string
+  before looking it up in r.params).
+ 
+  Also note that this plugin will not work correctly if you are using
+  the symbol_matchers plugin with custom symbol matching and are using
+  symbols that capture multiple values or no values.
+
+* A :scope option is now supported by render/view in the render plugin,
+  which allows you to specify the object in which context to evaluate
+  the template.
+
+= Other Improvements
+
+* The assets plugin's support for the Minjs javascript minifier now
+  supports the latest version (0.4.1).
+
+= Backwards Compatibility
+
+* Support for Minjs <0.4.0 has been dropped from the assets plugin.
+  Please upgrade Minjs at the same time you upgrade Roda if you are
+  using both of them.

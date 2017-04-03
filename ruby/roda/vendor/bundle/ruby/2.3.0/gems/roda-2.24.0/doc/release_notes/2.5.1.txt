@@ -1,0 +1,4 @@
+= Improvements
+
+* The multi_route plugin now works correctly if the middleware plugin
+  is loaded after it.

@@ -1,0 +1,44 @@
+= New Features
+
+* A symbol_status plugin has been added for using symbolic status names
+  in response.status=:
+
+    class App < Roda
+      plugin :symbol_status
+
+      route do |r|
+        r.is "needs_authorization"
+          response.status = :unauthorized
+        end
+      end
+
+= Other Improvements
+
+* The middleware plugin will now also run the application's middleware
+  when the application is used as middleware.  For example, if you
+  have the following code in your config.ru file:
+
+    class App < Roda
+      plugin :csrf
+      plugin :middleware
+      route{}
+    end
+
+    use App
+  
+  previously, the csrf protection would not be enforced, as it uses a
+  middleware instead of being part of the application. Now, csrf
+  protection will be enforced.  This change makes it so the Roda
+  application operates the same way regardless of whether it is run
+  as the rack application or used as rack middleware.
+
+  Because of this change, if you are nesting roda applications using
+  the middleware plugin, you may need to use the middleware plugin's
+  :env_var option to specify the environment variable used to
+  indicate to the Roda application that it is being run as middleware.
+
+= Backwards Compatibility
+
+* See above changes to the middleware plugin if you are using
+  middleware inside a Roda application that uses the middleware
+  plugin.

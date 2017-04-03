@@ -3,7 +3,7 @@ all: ruby crystal go client
 # --- Ruby ---
 # 
 # Rails
-ruby: rails sinatra
+ruby: rails sinatra roda
 
 rails:
 	cd ruby/rails; bundle install --path vendor/bundle
@@ -12,6 +12,10 @@ rails:
 sinatra:
 	cd ruby/sinatra; bundle install --path vendor/bundle
 	ln -s -f ../ruby/sinatra/server_ruby_sinatra bin/.
+
+roda:
+	cd ruby/roda; bundle install --path vendor/bundle
+	ln -s -f ../ruby/roda/server_ruby_roda bin/.
 
 # --- Crystal ---
 # 

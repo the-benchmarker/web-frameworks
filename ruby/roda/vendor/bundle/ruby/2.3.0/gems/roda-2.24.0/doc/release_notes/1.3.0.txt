@@ -1,0 +1,109 @@
+= Preparation for Roda 2
+
+* In Roda 2 (the next version), the PATH_INFO and SCRIPT_NAME
+  env variables will not be modified during routing. Instead,
+  Roda will use the static_path_info plugin behavior by default.
+  Users are strongly encouraged to use the static_path_info
+  plugin to make sure their apps will work with Roda 2.
+
+* In Roda 2, Roda#initialize will take the env hash, and #call
+  will take the route block.  The private #_route method will be
+  eliminated.  This should not affect applications, but it will
+  affect plugins that override these methods.
+  
+* The issues mentioned below should all have deprecation warnings,
+  except where noted.
+
+== New Plugins to Replace Deprecated Features
+
+* RodaResponse#set_cookie and #delete_cookie have been moved to the
+  cookies plugin.
+
+* Roda.request_module and .response_module have been moved to the
+  module_include plugin.
+
+* Roda.hash_matcher has been moved to the hash_matcher plugin.
+
+* The :extension hash matcher has been moved to the path_machers
+  plugin.  This plugin also contains new :prefix and :suffix hash
+  matchers.
+
+* The :param and :param! hash matchers have been moved to the
+  param_matchers plugin.
+
+== Other Deprecation Issues
+
+* The :opts render plugin option and :opts option to render and
+  view are now deprecated.  Use the :template_opts option instead.
+
+* RodaRequest#full_path_info has been deprecated, switch to using
+  #path.
+
+* Mutating plugin option hashes for the chunked, default_headers,
+  error_email, json, and render plugins is now deprecated, these
+  option hashes will be frozen in Roda 2.
+
+* The :header hash matcher in the header_matchers plugin now
+  gives a deprecation warning, because in Roda 2, the matcher will
+  yield the value of the header to the block.  To get the new
+  behavior and silence the deprecation warning, you need to set an
+  option:
+
+    Roda.opts[:match_header_yield] = true
+
+* Mutating json_result_classes directly in the json plugin is now
+  deprecated.  You should now pass a :classes option to the plugin
+  specifying the classes to convert, if you want to handle classes
+  other than Array and Hash.  There will not be a deprecation warning
+  if you attempt to mutate json_result_classes.
+
+= New Features
+
+* The Roda.freeze method now freezes internal datastructures to avoid
+  thread safety issues.  The plugins that ship with Roda will freeze
+  their datastructures when Roda.freeze is called.  It is recommended
+  that production applications call freeze on the application after
+  fully loading it, especially if they are using a threaded webserver
+  and a non-MRI ruby.
+
+* A delete_empty_headers plugin has been added that automatically
+  deletes headers set to the empty string.  This makes it simpler to
+  delete default headers if they shouldn't be set for a specific
+  request.
+  
+* A class_delegate method has been added to the delegate plugin. This
+  makes it easier to create instance methods that call class methods.
+
+* Roda::RodaMajorVersion, RodaMinorVersion, and RodaPatchVersion
+  constants have been added.
+
+= Other Improvements
+
+* The error_handler plugin now uses a new response instead of reusing
+  the existing response.  This fixes cases where changing the
+  Content-Type and then raising an exception would result in a error
+  page that used the previously set Content-Type.
+
+* The not_found plugin now clears previous set headers before calling
+  not found.  This fixes cases where Content-Type was set previously,
+  and also fixes an incorrect Content-Length being used for the
+  response.
+
+* The static_path_info plugin now restores the original SCRIPT_NAME
+  and PATH_INFO before returning from r.run, fixing usage with some
+  middleware.
+
+* The multi_run plugin now works when subclassing the app.
+
+* The default_headers plugin is now faster by skipping an unnecessary
+  hash duplication.
+
+* A Gemfile has been added to make development slightly easier.
+
+= Backwards Compatibility
+
+* RodaResponse is no longer a subclass of Rack::Response, it is now a
+  subclass of Object.  This shouldn't have an effect unless you were
+  calling a method on an instance that was defined by Rack::Response
+  and not RodaResponse, but most of those methods would have raised
+  exceptions.

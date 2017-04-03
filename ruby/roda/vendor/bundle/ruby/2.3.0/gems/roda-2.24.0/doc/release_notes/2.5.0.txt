@@ -1,0 +1,23 @@
+= New Features
+
+* The assets plugin now supports a :compiled_asset_host option, which
+  specifies a hostname used to serve compiled assets.
+
+* The render plugin now supports a :cache_class option, which
+  specificies a class to use for the thread-safe template cache.
+  This can be used to setup LRU caching or caching that checks
+  modify times on the underlying template files.
+
+* r.multi_run in the multi_run plugin now accepts a block, and calls
+  the block before dispatching to the related rack application.  This
+  can be used to modify the environment before dispatching.  Example:
+
+    r.multi_run do |prefix|
+      env['authenticated'] = true
+    end
+
+= Backwards Compatibility
+
+* The :by_name option to the path plugin now defaults to true in
+  development mode.  This should only negatively affect applications
+  that register anonymous classes with the path plugin.

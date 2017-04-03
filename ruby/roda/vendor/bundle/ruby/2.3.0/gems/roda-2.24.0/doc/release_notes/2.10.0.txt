@@ -1,0 +1,27 @@
+= New Features
+
+* The json plugin now accepts a :content_type option, which will
+  override the default Content-Type response header used for
+  responses.
+
+* Stream#write has been added to the streaming plugin, allowing
+  the following type of code to work:
+
+    stream do |out|
+      IO.copy_stream(StringIO.new(content), out)
+    end
+
+= Other Improvements
+
+* Roda now works with ruby 2.3's --enable-frozen-string-literal,
+  and all of the library files are set to use frozen string
+  literals by default.
+
+  Most of roda's plugin-specific dependencies were found to have
+  issues with frozen string literals, and while pull requests have
+  been sent to fix the issues, it's unlikely that you would
+  currently be able to use --enable-frozen-string-literal in
+  production.
+
+* The json plugin will no longer override a Content-Type header if
+  one is already set.

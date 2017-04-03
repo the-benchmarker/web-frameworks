@@ -1,0 +1,17 @@
+= New Features
+
+* The streaming plugin now supports a handle_stream_error method to
+  handle exceptions when using stream(:loop=>true).  This method
+  takes the exception and the stream object, and can be used to log
+  errors, output errors into the stream, close the stream, ignore
+  errors, or any other error handling.
+
+= Other Improvements
+
+* A couple of unused variable assignments have been removed, providing
+  a minor speedup.
+
+* The specs no longer produce deprecation warnings when using Minitest
+  5.10.
+
+* Some verbose warnings have been removed from the specs.

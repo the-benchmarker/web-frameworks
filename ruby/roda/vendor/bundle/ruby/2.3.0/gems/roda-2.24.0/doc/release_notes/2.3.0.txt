@@ -1,0 +1,109 @@
+= New Plugins
+
+* A json_parser plugin has been added, for parsing request bodies in
+  JSON format.  This is faster than using a middleware to perform
+  the same task.  This plugin supports a :parser option to use a
+  custom JSON parser, an :include_request option to include the
+  request when calling the parser, and a :error_handler option for
+  a proc to call with the request if there is an error when parsing.
+  Example:
+
+    plugin :json_parser,
+      :parser=>JSON.method(:parse),
+      :include_request=>false,
+      :error_handler=>proc{|r| r.halt [400, {}, []]} 
+
+* A path_rewriter plugin has been added, allowing for the rewriting
+  of paths before routing.  This allows you to rewrite just the
+  routing path (the default), or PATH_INFO as well as the routing
+  path (if the :path_info option is used).  This is useful if you
+  want to internally treat one path exactly the same as another
+  path.
+
+  By default, path rewriting is done on prefixes, so any path that
+  starts with the prefix will be rewritten.  You can pass a
+  Regexp when rewriting the path for more complete control.
+
+  Examples:
+
+    plugin :path_rewriter
+    rewrite_path '/a', '/b'
+    # GET /a treated as GET /b
+    # GET /a/c treated as GET /b/c
+
+    rewrite_path /\A\/c\z/, '/d'
+    # GET /c treated as GET /d
+    # GET /c/e no change
+
+* A precompiled_templates plugin has been added, for precompiling
+  templates before starting the application.  This can save a
+  substantial amount of memory if you are using large templates or
+  a large number of small templates in conjunction when using
+  application preloading with a forking webserver.  Example:
+
+    plugin :precompile_templates
+    precompile_templates "views/\*\*/*.erb"
+    precompile_templates "views/users/_*.erb", :locals=>[:user]
+
+* A heartbeat plugin has been added, for easily handling
+  heartbeat/status requests.  If a heartbeat/status request comes in,
+  it will get a 200 response with a body of "OK".  This is designed
+  for automated systems that check if the application is functioning.
+  The default heartbeat path is /heartbeat, but you can choose a
+  different one using the :path option.
+
+    plugin :heartbeat, :path=>'/heartbeat'
+
+= Other New Features
+
+* The json plugin now supports a :serializer option to use a custom
+  serializer.  Additionally, it now supports a :include_request
+  option to include the request when calling the serializer.
+
+* In the render plugin, the render/view methods now support a
+  :cache=>false option to not cache the template.  This can be useful
+  for large but rarely used templates, or where a new template object
+  is created for every render/view call.
+
+* In the render plugin, the render/view methods now support a
+  :cache_key option to force a specific cache key.  Manually setting
+  cache keys can result in improved performance, as automatically
+  determining the cache key can be a relatively expensive operation.
+
+* The render plugin now supports a :engine_opts option, to specify
+  per-template engine options.  :engine options should be a hash
+  keyed by render engine strings, with values being hashes of
+  template options.
+
+* In the mailer plugin, a no_mail! method is now supported when
+  mailing, which will skip the current mail.  This makes it easier
+  to delay the decision about actually sending the email till it is
+  time to send the email, which makes it easier to avoid race
+  conditions if you are using a job queue for mailing.
+
+= Other Improvements
+
+* Roda avoids rehashing hashes at runtime in some places, for a minor
+  speedup.
+
+* If the :template_block is given to render/view, default to not
+  caching the template, since it is likely the template block is
+  specific to the request.  Allow for the :cache=>true option to be
+  used to force the caching of the template.
+
+* Roda now returns a 404 response for unmatched GET requests when
+  using the assets and json plugins where r.assets is the last
+  method called in a route block.
+
+= Backwards Compatibility
+
+* In the render plugin, the :ext option to the plugin and to the
+  render/view methods is now replaced by the :engine option.
+  Previously, :engine was used by default if :ext was not given. In
+  general, there is no need for two separate options, the engine is
+  used as the extension by Tilt.
+
+  In general, this is a backwards compatible change, except when
+  both :ext and :engine were specified differently as plugin options,
+  and an inline template is used with render or view without either
+  the :ext or :engine options being specified.

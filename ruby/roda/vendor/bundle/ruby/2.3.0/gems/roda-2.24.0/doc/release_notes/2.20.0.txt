@@ -1,0 +1,5 @@
+= New Features
+
+* The render plugin now supports :erubi as an :escape option value,
+  which will change the plugin to use Erubi instead of Erubis as the
+  template processor.  Erubi is a simplified Erubis fork.

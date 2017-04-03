@@ -1,0 +1,75 @@
+= New Features
+
+* A default_status plugin has been added for changing the default
+  status for responses.  Previously, the default status was hard
+  coded to 200, this plugin allows you to change it.  The plugin
+  takes a block which is instance_evaled in the context of the
+  response:
+
+    plugin :default_status do
+      headers['Content-Type'] == 'foo' ? 201 : 200
+    end
+
+  Note that the default status for empty responses (used when no
+  route handles the response) is still 404, this just changes the
+  default for non-empty responses.
+
+* A response_request plugin has been added for giving the response
+  instance access to the related request.  This can be useful in
+  conjunction with the default_status plugin, if you want the
+  default status of the response to depend on the request, such as
+  using a different status for different request methods:
+
+    plugin :response_request
+    plugin :default_status do
+      request.post? ? 201 : 200
+    end
+
+* A run_handler plugin has been added, for modifying rack response
+  arrays before returning them when using r.run.  Additionally, it
+  allows for continuing with routing if the response returned by
+  r.run is a 404 response, using the :not_found=>:pass option:
+
+    plugin :run_handler
+    route do |r|
+      # Keep running code if RackAppFoo returns a 404 response
+      r.run RackAppFoo, :not_found=>:pass
+
+      # Change response status codes before returning.
+      r.run(RackAppBar) do |response|
+        response[0] = 200 if response[0] == 201
+      end
+    end
+
+* Roda.rewite_path in the path_rewriter extension now accepts a block
+  to allow for dynamic replacements. The block is yielded a MatchData
+  instance:
+
+    rewrite_path(/\A\/a/(\w+)/){|match| match[1].capitalize}
+    # PATH_INFO '/a/moo' => remaining_path '/a/Moo'
+
+    rewrite_path(/\A\/a/(\w+)/, :path_info => true) do |match|
+      match[1].capitalize
+    end
+    # PATH_INFO '/a/moo' => PATH_INFO '/a/Moo'
+
+* The :host matcher in the header_matchers plugin will now yield the
+  regexp captures to the block if given a regexp when the
+  :host_matcher_captures application option is set.  This behavior
+  will become the default behavior in Roda 3.  This will allow for
+  code like:
+
+    opts[:host_matcher_captures] = true
+    route do |r|
+      r.on :host=>/\A(\w+).example.com\z/ do |subdomain|
+        # ...
+      end
+    end
+
+= Other Improvements
+
+* RodaCache now uses a mutex to synchronize access on MRI.
+  Previously, it relied on the global interpreter lock, but testing
+  has shown that is not reliable in all cases.  RodaCache has always
+  used a mutex for synchronization on other ruby implementations,
+  this just extends that code to MRI as well.

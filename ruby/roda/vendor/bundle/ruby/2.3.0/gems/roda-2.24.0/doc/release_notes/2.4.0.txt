@@ -1,0 +1,55 @@
+= New Plugins
+
+* A websocket plugin has been added, for websocket support using
+  faye-websocket.  Here's an example of a simple echo service using
+  websockets:
+
+    plugin :websockets
+
+    route do |r|
+      r.get "echo" do
+        r.websocket do |ws|
+          # Routing block taken for a websocket request to /echo
+
+          # ws is a Faye::WebSocket instance, so you can use the
+          # Faye::WebSocket API
+          ws.on(:message) do |event|
+            ws.send(event.data)
+          end
+        end
+
+        # View rendered if a regular GET request to /echo
+        view "echo"
+      end
+    end
+ 
+* A status_handler plugin has been added, which allows Roda to
+  specially handle arbitrary status codes.  Usage is similar to the
+  not_found plugin (which now uses status_handler internally):
+
+    plugin :status_handler
+
+    status_handler 403 do
+      "You are forbidden from seeing that!"
+    end
+    status_handler 404 do
+      "Where did it go?"
+    end
+
+= Other New Features
+
+* The assets plugin now supports a :gzip option, which will save
+  gzipped versions when compiling assets.  When serving compiled
+  assets, if the request accepts gzip encoding, it will serve
+  the gzipped version.  This also plays nicely with nginx's
+  gzip_static support.
+
+* The assets plugin now supports Google Closure Compiler, Uglifier,
+  and MinJS for minifying javascript.  You can now specify which
+  css and js compressors to use via the :css_compressor and
+  :js_compressor options.
+
+= Backwards Compatibility
+
+* Roda.plugin now always returns nil.  Previously the return value
+  could be non-nil if the plugin used a configure method.

@@ -1,0 +1,406 @@
+= New Plugins
+
+* A static_path_info plugin has been added, which doesn't modify
+  SCRIPT_NAME/PATH_INFO during routing, only before dispatching
+  the request to another rack application via r.run.  This is
+  faster and avoids problems caused by changing SCRIPT_NAME/PATH_INFO
+  during routing, such as methods that return paths that depend on
+  SCRIPT_NAME.  This behavior will become Roda's default starting
+  in Roda 2, and it is recommended that all Roda apps use it.
+
+* A mailer plugin has been added, which allows you to use Roda's
+  render plugin to create email bodies, and allows you to use Roda's
+  routing tree features to DRY up your mailing code similar to how it
+  DRYs up your web code.
+
+  Here is an example routing tree using the mailer plugin:
+
+    class Mailer < Roda
+      plugin :render
+      plugin :mailer
+
+      route do |r|
+        r.on "user/:d" do |user_id|
+          # DRY up code by setting shared behavior in higher level
+          # branches, instead of duplicating it inside each subtree.
+          @user = User[user_id]
+          from 'notifications@example.com'
+          to @user.email
+
+          r.mail "open_account" do
+            subject 'Welcome to example.com'
+            render(:open_account)
+          end
+
+          r.mail "close_account" do
+            subject 'Thank you for using example.com'
+            render(:close_account)
+          end
+        end
+      end
+    end
+
+  With your routing tree setup, you can use the sendmail method to
+  send email:
+
+    Mailer.sendmail("/user/1/open_account")
+
+  If you want a Mail::Message object returned for further modification
+  before sending, you can use mail instead of of sendmail:
+
+    Mailer.mail("/user/2/close_account").deliver
+
+* A delegate plugin has been added, allowing you to easily create
+  methods in the route block scope that delegate to the request or
+  response.  While Roda does not pollute your namespaces by default,
+  this allows you to choose to do so yourself if you find it offers
+  a nicer API.  Example:
+
+    class App < Roda
+      plugin :delegate
+      request_delegate :root, :on, :is, :get, :post, :redirect
+
+      route do |r|
+        root do
+          redirect "/hello"
+        end
+
+        on "hello" do
+          get "world" do
+            "Hello world!"
+          end
+
+          is do
+            get do
+              "Hello!"
+            end
+
+            post do
+              puts "Someone said hello!"
+              redirect
+            end
+          end
+        end
+      end
+    end
+
+* A class_level_routing plugin has been added, allowing you to define
+  your routes at the class level if desired.  The routes defined at
+  the class level can still use a routing tree for further routing.
+  Example:
+
+    class App < Roda
+      plugin :class_level_routing
+
+      root do
+        request.redirect "/hello"
+      end
+
+      get "hello/world" do
+        "Hello world!"
+      end
+
+      is "hello" do
+        request.get do
+          "Hello!"
+        end
+
+        request.post do
+          puts "Someone said hello!"
+          request.redirect
+        end
+      end
+    end
+
+* A named_templates plugin has been added, for creating inline
+  templates associated with a given name, that are used by
+  the render plugin's render/view method in preference to
+  templates stored in the filesystem.  This makes it simpler to
+  ship single-file Roda applications that use templates. Example:
+
+    class App < Roda
+      plugin :named_templates
+
+      template :layout do
+        "<html><body><%= yield %></body></html>"
+      end
+      template :index do
+        "<p>Hello <%= @user %>!</p>"
+      end
+
+      route do |r|
+        @user = 'You'
+        render(:index)
+      end
+      # => "<html><body><p>Hello You!</p></body></html>"
+    end
+
+* A multi_run plugin has been added, for dispatching to multiple
+  rack applications based on the request path prefix.  This
+  provides a similar API as the multi_route plugin, but allows
+  you to separate your applications per routing subtree, as
+  opposed to multi_route which uses the same application for
+  all routing subtrees.
+
+  With the multi_run plugin, you call the class level run method
+  with the routing prefix and the rack application to use, and
+  you call r.multi_run to dispatch to all of the applications
+  based on the prefix.
+
+    class App < Roda
+      plugin :multi_run
+
+      run "foo", Foo
+      run "bar", Bar
+      run "baz", Baz
+
+      route do |r|
+        r.multi_run
+      end
+    end
+
+  In this case, Foo, Bar, and Baz, can be subclasses of App, which
+  allows them to share methods that should be shared, but still
+  define methods themselves that are not shared by the other
+  applications.
+
+* A sinatra_helpers plugin has been added, that ports over most
+  of the Sinatra::Helpers methods that haven't already been added
+  by other plugins.  All of the methods are added either to the
+  request or response class as appropriate.  By default, delegate
+  methods are also added to the route block scope, but you can
+  turn this off by passing a :delegate=>false option when loading
+  the plugin, which avoids polluting the route block namespace.
+
+  The sinatra_helpers plugin adds the following request methods:
+
+  * back
+  * error
+  * not_found
+  * uri
+  * send_file
+
+  And the following response methods:
+
+  * body
+  * body=
+  * status
+  * headers
+  * mime_type
+  * content_type
+  * attachment
+  * informational?
+  * success?
+  * redirect?
+  * client_error?
+  * not_found?
+  * server_error?
+
+* A slash_path_empty plugin has been added, which changes Roda
+  so that "/" is considered an empty path when doing a
+  terminal match via r.is or r.get/r.post with a path.
+
+    class App < Roda
+      plugin :slash_path_empty
+
+      route do |r|
+        r.get "albums" do
+          # matches both GET /albums and GET /albums/ 
+        end
+      end
+    end
+
+* An empty_root plugin has been added, which makes r.root match
+  the empty string, in addition to /.  This can be useful in
+  cases where a partial match on the patch has been completed.
+
+    class App < Roda
+      plugin :empty_root
+
+      route do |r|
+        r.on "albums" do
+          r.root do
+            # matches both GET /albums and GET /albums/ 
+          end
+        end
+      end
+    end
+
+* A match_affix plugin has been added, for overriding the default
+  prefix/suffix used in match patterns.  For example, if you want
+  to require that a leading / be specified in your routes. and
+  you want to consume any trailing slash:
+
+    class App < Roda
+      plugin :match_affix, "", /(\/|\z)/
+
+      route do |r|
+        r.on "/albums" do |s|
+          # GET /albums # s => ""
+          # GET /albums/ # s => "/"
+        end
+      end
+    end
+
+* An environments plugin has been added, giving some simple
+  helpers for executing code in different environments.  Example:
+
+    class App < Roda
+     plugin :environments
+
+     environment  # => :development
+     development? # => true
+     test?        # => false
+     production?  # => false
+
+     # Set the environment for the application
+     self.environment = :test
+     test?        # => true
+
+     configure do
+       # called, as no environments given
+     end
+
+     configure :development, :production do
+       # not called, as no environments match
+     end
+
+     configure :test do
+       # called, as environment given matches current environment
+     end
+    end
+
+* A drop_body plugin has been added, which automatically drops the
+  body, Content-Type header, and Content-Length header when the
+  response status indicates no body (100-102, 204, 205, 304).
+
+* A delay_build plugin has been added, which delays building the
+  rack application until Roda.app is called, and only rebuilds the
+  rack application if build! is called.  This removes O(n^2)
+  performance in the pathological case of adding a route block
+  and then calling Roda.use many times to add middlewares, though
+  you have to add a few hundred middlewares for the difference
+  to be noticeable.
+
+= New Features
+
+* r.remaining_path and r.matched_path have been added for returning
+  the remaining path that will be used for matching, and for
+  returning the path already matched.  Currently, these just provide
+  the PATH_INFO and SCRIPT_NAME, but starting in Roda 2 PATH_INFO
+  and SCRIPT_NAME will not be modified during routing, and you'll
+  need to use these methods if you want to find out the remaining
+  or already matched paths.
+
+* The render plugin now supports a :template option to render/view
+  to specify the template to use, instead of requiring a separate
+  argument.
+
+* The render plugin now supports a :template_class option, allowing
+  you to override the default template class that Roda would use.
+
+* The render plugin now supports a :template_block option, specifying
+  the block to pass when creating a template.
+
+* The path class method added by the path plugin now accepts :name,
+  :url, :url_only, and :add_script_name options:
+
+  :name :: Specifies name for method
+  :url :: Creates a url method in addition to a path method
+  :url_only :: Only creates a url method, not a path method
+  :add_script_name :: prefixes the path with SCRIPT_NAME
+
+  Note that if you plan to use :add_script_name, you should use
+  the static_path_info plugin so that the method created does not
+  return different results depending on where you are in the
+  routing tree.
+
+* A :user_agent hash matcher has been added to the header_matchers
+  plugin.
+
+* An inherit_middleware class accessor has been added.  This can
+  be set to false if you do not want subclasses to inherit
+  middleware from the superclass.  This is useful if the
+  superclass dispatches to the subclass via r.run, as otherwise
+  it would have to run the the same middleware stack twice.
+
+* A clear_middleware! class accessor has been added, allowing
+  you to clear the current middleware stack.
+
+* RodaRequest#default_redirect_status has been added, allowing
+  plugins to override the default status used for redirect if
+  a status is not given.
+
+* Roda{Request,Response}#roda_class has been added, which
+  returns the Roda class related to the given request/response.
+
+= Other Improvements
+
+* The render plugin no longer caches templates by default if
+  RACK_ENV is development.
+
+* When subclassing a Roda app, unfrozen Array/Hash entries in the
+  opts hash are now duped into the subclass, so the subclass
+  no longer needs to dup them manually.  Note that plugins that
+  use nested arrays/hashes in the opts hash still need to dup
+  manually inside ClassMethods#inherited.  For the plugins where
+  it is possible, it is recommended to store plugin options in a
+  frozen object in the opts hash, and require loading the plugin
+  again to modify the plugin options.
+
+* Caching of templates is now fixed when the render/view :opts is
+  used to specify template options per-call.
+
+* An explicit :default_encoding of nil in the render plugin's
+  :opts hash is no longer overwritten with
+  Encoding.default_external.
+
+* Roda#session now returns the same object as RodaRequest#session.
+
+* The view_subdirs, content_for, and render_each plugins now all
+  depend on the render plugin.
+
+* The not_allowed plugin now depends on the all_verbs plugin.
+
+* Local/instance variables are now used in more places instead of
+  method calls, improving performance.
+
+= Backwards Compatibility
+
+* The render plugin's render/view methods no longer pass the given
+  hash directly to the underlying template.  To pass options to the
+  template engine, use a separate hash under the :opts key:
+
+    render :file, :opts=>{:foo=>'bar'}
+
+  This is more consistent with the class-level render plugin options,
+  which also uses :opts to pass options to the template engine.
+
+  The :js_opts and :css_opts options to the assets plugin are now
+  passed as the :opts hash, so they continue to affect the template
+  engine, so they no longer specify general render method options.
+
+* Modifying render_opts :layout after loading the render plugin
+  now has no effect.  You need to use plugin :render, :layout=>'...'
+  to set the layout to use now.
+
+* Default headers are not set on a response until the response is
+  finished.  This allows you to check for header presence during
+  routing to detect whether the header was specifically set for the
+  current request.
+
+* RodaRequest.consume_pattern no longer captures anything by default.
+  Previously, it did so in order to update SCRIPT_NAME, but that is
+  now handled differently.  This should only affect external plugins
+  that attempt to override RodaRequest#consume.
+
+* RodaRequest.def_verb_method has been removed.
+
+* The hooks, default_headers, json, and multi_route plugins all store
+  their class-level metadata in the opts hash instead of separate
+  class instance variables.  This should have no affect unless you
+  were accessing the class instance variables directly.
+
+* The render plugin internals changed significantly, it now passes
+  internal data using a hash.  This should only affect users that
+  were overriding render plugin methods.

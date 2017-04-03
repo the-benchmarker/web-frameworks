@@ -9,6 +9,7 @@
  - Ruby
    - [Rails](https://github.com/rails/rails)
    - [Sinatra](https://github.com/sinatra/sinatra)
+   - [Roda](https://github.com/jeremyevans/roda)
  - Crystal
    - [Kemal](https://github.com/kemalcr/kemal)
    - [route.cr](https://github.com/tbrand/route.cr)
@@ -19,6 +20,7 @@
 ```bash
 bin/server_ruby_rails   # for Rails
 bin/server_ruby_sinatra # for Sinatra
+bin/server_ruby_roda    # for Roda
 bin/server_kemal        # for Kemal
 bin/server_route_cr     # for route.cr
 bin/server_go_echo      # for Echo

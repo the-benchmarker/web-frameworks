@@ -1,0 +1,329 @@
+= New Plugins
+
+* A csrf plugin has been added for CSRF prevention, using
+  Rack::Csrf.  It also adds helper methods for views such as
+  csrf_tag.
+
+* A symbol_matchers plugin has been added, for customizing
+  the regexps used per symbol.  This also affects the use
+  of embedded colons in strings.  This supports the following
+  symbol regexps by default:
+
+  :d :: (\d+), a decimal segment
+  :format :: (?:\.(\w+))?, an optional format/extension
+  :opt :: (?:\/([^\/]+))?, an optional segment
+  :optd :: (?:\/(\d+))?, an optional decimal segment
+  :rest :: (.*), all remaining characters, if any
+  :w :: (\w+), a alphanumeric segment
+
+  This allows you to write code such as:
+
+    plugin :symbol_matchers
+
+    route do |r|
+      r.is "track/:d" do
+      end
+    end
+
+  And have it only match routes such as /track/123, not
+  /track/abc.
+
+  Note that :opt, :optd, and :format are only going to make sense
+  when used as embedded colons in strings, due to how segment matching
+  works.
+
+  You can add your own symbol matchers using the symbol_matcher
+  class method:
+
+    plugin :symbol_matchers
+    symbol_matcher :slug, /([\w-]+)/
+
+    route do |r|
+      r.on :slug do
+      end
+    end
+
+* A symbol_views plugin has been added, which allows match blocks to
+  return symbols, which are interpreted as template names:
+
+    plugin :symbol_views
+
+    route do |r|
+      :template_name # same as view :template_name
+    end
+
+* A json plugin has been added, which allows match blocks to return
+  arrays or hashes, and uses a JSON version of them as the response
+  body:
+
+    plugin :json
+
+    route do |r|
+      {'a'=>[1,2,3]} # response: {"a":[1,2,3]}
+    end
+
+  This also sets the Content-Type of the response to application/json.
+
+  To convert additional object types to JSON, you can modify
+  json_response_classes:
+
+    plugin :json
+    json_response_classes << Sequel::Model
+
+* A view_subdirs plugin has been added for setting a default
+  subdirectory to use for views:
+
+    Roda.route do |r|
+      r.on "admin" do
+        set_view_subdir "admin"
+        
+        r.is do
+          view "index" # uses admin/index view
+        end
+      end
+    end
+
+* A render_each plugin has been added, for rendering the same
+  template for multiple objects, and returning the concatenation
+  of all of the output:
+
+    <%= render_each([1,2,3], 'number') %>
+
+  This renders the number template 3 times.  Each time the template
+  is rendered, a local variable named number will be present with
+  the current entry in the enumerable.  You can control the name of
+  the local variable using the :local option:
+
+    <%= render_each([1,2,3], 'number', :local=>:n) %>
+
+* A content_for plugin has been added, for storing content in one
+  template and retrieving that content in a different template (such
+  as the layout).  To set content, you call content_for with a block:
+
+    <% content_for :foo do %>
+      content for foo
+    <% end %>
+
+  To retrieve content, you call content_for without a block:
+
+    <%= content_for :foo %>
+
+  This plugin probably only works when using erb templates.
+
+* A not_allowed plugin has been added, for automatically returning 405
+  Method Not Allowed responses when a route is handled for a different
+  request method than the one used.  For this routing tree:
+
+    plugin :not_allowed
+
+    route do |r|
+      r.get "foo" do
+      end
+    end
+
+  If you submit a POST /foo request, it will return a 405 error
+  instead of a 404 error.
+
+  This also handles cases when multiple methods are supported for
+  a single path, so for this routing tree:
+
+    route do |r|
+      r.is "foo" do
+        r.get do
+        end
+        r.post do
+        end
+      end
+    end
+
+  If you submit a DELETE /foo request, it will return a 405 error
+  instead of a 404 error.
+
+* A head plugin has been added, automatically handling HEAD requests
+  the same as GET requests, except returning an empty body. So for
+  this routing tree:
+
+    plugin :head
+
+    route do |r|
+      r.get "foo" do
+      end
+    end
+
+  A request for HEAD /foo will return a 200 result instead of a 404
+  error.
+
+* A backtracking_array plugin has been added, which makes matching
+  backtrack to the next entry in an array if a later matcher fails.
+  For example, the following code does not match /foo/bar by
+  default in Roda:
+
+    r.is ['foo', 'foo/bar'] do
+    end
+
+  This is because the 'foo' entry in the array matches, so the
+  array matches.  However, after the array is matched, the terminal
+  matcher added by r.is fails to match.  That causes the routing
+  method not to match the request, so the match block is not called.
+
+  With the backtracking_array plugin, failures of later matchers after
+  an array matcher backtrack so the next entry in the array is tried.
+
+* A per_thread_caching plugin has been added, allowing you to change
+  from a thread-safe shared cache to a per-thread cache, which may
+  be faster on alternative ruby implementations, at the cost of
+  additional memory usage.
+
+= New Features
+
+* The hash_matcher class method has been added to make it easier to
+  define custom hash matchers:
+
+    hash_matcher(:foo) do |v|
+      self['foo'] == v
+    end
+    
+    route do |r|
+      r.on :foo=>'bar' do
+        # matches when param foo has value bar
+      end
+    end
+
+* An r.root routing method has been added for handling GET
+  requests where the current path is /.  This is basically
+  a faster and simpler version of r.get "", except it does
+  not consume the / from the path.
+
+* The r.halt method now works without an argument, in which
+  case it uses the current response.
+
+* The r.redirect method now works without an argument for non-GET
+  requests, redirecting to the current path.
+
+* An :all hash matcher has been added, which takes an array and
+  matches only if all of the elements match.  This is mainly
+  designed for usage inside an array matcher, so:
+
+    r.on ["foo", {:all=>["bar", :id]}] do
+    end
+
+  will match either /foo or /bar/123, but not /bar.
+
+* The render plugin's view method now accepts a :content option,
+  in which case it uses the content directly without running it
+  through the template engine.  This is useful if you have
+  arbitrary content you want rendered inside the layout.
+
+* The render plugin now accepts an :escape option, in which case
+  it will automatically set the default :engine_class for erb
+  templates to an Erubis::EscapedEruby subclass.  This changes the
+  behavior of erb templates such that:
+
+    <%= '<escaped>' %> # &lt;escaped&gt;
+    <%== '<not escaped>' %> # <not escaped>
+
+  This makes it easier to protect against XSS attacks in your
+  templates, as long as you only use <%== %> for content that has
+  already been escaped.
+
+  Note that similar behavior is available in Erubis by default,
+  using the :opts=>{:escape_html=>true} render option, but that
+  doesn't handle postfix conditionals in <%= %> tags.
+
+* The multi_route plugin now has an r.multi_route method, which
+  will attempt to dispatch to one of the named routes based on
+  first segment in the path.  So this routing tree:
+
+    plugin :multi_route
+
+    route "a" do |r|
+      r.is "c" do
+        "e"
+      end
+    end
+    route "b" do |r|
+      r.is "d" do
+        "f"
+      end
+    end
+
+    route do |r|
+      r.multi_route
+    end
+
+  will return "e" for /a/c and "f" for /b/d.
+
+* Plugins can now override request and response class methods
+  using RequestClassMethods and ResponseClassMethods modules.
+
+= Optimizations
+
+* String, hash, and symbol matchers are now much faster by caching
+  the underlying regexp.
+
+* String, hash, and symbol matchers are now faster by using a
+  regexp positive lookahead assertion instead of an additional
+  capture.
+
+* Terminal matching in the r.is, r.get, and r.post routing methods
+  is now faster, as it does not use a hash matcher internally.
+
+* The routing methods are now faster by reducing the number of
+  Array objects created.
+
+* Calling routing methods without arguments is now faster.
+
+* The r.get method is now faster by reducing the number of string
+  allocations.
+
+* Many request methods are faster by reducing the number of
+  method calls used.
+
+* Template caching no longer uses a mutex on MRI, since one is
+  not needed for thread safety there.
+
+= Other Improvements
+
+* The flash plugin now implements its own flash hash instead of
+  using sinatra-flash.  It is now slightly faster and handles nil
+  keys in #keep and #discard.
+
+* Roda's version is now stored in roda/version.rb so that it can be
+  required without requiring Roda itself.
+
+= Backwards Compatibility
+
+* The multi_route plugin's route instance method has been changed
+  to a request method.  So the new usage is:
+
+    plugin :multi_route
+
+    route "a" do |r|
+    end
+
+    route do |r|
+      r.route "a" # instead of: route "a"
+    end
+
+* The session key used for the flash hash in the flash plugin is
+  now :_flash, not :flash.
+
+* The :extension matcher now longer forces a terminal match, use
+  one of the routing methods that forces a terminal match if you
+  want that behavior.
+
+* The :term hash matcher has been removed.
+
+* The r.consume private method now takes the exact regexp to use
+  to search the current path, it no longer enforces a preceeding
+  slash and that the match end on a segment boundary.
+
+* Dynamically constructing match patterns is now a potential
+  memory leak due to them being cached.  So you shouldn't do
+  things like:
+
+    r.on r['param'] do
+    end
+
+* Many private routing methods were changed or removed, if you were
+  using them, you'll probably need to update your code.

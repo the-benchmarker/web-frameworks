@@ -1,0 +1,21 @@
+= New Features
+
+* :params and :params! matchers have been added to the param_matchers
+  plugin, allowing you to match multiple params at the same time:
+
+    r.on :params=>%w'foo bar' do |foo, bar| end
+    # instead of
+    r.on({:param=>'foo'}, :param=>'bar') do |foo, bar| end
+
+= Other Improvements
+
+* When loading the csrf plugin multiple times, instead of loading the
+  middleware multiple times with different settings, merge options
+  in later plugin calls into a single middleware option hash, and
+  only load the middleware once.
+
+  This allows plugins to depend on the csrf plugin, while also
+  allowing the application to use the csrf plugin with options.
+
+* request.halt now works correctly when used inside a before hook when
+  using the hooks plugin.

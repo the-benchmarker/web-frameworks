@@ -1,0 +1,30 @@
+= Improvements
+
+* The indifferent_params plugin is now optimized when using Rack 2,
+  using Rack 2's query_parser API, and it no longer needs to do a
+  deep copy of the params.
+
+* The Content-Type and Content-Length headers are no longer added
+  for 1xx, 204, 205, and 304 responses.
+
+* The assets_paths method in the assets plugin now works
+  correctly when subresource integrity is enabled.
+
+* The asset paths are now escaped in tags by the assets and
+  assets_preloading plugins.  While it's unlikely a developer
+  would use an asset path that requires escaping, that case is
+  now handled correctly.
+
+* The h plugin no longer calls Rack::Utils.escape_html, instead
+  implementing it's own html escaping.
+
+* The assets plugin now uses the h plugin, instead of calling
+  Rack::Utils.escape_html.
+
+= Backwards Compatibility
+
+* The h plugin's html escaping no longer escapes "/", which is
+  a behavior change if you are using any recent version of rack.
+  The security arguments made to escape "/" could be applied to
+  many other characters, so if you want to escape "/", you should
+  probably use a separate method that escapes all \W characters.

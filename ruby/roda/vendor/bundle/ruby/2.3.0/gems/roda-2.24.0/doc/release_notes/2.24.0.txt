@@ -1,0 +1,65 @@
+= New Features
+
+* The middleware plugin now accepts a block that can be used to
+  implement configurable middleware.  This allows you to load the
+  Roda application as middleware in another application, and provide
+  options/block that are passed to the block you passed when loading
+  the middleware plugin.  Example:
+
+    class Mid < Roda
+      plugin :middleware do |middleware, *args, &block|
+        middleware.opts[:middleware_args] = args
+        block.call(middleware)
+      end
+    end
+
+    class App < Roda
+      use Mid, :foo, :bar do |middleware|
+        middleware.opts[:middleware_args] << :baz
+      end
+    end
+
+  Note that when passing a block when loading the middleware plugin,
+  using the middleware in another rack application will actually
+  load a subclass of the middleware (Mid in the example above).
+  This allows you to use the Roda middleware multiple times in the
+  same process with different configurations.
+
+* The cookies plugin now accepts options that are used as the default
+  options when setting and deleting cookies:
+
+    plugin :cookies, :path => '/foo', :domain => 'example.com'
+
+* A strip_path_prefix plugin has been added, which can be used to
+  strip prefixes from internal paths.  Internally Sequel stores
+  most paths as absolute paths, but there are cases where this
+  doesn't work well, such as symlink changes and chroot.  This
+  plugin supports those scenarios.
+
+* A disallow_file_uploads plugin has been added, which raises
+  an exception if the user attempts a multipart file upload.
+  More exactly, it makes the application raise an exception if
+  attempting to parse a request body when the user has submitted
+  a multipart file upload.  This is useful if you don't need to
+  support file uploads in your application, or cases where no
+  paths are writable by the application (due to chroot or system call
+  filtering).
+
+* The :freeze_middleware option has been added, which freezes all
+  middleware instances when building the rack application.  This
+  can help find thread safety issues in middleware.
+
+= Other Improvements
+
+* The h plugin is now about 6x faster on ruby 2.3+ due to the use
+  of cgi/escape.
+
+* The static_routing plugin now works with the hooks plugin if the
+  hooks plugin is loaded first.
+
+* The render plugin's render cache is no longer cleared when loading
+  the plugin multiple times.
+
+= Backwards Compatibility
+
+* The h plugin now escapes ' as &#39; instead of &#x27;.

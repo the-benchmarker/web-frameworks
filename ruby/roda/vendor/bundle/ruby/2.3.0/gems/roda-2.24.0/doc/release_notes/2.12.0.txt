@@ -1,0 +1,40 @@
+= New Features
+
+* An optimized_string_matchers plugin has been added, which contains
+  optimized matchers for single strings.  r.on_branch is an optimized
+  version of r.on and r.is_exactly is optimized version of r.is:
+
+    plugin :optimized_string_matchers
+
+    route do |r|
+      r.on_branch "x" do
+        # matches /x and paths starting with /x/
+        r.is_exactly "y" do
+          # matches /x/y
+        end
+      end
+    end
+ 
+  Both of these methods will work even if the strings have placeholders,
+  but no captures will be yielded to the blocks.
+
+* The error_handler plugin now has access to the request's
+  remaining_path when handling an error.  You can then compare the
+  remaining_path to path_info to see how much of request was already
+  routed, which can be useful when reporting errors.
+
+= Other Improvements
+
+* String matching for strings without placeholders is now 60% faster
+  as it uses optimized string operations instead of a regexp match.
+
+* Symbol matching is now 60% faster as it uses optimized string
+  operations instead of a regexp match. 
+
+= Backwards Compatibility
+
+* The match methods no longer automatically reset the remaining_path
+  via ensure.  This means that using non-local jumps out of the code
+  such as begin/rescue and throw/catch will not reset remaining_path
+  automatically.  Users that want to reset remaining path in
+  such cases should use their own ensure blocks.

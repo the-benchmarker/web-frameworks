@@ -1,0 +1,48 @@
+= New Features
+
+* A type_routing plugin has been added.  This plugin allows routing
+  based on the requested type, which can be submitted either via a
+  file extension or Accept header:
+
+    plugin :type_routing
+
+    route do |r|
+      r.get 'a' do
+        r.html{ "<h1>This is the HTML response</h1>" }
+        r.json{ '{"json": "ok"}' }
+        r.xml{ "<root>This is the XML response</root>" }
+      end
+    end
+
+    # /a or /a.html => HTML response
+    # /a.json => JSON response
+    # /a.xml => XML response
+
+  The response content type is set appropriately when the r.html,
+  r.json, or r.xml block is yielded to.  Using plugin options, you can
+  add support for custom types, and choose whether to use only file
+  extensions or only Accept headers for type matching.
+
+* A request_headers plugin has been added. This allows easier access
+  to request headers.  For example, to access a header called
+  X-My-Header, by default you would need to use the CGI mangled name:
+    
+    r.env['HTTP_X_MY_HEADER']
+
+  The request_headers plugin allows the easier to use:
+
+    r.headers['X-My-Header']
+
+* An unescape_path plugin has been added.  By default, Roda does not
+  unescape a URL-encoded PATH_INFO before routing.  This plugin allows
+  URL-encoded PATH_INFO to work, supporting %2f as well as / as path
+  separators, and having captures return unescaped values:
+
+    plugin :unescape_path
+  
+    route do |r|
+      # Assume /b/a URL encoded at %2f%62%2f%61
+      r.on :x, /(.)/ do |*x|
+        # x => ['b', 'a']
+      end
+    end

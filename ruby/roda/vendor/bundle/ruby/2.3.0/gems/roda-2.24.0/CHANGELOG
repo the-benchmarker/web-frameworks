@@ -1,0 +1,517 @@
+= 2.24.0 (2017-03-15)
+
+* Have h plugin use cgi/escape if available for faster escaping (jeremyevans)
+
+* Add disallow_file_uploads plugin for raising an exception if a multipart file upload is attempted (jeremyevans)
+
+* Add strip_path_prefix plugin for stripping prefixes off of internal absolute paths, making them relative paths (jeremyevans)
+
+* Add Roda.expand_path method to DRY up path expansion (jeremyevans)
+
+* Support :freeze_middleware option, which freezes all middleware instances when building the rack app (jeremyevans)
+
+* Allow middleware plugin to accept a block that will be used to configure the application when used as middleware (jeremyevans)
+
+* Support an options hash when loading the cookies plugin, that will be used as the defaults for setting and deleting cookies (mwpastore, jeremyevans) (#112)
+
+* Make the static_routing plugin work with the hooks plugin if the hooks plugin is loaded first (jeremyevans) (#110)
+
+* Do not modify the render plugin's cache if loading the plugin multiple times (jeremyevans)
+
+= 2.23.0 (2017-02-24)
+
+* Add :inherit_cache render plugin option, to create a copy of the cache for subclasses, instead of using an empty cache (jeremyevans)
+
+* In development mode, default to :explicit_cache=>true, :cache=>true instead of :cache=>false (jeremyevans)
+
+* Add :explicit_cache render plugin option, to only cache templates if the :cache option is given to render/view (jeremyevans)
+
+* Add error_email_content method to error_email plugin (jeremyevans)
+
+* Make error_email method in error_email plugin support non-exception arguments (jeremyevans)
+
+* Make Roda.freeze in the static_routing plugin return self (jeremyevans)
+
+= 2.22.0 (2017-01-20)
+
+* Add support for :verbatim_string_matcher option, for making all string matchers match verbatim (jeremyevans)
+
+* Add support for :unsupported_matcher => :raise option, for raising on unsupported matcher values (jeremyevans)
+
+* Add support for :unsupported_block_result => :raise option, for raising on unsupported route/match block return values (jeremyevans)
+
+= 2.21.0 (2016-12-16)
+
+* Add handle_stream_error method to streaming plugin, for handling errors when using stream(:loop=>true) (jeremyevans)
+
+= 2.20.0 (2016-11-13)
+
+* Support :escape=>:erubi option in the render plugin to use the erubi template engine (jeremyevans)
+
+= 2.19.0 (2016-10-14)
+
+* Don't add Content-Type/Content-Length headers for 1xx, 204, 205, 304 statuses (celsworth, jeremyevans) (#101, #102)
+
+* Optimize indifferent_params plugin when using Rack 2 (jeremyevans)
+
+* Fix assets_paths method in assets plugin when subresource integrity is used (jeremyevans, celsworth)
+
+* Make assets plugin depend on h plugin, instead of using Rack::Utils.escape_html (jeremyevans)
+
+* Make h plugin not escape / (celsworth, jeremyevans) (#100)
+
+= 2.18.0 (2016-09-13)
+
+* Add assets_preloading plugin, for creating link tags or Link header for preloading assets (celsworth, jeremyevans) (#98)
+
+* Add assets_paths method to assets plugin, for just the paths to the assets, instead of the full tags (celsworth) (#96)
+
+* Make type_routing plugin work correctly with public plugin (celsworth, jeremyevans) (#95)
+
+* Add static_routing plugin for 3-4x increase in performance for large numbers of static routes (jeremyevans)
+
+* Make head plugin work with not_allowed plugin if loaded after (jeremyevans) (#92)
+
+= 2.17.0 (2016-08-13)
+
+* Add :postprocessor option to assets plugin, for postprocessing assets (e.g. autoprefixing CSS) (celsworth) (#86)
+
+* Fix path passed to rack apps when using r.run and the type_routing plugin (jeremyevans) (#82)
+
+* Support :classes option to error_handler plugin for overriding which exception classes to rescue (jeremyevans)
+
+* Support :layout_opts=>:merge_locals option in render plugin for merging view template locals into layout template locals (jeremyevans) (#80)
+
+* Support :sri option to assets plugin to enable subresource integrity (jeremyevans)
+
+* Add run_append_slash plugin, so r.run uses "/" instead of "" for app's PATH_INFO (kenaniah) (#77)
+
+= 2.16.0 (2016-07-13)
+
+* Add type_routing plugin, for routing based on path extensions and Accept headers (Papierkorb, jeremyevans) (#75)
+
+* Add unescape_path plugin, for decoding URL-encoded PATH_INFO before routing (jeremyevans) (#74)
+
+* Add request_headers plugin, for simpler access to request headers (celsworth) (#72)
+
+= 2.15.0 (2016-06-13)
+
+* Add public plugin for r.public method for serving all files in the public directory (jeremyevans)
+
+* Make send_file in sinatra_helpers plugin work with Rack 2 (jeremyevans)
+
+* Make :header matcher prefixes the env key with HTTP_ if application :header_matcher_prefix option is set (timothypage, jeremyevans) (#69)
+
+* Add content_for plugin :append option to support appending to the existing content (evanleck, jeremyevans) (#66)
+
+= 2.14.0 (2016-05-13)
+
+* Add symbol_status plugin for using symbols as status codes (Papierkorb) (#65)
+
+* Make middleware plugin also run the application's middleware (jeremyevans)
+
+= 2.13.0 (2016-04-14)
+
+* Add :check_paths and :allowed_paths to render plugin options to avoid security issues with template rendering (jeremyevans)
+
+= 2.12.0 (2016-03-15)
+
+* Allow error handler access to the request's remaining_path (jeremyevans)
+
+* Add optimized_string_matchers plugin, containing optimized matchers for single string arguments (jeremyevans)
+
+* Optimize string matching code for strings without placeholders for up to a 60% performance increase (jeremyevans)
+
+* Optimize symbol matching code for up to a 60% performance increase (jeremyevans)
+
+= 2.11.0 (2016-02-16)
+
+* Support :scope option in render plugin, for specifying object in which to evaluate the template (jeremyevans)
+
+* Make minjs compressor support in assets plugin support latest version of Minjs (jeremyevans)
+
+* Add params_capturing plugin, for storing matcher captures in the request params (jeremyevans)
+
+= 2.10.0 (2016-01-15)
+
+* Do not override existing Content-Type header in json plugin (jeremyevans)
+
+* Add :content_type option to json plugin to override Content-Type header used (Kyrremann) (#58)
+
+* Add support for running with --enable-frozen-string-literal on ruby 2.3 (jeremyevans)
+
+* Add Streaming::Stream#write method so that IO.copy_stream will work (janko-m) (#56)
+
+= 2.9.0 (2015-12-15)
+
+* Support passing the content as a string argument instead of a block in the content_for plugin (badosu) (#52)
+
+= 2.8.0 (2015-11-16)
+
+* Add multi_view plugin for easily setting up routing for rendering multiple views (jeremyevans)
+
+* Make content_for plugin work with haml and potentially other non-erb template engines (plukevdh) (#50)
+
+= 2.7.0 (2015-10-13)
+
+* Add run_handler plugin for modifying rack response arrays when using r.run, and continuing routing for 404 responses (jeremyevans)
+
+* Add response_request plugin allowing response object access to request object (jeremyevans)
+
+* Add default_status plugin for overriding the default response status (celsworth) (#47)
+
+* Make RodaCache synchronize access on MRI (jeremyevans)
+
+* Support opts[:host_matcher_captures] = true to make :host=>/regexp/ matcher yield captures in the header_matchers plugin (jeremyevans)
+
+* Allow Roda.rewrite_path to take a block in the path_rewriter plugin (Freaky) (#45)
+
+= 2.6.0 (2015-09-14)
+
+* Add :params and :params! matchers to param_matchers plugin (jeremyevans)
+
+* Merge options when loading csrf plugin multiple times (jeremyevans)
+
+* Allow request.halt to work in before hooks in the hooks plugin (celsworth) (#38)
+
+= 2.5.1 (2015-08-13)
+
+* Allow multi_route and middleware plugins to work together (janko-m) (#36)
+
+= 2.5.0 (2015-07-14)
+
+* Make :by_name option to path plugin default to true in development (jeremyevans)
+
+* Add :cache_class option to render plugin, for customized template cache behavior (celsworth) (#34)
+
+* Add :compiled_asset_host option to assets plugin, to use a host for compiled assets (jeremyevans)
+
+* Allow r.multi_run to take a block that is called with the prefix before dispatching to the rack app (mikz) (#32)
+
+= 2.4.0 (2015-06-15)
+
+* Add websockets plugin, for integration with faye-websocket (jeremyevans)
+
+* Add status_handler plugin, similar to not_found but for any status code (celsworth) (#29)
+
+* Support Closure Compiler, Uglifier, and MinJS for compressing javascript in the assets plugin (jeremyevans)
+
+* Make Roda.plugin always return nil (jeremyevans)
+
+* Add :gzip option to assets plugin (jeremyevans)
+
+= 2.3.0 (2015-05-13)
+
+* Make assets plugin work better with json plugin when r.assets is the last method called in a route block (jeremyevans) (#27)
+
+* Support no_mail! method in the mailer plugin, for skipping an email (jeremyevans)
+
+* Add precompile_templates plugin, for saving memory when using a forking webserver (jeremyevans)
+
+* Document how to allow per-branch HTML escaping of <%= %> in the view_options plugin (jeremyevans)
+
+* Add :include_request option to json and json_parser plugins to include request in :serializer/:parser call (janko-m) (#26)
+
+* Optimize template cache lookup in render plugin when :cache_key is given (jeremyevans)
+
+* Add :engine_opts option to render plugin, for specifying per-template engine options (jeremyevans)
+
+* The render plugin and render/view :ext option is now replaced by the :engine option (jeremyevans)
+
+* Add path_rewriter plugin, for rewriting paths before routing (jeremyevans)
+
+* Add :cache_key option to render/view to explicitly set the template cache key (jeremyevans)
+
+* Don't cache templates if :template_block is given to render/view, unless :cache=>true is used  (jeremyevans)
+
+* Add :cache option to render/view to force caching or not caching the template (jeremyevans)
+
+* Avoid rehashing hashes at runtime in plugins (jeremyevans)
+
+* Add heartbeat plugin for heartbeat support (jeremyevans)
+
+* Support :serializer option in json plugin (janko-m) (#21)
+
+* Add json_parser plugin, for parsing request bodies in JSON format (jeremyevans)
+
+= 2.2.0 (2015-04-13)
+
+* Add :escaper render plugin option to support custom escaping of <%= %> tags when :escape is used (jeremyevans)
+
+* Add :escape_safe_classes render plugin option, to not escape certain string subclasses when :escape is used (jeremyevans)
+
+* Split partials method from padrino_render plugin into partials plugin (kematzy) (#19)
+
+* Add shared_vars plugin, for sharing variables between multiple Roda apps (jeremyevans)
+
+* Add delay method to chunked plugin, for delaying a block execution until right before content template rendering (jeremyevans)
+
+* Have default Content-Type header when using the default_headers plugin (jeremyevans)
+
+* Add :by_name option to the path plugin, for registering classes by name, useful when reloading code (jeremyevans)
+
+* Add Roda.path_block to get the block related to the given class used for Road#path (jeremyevans)
+
+* Make Roda#path work correctly in subclasses (jeremyevans)
+
+= 2.1.0 (2015-03-13)
+
+* Have add_file in the mailer plugin support blocks, which are called after the file has been added (jeremyevans)
+
+* Add append_view_subdir to view_options, for appending to an existing view subdirectory (jeremyevans)
+
+* Rename view_subdirs plugin to view_options, add support for branch/route specific view/layout options/locals (jeremyevans)
+ 
+* Merge :locals set in the render plugin options into :locals provided in call to view/render (jeremyevans)
+
+* Add support for registering classes in the path plugin for use with Roda#path (jeremyevans)
+
+* Use :add_script_name app option as default for path method :add_script_name option in path plugin (jeremyevans)
+
+* Support :add_script_name app option in assets plugin, to prefix URLs with SCRIPT_NAME (jeremyevans)
+
+* Make r.multi_route in multi_route plugin work without any named routes defined (jeremyevans)
+
+* Add :static plugin, for more easily serving static files (jeremyevans)
+
+* Recognize Roda :root option in render and assets plugins (jeremyevans)
+
+* Make :layout=>false option in render plugin override previous layout template (jeremyevans)
+
+* Make add_file in the mailer plugin add the files after the email body instead of before (jeremyevans)
+
+= 2.0.0 (2015-02-13)
+
+* Allow Roda app to be used as a regular rack app even when using the middleware plugin (jeremyevans)
+
+* Make render plugin :layout option always be true or false (jeremyevans)
+
+* Make :layout=>true view option use the default layout (jeremyevans)
+
+* Make error_handler plugin rescue ScriptError in addition to StandardError (jeremyevans)
+
+* Make halt plugin integrate with symbol_views, json, and similar plugins (jeremyevans)
+
+* Add padrino_render plugin, adding render/partial methods that work similar to Padrino (jeremyevans)
+
+* Add Roda#render_template private method for template rendering, for use by plugins (jeremyevans)
+
+* Make Roda#initialize take env hash, #call take route_block, remove private #_route (jeremyevans)
+
+* Remove keep_remaining_path/update_remaining_path private request methods (jeremyevans)
+
+* Don't modify SCRIPT_NAME/PATH_INFO during routing, merging static_path_info plugin into core (jeremyevans)
+
+* Remove code deprecated in Roda 1.3.0 (jeremyevans)
+
+= 1.3.0 (2015-01-13)
+
+* Make static_path_info plugin restore original SCRIPT_NAME/PATH_INFO before returning from r.run (jeremyevans)
+
+* Add RodaMajorVersion, RodaMinorVersion, and RodaPatchVersion (jeremyevans)
+
+* Add delete_empty_headers plugin for deleting response headers that are empty before return response (jeremyevans)
+
+* Make freeze class method freeze internal data structures to avoid thread safety issues (jeremyevans)
+
+* Deprecate mutating plugin option hashes for chunked, default_headers, error_email, json, and render plugins (jeremyevans)
+
+* Fix subclassing app and using r.multi_run in subclass in multi_run plugin (jeremyevans)
+
+* Support :classes option in json plugin to set the classes to use (jeremyevans)
+
+* Improve performance in default_headers plugin by not duping the headers (jeremyevans)
+
+* Use :template_opts instead of :opts for providing options to the template in the render plugin (jeremyevans)
+
+* Support :match_header_yield Roda option in the header_matchers plugin, causing the :header match to yield the value (jeremyevans)
+
+* Move :param and :param! hash matchers to the param_matchers plugin (jeremyevans)
+
+* Add path_matchers plugin, for :extension, :prefix, and :suffix hash matchers (jeremyevans)
+
+* Move Roda.hash_matcher to hash_matcher plugin (jeremyevans)
+
+* Move Roda.request_module and .response_module to module_include plugin (jeremyevans)
+
+* Move RodaResponse#set_cookie and #delete_cookie to cookies plugin (jeremyevans)
+
+* Deprecate RodaRequest#full_path_info, use #path instead (jeremyevans)
+
+* Add class_delegate to the delegate plugin (jeremyevans)
+
+* Make not_found plugin clear headers for response if it is not found (jeremyevans)
+
+* Make error_handler plugin use a new response instead of reusing existing response (jeremyevans)
+
+* Make RodaResponse a subclass of Object instead of Rack::Response (jeremyevans)
+
+= 1.2.0 (2014-12-17)
+
+* Don't override explicit nil :default_encoding template option in the render plugin (jeremyevans)
+
+* Add remaining_path and matched_path request methods (jeremyevans)
+
+* Add slash_path_emty plugin, for considering a path of "/" as empty when doing a terminal match (jeremyevans)
+
+* Remove def_verb_method request class method (jeremyevans)
+
+* Support :add_script_name, :name, :url, and :url_only options when creating named paths in the path plugin (jeremyevans)
+
+* Add match_affix plugin, for overriding default prefix/suffix used in match patterns (jeremyevans)
+
+* Add empty_root plugin, for making root matcher also match empty string (jeremyevans)
+
+* Add roda_class instance methods to RodaRequest and RodaResponse, to DRY up plugin code (jeremyevans)
+
+* Add sinatra_helpers plugin, porting Sinatra::Helpers methods not covered by other plugins (jeremyevans)
+
+* Don't set the default headers until the response is finished (jeremyevans)
+
+* Add RodaRequest#default_redirect_status, so plugins can override the default status used for redirects (jeremyevans)
+
+* Add drop_body plugin, for automatically dropping body and Content-{Length,Type} headers based on response status (jeremyevans)
+
+* Add clear_middleware! class method, for clearing the current middleware (jeremyevans)
+
+* Add inherit_middleware class accessor, allowing users to turn off middleware inheritance (jeremyevans)
+
+* Add multi_run plugin, for dispatching to multiple rack applications based on the request path prefix (jeremyevans)
+
+* Add environments plugin, for handling development/test/production environments (jeremyevans)
+
+* Do not cache templates by default if RACK_ENV is development (jeremyevans)
+
+* Add delay_build plugin, to delay building the rack app until Roda.app is called (jeremyevans)
+
+* Add :user_agent hash matcher to the header_matchers plugin (jeremyevans)
+
+* Fix caching of templates in the render plugin when :opts or :template_class is used (jeremyevans)
+
+* Require loading the render plugin again if you want to change the default layout (jeremyevans)
+
+* Pass :css_opts and :js_opts as template options (via :opts) instead of render options when rendering (jeremyevans)
+
+* Only pass :opts hash to template class during rendering, instead of all render/view options (jeremyevans)
+
+* Support :template_class option in the render plugin for overriding template class to use (jeremyevans)
+
+* Automatically dup unfrozen Array/Hash opts values when subclassing (jeremyevans)
+
+* Add named_templates plugin, for creating inline templates by name, instead of storing them in the file system (jeremyevans)
+
+* Support :template option in for render/view to specify template to use, instead of requiring separate argument (jeremyevans)
+
+* Add class_level_routing plugin, for a DSL similar to Sinatra (jeremyevans)
+
+* Make RodaRequest.consume_pattern not capture pattern by default (jeremyevans)
+
+* Add static_path_info plugin, making Roda not modify PATH_INFO or SCRIPT_NAME during routing (jeremyevans)
+
+* Use local/instance variable lookups instead of method calls to improve performance (jeremyevans)
+
+* Add RodaRequest#session, and have #session delegate to that (jeremyevans)
+
+* Add delegate plugin, for easily creating methods that delegate to request or response (jeremyevans)
+
+* Add mailer plugin, allowing use of a routing tree for email instead of web responses (jeremyevans)
+
+= 1.1.0 (2014-11-11)
+
+* Add assets plugin, for rendering assets on the fly, or compiling them to a single compressed file (cj, jeremyevans) (#5)
+
+* Make InstanceMethods in plugins not include constants, as they would pollute the constant namespace (jeremyevans)
+
+* Make response.finish add the Content-Length header, not response.write (jeremyevans)
+
+* Add response.finish_with_body to override response body used (jeremyevans)
+
+* Use allocate instead of new in rack app (jeremyevans)
+
+* Add chunked plugin, for easy streaming of template responses using Transfer-Encoding: chunked (jeremyevans)
+
+* Add namespace support to the multi_route plugin, to support more complex applications (jeremyevans)
+
+* Make r.multi_route use named route return value if not passed a block (jeremyevans)
+
+* Make r.multi_route prefer longer route if multiple routes have the same prefix (jeremyevans)
+
+* Add caching plugin, for handling http caching (jeremyevans)
+
+* Support adding middleware after the route block has been added (jeremyevans)
+
+* Allow Roda subclasses to use route block from superclass (jeremyevans)
+
+* Have r.multi_route ignore non-String named routes (jeremyevans)
+
+* Pick up newly added named routes while running in the multi_route plugin, useful for development (jeremyevans)
+
+* Add path plugin, for named path support (jeremyevans) (#4)
+
+* Add error_email plugin, for easily emailing an error notification for an exception (jeremyevans)
+
+= 1.0.0 (2014-08-19)
+
+* Don't have :extension hash matcher force a terminal match (jeremyevans)
+
+* Add :content option to view method in render plugin to use given content instead of rendering a template (jeremyevans)
+
+* Add :escape option to render plugin for using erb templates where <%= %> escapes and <%== %> does not (jeremyevans)
+
+* Make multi_route plugin route("route_name") method a request method instead of an instance method (jeremyevans)
+
+* Add r.multi_route method to multi_route plugin, for dispatching to named route based on first segment in path (jeremyevans)
+
+* Allow non-GET requests to use r.redirect with no argument, redirecting to current path (jeremyevans)
+
+* Add head plugin, for handling HEAD requests like GET requests with an empty body (jeremyevans)
+
+* Optimize consuming patterns by using a positive lookahead assertion (jeremyevans)
+
+* Add not_allowed plugin, for automatically returning 405 Method Not Allowed responses (jeremyevans)
+
+* Optimize match blocks with no arguments (jeremyevans)
+
+* Add content_for plugin, for storing content in one template and retrieving it in another (jeremyevans)
+
+* Add render_each plugin, for rendering a template for each value in an enumerable (jeremyevans)
+
+* Add backtracking_array plugin, allowing array matchers to backtrack if later matchers do not match (jeremyevans)
+
+* Add :all hash matcher, allowing array matchers to include conditions where you want to match multiple conditions (jeremyevans)
+
+* Add json plugin, allowing match blocks to return arrays/hashes, returning JSON (jeremyevans)
+
+* Add view_subdirs plugin, for setting a subdirectory for views on a per-request basis (jeremyevans)
+
+* Allow default halt method to take no arguments, and use the current response (jeremyevans)
+
+* Add symbol_views plugin, allowing match blocks to return a template name symbol (jeremyevans)
+
+* Add per_thread_caching plugin, for using separate caches per thread instead of shared thread-safe caches (jeremyevans)
+
+* Add hash_matcher class method, for easily creating hash match methods (jeremyevans)
+
+* Add symbol_matchers plugin, for using symbol-specific matching regexps (jeremyevans)
+
+* Add csrf plugin for csrf protection using rack_csrf (jeremyevans)
+
+* Optimize r.is, r.get, r.post and similar methods by reducing the number of Array objects created (jeremyevans)
+
+* Support RequestClassMethods and ResponseClassMethods in plugins (jeremyevans)
+
+* Add Roda::RodaCache for a thread safe cache, currently used for match patterns, templates, and plugins (jeremyevans)
+
+* Optimize matching by caching consume regexp for strings, regexp, symbol, and :extension matchers (jeremyevans)
+
+* Add r.root for GET / requests, for easier to read version of r.get "" (jeremyevans)
+
+* Optimize r.is terminal matcher, remove :term hash matcher (jeremyevans)
+
+* Make flash plugin no longer depend on sinatra-flash (jeremyevans)
+
+* Move version file to roda/version so it can be required separately without loading dependencies (jeremyevans)
+
+= 0.9.0 (2014-07-30)
+
+* Initial public release

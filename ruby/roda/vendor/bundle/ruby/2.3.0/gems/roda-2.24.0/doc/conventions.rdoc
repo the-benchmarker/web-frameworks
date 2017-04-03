@@ -1,0 +1,165 @@
+= Conventions
+
+This guide goes over conventions for directory layout and file layout for Roda applications.
+You are free to ignore these conventions, they mostly exist to help users who are unsure how
+to structure their Roda applications.
+
+== Directory Layout
+
+Which directory layout to use should reflect the size of your application.
+
+=== Small Applications
+
+For a small application, the following directory layout is recommended:
+
+  Rakefile
+  app_name.rb
+  assets/
+  migrate/
+  models.rb
+  models/
+  public/
+  spec/
+  views/
+
++app_name.rb+ should contain the Roda application, and should reflect the name of your application.
+So, if your application is named +FooBar+, you should use +foo_bar.rb+.
+
++views/+ should contain your template files.  This assumes you are using the +render+ plugin
+and server-side rendering.  If you are creating a single page application and just serving
+JSON, then you won't need a +views+ directory.  For small applications, all view files should be
+in the +views+ directory.
+
++public/+ should contain any static files that should be served directly by the webserver.
+Again, for pure JSON applications, you won't need a +public+ directory.
+
++assets/+ should contain the source files for your CSS and javascript assets.  If you are
+not using the +assets+ plugin, you won't need an +assets+ directory.
+
++models.rb+ should contain all code related to your database/ORM.  This file should be required
+by +app_name.rb+.  This keeps your model code separate from your web code, making it easier
+to use outside of your web code. It allows you to get an IRB shell for accessing your models
+via <tt>irb -r ./models</tt>, without loading the Roda application.
+
++models/+ should contain your ORM models, with a separate file per model class.
+
++migrate/+ should create your database migration files, if you are using an ORM that uses
+migrations.
+
++spec/+ should contain your specifications/tests.  For a small application, it's recommended
+to a have a single file for your model tests, and a single file for your web/integration tests.
+
++Rakefile+ should contain the rake tasks for the application.  The convention is that the
+default rake task will run all specs/tests related to the application.  If you are using
+the +assets+ plugin, you should have an <tt>assets:precompile</tt> task for precompiling
+assets.
+
+=== Large Applications
+
+Large applications generally need more structure:
+
+  Rakefile
+  app_name.rb
+  assets/
+  helpers/
+  migrate/
+  models.rb
+  models/
+  public/
+  routes/
+   prefix1.rb
+   prefix2.rb
+  spec/
+   models/
+   web/
+  views/
+   prefix1/
+   prefix2/
+
+For larger apps, the +Rakefile+, +assets/+, +migrate+, +models.rb+, +models/+, +public/+, remain the same.
+
++app_name.rb+ should use the +multi_route+ and +view_subdirs+ plugin, or the +multi_run+ plugin.
+The routes used by the +multi_route+ or +multi_run+ should be stored in routing files in the +routes/+
+directory, with one file per prefix.
+
+For specs/tests, you should have +spec/models/+ and +spec/web/+, with one file per model in +spec/models/+
+and one file per prefix in +spec/web/+.
+
+You should have a separate view subdirectory per prefix. If you are using +multi_route+ and +view_subdirs+,
+use +set_view_subdir+ in your routing files to specify the subdirectory to use, so it doesn't need to be
+specified on every call to view.
+
++helpers/+ should be used to store helper methods for your application, that you call in your routing files
+and views.  In a small application, these methods should just be specified in +app_name.rb+
+
+=== Really Large Applications
+
+For very large applications, it's expected that there will be deviations from these conventions. However,
+it is recommended to use the +multi_route+ or +multi_run+ plugins to organize your application, and have
+subdirectories in the +routes/+ directory, and nested subdirectories in the +views/+ directory.
+
+== Roda Application File Layout
+
+=== Small Applications
+
+For a small application, the convention in Roda is to layout your Roda application file (+app_name.rb+) like this:
+
+  require 'roda'
+  require './models'
+
+  class AppName < Roda
+    SOME_CONSTANT = 1
+
+    use SomeMiddleware
+
+    plugin :render
+    plugin :assets
+
+    route do |r|
+      # ...
+    end
+
+    def view_method
+      'foo'
+    end
+  end
+
+You should first require +roda+ and +./models+, followed by any other libraries needed by the
+application.
+
+You should subclass Roda and make the application's name the name of the Roda subclass.
+Inside the subclass, you first define the constants used by the application.  Then you add
+any middleware used by the application, followed by loading any plugins used by the application.
+Then you add the route block for the application.  After the route block, define the instance methods
+used in your route block or views.
+
+=== Large Applications
+
+For larger applications, there are some slight changes to the Roda application file layout:
+
+  require 'roda'
+  require './models'
+
+  class AppName < Roda
+    SOME_CONSTANT = 1
+
+    use SomeMiddleware
+
+    plugin :render
+    plugin :assets
+    plugin :view_subdirs
+    plugin :multi_route
+    Dir['./routes/*.rb'].each{|f| require f}
+
+    route do |r|
+      r.multi_route
+    end
+
+    Dir['./helpers/*.rb'].each{|f| require f}
+  end
+
+After loading the +view_subdirs+ and +multi_route+ plugin, you require all of your
+routing files.  Inside your route block, instead of defining your routes, you just call
++r.multi_route+, which will dispatch to all of your routing files.  After your route
+block, you require all of your helper files containing the instance methods for your
+route block or views, instead of defining the methods directly.

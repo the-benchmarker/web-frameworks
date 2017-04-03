@@ -1,0 +1,226 @@
+= New Plugins
+
+* An assets plugin has been added, for rendering your CSS and
+  javascript asset files on the fly in development, and compiling
+  them to a single, compressed file in production.
+
+  When loading the plugin, you just specify the assets to use via :css
+  and/or :js options:
+
+    plugin :assets, :css=>'some_file.scss', :js=>'some_file.coffee'
+
+  Inside your Roda.route block, you call r.assets to serve the assets:
+
+    route do |r|
+      r.assets
+    end
+
+  In your views, you can call the assets method, which returns strings
+  containing link/script tags for your assets:
+
+    <%= assets(:css) %>
+    <%= assets(:js) %>
+
+  In production mode, you call compile_assets after loading the
+  plugin, and it will compile all of the asset files into a single
+  file per type, optionally compress it (using yuicompressor), and
+  write the file to the public folder where it can be served by the
+  webserver.  In compiled mode, calling assets in your views will
+  reference the compiled file.
+
+  It's possible to precompile your assets before application boot, so
+  they don't need to be compiled every time your application boots.
+
+  The assets plugin also supports asset groups, useful when different
+  sections of your application use different sets of assets.
+
+* A chunked plugin has been added, for streaming template rendering
+  using Transfer-Encoding: chunked.  By default, this flushes the
+  rendering of the top part of the layout template before rendering
+  the content template, allowing the client to load the assets
+  necessary to fully render the page while the content template is
+  still being rendered on the server.  This can significantly decrease
+  client rendering times.
+
+  To use chunked encoding for a response, just call the chunked method
+  instead of view:
+
+    r.root do
+      chunked(:index)
+    end
+
+  If you want to execute code after flushing the top part of the layout
+  template, but before rendering the content template, pass a block to
+  chunked:
+
+    r.root do
+      chunked(:index) do
+        # expensive calculation here
+      end
+    end
+
+  If you want to use chunked encoding for all responses, pass the
+  :chunk_by_default option when loading the plugin:
+
+    plugin :chunked, :chunk_by_default => true
+
+  Inside your layout or content templates, you can call the flush method
+  to flush the current result of the template to the user, useful for
+  streaming large datasets.
+
+    <% (1..100).each do |i| %>
+      <%= i %>
+      <% sleep 0.1 %>
+      <% flush %>
+    <% end %>
+
+* A caching plugin has been added, for simple HTTP caching support.
+  The implementation is based on Sinatra's, and offers
+  r.last_modifed and r.etag methods for conditional responses:
+
+    r.get '/albums/:d' do |album_id|
+      @album = Album[album_id]
+      r.last_modified @album.updated_at
+      r.etag @album.sha1
+      view('album')
+    end
+
+  This also adds response.cache_control and response.expires methods
+  for setting the Cache-Control/Expires headers for the response.
+
+* A path plugin has been added for simple support for named paths:
+
+    plugin :path
+    path :foo, '/foo'   # foo_path => '/foo'
+    path :bar do |bar|  # bar_path(bar) => '/bar/1'
+      "/bar/#{bar.id}"
+    end
+  
+* An error_email plugin has been added, for easily emailing error
+  notifications for an exception.  This is designed for use with
+  the error_handler plugin, and should only be used in low-traffic
+  environments:
+
+    plugin :error_email, :to=>'to@example.com',
+                         :from=>'from@example.com'
+    plugin :error_handler do |e|
+      error_email(e)
+      'Internal Server Error'
+    end
+
+= multi_route Plugin Improvements
+
+* The multi_route plugin now supports namespaces, allowing it to
+  support routing trees of arbitrary complexity.  Previously, only
+  a single namespace was supported. For example, if you want
+  to store your named routes in a directory tree:
+
+    /routes/foo.rb
+    /routes/foo/baz.rb
+    /routes/foo/quux.rb
+    /routes/bar.rb
+    /routes/bar/baz.rb
+    /routes/bar/quux.rb
+
+  You can load all of the routing files in the routes subdirectory
+  tree, and structure your routing tree as follows:
+
+    # app.rb
+    route do |r|
+      r.multi_route
+    end
+
+    # routes/foo.rb
+    route('foo') do |r|
+      check_foo_access!
+      r.multi_route('foo')
+    end
+
+    # routes/bar.rb
+    route('bar') do |r|
+      check_bar_access!
+      r.multi_route('bar')
+    end
+
+    # routes/foo/baz.rb
+    route('baz', 'foo') do
+      # ...
+    end
+
+* Newly added named routes are now picked up while running, useful in
+  development when using code reloading.
+
+* r.multi_route now ignores non-String named routes, allowing you to
+  only dispatch to the String named routes.  Previously, calling
+  r.multi_route when any non-String names routes were present resulted
+  in an error.
+
+* r.multi_route now prefers longer routes to shorter routes if
+  routes have the same prefix.  This can fix behavior if you have
+  named routes such as "foo" and "foo/bar".
+
+* If you don't pass a block to r.multi_route, it will use the
+  return value of the named route as the block value to return,
+  instead of always returning nil.
+
+= Optimizations
+
+* Dispatch speed is slightly improved by using allocate instead of
+  new to create new instances.
+
+* Hash allocations in the render plugin have been reduced.
+
+= Other Improvements
+
+* The Roda.route block is now inherited when subclassing, making
+  it possible to subclass a Roda application and have the subclass
+  work without adding a route block.
+
+* Middleware added to a Roda app after the Roda.route method is
+  called are now used instead of being ignored.
+
+* A response.finish_with_body method has been added, for overriding
+  the response body to use.  This is useful if you want to support
+  arbitrary response bodies.
+
+* The render plugin now defaults the locals argument to an empty
+  frozen hash instead of nil when rendering templates via tilt.
+  This is faster as it avoids a hash allocation inside tilt, and
+  also works with broken external tilt templates that require that
+  the locals argument be a hash.
+
+* Plugins that ship with Roda no longer set constants inside
+  InstanceMethods.  Instead, the constants are set at the plugin
+  module level.  This is done to avoid polluting the namespace of
+  the application with the constants.  Roda's policy is that all
+  internal constants inside the Roda namespace are prefixed with
+  Roda, so they don't pollute the user's namespace, and setting
+  these constants inside InstanceMethods in plugins violated that
+  policy.
+
+= Backwards Compatibility
+
+* response.write no longer sets a Content-Length header.  Instead,
+  response.finish sets it.  This is faster if you call
+  response.write multiple times, and more correct if you call
+  response.finish without calling response.write.
+
+* In the render plugin, modifying render_opts directly is now
+  deprecated and will raise an error in the next major release (the
+  hash will be frozen).  Instead, users should call plugin :render
+  again with a new hash, which will be merged into the existing
+  render_opts hash.
+
+* Moving plugin's constants from InstanceMethods to the plugin level
+  can break applications where the constant was referenced directly.
+  For example, if you were doing:
+
+    Roda::SESSION_KEY
+
+  to get the constant for the session key, you would now need to use:
+
+    Roda::RodaPlugins::Base::SESSION_KEY
+
+  In general, it is recommended to not reference such constants at
+  all.  If you think there should be a general reason to access them,
+  request that a method is added that returns them.

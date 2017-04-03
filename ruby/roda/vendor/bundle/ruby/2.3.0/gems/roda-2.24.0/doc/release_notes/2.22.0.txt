@@ -1,0 +1,41 @@
+= New Features
+
+* An :unsupported_block_result => :raise option is now supported
+  for Roda applications.  This will raise a RodaError if an
+  unsupported value is returned from a match block or the
+  route block.  This can make it easier to discover potential
+  problems in the routing tree.  This option may become the
+  default behavior in Roda 3.
+
+* An :unsupported_matcher => :raise option is now supported for
+  Roda applications.  This will raise a RodaError if you use an
+  unsupported value as a matcher.  This can make it easier to
+  discover potential problems in the routing tree. This option
+  may become the default behavior in Roda 3.
+
+* A :verbatim_string_matcher option is now supported for Roda
+  applications.  This will make all string matchers only match
+  the path verbatim, disallowing the use of a colon for
+  placeholders in the string.  It's recommended that users
+  switch to using separate symbol arguments for placeholders.
+
+  If you enable this option, you need to change code such as:
+
+    r.is "foo/:bar" do |bar|
+    end
+
+  to:
+
+    r.is "foo", :bar do |bar|
+    end
+
+  If you are looking to convert an existing routing tree
+  from using placeholders in strings to separate symbol
+  arguments, you can scan your routing tree for potential
+  usage of placeholders in strings:
+
+    grep ' r\..*['\''"].*:.*['\''"]' app.rb
+
+  This option may become the default behavior in Roda 3, with
+  a plugin added to support the current default behavior of
+  allowing placeholders in string matchers.

@@ -1,0 +1,10 @@
+= New Features
+
+* The render plugin now supports :check_paths and :allowed_paths
+  options.  Setting :check_paths to true will turn on path checking of
+  template files.  By default, template files are required to be in
+  the :views directory, otherwise an exception will be raised.  Using
+  the :check_paths option can prevent security issues when template
+  names are derived from user input.  The :allowed_paths option
+  overrides which path prefixes are allowed. In Roda 3, :check_paths
+  will default to true.

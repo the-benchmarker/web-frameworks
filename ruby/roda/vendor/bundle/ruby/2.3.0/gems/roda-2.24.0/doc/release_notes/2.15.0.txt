@@ -1,0 +1,53 @@
+= New Features
+
+* A public plugin has been added.  This adds an r.public method
+  for serving all files in the public directory.  The public
+  plugin can replace usage of the static plugin, and is more
+  flexible.  You can place r.public at any point in the routing
+  tree, and it will use the remaining path to lookup the file
+  in the public directory.  You can also pass the :gzip option
+  when loading the plugin, and it will serve already gzipped
+  files to the client if the client supports gzipped transfer
+  encoding and the file exists with a .gz extension.  Example:
+
+    plugin :public
+    route do |r|
+      # Serve public files before routing
+      r.public
+
+      # ...
+    end
+
+* The :header matcher added by the header_matchers plugin now
+  automatically prefixes the key with HTTP_ when looking it up in
+  the environment, if the :header_matcher_prefix application
+  option is set.  This behavior will probably be the default in
+  Roda 3.
+
+    # Before
+    r.on :header => 'http_accept'
+
+    # Now, with :header_matcher_prefix=>true application option
+    r.on :header => 'accept'
+
+* The content_for plugin now accepts an :append=>true option to
+  support appending to the existing content instead of overwriting
+  the existing content if called multiple times.  This behavior
+  will probably be the default in Roda 3.
+
+    # Before
+    content_for(:form, 'a')
+    content_for(:form, 'b')
+    content_for(:form) # => 'b'
+
+    # Now, with :append=>true option
+    content_for(:form, 'a')
+    content_for(:form, 'b')
+    content_for(:form) # => 'ab'
+
+= Other Improvements
+
+* The r.send_file method in the sinatra_helpers plugin now works
+  correctly when using rack 2.
+
+* The specs now run correctly on Windows.
