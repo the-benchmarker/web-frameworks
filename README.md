@@ -18,12 +18,12 @@
 
 ### How to run server
 ```bash
-bin/server_ruby_rails   # for Rails
-bin/server_ruby_sinatra # for Sinatra
-bin/server_ruby_roda    # for Roda
-bin/server_kemal        # for Kemal
-bin/server_route_cr     # for route.cr
-bin/server_go_echo      # for Echo
+bin/server_ruby_rails       # for Rails
+bin/server_ruby_sinatra     # for Sinatra
+bin/server_ruby_roda        # for Roda
+bin/server_crystal_kemal    # for Kemal
+bin/server_crystal_route_cr # for route.cr
+bin/server_go_echo          # for Echo
 ```
 
 ### How to run client
