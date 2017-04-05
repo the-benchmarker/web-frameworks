@@ -38,12 +38,17 @@ route_cr: crystal/src/server_route_cr.cr
 # --- Go ---
 #
 # Echo Gin
-go: echo
+go: echo gorilla-mux
 
 echo:
-	cd go/echo; glide install
+	go get -u github.com/labstack/echo
 	cd go/echo; go build -o server_go_echo main.go
 	ln -s -f ../go/echo/server_go_echo bin/.
+
+gorilla-mux:
+	go get -u github.com/gorilla/mux
+	cd go/gorilla-mux; go build -o server_go_gorilla_mux main.go
+	ln -s -f ../go/gorilla-mux/server_go_gorilla_mux bin/.
 
 #
 # Client -> bin/client
