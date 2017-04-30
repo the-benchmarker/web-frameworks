@@ -2,9 +2,9 @@
 
 ## Result
 
-<img src="https://cloud.githubusercontent.com/assets/3483230/24611869/78ce3c9e-18be-11e7-811e-139a4554bcce.png" width="800"/>
+<img src="https://cloud.githubusercontent.com/assets/3483230/25562560/c5a60a64-2dc3-11e7-96da-a0fe3f64923a.png" width="800"/>
 
-**Current target frameworks**
+**Current target frameworks(middlewares)**
  - Ruby
    - [Rails](https://github.com/rails/rails)
    - [Sinatra](https://github.com/sinatra/sinatra)
@@ -17,11 +17,12 @@
    - [gorilla-mux](https://github.com/gorilla/mux)
  - Rust
    - [IRON](https://github.com/iron/iron)
+   - [nickel.rs](https://github.com/nickel-org/nickel.rs)
 
-## Regulation and Rule
+## The rule
 I want to know the response time, not a usability. So full-stack framework is at a disadvantage.
  - Each server has no special logics.
- - Each server's executable is named as `server_[Lauguage]_[Framework]`.
+ - Each server's executable is named as `server_[Lauguage]_[Framework]`. (For example, `server_ruby_sinatra`)
  - There are only 3 routes
    - GET  '/'         return status code 200 with empty body
    - GET  '/user/:id' return status code 200 with the id
@@ -74,7 +75,7 @@ So 48000 requests are sent in total.
 
 ## Development
  - **Give me PR when you want to add other web frameworks**
- - **Give me PR when you can tuning each framework (under the regulation)**
+ - **Give me PR when you can tuning each framework (under the rule)**
 
 ## Contributing
 
