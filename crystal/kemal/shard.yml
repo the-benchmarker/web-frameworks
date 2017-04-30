@@ -1,0 +1,17 @@
+name: kemal
+version: 0.1.0
+
+authors:
+  - tbrand <taichiro0709@gmail.com>
+
+targets:
+  server_crystal_kemal:
+    main: src/server.cr
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+
+crystal: 0.22.0
+
+license: MIT

@@ -14,30 +14,14 @@
    - [route.cr](https://github.com/tbrand/route.cr)
  - Go
    - [Echo](https://github.com/labstack/echo)
-
-### How to run server
-```bash
-bin/server_ruby_rails       # for Rails
-bin/server_ruby_sinatra     # for Sinatra
-bin/server_ruby_roda        # for Roda
-bin/server_crystal_kemal    # for Kemal
-bin/server_crystal_route_cr # for route.cr
-bin/server_go_echo          # for Echo
-```
-
-### How to run client
-```bash
-time bin/client -t 16 -r 1000 # 48000  requests in total
-time bin/client -t 16 -r 2000 # 96000  requests in total
-time bin/client -t 16 -r 3000 # 144000 requests in total
-time bin/client -t 16 -r 4000 # 192000 requests in total
-time bin/client -t 16 -r 5000 # 240000 requests in total
-```
+   - [gorilla-mux](https://github.com/gorilla/mux)
+ - Rust
+   - [IRON](https://github.com/iron/iron)
 
 ## Regulation and Rule
 I want to know the response time, not a usability. So full-stack framework is at a disadvantage.
- - Each server has no logics
- - Each server executable is `server_[Lauguage]_[Framework]`
+ - Each server has no special logics.
+ - Each server's executable is named as `server_[Lauguage]_[Framework]`.
  - There are only 3 routes
    - GET  '/'         return status code 200 with empty body
    - GET  '/user/:id' return status code 200 with the id
@@ -45,12 +29,13 @@ I want to know the response time, not a usability. So full-stack framework is at
 
 ## Installation
 
-You need
+Required environment
  - Ruby (bundler)
- - crystal
- - Go (glide)
+ - Go
+ - Crystal
+ - Rust
 
-To compile servers,
+To compile servers and benchmarker,
 ```
 > make
 ```
@@ -65,19 +50,24 @@ For each framework,
 
 ## Usage
 
-To run server
+You can take a benchmark by
 ```bash
-bin/server_[Language]_[Framework]
+> bin/benchmarker
 ```
 
-To run client
+If you take it manually, you can run each server by
 ```bash
-time bin/client
+> bin/server_[Language]_[Framework]
 ```
 
-You can set # of threads and # of request loops(each loop requests 3 times) by
+and run client by
 ```bash
-time bin/client -t 16 -r 1000
+> time bin/client
+```
+
+You can set # of threads and # of request loops(there are 3 requests in a loop) by
+```bash
+> time bin/client -t 16 -r 1000
 ```
 In the above example, 16 threads requests 1000 * 3 times.
 So 48000 requests are sent in total.

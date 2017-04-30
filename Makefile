@@ -1,61 +1,79 @@
-all: ruby crystal go client
+all: ruby crystal go rust client benchmarker
 
 # --- Ruby ---
-# 
-# Rails
 ruby: rails sinatra roda
 
+# Rails
 rails:
+	cd ruby/rails; bundle update
 	cd ruby/rails; bundle install --path vendor/bundle
 	ln -s -f ../ruby/rails/bin/server_ruby_rails bin/.
 
+# Sinatra
 sinatra:
+	cd ruby/sinatra; bundle update
 	cd ruby/sinatra; bundle install --path vendor/bundle
 	ln -s -f ../ruby/sinatra/server_ruby_sinatra bin/.
 
+# Roda
 roda:
+	cd ruby/roda; bundle update
 	cd ruby/roda; bundle install --path vendor/bundle
 	ln -s -f ../ruby/roda/server_ruby_roda bin/.
 
 # --- Crystal ---
-# 
-# Kemal route.cr
-crystal: crystal-deps kemal route_cr
-
-crystal-deps:
-	cd crystal; shards update
+crystal: kemal route_cr
 
 # Kemal
-kemal: crystal/src/server_kemal.cr
-	cd crystal; crystal build src/server_kemal.cr -o bin/server_crystal_kemal --release
-	ln -s -f ../crystal/bin/server_crystal_kemal bin/.
+kemal: crystal/kemal/src/server.cr
+	cd crystal/kemal; shards build
+	ln -s -f ../crystal/kemal/bin/server_crystal_kemal bin/.
 
 # route.cr
-route_cr: crystal/src/server_route_cr.cr
-	cd crystal; crystal build src/server_route_cr.cr -o bin/server_crystal_route_cr --release
-	ln -s -f ../crystal/bin/server_crystal_route_cr bin/.
+route_cr: crystal/route.cr/src/server.cr
+	cd crystal/route.cr; shards build
+	ln -s -f ../crystal/route.cr/bin/server_crystal_route_cr bin/.
 
 # --- Go ---
-#
-# Echo Gin
 go: echo gorilla-mux
 
+# Echo
 echo:
 	go get -u github.com/labstack/echo
 	cd go/echo; go build -o server_go_echo main.go
 	ln -s -f ../go/echo/server_go_echo bin/.
 
+# gorilla/mux
 gorilla-mux:
 	go get -u github.com/gorilla/mux
 	cd go/gorilla-mux; go build -o server_go_gorilla_mux main.go
 	ln -s -f ../go/gorilla-mux/server_go_gorilla_mux bin/.
 
-#
-# Client -> bin/client
-#
-client: crystal/src/client.cr
-	cd crystal; crystal build src/client.cr -o bin/client --release
-	ln -s -f ../crystal/bin/client bin/.
+# --- Rust ---
+rust: iron nickel
+
+# IRON
+iron:
+	cd rust/iron; cargo update
+	cd rust/iron; cargo build --release
+	ln -s -f ../rust/iron/target/release/server_rust_iron bin/.
+
+# nickel.rs
+nickel:
+	cd rust/nickel; cargo update
+	cd rust/nickel; cargo build --release
+	ln -s -f ../rust/nickel/target/release/server_rust_nickel bin/.
+
+# --- Benchmarker ---
+# client
+client: benchmarker/src/client.cr
+	cd benchmarker; crystal build src/client.cr -o bin/client --release
+	ln -s -f ../benchmarker/bin/client bin/.
+
+# benchmarker
+benchmarker: benchmarker/src/benchmarker.cr
+	cd benchmarker; crystal build src/benchmarker.cr -o bin/benchmarker --release
+	ln -s -f ../benchmarker/bin/benchmarker bin/.
 
 # Cleaning all executables
 clean:

@@ -1,0 +1,1 @@
+/Users/taicsuzu/Documents/workspace/hobby/crystal/which_is_the_fastest/rust/nickel/target/release/server_rust_nickel: /Users/taicsuzu/Documents/workspace/hobby/crystal/which_is_the_fastest/rust/nickel/src/main.rs

@@ -1,0 +1,7 @@
+[package]
+name = "server_rust_nickel"
+version = "0.1.0"
+authors = ["taicsuzu <taicsuzu@yahoo-corp.jp>"]
+
+[dependencies]
+nickel = "*"
