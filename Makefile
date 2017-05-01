@@ -26,12 +26,12 @@ crystal: kemal route_cr
 
 # Kemal
 kemal: crystal/kemal/src/server.cr
-	cd crystal/kemal; shards build
+	cd crystal/kemal; shards build --release
 	ln -s -f ../crystal/kemal/bin/server_crystal_kemal bin/.
 
 # route.cr
 route_cr: crystal/route.cr/src/server.cr
-	cd crystal/route.cr; shards build
+	cd crystal/route.cr; shards build --release
 	ln -s -f ../crystal/route.cr/bin/server_crystal_route_cr bin/.
 
 # --- Go ---
