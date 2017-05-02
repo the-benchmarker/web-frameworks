@@ -50,7 +50,7 @@ gorilla-mux:
 	ln -s -f ../go/gorilla-mux/server_go_gorilla_mux bin/.
 
 # --- Rust ---
-rust: iron nickel
+rust: iron nickel hyper
 
 # IRON
 iron:
@@ -63,6 +63,11 @@ nickel:
 	cd rust/nickel; cargo update
 	cd rust/nickel; cargo build --release
 	ln -s -f ../rust/nickel/target/release/server_rust_nickel bin/.
+
+hyper:
+	cd rust/hyper; cargo update
+	cd rust/hyper; cargo build --release
+	ln -s -f ../rust/hyper/target/release/server_rust_hyper bin/.
 
 # --- Benchmarker ---
 # client
