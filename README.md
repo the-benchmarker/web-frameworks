@@ -11,7 +11,7 @@
    - [Roda](https://github.com/jeremyevans/roda)
  - Crystal
    - [Kemal](https://github.com/kemalcr/kemal)
-   - [route.cr](https://github.com/tbrand/route.cr)
+   - [router.cr](https://github.com/tbrand/router.cr)
  - Go
    - [Echo](https://github.com/labstack/echo)
    - [gorilla-mux](https://github.com/gorilla/mux)

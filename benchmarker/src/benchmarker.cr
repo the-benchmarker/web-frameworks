@@ -8,27 +8,27 @@ CLIENT = File.expand_path(PATH_PREFIX + "client", __FILE__)
 
 # Each framework
 LANGS = [
-  #{lang: "Ruby", targets: [
-  #   {name: "Rails", exec: "server_ruby_rails"},
-  #   {name: "Sinatra", exec: "server_ruby_sinatra"},
-  #   {name: "Roda", exec: "server_ruby_roda"},
-  # ]},
+  {lang: "Ruby", targets: [
+     {name: "Rails", exec: "server_ruby_rails"},
+     {name: "Sinatra", exec: "server_ruby_sinatra"},
+     {name: "Roda", exec: "server_ruby_roda"},
+   ]},
   {lang: "Crystal", targets: [
      {name: "Kemal", exec: "server_crystal_kemal"},
      {name: "router.cr", exec: "server_crystal_router_cr"},
    ]},
-  #{lang: "Go", targets: [
-  #   {name: "Echo", exec: "server_go_echo"},
-  #   {name: "gorilla/mux", exec: "server_go_gorilla_mux"},
-  #   {name: "iris", exec: "server_go_iris"},
-  # ]},
-  #{lang: "Rust", targets: [
-  #   {name: "IRON", exec: "server_rust_iron"},
-  #   {name: "nickel.rs", exec: "server_rust_nickel"},
-  # ]},
-  #{lang: "node", targets: [
-  #   {name: "express", exec: "server_node_express"},
-  # ]},
+  {lang: "Go", targets: [
+     {name: "Echo", exec: "server_go_echo"},
+     {name: "gorilla/mux", exec: "server_go_gorilla_mux"},
+     {name: "iris", exec: "server_go_iris"},
+   ]},
+  {lang: "Rust", targets: [
+     {name: "IRON", exec: "server_rust_iron"},
+     {name: "nickel.rs", exec: "server_rust_nickel"},
+   ]},
+  {lang: "node", targets: [
+     {name: "express", exec: "server_node_express"},
+   ]},
 ]
 
 # struct for benchmark result
