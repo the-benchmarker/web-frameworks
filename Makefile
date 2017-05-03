@@ -42,7 +42,7 @@ route_cr: crystal/route.cr/src/server.cr
 	ln -s -f ../crystal/route.cr/bin/server_crystal_route_cr bin/.
 
 # --- Go ---
-go: echo gorilla-mux
+go: echo gorilla-mux iris
 
 # Echo
 echo:
@@ -56,8 +56,14 @@ gorilla-mux:
 	cd go/gorilla-mux; go build -o server_go_gorilla_mux main.go
 	ln -s -f ../go/gorilla-mux/server_go_gorilla_mux bin/.
 
+# iris
+iris:
+	go get -u gopkg.in/kataras/iris.v6
+	cd go/iris; go build -o server_go_iris main.go
+	ln -s -f ../go/iris/server_go_iris bin/.
+
 # --- Rust ---
-rust: iron nickel hyper
+rust: iron nickel
 
 # IRON
 iron:
@@ -70,11 +76,6 @@ nickel:
 	cd rust/nickel; cargo update
 	cd rust/nickel; cargo build --release
 	ln -s -f ../rust/nickel/target/release/server_rust_nickel bin/.
-
-hyper:
-	cd rust/hyper; cargo update
-	cd rust/hyper; cargo build --release
-	ln -s -f ../rust/hyper/target/release/server_rust_hyper bin/.
 
 # --- Benchmarker ---
 # client
