@@ -1,16 +1,16 @@
-name: route_cr
+name: router_cr
 version: 0.1.0
 
 authors:
   - tbrand <taichiro0709@gmail.com>
 
 targets:
-  server_crystal_route_cr:
+  server_crystal_router_cr:
     main: src/server.cr
 
 dependencies:
-  route:
-    github: tbrand/route.cr
+  router:
+    github: tbrand/router.cr
 
 crystal: 0.22.0
 

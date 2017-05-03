@@ -1,6 +1,6 @@
-require "route"
+require "router"
 
-class Routecr
+class Server
 
   @route_handler = RouteHandler.new
 
@@ -33,8 +33,8 @@ class Routecr
     server.listen
   end
 
-  include Route
+  include Router
 end
 
-routecr = Routecr.new
-routecr.run
+server = Server.new
+server.run

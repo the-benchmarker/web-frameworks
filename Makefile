@@ -29,17 +29,17 @@ roda:
 	ln -s -f ../ruby/roda/server_ruby_roda bin/.
 
 # --- Crystal ---
-crystal: kemal route_cr
+crystal: kemal router_cr
 
 # Kemal
 kemal: crystal/kemal/src/server.cr
 	cd crystal/kemal; shards build --release
 	ln -s -f ../crystal/kemal/bin/server_crystal_kemal bin/.
 
-# route.cr
-route_cr: crystal/route.cr/src/server.cr
-	cd crystal/route.cr; shards build --release
-	ln -s -f ../crystal/route.cr/bin/server_crystal_route_cr bin/.
+# router.cr
+router_cr: crystal/router.cr/src/server.cr
+	cd crystal/router.cr; shards build --release
+	ln -s -f ../crystal/router.cr/bin/server_crystal_router_cr bin/.
 
 # --- Go ---
 go: echo gorilla-mux iris
