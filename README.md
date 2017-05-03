@@ -18,6 +18,8 @@
  - Rust
    - [IRON](https://github.com/iron/iron)
    - [nickel.rs](https://github.com/nickel-org/nickel.rs)
+ - node
+   - [express](https://github.com/expressjs/express)
 
 ## The rule
 I want to know the response time, not a usability. So full-stack framework is at a disadvantage.
@@ -35,6 +37,7 @@ Required environment
  - Go
  - Crystal
  - Rust
+ - node
 
 To compile servers and benchmarker,
 ```
