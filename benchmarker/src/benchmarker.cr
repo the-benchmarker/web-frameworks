@@ -20,6 +20,7 @@ LANGS = [
   {lang: "Go", targets: [
      {name: "Echo", exec: "server_go_echo"},
      {name: "gorilla/mux", exec: "server_go_gorilla_mux"},
+     {name: "iris", exec: "server_go_iris"},
    ]},
   {lang: "Rust", targets: [
      {name: "IRON", exec: "server_rust_iron"},
@@ -72,7 +73,7 @@ end
 # Running client and returning span
 def client
   s = Time.now
-  `#{CLIENT} -t 16 -r 1000`
+  `#{CLIENT} -t 16 -r 5000`
   e = Time.now
   (e-s).to_f
 end
@@ -110,15 +111,15 @@ def benchmark(server, count) : BenchResult
 end
 
 def header(lang : String, name : String, max : String, min : String, ave : String)
-  puts "%-15s %-25s %15s %15s %15s" % [lang, name, max, min, ave]
+  puts "%-25s %-25s %15s %15s %15s" % [lang, name, max, min, ave]
 end
 
 def result_line(lang : String, name : String, max : Float64, min : Float64, ave : Float64)
-  puts "%-15s %-25s %15f %15f %15f" % [lang, name, max, min, ave]
+  puts "%-25s %-25s %15f %15f %15f" % [lang, name, max, min, ave]
 end
 
-header("Language", "Framework (Middleware)", "Max [sec]", "Min [sec]", "Ave [sec]")
-header("-" * 15, "-" * 25, "-" * 15, "-" * 15, "-" * 15)
+header("Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]", "Ave [sec]")
+header("-" * 25, "-" * 25, "-" * 15, "-" * 15, "-" * 15)
 
 # Running benchmark for each server
 LANGS.each do |lang|
