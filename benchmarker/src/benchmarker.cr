@@ -25,6 +25,9 @@ LANGS = [
      {name: "IRON", exec: "server_rust_iron"},
      {name: "nickel.rs", exec: "server_rust_nickel"},
    ]},
+  {lang: "node", targets: [
+     {name: "express", exec: "server_node_express"},
+   ]},
 ]
 
 # struct for benchmark result
@@ -47,14 +50,20 @@ class ExecServer
     if @server[:name] == "Rails" ||
        @server[:name] == "Roda" ||
        @server[:name] == "Sinatra"
-      # Search pid of the puma process
-      puma = `ps aux | grep puma | grep -v grep`
-      puma.split(" ").each do |pid|
-        if /\d+/ =~ pid
-          _pid = $~[0].to_i
-          Process.kill(Signal::TERM, _pid)
-          break
-        end
+      kill_proc("puma")
+    elsif @server[:name] == "express"
+      kill_proc("node")
+    end
+  end
+
+  def kill_proc(proc : String)
+    # Search pid of the process
+    proc = `ps aux | grep #{proc} | grep -v grep`
+    proc.split(" ").each do |pid|
+      if /\d+/ =~ pid
+        _pid = $~[0].to_i
+        Process.kill(Signal::TERM, _pid)
+        break
       end
     end
   end
