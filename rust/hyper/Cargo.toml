@@ -1,0 +1,11 @@
+[package]
+authors = ["steveklabnik <steve@steveklabnik.com>"]
+name = "hyper"
+version = "0.1.0"
+
+[dependencies]
+futures = "0.1.13"
+
+[dependencies.hyper]
+git = "https://github.com/hyperium/hyper"
+optional = false
