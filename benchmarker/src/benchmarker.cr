@@ -25,6 +25,9 @@ LANGS = [
      {name: "IRON", exec: "server_rust_iron"},
      {name: "nickel.rs", exec: "server_rust_nickel"},
    ]},
+  {lang: "node", targets: [
+    {name: "express", exec: "server_node_express"},
+   ]},
 ]
 
 # struct for benchmark result

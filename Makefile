@@ -1,5 +1,12 @@
 all: ruby crystal go rust client benchmarker
 
+# --- node.js ---
+node: express
+
+express:
+	cd node/express; npm install
+	ln -s -f ../node/express/bin/server_node_express bin/.
+
 # --- Ruby ---
 ruby: rails sinatra roda
 
