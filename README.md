@@ -2,7 +2,7 @@
 
 ## Result
 
-<img src="https://cloud.githubusercontent.com/assets/3483230/25646596/017fcf38-2ff5-11e7-85c3-5f9533ab28cb.png" width="1000"/>
+<img src="https://raw.githubusercontent.com/tbrand/which_is_the_fastest/master/imgs/result.png" width="1000"/>
 
 **Current target frameworks(middlewares)**
  - Ruby
