@@ -1,4 +1,4 @@
-all: ruby crystal go rust client benchmarker
+all: node ruby crystal go rust client benchmarker
 
 # --- node.js ---
 node: express

@@ -6,13 +6,11 @@ app.get('/', function (req, res) {
 })
 
 app.get('/user/:id', function (req, res) {
+  res.send(req.params.id)
+})
+
+app.post('/user', function (req, res) {
   res.send('')
 })
 
-app.post('/user/:id', function (req, res) {
-  res.send('')
-})
-
-app.listen(3000, function() {
-  console.log('listening on 3000')
-})
+app.listen(3000, function() {})
