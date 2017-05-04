@@ -20,6 +20,8 @@
    - [nickel.rs](https://github.com/nickel-org/nickel.rs)
  - node
    - [express](https://github.com/expressjs/express)
+ - Elixir
+   - [Plug](http://github.com/elixir-lang/plug)
 
 ## The rule
 I want to know the response time, not a usability. So full-stack framework is at a disadvantage.

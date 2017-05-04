@@ -1,4 +1,11 @@
-all: node ruby crystal go rust client benchmarker
+all: elixir node ruby crystal go rust client benchmarker
+
+# --- Elixir ---
+elixir: plug
+
+plug:
+	cd elixir/plug; mix deps.get
+	ln -s -f ../elixir/plug/bin/server_elixir_plug bin/.
 
 # --- node.js ---
 node: express
