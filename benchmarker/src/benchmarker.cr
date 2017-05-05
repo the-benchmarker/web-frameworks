@@ -20,7 +20,6 @@ LANGS = [
   {lang: "Go", targets: [
      {name: "Echo", exec: "server_go_echo"},
      {name: "gorilla/mux", exec: "server_go_gorilla_mux"},
-     {name: "iris", exec: "server_go_iris"},
    ]},
   {lang: "Rust", targets: [
      {name: "IRON", exec: "server_rust_iron"},

@@ -1,0 +1,130 @@
+main:
+  depends_on:
+    - node
+    - ruby
+    - crystal
+    - go
+    - rust
+    - benchmarker
+
+node:
+  depends_on:
+    - express
+
+express:
+  command: |
+    npm install
+    ln -s -f ../node/express/bin/server_node_express ../../bin/.
+  chdir:
+    node/express
+
+ruby:
+  depends_on:
+    - rails
+    - sinatra
+    - roda
+
+rails:
+  command: |
+    bundle update
+    bundle install --path vendor/bundle
+    ln -s -f ../ruby/rails/bin/server_ruby_rails ../../bin/.
+  chdir:
+    ruby/rails
+
+sinatra:
+  command: |
+    bundle update
+    bundle install --path vendor/bundle
+    ln -s -f ../ruby/sinatra/server_ruby_sinatra ../../bin/.
+  chdir:
+    ruby/sinatra
+
+roda:
+  command: |
+    bundle update
+    bundle install --path vendor/bundle
+    ln -s -f ../ruby/roda/server_ruby_roda ../../bin/.
+  chdir:
+    ruby/roda
+
+crystal:
+  depends_on:
+    - kemal
+    - router_cr
+
+kemal:
+  command: |
+    shards build --release
+    ln -s -f ../crystal/kemal/bin/server_crystal_kemal ../../bin/.
+  chdir:
+    crystal/kemal
+
+router_cr:
+  command: |
+    shards build --release
+    ln -s -f ../crystal/router.cr/bin/server_crystal_router_cr ../../bin/.
+  chdir:
+    crystal/router.cr
+
+go:
+  depends_on:
+    - echo
+    - gorilla-mux
+
+echo:
+  command: |
+    go get -u github.com/labstack/echo
+    go build -o server_go_echo main.go
+    ln -s -f ../go/echo/server_go_echo ../../bin/.
+  chdir:
+    go/echo
+
+gorilla-mux:
+  command: |
+    go get -u github.com/gorilla/mux
+    go build -o server_go_gorilla_mux main.go
+    ln -s -f ../go/gorilla-mux/server_go_gorilla_mux ../../bin/.
+  chdir:
+    go/gorilla-mux
+
+rust:
+  depends_on:
+    - iron
+    - nickel
+
+iron:
+  command: |
+    cargo update
+    cargo build --release
+    ln -s -f ../rust/iron/target/release/server_rust_iron ../../bin/.
+  chdir:
+    rust/iron
+
+nickel:
+  command: |
+    cargo update
+    cargo build --release
+    ln -s -f ../rust/nickel/target/release/server_rust_nickel ../../bin/.
+  chdir:
+    rust/nickel
+
+benchmarker:
+  command: |
+    crystal build src/benchmarker.cr -o bin/benchmarker --release
+    ln -s -f ../benchmarker/bin/benchmarker ../bin/.
+  depends_on:
+    client
+  chdir:
+    benchmarker
+
+client:
+  command: |
+    crystal build src/client.cr -o bin/client --release
+    ln -s -f ../benchmarker/bin/client ../bin/.
+  chdir:
+    benchmarker
+
+clean:
+  command:
+    rm -rf bin/*

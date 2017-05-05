@@ -39,6 +39,27 @@ Required environment
  - Rust
  - node
 
+### By using Neph
+
+[Neph](https://github.com/tbrand/neph) is a modern command line job processor.  
+
+To compile servers and benchmarker,
+```
+> neph
+```
+For each language,
+```
+> neph -j ruby
+```
+For each framework,
+```
+> neph -j rails
+```
+
+See [neph.yml](https://github.com/tbrand/which_is_the_fastest/blob/master/neph.yml)
+
+### By using make
+
 To compile servers and benchmarker,
 ```
 > make

@@ -42,7 +42,7 @@ router_cr: crystal/router.cr/src/server.cr
 	ln -s -f ../crystal/router.cr/bin/server_crystal_router_cr bin/.
 
 # --- Go ---
-go: echo gorilla-mux iris
+go: echo gorilla-mux
 
 # Echo
 echo:
@@ -55,12 +55,6 @@ gorilla-mux:
 	go get -u github.com/gorilla/mux
 	cd go/gorilla-mux; go build -o server_go_gorilla_mux main.go
 	ln -s -f ../go/gorilla-mux/server_go_gorilla_mux bin/.
-
-# iris
-iris:
-	go get -u gopkg.in/kataras/iris.v6
-	cd go/iris; go build -o server_go_iris main.go
-	ln -s -f ../go/iris/server_go_iris bin/.
 
 # --- Rust ---
 rust: iron nickel
