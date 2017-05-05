@@ -5,6 +5,7 @@ main:
     - crystal
     - go
     - rust
+    - elixir
     - benchmarker
 
 node:
@@ -108,6 +109,17 @@ nickel:
     ln -s -f ../rust/nickel/target/release/server_rust_nickel ../../bin/.
   chdir:
     rust/nickel
+
+elixir:
+  depends_on:
+    - plug
+
+plug:
+  command: |
+    mix deps.get --force
+    ln -s -f ../elixir/plug/bin/server_elixir_plug ../../bin/.
+  chdir:
+    elixir/plug
 
 benchmarker:
   command: |
