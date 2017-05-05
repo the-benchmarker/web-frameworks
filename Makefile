@@ -4,7 +4,7 @@ all: elixir node ruby crystal go rust client benchmarker
 elixir: plug
 
 plug:
-	cd elixir/plug; mix deps.get
+	cd elixir/plug; mix deps.get --force
 	ln -s -f ../elixir/plug/bin/server_elixir_plug bin/.
 
 # --- node.js ---
