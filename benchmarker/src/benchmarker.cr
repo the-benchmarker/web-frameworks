@@ -28,10 +28,13 @@ LANGS = [
   {lang: "node", targets: [
      {name: "express", exec: "server_node_express"},
    ]},
+  {lang: "Elixir", targets: [
+     {name: "Plug", exec: "server_elixir_plug"},
+   ]},
 ]
 
 # struct for benchmark result
-record BenchResult, max : Float64, min : Float64, ave : Float64, total : Float64 
+record BenchResult, max : Float64, min : Float64, ave : Float64, total : Float64
 
 # Executor of each server
 class ExecServer
@@ -53,6 +56,8 @@ class ExecServer
       kill_proc("puma")
     elsif @server[:name] == "express"
       kill_proc("node")
+    elsif @server[:name] == "Plug"
+      kill_proc("iex")
     end
   end
 
