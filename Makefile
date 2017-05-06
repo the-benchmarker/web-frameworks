@@ -87,12 +87,12 @@ nickel:
 
 # --- Benchmarker ---
 # client
-client: benchmarker/src/client.cr
+client:
 	cd benchmarker; crystal build src/client.cr -o bin/client --release
 	ln -s -f ../benchmarker/bin/client bin/.
 
 # benchmarker
-benchmarker: benchmarker/src/benchmarker.cr
+benchmarker:
 	cd benchmarker; crystal build src/benchmarker.cr -o bin/benchmarker --release
 	ln -s -f ../benchmarker/bin/benchmarker bin/.
 
