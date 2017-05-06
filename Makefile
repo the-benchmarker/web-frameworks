@@ -49,7 +49,7 @@ router_cr: crystal/router.cr/src/server.cr
 	ln -s -f ../crystal/router.cr/bin/server_crystal_router_cr bin/.
 
 # --- Go ---
-go: echo gorilla-mux
+go: echo gorilla-mux fasthttprouter
 
 # Echo
 echo:
@@ -62,6 +62,13 @@ gorilla-mux:
 	go get -u github.com/gorilla/mux
 	cd go/gorilla-mux; go build -o server_go_gorilla_mux main.go
 	ln -s -f ../go/gorilla-mux/server_go_gorilla_mux bin/.
+
+# fasthttprouter
+fasthttprouter:
+	go get -u github.com/buaazp/fasthttprouter
+	go get -u github.com/valyala/fasthttp
+	cd go/fasthttprouter; go build -o server_go_fasthttprouter main.go
+	ln -s -f ../go/fasthttprouter/server_go_fasthttprouter bin/.
 
 # --- Rust ---
 rust: iron nickel
