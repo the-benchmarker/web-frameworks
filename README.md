@@ -15,6 +15,7 @@
  - Go
    - [Echo](https://github.com/labstack/echo)
    - [gorilla-mux](https://github.com/gorilla/mux)
+   - [fasthttprouter](https://github.com/buaazp/fasthttprouter)
  - Rust
    - [IRON](https://github.com/iron/iron)
    - [nickel.rs](https://github.com/nickel-org/nickel.rs)
