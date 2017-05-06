@@ -39,12 +39,12 @@ roda:
 crystal: kemal router_cr
 
 # Kemal
-kemal: crystal/kemal/src/server.cr
+kemal:
 	cd crystal/kemal; shards build --release
 	ln -s -f ../crystal/kemal/bin/server_crystal_kemal bin/.
 
 # router.cr
-router_cr: crystal/router.cr/src/server.cr
+router_cr:
 	cd crystal/router.cr; shards build --release
 	ln -s -f ../crystal/router.cr/bin/server_crystal_router_cr bin/.
 
