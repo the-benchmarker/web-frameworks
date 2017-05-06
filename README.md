@@ -34,12 +34,7 @@ I want to know the response time, not a usability. So full-stack framework is at
 
 ## Installation
 
-Required environment
- - Ruby (bundler)
- - Go
- - Crystal
- - Rust
- - node
+Required environment -> See **Current target frameworks(middlewares)**
 
 ### By using Neph
 
