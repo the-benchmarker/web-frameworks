@@ -72,6 +72,7 @@ go:
   depends_on:
     - echo
     - gorilla-mux
+    - fasthttprouter
 
 echo:
   command: |
@@ -88,6 +89,15 @@ gorilla-mux:
     ln -s -f ../go/gorilla-mux/server_go_gorilla_mux ../../bin/.
   chdir:
     go/gorilla-mux
+
+fasthttprouter:
+  command: |
+    go get -u github.com/buaazp/fasthttprouter
+    go get -u github.com/valyala/fasthttp
+    go build -o server_go_fasthttprouter main.go
+    ln -s -f ../go/fasthttprouter/server_go_fasthttprouter ../../bin/.
+  chdir:
+    go/fasthttprouter
 
 rust:
   depends_on:
