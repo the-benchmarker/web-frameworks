@@ -71,7 +71,7 @@ fasthttprouter:
 	ln -s -f ../go/fasthttprouter/server_go_fasthttprouter bin/.
 
 # --- Rust ---
-rust: iron nickel
+rust: iron nickel rocket
 
 # IRON
 iron:
@@ -84,6 +84,12 @@ nickel:
 	cd rust/nickel; cargo update
 	cd rust/nickel; cargo build --release
 	ln -s -f ../rust/nickel/target/release/server_rust_nickel bin/.
+
+# rocket
+rocket:
+	cd rust/rocket; cargo update
+	cd rust/rocket; cargo build --release
+	ln -s -f ../rust/rocket/target/release/server_rust_rocket bin/.
 
 # --- Benchmarker ---
 # client
