@@ -29,6 +29,7 @@ Measuring response times for each framework(middleware).  Each framework has to 
  - Swift
    - [Vapor](https://vapor.codes)
    - [Perfect](https://www.perfect.org)
+   - [Kitura](http://www.kitura.io)
 
 See Development section when you want to add new languages for frameworks.
 
