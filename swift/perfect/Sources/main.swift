@@ -10,7 +10,7 @@ routes.add(method: .get, uri: "/", handler: { _, response in
 })
 
 routes.add(method: .get, uri: "/user/{id}", handler: { request, response in
-    response.setBody(string: request.urlVariables["id"]!)
+    response.setBody(string: request.urlVariables["id"] ?? "")
     response.completed()
 })
 
