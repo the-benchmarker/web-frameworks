@@ -1,14 +1,16 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    mustermann (1.0.0)
     puma (3.8.2)
-    rack (1.6.5)
-    rack-protection (1.5.3)
+    rack (2.0.1)
+    rack-protection (2.0.0)
       rack
-    sinatra (1.4.8)
-      rack (~> 1.5)
-      rack-protection (~> 1.4)
-      tilt (>= 1.3, < 3)
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0)
+      tilt (~> 2.0)
     tilt (2.0.7)
 
 PLATFORMS
