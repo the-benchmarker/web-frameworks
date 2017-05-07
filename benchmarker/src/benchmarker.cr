@@ -25,6 +25,7 @@ LANGS = [
   {lang: "Rust", targets: [
      {name: "IRON", exec: "server_rust_iron"},
      {name: "nickel.rs", exec: "server_rust_nickel"},
+     {name: "Rocket", exec: "server_rust_rocket"},
    ]},
   {lang: "node", targets: [
      {name: "express", exec: "server_node_express"},
