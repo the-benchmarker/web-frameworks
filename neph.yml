@@ -144,6 +144,7 @@ swift:
   depends_on:
     - vapor
     - perfect
+    - kitura
 
 vapor:
   command: |
@@ -158,6 +159,13 @@ perfect:
     ln -s -f ../swift/perfect/.build/release/server_swift_perfect ../../bin/.
   chdir:
     swift/perfect
+
+kitura:
+  command: |
+    swift build --configuration release
+    ln -s -f ../swift/kitura/.build/release/server_swift_kitura ../../bin/.
+  chdir:
+    swift/kitura
 
 benchmarker:
   command: |
