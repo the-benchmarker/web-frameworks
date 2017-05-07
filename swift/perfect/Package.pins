@@ -1,0 +1,42 @@
+{
+  "autoPin": true,
+  "pins": [
+    {
+      "package": "COpenSSL",
+      "reason": null,
+      "repositoryURL": "https://github.com/PerfectlySoft/Perfect-COpenSSL.git",
+      "version": "2.0.4"
+    },
+    {
+      "package": "PerfectHTTP",
+      "reason": null,
+      "repositoryURL": "https://github.com/PerfectlySoft/Perfect-HTTP.git",
+      "version": "2.0.7"
+    },
+    {
+      "package": "PerfectHTTPServer",
+      "reason": null,
+      "repositoryURL": "https://github.com/PerfectlySoft/Perfect-HTTPServer.git",
+      "version": "2.0.9"
+    },
+    {
+      "package": "PerfectLib",
+      "reason": null,
+      "repositoryURL": "https://github.com/PerfectlySoft/PerfectLib.git",
+      "version": "2.0.9"
+    },
+    {
+      "package": "PerfectNet",
+      "reason": null,
+      "repositoryURL": "https://github.com/PerfectlySoft/Perfect-Net.git",
+      "version": "2.0.5"
+    },
+    {
+      "package": "PerfectThread",
+      "reason": null,
+      "repositoryURL": "https://github.com/PerfectlySoft/Perfect-Thread.git",
+      "version": "2.0.9"
+    }
+  ],
+  "version": 1
+}
