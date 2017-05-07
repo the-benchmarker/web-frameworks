@@ -33,6 +33,11 @@ LANGS = [
   {lang: "Elixir", targets: [
      {name: "Plug", exec: "server_elixir_plug"},
    ]},
+  {lang: "Swift", targets: [
+     {name: "Vapor", exec: "server_swift_vapor"},
+     {name: "Perfect", exec: "server_swift_perfect"},
+     {name: "Kitura", exec: "server_swift_kitura"},
+   ]},
 ]
 
 # struct for benchmark result
