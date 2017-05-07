@@ -103,6 +103,7 @@ rust:
   depends_on:
     - iron
     - nickel
+    - rocket
 
 iron:
   command: |
@@ -119,6 +120,14 @@ nickel:
     ln -s -f ../rust/nickel/target/release/server_rust_nickel ../../bin/.
   chdir:
     rust/nickel
+
+rocket:
+  command: |
+    cargo update
+    cargo build --release
+    ln -s -f ../rust/rocket/target/release/server_rust_rocket ../../bin/.
+  chdir:
+    rust/rocket
 
 elixir:
   depends_on:
