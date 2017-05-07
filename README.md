@@ -1,5 +1,7 @@
 # Which is the fastest?
 
+Measuring response times for each framework(middleware).  Each framework has to have two features; routing and parsing path parameters.
+
 ## Result
 
 <img src="https://raw.githubusercontent.com/tbrand/which_is_the_fastest/master/imgs/result.png" width="1000"/>
@@ -25,6 +27,8 @@
  - Elixir
    - [Plug](http://github.com/elixir-lang/plug)
 
+See Development section when you want to add new languages for frameworks.
+
 ## The rule
 I want to know the response time, not a usability. So full-stack framework is at a disadvantage.
  - Each server has no special logics.
@@ -40,7 +44,7 @@ Required environment -> See **Current target frameworks(middlewares)**
 
 ### By using Neph
 
-[Neph](https://github.com/tbrand/neph) is a modern command line job processor.  
+[Neph](https://github.com/tbrand/neph) is a modern command line job processor that can be substitute for `make` command.  
 
 To compile servers and benchmarker,
 ```
@@ -89,7 +93,7 @@ and run client by
 > time bin/client
 ```
 
-You can set # of threads and # of request loops(there are 3 requests in a loop) by
+You can set # of threads and # of the loops of the request(there are 3 requests in a loop) by
 ```bash
 > time bin/client -t 16 -r 1000
 ```
@@ -107,7 +111,7 @@ So 48000 requests are sent in total.
  - `Makefile`
  - `neph.yml`(optional)
 
-The result will be updated by maintainer.
+Anyway, you don't have to care about details since maintainer can fix them after merging it. The result will be updated by maintainer.
 
 ## Contributing
 
