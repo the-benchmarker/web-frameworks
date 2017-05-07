@@ -100,6 +100,15 @@ So 48000 requests are sent in total.
  - **Give me PR when you want to add other web frameworks**
  - **Give me PR when you can tuning each framework (under the rule)**
 
+### Where should I modify when adding new framework
+ - `/[language]/[framework]/[codes]` <- Project iteself
+ - `benchmarker/benchmarker.cr` <- Adding it as a target to
+ - `README.md` <- Adding it as a target framework of the list
+ - `Makefile`
+ - `neph.yml`(optional)
+
+The result will be updated by maintainer.
+
 ## Contributing
 
 1. Fork it ( https://github.com/tbrand/which_is_the_fastest/fork )
