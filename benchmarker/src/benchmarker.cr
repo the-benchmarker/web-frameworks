@@ -8,46 +8,48 @@ CLIENT = File.expand_path(PATH_PREFIX + "client", __FILE__)
 
 # Each framework
 LANGS = [
-  {lang: "Ruby", targets: [
-     {name: "Rails", exec: "server_ruby_rails"},
-     {name: "Sinatra", exec: "server_ruby_sinatra"},
-     {name: "Roda", exec: "server_ruby_roda"},
+  {lang: "ruby", targets: [
+     {name: "rails", bin: "server_ruby_rails"},
+     {name: "sinatra", bin: "server_ruby_sinatra"},
+     {name: "roda", bin: "server_ruby_roda"},
    ]},
-  {lang: "Crystal", targets: [
-     {name: "Kemal", exec: "server_crystal_kemal"},
-     {name: "router.cr", exec: "server_crystal_router_cr"},
+  {lang: "crystal", targets: [
+     {name: "kemal", bin: "server_crystal_kemal"},
+     {name: "router_cr", bin: "server_crystal_router_cr"},
    ]},
-  {lang: "Go", targets: [
-     {name: "Echo", exec: "server_go_echo"},
-     {name: "gorilla/mux", exec: "server_go_gorilla_mux"},
-     {name: "fasthttprouter", exec: "server_go_fasthttprouter"},
+  {lang: "go", targets: [
+     {name: "echo", bin: "server_go_echo"},
+     {name: "gorilla_mux", bin: "server_go_gorilla_mux"},
+     {name: "fasthttprouter", bin: "server_go_fasthttprouter"},
    ]},
-  {lang: "Rust", targets: [
-     {name: "IRON", exec: "server_rust_iron"},
-     {name: "nickel.rs", exec: "server_rust_nickel"},
-     {name: "Rocket", exec: "server_rust_rocket"},
+  {lang: "rust", targets: [
+     {name: "iron", bin: "server_rust_iron"},
+     {name: "nickel", bin: "server_rust_nickel"},
+     {name: "rocket", bin: "server_rust_rocket"},
    ]},
   {lang: "node", targets: [
-     {name: "express", exec: "server_node_express"},
+     {name: "express", bin: "server_node_express"},
    ]},
-  {lang: "Elixir", targets: [
-     {name: "Plug", exec: "server_elixir_plug"},
+  {lang: "elixir", targets: [
+     {name: "plug", bin: "server_elixir_plug"},
    ]},
-  {lang: "Swift", targets: [
-     {name: "Vapor", exec: "server_swift_vapor"},
-     {name: "Perfect", exec: "server_swift_perfect"},
-     {name: "Kitura", exec: "server_swift_kitura"},
+  {lang: "swift", targets: [
+     {name: "vapor", bin: "server_swift_vapor"},
+     {name: "perfect", bin: "server_swift_perfect"},
+     {name: "kitura", bin: "server_swift_kitura"},
    ]},
 ]
 
 # struct for benchmark result
 record BenchResult, max : Float64, min : Float64, ave : Float64, total : Float64
+# struct for target
+record Target, lang : String, name : String, bin : String
 
 # Executor of each server
 class ExecServer
-  def initialize(@server : NamedTuple(name: String, exec: String))
+  def initialize(@target : Target)
     # Path of the executable
-    executable = File.expand_path(PATH_PREFIX + @server[:exec], __FILE__)
+    executable = File.expand_path(PATH_PREFIX + @target.bin, __FILE__)
     # Running the server
     @process = Process.new(executable)
   end
@@ -57,13 +59,13 @@ class ExecServer
     @process.not_nil!.kill
 
     # Since ruby's frameworks are running on puma, we have to kill the independent process
-    if @server[:name] == "Rails" ||
-       @server[:name] == "Roda" ||
-       @server[:name] == "Sinatra"
+    if @target.name == "rails" ||
+       @target.name == "roda" ||
+       @target.name == "sinatra"
       kill_proc("puma")
-    elsif @server[:name] == "express"
+    elsif @target.name == "express"
       kill_proc("node")
-    elsif @server[:name] == "Plug"
+    elsif @target.name == "plug"
       kill_proc("iex")
     end
   end
@@ -121,6 +123,18 @@ def benchmark(server, count) : BenchResult
   result
 end
 
+def all_frameworks : Array(Target)
+  targets = [] of Target
+  
+  LANGS.each do |lang|
+    lang[:targets].each do |framework|
+      targets.push(Target.new(lang[:lang], framework[:name], framework[:bin]))
+    end
+  end
+
+  targets
+end
+
 def header(lang : String, name : String, max : String, min : String, ave : String)
   puts "%-25s %-25s %15s %15s %15s" % [lang, name, max, min, ave]
 end
@@ -132,10 +146,15 @@ end
 header("Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]", "Ave [sec]")
 header("-" * 25, "-" * 25, "-" * 15, "-" * 15, "-" * 15)
 
-# Running benchmark for each server
-LANGS.each do |lang|
-  lang[:targets].each do |framework|
-    result = benchmark(framework, 5)
-    result_line(lang[:lang], framework[:name], result.max, result.min, result.ave)
-  end
+targets = if ARGV.size > 0
+            all_frameworks.reject{ |target| target.lang != ARGV[0] && target.name != ARGV[0] }
+          else
+            all_frameworks
+          end
+
+abort "No targets found for #{ARGV[0]}" if targets.size == 0
+
+targets.each do |target|
+  result = benchmark(target, 5)
+  result_line(target.lang, target.name, result.max, result.min, result.ave)
 end

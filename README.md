@@ -87,6 +87,16 @@ You can take a benchmark by
 > bin/benchmarker
 ```
 
+For each language
+```bash
+> bin/benchmarker ruby
+```
+
+For each framework
+```bash
+> bin/benchmarker rails
+```
+
 If you take it manually, you can run each server by
 ```bash
 > bin/server_[Language]_[Framework]

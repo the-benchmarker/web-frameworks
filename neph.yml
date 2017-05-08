@@ -176,6 +176,8 @@ benchmarker:
     client
   chdir:
     benchmarker
+  sources:
+    benchmarker/src/benchmarker.cr
 
 client:
   command: |
@@ -183,6 +185,8 @@ client:
     ln -s -f ../benchmarker/bin/client ../bin/.
   chdir:
     benchmarker
+  sources:
+    benchmarker/src/client.cr
 
 clean:
   command:
