@@ -1,4 +1,4 @@
-all: elixir node ruby crystal go rust client benchmarker
+all: elixir node ruby crystal go rust swift client benchmarker
 
 # --- Elixir ---
 elixir: plug
