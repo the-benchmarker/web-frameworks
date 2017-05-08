@@ -133,6 +133,7 @@ rocket:
 elixir:
   depends_on:
     - plug
+    - phoenix
 
 plug:
   command: |
@@ -140,6 +141,14 @@ plug:
     ln -s -f ../elixir/plug/bin/server_elixir_plug ../../bin/.
   chdir:
     elixir/plug
+
+phoenix:
+  command: |
+    mix deps.get --force
+    ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix ../../bin/.
+  chdir:
+    elixir/phoenix
+
 
 swift:
   depends_on:

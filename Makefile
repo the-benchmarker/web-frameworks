@@ -1,11 +1,15 @@
 all: elixir node ruby crystal go rust swift client benchmarker
 
 # --- Elixir ---
-elixir: plug
+elixir: plug phoenix
 
 plug:
 	cd elixir/plug; mix deps.get --force
 	ln -s -f ../elixir/plug/bin/server_elixir_plug bin/.
+
+phoenix:
+	cd elixir/phoenix; mix deps.get --force
+	ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix bin/.
 
 # --- node.js ---
 node: express
