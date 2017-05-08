@@ -91,6 +91,24 @@ rocket:
 	cd rust/rocket; cargo build --release
 	ln -s -f ../rust/rocket/target/release/server_rust_rocket bin/.
 
+# --- Swift ---
+swift: vapor perfect kitura
+
+# Vapor
+vapor:
+	cd swift/vapor; swift build --configuration release
+	ln -s -f ../swift/vapor/.build/release/server_swift_vapor bin/.
+
+# Perfect
+perfect:
+	cd swift/perfect; swift build --configuration release
+	ln -s -f ../swift/perfect/.build/release/server_swift_perfect bin/.
+
+# Kitura
+kitura:
+	cd swift/kitura; swift build --configuration release
+	ln -s -f ../swift/kitura/.build/release/server_swift_kitura bin/.
+
 # --- Benchmarker ---
 # client
 client:

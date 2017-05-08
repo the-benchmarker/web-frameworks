@@ -140,6 +140,33 @@ plug:
   chdir:
     elixir/plug
 
+swift:
+  depends_on:
+    - vapor
+    - perfect
+    - kitura
+
+vapor:
+  command: |
+    swift build --configuration release
+    ln -s -f ../swift/vapor/.build/release/server_swift_vapor ../../bin/.
+  chdir:
+    swift/vapor
+
+perfect:
+  command: |
+    swift build --configuration release
+    ln -s -f ../swift/perfect/.build/release/server_swift_perfect ../../bin/.
+  chdir:
+    swift/perfect
+
+kitura:
+  command: |
+    swift build --configuration release
+    ln -s -f ../swift/kitura/.build/release/server_swift_kitura ../../bin/.
+  chdir:
+    swift/kitura
+
 benchmarker:
   command: |
     crystal build src/benchmarker.cr -o bin/benchmarker --release

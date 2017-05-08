@@ -26,6 +26,10 @@ Measuring response times for each framework(middleware).  Each framework has to 
    - [express](https://github.com/expressjs/express)
  - Elixir
    - [Plug](http://github.com/elixir-lang/plug)
+ - Swift
+   - [Vapor](https://vapor.codes)
+   - [Perfect](https://www.perfect.org)
+   - [Kitura](http://www.kitura.io)
 
 See Development section when you want to add new languages for frameworks.
 
