@@ -26,6 +26,7 @@ Measuring response times for each framework(middleware).  Each framework has to 
    - [express](https://github.com/expressjs/express)
  - Elixir
    - [Plug](http://github.com/elixir-lang/plug)
+   - [Phoenix](http://github.com/phoenixframework/phoenix)
  - Swift
    - [Vapor](https://vapor.codes)
    - [Perfect](https://www.perfect.org)
@@ -48,7 +49,7 @@ Required environment -> See **Current target frameworks(middlewares)**
 
 ### By using Neph
 
-[Neph](https://github.com/tbrand/neph) is a modern command line job processor that can be substitute for `make` command.  
+[Neph](https://github.com/tbrand/neph) is a modern command line job processor that can be substitute for `make` command.
 
 To compile servers and benchmarker,
 ```

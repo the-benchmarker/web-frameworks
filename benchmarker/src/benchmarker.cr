@@ -32,6 +32,7 @@ LANGS = [
    ]},
   {lang: "elixir", targets: [
      {name: "plug", bin: "server_elixir_plug"},
+     {name: "phoenix", bin: "server_elixir_phoenix"},
    ]},
   {lang: "swift", targets: [
      {name: "vapor", bin: "server_swift_vapor"},
@@ -65,7 +66,8 @@ class ExecServer
       kill_proc("puma")
     elsif @target.name == "express"
       kill_proc("node")
-    elsif @target.name == "plug"
+    elsif @target.name == "plug" ||
+          @target.name == "phoenix"
       kill_proc("iex")
     end
   end
@@ -125,7 +127,7 @@ end
 
 def all_frameworks : Array(Target)
   targets = [] of Target
-  
+
   LANGS.each do |lang|
     lang[:targets].each do |framework|
       targets.push(Target.new(lang[:lang], framework[:name], framework[:bin]))
