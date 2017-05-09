@@ -1,0 +1,59 @@
+%% Copyright (c) 2013-2014, Loïc Hoguin <essen@ninenines.eu>
+%%
+%% Permission to use, copy, modify, and/or distribute this software for any
+%% purpose with or without fee is hereby granted, provided that the above
+%% copyright notice and this permission notice appear in all copies.
+%%
+%% THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+%% WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+%% MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+%% ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+%% WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+%% ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+%% OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+-module(cow_mimetypes).
+
+-export([all/1]).
+-export([web/1]).
+
+%% @doc Return the mimetype for any file by looking at its extension.
+
+-spec all(file:filename_all()) -> {binary(), binary(), []}.
+all(Path) ->
+	case filename:extension(Path) of
+		<<>> -> {<<"application">>, <<"octet-stream">>, []};
+		<< $., Ext/binary >> -> all_ext(Ext)
+	end.
+
+%% @doc Return the mimetype for a Web related file by looking at its extension.
+
+-spec web(file:filename_all()) -> {binary(), binary(), []}.
+web(Path) ->
+	case filename:extension(Path) of
+		<<>> -> {<<"application">>, <<"octet-stream">>, []};
+		<< $., Ext/binary >> -> web_ext(Ext)
+	end.
+
+%% Internal.
+
+%% GENERATED
+all_ext(_) -> {<<"application">>, <<"octet-stream">>, []}.
+
+web_ext(<<"css">>) -> {<<"text">>, <<"css">>, []};
+web_ext(<<"gif">>) -> {<<"image">>, <<"gif">>, []};
+web_ext(<<"html">>) -> {<<"text">>, <<"html">>, []};
+web_ext(<<"htm">>) -> {<<"text">>, <<"html">>, []};
+web_ext(<<"ico">>) -> {<<"image">>, <<"x-icon">>, []};
+web_ext(<<"jpeg">>) -> {<<"image">>, <<"jpeg">>, []};
+web_ext(<<"jpg">>) -> {<<"image">>, <<"jpeg">>, []};
+web_ext(<<"js">>) -> {<<"application">>, <<"javascript">>, []};
+web_ext(<<"mp3">>) -> {<<"audio">>, <<"mpeg">>, []};
+web_ext(<<"mp4">>) -> {<<"video">>, <<"mp4">>, []};
+web_ext(<<"ogg">>) -> {<<"audio">>, <<"ogg">>, []};
+web_ext(<<"ogv">>) -> {<<"video">>, <<"ogg">>, []};
+web_ext(<<"png">>) -> {<<"image">>, <<"png">>, []};
+web_ext(<<"svg">>) -> {<<"image">>, <<"svg+xml">>, []};
+web_ext(<<"wav">>) -> {<<"audio">>, <<"x-wav">>, []};
+web_ext(<<"webm">>) -> {<<"video">>, <<"webm">>, []};
+web_ext(_) -> {<<"application">>, <<"octet-stream">>, []}.
