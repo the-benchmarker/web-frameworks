@@ -4,11 +4,11 @@ all: elixir node ruby crystal go rust swift client benchmarker
 elixir: plug phoenix
 
 plug:
-	cd elixir/plug; mix deps.get --force
+	cd elixir/plug; mix deps.get --force; MIX_ENV=prod mix release --no-tar
 	ln -s -f ../elixir/plug/bin/server_elixir_plug bin/.
 
 phoenix:
-	cd elixir/phoenix; mix deps.get --force
+	cd elixir/phoenix; mix deps.get --force; MIX_ENV=prod mix release  --no-tar
 	ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix bin/.
 
 # --- node.js ---
