@@ -66,7 +66,8 @@ class ExecServer
       kill_proc("puma")
     elsif @target.name == "express"
       kill_proc("node")
-    elsif @target.name == "plug"
+    elsif @target.name == "plug" ||
+          @target.name == "phoenix"
       kill_proc("iex")
     end
   end
