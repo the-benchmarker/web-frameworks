@@ -9,8 +9,8 @@ use rocket::config::{Config, Environment};
 fn index_route() {}
 
 #[get("/user/<id>")]
-fn user_route(id: &str) -> String {
-    format!("{}", id)
+fn user_route(id: &str) -> &str {
+    id
 }
 
 #[post("/user")]
