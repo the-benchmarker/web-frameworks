@@ -1,4 +1,4 @@
-all: elixir node ruby crystal go rust swift python client benchmarker
+all: elixir node ruby crystal go rust swift client benchmarker
 
 # --- Elixir ---
 elixir: plug phoenix
@@ -113,14 +113,6 @@ kitura:
 	cd swift/kitura; swift build --configuration release
 	ln -s -f ../swift/kitura/.build/release/server_swift_kitura bin/.
 
-# --- Python ---
-python: sanic
-
-# Sanic
-sanic:
-	cd python/sanic; pip3 install sanic; chmod +x server_python_sanic.py
-	ln -s -f ../python/sanic/server_python_sanic.py bin/server_python_sanic
-
 # --- Benchmarker ---
 # client
 client:
@@ -135,4 +127,3 @@ benchmarker:
 # Cleaning all executables
 clean:
 	rm -rf bin/*
-	rm -rf *.log
