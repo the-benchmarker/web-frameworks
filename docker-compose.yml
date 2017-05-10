@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  crystal:
+    image: alpine:latest
+    command: "true"
+    links:
+      - kemal
+      - router_cr
+
+  kemal:
+    build: crystal/kemal
+    ports:
+      - 3000:3000
+
+  router_cr:
+    build: crystal/router.cr
+    ports:
+      - 3000:3000
+
+  ruby:
+    image: alpine:latest
+    command: "true"
+    links:
+      - rails
+      - roda
+      - sinatra
+
+  rails:
+    build: ruby/rails
+    ports:
+      - 3000:3000
+
+  roda:
+    build: ruby/roda
+    ports:
+      - 3000:3000
+
+  sinatra:
+    build: ruby/sinatra
+    ports:
+      - 3000:3000
