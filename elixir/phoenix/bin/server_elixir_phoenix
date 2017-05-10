@@ -1,1 +1,1 @@
-cd elixir/phoenix; mix phoenix.server
+cd elixir/phoenix; _build/prod/rel/my_phoenix/bin/my_phoenix foreground

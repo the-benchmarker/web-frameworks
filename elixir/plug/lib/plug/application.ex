@@ -12,7 +12,12 @@ defmodule MyPlug.Application do
     children = [
       # Starts a worker by calling: Plug.Worker.start_link(arg1, arg2, arg3)
       # worker(Plug.Worker, [arg1, arg2, arg3]),
-      Plug.Adapters.Cowboy.child_spec(:http, MyPlug.Router, [], [port: 3000])
+      Plug.Adapters.Cowboy.child_spec(:http, MyPlug.Router, [], [
+                                        port: 3000,
+                                        protocol_options: [
+                                          max_keepalive: 5_000_000
+                                        ]
+                                      ])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

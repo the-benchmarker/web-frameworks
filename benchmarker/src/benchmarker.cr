@@ -66,9 +66,12 @@ class ExecServer
       kill_proc("puma")
     elsif @target.name == "express"
       kill_proc("node")
-    elsif @target.name == "plug" ||
-          @target.name == "phoenix"
-      kill_proc("iex")
+    elsif @target.name == "plug"
+      path = File.expand_path("../../../elixir/plug/_build/prod/rel/my_plug/bin/my_plug", __FILE__)
+      Process.run("bash #{path} stop", shell: true)
+    elsif @target.name == "phoenix"
+      path = File.expand_path("../../../elixir/phoenix/_build/prod/rel/my_phoenix/bin/my_phoenix", __FILE__)
+      Process.run("bash #{path} stop", shell: true)
     end
   end
 
