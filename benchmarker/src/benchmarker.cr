@@ -57,34 +57,15 @@ class ExecServer
 
   # Kill the server process
   def kill
-    @process.not_nil!.kill
-
-    # Since ruby's frameworks are running on puma, we have to kill the independent process
-    if @target.name == "rails" ||
-       @target.name == "roda" ||
-       @target.name == "sinatra"
-      kill_proc("puma")
-    elsif @target.name == "express"
-      kill_proc("node")
-    elsif @target.name == "plug"
+    if @target.name == "plug"
       path = File.expand_path("../../../elixir/plug/_build/prod/rel/my_plug/bin/my_plug", __FILE__)
       Process.run("bash #{path} stop", shell: true)
     elsif @target.name == "phoenix"
       path = File.expand_path("../../../elixir/phoenix/_build/prod/rel/my_phoenix/bin/my_phoenix", __FILE__)
       Process.run("bash #{path} stop", shell: true)
     end
-  end
-
-  def kill_proc(proc : String)
-    # Search pid of the process
-    proc = `ps aux | grep #{proc} | grep -v grep`
-    proc.split(" ").each do |pid|
-      if /\d+/ =~ pid
-        _pid = $~[0].to_i
-        Process.kill(Signal::TERM, _pid)
-        break
-      end
-    end
+    # kill the server_lang_framework @process AND it's children
+    Process.run("pkill -9 -P #{@process.pid}", shell: true)
   end
 end
 
