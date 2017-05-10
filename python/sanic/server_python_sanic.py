@@ -4,7 +4,7 @@
 from sanic import Sanic 
 from sanic.response import text
 
-app = Sanic()
+app = Sanic(log_config=None)
 
 @app.route("/")
 async def index(request):
@@ -22,4 +22,5 @@ async def user(request):
 
 
 if __name__ == '__main__':
-    app.run(port=3000, log_config=None, debug=False)
+    app.config.LOGO=None
+    app.run(port=3000, log_config=None)
