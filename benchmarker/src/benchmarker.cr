@@ -152,7 +152,8 @@ header("Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]",
 header("-" * 25, "-" * 25, "-" * 15, "-" * 15, "-" * 15)
 
 targets = if ARGV.size > 0
-            all_frameworks.reject{ |target| target.lang != ARGV[0] && target.name != ARGV[0] }
+          # all_frameworks.reject{ |target| target.lang != ARGV[0] && target.name != ARGV[0] }
+            all_frameworks.select{ |target| ARGV.includes?(target.lang) || ARGV.includes?(target.name) }
           else
             all_frameworks
           end
