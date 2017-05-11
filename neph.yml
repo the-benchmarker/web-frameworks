@@ -137,14 +137,14 @@ elixir:
 
 plug:
   command: |
-    mix deps.get --force
+    echo "yes" | mix deps.get --force; MIX_ENV=prod mix release --no-tar
     ln -s -f ../elixir/plug/bin/server_elixir_plug ../../bin/.
   chdir:
     elixir/plug
 
 phoenix:
   command: |
-    mix deps.get --force
+    echo "yes" | mix do local.rebar; mix deps.get --force; MIX_ENV=prod mix release --no-tar
     ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix ../../bin/.
   chdir:
     elixir/phoenix
