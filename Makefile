@@ -118,7 +118,7 @@ python: sanic
 
 # Sanic
 sanic:
-	cd python/sanic; pip3 install sanic; chmod +x server_python_sanic.py
+	cd python/sanic; pip3 install -r requirements.txt; chmod +x server_python_sanic.py
 	ln -s -f ../python/sanic/server_python_sanic.py bin/server_python_sanic
 
 # --- Benchmarker ---
