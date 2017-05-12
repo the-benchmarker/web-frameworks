@@ -1,15 +1,11 @@
-all: elixir node ruby crystal go rust swift client benchmarker
+all: elixir node ruby crystal go rust swift python client benchmarker
 
 # --- Elixir ---
-elixir: plug phoenix
+elixir: plug
 
 plug:
-	cd elixir/plug; mix deps.get --force; MIX_ENV=prod mix release --no-tar
+	cd elixir/plug; mix deps.get --force
 	ln -s -f ../elixir/plug/bin/server_elixir_plug bin/.
-
-phoenix:
-	cd elixir/phoenix; mix deps.get --force; MIX_ENV=prod mix release  --no-tar
-	ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix bin/.
 
 # --- node.js ---
 node: express
@@ -113,6 +109,14 @@ kitura:
 	cd swift/kitura; swift build --configuration release
 	ln -s -f ../swift/kitura/.build/release/server_swift_kitura bin/.
 
+# --- Python ---
+python: sanic
+
+# Sanic
+sanic:
+	cd python/sanic; pip3 install sanic; chmod +x server_python_sanic.py
+	ln -s -f ../python/sanic/server_python_sanic.py bin/server_python_sanic
+
 # --- Benchmarker ---
 # client
 client:
@@ -127,3 +131,4 @@ benchmarker:
 # Cleaning all executables
 clean:
 	rm -rf bin/*
+	rm -rf *.log
