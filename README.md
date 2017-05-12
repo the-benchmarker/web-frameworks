@@ -98,6 +98,11 @@ For each framework
 > bin/benchmarker rails
 ```
 
+For comparison (Comparing rails, kemal and router.cr in this example)
+```bash
+> bin/benchmarker rails crystal
+```
+
 If you take it manually, you can run each server by
 ```bash
 > bin/server_[Language]_[Framework]
