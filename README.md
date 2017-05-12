@@ -115,6 +115,16 @@ You can set # of threads and # of the loops of the request(there are 3 requests 
 In the above example, 16 threads requests 1000 * 3 times.
 So 48000 requests are sent in total.
 
+## Using Docker
+Setup servers by using `docker` is in **work in progress**. Currently, crystal and ruby servers are supported. For example
+```bash
+docker-compose up rails
+```
+
+Then you can run your client by
+```bash
+time ./bin/client
+```
 ## Development
  - **Give me PR when you want to add other web frameworks**
  - **Give me PR when you can tuning each framework (under the rule)**

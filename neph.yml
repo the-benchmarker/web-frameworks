@@ -7,6 +7,7 @@ main:
     - rust
     - elixir
     - swift
+    - python
     - benchmarker
 
 node:
@@ -176,6 +177,17 @@ kitura:
     ln -s -f ../swift/kitura/.build/release/server_swift_kitura ../../bin/.
   chdir:
     swift/kitura
+
+python:
+  depends_on:
+    - sanic
+
+sanic:
+  command: |
+    pip3 install -r requirements.txt; chmod +x server_python_sanic.py
+    ln -s -f ../python/sanic/server_python_sanic.py ../../bin/server_python_sanic
+  chdir:
+    python/sanic
 
 benchmarker:
   command: |
