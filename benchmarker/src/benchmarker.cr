@@ -39,6 +39,10 @@ LANGS = [
      {name: "perfect", bin: "server_swift_perfect"},
      {name: "kitura", bin: "server_swift_kitura"},
    ]},
+  {lang: "scala", targets: [
+     {name: "akkahttp", bin: "server_scala_akkahttp"},
+     {name: "akkahttp-low", bin: "server_scala_akkahttp-low"},
+   ]},
 ]
 
 # struct for benchmark result
@@ -72,6 +76,9 @@ class ExecServer
     elsif @target.name == "phoenix"
       path = File.expand_path("../../../elixir/phoenix/_build/prod/rel/my_phoenix/bin/my_phoenix", __FILE__)
       Process.run("bash #{path} stop", shell: true)
+    elsif @target.name == "akkahttp" ||
+       @target.name == "akkahttp-low"
+      kill_proc("akkahttp")
     end
   end
 

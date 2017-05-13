@@ -112,6 +112,16 @@ perfect:
 kitura:
 	cd swift/kitura; swift build --configuration release
 	ln -s -f ../swift/kitura/.build/release/server_swift_kitura bin/.
+# --- Scala ---
+scala: akkahttp akkahttp-low
+
+# Akka-HTTP
+akkahttp:
+	cd scala/akkahttp; sbt assembly
+	ln -s -f ../scala/akkahttp/target/scala-2.12/server_scala_akkahttp bin/.
+akkahttp-low:
+	cd scala/akkahttp-low; sbt assembly
+	ln -s -f ../scala/akkahttp-low/target/scala-2.12/server_scala_akkahttp-low bin/.
 
 # --- Benchmarker ---
 # client
