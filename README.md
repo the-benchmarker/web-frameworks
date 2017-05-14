@@ -31,6 +31,8 @@ Measuring response times for each framework(middleware).  Each framework has to 
    - [Vapor](https://vapor.codes)
    - [Perfect](https://www.perfect.org)
    - [Kitura](http://www.kitura.io)
+ - Python
+   - [sanic](https://github.com/channelcat/sanic)
 
 See Development section when you want to add new languages for frameworks.
 
@@ -139,7 +141,7 @@ time ./bin/client
  - `benchmarker/benchmarker.cr` <- Adding it as a target to
  - `README.md` <- Adding it as a target framework of the list
  - `Makefile`
- - `neph.yml`(optional)
+ - `neph.yml` (optional)
 
 Anyway, you don't have to care about details since maintainer can fix them after merging it. The result will be updated by maintainer.
 

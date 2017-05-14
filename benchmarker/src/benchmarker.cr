@@ -39,12 +39,17 @@ LANGS = [
      {name: "perfect", bin: "server_swift_perfect"},
      {name: "kitura", bin: "server_swift_kitura"},
    ]},
+  {lang: "python", targets: [
+     {name: "sanic", bin: "server_python_sanic"},
+   ]},
 ]
 
 # struct for benchmark result
 record BenchResult, max : Float64, min : Float64, ave : Float64, total : Float64
 # struct for target
 record Target, lang : String, name : String, bin : String
+
+record Ranked, res : BenchResult, target : Target
 
 # Executor of each server
 class ExecServer
@@ -90,7 +95,7 @@ def benchmark(server, count) : BenchResult
   exec_server = ExecServer.new(server)
 
   # Wait for the binding
-  sleep 5
+  sleep 7
 
   count.times do |i|
     span = client
@@ -141,7 +146,37 @@ targets = if ARGV.size > 0
 
 abort "No targets found for #{ARGV[0]}" if targets.size == 0
 
+ranks = [] of Ranked
+
 targets.each do |target|
   result = benchmark(target, 5)
   result_line(target.lang, target.name, result.max, result.min, result.ave)
+  ranks.push(Ranked.new(result, target))
+end
+
+ranks.sort! do |rank0, rank1|
+  rank0.res.ave <=> rank1.res.ave
+end
+
+puts ""
+puts " -- Ranking (Language) -- "
+
+ranked_langs = [] of String
+rank = 1
+
+ranks.each do |ranked|
+  next if ranked_langs.includes?(ranked.target.lang)
+  puts "#{rank}. #{ranked.target.lang} (#{ranked.target.name}) #{ranked.res.ave}"
+  ranked_langs.push(ranked.target.lang)
+  rank += 1
+end
+
+puts ""
+puts " -- Ranking (Framework) -- "
+
+rank = 1
+
+ranks.each do |ranked|
+  puts "#{rank}. #{ranked.target.name} #{ranked.res.ave}"
+  rank += 1
 end
