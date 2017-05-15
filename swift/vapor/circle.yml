@@ -1,0 +1,11 @@
+dependencies:
+  override:
+    - eval "$(curl -sL https://apt.vapor.sh)"
+    - sudo apt-get install vapor
+    - sudo chmod -R a+rx /usr/
+test:
+  override:
+    - swift build
+    - swift build -c release
+    - swift test
+    

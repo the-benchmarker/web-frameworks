@@ -2,106 +2,112 @@
   "autoPin": true,
   "pins": [
     {
-      "package": "BCrypt",
+      "package": "CLibreSSL",
       "reason": null,
-      "repositoryURL": "https://github.com/vapor/bcrypt.git",
-      "version": "1.0.0-beta.1"
-    },
-    {
-      "package": "Bits",
-      "reason": null,
-      "repositoryURL": "https://github.com/vapor/bits.git",
-      "version": "1.0.0-beta.6"
-    },
-    {
-      "package": "CTLS",
-      "reason": null,
-      "repositoryURL": "https://github.com/vapor/ctls.git",
-      "version": "1.0.0-beta.4"
+      "repositoryURL": "https://github.com/vapor/clibressl.git",
+      "version": "1.0.0"
     },
     {
       "package": "Console",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/console.git",
-      "version": "2.0.0-beta.6"
+      "version": "1.0.2"
     },
     {
       "package": "Core",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/core.git",
-      "version": "2.0.0-beta.9"
+      "version": "1.1.2"
     },
     {
       "package": "Crypto",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/crypto.git",
-      "version": "2.0.0-beta.1"
-    },
-    {
-      "package": "Debugging",
-      "reason": null,
-      "repositoryURL": "https://github.com/vapor/debugging.git",
-      "version": "1.0.0-beta.1"
+      "version": "1.1.0"
     },
     {
       "package": "Engine",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/engine.git",
-      "version": "2.0.0-beta.6"
+      "version": "1.3.12"
+    },
+    {
+      "package": "Fluent",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor/fluent.git",
+      "version": "1.4.3"
     },
     {
       "package": "JSON",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/json.git",
-      "version": "2.0.0-beta.5"
+      "version": "1.0.6"
+    },
+    {
+      "package": "Jay",
+      "reason": null,
+      "repositoryURL": "https://github.com/DanToml/Jay.git",
+      "version": "1.0.1"
+    },
+    {
+      "package": "Leaf",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor/leaf.git",
+      "version": "1.0.7"
     },
     {
       "package": "Multipart",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/multipart.git",
-      "version": "2.0.0-beta.2"
+      "version": "1.0.3"
     },
     {
       "package": "Node",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/node.git",
-      "version": "2.0.0-beta.7"
+      "version": "1.0.1"
     },
     {
       "package": "PathIndexable",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/path-indexable.git",
-      "version": "2.0.0-beta.1"
+      "version": "1.0.0"
     },
     {
-      "package": "Random",
+      "package": "Polymorphic",
       "reason": null,
-      "repositoryURL": "https://github.com/vapor/random.git",
-      "version": "1.0.0-beta.3"
+      "repositoryURL": "https://github.com/vapor/polymorphic.git",
+      "version": "1.0.1"
     },
     {
       "package": "Routing",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/routing.git",
-      "version": "2.0.0-beta.5"
+      "version": "1.1.0"
     },
     {
-      "package": "Sockets",
+      "package": "Socks",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/socks.git",
-      "version": "2.0.0-beta.6"
+      "version": "1.2.7"
     },
     {
       "package": "TLS",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/tls.git",
-      "version": "2.0.0-beta.4"
+      "version": "1.1.2"
+    },
+    {
+      "package": "Turnstile",
+      "reason": null,
+      "repositoryURL": "https://github.com/stormpath/Turnstile.git",
+      "version": "1.0.6"
     },
     {
       "package": "Vapor",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/vapor.git",
-      "version": "2.0.0-beta.26"
+      "version": "1.5.15"
     }
   ],
   "version": 1

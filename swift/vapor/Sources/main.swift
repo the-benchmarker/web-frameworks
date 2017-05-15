@@ -1,19 +1,23 @@
 import Vapor
 
-let drop = Droplet(environment: .production)
+/// Manually override config
+let config = Config([:])
+config.arguments = ["vapor", "serve", "--port=3000"]
+config.environment = .production
 
-drop.get("/") { _ in
+let drop = try Droplet(config)
+
+drop.get("/") { req in
     return ""
 }
 
-drop.get("user", String.self) { _, userID in
+drop.get("user", String.parameter) { req in
+    let userID = try req.parameters.next(String.self)
     return userID
 }
 
-drop.post("user") { _ in
+drop.post("user") { req in
     return ""
 }
 
-drop.run(servers: [
-    "default": (host: "127.0.0.1", port: 3000, securityLayer: .none)
-])
+try drop.run()
