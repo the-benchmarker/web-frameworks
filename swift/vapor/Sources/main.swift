@@ -5,7 +5,7 @@ let config = Config([:])
 config.arguments = ["vapor", "serve", "--port=3000"]
 config.environment = .production
 
-let drop = try Droplet(config)
+let drop = try Droplet(config: config, middleware: [])
 
 drop.get("/") { req in
     return ""
