@@ -128,7 +128,7 @@ sanic:
 # --- Benchmarker ---
 # client
 client:
-	cd benchmarker; crystal build src/client.cr -o bin/client --release --link-flags -L/usr/local/opt/openssl/lib
+	cd benchmarker; crystal build src/client.cr -o bin/client --release
 	ln -s -f ../benchmarker/bin/client bin/.
 
 # benchmarker
