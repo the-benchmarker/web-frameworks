@@ -114,12 +114,17 @@ kitura:
 	ln -s -f ../swift/kitura/.build/release/server_swift_kitura bin/.
 
 # --- Python ---
-python: sanic
+python: sanic japronto
 
 # Sanic
 sanic:
 	cd python/sanic; pip3 install -r requirements.txt; chmod +x server_python_sanic.py
 	ln -s -f ../python/sanic/server_python_sanic.py bin/server_python_sanic
+
+# Japronto 
+japronto:
+	cd python/japronto; pip3 install -r requirements.txt; chmod +x server_python_japronto.py
+	ln -s -f ../python/japronto/server_python_japronto.py bin/server_python_japronto
 
 # --- Benchmarker ---
 # client
