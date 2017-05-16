@@ -96,13 +96,9 @@ rocket:
 	ln -s -f ../rust/rocket/target/release/server_rust_rocket bin/.
 
 # --- Swift ---
-swift: vapor vapor-1 perfect kitura
+swift: vapor perfect kitura
 
 # Vapor
-vapor-1:
-	cd swift/vapor-1; swift build --configuration release
-	ln -s -f ../swift/vapor-1/.build/release/server_swift_vapor_1 bin/.
-
 vapor:
 	cd swift/vapor; swift build -c release
 	ln -s -f ../swift/vapor/.build/release/server_swift_vapor bin/.

@@ -36,7 +36,6 @@ LANGS = [
    ]},
   {lang: "swift", targets: [
      {name: "vapor", bin: "server_swift_vapor"},
-     {name: "vapor-1", bin: "server_swift_vapor_1"},
      {name: "perfect", bin: "server_swift_perfect"},
      {name: "kitura", bin: "server_swift_kitura"},
    ]},
