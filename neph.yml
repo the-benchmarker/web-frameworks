@@ -181,6 +181,7 @@ kitura:
 python:
   depends_on:
     - sanic
+    - japronto
 
 sanic:
   command: |
@@ -188,6 +189,13 @@ sanic:
     ln -s -f ../python/sanic/server_python_sanic.py ../../bin/server_python_sanic
   dir:
     python/sanic
+
+japronto:
+  command: |
+    pip3 install -r requirements.txt; chmod +x server_python_japronto.py
+    ln -s -f ../python/japronto/server_python_japronto.py ../../bin/server_python_japronto
+  dir:
+    python/japronto
 
 benchmarker:
   command: |

@@ -33,6 +33,7 @@ Measuring response times for each framework(middleware).  Each framework has to 
    - [Kitura](http://www.kitura.io)
  - Python
    - [sanic](https://github.com/channelcat/sanic)
+   - [japronto](https://github.com/squeaky-pl/japronto)
 
 See Development section when you want to add new languages for frameworks.
 
