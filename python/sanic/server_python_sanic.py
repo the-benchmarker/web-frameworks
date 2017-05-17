@@ -1,7 +1,8 @@
 #!/usr/bin/env python3.5
 # -*- coding: utf-8 -*-
 
-from sanic import Sanic 
+import os
+from sanic import Sanic
 from sanic.response import text
 
 app = Sanic(log_config=None)
@@ -23,4 +24,4 @@ async def user(request):
 
 if __name__ == '__main__':
     app.config.LOGO=None
-    app.run(port=3000, log_config=None)
+    app.run(port=3000, log_config=None, workers=os.cpu_count())
