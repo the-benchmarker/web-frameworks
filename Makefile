@@ -113,13 +113,13 @@ kitura:
 	cd swift/kitura; swift build --configuration release
 	ln -s -f ../swift/kitura/.build/release/server_swift_kitura bin/.
 
-# --- dotnet ---
-dotnet: aspnetcore
+# --- C# ---
+csharp: aspnetcore
 
 # ASP.NET Core
 aspnetcore:
-	cd dotnet/aspnetcore; dotnet restore && dotnet build
-	ln -s -f ../dotnet/aspnetcore/bin/server_dotnet_aspnetcore bin/.
+	cd csharp/aspnetcore; dotnet restore && dotnet build
+	ln -s -f ../csharp/aspnetcore/bin/server_csharp_aspnetcore bin/.
 
 # --- Python ---
 python: sanic japronto

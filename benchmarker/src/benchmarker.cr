@@ -39,8 +39,8 @@ LANGS = [
      {name: "perfect", bin: "server_swift_perfect"},
      {name: "kitura", bin: "server_swift_kitura"},
    ]},
-  {lang: "dotnet", targets: [
-     {name: "aspnetcore", bin: "server_dotnet_aspnetcore"},
+  {lang: "csharp", targets: [
+     {name: "aspnetcore", bin: "server_csharp_aspnetcore"},
    ]},
   {lang: "python", targets: [
      {name: "sanic", bin: "server_python_sanic"},
