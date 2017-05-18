@@ -118,7 +118,7 @@ dotnet: aspnetcore
 
 # ASP.NET Core
 aspnetcore:
-	cd dotnet/aspnetcore; dotnet restore && dotnet build && dotnet run
+	cd dotnet/aspnetcore; dotnet restore && dotnet build
 	ln -s -f ../dotnet/aspnetcore/bin/server_dotnet_aspnetcore bin/.
 
 # --- Python ---
