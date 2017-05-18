@@ -113,6 +113,14 @@ kitura:
 	cd swift/kitura; swift build --configuration release
 	ln -s -f ../swift/kitura/.build/release/server_swift_kitura bin/.
 
+# --- dotnet ---
+dotnet: aspnetcore
+
+# ASP.NET Core
+aspnetcore:
+	cd dotnet/aspnetcore; dotnet restore && dotnet build && dotnet run
+	ln -s -f ../dotnet/aspnetcore/bin/server_dotnet_aspnetcore bin/.
+
 # --- Benchmarker ---
 # client
 client:
