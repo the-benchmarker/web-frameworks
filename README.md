@@ -31,7 +31,7 @@ Measuring response times for each framework(middleware).  Each framework has to 
    - [Vapor](https://vapor.codes)
    - [Perfect](https://www.perfect.org)
    - [Kitura](http://www.kitura.io)
- - Dotnet
+ - C#
    - [ASP.NET Core](https://www.microsoft.com/net/core)
  - Python
    - [sanic](https://github.com/channelcat/sanic)
