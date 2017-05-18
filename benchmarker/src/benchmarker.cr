@@ -29,6 +29,7 @@ LANGS = [
    ]},
   {lang: "node", targets: [
      {name: "express", bin: "server_node_express"},
+     {name: "clusterexpress", bin: "server_node_clusterexpress"},
    ]},
   {lang: "elixir", targets: [
      {name: "plug", bin: "server_elixir_plug"},

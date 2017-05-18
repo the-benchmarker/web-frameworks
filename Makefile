@@ -12,11 +12,14 @@ phoenix:
 	ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix bin/.
 
 # --- node.js ---
-node: express
+node: express clusterexpress
 
 express:
 	cd node/express; npm install
 	ln -s -f ../node/express/bin/server_node_express bin/.
+clusterexpress:
+	cd node/express; npm install
+	ln -s -f ../node/express/bin/server_node_clusterexpress bin/.
 
 # --- Ruby ---
 ruby: rails sinatra roda
