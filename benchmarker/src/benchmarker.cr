@@ -39,6 +39,9 @@ LANGS = [
      {name: "perfect", bin: "server_swift_perfect"},
      {name: "kitura", bin: "server_swift_kitura"},
    ]},
+  {lang: "dotnet", targets: [
+     {name: "aspnetcore", bin: "server_dotnet_aspnetcore"},
+   ]},
 ]
 
 # struct for benchmark result
