@@ -31,6 +31,8 @@ Measuring response times for each framework(middleware).  Each framework has to 
    - [Vapor](https://vapor.codes)
    - [Perfect](https://www.perfect.org)
    - [Kitura](http://www.kitura.io)
+ - Dotnet
+   - [ASP.NET Core](https://www.microsoft.com/net/core)
 
 See Development section when you want to add new languages for frameworks.
 
