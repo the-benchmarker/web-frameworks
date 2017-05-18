@@ -1,4 +1,4 @@
-all: elixir node ruby crystal go rust swift python client benchmarker
+all: elixir node ruby crystal go rust swift python csharp client benchmarker
 
 # --- Elixir ---
 elixir: plug phoenix
