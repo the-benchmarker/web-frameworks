@@ -1,14 +1,14 @@
-all: elixir node ruby crystal go rust swift client benchmarker
+all: elixir node ruby crystal go rust swift python client benchmarker
 
 # --- Elixir ---
 elixir: plug phoenix
 
 plug:
-	cd elixir/plug; mix deps.get --force; MIX_ENV=prod mix release --no-tar
+	cd elixir/plug; echo "yes" | mix deps.get --force; MIX_ENV=prod mix release --no-tar
 	ln -s -f ../elixir/plug/bin/server_elixir_plug bin/.
 
 phoenix:
-	cd elixir/phoenix; mix deps.get --force; MIX_ENV=prod mix release  --no-tar
+	cd elixir/phoenix; echo "yes" | mix do local.rebar; mix deps.get --force; MIX_ENV=prod mix release  --no-tar
 	ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix bin/.
 
 # --- node.js ---
@@ -121,6 +121,19 @@ aspnetcore:
 	cd dotnet/aspnetcore; dotnet restore && dotnet build && dotnet run
 	ln -s -f ../dotnet/aspnetcore/bin/server_dotnet_aspnetcore bin/.
 
+# --- Python ---
+python: sanic japronto
+
+# Sanic
+sanic:
+	cd python/sanic; pip3 install -r requirements.txt; chmod +x server_python_sanic.py
+	ln -s -f ../python/sanic/server_python_sanic.py bin/server_python_sanic
+
+# Japronto 
+japronto:
+	cd python/japronto; pip3 install -r requirements.txt; chmod +x server_python_japronto.py
+	ln -s -f ../python/japronto/server_python_japronto.py bin/server_python_japronto
+
 # --- Benchmarker ---
 # client
 client:
@@ -135,3 +148,4 @@ benchmarker:
 # Cleaning all executables
 clean:
 	rm -rf bin/*
+	rm -rf *.log

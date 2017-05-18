@@ -42,12 +42,17 @@ LANGS = [
   {lang: "dotnet", targets: [
      {name: "aspnetcore", bin: "server_dotnet_aspnetcore"},
    ]},
+  {lang: "python", targets: [
+     {name: "sanic", bin: "server_python_sanic"},
+   ]},
 ]
 
 # struct for benchmark result
 record BenchResult, max : Float64, min : Float64, ave : Float64, total : Float64
 # struct for target
 record Target, lang : String, name : String, bin : String
+
+record Ranked, res : BenchResult, target : Target
 
 # Executor of each server
 class ExecServer
@@ -60,34 +65,15 @@ class ExecServer
 
   # Kill the server process
   def kill
-    @process.not_nil!.kill
-
-    # Since ruby's frameworks are running on puma, we have to kill the independent process
-    if @target.name == "rails" ||
-       @target.name == "roda" ||
-       @target.name == "sinatra"
-      kill_proc("puma")
-    elsif @target.name == "express"
-      kill_proc("node")
-    elsif @target.name == "plug"
+    if @target.name == "plug"
       path = File.expand_path("../../../elixir/plug/_build/prod/rel/my_plug/bin/my_plug", __FILE__)
       Process.run("bash #{path} stop", shell: true)
     elsif @target.name == "phoenix"
       path = File.expand_path("../../../elixir/phoenix/_build/prod/rel/my_phoenix/bin/my_phoenix", __FILE__)
       Process.run("bash #{path} stop", shell: true)
     end
-  end
-
-  def kill_proc(proc : String)
-    # Search pid of the process
-    proc = `ps aux | grep #{proc} | grep -v grep`
-    proc.split(" ").each do |pid|
-      if /\d+/ =~ pid
-        _pid = $~[0].to_i
-        Process.kill(Signal::TERM, _pid)
-        break
-      end
-    end
+    # kill the server_lang_framework @process AND it's children
+    Process.run("pkill -9 -g $(ps -o pgid= #{@process.pid} | grep -o [0-9]*)", shell: true)
   end
 end
 
@@ -112,7 +98,7 @@ def benchmark(server, count) : BenchResult
   exec_server = ExecServer.new(server)
 
   # Wait for the binding
-  sleep 5
+  sleep 7
 
   count.times do |i|
     span = client
@@ -155,14 +141,45 @@ header("Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]",
 header("-" * 25, "-" * 25, "-" * 15, "-" * 15, "-" * 15)
 
 targets = if ARGV.size > 0
-            all_frameworks.reject{ |target| target.lang != ARGV[0] && target.name != ARGV[0] }
+          # all_frameworks.reject{ |target| target.lang != ARGV[0] && target.name != ARGV[0] }
+            all_frameworks.select{ |target| ARGV.includes?(target.lang) || ARGV.includes?(target.name) }
           else
             all_frameworks
           end
 
 abort "No targets found for #{ARGV[0]}" if targets.size == 0
 
+ranks = [] of Ranked
+
 targets.each do |target|
   result = benchmark(target, 5)
   result_line(target.lang, target.name, result.max, result.min, result.ave)
+  ranks.push(Ranked.new(result, target))
+end
+
+ranks.sort! do |rank0, rank1|
+  rank0.res.ave <=> rank1.res.ave
+end
+
+puts ""
+puts " -- Ranking (Language) -- "
+
+ranked_langs = [] of String
+rank = 1
+
+ranks.each do |ranked|
+  next if ranked_langs.includes?(ranked.target.lang)
+  puts "#{rank}. #{ranked.target.lang} (#{ranked.target.name}) #{ranked.res.ave}"
+  ranked_langs.push(ranked.target.lang)
+  rank += 1
+end
+
+puts ""
+puts " -- Ranking (Framework) -- "
+
+rank = 1
+
+ranks.each do |ranked|
+  puts "#{rank}. #{ranked.target.name} #{ranked.res.ave}"
+  rank += 1
 end

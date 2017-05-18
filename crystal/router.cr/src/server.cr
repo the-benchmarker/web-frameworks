@@ -29,7 +29,7 @@ class Server
   end
 
   def run
-    server = HTTP::Server.new(3000, @route_handler)
+    server = HTTP::Server.new("0.0.0.0", 3000, @route_handler)
     server.listen
   end
 

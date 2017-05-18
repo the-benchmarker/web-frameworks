@@ -33,6 +33,9 @@ Measuring response times for each framework(middleware).  Each framework has to 
    - [Kitura](http://www.kitura.io)
  - Dotnet
    - [ASP.NET Core](https://www.microsoft.com/net/core)
+ - Python
+   - [sanic](https://github.com/channelcat/sanic)
+   - [japronto](https://github.com/squeaky-pl/japronto)
 
 See Development section when you want to add new languages for frameworks.
 
@@ -100,6 +103,11 @@ For each framework
 > bin/benchmarker rails
 ```
 
+For comparison (Comparing rails, kemal and router.cr in this example)
+```bash
+> bin/benchmarker rails crystal
+```
+
 If you take it manually, you can run each server by
 ```bash
 > bin/server_[Language]_[Framework]
@@ -117,6 +125,16 @@ You can set # of threads and # of the loops of the request(there are 3 requests 
 In the above example, 16 threads requests 1000 * 3 times.
 So 48000 requests are sent in total.
 
+## Using Docker
+Setup servers by using `docker` is in **work in progress**. Currently, crystal and ruby servers are supported. For example
+```bash
+docker-compose up rails
+```
+
+Then you can run your client by
+```bash
+time ./bin/client
+```
 ## Development
  - **Give me PR when you want to add other web frameworks**
  - **Give me PR when you can tuning each framework (under the rule)**
@@ -126,7 +144,7 @@ So 48000 requests are sent in total.
  - `benchmarker/benchmarker.cr` <- Adding it as a target to
  - `README.md` <- Adding it as a target framework of the list
  - `Makefile`
- - `neph.yml`(optional)
+ - `neph.yml` (optional)
 
 Anyway, you don't have to care about details since maintainer can fix them after merging it. The result will be updated by maintainer.
 

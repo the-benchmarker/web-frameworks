@@ -1,1 +1,1 @@
-cd ruby/rails; bundle exec rails s -b 0.0.0.0 -e production
+cd ruby/rails; bundle exec rails s -b 0.0.0.0 -e production -p 3000
