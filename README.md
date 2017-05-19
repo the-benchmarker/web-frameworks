@@ -24,6 +24,7 @@ Measuring response times for each framework(middleware).  Each framework has to 
    - [Rocket](https://rocket.rs) (nightly)
  - node
    - [express](https://github.com/expressjs/express)
+   - [express/cluster](https://github.com/LearnBoost/cluster)
  - Elixir
    - [Plug](http://github.com/elixir-lang/plug)
    - [Phoenix](http://github.com/phoenixframework/phoenix)

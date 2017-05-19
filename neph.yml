@@ -21,6 +21,13 @@ express:
   dir:
     node/express
 
+clusterexpress:
+  command: |
+    npm install
+    ln -s -f ../node/express/bin/server_node_clusterexpress ../../bin/.
+  dir:
+    node/express
+
 ruby:
   depends_on:
     - rails
