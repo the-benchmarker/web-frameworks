@@ -8,6 +8,7 @@ main:
     - elixir
     - swift
     - python
+    - csharp
     - benchmarker
 
 node:
@@ -203,6 +204,18 @@ japronto:
     ln -s -f ../python/japronto/server_python_japronto.py ../../bin/server_python_japronto
   dir:
     python/japronto
+
+csharp:
+  depends_on:
+    - aspnetcore
+
+aspnetcore:
+  command: |
+    dotnet restore
+    dotnet build
+    ln -s -f ../csharp/aspnetcore/server_csharp_aspnetcore ../../bin/server_csharp_aspnetcore
+  dir:
+    csharp/aspnetcore
 
 benchmarker:
   command: |

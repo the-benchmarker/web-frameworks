@@ -1,4 +1,4 @@
-all: elixir node ruby crystal go rust swift python client benchmarker
+all: elixir node ruby crystal go rust swift python csharp client benchmarker
 
 # --- Elixir ---
 elixir: plug phoenix
@@ -115,6 +115,14 @@ perfect:
 kitura:
 	cd swift/kitura; swift build --configuration release
 	ln -s -f ../swift/kitura/.build/release/server_swift_kitura bin/.
+
+# --- C# ---
+csharp: aspnetcore
+
+# ASP.NET Core
+aspnetcore:
+	cd csharp/aspnetcore; dotnet restore && dotnet build
+	ln -s -f ../csharp/aspnetcore/server_csharp_aspnetcore bin/.
 
 # --- Python ---
 python: sanic japronto
