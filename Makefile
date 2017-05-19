@@ -119,7 +119,7 @@ csharp: aspnetcore
 # ASP.NET Core
 aspnetcore:
 	cd csharp/aspnetcore; dotnet restore && dotnet build
-	ln -s -f ../csharp/aspnetcore/bin/server_csharp_aspnetcore bin/.
+	ln -s -f ../csharp/aspnetcore/server_csharp_aspnetcore bin/.
 
 # --- Python ---
 python: sanic japronto
