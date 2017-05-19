@@ -159,7 +159,7 @@ swift:
 
 vapor:
   command: |
-    swift build --configuration release
+    swift build -c release
     ln -s -f ../swift/vapor/.build/release/server_swift_vapor ../../bin/.
   dir:
     swift/vapor
