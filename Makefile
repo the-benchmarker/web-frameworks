@@ -100,7 +100,7 @@ swift: vapor perfect kitura
 
 # Vapor
 vapor:
-	cd swift/vapor; swift build --configuration release
+	cd swift/vapor; swift build -c release
 	ln -s -f ../swift/vapor/.build/release/server_swift_vapor bin/.
 
 # Perfect
