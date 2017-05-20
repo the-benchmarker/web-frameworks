@@ -14,6 +14,7 @@ main:
 node:
   depends_on:
     - express
+    - clusterexpress
 
 express:
   command: |
