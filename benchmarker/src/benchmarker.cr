@@ -45,6 +45,7 @@ LANGS = [
    ]},
   {lang: "python", targets: [
      {name: "sanic", bin: "server_python_sanic"},
+     {name: "japronto", bin: "server_python_japronto"},
    ]},
 ]
 
