@@ -237,6 +237,6 @@ client:
   src:
     benchmarker/src/client.cr
 
-clean:
+clean_bin:
   command:
     rm -rf bin/*
