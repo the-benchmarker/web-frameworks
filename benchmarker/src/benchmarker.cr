@@ -74,7 +74,8 @@ class ExecServer
       Process.run("bash #{path} stop", shell: true)
     end
     # kill the server_lang_framework @process AND it's children
-    Process.run("pkill -9 -g $(ps -o pgid= #{@process.pid} | grep -o [0-9]*)", shell: true)
+    Process.run("pkill -9 -p #{@process.pid}", shell: true)
+    Process.run("kill -9 #{@process.pid}", shell: true)
   end
 end
 
