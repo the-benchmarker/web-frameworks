@@ -25,8 +25,6 @@ object Main {
 
 
     Http().bindAndHandle(route, "localhost", 3000)
-
-    println(s"Server online at http://localhost:3000")
   }
 
 }
