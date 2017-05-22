@@ -188,7 +188,6 @@ kitura:
   dir:
     swift/kitura
 
-<<<<<<< HEAD
 scala:
   depends_on:
     - akkahttp
@@ -197,9 +196,9 @@ akkahttp:
   command: |
     sbt assembly
     ln -s -f ../scala/akkahttp/target/scala-2.12/server_scala_akkahttp ../../bin/.
-  chdir:
+  dir:
     scala/akkahttp
-=======
+
 python:
   depends_on:
     - sanic
@@ -230,7 +229,6 @@ aspnetcore:
     ln -s -f ../csharp/aspnetcore/server_csharp_aspnetcore ../../bin/server_csharp_aspnetcore
   dir:
     csharp/aspnetcore
->>>>>>> origin/master
 
 benchmarker:
   command: |
