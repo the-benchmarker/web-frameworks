@@ -41,7 +41,6 @@ LANGS = [
    ]},
   {lang: "scala", targets: [
      {name: "akkahttp", bin: "server_scala_akkahttp"},
-     {name: "akkahttp-low", bin: "server_scala_akkahttp-low"},
    ]},
 ]
 
@@ -76,8 +75,7 @@ class ExecServer
     elsif @target.name == "phoenix"
       path = File.expand_path("../../../elixir/phoenix/_build/prod/rel/my_phoenix/bin/my_phoenix", __FILE__)
       Process.run("bash #{path} stop", shell: true)
-    elsif @target.name == "akkahttp" ||
-       @target.name == "akkahttp-low"
+    elsif @target.name == "akkahttp"
       kill_proc("akkahttp")
     end
   end

@@ -181,7 +181,6 @@ kitura:
 scala:
   depends_on:
     - akkahttp
-    - akkahttp-low
 
 akkahttp:
   command: |
@@ -189,12 +188,6 @@ akkahttp:
     ln -s -f ../scala/akkahttp/target/scala-2.12/server_scala_akkahttp ../../bin/.
   chdir:
     scala/akkahttp
-akkahttp-low:
-  command: |
-    sbt assembly
-    ln -s -f ../scala/akkahttp-low/target/scala-2.12/server_scala_akkahttp-low ../../bin/.
-  chdir:
-    scala/akkahttp-low
 
 benchmarker:
   command: |
