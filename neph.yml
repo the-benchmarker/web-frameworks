@@ -7,6 +7,7 @@ main:
     - rust
     - elixir
     - swift
+    - scala
     - python
     - csharp
     - benchmarker
@@ -186,6 +187,17 @@ kitura:
     ln -s -f ../swift/kitura/.build/release/server_swift_kitura ../../bin/.
   dir:
     swift/kitura
+
+scala:
+  depends_on:
+    - akkahttp
+
+akkahttp:
+  command: |
+    sbt assembly
+    ln -s -f ../scala/akkahttp/target/scala-2.12/server_scala_akkahttp ../../bin/.
+  dir:
+    scala/akkahttp
 
 python:
   depends_on:

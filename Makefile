@@ -1,4 +1,4 @@
-all: elixir node ruby crystal go rust swift python csharp client benchmarker
+all: elixir node ruby crystal go rust swift python csharp scala client benchmarker
 
 # --- Elixir ---
 elixir: plug phoenix
@@ -115,6 +115,14 @@ perfect:
 kitura:
 	cd swift/kitura; swift build --configuration release
 	ln -s -f ../swift/kitura/.build/release/server_swift_kitura bin/.
+
+# --- Scala ---
+scala: akkahttp
+
+# Akka-HTTP
+akkahttp:
+	cd scala/akkahttp; sbt assembly
+	ln -s -f ../scala/akkahttp/target/scala-2.12/server_scala_akkahttp bin/.
 
 # --- C# ---
 csharp: aspnetcore

@@ -40,6 +40,9 @@ LANGS = [
      {name: "perfect", bin: "server_swift_perfect"},
      {name: "kitura", bin: "server_swift_kitura"},
    ]},
+  {lang: "scala", targets: [
+     {name: "akkahttp", bin: "server_scala_akkahttp"},
+   ]},
   {lang: "csharp", targets: [
      {name: "aspnetcore", bin: "server_csharp_aspnetcore"},
    ]},
@@ -80,6 +83,8 @@ class ExecServer
     elsif @target.name == "phoenix"
       path = File.expand_path("../../../elixir/phoenix/_build/prod/rel/my_phoenix/bin/my_phoenix", __FILE__)
       Process.run("bash #{path} stop", shell: true)
+    elsif @target.name == "akkahttp"
+      kill_proc("akkahttp")
     elsif @target.name == "aspnetcore"
       kill_proc("dotnet")
     end

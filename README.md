@@ -32,6 +32,8 @@ Measuring response times for each framework(middleware).  Each framework has to 
    - [Vapor](https://vapor.codes)
    - [Perfect](https://www.perfect.org)
    - [Kitura](http://www.kitura.io)
+ - Scala
+   - [Akka-Http (Routing DSL)](http://doc.akka.io/docs/akka-http/current/scala/http/introduction.html#routing-dsl-for-http-servers)
  - C#
    - [ASP.NET Core](https://www.microsoft.com/net/core)
  - Python
