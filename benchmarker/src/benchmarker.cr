@@ -109,8 +109,7 @@ end
 # Running client and returning span
 def client
   s = Time.now
-  # `#{CLIENT} -t 16 -r 5000`
-  `#{CLIENT} -t 1 -r 1`
+  `#{CLIENT} -t 16 -r 5000`
   e = Time.now
   (e-s).to_f
 end
