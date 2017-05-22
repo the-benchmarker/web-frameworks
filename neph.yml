@@ -8,17 +8,27 @@ main:
     - elixir
     - swift
     - scala
+    - python
+    - csharp
     - benchmarker
 
 node:
   depends_on:
     - express
+    - clusterexpress
 
 express:
   command: |
     npm install
     ln -s -f ../node/express/bin/server_node_express ../../bin/.
-  chdir:
+  dir:
+    node/express
+
+clusterexpress:
+  command: |
+    npm install
+    ln -s -f ../node/express/bin/server_node_clusterexpress ../../bin/.
+  dir:
     node/express
 
 ruby:
@@ -32,7 +42,7 @@ rails:
     bundle update
     bundle install --path vendor/bundle
     ln -s -f ../ruby/rails/bin/server_ruby_rails ../../bin/.
-  chdir:
+  dir:
     ruby/rails
 
 sinatra:
@@ -40,7 +50,7 @@ sinatra:
     bundle update
     bundle install --path vendor/bundle
     ln -s -f ../ruby/sinatra/server_ruby_sinatra ../../bin/.
-  chdir:
+  dir:
     ruby/sinatra
 
 roda:
@@ -48,7 +58,7 @@ roda:
     bundle update
     bundle install --path vendor/bundle
     ln -s -f ../ruby/roda/server_ruby_roda ../../bin/.
-  chdir:
+  dir:
     ruby/roda
 
 crystal:
@@ -60,14 +70,14 @@ kemal:
   command: |
     shards build --release
     ln -s -f ../crystal/kemal/bin/server_crystal_kemal ../../bin/.
-  chdir:
+  dir:
     crystal/kemal
 
 router_cr:
   command: |
     shards build --release
     ln -s -f ../crystal/router.cr/bin/server_crystal_router_cr ../../bin/.
-  chdir:
+  dir:
     crystal/router.cr
 
 go:
@@ -81,7 +91,7 @@ echo:
     go get -u github.com/labstack/echo
     go build -o server_go_echo main.go
     ln -s -f ../go/echo/server_go_echo ../../bin/.
-  chdir:
+  dir:
     go/echo
 
 gorilla-mux:
@@ -89,7 +99,7 @@ gorilla-mux:
     go get -u github.com/gorilla/mux
     go build -o server_go_gorilla_mux main.go
     ln -s -f ../go/gorilla-mux/server_go_gorilla_mux ../../bin/.
-  chdir:
+  dir:
     go/gorilla-mux
 
 fasthttprouter:
@@ -98,7 +108,7 @@ fasthttprouter:
     go get -u github.com/valyala/fasthttp
     go build -o server_go_fasthttprouter main.go
     ln -s -f ../go/fasthttprouter/server_go_fasthttprouter ../../bin/.
-  chdir:
+  dir:
     go/fasthttprouter
 
 rust:
@@ -112,7 +122,7 @@ iron:
     cargo update
     cargo build --release
     ln -s -f ../rust/iron/target/release/server_rust_iron ../../bin/.
-  chdir:
+  dir:
     rust/iron
 
 nickel:
@@ -120,7 +130,7 @@ nickel:
     cargo update
     cargo build --release
     ln -s -f ../rust/nickel/target/release/server_rust_nickel ../../bin/.
-  chdir:
+  dir:
     rust/nickel
 
 rocket:
@@ -128,7 +138,7 @@ rocket:
     cargo update
     cargo build --release
     ln -s -f ../rust/rocket/target/release/server_rust_rocket ../../bin/.
-  chdir:
+  dir:
     rust/rocket
 
 elixir:
@@ -140,14 +150,14 @@ plug:
   command: |
     echo "yes" | mix deps.get --force; MIX_ENV=prod mix release --no-tar
     ln -s -f ../elixir/plug/bin/server_elixir_plug ../../bin/.
-  chdir:
+  dir:
     elixir/plug
 
 phoenix:
   command: |
     echo "yes" | mix do local.rebar; mix deps.get --force; MIX_ENV=prod mix release --no-tar
     ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix ../../bin/.
-  chdir:
+  dir:
     elixir/phoenix
 
 
@@ -159,25 +169,26 @@ swift:
 
 vapor:
   command: |
-    swift build --configuration release
+    swift build -c release
     ln -s -f ../swift/vapor/.build/release/server_swift_vapor ../../bin/.
-  chdir:
+  dir:
     swift/vapor
 
 perfect:
   command: |
     swift build --configuration release
     ln -s -f ../swift/perfect/.build/release/server_swift_perfect ../../bin/.
-  chdir:
+  dir:
     swift/perfect
 
 kitura:
   command: |
     swift build --configuration release
     ln -s -f ../swift/kitura/.build/release/server_swift_kitura ../../bin/.
-  chdir:
+  dir:
     swift/kitura
 
+<<<<<<< HEAD
 scala:
   depends_on:
     - akkahttp
@@ -188,6 +199,38 @@ akkahttp:
     ln -s -f ../scala/akkahttp/target/scala-2.12/server_scala_akkahttp ../../bin/.
   chdir:
     scala/akkahttp
+=======
+python:
+  depends_on:
+    - sanic
+    - japronto
+
+sanic:
+  command: |
+    pip3 install -r requirements.txt; chmod +x server_python_sanic.py
+    ln -s -f ../python/sanic/server_python_sanic.py ../../bin/server_python_sanic
+  dir:
+    python/sanic
+
+japronto:
+  command: |
+    pip3 install -r requirements.txt; chmod +x server_python_japronto.py
+    ln -s -f ../python/japronto/server_python_japronto.py ../../bin/server_python_japronto
+  dir:
+    python/japronto
+
+csharp:
+  depends_on:
+    - aspnetcore
+
+aspnetcore:
+  command: |
+    dotnet restore
+    dotnet build
+    ln -s -f ../csharp/aspnetcore/server_csharp_aspnetcore ../../bin/server_csharp_aspnetcore
+  dir:
+    csharp/aspnetcore
+>>>>>>> origin/master
 
 benchmarker:
   command: |
@@ -195,20 +238,20 @@ benchmarker:
     ln -s -f ../benchmarker/bin/benchmarker ../bin/.
   depends_on:
     client
-  chdir:
+  dir:
     benchmarker
-  sources:
+  src:
     benchmarker/src/benchmarker.cr
 
 client:
   command: |
     crystal build src/client.cr -o bin/client --release
     ln -s -f ../benchmarker/bin/client ../bin/.
-  chdir:
+  dir:
     benchmarker
-  sources:
+  src:
     benchmarker/src/client.cr
 
-clean:
+clean_bin:
   command:
     rm -rf bin/*

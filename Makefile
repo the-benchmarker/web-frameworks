@@ -1,4 +1,4 @@
-all: elixir node ruby crystal go rust swift client benchmarker
+all: elixir node ruby crystal go rust swift python csharp client benchmarker
 
 # --- Elixir ---
 elixir: plug phoenix
@@ -12,11 +12,14 @@ phoenix:
 	ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix bin/.
 
 # --- node.js ---
-node: express
+node: express clusterexpress
 
 express:
 	cd node/express; npm install
 	ln -s -f ../node/express/bin/server_node_express bin/.
+clusterexpress:
+	cd node/express; npm install
+	ln -s -f ../node/express/bin/server_node_clusterexpress bin/.
 
 # --- Ruby ---
 ruby: rails sinatra roda
@@ -100,7 +103,7 @@ swift: vapor perfect kitura
 
 # Vapor
 vapor:
-	cd swift/vapor; swift build --configuration release
+	cd swift/vapor; swift build -c release
 	ln -s -f ../swift/vapor/.build/release/server_swift_vapor bin/.
 
 # Perfect
@@ -121,6 +124,27 @@ akkahttp:
 	cd scala/akkahttp; sbt assembly
 	ln -s -f ../scala/akkahttp/target/scala-2.12/server_scala_akkahttp bin/.
 
+# --- C# ---
+csharp: aspnetcore
+
+# ASP.NET Core
+aspnetcore:
+	cd csharp/aspnetcore; dotnet restore && dotnet build
+	ln -s -f ../csharp/aspnetcore/server_csharp_aspnetcore bin/.
+
+# --- Python ---
+python: sanic japronto
+
+# Sanic
+sanic:
+	cd python/sanic; pip3 install -r requirements.txt; chmod +x server_python_sanic.py
+	ln -s -f ../python/sanic/server_python_sanic.py bin/server_python_sanic
+
+# Japronto 
+japronto:
+	cd python/japronto; pip3 install -r requirements.txt; chmod +x server_python_japronto.py
+	ln -s -f ../python/japronto/server_python_japronto.py bin/server_python_japronto
+
 # --- Benchmarker ---
 # client
 client:
@@ -135,3 +159,4 @@ benchmarker:
 # Cleaning all executables
 clean:
 	rm -rf bin/*
+	rm -rf *.log
