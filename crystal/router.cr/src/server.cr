@@ -1,6 +1,6 @@
 require "router"
 
-class Server
+struct Server
 
   @route_handler = RouteHandler.new
 
