@@ -1,7 +1,7 @@
 all: elixir node ruby crystal go rust swift python csharp scala client benchmarker
 
 # --- Elixir ---
-elixir: plug phoenix
+elixir: plug phoenix cowboy elli
 
 plug:
 	cd elixir/plug; echo "yes" | mix deps.get --force; MIX_ENV=prod mix release --no-tar
@@ -10,6 +10,14 @@ plug:
 phoenix:
 	cd elixir/phoenix; echo "yes" | mix do local.rebar; mix deps.get --force; MIX_ENV=prod mix release  --no-tar
 	ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix bin/.
+
+cowboy:
+	cd elixir/cowboy; echo "yes" | mix deps.get --force; MIX_ENV=prod mix do compile, release --env=prod --no-tar
+	ln -s -f ../elixir/cowboy/bin/server_elixir_cowboy bin/.
+
+elli:
+	cd elixir/elli; echo "yes" | mix deps.get --force; MIX_ENV=prod mix do compile, release --env=prod --no-tar
+	ln -s -f ../elixir/elli/bin/server_elixir_elli bin/.
 
 # --- node.js ---
 node: express clusterexpress
@@ -140,7 +148,7 @@ sanic:
 	cd python/sanic; pip3 install -r requirements.txt; chmod +x server_python_sanic.py
 	ln -s -f ../python/sanic/server_python_sanic.py bin/server_python_sanic
 
-# Japronto 
+# Japronto
 japronto:
 	cd python/japronto; pip3 install -r requirements.txt; chmod +x server_python_japronto.py
 	ln -s -f ../python/japronto/server_python_japronto.py bin/server_python_japronto

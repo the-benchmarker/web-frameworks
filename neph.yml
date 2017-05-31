@@ -145,6 +145,8 @@ elixir:
   depends_on:
     - plug
     - phoenix
+    - cowboy
+    - elli
 
 plug:
   command: |
@@ -159,6 +161,20 @@ phoenix:
     ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix ../../bin/.
   dir:
     elixir/phoenix
+
+cowboy:
+  command: |
+    echo "yes" | mix do local.rebar; mix deps.get --force; MIX_ENV=prod mix release --no-tar
+    ln -s -f ../elixir/cowboy/bin/server_elixir_cowboy ../../bin/.
+  dir:
+    elixir/cowboy
+
+elli:
+  command: |
+    echo "yes" | mix do local.rebar; mix deps.get --force; MIX_ENV=prod mix release --no-tar
+    ln -s -f ../elixir/elli/bin/server_elixir_elli ../../bin/.
+  dir:
+    elixir/elli
 
 
 swift:
