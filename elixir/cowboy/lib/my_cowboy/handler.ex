@@ -1,14 +1,14 @@
 defmodule MyCowboy.Handler do
 
-  def init(_type, req, _opts) do
-    {:ok, req, :no_state}
+  def init(_type, req, opts) do
+    {:ok, req, opts}
   end
 
-  def handle(req, state) do
+  def handle(req, opts) do
     {method, req} = :cowboy_req.method(req)
     {path, req} = :cowboy_req.path(req)
     {:ok, req} = reply(method, split_path(path), req)
-    {:ok, req, state}
+    {:ok, req, opts}
   end
 
   def terminate(_, _, _), do: :ok
