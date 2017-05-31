@@ -1,7 +1,7 @@
 all: elixir node ruby crystal go rust swift python csharp scala client benchmarker
 
 # --- Elixir ---
-elixir: plug phoenix cowboy elli
+elixir: plug phoenix cowboy1 cowboy2 elli
 
 plug:
 	cd elixir/plug; echo "yes" | mix deps.get --force; MIX_ENV=prod mix release --no-tar
@@ -11,9 +11,13 @@ phoenix:
 	cd elixir/phoenix; echo "yes" | mix do local.rebar; mix deps.get --force; MIX_ENV=prod mix release  --no-tar
 	ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix bin/.
 
-cowboy:
-	cd elixir/cowboy; echo "yes" | mix deps.get --force; MIX_ENV=prod mix do compile, release --env=prod --no-tar
-	ln -s -f ../elixir/cowboy/bin/server_elixir_cowboy bin/.
+cowboy1:
+	cd elixir/cowboy1; echo "yes" | mix deps.get --force; MIX_ENV=prod mix do compile, release --env=prod --no-tar
+	ln -s -f ../elixir/cowboy1/bin/server_elixir_cowboy1 bin/.
+
+cowboy2:
+	cd elixir/cowboy2; echo "yes" | mix deps.get --force; MIX_ENV=prod mix do compile, release --env=prod --no-tar
+	ln -s -f ../elixir/cowboy2/bin/server_elixir_cowboy2 bin/.
 
 elli:
 	cd elixir/elli; echo "yes" | mix deps.get --force; MIX_ENV=prod mix do compile, release --env=prod --no-tar
