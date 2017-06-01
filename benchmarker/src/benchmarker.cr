@@ -86,6 +86,15 @@ class ExecServer
     elsif @target.name == "phoenix"
       path = File.expand_path("../../../elixir/phoenix/_build/prod/rel/my_phoenix/bin/my_phoenix", __FILE__)
       Process.run("bash #{path} stop", shell: true)
+    elsif @target.name == "cowboy1"
+      path = File.expand_path("../../../elixir/cowboy1/_build/prod/rel/my_cowboy/bin/my_cowboy", __FILE__)
+      Process.run("bash #{path} stop", shell: true)
+    elsif @target.name == "cowboy2"
+      path = File.expand_path("../../../elixir/cowboy2/_build/prod/rel/my_cowboy/bin/my_cowboy", __FILE__)
+      Process.run("bash #{path} stop", shell: true)
+    elsif @target.name == "elli"
+      path = File.expand_path("../../../elixir/elli/_build/prod/rel/my_elli/bin/my_elli", __FILE__)
+      Process.run("bash #{path} stop", shell: true)
     elsif @target.name == "akkahttp"
       kill_proc("akkahttp")
     elsif @target.name == "aspnetcore"
