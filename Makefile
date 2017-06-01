@@ -11,13 +11,9 @@ phoenix:
 	cd elixir/phoenix; echo "yes" | mix do local.rebar; mix deps.get --force; MIX_ENV=prod mix release  --no-tar
 	ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix bin/.
 
-cowboy1:
-	cd elixir/cowboy1; echo "yes" | mix deps.get --force; MIX_ENV=prod mix do compile, release --env=prod --no-tar
-	ln -s -f ../elixir/cowboy1/bin/server_elixir_cowboy1 bin/.
-
-cowboy2:
-	cd elixir/cowboy2; echo "yes" | mix deps.get --force; MIX_ENV=prod mix do compile, release --env=prod --no-tar
-	ln -s -f ../elixir/cowboy2/bin/server_elixir_cowboy2 bin/.
+cowboy:
+	cd elixir/cowboy; echo "yes" | mix deps.get --force; MIX_ENV=prod mix do compile, release --env=prod --no-tar
+	ln -s -f ../elixir/cowboy/bin/server_elixir_cowboy bin/.
 
 elli:
 	cd elixir/elli; echo "yes" | mix deps.get --force; MIX_ENV=prod mix do compile, release --env=prod --no-tar
