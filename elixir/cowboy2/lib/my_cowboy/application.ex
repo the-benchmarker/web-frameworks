@@ -9,6 +9,6 @@ defmodule MyCowboy.Application do
                    max_keepalive: 5_000_000,
                    stream_handlers: [MyCowboy.StreamHandler]}
 
-    {:ok, _pid} = :cowboy.start_clear(:http, 100, trans_opts, proto_opts)
+    {:ok, _pid} = :cowboy.start_clear(:http, nb_acceptors, trans_opts, proto_opts)
   end
 end
