@@ -145,8 +145,7 @@ elixir:
   depends_on:
     - plug
     - phoenix
-    - cowboy1
-    - cowboy2
+    - cowboy
     - elli
 
 plug:
