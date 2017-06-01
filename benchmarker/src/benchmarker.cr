@@ -34,7 +34,8 @@ LANGS = [
   {lang: "elixir", targets: [
      {name: "plug", bin: "server_elixir_plug"},
      {name: "phoenix", bin: "server_elixir_phoenix"},
-     {name: "cowboy", bin: "server_elixir_cowboy"},
+     {name: "cowboy1", bin: "server_elixir_cowboy1"},
+     {name: "cowboy2", bin: "server_elixir_cowboy2"},
      {name: "elli", bin: "server_elixir_elli"},
    ]},
   {lang: "swift", targets: [
