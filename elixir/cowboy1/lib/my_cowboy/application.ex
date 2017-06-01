@@ -7,7 +7,9 @@ defmodule MyCowboy.Application do
 
     nb_acceptors = 100
     trans_opts = [port: 3000]
-    proto_opts = [env: [dispatch: dispatch], max_connections: 16_384]
+    proto_opts = [env: [dispatch: dispatch],
+                  max_connections: 16_384,
+                  max_keepalive: 5_000_000]
 
     children = [
       :ranch.child_spec(MyCowboy, nb_acceptors, :ranch_tcp, trans_opts, :cowboy_protocol, proto_opts)
