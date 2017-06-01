@@ -1,7 +1,7 @@
 all: elixir node ruby crystal go rust swift python csharp scala client benchmarker
 
 # --- Elixir ---
-elixir: plug phoenix cowboy1 cowboy2 elli
+elixir: plug phoenix cowboy elli
 
 plug:
 	cd elixir/plug; echo "yes" | mix deps.get --force; MIX_ENV=prod mix release --no-tar
