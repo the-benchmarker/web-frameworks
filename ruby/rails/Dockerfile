@@ -1,4 +1,4 @@
-FROM ruby:2.3
+FROM ruby:2.4
 
 RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
