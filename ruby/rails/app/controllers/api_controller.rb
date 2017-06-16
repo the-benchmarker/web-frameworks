@@ -1,11 +1,10 @@
 class ApiController < ApplicationController
-
   def index
     head 200
   end
 
   def user
-    render plain: params["id"]
+    render plain: params['id']
   end
 
   def register_user
