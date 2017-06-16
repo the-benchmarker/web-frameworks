@@ -1,12 +1,14 @@
 # Which is the fastest?
 
-Measuring response times for each framework(middleware).  Each framework has to have two features; routing and parsing path parameters.
+Measuring response times for each framework (middleware).
+Each framework has to have two features; routing and parsing path parameters.
 
 ## Result
 
 <img src="https://raw.githubusercontent.com/tbrand/which_is_the_fastest/master/imgs/result.png" width="1000"/>
 
-**Current target frameworks(middlewares)**
+**Current target frameworks (middlewares)**
+
  - Ruby
    - [Rails](https://github.com/rails/rails)
    - [Sinatra](https://github.com/sinatra/sinatra)
@@ -43,6 +45,7 @@ Measuring response times for each framework(middleware).  Each framework has to 
 See Development section when you want to add new languages for frameworks.
 
 ## The rule
+
 I want to know the response time, not a usability. So full-stack framework is at a disadvantage.
  - Each server has no special logics.
  - Each server's executable is named as `server_[Lauguage]_[Framework]`. (For example, `server_ruby_sinatra`)
@@ -153,7 +156,7 @@ Anyway, you don't have to care about details since maintainer can fix them after
 
 ## Contributing
 
-1. Fork it ( https://github.com/tbrand/which_is_the_fastest/fork )
+1. Fork it (https://github.com/tbrand/which_is_the_fastest/fork)
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
