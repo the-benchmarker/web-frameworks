@@ -28,8 +28,10 @@ Each framework has to have two features; routing and parsing path parameters.
    - [express](https://github.com/expressjs/express)
    - [express/cluster](https://github.com/LearnBoost/cluster)
  - Elixir
-   - [Plug](http://github.com/elixir-lang/plug)
-   - [Phoenix](http://github.com/phoenixframework/phoenix)
+   - [Plug](https://github.com/elixir-lang/plug)
+   - [Phoenix](https://github.com/phoenixframework/phoenix)
+   - [Cowboy](https://github.com/ninenines/cowboy)
+   - [Elli](https://github.com/knutin/elli)
  - Swift
    - [Vapor](https://vapor.codes)
    - [Perfect](https://www.perfect.org)

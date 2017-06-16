@@ -34,6 +34,9 @@ LANGS = [
   {lang: "elixir", targets: [
      {name: "plug", bin: "server_elixir_plug"},
      {name: "phoenix", bin: "server_elixir_phoenix"},
+     {name: "cowboy1", bin: "server_elixir_cowboy1"},
+     {name: "cowboy2", bin: "server_elixir_cowboy2"},
+     {name: "elli", bin: "server_elixir_elli"},
    ]},
   {lang: "swift", targets: [
      {name: "vapor", bin: "server_swift_vapor"},
@@ -82,6 +85,15 @@ class ExecServer
       Process.run("bash #{path} stop", shell: true)
     elsif @target.name == "phoenix"
       path = File.expand_path("../../../elixir/phoenix/_build/prod/rel/my_phoenix/bin/my_phoenix", __FILE__)
+      Process.run("bash #{path} stop", shell: true)
+    elsif @target.name == "cowboy1"
+      path = File.expand_path("../../../elixir/cowboy1/_build/prod/rel/my_cowboy/bin/my_cowboy", __FILE__)
+      Process.run("bash #{path} stop", shell: true)
+    elsif @target.name == "cowboy2"
+      path = File.expand_path("../../../elixir/cowboy2/_build/prod/rel/my_cowboy/bin/my_cowboy", __FILE__)
+      Process.run("bash #{path} stop", shell: true)
+    elsif @target.name == "elli"
+      path = File.expand_path("../../../elixir/elli/_build/prod/rel/my_elli/bin/my_elli", __FILE__)
       Process.run("bash #{path} stop", shell: true)
     elsif @target.name == "akkahttp"
       kill_proc("akkahttp")
