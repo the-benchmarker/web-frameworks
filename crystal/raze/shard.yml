@@ -1,0 +1,17 @@
+name: raze
+version: 0.1.0
+
+authors:
+  - tbrand <taichiro0709@gmail.com>
+
+targets:
+  server_crystal_raze:
+    main: src/server.cr
+
+dependencies:
+  raze:
+    github: samueleaton/raze
+
+crystal: 0.22.0
+
+license: MIT
