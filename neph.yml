@@ -72,6 +72,13 @@ kemal:
     ln -s -f ../crystal/kemal/bin/server_crystal_kemal ../../bin/.
   dir:
     crystal/kemal
+    
+raze:
+  command: |
+    shards build --release
+    ln -s -f ../crystal/raze/bin/server_crystal_raze ../../bin/.
+  dir:
+    crystal/raze
 
 router_cr:
   command: |
@@ -101,6 +108,14 @@ gorilla-mux:
     ln -s -f ../go/gorilla-mux/server_go_gorilla_mux ../../bin/.
   dir:
     go/gorilla-mux
+    
+iris:
+  command: |
+    go get -u github.com/kataras/iris
+    go build -o server_go_iris main.go
+    ln -s -f ../go/iris/server_go_iris ../../bin/.
+  dir:
+    go/iris
 
 fasthttprouter:
   command: |
