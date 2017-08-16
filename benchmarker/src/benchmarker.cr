@@ -16,11 +16,13 @@ LANGS = [
   {lang: "crystal", targets: [
      {name: "kemal", bin: "server_crystal_kemal"},
      {name: "router_cr", bin: "server_crystal_router_cr"},
+     {name: "raze", bin: "server_crystal_raze"},
    ]},
   {lang: "go", targets: [
      {name: "echo", bin: "server_go_echo"},
      {name: "gorilla_mux", bin: "server_go_gorilla_mux"},
      {name: "fasthttprouter", bin: "server_go_fasthttprouter"},
+     {name: "iris", bin: "server_go_iris"},
    ]},
   {lang: "rust", targets: [
      {name: "iron", bin: "server_rust_iron"},
