@@ -9,53 +9,53 @@ CLIENT = File.expand_path(PATH_PREFIX + "client", __FILE__)
 # Each framework
 LANGS = [
   {lang: "ruby", targets: [
-     {name: "rails", bin: "server_ruby_rails"},
-     {name: "sinatra", bin: "server_ruby_sinatra"},
-     {name: "roda", bin: "server_ruby_roda"},
+     {name: "rails", repo: "rails/rails"},
+     {name: "sinatra", repo: "sinatra/sinatra"},
+     {name: "roda", repo: "jeremyevans/roda"},
    ]},
   {lang: "crystal", targets: [
-     {name: "kemal", bin: "server_crystal_kemal"},
-     {name: "router_cr", bin: "server_crystal_router_cr"},
+     {name: "kemal", repo: "kemalcr/kemal"},
+     {name: "router_cr", repo: "tbrand/router.cr"},
    ]},
   {lang: "go", targets: [
-     {name: "echo", bin: "server_go_echo"},
-     {name: "gorilla_mux", bin: "server_go_gorilla_mux"},
-     {name: "fasthttprouter", bin: "server_go_fasthttprouter"},
+     {name: "echo", repo: "labstack/echo"},
+     {name: "gorilla_mux", repo: "gorilla/mux"},
+     {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
    ]},
   {lang: "rust", targets: [
-     {name: "iron", bin: "server_rust_iron"},
-     {name: "nickel", bin: "server_rust_nickel"},
-     {name: "rocket", bin: "server_rust_rocket"},
+     {name: "iron", repo: "iron/iron"},
+     {name: "nickel", repo: "nickel-org/nickel.rs"},
+     {name: "rocket", repo: "SergioBenitez/Rocket"},
    ]},
   {lang: "node", targets: [
-     {name: "express", bin: "server_node_express"},
-     {name: "clusterexpress", bin: "server_node_clusterexpress"},
+     {name: "express", repo: "expressjs/express"},
+     {name: "clusterexpress", repo: "LearnBoost/cluster"},
    ]},
   {lang: "elixir", targets: [
-     {name: "plug", bin: "server_elixir_plug"},
-     {name: "phoenix", bin: "server_elixir_phoenix"},
+     {name: "plug", repo: "elixir-lang/plug"},
+     {name: "phoenix", repo: "phoenixframework/phoenix"},
    ]},
   {lang: "swift", targets: [
-     {name: "vapor", bin: "server_swift_vapor"},
-     {name: "perfect", bin: "server_swift_perfect"},
-     {name: "kitura", bin: "server_swift_kitura"},
+     {name: "vapor", repo: "vapor/vapor"},
+     {name: "perfect", repo: "PerfectlySoft/Perfect"},
+     {name: "kitura", repo: "IBM-Swift/Kitura"},
    ]},
   {lang: "scala", targets: [
-     {name: "akkahttp", bin: "server_scala_akkahttp"},
+     {name: "akkahttp", repo: "akka/akka-http"},
    ]},
   {lang: "csharp", targets: [
-     {name: "aspnetcore", bin: "server_csharp_aspnetcore"},
+     {name: "aspnetcore", repo: "aspnet/Home"},
    ]},
   {lang: "python", targets: [
-     {name: "sanic", bin: "server_python_sanic"},
-     {name: "japronto", bin: "server_python_japronto"},
+     {name: "sanic", repo: "channelcat/sanic"},
+     {name: "japronto", repo: "squeaky-pl/japronto"},
    ]},
 ]
 
 # struct for benchmark result
 record BenchResult, max : Float64, min : Float64, ave : Float64, total : Float64
 # struct for target
-record Target, lang : String, name : String, bin : String
+record Target, lang : String, name : String, repo : String
 
 record Ranked, res : BenchResult, target : Target
 
@@ -63,7 +63,7 @@ record Ranked, res : BenchResult, target : Target
 class ExecServer
   def initialize(@target : Target)
     # Path of the executable
-    executable = File.expand_path(PATH_PREFIX + @target.bin, __FILE__)
+    executable = File.expand_path(PATH_PREFIX + "server_" + @target.lang + "_" + @target.name, __FILE__)
     # Running the server
     @process = Process.new(executable)
   end
@@ -84,7 +84,7 @@ class ExecServer
       path = File.expand_path("../../../elixir/phoenix/_build/prod/rel/my_phoenix/bin/my_phoenix", __FILE__)
       Process.run("bash #{path} stop", shell: true)
     elsif @target.name == "akkahttp"
-      kill_proc("akkahttp")
+      kill_proc("sbt")
     elsif @target.name == "aspnetcore"
       kill_proc("dotnet")
     end
@@ -109,7 +109,7 @@ end
 # Running client and returning span
 def client
   s = Time.now
-  `#{CLIENT} -t 16 -r 5000`
+  `#{CLIENT} -t 16 -r 1000`
   e = Time.now
   (e-s).to_f
 end
@@ -151,26 +151,19 @@ def all_frameworks : Array(Target)
 
   LANGS.each do |lang|
     lang[:targets].each do |framework|
-      targets.push(Target.new(lang[:lang], framework[:name], framework[:bin]))
+      targets.push(Target.new(lang[:lang], framework[:name], framework[:repo]))
     end
   end
 
   targets
 end
 
-def header(lang : String, name : String, max : String, min : String, ave : String)
-  puts "%-25s %-25s %15s %15s %15s" % [lang, name, max, min, ave]
+def puts_markdown(line, f = nil)
+  puts line
+  f.puts line if f
 end
 
-def result_line(lang : String, name : String, max : Float64, min : Float64, ave : Float64)
-  puts "%-25s %-25s %15f %15f %15f" % [lang, name, max, min, ave]
-end
-
-header("Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]", "Ave [sec]")
-header("-" * 25, "-" * 25, "-" * 15, "-" * 15, "-" * 15)
-
-targets = if ARGV.size > 0
-          # all_frameworks.reject{ |target| target.lang != ARGV[0] && target.name != ARGV[0] }
+targets = if ARGV.reject{ |opt| opt.starts_with?("--") }.size > 0
             all_frameworks.select{ |target| ARGV.includes?(target.lang) || ARGV.includes?(target.name) }
           else
             all_frameworks
@@ -178,37 +171,68 @@ targets = if ARGV.size > 0
 
 abort "No targets found for #{ARGV[0]}" if targets.size == 0
 
+f = if ARGV.includes?("--record")
+      File.open(File.expand_path("../../../res/README.md", __FILE__), "w")
+    end
+
+puts_markdown "# Result of the benchmark", f
+puts_markdown "", f
+puts_markdown "Last update: #{Time.now.to_s("%Y-%m-%d")}", f
+puts_markdown ""
+puts_markdown "Bechmark running..."
+
+all   = [] of Ranked
 ranks = [] of Ranked
 
 targets.each do |target|
   result = benchmark(target, 5)
-  result_line(target.lang, target.name, result.max, result.min, result.ave)
-  ranks.push(Ranked.new(result, target))
+  puts_markdown "Done. <- #{target.name}"
+  all.push(Ranked.new(result, target))
 end
 
-ranks.sort! do |rank0, rank1|
+ranks = all.sort do |rank0, rank1|
   rank0.res.ave <=> rank1.res.ave
 end
 
-puts ""
-puts " -- Ranking (Language) -- "
+# --- Ranking of frameworks
+
+puts_markdown "", f
+puts_markdown "## Ranking (Framework)", f
+puts_markdown "", f
+
+rank = 1
+
+ranks.each do |ranked|
+  puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo})", f
+  rank += 1
+end
+
+# --- Ranking of langages
+
+puts_markdown "", f
+puts_markdown "## Ranking (Language)", f
+puts_markdown "", f
 
 ranked_langs = [] of String
 rank = 1
 
 ranks.each do |ranked|
   next if ranked_langs.includes?(ranked.target.lang)
-  puts "#{rank}. #{ranked.target.lang} (#{ranked.target.name}) #{ranked.res.ave}"
+  puts_markdown "#{rank}. #{ranked.target.lang} ([#{ranked.target.name}](https://github.com/#{ranked.target.repo}))", f
   ranked_langs.push(ranked.target.lang)
   rank += 1
 end
 
-puts ""
-puts " -- Ranking (Framework) -- "
+# --- Result of all frameworks
 
-rank = 1
+puts_markdown "", f
+puts_markdown "## All frameworks", f
+puts_markdown "", f
+puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]", "Ave [sec]"], f
+puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", f
 
-ranks.each do |ranked|
-  puts "#{rank}. #{ranked.target.name} #{ranked.res.ave}"
-  rank += 1
+all.each do |framework|
+  puts_markdown "| %-25s | %-25s | %15f | %15f | %15f |" % [framework.target.lang, framework.target.name, framework.res.max, framework.res.min, framework.res.ave], f
 end
+
+f.close if f

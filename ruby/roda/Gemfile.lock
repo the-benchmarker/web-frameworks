@@ -1,9 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    puma (3.8.2)
+    puma (3.10.0)
     rack (2.0.3)
-    roda (2.26.0)
+    roda (2.29.0)
       rack
 
 PLATFORMS
@@ -14,4 +14,4 @@ DEPENDENCIES
   roda
 
 BUNDLED WITH
-   1.14.6
+   1.15.4

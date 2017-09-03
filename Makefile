@@ -122,7 +122,7 @@ scala: akkahttp
 # Akka-HTTP
 akkahttp:
 	cd scala/akkahttp; sbt assembly
-	ln -s -f ../scala/akkahttp/target/scala-2.12/server_scala_akkahttp bin/.
+	ln -s -f ../scala/akkahttp/bin/server_scala_akkahttp bin/.
 
 # --- C# ---
 csharp: aspnetcore
@@ -148,13 +148,13 @@ japronto:
 # --- Benchmarker ---
 # client
 client:
-	cd benchmarker; crystal build src/client.cr -o bin/client --release
-	ln -s -f ../benchmarker/bin/client bin/.
+	cd tools; crystal build src/client.cr -o bin/client --release
+	ln -s -f ../tools/bin/client bin/.
 
 # benchmarker
 benchmarker:
-	cd benchmarker; crystal build src/benchmarker.cr -o bin/benchmarker --release
-	ln -s -f ../benchmarker/bin/benchmarker bin/.
+	cd tools; crystal build src/benchmarker.cr -o bin/benchmarker --release
+	ln -s -f ../tools/bin/benchmarker bin/.
 
 # Cleaning all executables
 clean:

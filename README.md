@@ -5,9 +5,9 @@ Each framework has to have two features; routing and parsing path parameters.
 
 ## Result
 
-<img src="https://raw.githubusercontent.com/tbrand/which_is_the_fastest/master/imgs/result.png" width="1000"/>
+[HERE](https://github.com/tbrand/which_is_the_fastest/tree/master/res)
 
-**Current target frameworks (middlewares)**
+## Current target frameworks (middlewares)
 
  - Ruby
    - [Rails](https://github.com/rails/rails)
@@ -42,11 +42,11 @@ Each framework has to have two features; routing and parsing path parameters.
    - [sanic](https://github.com/channelcat/sanic)
    - [japronto](https://github.com/squeaky-pl/japronto)
 
-See Development section when you want to add new languages for frameworks.
+See Development section when you want to add new languages or frameworks.
 
 ## The rule
 
-I want to know the response time, not a usability. So full-stack framework is at a disadvantage.
+We want to know the response time, not a usability. So full-stack framework is at a disadvantage.
  - Each server has no special logics.
  - Each server's executable is named as `server_[Lauguage]_[Framework]`. (For example, `server_ruby_sinatra`)
  - There are only 3 routes
@@ -132,7 +132,7 @@ In the above example, 16 threads requests 1000 * 3 times.
 So 48000 requests are sent in total.
 
 ## Using Docker
-Setup servers by using `docker` is in **work in progress**. Currently, crystal and ruby servers are supported. For example
+Setup servers by using `docker` is under **WIP**. Currently, crystal and ruby servers are supported. For example
 ```bash
 docker-compose up rails
 ```
@@ -165,3 +165,4 @@ Anyway, you don't have to care about details since maintainer can fix them after
 ## Contributors
 
 - [tbrand](https://github.com/tbrand) Taichiro Suzuki - creator, maintainer
+- [OvermindDL1](https://github.com/OvermindDL1) OvermindDL1 - maintainer
