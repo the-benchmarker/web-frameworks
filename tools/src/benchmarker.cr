@@ -16,10 +16,12 @@ LANGS = [
   {lang: "crystal", targets: [
      {name: "kemal", repo: "kemalcr/kemal"},
      {name: "router_cr", repo: "tbrand/router.cr"},
+     {name: "raze", repo: "samueleaton/raze"},
    ]},
   {lang: "go", targets: [
      {name: "echo", repo: "labstack/echo"},
      {name: "gorilla_mux", repo: "gorilla/mux"},
+     {name: "iris", repo: "kataras/iris"},
      {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
    ]},
   {lang: "rust", targets: [
@@ -109,7 +111,7 @@ end
 # Running client and returning span
 def client
   s = Time.now
-  `#{CLIENT} -t 16 -r 1000`
+  `#{CLIENT} -t 16 -r 5000`
   e = Time.now
   (e-s).to_f
 end
@@ -158,9 +160,11 @@ def all_frameworks : Array(Target)
   targets
 end
 
-def puts_markdown(line, f = nil)
+m_lines = [] of String
+
+def puts_markdown(line, m_lines = nil, m = false)
   puts line
-  f.puts line if f
+  m_lines.push(line) if m && m_lines
 end
 
 targets = if ARGV.reject{ |opt| opt.starts_with?("--") }.size > 0
@@ -171,13 +175,7 @@ targets = if ARGV.reject{ |opt| opt.starts_with?("--") }.size > 0
 
 abort "No targets found for #{ARGV[0]}" if targets.size == 0
 
-f = if ARGV.includes?("--record")
-      File.open(File.expand_path("../../../res/README.md", __FILE__), "w")
-    end
-
-puts_markdown "# Result of the benchmark", f
-puts_markdown "", f
-puts_markdown "Last update: #{Time.now.to_s("%Y-%m-%d")}", f
+puts_markdown "Last update: #{Time.now.to_s("%Y-%m-%d")}", m_lines, true
 puts_markdown ""
 puts_markdown "Bechmark running..."
 
@@ -196,43 +194,56 @@ end
 
 # --- Ranking of frameworks
 
-puts_markdown "", f
-puts_markdown "## Ranking (Framework)", f
-puts_markdown "", f
+puts_markdown "", m_lines, true
+puts_markdown "### Ranking (Framework)", m_lines, true
+puts_markdown "", m_lines, true
 
 rank = 1
 
 ranks.each do |ranked|
-  puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo})", f
+  puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo}) (#{ranked.target.lang})", m_lines, true
   rank += 1
 end
 
 # --- Ranking of langages
 
-puts_markdown "", f
-puts_markdown "## Ranking (Language)", f
-puts_markdown "", f
+puts_markdown "", m_lines, true
+puts_markdown "### Ranking (Language)", m_lines, true
+puts_markdown "", m_lines, true
 
 ranked_langs = [] of String
 rank = 1
 
 ranks.each do |ranked|
   next if ranked_langs.includes?(ranked.target.lang)
-  puts_markdown "#{rank}. #{ranked.target.lang} ([#{ranked.target.name}](https://github.com/#{ranked.target.repo}))", f
+  puts_markdown "#{rank}. #{ranked.target.lang} ([#{ranked.target.name}](https://github.com/#{ranked.target.repo}))", m_lines, true
   ranked_langs.push(ranked.target.lang)
   rank += 1
 end
 
 # --- Result of all frameworks
 
-puts_markdown "", f
-puts_markdown "## All frameworks", f
-puts_markdown "", f
-puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]", "Ave [sec]"], f
-puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", f
+puts_markdown "", m_lines, true
+puts_markdown "### All frameworks", m_lines, true
+puts_markdown "", m_lines, true
+puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]", "Ave [sec]"], m_lines, true
+puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", m_lines, true
 
 all.each do |framework|
-  puts_markdown "| %-25s | %-25s | %15f | %15f | %15f |" % [framework.target.lang, framework.target.name, framework.res.max, framework.res.min, framework.res.ave], f
+  puts_markdown "| %-25s | %-25s | %15f | %15f | %15f |" % [framework.target.lang, framework.target.name, framework.res.max, framework.res.min, framework.res.ave], m_lines, true
 end
 
-f.close if f
+if ARGV.includes?("--record")
+  path = File.expand_path("../../../README.md", __FILE__)
+  tag_from = "<!-- Result from here -->"
+  tag_till = "<!-- Result till here -->"
+  m_lines.insert(0, tag_from)
+  m_lines.push(tag_till)
+
+  prev_readme = File.read(path)
+  next_readme = prev_readme.gsub(
+    /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
+    m_lines.join('\n'))
+
+  File.write(path, next_readme)
+end
