@@ -50,6 +50,11 @@ kemal:
 	cd crystal/kemal; shards build --release
 	ln -s -f ../crystal/kemal/bin/server_crystal_kemal bin/.
 
+# Raze
+raze:
+	cd crystal/raze; shards build --release
+	ln -s -f ../crystal/raze/bin/server_crystal_raze bin/.
+
 # router.cr
 router_cr:
 	cd crystal/router.cr; shards build --release
@@ -69,6 +74,11 @@ gorilla-mux:
 	go get -u github.com/gorilla/mux
 	cd go/gorilla-mux; go build -o server_go_gorilla_mux main.go
 	ln -s -f ../go/gorilla-mux/server_go_gorilla_mux bin/.
+
+iris:
+	go get -u github.com/kataras/iris
+	cd go/iris; go build -o server_go_iris.go
+	ln -s -f ../go/iris/server_go_iris bin/.
 
 # fasthttprouter
 fasthttprouter:

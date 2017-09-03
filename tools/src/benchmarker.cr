@@ -16,10 +16,12 @@ LANGS = [
   {lang: "crystal", targets: [
      {name: "kemal", repo: "kemalcr/kemal"},
      {name: "router_cr", repo: "tbrand/router.cr"},
+     {name: "raze", repo: "samueleaton/raze"},
    ]},
   {lang: "go", targets: [
      {name: "echo", repo: "labstack/echo"},
      {name: "gorilla_mux", repo: "gorilla/mux"},
+     {name: "iris", repo: "kataras/iris"},
      {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
    ]},
   {lang: "rust", targets: [
@@ -109,7 +111,7 @@ end
 # Running client and returning span
 def client
   s = Time.now
-  `#{CLIENT} -t 16 -r 1000`
+  `#{CLIENT} -t 16 -r 5000`
   e = Time.now
   (e-s).to_f
 end
