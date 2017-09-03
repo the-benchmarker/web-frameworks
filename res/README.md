@@ -4,7 +4,7 @@ Last update: 2017-09-03
 
 ## Ranking (Framework)
 
-<link href="https://github.com/tbrand/which_is_the_fastest/tree/master/res/css/chart.css" rel="stylesheet"></link>
+<link href="https://github.com/tbrand/which_is_the_fastest/tree/chart/res/css/chart.css" rel="stylesheet"></link>
 
 <div class="red">
 
