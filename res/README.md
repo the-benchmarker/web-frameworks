@@ -7,10 +7,10 @@ Last update: 2017-09-03
 <link href="https://github.com/tbrand/which_is_the_fastest/tree/chart/res/css/chart.css" rel="stylesheet"></link>
 
 <div class="red">
-
+RED
 <div>
 </div class="blue">
-
+BLUE
 </div>
 
 1. [raze](https://github.com/samueleaton/raze)
