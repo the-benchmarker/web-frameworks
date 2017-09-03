@@ -201,7 +201,7 @@ puts_markdown "", m_lines, true
 rank = 1
 
 ranks.each do |ranked|
-  puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo})", m_lines, true
+  puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo}) (#{ranked.target.lang})", m_lines, true
   rank += 1
 end
 
