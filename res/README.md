@@ -1,4 +1,4 @@
-## Result
+# Result of the benchmark
 
 Last update: 2017-09-03
 
@@ -40,7 +40,7 @@ Last update: 2017-09-03
 9. scala ([akkahttp](https://github.com/akka/akka-http))
 10. ruby ([roda](https://github.com/jeremyevans/roda))
 
-### All frameworks
+## All frameworks
 
 | Language (Runtime)        | Framework (Middleware)    |       Max [sec] |       Min [sec] |       Ave [sec] |
 |---------------------------|---------------------------|-----------------|-----------------|-----------------|

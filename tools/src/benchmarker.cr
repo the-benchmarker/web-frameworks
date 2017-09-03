@@ -175,7 +175,7 @@ f = if ARGV.includes?("--record")
       File.open(File.expand_path("../../../res/README.md", __FILE__), "w")
     end
 
-puts_markdown "## Result", f
+puts_markdown "# Result of the benchmark", f
 puts_markdown "", f
 puts_markdown "Last update: #{Time.now.to_s("%Y-%m-%d")}", f
 puts_markdown ""
@@ -226,7 +226,7 @@ end
 # --- Result of all frameworks
 
 puts_markdown "", f
-puts_markdown "### All frameworks", f
+puts_markdown "## All frameworks", f
 puts_markdown "", f
 puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]", "Ave [sec]"], f
 puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", f
