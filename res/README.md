@@ -4,15 +4,6 @@ Last update: 2017-09-03
 
 ## Ranking (Framework)
 
-<link href="https://github.com/tbrand/which_is_the_fastest/tree/chart/res/css/chart.css" rel="stylesheet"></link>
-
-<div class="red">
-RED
-<div>
-</div class="blue">
-BLUE
-</div>
-
 1. [raze](https://github.com/samueleaton/raze)
 2. [router_cr](https://github.com/tbrand/router.cr)
 3. [nickel](https://github.com/nickel-org/nickel.rs)
