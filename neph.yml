@@ -195,7 +195,7 @@ scala:
 akkahttp:
   command: |
     sbt assembly
-    ln -s -f ../scala/akkahttp/bin/server_scala_akkahttp bin/.
+    ln -s -f ../scala/akkahttp/bin/server_scala_akkahttp ../../bin/.
   dir:
     scala/akkahttp
 

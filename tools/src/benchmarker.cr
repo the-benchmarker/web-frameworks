@@ -109,7 +109,9 @@ end
 # Running client and returning span
 def client
   s = Time.now
-  `#{CLIENT} -t 16 -r 5000`
+  `#{CLIENT} -t 16 -r 10`
+  # TEST
+  # `#{CLIENT} -t 16 -r 5000`
   e = Time.now
   (e-s).to_f
 end
@@ -158,19 +160,12 @@ def all_frameworks : Array(Target)
   targets
 end
 
-def header(lang : String, name : String, max : String, min : String, ave : String)
-  puts "%-25s %-25s %15s %15s %15s" % [lang, name, max, min, ave]
+def puts_markdown(line, f = nil)
+  puts line
+  f.puts line if f
 end
-
-def result_line(lang : String, name : String, max : Float64, min : Float64, ave : Float64)
-  puts "%-25s %-25s %15f %15f %15f" % [lang, name, max, min, ave]
-end
-
-header("Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]", "Ave [sec]")
-header("-" * 25, "-" * 25, "-" * 15, "-" * 15, "-" * 15)
 
 targets = if ARGV.size > 0
-          # all_frameworks.reject{ |target| target.lang != ARGV[0] && target.name != ARGV[0] }
             all_frameworks.select{ |target| ARGV.includes?(target.lang) || ARGV.includes?(target.name) }
           else
             all_frameworks
@@ -178,11 +173,22 @@ targets = if ARGV.size > 0
 
 abort "No targets found for #{ARGV[0]}" if targets.size == 0
 
+f = File.open(File.expand_path("../../../res/README.md", __FILE__), "w")
+
+puts_markdown "## Result", f
+puts_markdown "", f
+puts_markdown "Last update: #{Time.now.to_s("%Y-%m-%d")}"
+puts_markdown "", f
+puts_markdown "### All frameworks", f
+puts_markdown "", f
+puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]", "Ave [sec]"], f
+puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", f
+
 ranks = [] of Ranked
 
 targets.each do |target|
   result = benchmark(target, 5)
-  result_line(target.lang, target.name, result.max, result.min, result.ave)
+  puts_markdown "| %-25s | %-25s | %15f | %15f | %15f |" % [target.lang, target.name, result.max, result.min, result.ave], f
   ranks.push(Ranked.new(result, target))
 end
 
@@ -190,25 +196,33 @@ ranks.sort! do |rank0, rank1|
   rank0.res.ave <=> rank1.res.ave
 end
 
-puts ""
-puts " -- Ranking (Language) -- "
+puts_markdown "", f
+puts_markdown "## Ranking (Language)", f
+puts_markdown "", f
 
 ranked_langs = [] of String
 rank = 1
 
+puts_markdown "```"
 ranks.each do |ranked|
   next if ranked_langs.includes?(ranked.target.lang)
-  puts "#{rank}. #{ranked.target.lang} (#{ranked.target.name}) #{ranked.res.ave}"
+  puts_markdown "#{rank}. #{ranked.target.lang} (#{ranked.target.name})", f
   ranked_langs.push(ranked.target.lang)
   rank += 1
 end
+puts_markdown "```"
 
-puts ""
-puts " -- Ranking (Framework) -- "
+puts_markdown "", f
+puts_markdown "## Ranking (Framework)", f
+puts_markdown "", f
 
 rank = 1
 
+puts_markdown "```"
 ranks.each do |ranked|
-  puts "#{rank}. #{ranked.target.name} #{ranked.res.ave}"
+  puts_markdown "#{rank}. #{ranked.target.name}", f
   rank += 1
 end
+puts_markdown "```"
+
+f.close if f

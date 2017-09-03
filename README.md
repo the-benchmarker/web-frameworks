@@ -5,9 +5,9 @@ Each framework has to have two features; routing and parsing path parameters.
 
 ## Result
 
-<img src="https://raw.githubusercontent.com/tbrand/which_is_the_fastest/master/imgs/result.png" width="1000"/>
+[HERE](https://github.com/tbrand/which_is_the_fastest/tree/master/res)
 
-**Current target frameworks (middlewares)**
+## Current target frameworks (middlewares)
 
  - Ruby
    - [Rails](https://github.com/rails/rails)
