@@ -109,9 +109,7 @@ end
 # Running client and returning span
 def client
   s = Time.now
-  `#{CLIENT} -t 16 -r 10`
-  # TEST
-  # `#{CLIENT} -t 16 -r 5000`
+  `#{CLIENT} -t 16 -r 5000`
   e = Time.now
   (e-s).to_f
 end
@@ -165,7 +163,11 @@ def puts_markdown(line, f = nil)
   f.puts line if f
 end
 
-targets = if ARGV.size > 0
+options = [
+  "--record",
+]
+
+targets = if ARGV.reject{ |opt| options.includes?(opt) }.size > 0
             all_frameworks.select{ |target| ARGV.includes?(target.lang) || ARGV.includes?(target.name) }
           else
             all_frameworks
@@ -173,7 +175,9 @@ targets = if ARGV.size > 0
 
 abort "No targets found for #{ARGV[0]}" if targets.size == 0
 
-f = File.open(File.expand_path("../../../res/README.md", __FILE__), "w")
+f = if ARGV.includes?("--record")
+      File.open(File.expand_path("../../../res/README.md", __FILE__), "w")
+    end
 
 puts_markdown "## Result", f
 puts_markdown "", f
@@ -203,14 +207,12 @@ puts_markdown "", f
 ranked_langs = [] of String
 rank = 1
 
-puts_markdown "```"
 ranks.each do |ranked|
   next if ranked_langs.includes?(ranked.target.lang)
   puts_markdown "#{rank}. #{ranked.target.lang} (#{ranked.target.name})", f
   ranked_langs.push(ranked.target.lang)
   rank += 1
 end
-puts_markdown "```"
 
 puts_markdown "", f
 puts_markdown "## Ranking (Framework)", f
@@ -218,11 +220,9 @@ puts_markdown "", f
 
 rank = 1
 
-puts_markdown "```"
 ranks.each do |ranked|
   puts_markdown "#{rank}. #{ranked.target.name}", f
   rank += 1
 end
-puts_markdown "```"
 
 f.close if f
