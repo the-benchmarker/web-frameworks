@@ -9,7 +9,7 @@ use rocket::config::{Config, Environment};
 fn index_route() {}
 
 #[get("/user/<id>")]
-fn user_route(id: &str) -> &str {
+fn user_route(id: String) -> String {
     id
 }
 

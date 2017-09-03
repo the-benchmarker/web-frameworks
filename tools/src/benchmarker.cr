@@ -84,7 +84,7 @@ class ExecServer
       path = File.expand_path("../../../elixir/phoenix/_build/prod/rel/my_phoenix/bin/my_phoenix", __FILE__)
       Process.run("bash #{path} stop", shell: true)
     elsif @target.name == "akkahttp"
-      kill_proc("akkahttp")
+      kill_proc("sbt")
     elsif @target.name == "aspnetcore"
       kill_proc("dotnet")
     end

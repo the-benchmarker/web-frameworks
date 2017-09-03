@@ -1,7 +1,4 @@
-#!/usr/bin/env python3.5
-# -*- coding: utf-8 -*-
-
-
+#!/usr/bin/env python
 from japronto import Application
 
 
