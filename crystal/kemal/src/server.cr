@@ -1,6 +1,9 @@
 require "kemal"
 
-logging false
+Kemal.config do |cfg|
+	cfg.serve_static = false
+	cfg.logging = false
+end
 
 get "/" do |env|
   nil
