@@ -13,13 +13,12 @@ func main() {
 	})
 
 	app.Get("/user/{id}", func(ctx context.Context) {
-		p := ctx.Params().Get("id")
-		ctx.WriteString(p)
+		ctx.WriteString(ctx.Params().Get("id"))
 	})
 
 	app.Post("/user", func(ctx context.Context) {
 		ctx.WriteString("")
 	})
 
-	app.Run(iris.Addr(":3000"))
+	app.Run(iris.Addr("localhost:3000"))
 }
