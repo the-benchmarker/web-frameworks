@@ -129,7 +129,7 @@ def benchmark(server, count) : BenchResult
   exec_server = ExecServer.new(server)
 
   # Wait for the binding
-  sleep 7
+  sleep 10
 
   count.times do |i|
     span = client
@@ -176,7 +176,10 @@ targets = if ARGV.reject{ |opt| opt.starts_with?("--") }.size > 0
 abort "No targets found for #{ARGV[0]}" if targets.size == 0
 
 puts_markdown "Last update: #{Time.now.to_s("%Y-%m-%d")}", m_lines, true
-puts_markdown ""
+puts_markdown "```", m_lines, true
+puts_markdown "OS: #{`uname -s`.rstrip} (version: #{`uname -r`.rstrip}, arch: #{`uname -m`.rstrip})", m_lines, true
+puts_markdown "CPU Cores: #{System.cpu_count}", m_lines, true
+puts_markdown "```", m_lines, true
 puts_markdown "Bechmark running..."
 
 all   = [] of Ranked
