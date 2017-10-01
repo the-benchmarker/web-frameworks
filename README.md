@@ -111,6 +111,7 @@ CPU Cores: 8
    - [Vapor](https://vapor.codes)
    - [Perfect](https://www.perfect.org)
    - [Kitura](http://www.kitura.io)
+   - [HTTP](https://swift-server.github.io/http/)
  - Scala
    - [Akka-Http (Routing DSL)](http://doc.akka.io/docs/akka-http/current/scala/http/introduction.html#routing-dsl-for-http-servers)
  - C#
