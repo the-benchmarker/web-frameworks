@@ -143,7 +143,7 @@ def benchmark(server, count) : BenchResult
 
   result = BenchResult.new(max, min, ave, total)
 
-  sleep 3
+  sleep 7
 
   result
 end
