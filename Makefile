@@ -109,7 +109,12 @@ rocket:
 	ln -s -f ../rust/rocket/target/release/server_rust_rocket bin/.
 
 # --- Swift ---
-swift: vapor perfect kitura
+swift: http vapor perfect kitura
+
+# HTTP
+http:
+	cd swift/http; swift build --configuration release
+	ln -s -f ../swift/http/.build/release/server_swift_http bin/.
 
 # Vapor
 vapor:

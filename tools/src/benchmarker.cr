@@ -38,6 +38,7 @@ LANGS = [
      {name: "phoenix", repo: "phoenixframework/phoenix"},
    ]},
   {lang: "swift", targets: [
+     {name: "http", bin: "server_swift_http"},
      {name: "vapor", repo: "vapor/vapor"},
      {name: "perfect", repo: "PerfectlySoft/Perfect"},
      {name: "kitura", repo: "IBM-Swift/Kitura"},
