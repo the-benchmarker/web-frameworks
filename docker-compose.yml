@@ -46,3 +46,8 @@ services:
     build: ruby/sinatra
     ports:
       - 3000:3000
+
+  iron:
+    build: rust/iron
+    ports:
+    - 3000:3000
