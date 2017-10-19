@@ -19,6 +19,11 @@ services:
     ports:
       - 3000:3000
 
+  japronto:
+    build: python/japronto
+    ports:
+    - 3000:3000
+
   ruby:
     image: alpine:latest
     command: "true"
