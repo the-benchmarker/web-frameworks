@@ -21,6 +21,15 @@ clusterexpress:
 	cd node/express; npm install
 	ln -s -f ../node/express/bin/server_node_clusterexpress bin/.
 
+# --- Objective-C ---
+objc: criollo
+
+#criollo
+criollo:
+	cd objc/criollo; pod install; xcodebuild -workspace server_objc_criollo.xcworkspace -scheme server_objc_criollo -derivedDataPath ./derivedData
+	ln -s -f ../objc/criollo/derivedData/Build/Products/Debug/server_objc_criollo.app/Contents/MacOS/server_objc_criollo bin/.
+
+
 # --- Ruby ---
 ruby: rails sinatra roda
 

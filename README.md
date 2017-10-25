@@ -118,6 +118,8 @@ CPU Cores: 8
  - Python
    - [sanic](https://github.com/channelcat/sanic)
    - [japronto](https://github.com/squeaky-pl/japronto)
+ - Objective-C
+   - [Criollo](https://criollo.io/)
 
 See Development section when you want to add new languages or frameworks.
 

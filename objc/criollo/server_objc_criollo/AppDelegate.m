@@ -35,7 +35,7 @@
     }];
     
     NSError *error;
-    if ( ! [self.server startListening:&error] ) {
+    if ( ! [self.server startListening:&error portNumber:3000] ) {
         [CRApp logErrorFormat:@"Error starting server: %@", error];
         [CRApp terminate:nil];
         return;
