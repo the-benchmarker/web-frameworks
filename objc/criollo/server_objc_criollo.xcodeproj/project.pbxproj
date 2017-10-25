@@ -1,0 +1,375 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		35538C60B40444D6F3EF8A93 /* Pods_server_objc_criollo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C8CDD2B2ADF192D6A23F4D /* Pods_server_objc_criollo.framework */; };
+		4A2A3B9B1FA1356000CEE70B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A3B9A1FA1356000CEE70B /* AppDelegate.m */; };
+		4A2A3BA31FA1356000CEE70B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A3BA21FA1356000CEE70B /* main.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4A2A3B961FA1356000CEE70B /* server_objc_criollo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = server_objc_criollo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A2A3B991FA1356000CEE70B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4A2A3B9A1FA1356000CEE70B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4A2A3BA11FA1356000CEE70B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A2A3BA21FA1356000CEE70B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5A01CB5A10028EFF3C8F0A4D /* Pods-server_objc_criollo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-server_objc_criollo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-server_objc_criollo/Pods-server_objc_criollo.debug.xcconfig"; sourceTree = "<group>"; };
+		91C8CDD2B2ADF192D6A23F4D /* Pods_server_objc_criollo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_server_objc_criollo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B23C0BBF93641BCA18765D83 /* Pods-server_objc_criollo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-server_objc_criollo.release.xcconfig"; path = "Pods/Target Support Files/Pods-server_objc_criollo/Pods-server_objc_criollo.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4A2A3B931FA1356000CEE70B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35538C60B40444D6F3EF8A93 /* Pods_server_objc_criollo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1C58C5124D5A06795EEF5E80 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91C8CDD2B2ADF192D6A23F4D /* Pods_server_objc_criollo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4A2A3B8D1FA1356000CEE70B = {
+			isa = PBXGroup;
+			children = (
+				4A2A3B981FA1356000CEE70B /* server_objc_criollo */,
+				4A2A3B971FA1356000CEE70B /* Products */,
+				AD5BF5CBE20D59B8DE0FD732 /* Pods */,
+				1C58C5124D5A06795EEF5E80 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4A2A3B971FA1356000CEE70B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4A2A3B961FA1356000CEE70B /* server_objc_criollo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4A2A3B981FA1356000CEE70B /* server_objc_criollo */ = {
+			isa = PBXGroup;
+			children = (
+				4A2A3B991FA1356000CEE70B /* AppDelegate.h */,
+				4A2A3B9A1FA1356000CEE70B /* AppDelegate.m */,
+				4A2A3BA11FA1356000CEE70B /* Info.plist */,
+				4A2A3BA21FA1356000CEE70B /* main.m */,
+			);
+			path = server_objc_criollo;
+			sourceTree = "<group>";
+		};
+		AD5BF5CBE20D59B8DE0FD732 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5A01CB5A10028EFF3C8F0A4D /* Pods-server_objc_criollo.debug.xcconfig */,
+				B23C0BBF93641BCA18765D83 /* Pods-server_objc_criollo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4A2A3B951FA1356000CEE70B /* server_objc_criollo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A2A3BA71FA1356000CEE70B /* Build configuration list for PBXNativeTarget "server_objc_criollo" */;
+			buildPhases = (
+				88F7B0FE596E52627234B99B /* [CP] Check Pods Manifest.lock */,
+				4A2A3B921FA1356000CEE70B /* Sources */,
+				4A2A3B931FA1356000CEE70B /* Frameworks */,
+				4A2A3B941FA1356000CEE70B /* Resources */,
+				4EDA02DEC78827E2DA5D3FEB /* [CP] Embed Pods Frameworks */,
+				9313CD7CF23EF813CC30138E /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = server_objc_criollo;
+			productName = server_objc_criollo;
+			productReference = 4A2A3B961FA1356000CEE70B /* server_objc_criollo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4A2A3B8E1FA1356000CEE70B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "Cătălin Stan";
+				TargetAttributes = {
+					4A2A3B951FA1356000CEE70B = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 4A2A3B911FA1356000CEE70B /* Build configuration list for PBXProject "server_objc_criollo" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4A2A3B8D1FA1356000CEE70B;
+			productRefGroup = 4A2A3B971FA1356000CEE70B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4A2A3B951FA1356000CEE70B /* server_objc_criollo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4A2A3B941FA1356000CEE70B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4EDA02DEC78827E2DA5D3FEB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-server_objc_criollo/Pods-server_objc_criollo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/Criollo/Criollo.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaAsyncSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Criollo.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-server_objc_criollo/Pods-server_objc_criollo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		88F7B0FE596E52627234B99B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-server_objc_criollo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9313CD7CF23EF813CC30138E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-server_objc_criollo/Pods-server_objc_criollo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4A2A3B921FA1356000CEE70B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A2A3BA31FA1356000CEE70B /* main.m in Sources */,
+				4A2A3B9B1FA1356000CEE70B /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4A2A3BA51FA1356000CEE70B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4A2A3BA61FA1356000CEE70B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4A2A3BA81FA1356000CEE70B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A01CB5A10028EFF3C8F0A4D /* Pods-server_objc_criollo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = server_objc_criollo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.criollo.server-objc-criollo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4A2A3BA91FA1356000CEE70B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B23C0BBF93641BCA18765D83 /* Pods-server_objc_criollo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				INFOPLIST_FILE = server_objc_criollo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.criollo.server-objc-criollo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4A2A3B911FA1356000CEE70B /* Build configuration list for PBXProject "server_objc_criollo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A2A3BA51FA1356000CEE70B /* Debug */,
+				4A2A3BA61FA1356000CEE70B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4A2A3BA71FA1356000CEE70B /* Build configuration list for PBXNativeTarget "server_objc_criollo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A2A3BA81FA1356000CEE70B /* Debug */,
+				4A2A3BA91FA1356000CEE70B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4A2A3B8E1FA1356000CEE70B /* Project object */;
+}
