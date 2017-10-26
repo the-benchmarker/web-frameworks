@@ -32,6 +32,7 @@ LANGS = [
   {lang: "node", targets: [
      {name: "express", repo: "expressjs/express"},
      {name: "clusterexpress", repo: "LearnBoost/cluster"},
+     {name: "fastify", repo: "fastify/fastify"},
    ]},
   {lang: "elixir", targets: [
      {name: "plug", repo: "elixir-lang/plug"},

@@ -51,3 +51,8 @@ services:
     build: rust/iron
     ports:
     - 3000:3000
+
+  fastify:
+    build: node/fastify
+    ports:
+    - 3000:3000

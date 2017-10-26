@@ -12,7 +12,7 @@ phoenix:
 	ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix bin/.
 
 # --- node.js ---
-node: express clusterexpress
+node: express clusterexpress fastify
 
 express:
 	cd node/express; npm install
@@ -20,6 +20,9 @@ express:
 clusterexpress:
 	cd node/express; npm install
 	ln -s -f ../node/express/bin/server_node_clusterexpress bin/.
+fastify:
+	cd node/fastify; npm install
+	ln -s -f ../node/fastify/bin/server_node_fastify bin/.
 
 # --- Ruby ---
 ruby: rails sinatra roda
