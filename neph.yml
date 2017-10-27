@@ -10,6 +10,7 @@ main:
     - scala
     - python
     - csharp
+    - objc
     - benchmarker
 
 node:
@@ -258,6 +259,18 @@ aspnetcore:
     ln -s -f ../csharp/aspnetcore/server_csharp_aspnetcore ../../bin/server_csharp_aspnetcore
   dir:
     csharp/aspnetcore
+
+objc:
+  depends_on:
+    - criollo
+
+criollo:
+  command: |
+    pod install
+    xcodebuild -workspace server_objc_criollo.xcworkspace -scheme server_objc_criollo -derivedDataPath ./derivedData
+    ln -s -f ../objc/criollo/derivedData/Build/Products/Debug/server_objc_criollo.app/Contents/MacOS/server_objc_criollo ../../bin/server_objc_criollo
+  dir:
+    objc/criollo
 
 benchmarker:
   command: |
