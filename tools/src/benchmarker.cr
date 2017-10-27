@@ -52,6 +52,9 @@ LANGS = [
      {name: "sanic", repo: "channelcat/sanic"},
      {name: "japronto", repo: "squeaky-pl/japronto"},
    ]},
+  {lang: "objc", targets: [
+     {name: "criollo", repo: "thecatalinstan/criollo"},
+   ]},
 ]
 
 # struct for benchmark result

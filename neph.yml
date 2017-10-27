@@ -158,6 +158,18 @@ rocket:
   dir:
     rust/rocket
 
+objc:
+  depends_on:
+    - criollo
+
+criollo:
+  command: |
+    pod install
+    xcodebuild -workspace server_objc_criollo.xcworkspace -scheme server_objc_criollo -derivedDataPath ./derivedData
+    ln -s -f ../objc/criollo/derivedData/Build/Products/Debug/server_objc_criollo.app/Contents/MacOS/server_objc_criollo ../../bin/.
+  dir:
+    objc/criollo
+
 elixir:
   depends_on:
     - plug
