@@ -14,7 +14,7 @@ fastify.get('/', pathWithoutParams, function (req, res) {
 })
 
 fastify.get('/user/:id', pathWithParams, function (req, res) {
-  res.send(req.params.id)
+  res.type('text/html').send(`${req.params.id}`)
 })
 
 fastify.post('/user', pathWithoutParams, function (req, res) {
