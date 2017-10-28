@@ -107,6 +107,7 @@ CPU Cores: 8
  - node
    - [express](https://github.com/expressjs/express)
    - [express/cluster](https://github.com/LearnBoost/cluster)
+   - [fastify](https://github.com/fastify/fastify)
  - Elixir
    - [Plug](http://github.com/elixir-lang/plug)
    - [Phoenix](http://github.com/phoenixframework/phoenix)
