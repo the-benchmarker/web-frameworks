@@ -70,6 +70,7 @@ crystal:
 
 kemal:
   command: |
+    shards update
     shards build --release
     ln -s -f ../crystal/kemal/bin/server_crystal_kemal ../../bin/.
   dir:
@@ -77,6 +78,7 @@ kemal:
     
 raze:
   command: |
+    shards update
     shards build --release
     ln -s -f ../crystal/raze/bin/server_crystal_raze ../../bin/.
   dir:
@@ -84,6 +86,7 @@ raze:
 
 router_cr:
   command: |
+    shards update
     shards build --release
     ln -s -f ../crystal/router.cr/bin/server_crystal_router_cr ../../bin/.
   dir:
