@@ -1,35 +1,30 @@
 require "router"
 
 struct Server
+  def draw_routes
+    get "/" do |context, params|
+      context.response.status_code = 200
+      context
+    end
 
-  @route_handler = RouteHandler.new
+    get "/user/:id" do |context, params|
+      context.response.status_code = 200
+      context.response.print params["id"].to_s
+      context
+    end
 
-  @index = API.new do |context|
-    context.response.status_code = 200
-    context
-  end
-
-  @user = API.new do |context, params|
-    context.response.status_code = 200
-    context.response.print params["id"].to_s
-    context
-  end
-
-  @register_user = API.new do |context|
-    context.response.status_code = 200
-    context
-  end
-
-  def initialize
-    draw(@route_handler) do
-      get  "/",         @index
-      get  "/user/:id", @user
-      post "/user",     @register_user
+    post "/user" do |context, params|
+      context.response.status_code = 200
+      context
     end
   end
 
+  def initialize
+    draw_routes
+  end
+
   def run
-    server = HTTP::Server.new("0.0.0.0", 3000, @route_handler)
+    server = HTTP::Server.new("0.0.0.0", 3000, route_handler)
     server.listen
   end
 

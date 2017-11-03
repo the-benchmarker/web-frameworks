@@ -56,17 +56,17 @@ crystal: kemal router_cr
 
 # Kemal
 kemal:
-	cd crystal/kemal; shards build --release
+	cd crystal/kemal; shards update; shards build --release
 	ln -s -f ../crystal/kemal/bin/server_crystal_kemal bin/.
 
 # Raze
 raze:
-	cd crystal/raze; shards build --release
+	cd crystal/raze; shards update; shards build --release
 	ln -s -f ../crystal/raze/bin/server_crystal_raze bin/.
 
 # router.cr
 router_cr:
-	cd crystal/router.cr; shards build --release
+	cd crystal/router.cr; shards update; shards build --release
 	ln -s -f ../crystal/router.cr/bin/server_crystal_router_cr bin/.
 
 # --- Go ---
