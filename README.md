@@ -56,7 +56,7 @@ CPU Cores: 8
 
 ### All frameworks
 
-| Language (Runtime)        | Framework (Middleware)    |       Max [sec] |       Min [sec] |       Ave [sec] |
+| Language (Runtime)        | Framework (Middleware)    |       Max [sec] |       Min [sec] |       Avg [sec] |
 |---------------------------|---------------------------|-----------------|-----------------|-----------------|
 | ruby                      | rails                     |      158.707613 |      157.559875 |      157.970116 |
 | ruby                      | sinatra                   |       44.278810 |       44.183649 |       44.252526 |
