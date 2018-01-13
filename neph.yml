@@ -236,6 +236,7 @@ python:
   depends_on:
     - sanic
     - japronto
+    - flask
 
 sanic:
   command: |
@@ -250,6 +251,14 @@ japronto:
     ln -s -f ../python/japronto/server_python_japronto.py ../../bin/server_python_japronto
   dir:
     python/japronto
+
+flask:
+  command: |
+    pip3 install -r requirements.txt; chmod +x server_python_flask.py
+    ln -s -f ../python/flask/server_python_flask.py ../../bin/server_python_flask
+  dir:
+    python/flask
+
 
 csharp:
   depends_on:
