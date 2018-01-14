@@ -100,6 +100,7 @@ CPU Cores: 8
    - [gorilla-mux](https://github.com/gorilla/mux)
    - [iris](https://github.com/kataras/iris)
    - [fasthttprouter](https://github.com/buaazp/fasthttprouter)
+   - [Gin](https://github.com/gin-gonic/gin)
  - Rust
    - [IRON](https://github.com/iron/iron)
    - [nickel.rs](https://github.com/nickel-org/nickel.rs)

@@ -98,6 +98,7 @@ go:
     - gorilla-mux
     - fasthttprouter
     - iris
+    - gin
 
 echo:
   command: |
@@ -131,6 +132,14 @@ fasthttprouter:
     ln -s -f ../go/fasthttprouter/server_go_fasthttprouter ../../bin/.
   dir:
     go/fasthttprouter
+
+gin:
+  command: |
+    go get github.com/gin-gonic/gin
+    go build -o server_go_gin main.go
+    ln -s -f ../go/iris/server_go_gin ../../bin/.
+  dir:
+    go/gin
 
 rust:
   depends_on:

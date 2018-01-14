@@ -23,6 +23,7 @@ LANGS = [
      {name: "gorilla_mux", repo: "gorilla/mux"},
      {name: "iris", repo: "kataras/iris"},
      {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
+     {name: "gin", repo: "gin-gonic/gin"}
    ]},
   {lang: "rust", targets: [
      {name: "iron", repo: "iron/iron"},

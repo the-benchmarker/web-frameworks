@@ -70,7 +70,7 @@ router_cr:
 	ln -s -f ../crystal/router.cr/bin/server_crystal_router_cr bin/.
 
 # --- Go ---
-go: echo gorilla-mux fasthttprouter
+go: echo gorilla-mux fasthttprouter gin
 
 # Echo
 echo:
@@ -95,6 +95,11 @@ fasthttprouter:
 	go get -u github.com/valyala/fasthttp
 	cd go/fasthttprouter; go build -o server_go_fasthttprouter main.go
 	ln -s -f ../go/fasthttprouter/server_go_fasthttprouter bin/.
+
+gin:
+	go get github.com/gin-gonic/gin
+	cd go/gin; go build -o server_go_gin main.go
+	ln -s -f ../go/gin/server_go_gin bin/.
 
 # --- Rust ---
 rust: iron nickel rocket
