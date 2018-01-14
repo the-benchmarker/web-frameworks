@@ -1,4 +1,4 @@
-all: elixir node ruby crystal go rust swift python csharp scala client benchmarker
+all: elixir node ruby crystal go rust swift python nim csharp scala client benchmarker
 
 # --- Elixir ---
 elixir: plug phoenix
@@ -168,6 +168,14 @@ japronto:
 flask:
 	cd python/flask; pip3 install -r requirements.txt; chmod +x server_python_flask.py
 	ln -s -f ../python/flask/server_python_flask.py bin/server_python_flask
+
+# --- Nim ---
+nim: jester
+
+# Jester
+jester:
+	cd nim/jester; nimble install -y; nim c server_nim_jester.nim
+	ln -s -f ../nim/jester/server_nim_jester bin/server_nim_jester
 
 # --- Benchmarker ---
 # client

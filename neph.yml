@@ -9,6 +9,7 @@ main:
     - swift
     - scala
     - python
+    - nim
     - csharp
     - objc
     - benchmarker
@@ -259,6 +260,16 @@ flask:
   dir:
     python/flask
 
+nim:
+  depends_on:
+   - jester
+
+jester:
+  command: |
+    nimble install -y; nim c server_nim_jester.nim
+    ln -s -f ../nim/jester/server_nim_jester ../../bin/server_nim_jester
+  dir:
+    nim/jester
 
 csharp:
   depends_on:
