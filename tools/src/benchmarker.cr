@@ -54,6 +54,9 @@ LANGS = [
      {name: "japronto", repo: "squeaky-pl/japronto"},
      {name: "flask", repo: "pallets/flask"},
    ]},
+  {lang: "nim", targets: [
+    {name: "jester", repo: "dom96/jester" }
+  ]},
   {lang: "objc", targets: [
      {name: "criollo", repo: "thecatalinstan/criollo"},
    ]},

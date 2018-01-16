@@ -123,6 +123,8 @@ CPU Cores: 8
    - [sanic](https://github.com/channelcat/sanic)
    - [japronto](https://github.com/squeaky-pl/japronto)
    - [flask](https://github.com/pallets/flask)
+ - Nim
+   - [Jester](https://github.com/dom96/jester)
  - Objective-C
    - [Criollo](https://criollo.io/)
 
