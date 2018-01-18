@@ -138,7 +138,7 @@ gin:
   command: |
     go get github.com/gin-gonic/gin
     go build -o server_go_gin main.go
-    ln -s -f ../go/iris/server_go_gin ../../bin/.
+    ln -s -f ../go/gin/server_go_gin ../../bin/.
   dir:
     go/gin
 
