@@ -1,5 +1,17 @@
-class Home::Index < BrowserAction
+class Home::Index < ApiAction
   get "/" do
-    render Lucky::WelcomePage
+    head 200
+  end
+end
+
+class User::Show < ApiAction
+  get "/user/:id" do
+    render_text id.to_s
+  end
+end
+
+class User::Create < ApiAction
+  action do
+    head 200
   end
 end
