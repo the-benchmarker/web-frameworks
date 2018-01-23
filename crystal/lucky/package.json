@@ -1,0 +1,26 @@
+{
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "babel-brunch": "^6.1.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "browser-sync": "^2.18.13",
+    "brunch": "^2.10.10",
+    "fingerprinter-brunch": "^0.0.2",
+    "glob": "^7.1.2",
+    "jquery": "^3.2.1",
+    "lost": "^8.2.0",
+    "normalize.css": "^7.0.0",
+    "path-complete-extname": "^0.1.0",
+    "postcss-brunch": "luckyframework/postcss-brunch",
+    "postcss-cssnext": "^3.0.2",
+    "postcss-sass-color-functions": "^1.1.0",
+    "precss": "^2.0.0",
+    "rails-ujs": "^5.1.4",
+    "turbolinks": "^5.0.3"
+  },
+  "scripts": {
+    "heroku-postbuild": "bin/compile_assets build --production"
+  }
+}
