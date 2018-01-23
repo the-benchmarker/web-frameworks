@@ -9,61 +9,62 @@ CLIENT = File.expand_path(PATH_PREFIX + "client", __FILE__)
 # Each framework
 LANGS = [
   {lang: "ruby", targets: [
-     {name: "rails", repo: "rails/rails"},
-     {name: "sinatra", repo: "sinatra/sinatra"},
-     {name: "roda", repo: "jeremyevans/roda"},
-   ]},
+    {name: "rails", repo: "rails/rails"},
+    {name: "sinatra", repo: "sinatra/sinatra"},
+    {name: "roda", repo: "jeremyevans/roda"},
+  ]},
   {lang: "crystal", targets: [
-     {name: "kemal", repo: "kemalcr/kemal"},
-     {name: "router_cr", repo: "tbrand/router.cr"},
-     {name: "raze", repo: "samueleaton/raze"},
-   ]},
+    {name: "kemal", repo: "kemalcr/kemal"},
+    {name: "router_cr", repo: "tbrand/router.cr"},
+    {name: "raze", repo: "samueleaton/raze"},
+    {name: "lucky", repo: "luckyframework/lucky"},
+  ]},
   {lang: "go", targets: [
-     {name: "echo", repo: "labstack/echo"},
-     {name: "gorilla_mux", repo: "gorilla/mux"},
-     {name: "iris", repo: "kataras/iris"},
-     {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
-     {name: "gin", repo: "gin-gonic/gin"}
-   ]},
+    {name: "echo", repo: "labstack/echo"},
+    {name: "gorilla_mux", repo: "gorilla/mux"},
+    {name: "iris", repo: "kataras/iris"},
+    {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
+    {name: "gin", repo: "gin-gonic/gin"},
+  ]},
   {lang: "rust", targets: [
-     {name: "iron", repo: "iron/iron"},
-     {name: "nickel", repo: "nickel-org/nickel.rs"},
-     {name: "rocket", repo: "SergioBenitez/Rocket"},
-   ]},
+    {name: "iron", repo: "iron/iron"},
+    {name: "nickel", repo: "nickel-org/nickel.rs"},
+    {name: "rocket", repo: "SergioBenitez/Rocket"},
+  ]},
   {lang: "node", targets: [
-     {name: "express", repo: "expressjs/express"},
-     {name: "clusterexpress", repo: "LearnBoost/cluster"},
-   ]},
+    {name: "express", repo: "expressjs/express"},
+    {name: "clusterexpress", repo: "LearnBoost/cluster"},
+  ]},
   {lang: "elixir", targets: [
-     {name: "plug", repo: "elixir-lang/plug"},
-     {name: "phoenix", repo: "phoenixframework/phoenix"},
-   ]},
+    {name: "plug", repo: "elixir-lang/plug"},
+    {name: "phoenix", repo: "phoenixframework/phoenix"},
+  ]},
   {lang: "swift", targets: [
-     {name: "vapor", repo: "vapor/vapor"},
-     {name: "perfect", repo: "PerfectlySoft/Perfect"},
-     {name: "kitura", repo: "IBM-Swift/Kitura"},
-   ]},
+    {name: "vapor", repo: "vapor/vapor"},
+    {name: "perfect", repo: "PerfectlySoft/Perfect"},
+    {name: "kitura", repo: "IBM-Swift/Kitura"},
+  ]},
   {lang: "scala", targets: [
-     {name: "akkahttp", repo: "akka/akka-http"},
-   ]},
+    {name: "akkahttp", repo: "akka/akka-http"},
+  ]},
   {lang: "csharp", targets: [
-     {name: "aspnetcore", repo: "aspnet/Home"},
-   ]},
+    {name: "aspnetcore", repo: "aspnet/Home"},
+  ]},
   {lang: "python", targets: [
-     {name: "sanic", repo: "channelcat/sanic"},
-     {name: "japronto", repo: "squeaky-pl/japronto"},
-     # Temporary removed since following error
-     # ```
-     # in 'socket'Error connecting to 'localhost:3000': Connection refused (Errno)
-     # ```
-     # {name: "flask", repo: "pallets/flask"},
-   ]},
+    {name: "sanic", repo: "channelcat/sanic"},
+    {name: "japronto", repo: "squeaky-pl/japronto"},
+    # Temporary removed since following error
+    # ```
+    # in 'socket'Error connecting to 'localhost:3000': Connection refused (Errno)
+    # ```
+    # {name: "flask", repo: "pallets/flask"},
+  ]},
   {lang: "nim", targets: [
-    {name: "jester", repo: "dom96/jester" }
+    {name: "jester", repo: "dom96/jester"},
   ]},
   {lang: "objc", targets: [
-     {name: "criollo", repo: "thecatalinstan/criollo"},
-   ]},
+    {name: "criollo", repo: "thecatalinstan/criollo"},
+  ]},
 ]
 
 # struct for benchmark result
@@ -125,16 +126,16 @@ def client
   s = Time.now
   `#{CLIENT} -t 16 -r 5000`
   e = Time.now
-  (e-s).to_f
+  (e - s).to_f
 end
 
 # Benchmark
 # server : server context
 # count  : number of samples
 def benchmark(server, count) : BenchResult
-  max   : Float64 = -1.0
-  min   : Float64 = 100000.0
-  ave   : Float64 = 0.0
+  max : Float64 = -1.0
+  min : Float64 = 100000.0
+  ave : Float64 = 0.0
   total : Float64 = 0.0
 
   # Running server
@@ -179,8 +180,8 @@ def puts_markdown(line, m_lines = nil, m = false)
   m_lines.push(line) if m && m_lines
 end
 
-targets = if ARGV.reject{ |opt| opt.starts_with?("--") }.size > 0
-            all_frameworks.select{ |target| ARGV.includes?(target.lang) || ARGV.includes?(target.name) }
+targets = if ARGV.reject { |opt| opt.starts_with?("--") }.size > 0
+            all_frameworks.select { |target| ARGV.includes?(target.lang) || ARGV.includes?(target.name) }
           else
             all_frameworks
           end
@@ -194,7 +195,7 @@ puts_markdown "CPU Cores: #{System.cpu_count}", m_lines, true
 puts_markdown "```", m_lines, true
 puts_markdown "Bechmark running..."
 
-all   = [] of Ranked
+all = [] of Ranked
 ranks = [] of Ranked
 
 targets.each do |target|

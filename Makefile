@@ -52,7 +52,7 @@ roda:
 	ln -s -f ../ruby/roda/server_ruby_roda bin/.
 
 # --- Crystal ---
-crystal: kemal router_cr
+crystal: kemal router_cr lucky
 
 # Kemal
 kemal:
@@ -63,6 +63,11 @@ kemal:
 raze:
 	cd crystal/raze; shards update; shards build --release
 	ln -s -f ../crystal/raze/bin/server_crystal_raze bin/.
+
+# Lucky
+lucky:
+	cd crystal/lucky; bin/setup; shards build --release
+	ln -s -f ../crystal/lucky/bin/server_crystal_lucky bin/.
 
 # router.cr
 router_cr:
@@ -164,7 +169,7 @@ sanic:
 	cd python/sanic; pip3 install -r requirements.txt; chmod +x server_python_sanic.py
 	ln -s -f ../python/sanic/server_python_sanic.py bin/server_python_sanic
 
-# Japronto 
+# Japronto
 japronto:
 	cd python/japronto; pip3 install -r requirements.txt; chmod +x server_python_japronto.py
 	ln -s -f ../python/japronto/server_python_japronto.py bin/server_python_japronto

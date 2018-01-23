@@ -5,7 +5,7 @@ authors:
   - Paul Smith <paulcsmith0218@gmail.com>
 
 targets:
-  benchmark_lucky:
+  server_crystal_lucky:
     main: src/benchmark_lucky.cr
 
 crystal: 0.24.1
