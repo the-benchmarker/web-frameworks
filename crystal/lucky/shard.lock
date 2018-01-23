@@ -1,0 +1,50 @@
+version: 1.0
+shards:
+  blank:
+    github: kostya/blank
+    commit: 9106c23080fb08f271dcd00d4de75fd6481a1de6
+
+  db:
+    github: crystal-lang/crystal-db
+    version: 0.5.0
+
+  habitat:
+    github: luckyframework/habitat
+    version: 0.2.1
+
+  lucky:
+    github: luckyframework/lucky
+    version: 0.7.4
+
+  lucky_cli:
+    github: luckyframework/lucky_cli
+    version: 0.8.3
+
+  lucky_inflector:
+    github: luckyframework/lucky_inflector
+    version: 0.1.1
+
+  lucky_migrator:
+    github: luckyframework/lucky_migrator
+    version: 0.4.1
+
+  lucky_record:
+    github: luckyframework/lucky_record
+    version: 0.3.1
+
+  lucky_router:
+    github: luckyframework/lucky_router
+    version: 0.2.0
+
+  pg:
+    github: will/crystal-pg
+    version: 0.14.1
+
+  shell-table:
+    github: jwaldrip/shell-table.cr
+    version: 0.9.2
+
+  teeplate:
+    github: bcardiff/teeplate
+    commit: 27475f26c2fba4f7ece929f89b6c0808cafcadb5
+
