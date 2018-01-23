@@ -5,8 +5,6 @@ port = Lucky::Server.settings.port
 
 server = HTTP::Server.new(host, port, [
   Lucky::HttpMethodOverrideHandler.new,
-  Lucky::SessionHandler.new,
-  Lucky::Flash::Handler.new,
   Lucky::ErrorHandler.new(action: Errors::Show),
   Lucky::RouteHandler.new,
 ])
