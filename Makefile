@@ -127,6 +127,12 @@ rocket:
 	cd rust/rocket; cargo build --release
 	ln -s -f ../rust/rocket/target/release/server_rust_rocket bin/.
 
+# Actix
+actix:
+	cd rust/actix; cargo update
+	cd rust/actix; cargo build --release
+	ln -s -f ../rust/actix/target/release/server_rust_actix bin/.
+
 # --- Swift ---
 swift: vapor perfect kitura
 
