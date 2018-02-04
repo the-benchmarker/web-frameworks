@@ -147,6 +147,7 @@ rust:
     - iron
     - nickel
     - rocket
+    - actix
 
 iron:
   command: |
@@ -171,6 +172,14 @@ rocket:
     ln -s -f ../rust/rocket/target/release/server_rust_rocket ../../bin/.
   dir:
     rust/rocket
+
+actix:
+  command: |
+    cargo update
+    cargo build --release
+    ln -s -f ../rust/actix/target/release/server_rust_actix ../../bin/.
+  dir:
+    rust/actix
 
 objc:
   depends_on:
