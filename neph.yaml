@@ -18,6 +18,8 @@ node:
   depends_on:
     - express
     - clusterexpress
+    - polka
+    - clusterpolka
 
 express:
   command: |
@@ -32,6 +34,20 @@ clusterexpress:
     ln -s -f ../node/express/bin/server_node_clusterexpress ../../bin/.
   dir:
     node/express
+
+polka:
+  command: |
+    npm install
+    ln -s -f ../node/polka/bin/server_node_polka ../../bin/.
+  dir:
+    node/polka
+
+clusterpolka:
+  command: |
+    npm install
+    ln -s -f ../node/polka/bin/server_node_clusterpolka ../../bin/.
+  dir:
+    node/polka
 
 ruby:
   depends_on:
@@ -76,7 +92,7 @@ kemal:
     ln -s -f ../crystal/kemal/bin/server_crystal_kemal ../../bin/.
   dir:
     crystal/kemal
-    
+
 raze:
   command: |
     shards update
@@ -116,7 +132,7 @@ gorilla-mux:
     ln -s -f ../go/gorilla-mux/server_go_gorilla_mux ../../bin/.
   dir:
     go/gorilla-mux
-    
+
 iris:
   command: |
     go get -u github.com/kataras/iris
