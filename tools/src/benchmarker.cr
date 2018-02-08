@@ -66,6 +66,9 @@ LANGS = [
   {lang: "objc", targets: [
     {name: "criollo", repo: "thecatalinstan/criollo"},
   ]},
+  {lang: "php", targets: [
+    {name: "laravel", repo: "laravel/framework"},
+  ]},
 ]
 
 # struct for benchmark result
@@ -80,8 +83,10 @@ class ExecServer
   def initialize(@target : Target)
     # Path of the executable
     executable = File.expand_path(PATH_PREFIX + "server_" + @target.lang + "_" + @target.name, __FILE__)
+    
     # Running the server
     @process = Process.new(executable)
+
   end
 
   # Kill the server process

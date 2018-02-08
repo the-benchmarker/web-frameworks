@@ -193,6 +193,14 @@ jester:
 	cd nim/jester; nimble install -y; nim c server_nim_jester.nim
 	ln -s -f ../nim/jester/server_nim_jester bin/server_nim_jester
 
+# --- PHP ---
+php: laravel
+
+# Rails
+laravel:
+	cd php/laravel; composer update
+	ln -s -f ../php/laravel/server_php_laravel bin/server_php_laravel
+
 # --- Benchmarker ---
 # client
 client:

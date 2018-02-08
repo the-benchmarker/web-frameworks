@@ -12,6 +12,7 @@ main:
     - nim
     - csharp
     - objc
+    - php
     - benchmarker
 
 node:
@@ -312,6 +313,17 @@ criollo:
     ln -s -f ../objc/criollo/derivedData/Build/Products/Debug/server_objc_criollo.app/Contents/MacOS/server_objc_criollo ../../bin/server_objc_criollo
   dir:
     objc/criollo
+
+php:
+  depends_on:
+    - laravel
+
+laravel:
+  command: |
+    composer install
+    ln -s -f ../php/laravel/server_php_laravel ../../bin/.
+  dir:
+    php/laravel
 
 benchmarker:
   command: |
