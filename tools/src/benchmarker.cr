@@ -35,6 +35,8 @@ LANGS = [
   {lang: "node", targets: [
     {name: "express", repo: "expressjs/express"},
     {name: "clusterexpress", repo: "LearnBoost/cluster"},
+    {name: "polka", repo: "lukeed/polka"},
+    {name: "clusterpolka", repo: "lukeed/polka"},
   ]},
   {lang: "elixir", targets: [
     {name: "plug", repo: "elixir-lang/plug"},

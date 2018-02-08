@@ -12,7 +12,7 @@ phoenix:
 	ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix bin/.
 
 # --- node.js ---
-node: express clusterexpress
+node: express clusterexpress polka clusterpolka
 
 express:
 	cd node/express; npm install
@@ -20,6 +20,12 @@ express:
 clusterexpress:
 	cd node/express; npm install
 	ln -s -f ../node/express/bin/server_node_clusterexpress bin/.
+polka:
+	cd node/polka; npm install
+	ln -s -f ../node/polka/bin/server_node_polka bin/.
+clusterpolka:
+	cd node/polka; npm install
+	ln -s -f ../node/polka/bin/server_node_clusterpolka bin/.
 
 # --- Objective-C ---
 objc: criollo
