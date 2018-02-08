@@ -98,6 +98,8 @@ class ExecServer
       kill_proc("puma")
     elsif @target.lang == "node"
       kill_proc("node")
+    elsif @target.lang == "php"
+      kill_proc("php -S")
     elsif @target.name == "plug"
       path = File.expand_path("../../../elixir/plug/_build/prod/rel/my_plug/bin/my_plug", __FILE__)
       Process.run("bash #{path} stop", shell: true)
