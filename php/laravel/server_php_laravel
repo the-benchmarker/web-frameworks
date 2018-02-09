@@ -1,1 +1,1 @@
-cd php/laravel;php -S 127.0.0.1:3000 -t public public/index.php
+cd php/laravel;php artisan serve --port=3000
