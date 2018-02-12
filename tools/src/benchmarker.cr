@@ -17,7 +17,11 @@ LANGS = [
     {name: "kemal", repo: "kemalcr/kemal"},
     {name: "router_cr", repo: "tbrand/router.cr"},
     {name: "raze", repo: "samueleaton/raze"},
-    {name: "lucky", repo: "luckyframework/lucky"},
+    # Temporary remove lucky because of the following error at compiling
+    # ```
+    # 1. Manifest at which_is_the_fastest/crystal/lucky/public/manifest.json does not exist
+    # ```
+    # {name: "lucky", repo: "luckyframework/lucky"},
   ]},
   {lang: "go", targets: [
     {name: "echo", repo: "labstack/echo"},
@@ -145,7 +149,7 @@ def benchmark(server, count) : BenchResult
   exec_server = ExecServer.new(server)
 
   # Wait for the binding
-  sleep 10
+  sleep 120
 
   count.times do |i|
     span = client
@@ -159,7 +163,7 @@ def benchmark(server, count) : BenchResult
 
   result = BenchResult.new(max, min, ave, total)
 
-  sleep 7
+  sleep 120
 
   result
 end

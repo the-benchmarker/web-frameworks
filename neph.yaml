@@ -84,6 +84,7 @@ crystal:
     - kemal
     - router_cr
     - raze
+    # - lucky
 
 kemal:
   command: |
@@ -108,6 +109,18 @@ router_cr:
     ln -s -f ../crystal/router.cr/bin/server_crystal_router_cr ../../bin/.
   dir:
     crystal/router.cr
+
+# Temporary remove lucky because of the following error at compiling
+# ```
+# 1. Manifest at which_is_the_fastest/crystal/lucky/public/manifest.json does not exist
+# ```
+# lucky:
+#   command: |
+#     shards update
+#     shards build --release
+#     ln -s -f ../crystal/lucky/bin/server_crystal_lucky ../../bin/.
+#   dir:
+#     crystal/lucky
 
 go:
   depends_on:
