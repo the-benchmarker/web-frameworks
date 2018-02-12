@@ -7,6 +7,7 @@ from sanic.response import text
 
 app = Sanic(log_config=None)
 
+
 @app.route("/")
 async def index(request):
     return text('')
@@ -19,9 +20,9 @@ async def user_info(request, id):
 
 @app.route("/user", methods=['POST'])
 async def user(request):
-    return  text('')
+    return text('')
 
 
 if __name__ == '__main__':
-    app.config.LOGO=None
+    app.config.LOGO = None
     app.run(port=3000, log_config=None, workers=os.cpu_count())
