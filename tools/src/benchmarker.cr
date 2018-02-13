@@ -200,7 +200,7 @@ puts_markdown "```", m_lines, true
 puts_markdown "OS: #{`uname -s`.rstrip} (version: #{`uname -r`.rstrip}, arch: #{`uname -m`.rstrip})", m_lines, true
 puts_markdown "CPU Cores: #{System.cpu_count}", m_lines, true
 puts_markdown "```", m_lines, true
-puts_markdown "Bechmark running..."
+puts_markdown "Benchmark running ..."
 
 all = [] of Ranked
 ranks = [] of Ranked
