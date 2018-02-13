@@ -60,11 +60,7 @@ LANGS = [
   {lang: "python", targets: [
     {name: "sanic", repo: "channelcat/sanic"},
     {name: "japronto", repo: "squeaky-pl/japronto"},
-    # Temporary removed since following error
-    # ```
-    # in 'socket'Error connecting to 'localhost:3000': Connection refused (Errno)
-    # ```
-    # {name: "flask", repo: "pallets/flask"},
+    {name: "flask", repo: "pallets/flask"},
   ]},
   {lang: "nim", targets: [
     {name: "jester", repo: "dom96/jester"},
