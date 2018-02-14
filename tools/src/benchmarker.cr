@@ -18,11 +18,7 @@ LANGS = [
     {name: "kemal", repo: "kemalcr/kemal"},
     {name: "router_cr", repo: "tbrand/router.cr"},
     {name: "raze", repo: "samueleaton/raze"},
-    # Temporary remove lucky because of the following error at compiling
-    # ```
-    # 1. Manifest at which_is_the_fastest/crystal/lucky/public/manifest.json does not exist
-    # ```
-    # {name: "lucky", repo: "luckyframework/lucky"},
+    {name: "lucky", repo: "luckyframework/lucky"},
     {name: "amber", repo: "amberframework/amber"},
   ]},
   {lang: "go", targets: [
