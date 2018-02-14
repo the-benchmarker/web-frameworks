@@ -1,4 +1,5 @@
 require "benchmark"
+require "option_parser"
 
 # Prefix of pathes for each executable
 PATH_PREFIX = "../../../bin/"
@@ -126,9 +127,11 @@ class ExecServer
 end
 
 # Running client and returning span
-def client
+# threads : number of thread to launch simultaneously
+# requests : numbers of request per thread
+def client(threads, requests)
   s = Time.now
-  `#{CLIENT} -t 16 -r 5000`
+  `#{CLIENT} #{threads} -r #{requests}`
   e = Time.now
   (e - s).to_f
 end
@@ -136,7 +139,9 @@ end
 # Benchmark
 # server : server context
 # count  : number of samples
-def benchmark(server, count) : BenchResult
+# threads : number of thread to launch simultaneously
+# requests : numbers of request per thread
+def benchmark(server, count, threads, requests) : BenchResult
   max : Float64 = -1.0
   min : Float64 = 100000.0
   ave : Float64 = 0.0
@@ -149,7 +154,7 @@ def benchmark(server, count) : BenchResult
   sleep 120
 
   count.times do |i|
-    span = client
+    span = client(threads, requests)
     max = span if span > max
     min = span if span < min
     total += span
@@ -184,6 +189,26 @@ def puts_markdown(line, m_lines = nil, m = false)
   m_lines.push(line) if m && m_lines
 end
 
+####################
+### DEFAULT VALUES #
+####################
+threads = (System.cpu_count + 1).to_i
+requests = 10000
+record = false
+
+OptionParser.parse! do |parser|
+  parser.banner = "Usage: time ./bin/benchmark [options]"
+  parser.on("-t THREADS", "--threads=THREADS", "# of threads") do |x|
+    threads = x.to_i
+  end
+  parser.on("-r REQUESTS", "--requests=REQUESTS", "# of iterations of requests") do |x|
+    requests = x.to_i
+  end
+  parser.on("--record", "Record results in README.md") do
+    record = true
+  end
+end
+
 targets = if ARGV.reject { |opt| opt.starts_with?("--") }.size > 0
             all_frameworks.select { |target| ARGV.includes?(target.lang) || ARGV.includes?(target.name) }
           else
@@ -203,7 +228,7 @@ all = [] of Ranked
 ranks = [] of Ranked
 
 targets.each do |target|
-  result = benchmark(target, 5)
+  result = benchmark(target, 5, threads, requests)
   puts_markdown "Done. <- #{target.name}"
   all.push(Ranked.new(result, target))
 end
@@ -253,13 +278,13 @@ all.each do |framework|
   puts_markdown "| %-25s | %-25s | %15f | %15f | %15f |" % [framework.target.lang, framework.target.name, framework.res.max, framework.res.min, framework.res.ave], m_lines, true
 end
 
-if ARGV.includes?("--record")
+if record
   path = File.expand_path("../../../README.md", __FILE__)
   tag_from = "<!-- Result from here -->"
   tag_till = "<!-- Result till here -->"
   m_lines.insert(0, tag_from)
   m_lines.push(tag_till)
-
+  
   prev_readme = File.read(path)
   next_readme = prev_readme.gsub(
     /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
