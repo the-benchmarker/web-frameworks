@@ -1,8 +1,22 @@
+## Developer content
+
 .DS_Store
-/bin/*
+*.swp
 
-/.neph/
+## Generated content
 
-!.gitkeep
-
+bin/
 node_modules
+vendor
+*.lock
+package-lock.json
+
+### Crystal ###
+
+lib/
+.shards/
+
+### Python ###
+
+__pycache__/
+*.pyc
