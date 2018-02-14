@@ -22,6 +22,7 @@ LANGS = [
     # 1. Manifest at which_is_the_fastest/crystal/lucky/public/manifest.json does not exist
     # ```
     # {name: "lucky", repo: "luckyframework/lucky"},
+    {name: "amber", repo: "amberframework/amber"},
   ]},
   {lang: "go", targets: [
     {name: "echo", repo: "labstack/echo"},
