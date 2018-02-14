@@ -134,7 +134,6 @@ end
 # requests : numbers of request per thread
 def client(threads, requests)
   s = Time.now
-  t = System.cpu_count + 1
   `#{CLIENT} #{threads} -r #{requests}`
   e = Time.now
   (e - s).to_f
