@@ -1,3 +1,5 @@
+export AMBER_ENV := production
+
 all: elixir node ruby crystal go rust swift python nim csharp scala client benchmarker
 
 # --- Elixir ---
@@ -58,7 +60,7 @@ roda:
 	ln -s -f ../ruby/roda/server_ruby_roda bin/.
 
 # --- Crystal ---
-crystal: kemal router_cr lucky
+crystal: kemal router_cr lucky amber
 
 # Kemal
 kemal:
@@ -79,6 +81,12 @@ lucky:
 router_cr:
 	cd crystal/router.cr; shards update; shards build --release
 	ln -s -f ../crystal/router.cr/bin/server_crystal_router_cr bin/.
+
+# amber
+amber:
+	cd crystal/amber; shards update; shards build --release
+	ln -s -f ../crystal/amber/bin/server_crystal_amber bin/.
+
 
 # --- Go ---
 go: echo gorilla-mux fasthttprouter gin
