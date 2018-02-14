@@ -1,3 +1,5 @@
+export AMBER_ENV := production
+
 all: elixir node ruby crystal go rust swift python nim csharp scala client benchmarker
 
 # --- Elixir ---
