@@ -83,7 +83,7 @@ router_cr:
 # amber
 amber:
 	cd crystal/amber; shards update; shards build --release
-	ln -s -f ../crystal/amber/server_crystal_amber bin/.
+	ln -s -f ../crystal/amber/bin/server_crystal_amber bin/.
 
 
 # --- Go ---
