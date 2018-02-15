@@ -1,0 +1,1 @@
+cd python/django;gunicorn app.wsgi --bind 127.0.0.1:3000

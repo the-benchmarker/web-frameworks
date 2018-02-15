@@ -59,6 +59,7 @@ LANGS = [
     {name: "sanic", repo: "channelcat/sanic"},
     {name: "japronto", repo: "squeaky-pl/japronto"},
     {name: "flask", repo: "pallets/flask"},
+    {name: "django", repo: "django/django"},
   ]},
   {lang: "nim", targets: [
     {name: "jester", repo: "dom96/jester"},
@@ -91,6 +92,8 @@ class ExecServer
     # Since ruby's frameworks are running on puma, we have to kill the independent process
     if @target.lang == "ruby"
       kill_proc("puma")
+    elsif @target.lang == "python"
+      kill_proc("gunicorn")
     elsif @target.lang == "node"
       kill_proc("node")
     elsif @target.name == "plug"

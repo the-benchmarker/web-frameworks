@@ -199,6 +199,12 @@ flask:
 	cd python/flask; pip3 install -r requirements.txt; chmod +x server_python_flask.py
 	ln -s -f ../python/flask/server_python_flask.py bin/server_python_flask
 
+# Django
+django:
+	cd python/django; pip3 install -r requirements.txt --user
+	ln -s -f ../python/django/server_python_django bin/server_python_django
+
+
 # --- Nim ---
 nim: jester
 
