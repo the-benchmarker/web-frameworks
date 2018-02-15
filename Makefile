@@ -182,7 +182,7 @@ aspnetcore:
 	ln -s -f ../csharp/aspnetcore/server_csharp_aspnetcore bin/.
 
 # --- Python ---
-python: sanic japronto flask
+python: sanic japronto flask django
 
 # Sanic
 sanic:
