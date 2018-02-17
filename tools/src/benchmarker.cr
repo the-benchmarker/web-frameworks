@@ -58,7 +58,12 @@ LANGS = [
   {lang: "python", targets: [
     {name: "sanic", repo: "channelcat/sanic"},
     {name: "japronto", repo: "squeaky-pl/japronto"},
-    {name: "flask", repo: "pallets/flask"},
+    # Sorry, it's still not working
+    # For debugging, try; (it will be failed)
+    # ```
+    # ./bin/benchmarker flast
+    # ```
+    # {name: "flask", repo: "pallets/flask"},
   ]},
   {lang: "nim", targets: [
     {name: "jester", repo: "dom96/jester"},
