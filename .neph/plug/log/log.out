@@ -1,0 +1,17 @@
+Resolving Hex dependencies...
+Dependency resolution completed:
+  cowboy 1.0.4
+  cowlib 1.0.2
+  distillery 1.5.2
+  mime 1.2.0
+  plug 1.4.4
+  ranch 1.4.0
+All dependencies up to date
+[1m[36m==> Assembling release..[0m
+[1m[36m==> Building release my_plug:0.1.0 using environment prod[0m
+[1m[36m==> Including ERTS 9.2 from /usr/local/Cellar/erlang/20.2.2/lib/erlang/erts-9.2[0m
+[1m[32m==> Release successfully built!
+    You can run it in one of the following ways:
+      Interactive: _build/prod/rel/my_plug/bin/my_plug console
+      Foreground: _build/prod/rel/my_plug/bin/my_plug foreground
+      Daemon: _build/prod/rel/my_plug/bin/my_plug start[0m
