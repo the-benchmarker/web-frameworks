@@ -89,7 +89,7 @@ amber:
 
 
 # --- Go ---
-go: echo gorilla-mux fasthttprouter gin
+go: echo gorilla-mux fasthttprouter gin iris
 
 # Echo
 echo:
