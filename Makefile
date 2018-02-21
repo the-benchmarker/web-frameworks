@@ -186,17 +186,17 @@ python: sanic japronto flask django
 
 # Sanic
 sanic:
-	cd python/sanic; pip3 install -r requirements.txt -U; chmod +x server_python_sanic.py
+	cd python/sanic; pip3 install -r requirements.txt -U --user; chmod +x server_python_sanic.py
 	ln -s -f ../python/sanic/server_python_sanic.py bin/server_python_sanic
 
 # Japronto
 japronto:
-	cd python/japronto; pip3 install -r requirements.txt -U; chmod +x server_python_japronto.py
+	cd python/japronto; pip3 install -r requirements.txt -U --user; chmod +x server_python_japronto.py
 	ln -s -f ../python/japronto/server_python_japronto.py bin/server_python_japronto
 
 # Flask
 flask:
-	cd python/flask; pip3 install -r requirements.txt -U; chmod +x server_python_flask.py
+	cd python/flask; pip3 install -r requirements.txt -U --user; chmod +x server_python_flask.py
 	ln -s -f ../python/flask/server_python_flask.py bin/server_python_flask
 
 # Django
