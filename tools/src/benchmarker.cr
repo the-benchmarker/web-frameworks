@@ -130,7 +130,7 @@ end
 # requests : numbers of request per thread
 def client(threads, requests)
   s = Time.now
-  `#{CLIENT} #{threads} -r #{requests}`
+  `#{CLIENT} -t #{threads} -r #{requests}`
   e = Time.now
   (e - s).to_f
 end
