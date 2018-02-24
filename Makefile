@@ -66,7 +66,7 @@ rack-routing:
 	ln -s -f ../ruby/rack-routing/server_ruby_rack-routing bin/.
 
 # --- Crystal ---
-crystal: kemal router_cr lucky amber
+crystal: kemal router_cr lucky amber raze
 
 # Kemal
 kemal:
