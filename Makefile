@@ -80,6 +80,8 @@ raze:
 
 # Lucky
 lucky:
+	mkdir -p crystal/lucky/public
+	echo '{}' > crystal/lucky/public/manifest.json
 	cd crystal/lucky; bin/setup; shards build --release
 	ln -s -f ../crystal/lucky/bin/server_crystal_lucky bin/.
 
