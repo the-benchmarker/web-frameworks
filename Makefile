@@ -60,7 +60,7 @@ roda:
 	ln -s -f ../ruby/roda/server_ruby_roda bin/.
 
 # --- Crystal ---
-crystal: kemal router_cr lucky amber
+crystal: kemal router_cr lucky amber raze
 
 # Kemal
 kemal:
