@@ -4,6 +4,7 @@ ruby '2.4.3'
 gem 'rake'
 gem 'rack'
 gem 'rack-routing'
+gem 'puma'
 
 group :test do
   gem 'rspec'
