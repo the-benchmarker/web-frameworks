@@ -285,6 +285,7 @@ python:
     - sanic
     - japronto
     - flask
+    - tornado
 
 sanic:
   command: |
@@ -306,6 +307,13 @@ flask:
     ln -s -f ../python/flask/server_python_flask.py ../../bin/server_python_flask
   dir:
     python/flask
+
+tornado:
+  command: |
+    pip3 install -r requirements.txt; chmod +x server_python_tornado.py
+    ln -s -f ../python/tornado/server_python_tornado.py ../../bin/server_python_tornado
+  dir:
+    python/tornado
 
 nim:
   depends_on:

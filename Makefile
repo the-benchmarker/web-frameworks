@@ -212,6 +212,10 @@ django:
 	cd python/django; pip3 install -r requirements.txt -U --user
 	ln -s -f ../python/django/server_python_django bin/server_python_django
 
+# Tornado
+tornado:
+	cd python/tornado; pip3 install -r requirements.txt -U --user; chmod +x server_python_tornado.py
+	ln -s -f ../python/tornado/server_python_tornado.py bin/server_python_tornado
 
 # --- Nim ---
 nim: jester
