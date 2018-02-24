@@ -105,7 +105,7 @@ gorilla-mux:
 
 iris:
 	go get -u github.com/kataras/iris
-	cd go/iris; go build -o server_go_iris.go
+	cd go/iris; go build -o server_go_iris main.go
 	ln -s -f ../go/iris/server_go_iris bin/.
 
 # fasthttprouter
