@@ -1,0 +1,13 @@
+source 'https://rubygems.org'
+ruby '2.4.3'
+
+gem 'rake'
+gem 'rack'
+gem 'rack-routing'
+
+group :test do
+  gem 'rspec'
+  gem 'guard-rspec'
+  gem 'rack-test'
+  gem 'rb-fsevent'
+end

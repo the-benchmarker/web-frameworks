@@ -39,7 +39,7 @@ criollo:
 
 
 # --- Ruby ---
-ruby: rails sinatra roda
+ruby: rails sinatra roda rack-routing
 
 # Rails
 rails:
@@ -58,6 +58,12 @@ roda:
 	cd ruby/roda; bundle update
 	cd ruby/roda; bundle install --path vendor/bundle
 	ln -s -f ../ruby/roda/server_ruby_roda bin/.
+
+# Rack Routing
+rack-routing:
+	cd ruby/rack-routing; bundle update
+	cd ruby/rack-routing; bundle install --path vendor/bundle
+	ln -s -f ../ruby/rack-routing/server_ruby_rack-routing bin/.
 
 # --- Crystal ---
 crystal: kemal router_cr lucky amber
