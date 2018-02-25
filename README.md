@@ -6,7 +6,7 @@ Each framework has to have two features; routing and parsing path parameters.
 ## Result
 
 <!-- Result from here -->
-Last update: 2018-02-17
+Last update: 2018-02-26
 ```
 OS: Darwin (version: 17.3.0, arch: x86_64)
 CPU Cores: 8
@@ -30,9 +30,9 @@ CPU Cores: 8
 14. [gorilla_mux](https://github.com/gorilla/mux) (go)
 15. [aspnetcore](https://github.com/aspnet/Home) (csharp)
 16. [iris](https://github.com/kataras/iris) (go)
-17. [plug](https://github.com/elixir-lang/plug) (elixir)
-18. [gin](https://github.com/gin-gonic/gin) (go)
-19. [phoenix](https://github.com/phoenixframework/phoenix) (elixir)
+17. [phoenix](https://github.com/phoenixframework/phoenix) (elixir)
+18. [plug](https://github.com/elixir-lang/plug) (elixir)
+19. [gin](https://github.com/gin-gonic/gin) (go)
 20. [vapor](https://github.com/vapor/vapor) (swift)
 21. [perfect](https://github.com/PerfectlySoft/Perfect) (swift)
 22. [sanic](https://github.com/channelcat/sanic) (python)
@@ -45,7 +45,9 @@ CPU Cores: 8
 29. [jester](https://github.com/dom96/jester) (nim)
 30. [criollo](https://github.com/thecatalinstan/criollo) (objc)
 31. [sinatra](https://github.com/sinatra/sinatra) (ruby)
-32. [rails](https://github.com/rails/rails) (ruby)
+32. [tornado](https://github.com/tornadoweb/tornado) (python)
+33. [rack-routing](https://github.com/georgeu2000/rack-routing) (ruby)
+34. [rails](https://github.com/rails/rails) (ruby)
 
 ### Ranking (Language)
 
@@ -55,7 +57,7 @@ CPU Cores: 8
 4. go ([fasthttprouter](https://github.com/buaazp/fasthttprouter))
 5. node ([clusterpolka](https://github.com/lukeed/polka))
 6. csharp ([aspnetcore](https://github.com/aspnet/Home))
-7. elixir ([plug](https://github.com/elixir-lang/plug))
+7. elixir ([phoenix](https://github.com/phoenixframework/phoenix))
 8. swift ([vapor](https://github.com/vapor/vapor))
 9. scala ([akkahttp](https://github.com/akka/akka-http))
 10. ruby ([roda](https://github.com/jeremyevans/roda))
@@ -66,38 +68,40 @@ CPU Cores: 8
 
 | Language (Runtime)        | Framework (Middleware)    |       Max [sec] |       Min [sec] |       Ave [sec] |
 |---------------------------|---------------------------|-----------------|-----------------|-----------------|
-| ruby                      | rails                     |      335.395009 |      333.636317 |      334.396840 |
-| ruby                      | sinatra                   |       99.141004 |       98.975714 |       99.026594 |
-| ruby                      | roda                      |       37.466029 |       37.374301 |       37.419190 |
-| crystal                   | kemal                     |        8.325529 |        7.946342 |        8.221634 |
-| crystal                   | router_cr                 |        6.699849 |        6.328368 |        6.554750 |
-| crystal                   | raze                      |        7.168540 |        6.609037 |        6.972206 |
-| crystal                   | lucky                     |        8.039500 |        7.378015 |        7.611963 |
-| crystal                   | amber                     |        7.962421 |        7.630477 |        7.883198 |
-| go                        | echo                      |       10.680238 |        9.922064 |       10.253166 |
-| go                        | gorilla_mux               |       10.603140 |       10.141003 |       10.381136 |
-| go                        | iris                      |       11.089684 |       10.042793 |       10.546684 |
-| go                        | fasthttprouter            |        7.458703 |        7.251910 |        7.346479 |
-| go                        | gin                       |       11.514139 |       10.806855 |       11.177951 |
-| rust                      | actix                     |        6.867163 |        6.533883 |        6.656760 |
-| rust                      | iron                      |        7.088215 |        6.742639 |        6.881779 |
-| rust                      | nickel                    |        6.907404 |        6.733162 |        6.836242 |
-| rust                      | rocket                    |        8.828674 |        8.322669 |        8.560235 |
-| node                      | express                   |       27.026919 |       25.636237 |       26.024945 |
-| node                      | clusterexpress            |       16.060312 |       14.749847 |       15.140425 |
-| node                      | polka                     |       15.263102 |       14.424546 |       14.690798 |
-| node                      | clusterpolka              |        9.132165 |        8.292221 |        8.726003 |
-| elixir                    | plug                      |       11.684682 |       10.443505 |       11.025091 |
-| elixir                    | phoenix                   |       11.795545 |       10.572868 |       11.283478 |
-| swift                     | vapor                     |       12.750298 |       12.005783 |       12.446656 |
-| swift                     | perfect                   |       13.272732 |       11.944508 |       12.715364 |
-| swift                     | kitura                    |       16.144335 |       14.695239 |       15.612439 |
-| scala                     | akkahttp                  |       17.806122 |       16.206246 |       16.854295 |
-| csharp                    | aspnetcore                |       10.915338 |       10.031779 |       10.503702 |
-| python                    | sanic                     |       14.016670 |       11.820920 |       12.900015 |
-| python                    | japronto                  |        7.208292 |        7.011206 |        7.124510 |
-| nim                       | jester                    |       54.473501 |       54.306489 |       54.402050 |
-| objc                      | criollo                   |       57.432404 |       56.113433 |       56.738384 |
+| ruby                      | rails                     |      330.695639 |      329.748766 |      330.283498 |
+| ruby                      | sinatra                   |       97.614918 |       97.473684 |       97.549466 |
+| ruby                      | roda                      |       37.567316 |       37.482821 |       37.537436 |
+| ruby                      | rack-routing              |      293.084913 |      291.885714 |      292.707013 |
+| crystal                   | kemal                     |        8.471980 |        7.895288 |        8.240809 |
+| crystal                   | router_cr                 |        6.663747 |        6.398756 |        6.580617 |
+| crystal                   | raze                      |        7.046766 |        6.681810 |        6.931381 |
+| crystal                   | lucky                     |        7.853848 |        7.483846 |        7.716000 |
+| crystal                   | amber                     |        8.180518 |        7.714918 |        8.021653 |
+| go                        | echo                      |       10.407790 |        9.657063 |       10.030704 |
+| go                        | gorilla_mux               |       10.162614 |        9.867718 |       10.041358 |
+| go                        | iris                      |       10.584802 |       10.062414 |       10.369381 |
+| go                        | fasthttprouter            |        7.383870 |        7.237157 |        7.309896 |
+| go                        | gin                       |       11.390456 |       10.660009 |       10.951984 |
+| rust                      | actix                     |        6.837484 |        6.533378 |        6.661213 |
+| rust                      | iron                      |        7.106496 |        6.702638 |        6.840316 |
+| rust                      | nickel                    |        6.893016 |        6.765759 |        6.833456 |
+| rust                      | rocket                    |        8.471154 |        8.249096 |        8.374040 |
+| node                      | express                   |       27.553285 |       26.094557 |       26.461259 |
+| node                      | clusterexpress            |       15.340291 |       14.423945 |       14.746395 |
+| node                      | polka                     |       15.204288 |       14.529034 |       14.746328 |
+| node                      | clusterpolka              |        9.005489 |        8.700110 |        8.890766 |
+| elixir                    | plug                      |       11.180962 |       10.546574 |       10.919743 |
+| elixir                    | phoenix                   |       10.930012 |       10.564129 |       10.792129 |
+| swift                     | vapor                     |       12.312772 |       11.998519 |       12.125449 |
+| swift                     | perfect                   |       12.949930 |       12.451148 |       12.665174 |
+| swift                     | kitura                    |       15.190245 |       14.873937 |       15.024665 |
+| scala                     | akkahttp                  |       18.091491 |       16.309630 |       16.807849 |
+| csharp                    | aspnetcore                |       10.464090 |        9.795961 |       10.130911 |
+| python                    | sanic                     |       15.118685 |       12.626734 |       13.913008 |
+| python                    | japronto                  |        7.219928 |        6.947663 |        7.123151 |
+| python                    | tornado                   |      174.423872 |      173.858005 |      174.095675 |
+| nim                       | jester                    |       54.692087 |       54.458567 |       54.575013 |
+| objc                      | criollo                   |       61.117013 |       56.024134 |       57.618709 |
 <!-- Result till here -->
 
 ## Current target frameworks (middlewares)

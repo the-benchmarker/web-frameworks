@@ -285,6 +285,7 @@ python:
     - sanic
     - japronto
     - flask
+    - django
     - tornado
 
 sanic:
@@ -307,6 +308,13 @@ flask:
     ln -s -f ../python/flask/server_python_flask.py ../../bin/server_python_flask
   dir:
     python/flask
+
+django:
+  command: |
+    pip3 install -r requirements.txt; chmod +x server_python_django
+    ln -s -f ../python/django/server_python_django ../../bin/server_python_django
+  dir:
+    python/django
 
 tornado:
   command: |
