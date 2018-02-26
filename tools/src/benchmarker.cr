@@ -59,8 +59,11 @@ LANGS = [
   {lang: "python", targets: [
     {name: "sanic", repo: "channelcat/sanic"},
     {name: "japronto", repo: "squeaky-pl/japronto"},
-    {name: "flask", repo: "pallets/flask"},
-    {name: "django", repo: "django/django"},
+    # https://github.com/tbrand/which_is_the_fastest/issues/134
+    # {name: "flask", repo: "pallets/flask"},
+    # It's not working
+    # {name: "django", repo: "django/django"},
+    {name: "tornado", repo: "tornadoweb/tornado"},
   ]},
   {lang: "nim", targets: [
     {name: "jester", repo: "dom96/jester"},
@@ -88,11 +91,12 @@ class ExecServer
 
   # Kill the server process
   def kill
-    @process.not_nil!.kill
+    @process.kill
 
     # Since ruby's frameworks are running on puma, we have to kill the independent process
     if @target.lang == "ruby"
       kill_proc("puma")
+      kill_proc("rackup")
     elsif @target.lang == "python"
       kill_proc("gunicorn")
     elsif @target.lang == "node"
@@ -151,7 +155,7 @@ def benchmark(server, count, threads, requests) : BenchResult
   exec_server = ExecServer.new(server)
 
   # Wait for the binding
-  sleep 120
+  sleep 10
 
   count.times do |i|
     span = client(threads, requests)
@@ -165,7 +169,7 @@ def benchmark(server, count, threads, requests) : BenchResult
 
   result = BenchResult.new(max, min, ave, total)
 
-  sleep 120
+  sleep 10
 
   result
 end
@@ -221,6 +225,7 @@ puts_markdown "Last update: #{Time.now.to_s("%Y-%m-%d")}", m_lines, true
 puts_markdown "```", m_lines, true
 puts_markdown "OS: #{`uname -s`.rstrip} (version: #{`uname -r`.rstrip}, arch: #{`uname -m`.rstrip})", m_lines, true
 puts_markdown "CPU Cores: #{System.cpu_count}", m_lines, true
+puts_markdown "threads: #{threads}, requests: #{requests}"
 puts_markdown "```", m_lines, true
 puts_markdown "Benchmark running ..."
 

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import tornado.httpserver
@@ -7,7 +7,7 @@ import tornado.options
 import tornado.web
 
 from tornado.options import define, options
-define('port', default=8000, help='run on the given port', type=int)
+define('port', default=3000, help='run on the given port', type=int)
 
 
 class MainHandler(tornado.web.RequestHandler):
