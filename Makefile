@@ -5,7 +5,7 @@
 # Kemal
 export KEMAL_ENV := production
 # Raze
-export CRYSTAL_ENV := prouction
+export CRYSTAL_ENV := production
 # Lucky
 export LUCKY_ENV := production
 # Amber
