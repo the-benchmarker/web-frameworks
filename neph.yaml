@@ -84,7 +84,8 @@ crystal:
     - kemal
     - router_cr
     - raze
-    # - lucky
+    - lucky
+    - amber
 
 kemal:
   command: |
@@ -94,14 +95,6 @@ kemal:
   dir:
     crystal/kemal
 
-raze:
-  command: |
-    shards update
-    shards build --release
-    ln -s -f ../crystal/raze/bin/server_crystal_raze ../../bin/.
-  dir:
-    crystal/raze
-
 router_cr:
   command: |
     shards update
@@ -110,17 +103,32 @@ router_cr:
   dir:
     crystal/router.cr
 
-# Temporary remove lucky because of the following error at compiling
-# ```
-# 1. Manifest at which_is_the_fastest/crystal/lucky/public/manifest.json does not exist
-# ```
-# lucky:
-#   command: |
-#     shards update
-#     shards build --release
-#     ln -s -f ../crystal/lucky/bin/server_crystal_lucky ../../bin/.
-#   dir:
-#     crystal/lucky
+raze:
+  command: |
+    shards update
+    shards build --release
+    ln -s -f ../crystal/raze/bin/server_crystal_raze ../../bin/.
+  dir:
+    crystal/raze
+
+lucky:
+   command: |
+     mkdir -p public
+     echo '{}' > public/manifest.json
+     shards update
+     shards build --release
+     ln -s -f ../crystal/lucky/bin/server_crystal_lucky ../../bin/.
+   dir:
+     crystal/lucky
+
+amber:
+   command: |
+     shards update
+     shards build --release
+     ln -s -f crystal/amber/config ../../config
+     ln -s -f ../crystal/amber/bin/server_crystal_amber ../../bin/.
+   dir:
+     crystal/amber
 
 go:
   depends_on:
