@@ -79,6 +79,15 @@ roda:
   dir:
     ruby/roda
 
+rack-routing:
+  command: |
+    bundle update
+    bundle install --path vendor/bundle
+    ln -s -f ../ruby/rack-routing/server_ruby_rack-routing ../../bin/.
+  dir:
+    ruby/rack-routing
+
+
 crystal:
   depends_on:
     - kemal
