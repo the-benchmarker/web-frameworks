@@ -13,4 +13,5 @@ post "/user" do |ctx|
 end
 
 Raze.config.port = 3000
+Raze.config.env = "production"
 Raze.run

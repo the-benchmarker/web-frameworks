@@ -17,4 +17,5 @@ post "/user" do |env|
   nil
 end
 
+Kemal.config.env = "production"
 Kemal.run

@@ -59,10 +59,8 @@ LANGS = [
   {lang: "python", targets: [
     {name: "sanic", repo: "channelcat/sanic"},
     {name: "japronto", repo: "squeaky-pl/japronto"},
-    # https://github.com/tbrand/which_is_the_fastest/issues/134
-    # {name: "flask", repo: "pallets/flask"},
-    # It's not working
-    # {name: "django", repo: "django/django"},
+    {name: "flask", repo: "pallets/flask"},
+    {name: "django", repo: "django/django"},
     {name: "tornado", repo: "tornadoweb/tornado"},
   ]},
   {lang: "nim", targets: [

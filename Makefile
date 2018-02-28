@@ -1,16 +1,3 @@
-######################
-#### ENVIRONMENTS ####
-######################
-
-# Kemal
-export KEMAL_ENV := production
-# Raze
-export CRYSTAL_ENV := prouction
-# Lucky
-export LUCKY_ENV := production
-# Amber
-export AMBER_ENV := production
-
 all: elixir node ruby crystal go rust swift python nim csharp scala client benchmarker
 
 # --- Elixir ---
