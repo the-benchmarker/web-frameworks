@@ -13,7 +13,7 @@ LANGS = [
     {name: "rails", repo: "rails/rails"},
     {name: "sinatra", repo: "sinatra/sinatra"},
     {name: "roda", repo: "jeremyevans/roda"},
-    {name: "rack-routing", repo: "georgeu2000/rack-routing"},
+    {name: "rack-routing", repo: "iAmPlus/rack-routing"},
   ]},
   {lang: "crystal", targets: [
     {name: "kemal", repo: "kemalcr/kemal"},
