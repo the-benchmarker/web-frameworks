@@ -202,8 +202,9 @@ japronto:
 
 # Flask
 flask:
-	cd python/flask; pip3 install -r requirements.txt -U --user; chmod +x server_python_flask.py
-	ln -s -f ../python/flask/server_python_flask.py bin/server_python_flask
+	cd python/flask; pip3 install -r requirements.txt -U --user; chmod +x server_python_flask
+	ln -s -f ../python/flask/server_python_flask.py bin/.
+	ln -s -f ../python/flask/server_python_flask bin/server_python_flask
 
 # Django
 django:

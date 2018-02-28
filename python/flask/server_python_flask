@@ -1,0 +1,1 @@
+gunicorn --chdir python/flask --bind 0.0.0.0:3000 server_python_flask:app

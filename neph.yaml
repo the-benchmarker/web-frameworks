@@ -323,7 +323,7 @@ japronto:
 flask:
   command: |
     pip3 install -r requirements.txt; chmod +x server_python_flask.py
-    ln -s -f ../python/flask/server_python_flask.py ../../bin/server_python_flask
+    ln -s -f ../python/flask/server_python_flask ../../bin/.
   dir:
     python/flask
 
