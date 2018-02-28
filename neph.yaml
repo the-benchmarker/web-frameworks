@@ -54,6 +54,7 @@ ruby:
     - rails
     - sinatra
     - roda
+    - rack-routing
 
 rails:
   command: |
