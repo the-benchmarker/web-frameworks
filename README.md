@@ -150,6 +150,8 @@ CPU Cores: 8
    - [Jester](https://github.com/dom96/jester)
  - Objective-C
    - [Criollo](https://criollo.io/)
+ - Java
+   - [Vert.x Web](https://github.com/vert-x3/vertx-web)
 
 See Development section when you want to add new languages or frameworks.
 
