@@ -5,8 +5,8 @@ authors = ["Nikolay Kim <fafhrd91@gmail.com>"]
 
 [dependencies]
 regex = { version="0.2", features=["simd-accel"] }
-actix = "^0.4.3"
-actix-web = "=0.3.1"
+actix = "0.5"
+actix-web = "0.4"
 
 [build]
 rustflags = ["target-cpu", "native"]
