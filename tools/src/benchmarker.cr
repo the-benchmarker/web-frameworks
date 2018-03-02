@@ -98,7 +98,7 @@ class ExecServer
     elsif @target.lang == "python"
       kill_proc("gunicorn")
     elsif @target.lang == "node"
-      kill_proc("node")
+      kill_proc("node.*js$")
     elsif @target.name == "plug"
       path = File.expand_path("../../../elixir/plug/_build/prod/rel/my_plug/bin/my_plug", __FILE__)
       Process.run("bash #{path} stop", shell: true)
@@ -114,7 +114,7 @@ class ExecServer
 
   def kill_proc(proc : String)
     # Search pid of the process
-    procs = `ps aux | grep #{proc} | grep -v grep`
+    procs = `ps aux | grep -E '#{proc}' | grep -v grep`
     procs.split("\n").each do |proc|
       next if proc.includes?("benchmarker")
       proc.split(" ").each do |pid|
