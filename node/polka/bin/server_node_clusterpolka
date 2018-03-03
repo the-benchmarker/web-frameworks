@@ -1,1 +1,1 @@
-cd node/polka; node cluster_polka.js
+cd node/polka; NODE_ENV=production node cluster_polka.js

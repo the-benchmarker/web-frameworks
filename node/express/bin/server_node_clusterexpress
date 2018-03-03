@@ -1,1 +1,1 @@
-cd node/express; node cluster_express.js
+cd node/express; NODE_ENV=production node cluster_express.js
