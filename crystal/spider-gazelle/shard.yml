@@ -1,0 +1,18 @@
+name: app
+version: 1.0.0
+
+dependencies:
+  action-controller:
+    github: spider-gazelle/action-controller
+  active-model:
+    github: spider-gazelle/active-model
+
+  # https://github.com/jeromegn/kilt
+  # Generic template interface for Crystal
+  kilt:
+    github: jeromegn/kilt
+
+# compile target
+targets:
+  app:
+    main: src/app.cr
