@@ -64,7 +64,7 @@ rack-routing:
 	ln -s -f ../ruby/rack-routing/server_ruby_rack-routing bin/.
 
 # --- Crystal ---
-crystal: kemal router_cr lucky amber raze
+crystal: kemal router_cr lucky amber raze spider-gazelle
 
 # Kemal
 kemal:
@@ -92,6 +92,11 @@ router_cr:
 amber:
 	cd crystal/amber; shards update; shards build --release
 	ln -s -f ../crystal/amber/bin/server_crystal_amber bin/.
+
+# Spider Gazelle
+spider-gazelle:
+	cd crystal/spider-gazelle; shards update; shards build --release
+	ln -s -f ../crystal/spider-gazelle/bin/app bin/server_crystal_spider-gazelle
 
 
 # --- Go ---

@@ -96,6 +96,7 @@ crystal:
     - raze
     - lucky
     - amber
+    - spider-gazelle
 
 kemal:
   command: |
@@ -139,6 +140,14 @@ amber:
      ln -s -f ../crystal/amber/bin/server_crystal_amber ../../bin/.
    dir:
      crystal/amber
+
+spider-gazelle:
+  command: |
+    shards update
+    shards build --release
+    ln -s -f ../crystal/spider-gazelle/bin/app ../../bin/server_crystal_spider-gazelle
+  dir:
+    crystal/spider-gazelle
 
 go:
   depends_on:
