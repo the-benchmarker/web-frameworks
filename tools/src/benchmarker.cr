@@ -21,6 +21,7 @@ LANGS = [
     {name: "raze", repo: "samueleaton/raze"},
     {name: "lucky", repo: "luckyframework/lucky"},
     {name: "amber", repo: "amberframework/amber"},
+    {name: "spider-gazelle", repo: "spider-gazelle/spider-gazelle"},
   ]},
   {lang: "go", targets: [
     {name: "echo", repo: "labstack/echo"},

@@ -6,4 +6,8 @@ class User < Application
   def show
     render text: params["id"]
   end
+
+  def create
+    head :ok
+  end
 end
