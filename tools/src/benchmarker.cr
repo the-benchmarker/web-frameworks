@@ -70,6 +70,9 @@ LANGS = [
   {lang: "objc", targets: [
     {name: "criollo", repo: "thecatalinstan/criollo"},
   ]},
+  {lang: "php", targets: [
+    {name: "laravel", repo: "laravel/framework"},
+  ]},
 ]
 
 # struct for benchmark result
@@ -84,8 +87,10 @@ class ExecServer
   def initialize(@target : Target)
     # Path of the executable
     executable = File.expand_path(PATH_PREFIX + "server_" + @target.lang + "_" + @target.name, __FILE__)
+    
     # Running the server
     @process = Process.new(executable)
+
   end
 
   # Kill the server process
@@ -100,6 +105,8 @@ class ExecServer
       kill_proc("gunicorn")
     elsif @target.lang == "node"
       kill_proc("node")
+    elsif @target.lang == "php"
+      kill_proc("php -S")
     elsif @target.name == "plug"
       path = File.expand_path("../../../elixir/plug/_build/prod/rel/my_plug/bin/my_plug", __FILE__)
       Process.run("bash #{path} stop", shell: true)
