@@ -1,0 +1,13 @@
+name: which_is_the_fastest
+version: 0.1.0
+
+authors:
+  - Marwan Rabbâa <waghanza@gmail.com>
+
+development_dependencies:
+  ameba:
+    github: veelenga/ameba
+
+crystal: 0.24.1
+
+license: MIT
