@@ -146,7 +146,7 @@ end
 # requests : numbers of request per thread
 def benchmark(server, count, threads, requests) : BenchResult
   max : Float64 = -1.0
-  min : Float64 = 100000.0
+  min : Float64 = 100_000.0
   ave : Float64 = 0.0
   total : Float64 = 0.0
 
@@ -288,7 +288,6 @@ if record
   tag_till = "<!-- Result till here -->"
   m_lines.insert(0, tag_from)
   m_lines.push(tag_till)
-  
   prev_readme = File.read(path)
   next_readme = prev_readme.gsub(
     /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
