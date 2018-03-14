@@ -1,0 +1,6 @@
+language: crystal
+install:
+  - crystal deps
+script:
+  - crystal spec
+  - bin/ameba
