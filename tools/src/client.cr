@@ -5,6 +5,8 @@ class Client
   def initialize
     @threads  = 16
     @requests = 1000
+    @host = "localhost"
+    @port = 3000
 
     OptionParser.parse! do |parser|
       parser.banner = "Usage: time ./bin/benchmark [options]"
@@ -14,12 +16,18 @@ class Client
       parser.on("-r REQUESTS", "--requests=REQUESTS", "# of iterations of requests") do |requests|
         @requests = requests.to_i
       end
+      parser.on("-h HOST", "--host=HOST", "IP / address of host to test") do |host|
+        @host = host
+      end
+      parser.on("-p PORT", "--port=PORT", "Port to test") do |port|
+	@port = port.to_i
+      end
     end
   end
 
   macro run_spawn
     spawn do
-      c = HTTP::Client.new "localhost", 3000
+      c = HTTP::Client.new @host, @port
       @requests.times do |t|
         r = c.get  "/"
         abort "status code should be 200 when GET /" if r.status_code != 200
