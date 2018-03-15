@@ -6,10 +6,17 @@ authors:
   - OvermindDL1 <overminddl1@gmail.com>
   - Marwan Rabbâa <waghanza@gmail.com>
 
+dependencies:
+  docker:
+     github: jeromegn/docker.cr
+     version: ~> 0.1.2
+
+targets:
+  benchmarker:
+    main: tools/src/benchmarker.cr
+  client:
+    main: tools/src/client.cr
+
 development_dependencies:
   ameba:
     github: veelenga/ameba
-
-crystal: 0.24.1
-
-license: MIT

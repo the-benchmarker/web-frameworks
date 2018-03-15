@@ -1,204 +1,19 @@
 require "benchmark"
 require "option_parser"
-
-# Prefix of pathes for each executable
-PATH_PREFIX = "../../../bin/"
-
-# Path for client binary
-CLIENT = File.expand_path(PATH_PREFIX + "client", __FILE__)
-
-# Each framework
-LANGS = [
-  {lang: "ruby", targets: [
-    {name: "rails", repo: "rails/rails"},
-    {name: "sinatra", repo: "sinatra/sinatra"},
-    {name: "roda", repo: "jeremyevans/roda"},
-    {name: "rack-routing", repo: "iAmPlus/rack-routing"},
-  ]},
-  {lang: "crystal", targets: [
-    {name: "kemal", repo: "kemalcr/kemal"},
-    {name: "router_cr", repo: "tbrand/router.cr"},
-    {name: "raze", repo: "samueleaton/raze"},
-    {name: "lucky", repo: "luckyframework/lucky"},
-    {name: "amber", repo: "amberframework/amber"},
-    {name: "spider-gazelle", repo: "spider-gazelle/spider-gazelle"},
-  ]},
-  {lang: "go", targets: [
-    {name: "echo", repo: "labstack/echo"},
-    {name: "gorilla_mux", repo: "gorilla/mux"},
-    {name: "iris", repo: "kataras/iris"},
-    {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
-    {name: "gin", repo: "gin-gonic/gin"},
-  ]},
-  {lang: "rust", targets: [
-    {name: "actix", repo: "actix/actix-web"},
-    {name: "iron", repo: "iron/iron"},
-    {name: "nickel", repo: "nickel-org/nickel.rs"},
-    {name: "rocket", repo: "SergioBenitez/Rocket"},
-  ]},
-  {lang: "node", targets: [
-    {name: "express", repo: "expressjs/express"},
-    {name: "clusterexpress", repo: "LearnBoost/cluster"},
-    {name: "polka", repo: "lukeed/polka"},
-    {name: "clusterpolka", repo: "lukeed/polka"},
-  ]},
-  {lang: "elixir", targets: [
-    {name: "plug", repo: "elixir-lang/plug"},
-    {name: "phoenix", repo: "phoenixframework/phoenix"},
-  ]},
-  {lang: "swift", targets: [
-    {name: "vapor", repo: "vapor/vapor"},
-    {name: "perfect", repo: "PerfectlySoft/Perfect"},
-    {name: "kitura", repo: "IBM-Swift/Kitura"},
-  ]},
-  {lang: "scala", targets: [
-    {name: "akkahttp", repo: "akka/akka-http"},
-  ]},
-  {lang: "csharp", targets: [
-    {name: "aspnetcore", repo: "aspnet/Home"},
-  ]},
-  {lang: "python", targets: [
-    {name: "sanic", repo: "channelcat/sanic"},
-    {name: "japronto", repo: "squeaky-pl/japronto"},
-    # Issue: https://github.com/tbrand/which_is_the_fastest/issues/165
-    # {name: "flask", repo: "pallets/flask"},
-    # {name: "django", repo: "django/django"},
-    {name: "tornado", repo: "tornadoweb/tornado"},
-  ]},
-  {lang: "nim", targets: [
-    {name: "jester", repo: "dom96/jester"},
-  ]},
-  {lang: "objc", targets: [
-    {name: "criollo", repo: "thecatalinstan/criollo"},
-  ]},
-]
-
-# struct for benchmark result
-record BenchResult, max : Float64, min : Float64, ave : Float64, total : Float64
-# struct for target
-record Target, lang : String, name : String, repo : String
-
-record Ranked, res : BenchResult, target : Target
-
-# Executor of each server
-class ExecServer
-  def initialize(@target : Target)
-    # Path of the executable
-    executable = File.expand_path(PATH_PREFIX + "server_" + @target.lang + "_" + @target.name, __FILE__)
-    # Running the server
-    @process = Process.new(executable)
-  end
-
-  # Kill the server process
-  def kill
-    @process.kill
-
-    # Since ruby's frameworks are running on puma, we have to kill the independent process
-    if @target.lang == "ruby"
-      kill_proc("puma")
-      kill_proc("rackup")
-    elsif @target.lang == "python"
-      kill_proc("gunicorn")
-    elsif @target.lang == "node"
-      kill_proc("node")
-    elsif @target.name == "plug"
-      path = File.expand_path("../../../elixir/plug/_build/prod/rel/my_plug/bin/my_plug", __FILE__)
-      Process.run("bash #{path} stop", shell: true)
-    elsif @target.name == "phoenix"
-      path = File.expand_path("../../../elixir/phoenix/_build/prod/rel/my_phoenix/bin/my_phoenix", __FILE__)
-      Process.run("bash #{path} stop", shell: true)
-    elsif @target.name == "akkahttp"
-      kill_proc("sbt")
-    elsif @target.name == "aspnetcore"
-      kill_proc("dotnet")
-    end
-  end
-
-  def kill_proc(proc : String)
-    # Search pid of the process
-    procs = `ps aux | grep #{proc} | grep -v grep`
-    procs.split("\n").each do |proc|
-      next if proc.includes?("benchmarker")
-      proc.split(" ").each do |pid|
-        if /\d+/ =~ pid
-          _pid = $~[0].to_i
-          Process.kill(Signal::TERM, _pid)
-          break
-        end
-      end
-    end
-  end
-end
-
-# Running client and returning span
-# threads : number of thread to launch simultaneously
-# requests : numbers of request per thread
-def client(threads, requests)
-  s = Time.now
-  `#{CLIENT} -t #{threads} -r #{requests}`
-  e = Time.now
-  (e - s).to_f
-end
-
-# Benchmark
-# server : server context
-# count  : number of samples
-# threads : number of thread to launch simultaneously
-# requests : numbers of request per thread
-def benchmark(server, count, threads, requests) : BenchResult
-  max : Float64 = -1.0
-  min : Float64 = 100_000.0
-  ave : Float64 = 0.0
-  total : Float64 = 0.0
-
-  # Running server
-  exec_server = ExecServer.new(server)
-
-  # Wait for the binding
-  sleep 10
-
-  count.times do |i|
-    span = client(threads, requests)
-    max = span if span > max
-    min = span if span < min
-    total += span
-  end
-
-  ave = total/count.to_f
-  exec_server.kill
-
-  result = BenchResult.new(max, min, ave, total)
-
-  sleep 5
-
-  result
-end
-
-def all_frameworks : Array(Target)
-  targets = [] of Target
-
-  LANGS.each do |lang|
-    lang[:targets].each do |framework|
-      targets.push(Target.new(lang[:lang], framework[:name], framework[:repo]))
-    end
-  end
-
-  targets
-end
-
-m_lines = [] of String
-
-def puts_markdown(line, m_lines = nil, m = false)
-  puts line
-  m_lines.push(line) if m && m_lines
-end
+require "json"
+require "docker"
 
 ####################
-### DEFAULT VALUES #
+## DEFAULT VALUES ##
 ####################
+
 threads = (System.cpu_count + 1).to_i
-requests = 10000
+requests = 100_000.0
 record = false
+
+#################
+#### OPTIONS ####
+#################
 
 OptionParser.parse! do |parser|
   parser.banner = "Usage: time ./bin/benchmark [options]"
@@ -213,13 +28,110 @@ OptionParser.parse! do |parser|
   end
 end
 
-targets = if ARGV.reject { |opt| opt.starts_with?("--") }.size > 0
-            all_frameworks.select { |target| ARGV.includes?(target.lang) || ARGV.includes?(target.name) }
-          else
-            all_frameworks
-          end
+################
+## FRAMEWORKS ##
+################
 
-abort "No targets found for #{ARGV[0]}" if targets.size == 0
+# Prefix of pathes for each executable
+PATH_PREFIX = "../../../bin/"
+
+# Path for client binary
+CLIENT = File.expand_path(PATH_PREFIX + "client", __FILE__)
+
+# struct for benchmark result
+record BenchResult, max : Float64, min : Float64, ave : Float64, total : Float64
+# struct for target
+record Target, lang : String, name : String, repo : String
+
+record Ranked, res : BenchResult, target : Target
+
+LANGS = [
+  {lang: "ruby", targets: [
+    {name: "rails", repo: "rails/rails"},
+    {name: "sinatra", repo: "sinatra/sinatra"},
+    {name: "roda", repo: "jeremyevans/roda"},
+  ]},
+  {lang: "crystal", targets: [
+    {name: "kemal", repo: "kemalcr/kemal"},
+    {name: "router.cr", repo: "tbrand/router.cr"},
+    {name: "raze", repo: "samueleaton/raze"},
+  ]},
+  {lang: "python", targets: [
+    {name: "japronto", repo: "squeaky-pl/japronto"},
+    {name: "flask", repo: "pallets/flask"},
+  ]},
+  {lang: "nim", targets: [
+    {name: "jester", repo: "dom96/jester"},
+  ]},
+]
+
+def frameworks : Array(Target)
+  targets = [] of Target
+
+  LANGS.each do |lang|
+    lang[:targets].each do |framework|
+      targets.push(Target.new(lang[:lang], framework[:name], framework[:repo]))
+    end
+  end
+
+  targets
+end
+
+# Benchmark
+# server : server context
+# count  : number of samples
+# threads : number of thread to launch simultaneously
+# requests : numbers of request per thread
+def benchmark(host, count, threads, requests) : BenchResult
+  max : Float64 = -1.0
+  min : Float64 = 100_000.0
+  ave : Float64 = 0.0
+  total : Float64 = 0.0
+
+  count.times do |i|
+    span = client(host, threads, requests)
+    max = span if span > max
+    min = span if span < min
+    total += span
+  end
+
+  ave = total/count.to_f
+
+  result = BenchResult.new(max, min, ave, total)
+
+  sleep 5
+
+  result
+end
+
+# Running client and returning span
+# host: Hostname, or IP address, to target
+# threads : number of thread to launch simultaneously
+# requests : numbers of request per thread
+def client(host, threads, requests)
+  s = Time.now
+  `#{CLIENT} -h #{host} -t #{threads.to_i} -r #{requests.to_i}`
+  e = Time.now
+  (e - s).to_f
+end
+
+m_lines = [] of String
+
+def puts_markdown(line, m_lines = nil, m = false)
+  puts line
+  m_lines.push(line) if m && m_lines
+end
+
+targets = [] of Target
+frameworks.each do |target|
+  if ARGV.includes?(target.lang) || ARGV.includes?(target.name)
+    targets << target
+  end
+end
+
+if targets.size == 0
+  targets = frameworks
+end
 
 puts_markdown "Last update: #{Time.now.to_s("%Y-%m-%d")}", m_lines, true
 puts_markdown "```", m_lines, true
@@ -231,15 +143,19 @@ puts_markdown "Benchmark running ..."
 
 all = [] of Ranked
 ranks = [] of Ranked
-
 targets.each do |target|
-  result = benchmark(target, 5, threads, requests)
-  puts_markdown "Done. <- #{target.name}"
-  all.push(Ranked.new(result, target))
-end
-
-ranks = all.sort do |rank0, rank1|
-  rank0.res.ave <=> rank1.res.ave
+  cid = File.read(".neph/#{target.name}/log/log.out").strip
+  Docker.client.containers.each do |container|
+    if container.id == cid
+      network = container.network_settings
+      if network.is_a?(Hash)
+        ip = network["Networks"]["bridge"]["IPAddress"]
+	result = benchmark(ip, 5, threads, requests)
+        puts_markdown "Done. <- #{target.name}"
+        all.push(Ranked.new(result, target))
+      end
+    end
+  end
 end
 
 # --- Ranking of frameworks
