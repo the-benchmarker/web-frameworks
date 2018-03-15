@@ -97,7 +97,6 @@ LANGS = [
   ]},
   {lang: "nim", targets: [
     {name: "jester", repo: "dom96/jester"},
-    {name: "mofuw", repo: "2vg/mofuw"},
   ]},
   # Disable since only runnable on OSX
   #{lang: "objc", targets: [
