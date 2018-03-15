@@ -50,56 +50,15 @@ LANGS = [
     {name: "rails", repo: "rails/rails"},
     {name: "sinatra", repo: "sinatra/sinatra"},
     {name: "roda", repo: "jeremyevans/roda"},
-    {name: "rack-routing", repo: "iAmPlus/rack-routing"},
   ]},
   {lang: "crystal", targets: [
     {name: "kemal", repo: "kemalcr/kemal"},
     {name: "router.cr", repo: "tbrand/router.cr"},
     {name: "raze", repo: "samueleaton/raze"},
-    {name: "lucky", repo: "luckyframework/lucky"},
-    {name: "amber", repo: "amberframework/amber"},
-    {name: "spider-gazelle", repo: "spider-gazelle/spider-gazelle"},
-  ]},
-  {lang: "go", targets: [
-    {name: "echo", repo: "labstack/echo"},
-    {name: "gorilla_mux", repo: "gorilla/mux"},
-    {name: "iris", repo: "kataras/iris"},
-    {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
-    {name: "gin", repo: "gin-gonic/gin"},
-  ]},
-  {lang: "rust", targets: [
-    {name: "actix", repo: "actix/actix-web"},
-    {name: "iron", repo: "iron/iron"},
-    {name: "nickel", repo: "nickel-org/nickel.rs"},
-    {name: "rocket", repo: "SergioBenitez/Rocket"},
-  ]},
-  {lang: "node", targets: [
-    {name: "express", repo: "expressjs/express"},
-    {name: "clusterexpress", repo: "LearnBoost/cluster"},
-    {name: "polka", repo: "lukeed/polka"},
-    {name: "clusterpolka", repo: "lukeed/polka"},
-  ]},
-  {lang: "elixir", targets: [
-    {name: "plug", repo: "elixir-lang/plug"},
-    {name: "phoenix", repo: "phoenixframework/phoenix"},
-  ]},
-  {lang: "swift", targets: [
-    {name: "vapor", repo: "vapor/vapor"},
-    {name: "perfect", repo: "PerfectlySoft/Perfect"},
-    {name: "kitura", repo: "IBM-Swift/Kitura"},
-  ]},
-  {lang: "scala", targets: [
-    {name: "akkahttp", repo: "akka/akka-http"},
-  ]},
-  {lang: "csharp", targets: [
-    {name: "aspnetcore", repo: "aspnet/Home"},
   ]},
   {lang: "python", targets: [
-    {name: "sanic", repo: "channelcat/sanic"},
     {name: "japronto", repo: "squeaky-pl/japronto"},
     {name: "flask", repo: "pallets/flask"},
-    {name: "django", repo: "django/django"},
-    {name: "tornado", repo: "tornadoweb/tornado"},
   ]},
   {lang: "nim", targets: [
     {name: "jester", repo: "dom96/jester"},
@@ -155,7 +114,7 @@ end
 # requests : numbers of request per thread
 def client(host, threads, requests)
   s = Time.now
-  `#{CLIENT} -h #{host} -t #{threads} -r #{requests}`
+  `#{CLIENT} -h #{host} -t #{threads.to_i} -r #{requests.to_i}`
   e = Time.now
   (e - s).to_f
 end
@@ -172,6 +131,10 @@ frameworks.each do |target|
   if ARGV.includes?(target.lang) || ARGV.includes?(target.name)
     targets << target
   end
+end
+
+if targets.size == 0
+  targets = frameworks
 end
 
 puts_markdown "Last update: #{Time.now.to_s("%Y-%m-%d")}", m_lines, true
