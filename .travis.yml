@@ -1,7 +1,4 @@
 services: docker
 language: crystal
-install:
-  - crystal deps
-script:
-  - bin/ameba
-  - bin/neph
+install: shards build --release
+script: bin/ameba
