@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD [ "python", "./server_python_flask.py" ]
+CMD [ "gunicorn", "--chdir", "/usr/src/app", "--bind", "0.0.0.0:3000", "server_python_flask:app" ]
