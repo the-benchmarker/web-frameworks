@@ -60,8 +60,9 @@ LANGS = [
   {lang: "python", targets: [
     {name: "sanic", repo: "channelcat/sanic"},
     {name: "japronto", repo: "squeaky-pl/japronto"},
-    {name: "flask", repo: "pallets/flask"},
-    {name: "django", repo: "django/django"},
+    # Issue: https://github.com/tbrand/which_is_the_fastest/issues/165
+    # {name: "flask", repo: "pallets/flask"},
+    # {name: "django", repo: "django/django"},
     {name: "tornado", repo: "tornadoweb/tornado"},
   ]},
   {lang: "nim", targets: [
@@ -168,7 +169,7 @@ def benchmark(server, count, threads, requests) : BenchResult
 
   result = BenchResult.new(max, min, ave, total)
 
-  sleep 10
+  sleep 5
 
   result
 end
