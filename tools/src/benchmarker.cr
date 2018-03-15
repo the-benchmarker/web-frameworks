@@ -8,7 +8,7 @@ require "docker"
 ####################
 
 threads = (System.cpu_count + 1).to_i
-requests = 10000
+requests = 100_000.0
 record = false
 
 #################
