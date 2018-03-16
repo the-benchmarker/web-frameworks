@@ -58,6 +58,13 @@ LANGS = [
   {lang: "nim", targets: [
     {name: "jester", repo: "dom96/jester"},
   ]},
+  {lang: "go", targets: [
+    {name: "echo", repo: "labstack/echo"},
+    {name: "gorilla_mux", repo: "gorilla/mux"},
+    {name: "iris", repo: "kataras/iris"},
+    {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
+    {name: "gin", repo: "gin-gonic/gin"},
+  ]},
 ]
 
 # struct for benchmark result
