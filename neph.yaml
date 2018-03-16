@@ -4,6 +4,7 @@ main:
     - ruby
     - nim
     - python
+    - go
       
 crystal:
   depends_on:
@@ -26,6 +27,13 @@ python:
     - flask
     - japronto
     - django
+go:
+ depends_on:
+   - iris
+   - echo
+   - gorilla_mux
+   - fasthttprouter
+   - gin
 
 router.cr:
   command: |
@@ -80,6 +88,36 @@ japronto:
     docker build -t japronto . 1>&2
     docker run -td japronto
   dir: python/japronto
+
+iris:
+  command: |
+    docker build -t iris . 1>&2
+    docker run -td iris
+  dir: go/iris
+
+echo:
+  command: |
+    docker build -t echo . 1>&2
+    docker run -td echo
+  dir: go/echo
+
+gorilla_mux:
+  command: |
+    docker build -t gorilla_mux . 1>&2
+    docker run -td gorilla_mux
+  dir: go/gorilla-mux
+
+fasthttprouter:
+  command: |
+    docker build -t fasthttprouter . 1>&2
+    docker run -td fasthttprouter
+  dir: go/fasthttprouter
+
+gin:
+  command: |
+    docker build -t gin . 1>&2
+    docker run -td gin
+  dir: go/gin
 
 django:
   command: |
