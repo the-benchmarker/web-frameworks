@@ -6,3 +6,7 @@ script:
   - yamllint neph.yaml
   - bin/neph
 install: shards build --release
+script:
+  - crystal spec
+  - bin/ameba
+  - yamllint neph.yaml
