@@ -123,23 +123,23 @@ raze:
     crystal/raze
 
 lucky:
-   command: |
-     mkdir -p public
-     echo '{}' > public/manifest.json
-     shards update
-     shards build --release
-     ln -s -f ../crystal/lucky/bin/server_crystal_lucky ../../bin/.
-   dir:
-     crystal/lucky
+  command: |
+    mkdir -p public
+    echo '{}' > public/manifest.json
+    shards update
+    shards build --release
+    ln -s -f ../crystal/lucky/bin/server_crystal_lucky ../../bin/.
+  dir:
+    crystal/lucky
 
 amber:
-   command: |
-     shards update
-     shards build --release
-     ln -s -f crystal/amber/config ../../config
-     ln -s -f ../crystal/amber/bin/server_crystal_amber ../../bin/.
-   dir:
-     crystal/amber
+  command: |
+    shards update
+    shards build --release
+    ln -s -f crystal/amber/config ../../config
+    ln -s -f ../crystal/amber/bin/server_crystal_amber ../../bin/.
+  dir:
+    crystal/amber
 
 spider-gazelle:
   command: |
@@ -236,18 +236,6 @@ actix:
     ln -s -f ../rust/actix/target/release/server_rust_actix ../../bin/.
   dir:
     rust/actix
-
-objc:
-  depends_on:
-    - criollo
-
-criollo:
-  command: |
-    pod install
-    xcodebuild -workspace server_objc_criollo.xcworkspace -scheme server_objc_criollo -derivedDataPath ./derivedData
-    ln -s -f ../objc/criollo/derivedData/Build/Products/Debug/server_objc_criollo.app/Contents/MacOS/server_objc_criollo ../../bin/.
-  dir:
-    objc/criollo
 
 elixir:
   depends_on:
@@ -352,7 +340,7 @@ tornado:
 
 nim:
   depends_on:
-   - jester
+    - jester
 
 jester:
   command: |
