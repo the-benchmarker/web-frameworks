@@ -25,6 +25,7 @@ python:
   depends_on:
     - flask
     - japronto
+    - django
 
 router.cr:
   command: |
@@ -79,3 +80,9 @@ japronto:
     docker build -t japronto . 1>&2
     docker run -td japronto
   dir: python/japronto
+
+django:
+  command: |
+    docker build -t django . 1>&2
+    docker run -td django
+  dir: python/django
