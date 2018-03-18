@@ -53,6 +53,7 @@ LANGS = [
   {lang: "python", targets: [
     {name: "japronto", repo: "squeaky-pl/japronto"},
     {name: "flask", repo: "pallets/flask"},
+    {name: "django", repo: "django/django"}
   ]},
   {lang: "nim", targets: [
     {name: "jester", repo: "dom96/jester"},
