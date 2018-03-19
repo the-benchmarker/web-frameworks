@@ -17,6 +17,7 @@ ruby:
     - rails
     - sinatra
     - roda
+    - rack-routing
 
 nim:
   depends_on:
@@ -70,6 +71,12 @@ roda:
     docker build -t roda . 1>&2
     docker run -td roda
   dir: ruby/roda
+
+rack-routing:
+  command: |
+    docker build -t rack-routing . 1>&2
+    docker run -td rack-routing
+  dir: ruby/rack-routing
 
 jester:
   command: |
