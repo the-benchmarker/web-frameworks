@@ -11,6 +11,7 @@ crystal:
     - router.cr
     - raze
     - kemal
+    - lucky
 
 ruby:
   depends_on:
@@ -47,6 +48,14 @@ raze:
     docker build -t raze . 1>&2
     docker run -td raze
   dir: crystal/raze
+
+lucky:
+  command: |
+    docker build -t lucky . 1>&2
+    docker run -td lucky
+  dir: crystal/lucky
+
+kemal:
 
 kemal:
   command: |
