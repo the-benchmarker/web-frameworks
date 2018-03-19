@@ -168,6 +168,10 @@ targets.each do |target|
   end
 end
 
+ranks = all.sort do |rank0, rank1|
+  rank0.res.ave <=> rank1.res.ave
+end
+
 # --- Ranking of frameworks
 
 puts_markdown "", m_lines, true
