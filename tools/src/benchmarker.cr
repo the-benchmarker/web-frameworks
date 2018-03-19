@@ -50,6 +50,7 @@ LANGS = [
     {name: "kemal", repo: "kemalcr/kemal"},
     {name: "router.cr", repo: "tbrand/router.cr"},
     {name: "raze", repo: "samueleaton/raze"},
+    {name: "lucky", repo: "luckyframework/lucky"},
   ]},
   {lang: "python", targets: [
     {name: "japronto", repo: "squeaky-pl/japronto"},
