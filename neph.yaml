@@ -12,6 +12,7 @@ crystal:
     - raze
     - kemal
     - lucky
+    - amber
 
 ruby:
   depends_on:
@@ -55,7 +56,11 @@ lucky:
     docker run -td lucky
   dir: crystal/lucky
 
-kemal:
+amber:
+  command: |
+    docker build -t amber . 1>&2
+    docker run -td amber
+  dir: crystal/amber
 
 kemal:
   command: |
