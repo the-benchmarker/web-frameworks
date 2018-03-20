@@ -13,6 +13,7 @@ crystal:
     - kemal
     - lucky
     - amber
+    - spider-gazelle
 
 ruby:
   depends_on:
@@ -50,6 +51,12 @@ raze:
     docker run -td raze
   dir: crystal/raze
 
+kemal:
+  command: |
+    docker build -t kemal . 1>&2
+    docker run -td kemal
+  dir: crystal/kemal
+
 lucky:
   command: |
     docker build -t lucky . 1>&2
@@ -62,11 +69,11 @@ amber:
     docker run -td amber
   dir: crystal/amber
 
-kemal:
+spider-gazelle:
   command: |
-    docker build -t kemal . 1>&2
-    docker run -td kemal
-  dir: crystal/kemal
+    docker build -t spider-gazelle . 1>&2
+    docker run -td spider-gazelle
+  dir: crystal/spider-gazelle
 
 rails:
   command: |
