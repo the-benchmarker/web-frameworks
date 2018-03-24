@@ -49,6 +49,7 @@ CPU Cores: 8
 33. [sinatra](https://github.com/sinatra/sinatra) (ruby)
 34. [tornado](https://github.com/tornadoweb/tornado) (python)
 35. [rails](https://github.com/rails/rails) (ruby)
+36. [mofuw](https://github.com/2vg/mofuw) (nim)
 
 ### Ranking (Language)
 
@@ -150,6 +151,7 @@ CPU Cores: 8
    - [tornado](https://github.com/tornadoweb/tornado)
  - Nim
    - [Jester](https://github.com/dom96/jester)
+   - [mofuw](https://github.com/2vg/mofuw)
  - Objective-C
    - [Criollo](https://criollo.io/)
 
