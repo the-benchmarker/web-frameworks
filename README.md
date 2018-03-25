@@ -278,11 +278,4 @@ Anyway, you don't have to care about details since maintainer can fix them after
 
 - [tbrand](https://github.com/tbrand) Taichiro Suzuki - creator, maintainer
 - [OvermindDL1](https://github.com/OvermindDL1) OvermindDL1 - maintainer
-
-## Donate
-
-```
-1AE9P6TUVik1rJGQhaSqGWRk1oAQ3DJnmo
-```
-
-![QRCode](https://user-images.githubusercontent.com/3483230/30004198-ccfeb086-9105-11e7-821c-927e4aa7af70.png)
+- [waghanza](https://github.com/waghanza) Marwan Rabbâa - maintainer
