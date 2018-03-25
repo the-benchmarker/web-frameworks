@@ -341,6 +341,7 @@ tornado:
 nim:
   depends_on:
     - jester
+    - mofuw
 
 jester:
   command: |
@@ -348,6 +349,13 @@ jester:
     ln -s -f ../nim/jester/server_nim_jester ../../bin/server_nim_jester
   dir:
     nim/jester
+
+mofuw:
+  command: |
+    nimble install -y; nim c -d:release server_nim_mofuw.nim
+    ln -s -f ../nim/mofuw/server_nim_mofuw ../../bin/server_nim_mofuw
+  dir:
+    nim/mofuw
 
 csharp:
   depends_on:

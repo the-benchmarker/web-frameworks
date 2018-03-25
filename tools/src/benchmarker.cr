@@ -67,6 +67,7 @@ LANGS = [
   ]},
   {lang: "nim", targets: [
     {name: "jester", repo: "dom96/jester"},
+    {name: "mofuw", repo: "2vg/mofuw"},
   ]},
   {lang: "objc", targets: [
     {name: "criollo", repo: "thecatalinstan/criollo"},

@@ -150,6 +150,7 @@ CPU Cores: 8
    - [tornado](https://github.com/tornadoweb/tornado)
  - Nim
    - [Jester](https://github.com/dom96/jester)
+   - [mofuw](https://github.com/2vg/mofuw)
  - Objective-C
    - [Criollo](https://criollo.io/)
 
