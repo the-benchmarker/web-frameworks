@@ -345,7 +345,7 @@ nim:
 
 jester:
   command: |
-    nimble install -y; nim c server_nim_jester.nim
+    nimble install -y; nim c -d:release server_nim_jester.nim
     ln -s -f ../nim/jester/server_nim_jester ../../bin/server_nim_jester
   dir:
     nim/jester

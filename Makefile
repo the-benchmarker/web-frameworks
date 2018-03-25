@@ -226,7 +226,7 @@ nim: jester mofuw
 
 # Jester
 jester:
-	cd nim/jester; nimble install -y; nim c server_nim_jester.nim
+	cd nim/jester; nimble install -y; nim c -d:release server_nim_jester.nim
 	ln -s -f ../nim/jester/server_nim_jester bin/server_nim_jester
 
 # mofuw
