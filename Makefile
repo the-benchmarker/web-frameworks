@@ -222,12 +222,17 @@ tornado:
 	ln -s -f ../python/tornado/server_python_tornado.py bin/server_python_tornado
 
 # --- Nim ---
-nim: jester
+nim: jester mofuw
 
 # Jester
 jester:
 	cd nim/jester; nimble install -y; nim c server_nim_jester.nim
 	ln -s -f ../nim/jester/server_nim_jester bin/server_nim_jester
+
+# mofuw
+mofuw:
+	cd nim/mofuw; nimble install -y; nim c -d:release server_nim_mofuw.nim
+	ln -s -f ../nim/mofuw/server_nim_mofuw bin/server_nim_mofuw
 
 # --- Benchmarker ---
 # client
