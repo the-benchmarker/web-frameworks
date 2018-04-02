@@ -153,6 +153,8 @@ CPU Cores: 8
    - [mofuw](https://github.com/2vg/mofuw)
  - Objective-C
    - [Criollo](https://criollo.io/)
+ - C++/CPP
+   - [evhtp](https://github.com/criticalstack/libevhtp)
 
 See Development section when you want to add new languages or frameworks.
 
