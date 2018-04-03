@@ -48,6 +48,9 @@ swift:
 rust:
   depends_on:
     - actix
+    - iron
+    - rocket
+    - nickel
 
 router.cr:
   command: |
@@ -174,3 +177,21 @@ actix:
     docker build -t actix . 1>&2
     docker run -td actix
   dir: rust/actix
+
+iron:
+  command: |
+    docker build -t iron . 1>&2
+    docker run -td iron
+  dir: rust/iron
+
+rocket:
+  command: |
+    docker build -t rocket . 1>&2
+    docker run -td rocket
+  dir: rust/rocket
+
+nickel:
+  command: |
+    docker build -t nickel . 1>&2
+    docker run -td nickel
+  dir: rust/nickel
