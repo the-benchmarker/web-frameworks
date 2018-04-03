@@ -4,7 +4,7 @@ defmodule MyPhoenix.Mixfile do
   def project do
     [app: :my_phoenix,
      version: "0.0.1",
-     elixir: "~> 1.2",
+     elixir: "~> 1.6.4",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -28,7 +28,7 @@ defmodule MyPhoenix.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.2.1"},
+    [{:phoenix, "~> 1.3.0"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:distillery, "~> 1.0"}]
