@@ -11,5 +11,5 @@ fn main() {
                            request.param("id").unwrap()
                });
     server.post("/user", middleware!(""));
-    server.listen("127.0.0.1:3000").unwrap();
+    server.listen("0.0.0.0:3000").unwrap();
 }
