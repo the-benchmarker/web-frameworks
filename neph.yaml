@@ -6,6 +6,7 @@ main:
     - python
     - go
     - swift
+    - rust
       
 crystal:
   depends_on:
@@ -43,6 +44,10 @@ go:
 swift:
   depends_on:
     - vapor
+
+rust:
+  depends_on:
+    - actix
 
 router.cr:
   command: |
@@ -163,3 +168,9 @@ vapor:
     docker build -t vapor . 1>&2
     docker run -td vapor
   dir: swift/vapor
+
+actix:
+  command: |
+    docker build -t actix . 1>&2
+    docker run -td actix
+  dir: rust/actix
