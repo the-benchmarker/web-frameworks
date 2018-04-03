@@ -16,9 +16,9 @@ fn main() {
                       |r| r.f(|req| {
                           let id = Binary::from_slice(req.match_info()["id"].as_ref());
                           httpcodes::HTTPOk.with_body(id)})))
-        .bind("127.0.0.1:3000").unwrap()
+        .bind("0.0.0.0:3000").unwrap()
         .start();
 
-    println!("Started http server: 127.0.0.1:3000");
+    println!("Started http server: 0.0.0.0:3000");
     let _ = sys.run();
 }
