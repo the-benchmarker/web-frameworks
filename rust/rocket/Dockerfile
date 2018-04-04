@@ -10,4 +10,4 @@ RUN cargo install
 RUN cargo build --release
 
 EXPOSE 3000
-CMD target/release/server_rust_rocket
+CMD ROKET_ENV=production target/release/server_rust_rocket
