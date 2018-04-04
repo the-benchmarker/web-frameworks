@@ -5,6 +5,8 @@ WORKDIR /usr/src/app
 
 COPY . /usr/src/app
 
+RUN mkdir -p public
+RUN echo '{}'  > public/manifest.json
 RUN shards build --release
 
 CMD ./bin/server_crystal_lucky
