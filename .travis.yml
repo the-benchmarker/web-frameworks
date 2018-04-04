@@ -8,5 +8,8 @@ script:
 install: shards build --release
 script:
   - crystal spec
-  - bin/ameba
+  - bin/ameba tools
+  - bin/ameba crystal/*
+  - yamllint shard.yml
   - yamllint neph.yaml
+  - yamllint .travis.yml
