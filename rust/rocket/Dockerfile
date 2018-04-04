@@ -1,5 +1,8 @@
 FROM rust
 
+RUN /usr/local/cargo/bin/rustup install nightly
+RUN /usr/local/cargo/bin/rustup default nightly
+
 WORKDIR /usr/src/app
 COPY . .
 
