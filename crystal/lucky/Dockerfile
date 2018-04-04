@@ -1,12 +1,12 @@
 FROM crystallang/crystal
 
-RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-
-COPY . /usr/src/app
+COPY . .
 
 RUN mkdir -p public
 RUN echo '{}'  > public/manifest.json
-RUN shards build --release
+
+RUN shards install
+RUN shards build --release --no-debug
 
 CMD ./bin/server_crystal_lucky

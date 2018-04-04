@@ -1,10 +1,9 @@
 FROM crystallang/crystal
 
-RUN mkdir /app
-WORKDIR /app
+WORKDIR /usr/src/app
+COPY . .
 
-COPY . /app
-
-RUN shards build --release
+RUN shards install
+RUN shards build --release --no-debug
 
 CMD ./bin/server_crystal_router_cr

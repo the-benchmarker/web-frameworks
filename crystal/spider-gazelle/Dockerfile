@@ -1,11 +1,9 @@
 FROM crystallang/crystal
 
-RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
+COPY . .
 
-COPY . /usr/src/app
-
-RUN shards update
-RUN shards build --release
+RUN shards install
+RUN shards build --release --no-debug
 
 CMD bin/app
