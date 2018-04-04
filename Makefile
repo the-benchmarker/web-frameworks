@@ -249,3 +249,5 @@ benchmarker:
 clean:
 	rm -rf bin/*
 	rm -rf *.log
+	find -type f -name '*.lock' -exec rm -fr {} \;
+	find -type f -name package-lock.json -exec rm -fr {} \;
