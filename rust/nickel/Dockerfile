@@ -7,4 +7,4 @@ RUN cargo install
 RUN cargo build --release
 
 EXPOSE 3000
-CMD target/release/server_rust_actix
+CMD target/release/server_rust_nickel
