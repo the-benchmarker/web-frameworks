@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rake'
-gem 'rack'
-gem 'rack-routing'
-gem 'puma'
-gem 'json'
+gem 'rake', '~> 12.3.1'
+gem 'rack', '~> 2.0.4'
+gem 'rack-routing', '~> 0.0.10'
+gem 'puma', '~> 3.11.3'
+gem 'json', '~> 2.1.0'
