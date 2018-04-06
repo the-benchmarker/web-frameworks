@@ -21,4 +21,4 @@ app.router.add_route('/', index)
 app.router.add_route('/user', create_user, 'POST')
 app.router.add_route('/user/{id}', get_user, 'GET')
 
-app.run(debug=False, port=3000)
+app.run(debug=False, host='0.0.0.0', port=3000)
