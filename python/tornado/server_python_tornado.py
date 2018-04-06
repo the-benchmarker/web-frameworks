@@ -7,6 +7,7 @@ import tornado.options
 import tornado.web
 
 from tornado.options import define, options
+define('host', default='0.0.0.0', help="TCP server host")
 define('port', default=3000, help='run on the given port', type=int)
 
 
