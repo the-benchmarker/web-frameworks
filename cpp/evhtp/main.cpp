@@ -45,8 +45,8 @@ int main(int argc, char **argv) {
 	}
 	else if(num_threads < 0) {
 		const int cores = std::thread::hardware_concurrency();
-		if(cores > 0 && cores > -num_threads) {
-			evhtp_use_threads_wexit(htp, NULL, NULL, cores + num_threads, NULL);
+		if(cores > 0 && cores > -num_threads + 1) {
+			evhtp_use_threads_wexit(htp, NULL, NULL, cores + num_threads + 1, NULL);
 		}
 	}
 
