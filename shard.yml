@@ -13,6 +13,9 @@ dependencies:
   ameba:
     github: veelenga/ameba
     version: ~> 0.5.0
+  neph:
+    github: tbrand/neph
+    version: ~> 0.1.22
 
 targets:
   benchmarker:
@@ -21,3 +24,5 @@ targets:
     main: tools/src/client.cr
   ameba:
     main: lib/ameba/src/cli.cr
+  neph:
+    main: lib/neph/src/bin/neph_bin.cr
