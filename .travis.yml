@@ -1,10 +1,6 @@
 services: docker
 language: crystal
 before_install: pip install yamllint --user
-script:
-  - bin/ameba
-  - yamllint neph.yaml
-  - bin/neph
 install: shards build --release
 script:
   - crystal spec
