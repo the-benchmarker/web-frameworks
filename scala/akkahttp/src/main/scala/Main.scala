@@ -24,7 +24,7 @@ object Main {
         }
 
 
-    Http().bindAndHandle(route, "localhost", 3000)
+    Http().bindAndHandle(route, "0.0.0.0", 3000)
   }
 
 }
