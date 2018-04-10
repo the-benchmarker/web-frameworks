@@ -11,21 +11,24 @@ void on_request_index(evhtp_request_t *req, void*) {
 	if(req->method == htp_method_GET) {
 		evhtp_send_reply(req, EVHTP_RES_OK);
 	}
+	else evhtp_send_reply(req, EVHTP_RES_400);
 }
 
 void on_request_user_register(evhtp_request_t *req, void*) {
 	if(req->method == htp_method_POST) {
 		evhtp_send_reply(req, EVHTP_RES_OK);
 	}
+	else evhtp_send_reply(req, EVHTP_RES_400);
 }
 
 void on_request_user_index(evhtp_request_t *req, void*) {
 	if(req->method == htp_method_GET) {
-		const char *p = req->uri->path->full + 6; // 6 being the length of "/user/"
+		const char *p = req->uri->path->match_start;
 		const unsigned int pl = strlen(p);
 		evbuffer_add_reference(req->buffer_out, p, pl, NULL, NULL);
 		evhtp_send_reply(req, EVHTP_RES_OK);
 	}
+	else evhtp_send_reply(req, EVHTP_RES_400);
 }
 
 int main(int argc, char **argv) {
@@ -35,7 +38,7 @@ int main(int argc, char **argv) {
 	evhtp_set_parser_flags(htp, EVHTP_PARSE_QUERY_FLAG_LENIENT);
 	evhtp_enable_flag(htp, EVHTP_FLAG_ENABLE_NODELAY);
 
-	evhtp_set_cb(htp, "/user/", on_request_user_index, NULL);
+	evhtp_set_regex_cb(htp, "^/user/([^/]+)", on_request_user_index, NULL);
 	evhtp_set_cb(htp, "/user", on_request_user_register, NULL);
 	evhtp_set_cb(htp, "/", on_request_index, NULL);
 	evhtp_bind_socket(htp, "0.0.0.0", 3000, 1024);
