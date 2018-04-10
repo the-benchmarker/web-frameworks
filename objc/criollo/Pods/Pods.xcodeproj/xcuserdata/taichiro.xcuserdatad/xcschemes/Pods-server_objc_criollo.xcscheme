@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '686F6BB36B96AD681CA800D78DC1EE5C'
-               BlueprintName = 'Pods-server_objc_criollo'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods-server_objc_criollo.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "686F6BB36B96AD681CA800D78DC1EE5C"
+               BlueprintName = "Pods-server_objc_criollo"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "Pods-server_objc_criollo.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

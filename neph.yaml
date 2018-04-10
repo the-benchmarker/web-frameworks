@@ -1,6 +1,5 @@
 main:
   depends_on:
-    - cpp
     - node
     - ruby
     - crystal
@@ -14,18 +13,6 @@ main:
     - csharp
     - objc
     - benchmarker
-
-cpp:
-  depends_on:
-    - evhtp
-
-evhtp:
-  command: |
-    cmake -H. -B_builds -DCMAKE_BUILD_TYPE=Release
-    cmake --build _builds --config Release
-    ln -s -f ../cpp/evhtp/_builds/server_cpp_evhtp bin/.
-  dir:
-    cpp/evhtp
 
 node:
   depends_on:

@@ -1,11 +1,4 @@
-all: cpp elixir node ruby crystal go rust swift python nim csharp scala client benchmarker
-
-# --- C++/CPP ---
-cpp: evhtp
-
-evhtp:
-	cd cpp/evhtp && cmake -H. -B_builds -DCMAKE_BUILD_TYPE=Release && cmake --build _builds --config Release
-	ln -s -f ../cpp/evhtp/_builds/server_cpp_evhtp bin/.
+all: elixir node ruby crystal go rust swift python nim csharp scala client benchmarker
 
 # --- Elixir ---
 elixir: plug phoenix

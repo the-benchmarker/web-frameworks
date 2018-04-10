@@ -38,15 +38,6 @@
         }
       },
       {
-        "package": "PerfectLib",
-        "repositoryURL": "https://github.com/PerfectlySoft/PerfectLib.git",
-        "state": {
-          "branch": null,
-          "revision": "e85a9ead840f80dfd85ca90627cf88cfb6e0cb59",
-          "version": "2.0.11"
-        }
-      },
-      {
         "package": "PerfectNet",
         "repositoryURL": "https://github.com/PerfectlySoft/Perfect-Net.git",
         "state": {
@@ -62,6 +53,15 @@
           "branch": null,
           "revision": "7d09e1830dd8e46b99c34a754a0bf4c2d567794e",
           "version": "2.0.12"
+        }
+      },
+      {
+        "package": "PerfectLib",
+        "repositoryURL": "https://github.com/PerfectlySoft/PerfectLib.git",
+        "state": {
+          "branch": null,
+          "revision": "e85a9ead840f80dfd85ca90627cf88cfb6e0cb59",
+          "version": "2.0.11"
         }
       }
     ]

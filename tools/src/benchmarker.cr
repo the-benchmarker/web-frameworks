@@ -72,9 +72,6 @@ LANGS = [
   {lang: "objc", targets: [
     {name: "criollo", repo: "thecatalinstan/criollo"},
   ]},
-  {lang: "cpp", targets: [
-    {name: "evhtp", repo: "criticalstack/libevhtp"},
-  ]},
 ]
 
 # struct for benchmark result

@@ -2,48 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "CCurl",
-        "repositoryURL": "https://github.com/IBM-Swift/CCurl.git",
+        "package": "Socket",
+        "repositoryURL": "https://github.com/IBM-Swift/BlueSocket.git",
         "state": {
           "branch": null,
-          "revision": "f481bd86e58787824cc1c1ec1786e03b67831f38",
-          "version": "0.4.1"
-        }
-      },
-      {
-        "package": "Kitura",
-        "repositoryURL": "https://github.com/IBM-Swift/Kitura.git",
-        "state": {
-          "branch": null,
-          "revision": "e02c756134c5b399cfc45f186bc2c6f1d51032d1",
-          "version": "1.7.9"
-        }
-      },
-      {
-        "package": "Kitura-TemplateEngine",
-        "repositoryURL": "https://github.com/IBM-Swift/Kitura-TemplateEngine.git",
-        "state": {
-          "branch": null,
-          "revision": "8e75a213bf4dd7b5effd03848335e344535969aa",
-          "version": "1.7.2"
-        }
-      },
-      {
-        "package": "Kitura-net",
-        "repositoryURL": "https://github.com/IBM-Swift/Kitura-net.git",
-        "state": {
-          "branch": null,
-          "revision": "5b1b9b2463633f43f0e9fcee74c8360d6feb8d81",
-          "version": "1.7.16"
-        }
-      },
-      {
-        "package": "LoggerAPI",
-        "repositoryURL": "https://github.com/IBM-Swift/LoggerAPI.git",
-        "state": {
-          "branch": null,
-          "revision": "6b62fe66da9b8794d6581e5c341710eea3173cd4",
-          "version": "1.7.1"
+          "revision": "26c8f4e4e3000421a0c97aaf0c7b5e9aa5475222",
+          "version": "0.12.94"
         }
       },
       {
@@ -51,26 +15,62 @@
         "repositoryURL": "https://github.com/IBM-Swift/BlueSSLService.git",
         "state": {
           "branch": null,
-          "revision": "b4cac06a7860b7016ee968563812e9af3afe28e3",
-          "version": "0.12.57"
+          "revision": "3a87b64a97fb8e923f52f2a68e31e7bd4fc46b42",
+          "version": "0.12.84"
         }
       },
       {
-        "package": "Socket",
-        "repositoryURL": "https://github.com/IBM-Swift/BlueSocket.git",
+        "package": "CCurl",
+        "repositoryURL": "https://github.com/IBM-Swift/CCurl.git",
         "state": {
           "branch": null,
-          "revision": "d7d26f12e9614679423d4f7731de43597ae1e872",
-          "version": "0.12.70"
+          "revision": "2a431e3a5fb8d004aa7d4d1bebb5d511f568c43e",
+          "version": "1.0.0"
         }
       },
       {
-        "package": "SwiftyJSON",
-        "repositoryURL": "https://github.com/IBM-Swift/SwiftyJSON.git",
+        "package": "Kitura",
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura.git",
         "state": {
           "branch": null,
-          "revision": "1190845cf7d25a5c8ea7653fe03dcdd39a082056",
-          "version": "17.0.0"
+          "revision": "30b8d3156a63e69bf5229c61f8c343cc909d3d68",
+          "version": "2.2.1"
+        }
+      },
+      {
+        "package": "Kitura-net",
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura-net.git",
+        "state": {
+          "branch": null,
+          "revision": "9b4221e7378f76e0c5e04acaf30cdee99594aed3",
+          "version": "2.0.4"
+        }
+      },
+      {
+        "package": "Kitura-TemplateEngine",
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura-TemplateEngine.git",
+        "state": {
+          "branch": null,
+          "revision": "d432d61cd9dfb66bc9741fec44434bbbcad676cd",
+          "version": "1.7.3"
+        }
+      },
+      {
+        "package": "KituraContracts",
+        "repositoryURL": "https://github.com/IBM-Swift/KituraContracts.git",
+        "state": {
+          "branch": null,
+          "revision": "8821f72962c369f4941bcd006437f966972ed53d",
+          "version": "0.0.20"
+        }
+      },
+      {
+        "package": "LoggerAPI",
+        "repositoryURL": "https://github.com/IBM-Swift/LoggerAPI.git",
+        "state": {
+          "branch": null,
+          "revision": "ee0084cbb8bace59b3409cec05bedc5d2e97f8b7",
+          "version": "1.7.2"
         }
       }
     ]
