@@ -67,12 +67,12 @@ LANGS = [
     {name: "nickel", repo: "nickel-org/nickel.rs"},
     {name: "rocket", repo: "SergioBenitez/Rocket"},
   ]},
-  #{lang: "node", targets: [
-  #  {name: "express", repo: "expressjs/express"},
-  #  {name: "clusterexpress", repo: "LearnBoost/cluster"},
-  #  {name: "polka", repo: "lukeed/polka"},
-  #  {name: "clusterpolka", repo: "lukeed/polka"},
-  #]},
+  {lang: "node", targets: [
+    {name: "express", repo: "expressjs/express", command: "pm2-runtime app.js"},
+    {name: "clusterexpress", repo: "LearnBoost/cluster", command: "pm2-runtime cluster_express.js"},
+    {name: "polka", repo: "lukeed/polka", command: "pm2-runtime app.js"},
+    {name: "clusterpolka", repo: "lukeed/polka", command: "pm2-runtime cluster_polka.js"},
+  ]},
   {lang: "elixir", targets: [
     {name: "plug", repo: "elixir-lang/plug"},
     {name: "phoenix", repo: "phoenixframework/phoenix"},
@@ -107,8 +107,9 @@ LANGS = [
 
 # struct for benchmark result
 record BenchResult, max : Float64, min : Float64, ave : Float64, total : Float64
+
 # struct for target
-record Target, lang : String, name : String, repo : String
+record Target, lang : String, name : String, repo : String, command : (String | Nil)
 
 record Ranked, res : BenchResult, target : Target
 
@@ -117,7 +118,7 @@ def frameworks : Array(Target)
 
   LANGS.each do |lang|
     lang[:targets].each do |framework|
-      targets.push(Target.new(lang[:lang], framework[:name], framework[:repo]))
+      targets.push(Target.new(lang[:lang], framework[:name], framework[:repo], framework.fetch(:command, "")))
     end
   end
 
@@ -192,7 +193,11 @@ all = [] of Ranked
 ranks = [] of Ranked
 
 targets.each do |target|
-  cid = `docker run -td #{target.name}`.strip
+  if target.command
+    cid = `docker run -td #{target.name} #{target.command}`.strip
+  else
+    cid = `docker run -td #{target.name}`.strip
+  end
   sleep 5 # due to external program usage
   Docker.client.containers.each do |container|
     if container.id == cid
