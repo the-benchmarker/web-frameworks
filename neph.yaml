@@ -88,229 +88,153 @@ csharp:
     - aspnetcore
 
 router.cr:
-  command: |
-    docker build -t router.cr . 1>&2
-    docker run -td router.cr
+  command: docker build -t router.cr .
   dir: crystal/router.cr
 
 raze:
-  command: |
-    docker build -t raze . 1>&2
-    docker run -td raze
+  command: docker build -t raze .
   dir: crystal/raze
 
 kemal:
-  command: |
-    docker build -t kemal . 1>&2
-    docker run -td kemal
+  command: docker build -t kemal .
   dir: crystal/kemal
 
 lucky:
-  command: |
-    docker build -t lucky . 1>&2
-    docker run -td lucky
+  command: docker build -t lucky .
   dir: crystal/lucky
 
 amber:
-  command: |
-    docker build -t amber . 1>&2
-    docker run -td amber
+  command: docker build -t amber .
   dir: crystal/amber
 
 spider-gazelle:
-  command: |
-    docker build -t spider-gazelle . 1>&2
-    docker run -td spider-gazelle
+  command: docker build -t spider-gazelle .
   dir: crystal/spider-gazelle
 
 rails:
-  command: |
-    docker build -t rails . 1>&2
-    docker run -td rails
+  command: docker build -t rails .
   dir: ruby/rails
 
 sinatra:
-  command: |
-    docker build -t sinatra . 1>&2
-    docker run -td sinatra
+  command: docker build -t sinatra .
   dir: ruby/sinatra
 
 roda:
-  command: |
-    docker build -t roda . 1>&2
-    docker run -td roda
+  command: docker build -t roda .
   dir: ruby/roda
 
 rack-routing:
-  command: |
-    docker build -t rack-routing . 1>&2
-    docker run -td rack-routing
+  command: docker build -t rack-routing .
   dir: ruby/rack-routing
 
 jester:
-  command: |
-    docker build -t jester . 1>&2
-    docker run -td jester
+  command: docker build -t jester .
   dir: nim/jester
 
 mofuw:
-  command: |
-    docker build -t mofuw . 1>&2
-    docker run -td mofuw
+  command: docker build -t mofuw .
   dir: nim/mofuw
 
 flask:
-  command: |
-    docker build -t flask . 1>&2
-    docker run -td flask
+  command: docker build -t flask .
   dir: python/flask
 
 japronto:
-  command: |
-    docker build -t japronto . 1>&2
-    docker run -td japronto
+  command: docker build -t japronto .
   dir: python/japronto
 
 django:
-  command: |
-    docker build -t django . 1>&2
-    docker run -td django
+  command: docker build -t django .
   dir: python/django
 
 sanic:
-  command: |
-    docker build -t sanic . 1>&2
-    docker run -td sanic
+  command: docker build -t sanic .
   dir: python/sanic
 
 tornado:
-  command: |
-    docker build -t tornado . 1>&2
-    docker run -td tornado
+  command: docker build -t tornado .
   dir: python/tornado
 
 iris:
-  command: |
-    docker build -t iris . 1>&2
-    docker run -td iris
+  command: docker build -t iris .
   dir: go/iris
 
 echo:
-  command: |
-    docker build -t echo . 1>&2
-    docker run -td echo
+  command: docker build -t echo .
   dir: go/echo
 
 gorilla_mux:
-  command: |
-    docker build -t gorilla_mux . 1>&2
-    docker run -td gorilla_mux
+  command: docker build -t gorilla_mux .
   dir: go/gorilla-mux
 
 fasthttprouter:
-  command: |
-    docker build -t fasthttprouter . 1>&2
-    docker run -td fasthttprouter
+  command: docker build -t fasthttprouter .
   dir: go/fasthttprouter
 
 gin:
-  command: |
-    docker build -t gin . 1>&2
-    docker run -td gin
+  command: docker build -t gin .
   dir: go/gin
 
 vapor:
-  command: |
-    docker build -t vapor . 1>&2
-    docker run -td vapor
+  command: docker build -t vapor .
   dir: swift/vapor
 
 perfect:
-  command: |
-    docker build -t perfect . 1>&2
-    docker run -td perfect
+  command: docker build -t perfect .
   dir: swift/perfect
 
 kitura:
-  command: |
-    docker build -t kitura . 1>&2
-    docker run -td kitura
+  command: docker build -t kitura .
   dir: swift/kitura
 
 actix:
-  command: |
-    docker build -t actix . 1>&2
-    docker run -td actix
+  command: docker build -t actix .
   dir: rust/actix
 
 iron:
-  command: |
-    docker build -t iron . 1>&2
-    docker run -td iron
+  command: docker build -t iron .
   dir: rust/iron
 
 rocket:
-  command: |
-    docker build -t rocket . 1>&2
-    docker run -td rocket
+  command: docker build -t rocket .
   dir: rust/rocket
 
 nickel:
-  command: |
-    docker build -t nickel . 1>&2
-    docker run -td nickel
+  command: docker build -t nickel .
   dir: rust/nickel
 
 express:
-  command: |
-    docker build -t express . 1>&2
-    docker run -td express pm2-runtime app.js
+  command: docker build -t express .
   dir: node/express
 
 clusterexpress:
-  command: |
-    docker build -t clusterexpress . 1>&2
-    docker run -td clusterexpress pm2-runtime cluster_express.js
+  command: docker build -t clusterexpress .
   dir: node/express
 
 polka:
-  command: |
-    docker build -t polka . 1>&2
-    docker run -td polka pm2-runtime app.js
+  command: docker build -t polka .
   dir: node/polka
 
 clusterpolka:
-  command: |
-    docker build -t clusterpolka . 1>&2
-    docker run -td clusterpolka pm2-runtime cluster_polka.js
+  command: docker build -t clusterpolka .
   dir: node/polka
 
 plug:
-  command: |
-    docker build -t plug . 1>&2
-    docker run -td plug
+  command: docker build -t plug .
   dir: elixir/plug
 
 phoenix:
-  command: |
-    docker build -t phoenix . 1>&2
-    docker run -td phoenix
+  command: docker build -t phoenix .
   dir: elixir/phoenix
 
 evhtp:
-  command: |
-    docker build -t evhtp . 1>&2
-    docker run -td evhtp
+  command: docker build -t evhtp .
   dir: cpp/evhtp
 
 akkahttp:
-  command: |
-    docker build -t akkahttp . 1>&2
-    docker run -td akkahttp
+  command: docker build -t akkahttp .
   dir: scala/akkahttp
 
 aspnetcore:
-  command: |
-    docker build -t aspnetcore . 1>&2
-    docker run -td aspnetcore
+  command: docker build -t aspnetcore .
   dir: csharp/aspnetcore

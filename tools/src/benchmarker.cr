@@ -67,12 +67,12 @@ LANGS = [
     {name: "nickel", repo: "nickel-org/nickel.rs"},
     {name: "rocket", repo: "SergioBenitez/Rocket"},
   ]},
-  {lang: "node", targets: [
-    {name: "express", repo: "expressjs/express"},
-    {name: "clusterexpress", repo: "LearnBoost/cluster"},
-    {name: "polka", repo: "lukeed/polka"},
-    {name: "clusterpolka", repo: "lukeed/polka"},
-  ]},
+  #{lang: "node", targets: [
+  #  {name: "express", repo: "expressjs/express"},
+  #  {name: "clusterexpress", repo: "LearnBoost/cluster"},
+  #  {name: "polka", repo: "lukeed/polka"},
+  #  {name: "clusterpolka", repo: "lukeed/polka"},
+  #]},
   {lang: "elixir", targets: [
     {name: "plug", repo: "elixir-lang/plug"},
     {name: "phoenix", repo: "phoenixframework/phoenix"},
@@ -192,9 +192,11 @@ all = [] of Ranked
 ranks = [] of Ranked
 
 targets.each do |target|
-  cid = File.read(".neph/#{target.name}/log/log.out").strip
+  cid = `docker run -td #{target.name}`.strip
+  sleep 5 # due to external program usage
   Docker.client.containers.each do |container|
     if container.id == cid
+
       network = container.network_settings
       if network.is_a?(Hash)
         ip = network["Networks"]["bridge"]["IPAddress"]
@@ -204,6 +206,7 @@ targets.each do |target|
       end
     end
   end
+  `docker stop #{cid}`
 end
 
 ranks = all.sort do |rank0, rank1|
