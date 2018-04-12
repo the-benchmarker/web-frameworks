@@ -198,7 +198,7 @@ targets.each do |target|
   else
     cid = `docker run -td #{target.name}`.strip
   end
-  sleep 5 # due to external program usage
+  sleep 10 # due to external program usage
   Docker.client.containers.each do |container|
     if container.id == cid
 
