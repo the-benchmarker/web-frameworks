@@ -1,4 +1,4 @@
-all: elixir node ruby crystal go rust swift python nim csharp scala client benchmarker
+all: elixir node ruby crystal go rust swift python nim csharp scala
 
 # --- Elixir ---
 elixir: plug phoenix
@@ -181,17 +181,6 @@ jester:
 # mofuw
 mofuw:
 	docker build -t mofuw nim/mofuw
-
-# --- Benchmarker ---
-# client
-client:
-	cd tools; crystal build src/client.cr -o bin/client --release
-	ln -s -f ../tools/bin/client bin/.
-
-# benchmarker
-benchmarker:
-	cd tools; crystal build src/benchmarker.cr -o bin/benchmarker --release
-	ln -s -f ../tools/bin/benchmarker bin/.
 
 # Cleaning all executables
 clean:
