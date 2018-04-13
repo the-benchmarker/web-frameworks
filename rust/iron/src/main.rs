@@ -28,5 +28,5 @@ fn main() {
     router.get("/user/:id", user_handler, "user");
     router.post("/user", user_register_handler, "user_register");
 
-    Iron::new(router).http("127.0.0.1:3000").unwrap();
+    Iron::new(router).http("0.0.0.0:3000").unwrap();
 }

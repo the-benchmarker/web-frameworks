@@ -32,5 +32,5 @@ func main(){
 	r.HandleFunc("/user", RegisterUserHandler)
 
 	http.Handle("/", r)
-	http.ListenAndServe("localhost:3000", r)
+	http.ListenAndServe(":3000", r)
 }

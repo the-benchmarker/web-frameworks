@@ -1,10 +1,7 @@
-FROM ruby:2.4
-
-RUN apt-get update \
-    && rm -rf /var/lib/apt/lists/*
+FROM ruby
 
 WORKDIR /usr/src/app
-COPY Gemfile* ./
+COPY Gemfile  .
 RUN bundle install
 COPY . .
 
