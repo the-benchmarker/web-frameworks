@@ -1,9 +1,10 @@
 FROM crystallang/crystal
 
 WORKDIR /usr/src/app
-COPY . .
 
-RUN shards install
+COPY src src
+COPY shard.yml shard.lock ./
+
 RUN shards build --release --no-debug
 
-CMD ./bin/server_crystal_kemal
+CMD bin/server

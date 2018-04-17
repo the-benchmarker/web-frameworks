@@ -7,8 +7,10 @@ RUN apt-get -qy install openssl libssl-dev uuid-dev
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY Package.swift Package.resolved ./
+COPY Sources Sources
+
 RUN swift package update
 RUN swift build -c release
 
-CMD .build/release/server_swift_perfect
+CMD .build/release/server

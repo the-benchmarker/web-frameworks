@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY requirements.txt server.py ./
 
 EXPOSE 3000
-CMD ./server_python_sanic.py
+CMD python server.py

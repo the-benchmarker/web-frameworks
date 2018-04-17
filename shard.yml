@@ -7,9 +7,6 @@ authors:
   - Marwan Rabbâa <waghanza@gmail.com>
 
 dependencies:
-  docker:
-    github: jeromegn/docker.cr
-    version: ~> 0.1.2
   ameba:
     github: veelenga/ameba
     version: ~> 0.5.0

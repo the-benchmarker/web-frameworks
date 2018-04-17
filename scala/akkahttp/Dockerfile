@@ -1,9 +1,13 @@
 FROM bigtruedata/sbt
 
 WORKDIR /usr/src/app
-COPY . .
+
+COPY build.sbt ./
+COPY src src
+COPY project project
 
 RUN sbt assembly
 
 EXPOSE 3000
-CMD bin/server_scala_akkahttp
+
+CMD sbt run

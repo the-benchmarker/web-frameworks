@@ -1,9 +1,11 @@
 FROM crystallang/crystal
 
 WORKDIR /usr/src/app
-COPY . .
 
-RUN shards install
+COPY shard.yml shard.lock ./
+COPY spec spec
+COPY src src
+
 RUN shards build --release --no-debug
 
 CMD bin/app

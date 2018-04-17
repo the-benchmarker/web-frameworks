@@ -1,8 +1,9 @@
 FROM ruby
 
 WORKDIR /usr/src/app
-COPY Gemfile  .
+
+COPY Gemfile Gemfile.lock app.rb config.ru ./
+
 RUN bundle install
-COPY . .
 
 CMD bundle exec rackup -p 3000 -q -E production --host 0.0.0.0

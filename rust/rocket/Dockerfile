@@ -1,13 +1,18 @@
-FROM rust
-
-RUN /usr/local/cargo/bin/rustup install nightly
-RUN /usr/local/cargo/bin/rustup default nightly
+FROM rustlang/rust:nightly
 
 WORKDIR /usr/src/app
-COPY . .
+
+RUN rustup default nightly
+RUN rustup show
+
+COPY Cargo.toml Cargo.lock ./
+COPY src src
 
 RUN cargo install
 RUN cargo build --release
 
+ENV ROCKET_ENV=production
+
 EXPOSE 3000
-CMD ROKET_ENV=production target/release/server_rust_rocket
+
+CMD target/release/server

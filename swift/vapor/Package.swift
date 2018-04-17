@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "server_swift_vapor",
+    name: "server",
     dependencies: [
         .Package(url: "https://github.com/vapor/vapor.git",  majorVersion: 2, minor: 4)
     ],

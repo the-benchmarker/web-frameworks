@@ -2,8 +2,10 @@ FROM swift
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY Package.swift Package.resolved ./
+COPY Sources Sources
+
 RUN swift package update
 RUN swift build -c release
 
-CMD .build/release/server_swift_vapor
+CMD .build/release/server

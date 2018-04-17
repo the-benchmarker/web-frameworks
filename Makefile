@@ -101,7 +101,7 @@ gin:
 	docker build -t gin go/gin
 
 # --- Rust ---
-rust: iron nickel rocket
+rust: iron nickel rocket actix
 
 # IRON
 iron:
@@ -149,7 +149,7 @@ aspnetcore:
 	docker build -t aspnetcore csharp/aspnetcore
 
 # --- Python ---
-python: sanic japronto flask django
+python: sanic japronto flask django tornado
 
 # Sanic
 sanic:

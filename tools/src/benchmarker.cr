@@ -1,7 +1,6 @@
 require "benchmark"
 require "option_parser"
 require "json"
-require "docker"
 
 ####################
 ## DEFAULT VALUES ##
@@ -68,10 +67,8 @@ LANGS = [
     {name: "rocket", repo: "SergioBenitez/Rocket"},
   ]},
   {lang: "node", targets: [
-    {name: "express", repo: "expressjs/express", command: "pm2-runtime app.js"},
-    {name: "clusterexpress", repo: "LearnBoost/cluster", command: "pm2-runtime cluster_express.js"},
-    {name: "polka", repo: "lukeed/polka", command: "pm2-runtime app.js"},
-    {name: "clusterpolka", repo: "lukeed/polka", command: "pm2-runtime cluster_polka.js"},
+    {name: "express", repo: "expressjs/express"},
+    {name: "polka", repo: "lukeed/polka"},
   ]},
   {lang: "elixir", targets: [
     {name: "plug", repo: "elixir-lang/plug"},
@@ -99,17 +96,13 @@ LANGS = [
     {name: "jester", repo: "dom96/jester"},
     {name: "mofuw", repo: "2vg/mofuw"},
   ]},
-  # Disable since only runnable on OSX
-  #{lang: "objc", targets: [
-  #  {name: "criollo", repo: "thecatalinstan/criollo"},
-  #]},
 ]
 
 # struct for benchmark result
 record BenchResult, max : Float64, min : Float64, ave : Float64, total : Float64
 
 # struct for target
-record Target, lang : String, name : String, repo : String, command : (String | Nil)
+record Target, lang : String, name : String, repo : String
 
 record Ranked, res : BenchResult, target : Target
 
@@ -118,7 +111,7 @@ def frameworks : Array(Target)
 
   LANGS.each do |lang|
     lang[:targets].each do |framework|
-      targets.push(Target.new(lang[:lang], framework[:name], framework[:repo], framework.fetch(:command, "")))
+      targets.push(Target.new(lang[:lang], framework[:name], framework[:repo]))
     end
   end
 
@@ -193,24 +186,16 @@ all = [] of Ranked
 ranks = [] of Ranked
 
 targets.each do |target|
-  if target.command
-    cid = `docker run -td #{target.name} #{target.command}`.strip
-  else
-    cid = `docker run -td #{target.name}`.strip
-  end
-  sleep 10 # due to external program usage
-  Docker.client.containers.each do |container|
-    if container.id == cid
+  cid = `docker run -p 3000:3000 -td #{target.name}`.strip
 
-      network = container.network_settings
-      if network.is_a?(Hash)
-        ip = network["Networks"]["bridge"]["IPAddress"]
-	result = benchmark(ip, 5, threads, requests)
-        puts_markdown "Done. <- #{target.name}"
-        all.push(Ranked.new(result, target))
-      end
-    end
-  end
+  sleep 10 # due to external program usage
+
+  result = benchmark("localhost", 5, threads, requests)
+
+  puts_markdown "Done. <- #{target.name}"
+
+  all.push(Ranked.new(result, target))
+
   `docker stop #{cid}`
 end
 

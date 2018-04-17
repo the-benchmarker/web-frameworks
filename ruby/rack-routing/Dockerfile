@@ -1,8 +1,14 @@
 FROM ruby
 
 WORKDIR /usr/src/app
-COPY Gemfile  .
+
+COPY Gemfile Gemfile.lock Guardfile config.ru ./
+COPY app app
+COPY config config
+COPY spec spec
+
 RUN bundle install
-COPY . .
+
+EXPOSE 3000
 
 CMD [ "bundle", "exec", "rackup", "-p", "3000", "-q", "-E", "production" ]

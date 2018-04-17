@@ -9,14 +9,9 @@ crystal: 0.24.2
 license: UNLICENSED
 
 targets:
-  server_crystal_amber:
-    main: src/benchmark_amber.cr
 
-  amber:
+  server:
     main: src/amber.cr
-
-  amber:
-    main: lib/amber/src/amber/cli.cr
 
 dependencies:
   amber:

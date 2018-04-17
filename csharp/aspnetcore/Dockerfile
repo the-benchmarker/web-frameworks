@@ -11,7 +11,8 @@ RUN apt-get -qq update
 RUN apt-get -qy install dotnet-sdk-2.1.103 libuv1-dev
 
 WORKDIR /usr/src/app
-COPY . .
+
+COPY Program.cs Startup.cs aspnetcore.csproj ./
 
 RUN dotnet build --configuration Release
 

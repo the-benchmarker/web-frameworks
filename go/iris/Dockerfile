@@ -1,7 +1,7 @@
 FROM golang
 
 WORKDIR /usr/src/app
-COPY . .
+COPY main.go .
 
 RUN go get -u github.com/kataras/iris
 RUN go build main.go

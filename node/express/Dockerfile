@@ -1,10 +1,11 @@
 FROM node
 
-RUN npm -g install pm2
-
 WORKDIR /usr/src/app
-COPY . .
+
+COPY app.js package.json package-lock.json ./
 
 RUN npm install
 
 ENV NODE_ENV production
+
+CMD node app.js
