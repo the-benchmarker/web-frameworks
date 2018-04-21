@@ -117,6 +117,7 @@ CPU Cores: 8
    - [Sinatra](https://github.com/sinatra/sinatra)
    - [Roda](https://github.com/jeremyevans/roda)
    - [Rack-Routing](https://github.com/georgeu2000/rack-routing)
+   - [Flame](https://github.com/AlexWayfer/flame)
  - Crystal
    - [Kemal](https://github.com/kemalcr/kemal)
    - [raze](https://github.com/samueleaton/raze)

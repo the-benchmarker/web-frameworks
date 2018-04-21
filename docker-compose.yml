@@ -31,6 +31,7 @@ services:
       - rails
       - roda
       - sinatra
+      - flame
 
   rails:
     build: ruby/rails
@@ -44,6 +45,11 @@ services:
 
   sinatra:
     build: ruby/sinatra
+    ports:
+      - 3000:3000
+
+  flame:
+    build: ruby/flame
     ports:
       - 3000:3000
 

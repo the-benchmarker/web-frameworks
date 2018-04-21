@@ -1,0 +1,6 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+
+gem 'flame', '>= 5.0.0.rc3', '< 6'
+gem 'puma'

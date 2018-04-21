@@ -28,6 +28,7 @@ ruby:
     - sinatra
     - roda
     - rack-routing
+    - flame
 
 nim:
   depends_on:
@@ -125,6 +126,10 @@ roda:
 rack-routing:
   command: docker build -t rack-routing .
   dir: ruby/rack-routing
+
+flame:
+  command: docker build -t flame .
+  dir: ruby/flame
 
 jester:
   command: docker build -t jester .

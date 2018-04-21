@@ -39,7 +39,7 @@ criollo:
 
 
 # --- Ruby ---
-ruby: rails sinatra roda rack-routing
+ruby: rails sinatra roda rack-routing flame
 
 # Rails
 rails:
@@ -56,6 +56,10 @@ roda:
 # Rack Routing
 rack-routing:
 	docker build -t rack-routing ruby/rack-routing
+
+# Flame
+flame:
+	docker build -t flame ruby/flame
 
 # --- Crystal ---
 crystal: kemal router.cr lucky amber raze spider-gazelle
