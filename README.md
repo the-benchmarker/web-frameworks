@@ -3,6 +3,8 @@
 Measuring response times (routing times) for each framework (middleware).
 Each framework has to have two features; routing and parsing path parameters.
 
+Any idea is :heart:, let discuss about it on [![Join the chat at https://gitter.im/which_is_the_fastest/Lobby](https://badges.gitter.im/which_is_the_fastest/Lobby.svg)](https://gitter.im/which_is_the_fastest/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Result
 
 <!-- Result from here -->
