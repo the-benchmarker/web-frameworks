@@ -1,9 +1,9 @@
-FROM rustlang/rust:nightly
+FROM rust
 
 WORKDIR /usr/src/app
 
 RUN rustup default nightly
-RUN rustup show
+RUN rustup update
 
 COPY Cargo.toml ./
 COPY src src
