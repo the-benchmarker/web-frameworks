@@ -3,7 +3,7 @@ FROM crystallang/crystal
 WORKDIR /usr/src/app
 
 COPY src src
-COPY shard.yml shard.lock ./
+COPY shard.yml ./
 
 RUN shards build --release --no-debug
 

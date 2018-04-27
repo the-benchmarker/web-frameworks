@@ -2,7 +2,7 @@ FROM crystallang/crystal
 
 WORKDIR /usr/src/app
 
-COPY shard.yml shard.lock ./
+COPY shard.yml ./
 COPY spec spec
 COPY src src
 

@@ -10,7 +10,7 @@ COPY config config
 COPY lib lib
 COPY rel rel
 COPY test test
-COPY mix.exs mix.lock ./
+COPY mix.exs ./
 
 RUN ls -la
 

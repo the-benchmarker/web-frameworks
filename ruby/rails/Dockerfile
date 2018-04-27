@@ -2,7 +2,7 @@ FROM ruby
 
 WORKDIR /usr/src/app
 
-COPY Gemfile Gemfile.lock Rakefile config.ru ./
+COPY Gemfile Rakefile config.ru ./
 COPY app app
 COPY config config
 COPY public public

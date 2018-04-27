@@ -10,7 +10,7 @@ COPY config config
 COPY lib lib
 COPY rel rel
 COPY web web
-COPY mix.exs mix.lock ./
+COPY mix.exs ./
 
 RUN echo "yes" | mix deps.get --force
 ENV MIX_ENV prod

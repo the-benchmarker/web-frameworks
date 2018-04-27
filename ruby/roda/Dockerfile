@@ -2,7 +2,7 @@ FROM ruby
 
 WORKDIR /usr/src/app
 
-COPY Gemfile Gemfile.lock app.rb config.ru ./
+COPY Gemfile app.rb config.ru ./
 
 RUN bundle install
 

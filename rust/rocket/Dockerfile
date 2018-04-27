@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 RUN rustup default nightly
 RUN rustup show
 
-COPY Cargo.toml Cargo.lock ./
+COPY Cargo.toml ./
 COPY src src
 
 RUN cargo install
