@@ -39,6 +39,8 @@ LANGS = [
   {lang: "node", targets: [
     {name: "express", repo: "expressjs/express"},
     {name: "clusterexpress", repo: "LearnBoost/cluster"},
+    {name: "fastify", repo: "fastify/fastify"},
+    {name: "clusterfastify", repo: "fastify/fastify"},
     {name: "polka", repo: "lukeed/polka"},
     {name: "clusterpolka", repo: "lukeed/polka"},
   ]},

@@ -20,6 +20,12 @@ express:
 clusterexpress:
 	cd node/express; npm install
 	ln -s -f ../node/express/bin/server_node_clusterexpress bin/.
+fastify:
+	cd node/fastify; npm install
+	ln -s -f ../node/fastify/bin/server_node_fastify bin/.
+clusterfastify:
+	cd node/fastify; npm install
+	ln -s -f ../node/fastify/bin/server_node_clusterfastify bin/.
 polka:
 	cd node/polka; npm install
 	ln -s -f ../node/polka/bin/server_node_polka bin/.
