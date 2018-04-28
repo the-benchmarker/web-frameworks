@@ -1,8 +1,8 @@
 [package]
-name = "server_rust_rocket"
+name = "server"
 version = "0.1.0"
 authors = ["Kilian Koeltzsch <me@kilian.io>"]
 
 [dependencies]
-rocket = "*"
-rocket_codegen = "*"
+rocket = "0.3.7"
+rocket_codegen = "0.3.7"

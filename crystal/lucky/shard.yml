@@ -5,17 +5,14 @@ authors:
   - Paul Smith <paulcsmith0218@gmail.com>
 
 targets:
-  server_crystal_lucky:
+  server:
     main: src/benchmark_lucky.cr
 
-crystal: 0.24.1
+crystal: 0.24.2
 
 license: MIT
 
 dependencies:
   lucky:
     github: luckyframework/lucky
-    version: "~> 0.8.0"
-  lucky_migrator:
-    github: luckyframework/lucky_migrator
-    version: "~> 0.4.0"
+    version: ~> 0.8.0

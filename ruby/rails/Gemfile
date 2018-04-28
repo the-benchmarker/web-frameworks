@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'rails'
-gem 'puma'
-gem 'json'
+gem 'rails', '~> 5.1.6'
+gem 'puma', '~> 3.11.3'
+gem 'json', '~> 2.1.0'

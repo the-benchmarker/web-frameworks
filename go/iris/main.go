@@ -20,5 +20,5 @@ func main() {
 		ctx.WriteString("")
 	})
 
-	app.Run(iris.Addr("localhost:3000"))
+	app.Run(iris.Addr(":3000"))
 }

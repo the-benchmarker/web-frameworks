@@ -1,11 +1,15 @@
-FROM ruby:2.4
-
-RUN apt-get update \
-    && rm -rf /var/lib/apt/lists/*
+FROM ruby
 
 WORKDIR /usr/src/app
-COPY Gemfile* ./
-RUN bundle install
-COPY . .
 
-CMD ["rails", "s", "-b", "0.0.0.0", "-e", "production"]
+COPY Gemfile Rakefile config.ru ./
+COPY app app
+COPY config config
+COPY public public
+COPY bin bin
+
+RUN bundle install
+
+EXPOSE 3000
+
+CMD ["bin/rails", "s", "-b", "0.0.0.0", "-p", "3000", "-e", "production"]

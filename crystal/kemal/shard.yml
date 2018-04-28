@@ -5,13 +5,14 @@ authors:
   - tbrand <taichiro0709@gmail.com>
 
 targets:
-  server_crystal_kemal:
+  server:
     main: src/server.cr
 
 dependencies:
   kemal:
     github: kemalcr/kemal
+    kemal: ~> 0.22.0
 
-crystal: 0.24.1
+crystal: 0.24.2
 
 license: MIT

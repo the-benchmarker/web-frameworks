@@ -1,53 +1,26 @@
 main:
   depends_on:
-    - node
-    - ruby
     - crystal
-    - go
-    - rust
-    - elixir
-    - swift
-    - scala
-    - python
+    - ruby
     - nim
+    - python
+    - go
+    - swift
+    - rust
+    - node
+    - elixir
+    - cpp
+    - scala
     - csharp
-    - objc
-    - benchmarker
 
-node:
+crystal:
   depends_on:
-    - express
-    - clusterexpress
-    - polka
-    - clusterpolka
-
-express:
-  command: |
-    npm install
-    ln -s -f ../node/express/bin/server_node_express ../../bin/.
-  dir:
-    node/express
-
-clusterexpress:
-  command: |
-    npm install
-    ln -s -f ../node/express/bin/server_node_clusterexpress ../../bin/.
-  dir:
-    node/express
-
-polka:
-  command: |
-    npm install
-    ln -s -f ../node/polka/bin/server_node_polka ../../bin/.
-  dir:
-    node/polka
-
-clusterpolka:
-  command: |
-    npm install
-    ln -s -f ../node/polka/bin/server_node_clusterpolka ../../bin/.
-  dir:
-    node/polka
+    - router.cr
+    - raze
+    - kemal
+    - lucky
+    - amber
+    - spider-gazelle
 
 ruby:
   depends_on:
@@ -56,206 +29,26 @@ ruby:
     - roda
     - rack-routing
 
-rails:
-  command: |
-    bundle update
-    bundle install --path vendor/bundle
-    ln -s -f ../ruby/rails/bin/server_ruby_rails ../../bin/.
-  dir:
-    ruby/rails
-
-sinatra:
-  command: |
-    bundle update
-    bundle install --path vendor/bundle
-    ln -s -f ../ruby/sinatra/server_ruby_sinatra ../../bin/.
-  dir:
-    ruby/sinatra
-
-roda:
-  command: |
-    bundle update
-    bundle install --path vendor/bundle
-    ln -s -f ../ruby/roda/server_ruby_roda ../../bin/.
-  dir:
-    ruby/roda
-
-rack-routing:
-  command: |
-    bundle update
-    bundle install --path vendor/bundle
-    ln -s -f ../ruby/rack-routing/server_ruby_rack-routing ../../bin/.
-  dir:
-    ruby/rack-routing
-
-
-crystal:
+nim:
   depends_on:
-    - kemal
-    - router_cr
-    - raze
-    - lucky
-    - amber
-    - spider-gazelle
+    - jester
+    - mofuw
 
-kemal:
-  command: |
-    shards update
-    shards build --release
-    ln -s -f ../crystal/kemal/bin/server_crystal_kemal ../../bin/.
-  dir:
-    crystal/kemal
-
-router_cr:
-  command: |
-    shards update
-    shards build --release
-    ln -s -f ../crystal/router.cr/bin/server_crystal_router_cr ../../bin/.
-  dir:
-    crystal/router.cr
-
-raze:
-  command: |
-    shards update
-    shards build --release
-    ln -s -f ../crystal/raze/bin/server_crystal_raze ../../bin/.
-  dir:
-    crystal/raze
-
-lucky:
-  command: |
-    mkdir -p public
-    echo '{}' > public/manifest.json
-    shards update
-    shards build --release
-    ln -s -f ../crystal/lucky/bin/server_crystal_lucky ../../bin/.
-  dir:
-    crystal/lucky
-
-amber:
-  command: |
-    shards update
-    shards build --release
-    ln -s -f crystal/amber/config ../../config
-    ln -s -f ../crystal/amber/bin/server_crystal_amber ../../bin/.
-  dir:
-    crystal/amber
-
-spider-gazelle:
-  command: |
-    shards update
-    shards build --release
-    ln -s -f ../crystal/spider-gazelle/bin/app ../../bin/server_crystal_spider-gazelle
-  dir:
-    crystal/spider-gazelle
+python:
+  depends_on:
+    - flask
+    - japronto
+    - django
+    - sanic
+    - tornado
 
 go:
   depends_on:
-    - echo
-    - gorilla-mux
-    - fasthttprouter
     - iris
+    - echo
+    - gorilla_mux
+    - fasthttprouter
     - gin
-
-echo:
-  command: |
-    go get -u github.com/labstack/echo
-    go build -o server_go_echo main.go
-    ln -s -f ../go/echo/server_go_echo ../../bin/.
-  dir:
-    go/echo
-
-gorilla-mux:
-  command: |
-    go get -u github.com/gorilla/mux
-    go build -o server_go_gorilla_mux main.go
-    ln -s -f ../go/gorilla-mux/server_go_gorilla_mux ../../bin/.
-  dir:
-    go/gorilla-mux
-
-iris:
-  command: |
-    go get -u github.com/kataras/iris
-    go build -o server_go_iris main.go
-    ln -s -f ../go/iris/server_go_iris ../../bin/.
-  dir:
-    go/iris
-
-fasthttprouter:
-  command: |
-    go get -u github.com/buaazp/fasthttprouter
-    go get -u github.com/valyala/fasthttp
-    go build -o server_go_fasthttprouter main.go
-    ln -s -f ../go/fasthttprouter/server_go_fasthttprouter ../../bin/.
-  dir:
-    go/fasthttprouter
-
-gin:
-  command: |
-    go get github.com/gin-gonic/gin
-    go build -o server_go_gin main.go
-    ln -s -f ../go/gin/server_go_gin ../../bin/.
-  dir:
-    go/gin
-
-rust:
-  depends_on:
-    - iron
-    - nickel
-    - rocket
-    - actix
-
-iron:
-  command: |
-    cargo update
-    cargo build --release
-    ln -s -f ../rust/iron/target/release/server_rust_iron ../../bin/.
-  dir:
-    rust/iron
-
-nickel:
-  command: |
-    cargo update
-    cargo build --release
-    ln -s -f ../rust/nickel/target/release/server_rust_nickel ../../bin/.
-  dir:
-    rust/nickel
-
-rocket:
-  command: |
-    cargo update
-    cargo build --release
-    ln -s -f ../rust/rocket/target/release/server_rust_rocket ../../bin/.
-  dir:
-    rust/rocket
-
-actix:
-  command: |
-    cargo update
-    cargo build --release
-    ln -s -f ../rust/actix/target/release/server_rust_actix ../../bin/.
-  dir:
-    rust/actix
-
-elixir:
-  depends_on:
-    - plug
-    - phoenix
-
-plug:
-  command: |
-    echo "yes" | mix deps.get --force; MIX_ENV=prod mix release --no-tar
-    ln -s -f ../elixir/plug/bin/server_elixir_plug ../../bin/.
-  dir:
-    elixir/plug
-
-phoenix:
-  command: |
-    echo "yes" | mix do local.rebar; mix deps.get --force; MIX_ENV=prod mix release --no-tar
-    ln -s -f ../elixir/phoenix/bin/server_elixir_phoenix ../../bin/.
-  dir:
-    elixir/phoenix
-
 
 swift:
   depends_on:
@@ -263,144 +56,185 @@ swift:
     - perfect
     - kitura
 
-vapor:
-  command: |
-    swift build -c release
-    ln -s -f ../swift/vapor/.build/release/server_swift_vapor ../../bin/.
-  dir:
-    swift/vapor
+rust:
+  depends_on:
+    - actix
+    - iron
+    - rocket
+    - nickel
 
-perfect:
-  command: |
-    swift build --configuration release
-    ln -s -f ../swift/perfect/.build/release/server_swift_perfect ../../bin/.
-  dir:
-    swift/perfect
+node:
+  depends_on:
+    - express
+    - clusterexpress
+    - polka
+    - clusterpolka
 
-kitura:
-  command: |
-    swift build --configuration release
-    ln -s -f ../swift/kitura/.build/release/server_swift_kitura ../../bin/.
-  dir:
-    swift/kitura
+elixir:
+  depends_on:
+    - plug
+    - phoenix
+
+cpp:
+  depends_on:
+    - evhtp
 
 scala:
   depends_on:
     - akkahttp
 
-akkahttp:
-  command: |
-    sbt assembly
-    ln -s -f ../scala/akkahttp/bin/server_scala_akkahttp ../../bin/.
-  dir:
-    scala/akkahttp
-
-python:
-  depends_on:
-    - sanic
-    - japronto
-    - flask
-    - django
-    - tornado
-
-sanic:
-  command: |
-    pip3 install -r requirements.txt; chmod +x server_python_sanic.py
-    ln -s -f ../python/sanic/server_python_sanic.py ../../bin/server_python_sanic
-  dir:
-    python/sanic
-
-japronto:
-  command: |
-    pip3 install -r requirements.txt; chmod +x server_python_japronto.py
-    ln -s -f ../python/japronto/server_python_japronto.py ../../bin/server_python_japronto
-  dir:
-    python/japronto
-
-flask:
-  command: |
-    pip3 install -r requirements.txt; chmod +x server_python_flask.py
-    ln -s -f ../python/flask/server_python_flask ../../bin/.
-  dir:
-    python/flask
-
-django:
-  command: |
-    pip3 install -r requirements.txt; chmod +x server_python_django
-    ln -s -f ../python/django/server_python_django ../../bin/server_python_django
-  dir:
-    python/django
-
-tornado:
-  command: |
-    pip3 install -r requirements.txt; chmod +x server_python_tornado.py
-    ln -s -f ../python/tornado/server_python_tornado.py ../../bin/server_python_tornado
-  dir:
-    python/tornado
-
-nim:
-  depends_on:
-    - jester
-    - mofuw
-
-jester:
-  command: |
-    nimble install -y; nim c -d:release server_nim_jester.nim
-    ln -s -f ../nim/jester/server_nim_jester ../../bin/server_nim_jester
-  dir:
-    nim/jester
-
-mofuw:
-  command: |
-    nimble install -y; nim c -d:release server_nim_mofuw.nim
-    ln -s -f ../nim/mofuw/server_nim_mofuw ../../bin/server_nim_mofuw
-  dir:
-    nim/mofuw
-
 csharp:
   depends_on:
     - aspnetcore
 
+router.cr:
+  command: docker build -t router.cr .
+  dir: crystal/router.cr
+
+raze:
+  command: docker build -t raze .
+  dir: crystal/raze
+
+kemal:
+  command: docker build -t kemal .
+  dir: crystal/kemal
+
+lucky:
+  command: docker build -t lucky .
+  dir: crystal/lucky
+
+amber:
+  command: docker build -t amber .
+  dir: crystal/amber
+
+spider-gazelle:
+  command: docker build -t spider-gazelle .
+  dir: crystal/spider-gazelle
+
+rails:
+  command: docker build -t rails .
+  dir: ruby/rails
+
+sinatra:
+  command: docker build -t sinatra .
+  dir: ruby/sinatra
+
+roda:
+  command: docker build -t roda .
+  dir: ruby/roda
+
+rack-routing:
+  command: docker build -t rack-routing .
+  dir: ruby/rack-routing
+
+jester:
+  command: docker build -t jester .
+  dir: nim/jester
+
+mofuw:
+  command: docker build -t mofuw .
+  dir: nim/mofuw
+
+flask:
+  command: docker build -t flask .
+  dir: python/flask
+
+japronto:
+  command: docker build -t japronto .
+  dir: python/japronto
+
+django:
+  command: docker build -t django .
+  dir: python/django
+
+sanic:
+  command: docker build -t sanic .
+  dir: python/sanic
+
+tornado:
+  command: docker build -t tornado .
+  dir: python/tornado
+
+iris:
+  command: docker build -t iris .
+  dir: go/iris
+
+echo:
+  command: docker build -t echo .
+  dir: go/echo
+
+gorilla_mux:
+  command: docker build -t gorilla_mux .
+  dir: go/gorilla-mux
+
+fasthttprouter:
+  command: docker build -t fasthttprouter .
+  dir: go/fasthttprouter
+
+gin:
+  command: docker build -t gin .
+  dir: go/gin
+
+vapor:
+  command: docker build -t vapor .
+  dir: swift/vapor
+
+perfect:
+  command: docker build -t perfect .
+  dir: swift/perfect
+
+kitura:
+  command: docker build -t kitura .
+  dir: swift/kitura
+
+actix:
+  command: docker build -t actix .
+  dir: rust/actix
+
+iron:
+  command: docker build -t iron .
+  dir: rust/iron
+
+rocket:
+  command: docker build -t rocket .
+  dir: rust/rocket
+
+nickel:
+  command: docker build -t nickel .
+  dir: rust/nickel
+
+express:
+  command: docker build -t express .
+  dir: node/express
+
+clusterexpress:
+  command: docker build -t clusterexpress .
+  dir: node/express
+
+polka:
+  command: docker build -t polka .
+  dir: node/polka
+
+clusterpolka:
+  command: docker build -t clusterpolka .
+  dir: node/polka
+
+plug:
+  command: docker build -t plug .
+  dir: elixir/plug
+
+phoenix:
+  command: docker build -t phoenix .
+  dir: elixir/phoenix
+
+evhtp:
+  command: docker build -t evhtp .
+  dir: cpp/evhtp
+
+akkahttp:
+  command: docker build -t akkahttp .
+  dir: scala/akkahttp
+
 aspnetcore:
-  command: |
-    dotnet restore
-    dotnet build
-    ln -s -f ../csharp/aspnetcore/server_csharp_aspnetcore ../../bin/server_csharp_aspnetcore
-  dir:
-    csharp/aspnetcore
-
-objc:
-  depends_on:
-    - criollo
-
-criollo:
-  command: |
-    pod install
-    xcodebuild -workspace server_objc_criollo.xcworkspace -scheme server_objc_criollo -derivedDataPath ./derivedData
-    ln -s -f ../objc/criollo/derivedData/Build/Products/Debug/server_objc_criollo.app/Contents/MacOS/server_objc_criollo ../../bin/server_objc_criollo
-  dir:
-    objc/criollo
-
-benchmarker:
-  command: |
-    crystal build src/benchmarker.cr -o bin/benchmarker --release
-    ln -s -f ../tools/bin/benchmarker ../bin/.
-  depends_on:
-    client
-  dir:
-    tools
-  src:
-    tools/src/benchmarker.cr
-
-client:
-  command: |
-    crystal build src/client.cr -o bin/client --release
-    ln -s -f ../tools/bin/client ../bin/.
-  dir:
-    tools
-  src:
-    tools/src/client.cr
-
-clean_bin:
-  command:
-    rm -rf bin/*
+  command: docker build -t aspnetcore .
+  dir: csharp/aspnetcore

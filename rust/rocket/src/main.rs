@@ -18,7 +18,7 @@ fn user_register_route() {}
 
 fn main() {
     let config = Config::build(Environment::Production)
-        .address("127.0.0.1")
+        .address("0.0.0.0")
         .port(3000)
         .finalize()
         .unwrap();
