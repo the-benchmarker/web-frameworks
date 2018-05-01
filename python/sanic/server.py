@@ -25,4 +25,4 @@ async def user(request):
 
 if __name__ == '__main__':
     app.config.LOGO = None
-    app.run(host='0.0.0.0', port=3000, log_config=None, workers=os.cpu_count())
+    app.run(host='0.0.0.0', port=3000, access_log=False, debug=False, workers=os.cpu_count())
