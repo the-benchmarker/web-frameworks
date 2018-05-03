@@ -4,6 +4,6 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN swift build -c release
+RUN swift build
 
-CMD .build/release/benchmarker wrk
+CMD run.sh

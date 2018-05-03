@@ -1,0 +1,1 @@
+.build/release/benchmarker wrk $HOSTNAME
