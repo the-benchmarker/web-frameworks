@@ -9,10 +9,10 @@ router.get("/") { req in
     return empty
 }
 router.get("user", String.parameter) { req in
-	return try req.parameters.next(String.self)
+    return try req.parameters.next(String.self)
 }
 router.post("user") { req in
-	return empty
+    return empty
 }
 services.register(router, as: Router.self)
 
