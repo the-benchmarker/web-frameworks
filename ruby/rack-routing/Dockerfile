@@ -11,4 +11,4 @@ RUN bundle install
 
 EXPOSE 3000
 
-CMD [ "bundle", "exec", "rackup", "-p", "3000", "-q", "-E", "production" ]
+CMD bundle exec puma -p 3000 -e production -w $(nproc)

@@ -12,4 +12,4 @@ RUN bundle install
 
 EXPOSE 3000
 
-CMD ["bin/rails", "s", "-b", "0.0.0.0", "-p", "3000", "-e", "production"]
+CMD bundle exec puma -p 3000 -e production -w $(nproc)
