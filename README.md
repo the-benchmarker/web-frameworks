@@ -133,9 +133,7 @@ CPU Cores: 8
    - [Rocket](https://rocket.rs) (nightly)
  - node
    - [express](https://github.com/expressjs/express)
-   - [express/cluster](https://github.com/LearnBoost/cluster)
    - [polka](https://github.com/lukeed/polka)
-   - [polka/cluster](https://github.com/lukeed/polka)
  - Elixir
    - [Plug](http://github.com/elixir-lang/plug)
    - [Phoenix](http://github.com/phoenixframework/phoenix)

@@ -1,12 +1,8 @@
 [package]
-name = "server_rust_actix"
+name = "server"
 version = "0.1.0"
 authors = ["Nikolay Kim <fafhrd91@gmail.com>"]
 
 [dependencies]
-regex = { version="0.2", features=["simd-accel"] }
-actix = "0.5"
-actix-web = "0.4"
-
-[build]
-rustflags = ["target-cpu", "native"]
+actix = "0.5.5"
+actix-web = "0.4.10"

@@ -6,10 +6,20 @@ authors:
   - OvermindDL1 <overminddl1@gmail.com>
   - Marwan Rabbâa <waghanza@gmail.com>
 
-development_dependencies:
+dependencies:
   ameba:
     github: veelenga/ameba
+    version: ~> 0.5.0
+  neph:
+    github: tbrand/neph
+    version: ~> 0.1.22
 
-crystal: 0.24.1
-
-license: MIT
+targets:
+  benchmarker:
+    main: tools/src/benchmarker.cr
+  client:
+    main: tools/src/client.cr
+  ameba:
+    main: lib/ameba/src/cli.cr
+  neph:
+    main: lib/neph/src/bin/neph_bin.cr

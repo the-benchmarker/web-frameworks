@@ -5,13 +5,14 @@ authors:
   - tbrand <taichiro0709@gmail.com>
 
 targets:
-  server_crystal_router_cr:
+  server:
     main: src/server.cr
 
 dependencies:
   router:
     github: tbrand/router.cr
+    version: ~> 0.2.2
 
-crystal: 0.24.1
+crystal: 0.24.2
 
 license: MIT

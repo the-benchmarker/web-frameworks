@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# Exit if any subcommand fails
-set -e
-
-yarn run brunch "$@"

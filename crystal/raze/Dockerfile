@@ -1,10 +1,10 @@
 FROM crystallang/crystal
 
-RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY . /usr/src/app
+COPY shard.yml ./
+COPY src src
 
-RUN shards build --release
+RUN shards build --release --no-debug
 
-CMD ./bin/server_crystal_raze
+CMD bin/server
