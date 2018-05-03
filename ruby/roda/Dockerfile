@@ -6,4 +6,4 @@ COPY Gemfile app.rb config.ru ./
 
 RUN bundle install
 
-CMD bundle exec rackup -p 3000 -q -E production
+CMD bundle exec puma -p 3000 -e production -w $(nproc)
