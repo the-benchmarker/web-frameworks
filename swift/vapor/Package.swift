@@ -2,11 +2,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "Benchmark",
+    name: "which_is_the_fastest",
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", .branch("gm")),
     ],
     targets: [
-        .target(name: "main", dependencies: ["Vapor"], path: "."),
+        .target(name: "server", dependencies: ["Vapor"], path: "."),
     ]
 )
