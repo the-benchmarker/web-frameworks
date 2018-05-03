@@ -1,18 +1,12 @@
-// swift-tools-version:3.1
-
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
-    name: "server",
+    name: "which_is_the_fastest",
     dependencies: [
-        .Package(url: "https://github.com/vapor/vapor.git",  majorVersion: 2, minor: 4)
+        .package(url: "https://github.com/vapor/vapor.git", .branch("gm")),
     ],
-    exclude: [
-        "Config",
-        "Database",
-        "Localization",
-        "Public",
-        "Resources",
+    targets: [
+        .target(name: "server", dependencies: ["Vapor"], path: "."),
     ]
 )
-
