@@ -1,53 +1,20 @@
 version: '2'
 
 services:
-
-  crystal:
-    image: alpine:latest
-    command: "true"
-    links:
-      - kemal
-      - router_cr
-
-  kemal:
-    build: crystal/kemal
+  gin:
+    build: frameworks/go/gin
     ports:
-      - 3000:3000
-
-  router_cr:
-    build: crystal/router.cr
+      - 8000:8000
+  vapor:
+    build: frameworks/swift/vapor
     ports:
-      - 3000:3000
-
-  japronto:
-    build: python/japronto
+      - 8001:8001
+  kitura:
+    build: frameworks/swift/kitura
     ports:
-    - 3000:3000
-
-  ruby:
-    image: alpine:latest
-    command: "true"
-    links:
-      - rails
-      - roda
-      - sinatra
-
-  rails:
-    build: ruby/rails
+      - 8002:8002
+  perfect:
+    build: frameworks/swift/perfect
     ports:
-      - 3000:3000
+      - 8003:8003
 
-  roda:
-    build: ruby/roda
-    ports:
-      - 3000:3000
-
-  sinatra:
-    build: ruby/sinatra
-    ports:
-      - 3000:3000
-
-  iron:
-    build: rust/iron
-    ports:
-    - 3000:3000

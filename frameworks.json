@@ -1,0 +1,22 @@
+[
+    { 
+        "name": "vapor",
+        "language": "swift",
+        "port": 8001
+    },
+    { 
+        "name": "kitura",
+        "language": "swift",
+        "port": 8002
+    },
+    { 
+        "name": "perfect",
+        "language": "swift",
+        "port": 8003
+    },
+    { 
+        "name": "gin",
+        "language": "go",
+        "port": 8000
+    }
+]
