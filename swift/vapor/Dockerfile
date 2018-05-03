@@ -1,11 +1,9 @@
 FROM swift
 
-WORKDIR /usr/src/app
+WORKDIR /code
 
-COPY Package.swift Package.resolved ./
-COPY Sources Sources
+COPY . .
 
-RUN swift package update
 RUN swift build -c release
 
-CMD .build/release/server
+CMD .build/release/main -e prod -h 0.0.0.0 -p 3000
