@@ -2,17 +2,18 @@ FROM rust
 
 WORKDIR /usr/src/app
 
-RUN rustup default nightly
+RUN rustup default nightly-2018-04-28
 RUN rustup update
 
 COPY Cargo.toml ./
 COPY src src
 
-RUN cargo install
-RUN cargo build --release
-
 ENV ROCKET_ENV=production
 
-EXPOSE 3000
+#RUN cargo build --release
 
-CMD target/release/server
+
+#
+#EXPOSE 3000
+#
+#CMD target/release/server
