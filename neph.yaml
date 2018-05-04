@@ -46,7 +46,7 @@ go:
   depends_on:
     - iris
     - echo
-    - gorilla_mux
+    - gorilla-mux
     - fasthttprouter
     - gin
 
