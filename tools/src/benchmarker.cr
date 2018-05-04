@@ -55,7 +55,7 @@ LANGS = [
   ]},
   {lang: "go", targets: [
     {name: "echo", repo: "labstack/echo"},
-    {name: "gorilla_mux", repo: "gorilla/mux"},
+    {name: "gorilla-mux", repo: "gorilla/mux"},
     {name: "iris", repo: "kataras/iris"},
     {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
     {name: "gin", repo: "gin-gonic/gin"},
