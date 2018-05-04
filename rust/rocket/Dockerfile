@@ -10,10 +10,8 @@ COPY src src
 
 ENV ROCKET_ENV=production
 
-#RUN cargo build --release
+RUN cargo build --release
 
+EXPOSE 3000
 
-#
-#EXPOSE 3000
-#
-#CMD target/release/server
+CMD target/release/server
