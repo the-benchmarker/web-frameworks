@@ -3,23 +3,11 @@
 .DS_Store
 *.swp
 
-## Generated content
-
-bin/
-node_modules
-vendor
+# Lock files
 *.lock
-package-lock.json
 
-### Crystal ###
-
+# Crystal
 lib/
 .shards/
-config
-
-### Python ###
-
-__pycache__/
-*.pyc
 
 .neph
