@@ -7,7 +7,7 @@ use Mix.Config
 # You should also configure the url host to something
 # meaningful, we use this information when generating URLs.
 config :my_phoenix, MyPhoenix.Endpoint,
-  http: [port: 3000, protocol_options: [max_keepalive: 5_000_000]],
+  http: [port: 8010, protocol_options: [max_keepalive: 5_000_000]],
   url: [host: "example.com", port: 80],
   server: true
 

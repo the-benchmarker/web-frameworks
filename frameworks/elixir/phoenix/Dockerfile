@@ -16,5 +16,4 @@ RUN echo "yes" | mix deps.get --force
 ENV MIX_ENV prod
 RUN mix release --no-tar
 
-EXPOSE 3000
 CMD _build/prod/rel/my_phoenix/bin/my_phoenix foreground
