@@ -16,5 +16,4 @@ COPY Program.cs Startup.cs aspnetcore.csproj ./
 
 RUN dotnet build --configuration Release
 
-EXPOSE 3000
 CMD dotnet run bin/Release/netcoreapp2.0/aspnetcore.dll

@@ -33,4 +33,12 @@ services:
     build: frameworks/python/django
     ports:
       - 8007:8007
+  express:
+    build: frameworks/node/express
+    ports:
+      - 8008:8008
+  express:
+    build: frameworks/csharp/aspnetcore
+    ports:
+      - 8009:8009
 

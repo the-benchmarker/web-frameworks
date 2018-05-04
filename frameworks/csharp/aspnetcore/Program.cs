@@ -10,7 +10,7 @@ namespace aspnetcore
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseStartup<Startup>()
-                .UseUrls("http://0.0.0.0:3000")
+                .UseUrls("http://0.0.0.0:8009")
                 .Build();
 
             host.Run();
