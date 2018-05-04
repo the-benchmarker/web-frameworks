@@ -165,8 +165,8 @@ echo:
   command: docker build -t echo .
   dir: go/echo
 
-gorilla_mux:
-  command: docker build -t gorilla_mux .
+gorilla-mux:
+  command: docker build -t gorilla-mux .
   dir: go/gorilla-mux
 
 fasthttprouter:
