@@ -17,4 +17,20 @@ services:
     build: frameworks/swift/perfect
     ports:
       - 8003:8003
+  rails:
+    build: frameworks/ruby/rails
+    ports:
+      - 8004:8004
+  sinatra:
+    build: frameworks/ruby/sinatra
+    ports:
+      - 8005:8005
+  flask:
+    build: frameworks/python/flask
+    ports:
+      - 8006:8006
+  django:
+    build: frameworks/python/django
+    ports:
+      - 8007:8007
 

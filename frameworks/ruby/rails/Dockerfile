@@ -10,6 +10,4 @@ COPY bin bin
 
 RUN bundle install
 
-EXPOSE 3000
-
-CMD bundle exec puma -p 3000 -e production -w $(nproc)
+CMD bundle exec puma -p 8004 -e production -w $(nproc)

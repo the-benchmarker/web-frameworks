@@ -18,5 +18,25 @@
         "name": "perfect",
         "language": "swift",
         "port": 8003
+    },
+    { 
+        "name": "rails",
+        "language": "ruby",
+        "port": 8004
+    },
+    { 
+        "name": "sinatra",
+        "language": "ruby",
+        "port": 8005
+    },
+    { 
+        "name": "flask",
+        "language": "python",
+        "port": 8006
+    },
+    { 
+        "name": "django",
+        "language": "python",
+        "port": 8007
     }
 ]

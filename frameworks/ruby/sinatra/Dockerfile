@@ -6,4 +6,4 @@ COPY Gemfile app.rb config.ru ./
 
 RUN bundle install
 
-CMD bundle exec puma -p 3000 -e production -w $(nproc)
+CMD bundle exec puma -p 8005 -e production -w $(nproc)
