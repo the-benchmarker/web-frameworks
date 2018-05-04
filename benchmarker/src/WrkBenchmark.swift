@@ -15,44 +15,44 @@ final class WrkBenchmark: Command {
         let client = try context.container.make(Client.self)
 
         context.console.output("testing...".consoleText(.success))
-        for (i, framework) in frameworks.enumerated() {
+        return frameworks.enumerated().map { (i, framework) -> Future<Void> in
             context.console.print("[\(i+1)/\(frameworks.count)] \(framework) ", newLine: false)
-            let test = try client.get("http://\(hostname):\(framework.port)/").wait()
-            context.console.output(test.description.consoleText())
-            if test.http.contentType != .plainText {
-                context.console.output("⚠️ wrong content type")
-            }
-            if test.http.headers.firstValue(name: .date) == nil {
-                context.console.output("⚠️ missing date header")
-            }
-            if test.http.body.count != 4 {
-                context.console.output("⚠️ wrong body size")
-            }
-        }
-
-        context.console.output("benchmarking...".consoleText(.success))
-        for (i, framework) in frameworks.enumerated() {
-            var results: [WrkResult] = []
-
-            context.console.print("[\(i+1)/\(frameworks.count)] \(framework) ", newLine: false)
-            for _ in 1...runCount {
-                do {
-                    let result = try wrk(hostname: hostname, port: framework.port)
-                    results.append(result)
-                    context.console.print(".", newLine: false)
-                } catch {
-                    context.console.print("x", newLine: false)
+            return client.get("http://\(hostname):\(framework.port)/").map { res -> Void in
+                context.console.output(res.description.consoleText())
+                if res.http.contentType != .plainText {
+                    context.console.output("⚠️ wrong content type")
+                }
+                if res.http.headers.firstValue(name: .date) == nil {
+                    context.console.output("⚠️ missing date header")
+                }
+                if res.http.body.count != 4 {
+                    context.console.output("⚠️ wrong body size")
                 }
             }
-            context.console.print("")
+        }.flatten(on: context.container).map {
+            context.console.output("benchmarking...".consoleText(.success))
+            for (i, framework) in frameworks.enumerated() {
+                var results: [WrkResult] = []
 
-            let run = WrkRun(framework: framework, results: results)
-            runs.append(run)
+                context.console.print("[\(i+1)/\(frameworks.count)] \(framework) ", newLine: false)
+                for _ in 1...runCount {
+                    do {
+                        let result = try self.wrk(hostname: hostname, port: framework.port)
+                        results.append(result)
+                        context.console.print(".", newLine: false)
+                    } catch {
+                        context.console.print("x", newLine: false)
+                    }
+                }
+                context.console.print("")
+
+                let run = WrkRun(framework: framework, results: results)
+                runs.append(run)
+            }
+
+            context.console.report(\.requests, title: "total requests", suffix: " reqs", runs: runs)
+            context.console.report(\.latency.mean, title: "average latency", suffix: "µs", runs: runs)
         }
-
-        context.console.report(\.requests, title: "total requests", suffix: " reqs", runs: runs)
-        context.console.report(\.latency.mean, title: "average latency", suffix: "µs", runs: runs)
-        return .done(on: context.container)
     }
 
     func wrk(hostname: String, port: Int) throws -> WrkResult {

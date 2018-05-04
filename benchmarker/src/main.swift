@@ -3,7 +3,6 @@ import Vapor
 var services = Services.default()
 
 var commands = CommandConfig()
-commands.use(StartFrameworks(), as: "start")
 commands.use(WrkBenchmark(), as: "wrk")
 services.register(commands)
 
