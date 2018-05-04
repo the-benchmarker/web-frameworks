@@ -6,4 +6,4 @@ COPY . .
 
 RUN swift build -c release
 
-CMD .build/release/server serve -e prod -n 0.0.0.0 -p 8001
+CMD .build/release/server serve -e prod -b 0.0.0.0 -p 8001

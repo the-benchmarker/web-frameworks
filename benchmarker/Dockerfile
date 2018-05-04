@@ -6,4 +6,4 @@ COPY . .
 
 RUN swift build
 
-CMD run.sh
+CMD ./run.sh
