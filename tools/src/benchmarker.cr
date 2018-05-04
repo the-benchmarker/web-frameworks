@@ -68,6 +68,7 @@ LANGS = [
   ]},
   {lang: "node", targets: [
     {name: "express", repo: "expressjs/express"},
+    {name: "fastify", repo: "fastify/fastify"},
     {name: "polka", repo: "lukeed/polka"},
   ]},
   {lang: "elixir", targets: [
