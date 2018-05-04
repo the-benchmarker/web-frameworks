@@ -2,7 +2,7 @@ FROM swift
 
 WORKDIR /usr/src/app
 
-COPY Package.swift Package.resolved ./
+COPY Package.swift ./
 COPY Sources Sources
 
 RUN swift package update
