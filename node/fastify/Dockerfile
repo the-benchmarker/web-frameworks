@@ -8,4 +8,4 @@ RUN npm install
 
 ENV NODE_ENV production
 
-CMD node app.js
+CMD pm2-runtime start app.js

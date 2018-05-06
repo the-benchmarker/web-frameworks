@@ -5,6 +5,7 @@
     "url": "https://lukeed.com"
   },
   "dependencies": {
-    "polka": "^0.3.2"
+    "polka": "~0.3.4",
+    "pm2": "~2.1.4"
   }
 }

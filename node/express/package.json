@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "cluster": "^0.7.7",
-    "express": "^4.15.2"
+    "express": "~4.16.3",
+    "pm2": "~2.1.4"
   },
   "devDependencies": {},
   "scripts": {
