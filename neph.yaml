@@ -66,11 +66,8 @@ rust:
 node:
   depends_on:
     - express
-    - clusterexpress
     - fastify
-    - clusterfastify
     - polka
-    - clusterpolka
 
 elixir:
   depends_on:
@@ -209,24 +206,12 @@ express:
   command: docker build -t express .
   dir: node/express
 
-clusterexpress:
-  command: docker build -t clusterexpress .
-  dir: node/express
-
 fastify:
   command: docker build -t fastify .
   dir: node/fastify
 
-clusterfastify:
-  command: docker build -t clusterfastify .
-  dir: node/fastify
-
 polka:
   command: docker build -t polka .
-  dir: node/polka
-
-clusterpolka:
-  command: docker build -t clusterpolka .
   dir: node/polka
 
 plug:

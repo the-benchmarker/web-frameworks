@@ -5,7 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "express": "~4.16.3",
-    "cluster": "~2.1.4"
+    "pm2": "~2.1.4"
   },
   "devDependencies": {},
   "scripts": {
