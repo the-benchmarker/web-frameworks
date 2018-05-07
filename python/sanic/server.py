@@ -22,7 +22,5 @@ async def user_info(request, id):
 async def user(request):
     return text('')
 
-
-if __name__ == '__main__':
-    app.config.LOGO = None
-    app.run(host='0.0.0.0', port=3000, access_log=False, debug=False, workers=os.cpu_count())
+if __name__ == "__main__":
+    app.run(access_log=False)
