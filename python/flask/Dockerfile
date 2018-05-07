@@ -9,4 +9,4 @@ COPY requirements.txt server.py ./
 
 EXPOSE 3000
 
-CMD [ "gunicorn", "--chdir", "/usr/src/app", "--bind", "0.0.0.0:3000", "server:app" ]
+CMD  gunicorn --chdir /usr/src/app --worker-class meinheld.gmeinheld.MeinheldWorker --bind 0.0.0.0:3000 --workers $(nproc) server:app
