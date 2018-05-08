@@ -44,6 +44,7 @@ LANGS = [
     {name: "sinatra", repo: "sinatra/sinatra"},
     {name: "roda", repo: "jeremyevans/roda"},
     {name: "rack-routing", repo: "iAmPlus/rack-routing"},
+    {name: "flame", repo: "AlexWayfer/flame"},
   ]},
   {lang: "crystal", targets: [
     {name: "kemal", repo: "kemalcr/kemal"},
