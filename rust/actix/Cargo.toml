@@ -1,8 +1,0 @@
-[package]
-name = "server"
-version = "0.1.0"
-authors = ["Nikolay Kim <fafhrd91@gmail.com>"]
-
-[dependencies]
-actix = "0.5.5"
-actix-web = "0.4.10"

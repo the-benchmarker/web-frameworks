@@ -1,0 +1,15 @@
+[package]
+name = "server"
+version = "0.1.0"
+authors = ["Nikolay Kim <fafhrd91@gmail.com>"]
+
+[dependencies]
+tokio-io = "=0.1.5"
+tokio-core = "=0.1.12"
+actix = "0.5"
+actix-web = "0.6"
+
+[profile.release]
+lto = true
+opt-level = 3
+codegen-units = 1
