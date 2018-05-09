@@ -2,7 +2,7 @@ FROM rust
 
 WORKDIR /usr/src/app
 
-RUN rustup default nightly-2018-04-28
+RUN rustup default nightly
 RUN rustup update
 
 COPY Cargo.toml ./
