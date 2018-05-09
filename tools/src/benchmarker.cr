@@ -62,7 +62,7 @@ LANGS = [
     {name: "gin", repo: "gin-gonic/gin"},
   ]},
   {lang: "rust", targets: [
-    {name: "actix", repo: "actix/actix-web"},
+    {name: "actix-web", repo: "actix/actix-web"},
     {name: "iron", repo: "iron/iron"},
     {name: "nickel", repo: "nickel-org/nickel.rs"},
     {name: "rocket", repo: "SergioBenitez/Rocket"},

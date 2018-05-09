@@ -59,7 +59,7 @@ swift:
 
 rust:
   depends_on:
-    - actix
+    - actix-web
     - iron
     - rocket
     - nickel
@@ -191,9 +191,9 @@ kitura:
   command: docker build -t kitura .
   dir: swift/kitura
 
-actix:
-  command: docker build -t actix .
-  dir: rust/actix
+actix-web:
+  command: docker build -t actix-web .
+  dir: rust/actix-web
 
 iron:
   command: docker build -t iron .
