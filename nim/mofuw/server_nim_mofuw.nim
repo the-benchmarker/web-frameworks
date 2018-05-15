@@ -23,4 +23,4 @@ proc handler(req: mofuwReq, res: mofuwRes) {.async.} =
         ""
       )
 
-handler.mofuwRun(port = 3000, bufSize = 512)
+handler.mofuwRun(port = 3000)
