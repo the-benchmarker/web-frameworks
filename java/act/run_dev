@@ -1,0 +1,3 @@
+#!/bin/sh
+echo building ...
+mvn -q compile act:run
