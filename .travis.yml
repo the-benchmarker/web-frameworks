@@ -9,3 +9,6 @@ script:
   - yamllint shard.yml
   - yamllint neph.yaml
   - yamllint .travis.yml
+  - docker -v
+  - curl -V
+  - bash test.sh
