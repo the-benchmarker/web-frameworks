@@ -9,5 +9,3 @@ script:
   - yamllint shard.yml
   - yamllint neph.yaml
   - yamllint .travis.yml
-  - bin/neph --mode=CI
-  - bin/benchmarker -r 10
