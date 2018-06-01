@@ -107,7 +107,7 @@ LANGS = [
 ]
 
 # struct for benchmark result
-record BenchResult, max : Float64, min : Float64, ave : Float64, total : Float64
+record BenchResult, min : Int32, max : Int32, ave : Int32
 
 # struct for target
 record Target, lang : String, name : String, repo : String
@@ -128,40 +128,19 @@ end
 
 # Benchmark
 # server : server context
-# count  : number of samples
 # threads : number of thread to launch simultaneously
-# requests : numbers of request per thread
-def benchmark(host, count, threads, requests) : BenchResult
-  max : Float64 = -1.0
-  min : Float64 = 100_000.0
-  ave : Float64 = 0.0
-  total : Float64 = 0.0
+# connections : number of opened connections per thread
+def benchmark(host, threads, connections) : BenchResult
 
-  count.times do |i|
-    span = client(host, threads, requests)
-    max = span if span > max
-    min = span if span < min
-    total += span
-  end
+  `#{CLIENT} -h #{host} -t #{threads.to_i} -r #{connections.to_i}`
 
-  ave = total/count.to_f
+  row = File.read("/tmp/which_is_the_fastest.out").split(',')
 
-  result = BenchResult.new(max, min, ave, total)
+  result = BenchResult.new(row[0].to_i, row[1].to_i, row[2].to_i)
 
   sleep 5
 
   result
-end
-
-# Running client and returning span
-# host: Hostname, or IP address, to target
-# threads : number of thread to launch simultaneously
-# requests : numbers of request per thread
-def client(host, threads, requests)
-  s = Time.now
-  `#{CLIENT} -h #{host} -t #{threads.to_i} -r #{requests.to_i}`
-  e = Time.now
-  (e - s).to_f
 end
 
 m_lines = [] of String
@@ -194,11 +173,12 @@ all = [] of Ranked
 ranks = [] of Ranked
 
 targets.each do |target|
-  cid = `docker run -p 3000:3000 -td #{target.name}`.strip
+  cid = `docker run -td #{target.name}`.strip
 
   sleep 10 # due to external program usage
+  remote_ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
 
-  result = benchmark("localhost", 5, threads, requests)
+  result = benchmark(remote_ip, threads, requests)
 
   puts_markdown "Done. <- #{target.name}"
 
@@ -245,11 +225,11 @@ end
 puts_markdown "", m_lines, true
 puts_markdown "### All frameworks", m_lines, true
 puts_markdown "", m_lines, true
-puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]", "Ave [sec]"], m_lines, true
+puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Minimum", "Maximu", "Average"], m_lines, true
 puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", m_lines, true
 
 all.each do |framework|
-  puts_markdown "| %-25s | %-25s | %15f | %15f | %15f |" % [framework.target.lang, framework.target.name, framework.res.max, framework.res.min, framework.res.ave], m_lines, true
+  puts_markdown "| %-25s | %-25s | %15d | %15d | %15d" % [framework.target.lang, framework.target.name, framework.res.min, framework.res.max, framework.res.ave], m_lines, true
 end
 
 if record
