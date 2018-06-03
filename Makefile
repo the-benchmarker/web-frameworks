@@ -111,7 +111,7 @@ gin:
 	docker build -t gin go/gin
 
 # --- Rust ---
-rust: iron nickel rocket actix
+rust: iron nickel rocket actix-web
 
 # IRON
 iron:
@@ -126,8 +126,8 @@ rocket:
 	docker build -t rocket rust/rocket
 
 # Actix
-actix:
-	docker build -t actix rust/actix
+actix-web:
+	docker build -t actix rust/actix-web
 
 # --- Swift ---
 swift: vapor perfect kitura
