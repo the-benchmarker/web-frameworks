@@ -9,3 +9,4 @@ script:
   - yamllint shard.yml
   - yamllint neph.yaml
   - yamllint .travis.yml
+  - bash test.sh
