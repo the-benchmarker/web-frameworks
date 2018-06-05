@@ -2,6 +2,22 @@ services: docker
 language: crystal
 before_install: pip install yamllint --user
 install: shards build --release
+
+env:
+  matrix:
+    - "TESTLANG=crystal"
+    - "TESTLANG=ruby"
+    - "TESTLANG=nim"
+    - "TESTLANG=python"
+    - "TESTLANG=go"
+    - "TESTLANG=swift"
+    - "TESTLANG=rust"
+    - "TESTLANG=node"
+    - "TESTLANG=elixir"
+    - "TESTLANG=cpp"
+    - "TESTLANG=scala"
+    - "TESTLANG=csharp"
+
 script:
   - crystal spec
   - bin/ameba tools
@@ -9,4 +25,5 @@ script:
   - yamllint shard.yml
   - yamllint neph.yaml
   - yamllint .travis.yml
-  - bash test.sh
+  - make ${TESTLANG}
+  - bin/benchmarker ${TESTLANG} -r 1
