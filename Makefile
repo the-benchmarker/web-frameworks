@@ -127,7 +127,7 @@ rocket:
 
 # Actix
 actix-web:
-	docker build -t actix rust/actix-web
+	docker build -t actix-web rust/actix-web
 
 # --- Swift ---
 swift: vapor perfect kitura
