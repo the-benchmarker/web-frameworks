@@ -98,6 +98,12 @@ LANGS = [
     {name: "jester", repo: "dom96/jester"},
     {name: "mofuw", repo: "2vg/mofuw"},
   ]},
+  {lang: "java", targets: [
+    {name: "act", repo: "actframework/actframework"},
+  ]},
+  {lang: "cpp", targets: [
+    {name: "evhtp", repo: "criticalstack/libevhtp"},
+  ]}
 ]
 
 # struct for benchmark result
