@@ -1,4 +1,4 @@
-all: elixir node ruby crystal go rust swift python nim csharp scala
+all: elixir node ruby crystal go rust swift python nim csharp scala cpp
 
 # --- Elixir ---
 elixir: plug phoenix
@@ -191,6 +191,12 @@ jester:
 # mofuw
 mofuw:
 	docker build -t mofuw nim/mofuw
+
+# --- CPP ---
+cpp: evhtp
+
+evhtp:
+	docker build -t evhtp cpp/evhtp
 
 # Cleaning all executables
 clean:
