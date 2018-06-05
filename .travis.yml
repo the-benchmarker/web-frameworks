@@ -17,6 +17,7 @@ env:
     - "TESTLANG=cpp"
     - "TESTLANG=scala"
     - "TESTLANG=csharp"
+    - "TESTLANG=java"
 
 script:
   - crystal spec
