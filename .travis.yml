@@ -1,7 +1,6 @@
 services: docker
 language: crystal
 before_install: pip install yamllint --user
-
 install: shards build --release
 
 env:
