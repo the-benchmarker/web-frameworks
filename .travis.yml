@@ -1,17 +1,6 @@
-addons:
-  apt:
-    update: true
-    packages:
-      - build-essential
-      - libssl-dev
-      - git
-
-
 services: docker
 language: crystal
-before_install: 
-  - pip install yamllint --user
-  - git clone https://github.com/wg/wrk.git /tmp/wrk && cd /tmp/wrk && make && cp wrk ~/bin/ && cd -
+before_install: pip install yamllint --user
 
 install: shards build --release
 
@@ -39,4 +28,4 @@ script:
   - yamllint neph.yaml
   - yamllint .travis.yml
   - make ${TESTLANG}
-  - bin/benchmarker ${TESTLANG} -r 1
+  - bin/benchmarker ${TESTLANG} --check

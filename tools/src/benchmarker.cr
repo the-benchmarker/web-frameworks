@@ -1,3 +1,4 @@
+require "http/client"
 require "benchmark"
 require "option_parser"
 require "json"
@@ -9,6 +10,7 @@ require "json"
 threads = (System.cpu_count + 1).to_i
 requests = 100_000.0
 record = false
+check = false
 
 #################
 #### OPTIONS ####
@@ -24,6 +26,9 @@ OptionParser.parse! do |parser|
   end
   parser.on("--record", "Record results in README.md") do
     record = true
+  end
+  parser.on("--check", "Check mode (without result, typically run on CI)") do
+    check = true
   end
 end
 
@@ -183,70 +188,86 @@ targets.each do |target|
   sleep 10 # due to external program usage
   remote_ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
 
-  result = benchmark(remote_ip, threads, requests)
+  if check
+    r = HTTP::Client.get "http://#{remote_ip}:3000/"
+    unless r.status_code == 200 && r.body.empty?
+      STDERR.puts "Fail to GET on / for #{target} : [#{r.status_code}] #{r.body}"
+    end
+    r = HTTP::Client.get "http://#{remote_ip}:3000/user/0"
+    unless r.status_code == 200 && r.body.lines.first == "0"
+      STDERR.puts "Fail to GET on /user/0 for #{target} : [#{r.status_code}] #{r.body}"
+    end
+    r = HTTP::Client.post "http://#{remote_ip}:3000/user"
+    unless r.status_code == 200 && r.body.empty?
+      STDERR.puts "Fail to POST on /user for #{target} : [#{r.status_code}] #{r.body}"
+    end
+  else
+    result = benchmark(remote_ip, threads, requests)
+    all.push(Ranked.new(result, target))
+  end
 
   puts_markdown "Done. <- #{target.name}"
-
-  all.push(Ranked.new(result, target))
 
   `docker stop #{cid}`
 end
 
-ranks = all.sort do |rank0, rank1|
-  rank0.res.ave <=> rank1.res.ave
-end
+unless check
+  ranks = all.sort do |rank0, rank1|
+    rank0.res.ave <=> rank1.res.ave
+  end
 
-# --- Ranking of frameworks
+  # --- Ranking of frameworks
 
-puts_markdown "", m_lines, true
-puts_markdown "### Ranking (Framework)", m_lines, true
-puts_markdown "", m_lines, true
+  puts_markdown "", m_lines, true
+  puts_markdown "### Ranking (Framework)", m_lines, true
+  puts_markdown "", m_lines, true
 
-rank = 1
+  rank = 1
 
-ranks.each do |ranked|
-  puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo}) (#{ranked.target.lang})", m_lines, true
-  rank += 1
-end
+  ranks.each do |ranked|
+    puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo}) (#{ranked.target.lang})", m_lines, true
+    rank += 1
+  end
 
-# --- Ranking of langages
+  # --- Ranking of langages
 
-puts_markdown "", m_lines, true
-puts_markdown "### Ranking (Language)", m_lines, true
-puts_markdown "", m_lines, true
+  puts_markdown "", m_lines, true
+  puts_markdown "### Ranking (Language)", m_lines, true
+  puts_markdown "", m_lines, true
 
-ranked_langs = [] of String
-rank = 1
+  ranked_langs = [] of String
+  rank = 1
 
-ranks.each do |ranked|
-  next if ranked_langs.includes?(ranked.target.lang)
-  puts_markdown "#{rank}. #{ranked.target.lang} ([#{ranked.target.name}](https://github.com/#{ranked.target.repo}))", m_lines, true
-  ranked_langs.push(ranked.target.lang)
-  rank += 1
-end
+  ranks.each do |ranked|
+    next if ranked_langs.includes?(ranked.target.lang)
+    puts_markdown "#{rank}. #{ranked.target.lang} ([#{ranked.target.name}](https://github.com/#{ranked.target.repo}))", m_lines, true
+    ranked_langs.push(ranked.target.lang)
+    rank += 1
+  end
 
-# --- Result of all frameworks
+  # --- Result of all frameworks
 
-puts_markdown "", m_lines, true
-puts_markdown "### All frameworks", m_lines, true
-puts_markdown "", m_lines, true
-puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Minimum", "Maximum", "Average"], m_lines, true
-puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", m_lines, true
+  puts_markdown "", m_lines, true
+  puts_markdown "### All frameworks", m_lines, true
+  puts_markdown "", m_lines, true
+  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Minimum", "Maximum", "Average"], m_lines, true
+  puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", m_lines, true
 
-all.each do |framework|
-  puts_markdown "| %-25s | %-25s | %15d | %15d | %15d |" % [framework.target.lang, framework.target.name, framework.res.min, framework.res.max, framework.res.ave], m_lines, true
-end
+  all.each do |framework|
+    puts_markdown "| %-25s | %-25s | %15d | %15d | %15d |" % [framework.target.lang, framework.target.name, framework.res.min, framework.res.max, framework.res.ave], m_lines, true
+  end
 
-if record
-  path = File.expand_path("../../../README.md", __FILE__)
-  tag_from = "<!-- Result from here -->"
-  tag_till = "<!-- Result till here -->"
-  m_lines.insert(0, tag_from)
-  m_lines.push(tag_till)
-  prev_readme = File.read(path)
-  next_readme = prev_readme.gsub(
-    /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
-    m_lines.join('\n'))
+  if record
+    path = File.expand_path("../../../README.md", __FILE__)
+    tag_from = "<!-- Result from here -->"
+    tag_till = "<!-- Result till here -->"
+    m_lines.insert(0, tag_from)
+    m_lines.push(tag_till)
+    prev_readme = File.read(path)
+    next_readme = prev_readme.gsub(
+      /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
+      m_lines.join('\n'))
 
-  File.write(path, next_readme)
+    File.write(path, next_readme)
+  end
 end
