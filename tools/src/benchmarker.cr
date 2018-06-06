@@ -134,9 +134,14 @@ def benchmark(host, threads, connections) : BenchResult
 
   `#{CLIENT} -h #{host} -t #{threads.to_i} -r #{connections.to_i}`
 
-  row = File.read("/tmp/which_is_the_fastest.out").split(',')
+  row = File.read("/tmp/which_is_the_fastest.out").split(",")
+  duration = row[0].to_i
+  average = row[1].to_i
+  maximum = row[2].to_i
+  minimum = row[3].to_i
+  requests = row[4].to_i
 
-  result = BenchResult.new(row[0].to_i, row[1].to_i, row[2].to_i)
+  result = BenchResult.new(minimum, maximum, average)
 
   sleep 5
 
@@ -225,11 +230,11 @@ end
 puts_markdown "", m_lines, true
 puts_markdown "### All frameworks", m_lines, true
 puts_markdown "", m_lines, true
-puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Minimum", "Maximu", "Average"], m_lines, true
+puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Minimum", "Maximum", "Average"], m_lines, true
 puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", m_lines, true
 
 all.each do |framework|
-  puts_markdown "| %-25s | %-25s | %15d | %15d | %15d" % [framework.target.lang, framework.target.name, framework.res.min, framework.res.max, framework.res.ave], m_lines, true
+  puts_markdown "| %-25s | %-25s | %15d | %15d | %15d |" % [framework.target.lang, framework.target.name, framework.res.min, framework.res.max, framework.res.ave], m_lines, true
 end
 
 if record
