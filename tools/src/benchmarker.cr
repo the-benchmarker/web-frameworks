@@ -4,7 +4,7 @@ require "option_parser"
 require "json"
 
 ####################
-## DEFAULT VALUES ##
+# # DEFAULT VALUES ##
 ####################
 
 threads = (System.cpu_count + 1).to_i
@@ -13,7 +13,7 @@ record = false
 check = false
 
 #################
-#### OPTIONS ####
+# ### OPTIONS ####
 #################
 
 OptionParser.parse! do |parser|
@@ -33,7 +33,7 @@ OptionParser.parse! do |parser|
 end
 
 ################
-## FRAMEWORKS ##
+# # FRAMEWORKS ##
 ################
 
 # Prefix of pathes for each executable
@@ -108,7 +108,7 @@ LANGS = [
   ]},
   {lang: "cpp", targets: [
     {name: "evhtp", repo: "criticalstack/libevhtp"},
-  ]}
+  ]},
 ]
 
 # struct for target
@@ -141,9 +141,9 @@ end
 class Latency
   JSON.mapping(
     average: String,
-      stdev: String,
-      max: String,
-      pmstdev: String,
+    stdev: String,
+    max: String,
+    pmstdev: String,
   )
 end
 
@@ -180,7 +180,6 @@ end
 # threads : number of thread to launch simultaneously
 # connections : number of opened connections per thread
 def benchmark(host, threads, connections) : Result
-
   errors = 0
   requests = 0
   throughput = 0
@@ -221,7 +220,7 @@ ranks = [] of Ranked
 targets.each do |target|
   cid = `docker run -td #{target.name}`.strip
 
-  sleep 10 # due to external program usage
+  sleep 20 # due to external program usage
 
   remote_ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
 
@@ -239,9 +238,8 @@ targets.each do |target|
       STDERR.puts "Fail to POST on /user for #{target} : [#{r.status_code}] #{r.body}"
     end
   else
-  
     result = benchmark(remote_ip, threads, requests)
-  
+
     all.push(Ranked.new(result, target))
   end
 
@@ -252,50 +250,50 @@ end
 
 unless check
   ranks = all.sort do |rank0, rank1|
-    rank0.res.request.per_second <=> rank1.res.request.per_second
+    rank1.res.request.per_second <=> rank0.res.request.per_second
   end
-  
+
   # --- Ranking of frameworks
-  
+
   puts_markdown "", m_lines, true
   puts_markdown "### Ranking (Framework)", m_lines, true
   puts_markdown "", m_lines, true
-  
+
   rank = 1
-  
+
   ranks.each do |ranked|
     puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo}) (#{ranked.target.lang})", m_lines, true
     rank += 1
   end
-  
+
   # --- Ranking of langages
-  
+
   puts_markdown "", m_lines, true
   puts_markdown "### Ranking (Language)", m_lines, true
   puts_markdown "", m_lines, true
-  
+
   ranked_langs = [] of String
   rank = 1
-  
+
   ranks.each do |ranked|
     next if ranked_langs.includes?(ranked.target.lang)
     puts_markdown "#{rank}. #{ranked.target.lang} ([#{ranked.target.name}](https://github.com/#{ranked.target.repo}))", m_lines, true
     ranked_langs.push(ranked.target.lang)
     rank += 1
   end
-  
+
   # --- Result of all frameworks
-  
+
   puts_markdown "", m_lines, true
   puts_markdown "### All frameworks", m_lines, true
   puts_markdown "", m_lines, true
   puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Errors", "Requests / s", "Throughput"], m_lines, true
   puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", m_lines, true
-  
+
   all.each do |framework|
     puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % [framework.target.lang, framework.target.name, framework.res.errors, framework.res.request.per_second, framework.res.throughput.per_second], m_lines, true
   end
-  
+
   if record
     path = File.expand_path("../../../README.md", __FILE__)
     tag_from = "<!-- Result from here -->"
@@ -306,7 +304,7 @@ unless check
     next_readme = prev_readme.gsub(
       /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
       m_lines.join('\n'))
-  
+
     File.write(path, next_readme)
   end
 end
