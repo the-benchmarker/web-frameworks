@@ -9,7 +9,7 @@ class Client
     @threads = 16
     @host = "localhost"
     @port = 3000
-    @duration = 3
+    @duration = 15
     @connections = 1000
 
     OptionParser.parse! do |parser|
@@ -18,7 +18,7 @@ class Client
         @threads = threads.to_i
       end
       parser.on("-c CONNECTIONS", "--requests=CONNECTIONS", "# of opened connections") do |connections|
-	@connections = connections.to_i
+        @connections = connections.to_i
       end
       parser.on("-h HOST", "--host=HOST", "IP / address of host to test") do |host|
         @host = host
@@ -30,59 +30,48 @@ class Client
   end
 
   def run
-    results = `wrk --threads #{@threads} --script #{PIPELINE} --connections #{@connections} --duration #{@duration}s --timeout 5 --latency http://#{@host}:#{@port}/`.strip.lines
-    # wrk display errors (only occurs on akkahttp)
-    if results.size > 13
-      request_line = 12
-      throughput_line = 13
-    else
-      request_line = 11
-      throughput_line = 12
-    end
-    latency = results[3].split
-    request = results[4].split
-    summary = results[10].split
-    errors = File.read("/tmp/which_is_the_fastest.out").strip
+    `wrk -H 'Connection: keep-alive' --latency -d #{@duration}s -s #{PIPELINE} -c #{@connections} --timeout 8 -t #{@threads} http://#{@host}:#{@port}/`
+
+    result = File.read("/tmp/which_is_the_fastest.out").split(",")
     File.delete("/tmp/which_is_the_fastest.out")
 
     data = JSON.build do |json|
       json.object do
-        json.field "errors", errors.to_i
-
-        json.field "latency" do
-          json.object do
-            json.field "average", latency[1]
-            json.field "stdev", latency[2]
-            json.field "max", latency[3]
-            json.field "pmstdev", latency[4]
-          end
-        end
+        json.field "duration", result[0].to_f
 
         json.field "request" do
           json.object do
-            json.field "average", request[1]
-            json.field "stdev", request[2]
-            json.field "max", request[3]
-            json.field "pmstdev", request[4]
-            json.field "total", summary.first.to_i
-            json.field "per_second", results[request_line].split(":").last.strip.to_f64
+            json.field "total", result[1].to_f
+            json.field "per_second", result[2].to_f
+            json.field "bytes", result[3].to_f
+          end
+        end
+
+        json.field "error" do
+          json.object do
+            json.field "socket", result[4].to_f
+            json.field "read", result[5].to_f
+            json.field "write", result[6].to_f
+            json.field "http", result[7].to_f
+            json.field "timeout", result[8].to_f
+          end
+        end
+
+        json.field "latency" do
+          json.object do
+            json.field "minimum", result[9].to_f
+            json.field "maximum", result[10].to_f
+            json.field "average", result[11].to_f
+            json.field "deviation", result[12].to_f
           end
         end
 
         json.field "percentile" do
           json.object do
-            json.field "fifty", results[6].split.last
-            json.field "seventy_five", results[7].split.last
-            json.field "ninety", results[8].split.last
-            json.field "ninety_nine", results[9].split.last
-          end
-        end
-
-        json.field "throughput" do
-          json.object do
-            json.field "total", summary[4]
-            json.field "duration", summary[3]
-            json.field "per_second", results[throughput_line].split(":").last.strip
+            json.field "fifty", result[13].to_f
+            json.field "ninety", result[14].to_f
+            json.field "ninety_nine", result[15].to_f
+            json.field "ninety_nine_ninety", result[16].to_f
           end
         end
       end

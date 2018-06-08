@@ -130,48 +130,47 @@ end
 
 class Result
   JSON.mapping(
-    errors: Int32,
-    latency: {type: Latency, nilable: false},
+    duration: Float64,
     request: {type: Request, nilable: false},
+    error: {type: Error, nilable: false},
+    latency: {type: Latency, nilable: false},
     percentile: {type: Percentile, nilable: false},
-    throughput: {type: Throughput, nilable: false}
-  )
-end
-
-class Latency
-  JSON.mapping(
-    average: String,
-    stdev: String,
-    max: String,
-    pmstdev: String,
   )
 end
 
 class Request
   JSON.mapping(
-    average: String,
-    stdev: String,
-    max: String,
-    pmstdev: String,
-    total: Int32,
+    total: Float64,
+    bytes: Float64,
     per_second: Float64
+  )
+end
+
+class Error
+  JSON.mapping(
+    socket: Float64,
+    read: Float64,
+    write: Float64,
+    http: Float64,
+    timeout: Float64
+  )
+end
+
+class Latency
+  JSON.mapping(
+    maximum: Float64,
+    minimum: Float64,
+    average: Float64,
+    deviation: Float64
   )
 end
 
 class Percentile
   JSON.mapping(
-    fifty: String,
-    seventy_five: String,
-    ninety: String,
-    ninety_nine: String
-  )
-end
-
-class Throughput
-  JSON.mapping(
-    total: String,
-    duration: String,
-    per_second: String
+    fifty: Float64,
+    ninety: Float64,
+    ninety_nine: Float64,
+    ninety_nine_ninety: Float64
   )
 end
 
@@ -180,10 +179,6 @@ end
 # threads : number of thread to launch simultaneously
 # connections : number of opened connections per thread
 def benchmark(host, threads, connections) : Result
-  errors = 0
-  requests = 0
-  throughput = 0
-
   raw = `#{CLIENT} --threads #{threads} --host #{host} --port 3000`
   Result.from_json(raw)
 end
@@ -287,11 +282,12 @@ unless check
   puts_markdown "", m_lines, true
   puts_markdown "### All frameworks", m_lines, true
   puts_markdown "", m_lines, true
-  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Errors", "Requests / s", "Throughput"], m_lines, true
-  puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", m_lines, true
+
+  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Latency", "99 percentile", "Throughput"], m_lines, true
+  puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|------------|", m_lines, true
 
   all.each do |framework|
-    puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % [framework.target.lang, framework.target.name, framework.res.errors, framework.res.request.per_second, framework.res.throughput.per_second], m_lines, true
+    puts_markdown "| %-25s | %-25s | %.2f | %.2f | %.2f | %.2f |" % [framework.target.lang, framework.target.name, framework.res.request.per_second, framework.res.latency.average, framework.res.request.per_second, framework.res.request.bytes], m_lines, true
   end
 
   if record
