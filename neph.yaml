@@ -12,6 +12,7 @@ main:
     - cpp
     - scala
     - csharp
+    - java
 
 crystal:
   depends_on:
@@ -86,6 +87,10 @@ scala:
 csharp:
   depends_on:
     - aspnetcore
+
+java:
+  depends_on:
+    - act
 
 router.cr:
   command: docker build -t router.cr .
@@ -238,3 +243,7 @@ akkahttp:
 aspnetcore:
   command: docker build -t aspnetcore .
   dir: csharp/aspnetcore
+
+act:
+  command: docker build -t act .
+  dir: java/act

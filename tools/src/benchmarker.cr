@@ -111,13 +111,10 @@ LANGS = [
   ]}
 ]
 
-# struct for benchmark result
-record BenchResult, min : Int32, max : Int32, ave : Int32
-
 # struct for target
 record Target, lang : String, name : String, repo : String
 
-record Ranked, res : BenchResult, target : Target
+record Ranked, res : Result, target : Target
 
 def frameworks : Array(Target)
   targets = [] of Target
@@ -131,26 +128,65 @@ def frameworks : Array(Target)
   targets
 end
 
+class Result
+  JSON.mapping(
+    errors: Int32,
+    latency: {type: Latency, nilable: false},
+    request: {type: Request, nilable: false},
+    percentile: {type: Percentile, nilable: false},
+    throughput: {type: Throughput, nilable: false}
+  )
+end
+
+class Latency
+  JSON.mapping(
+    average: String,
+      stdev: String,
+      max: String,
+      pmstdev: String,
+  )
+end
+
+class Request
+  JSON.mapping(
+    average: String,
+    stdev: String,
+    max: String,
+    pmstdev: String,
+    total: Int32,
+    per_second: Float64
+  )
+end
+
+class Percentile
+  JSON.mapping(
+    fifty: String,
+    seventy_five: String,
+    ninety: String,
+    ninety_nine: String
+  )
+end
+
+class Throughput
+  JSON.mapping(
+    total: String,
+    duration: String,
+    per_second: String
+  )
+end
+
 # Benchmark
 # server : server context
 # threads : number of thread to launch simultaneously
 # connections : number of opened connections per thread
-def benchmark(host, threads, connections) : BenchResult
+def benchmark(host, threads, connections) : Result
 
-  `#{CLIENT} -h #{host} -t #{threads.to_i} -r #{connections.to_i}`
+  errors = 0
+  requests = 0
+  throughput = 0
 
-  row = File.read("/tmp/which_is_the_fastest.out").split(",")
-  duration = row[0].to_i
-  average = row[1].to_i
-  maximum = row[2].to_i
-  minimum = row[3].to_i
-  requests = row[4].to_i
-
-  result = BenchResult.new(minimum, maximum, average)
-
-  sleep 5
-
-  result
+  raw = `#{CLIENT} --threads #{threads} --host #{host} --port 3000`
+  Result.from_json(raw)
 end
 
 m_lines = [] of String
@@ -186,6 +222,7 @@ targets.each do |target|
   cid = `docker run -td #{target.name}`.strip
 
   sleep 10 # due to external program usage
+
   remote_ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
 
   if check
@@ -202,7 +239,9 @@ targets.each do |target|
       STDERR.puts "Fail to POST on /user for #{target} : [#{r.status_code}] #{r.body}"
     end
   else
+  
     result = benchmark(remote_ip, threads, requests)
+  
     all.push(Ranked.new(result, target))
   end
 
@@ -213,50 +252,50 @@ end
 
 unless check
   ranks = all.sort do |rank0, rank1|
-    rank0.res.ave <=> rank1.res.ave
+    rank0.res.request.per_second <=> rank1.res.request.per_second
   end
-
+  
   # --- Ranking of frameworks
-
+  
   puts_markdown "", m_lines, true
   puts_markdown "### Ranking (Framework)", m_lines, true
   puts_markdown "", m_lines, true
-
+  
   rank = 1
-
+  
   ranks.each do |ranked|
     puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo}) (#{ranked.target.lang})", m_lines, true
     rank += 1
   end
-
+  
   # --- Ranking of langages
-
+  
   puts_markdown "", m_lines, true
   puts_markdown "### Ranking (Language)", m_lines, true
   puts_markdown "", m_lines, true
-
+  
   ranked_langs = [] of String
   rank = 1
-
+  
   ranks.each do |ranked|
     next if ranked_langs.includes?(ranked.target.lang)
     puts_markdown "#{rank}. #{ranked.target.lang} ([#{ranked.target.name}](https://github.com/#{ranked.target.repo}))", m_lines, true
     ranked_langs.push(ranked.target.lang)
     rank += 1
   end
-
+  
   # --- Result of all frameworks
-
+  
   puts_markdown "", m_lines, true
   puts_markdown "### All frameworks", m_lines, true
   puts_markdown "", m_lines, true
-  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Minimum", "Maximum", "Average"], m_lines, true
+  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Errors", "Requests / s", "Throughput"], m_lines, true
   puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", m_lines, true
-
+  
   all.each do |framework|
-    puts_markdown "| %-25s | %-25s | %15d | %15d | %15d |" % [framework.target.lang, framework.target.name, framework.res.min, framework.res.max, framework.res.ave], m_lines, true
+    puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % [framework.target.lang, framework.target.name, framework.res.errors, framework.res.request.per_second, framework.res.throughput.per_second], m_lines, true
   end
-
+  
   if record
     path = File.expand_path("../../../README.md", __FILE__)
     tag_from = "<!-- Result from here -->"
@@ -267,7 +306,7 @@ unless check
     next_readme = prev_readme.gsub(
       /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
       m_lines.join('\n'))
-
+  
     File.write(path, next_readme)
   end
 end
