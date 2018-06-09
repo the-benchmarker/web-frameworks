@@ -1,4 +1,4 @@
-all: elixir node ruby crystal go rust swift python nim csharp scala java
+all: elixir node ruby crystal go rust swift python nim csharp scala java cpp
 
 # --- Elixir ---
 elixir: plug phoenix
@@ -127,7 +127,7 @@ rocket:
 
 # Actix
 actix-web:
-	docker build -t actix rust/actix-web
+	docker build -t actix-web rust/actix-web
 
 # --- Swift ---
 swift: vapor perfect kitura
@@ -198,6 +198,12 @@ java: act
 # Act
 act:
 	docker build -t act java/act
+
+# --- cpp ---
+cpp: evhtp
+
+evhtp:
+	docker build -t evhtp cpp/evhtp
 
 # Cleaning all executables
 clean:
