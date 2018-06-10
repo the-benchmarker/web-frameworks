@@ -305,10 +305,10 @@ unless check
   puts_markdown "", m_lines, true
 
   puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Latency", "99 percentile", "Throughput"], m_lines, true
-  puts_markdown "|---------------------------|---------------------------|----------------:|:----------------:|----------------:|-----------:|", m_lines, true
+  puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|-----------:|", m_lines, true
 
   all.each do |framework|
-    puts_markdown "| %-25s | %-25s | %.2f | %.2f | %.2f | %.2f |" % [framework.target.lang, framework.target.name, framework.res.request, framework.res.latency, framework.res.percentile, framework.res.throughput], m_lines, true
+    puts_markdown "| %-25s | %-25s | %.2f | %.2f | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, framework.res.request, framework.res.latency, framework.res.percentile, (framework.res.throughput/1000000)], m_lines, true
   end
 
   if record
