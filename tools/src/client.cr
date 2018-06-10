@@ -2,14 +2,15 @@ require "json"
 require "http/client"
 require "option_parser"
 
-PIPELINE = File.expand_path("../../" + "pipeline.lua", __FILE__)
+PIPELINE_GET  = File.expand_path("../../" + "pipeline.lua", __FILE__)
+PIPELINE_POST = File.expand_path("../../" + "pipeline_post.lua", __FILE__)
 
 class Client
   def initialize
     @threads = 16
-    @host = "localhost"
-    @port = 3000
     @duration = 15
+    @url = ""
+    @method = "GET"
     @connections = 1000
 
     OptionParser.parse! do |parser|
@@ -20,17 +21,21 @@ class Client
       parser.on("-c CONNECTIONS", "--requests=CONNECTIONS", "# of opened connections") do |connections|
         @connections = connections.to_i
       end
-      parser.on("-h HOST", "--host=HOST", "IP / address of host to test") do |host|
-        @host = host
+      parser.on("-u URL", "--url=URL", "URL to call") do |url|
+        @url = url
       end
-      parser.on("-p PORT", "--port=PORT", "Port to test") do |port|
-        @port = port.to_i
+      parser.on("-m METHOD", "--method=METHOD", "HTTP method to use") do |method|
+        @method = method
       end
     end
   end
 
   def run
-    `wrk -H 'Connection: keep-alive' --latency -d #{@duration}s -s #{PIPELINE} -c #{@connections} --timeout 8 -t #{@threads} http://#{@host}:#{@port}/`
+    if @method == "POST"
+      `wrk -H 'Connection: keep-alive' --latency -d #{@duration}s -s #{PIPELINE_POST} -c #{@connections} --timeout 8 -t #{@threads} #{@url}`
+    else
+      `wrk -H 'Connection: keep-alive' --latency -d #{@duration}s -s #{PIPELINE_GET} -c #{@connections} --timeout 8 -t #{@threads} #{@url}`
+    end
 
     result = File.read("/tmp/which_is_the_fastest.out").split(",")
     File.delete("/tmp/which_is_the_fastest.out")

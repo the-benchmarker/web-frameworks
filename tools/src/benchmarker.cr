@@ -13,7 +13,7 @@ record = false
 check = false
 
 #################
-# ### OPTIONS ####
+# ### OPTIONS ###
 #################
 
 OptionParser.parse! do |parser|
@@ -32,9 +32,9 @@ OptionParser.parse! do |parser|
   end
 end
 
-################
-# # FRAMEWORKS ##
-################
+##################
+# ## FRAMEWORKS ##
+##################
 
 # Prefix of pathes for each executable
 PATH_PREFIX = "../../../bin/"
@@ -111,10 +111,11 @@ LANGS = [
   ]},
 ]
 
-# struct for target
 record Target, lang : String, name : String, repo : String
 
-record Ranked, res : Result, target : Target
+record BenchResult, request : Float64, latency : Float64, percentile : Float64, throughput : Float64
+
+record Ranked, res : BenchResult, target : Target
 
 def frameworks : Array(Target)
   targets = [] of Target
@@ -178,9 +179,29 @@ end
 # server : server context
 # threads : number of thread to launch simultaneously
 # connections : number of opened connections per thread
-def benchmark(host, threads, connections) : Result
-  raw = `#{CLIENT} --threads #{threads} --host #{host} --port 3000`
-  Result.from_json(raw)
+def benchmark(host, threads, connections) : BenchResult
+  request = 0.0
+  latency = 0.0
+  percentile = 0.0
+  throughput = 0.0
+  ["/", "/user/0"].each do |route|
+    raw = `#{CLIENT} --threads #{threads} --url http://#{host}:3000#{route}`
+    result = Result.from_json(raw)
+    request = request + result.request.per_second
+    latency = latency + result.latency.average
+    percentile = percentile + result.percentile.ninety_nine
+    throughput = request + result.request.bytes
+  end
+  ["/user"].each do |route|
+    raw = `#{CLIENT} --threads #{threads} --method "POST" --url http://#{host}:3000#{route}`
+    result = Result.from_json(raw)
+    request = request + result.request.per_second
+    latency = latency + result.latency.average
+    percentile = percentile + result.percentile.ninety_nine
+    throughput = request + result.request.bytes
+  end
+
+  BenchResult.new((request/3), (latency/3), (percentile/3), (throughput/3))
 end
 
 m_lines = [] of String
@@ -245,7 +266,7 @@ end
 
 unless check
   ranks = all.sort do |rank0, rank1|
-    rank1.res.request.per_second <=> rank0.res.request.per_second
+    rank1.res.request <=> rank0.res.request
   end
 
   # --- Ranking of frameworks
@@ -284,10 +305,10 @@ unless check
   puts_markdown "", m_lines, true
 
   puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Latency", "99 percentile", "Throughput"], m_lines, true
-  puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|------------|", m_lines, true
+  puts_markdown "|---------------------------|---------------------------|----------------:|:----------------:|----------------:|-----------:|", m_lines, true
 
   all.each do |framework|
-    puts_markdown "| %-25s | %-25s | %.2f | %.2f | %.2f | %.2f |" % [framework.target.lang, framework.target.name, framework.res.request.per_second, framework.res.latency.average, framework.res.request.per_second, framework.res.request.bytes], m_lines, true
+    puts_markdown "| %-25s | %-25s | %.2f | %.2f | %.2f | %.2f |" % [framework.target.lang, framework.target.name, framework.res.request, framework.res.latency, framework.res.percentile, framework.res.throughput], m_lines, true
   end
 
   if record
