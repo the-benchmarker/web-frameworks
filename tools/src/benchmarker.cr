@@ -1,17 +1,19 @@
+require "http/client"
 require "benchmark"
 require "option_parser"
 require "json"
 
 ####################
-## DEFAULT VALUES ##
+# # DEFAULT VALUES ##
 ####################
 
 threads = (System.cpu_count + 1).to_i
 requests = 100_000.0
 record = false
+check = false
 
 #################
-#### OPTIONS ####
+# ### OPTIONS ###
 #################
 
 OptionParser.parse! do |parser|
@@ -25,11 +27,14 @@ OptionParser.parse! do |parser|
   parser.on("--record", "Record results in README.md") do
     record = true
   end
+  parser.on("--check", "Check mode (without result, typically run on CI)") do
+    check = true
+  end
 end
 
-################
-## FRAMEWORKS ##
-################
+##################
+# ## FRAMEWORKS ##
+##################
 
 # Prefix of pathes for each executable
 PATH_PREFIX = "../../../bin/"
@@ -103,14 +108,12 @@ LANGS = [
   ]},
   {lang: "cpp", targets: [
     {name: "evhtp", repo: "criticalstack/libevhtp"},
-  ]}
+  ]},
 ]
 
-# struct for benchmark result
-record BenchResult, max : Float64, min : Float64, ave : Float64, total : Float64
-
-# struct for target
 record Target, lang : String, name : String, repo : String
+
+record BenchResult, request : Float64, latency : Float64, percentile : Float64, throughput : Float64
 
 record Ranked, res : BenchResult, target : Target
 
@@ -126,42 +129,79 @@ def frameworks : Array(Target)
   targets
 end
 
-# Benchmark
-# server : server context
-# count  : number of samples
-# threads : number of thread to launch simultaneously
-# requests : numbers of request per thread
-def benchmark(host, count, threads, requests) : BenchResult
-  max : Float64 = -1.0
-  min : Float64 = 100_000.0
-  ave : Float64 = 0.0
-  total : Float64 = 0.0
-
-  count.times do |i|
-    span = client(host, threads, requests)
-    max = span if span > max
-    min = span if span < min
-    total += span
-  end
-
-  ave = total/count.to_f
-
-  result = BenchResult.new(max, min, ave, total)
-
-  sleep 5
-
-  result
+class Result
+  JSON.mapping(
+    duration: Float64,
+    request: {type: Request, nilable: false},
+    error: {type: Error, nilable: false},
+    latency: {type: Latency, nilable: false},
+    percentile: {type: Percentile, nilable: false},
+  )
 end
 
-# Running client and returning span
-# host: Hostname, or IP address, to target
+class Request
+  JSON.mapping(
+    total: Float64,
+    bytes: Float64,
+    per_second: Float64
+  )
+end
+
+class Error
+  JSON.mapping(
+    socket: Float64,
+    read: Float64,
+    write: Float64,
+    http: Float64,
+    timeout: Float64
+  )
+end
+
+class Latency
+  JSON.mapping(
+    maximum: Float64,
+    minimum: Float64,
+    average: Float64,
+    deviation: Float64
+  )
+end
+
+class Percentile
+  JSON.mapping(
+    fifty: Float64,
+    ninety: Float64,
+    ninety_nine: Float64,
+    ninety_nine_ninety: Float64
+  )
+end
+
+# Benchmark
+# server : server context
 # threads : number of thread to launch simultaneously
-# requests : numbers of request per thread
-def client(host, threads, requests)
-  s = Time.now
-  `#{CLIENT} -h #{host} -t #{threads.to_i} -r #{requests.to_i}`
-  e = Time.now
-  (e - s).to_f
+# connections : number of opened connections per thread
+def benchmark(host, threads, connections) : BenchResult
+  request = 0.0
+  latency = 0.0
+  percentile = 0.0
+  throughput = 0.0
+  ["/", "/user/0"].each do |route|
+    raw = `#{CLIENT} --threads #{threads} --url http://#{host}:3000#{route}`
+    result = Result.from_json(raw)
+    request = request + result.request.per_second
+    latency = latency + result.latency.average
+    percentile = percentile + result.percentile.ninety_nine
+    throughput = request + result.request.bytes
+  end
+  ["/user"].each do |route|
+    raw = `#{CLIENT} --threads #{threads} --method "POST" --url http://#{host}:3000#{route}`
+    result = Result.from_json(raw)
+    request = request + result.request.per_second
+    latency = latency + result.latency.average
+    percentile = percentile + result.percentile.ninety_nine
+    throughput = request + result.request.bytes
+  end
+
+  BenchResult.new((request/3), (latency/3), (percentile/3), (throughput/3))
 end
 
 m_lines = [] of String
@@ -194,74 +234,94 @@ all = [] of Ranked
 ranks = [] of Ranked
 
 targets.each do |target|
-  cid = `docker run -p 3000:3000 -td #{target.name}`.strip
+  cid = `docker run -td #{target.name}`.strip
 
-  sleep 10 # due to external program usage
+  sleep 20 # due to external program usage
 
-  result = benchmark("localhost", 5, threads, requests)
+  remote_ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
+
+  if check
+    r = HTTP::Client.get "http://#{remote_ip}:3000/"
+    unless r.status_code == 200 && r.body.empty?
+      STDERR.puts "Fail to GET on / for #{target} : [#{r.status_code}] #{r.body}"
+    end
+    r = HTTP::Client.get "http://#{remote_ip}:3000/user/0"
+    unless r.status_code == 200 && r.body.lines.first == "0"
+      STDERR.puts "Fail to GET on /user/0 for #{target} : [#{r.status_code}] #{r.body}"
+    end
+    r = HTTP::Client.post "http://#{remote_ip}:3000/user"
+    unless r.status_code == 200 && r.body.empty?
+      STDERR.puts "Fail to POST on /user for #{target} : [#{r.status_code}] #{r.body}"
+    end
+  else
+    result = benchmark(remote_ip, threads, requests)
+
+    all.push(Ranked.new(result, target))
+  end
 
   puts_markdown "Done. <- #{target.name}"
-
-  all.push(Ranked.new(result, target))
 
   `docker stop #{cid}`
 end
 
-ranks = all.sort do |rank0, rank1|
-  rank0.res.ave <=> rank1.res.ave
-end
+unless check
+  ranks = all.sort do |rank0, rank1|
+    rank1.res.request <=> rank0.res.request
+  end
 
-# --- Ranking of frameworks
+  # --- Ranking of frameworks
 
-puts_markdown "", m_lines, true
-puts_markdown "### Ranking (Framework)", m_lines, true
-puts_markdown "", m_lines, true
+  puts_markdown "", m_lines, true
+  puts_markdown "### Ranking (Framework)", m_lines, true
+  puts_markdown "", m_lines, true
 
-rank = 1
+  rank = 1
 
-ranks.each do |ranked|
-  puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo}) (#{ranked.target.lang})", m_lines, true
-  rank += 1
-end
+  ranks.each do |ranked|
+    puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo}) (#{ranked.target.lang})", m_lines, true
+    rank += 1
+  end
 
-# --- Ranking of langages
+  # --- Ranking of langages
 
-puts_markdown "", m_lines, true
-puts_markdown "### Ranking (Language)", m_lines, true
-puts_markdown "", m_lines, true
+  puts_markdown "", m_lines, true
+  puts_markdown "### Ranking (Language)", m_lines, true
+  puts_markdown "", m_lines, true
 
-ranked_langs = [] of String
-rank = 1
+  ranked_langs = [] of String
+  rank = 1
 
-ranks.each do |ranked|
-  next if ranked_langs.includes?(ranked.target.lang)
-  puts_markdown "#{rank}. #{ranked.target.lang} ([#{ranked.target.name}](https://github.com/#{ranked.target.repo}))", m_lines, true
-  ranked_langs.push(ranked.target.lang)
-  rank += 1
-end
+  ranks.each do |ranked|
+    next if ranked_langs.includes?(ranked.target.lang)
+    puts_markdown "#{rank}. #{ranked.target.lang} ([#{ranked.target.name}](https://github.com/#{ranked.target.repo}))", m_lines, true
+    ranked_langs.push(ranked.target.lang)
+    rank += 1
+  end
 
-# --- Result of all frameworks
+  # --- Result of all frameworks
 
-puts_markdown "", m_lines, true
-puts_markdown "### All frameworks", m_lines, true
-puts_markdown "", m_lines, true
-puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Max [sec]", "Min [sec]", "Ave [sec]"], m_lines, true
-puts_markdown "|---------------------------|---------------------------|-----------------|-----------------|-----------------|", m_lines, true
+  puts_markdown "", m_lines, true
+  puts_markdown "### All frameworks", m_lines, true
+  puts_markdown "", m_lines, true
 
-all.each do |framework|
-  puts_markdown "| %-25s | %-25s | %15f | %15f | %15f |" % [framework.target.lang, framework.target.name, framework.res.max, framework.res.min, framework.res.ave], m_lines, true
-end
+  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Latency", "99 percentile", "Throughput"], m_lines, true
+  puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|-----------:|", m_lines, true
 
-if record
-  path = File.expand_path("../../../README.md", __FILE__)
-  tag_from = "<!-- Result from here -->"
-  tag_till = "<!-- Result till here -->"
-  m_lines.insert(0, tag_from)
-  m_lines.push(tag_till)
-  prev_readme = File.read(path)
-  next_readme = prev_readme.gsub(
-    /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
-    m_lines.join('\n'))
+  all.each do |framework|
+    puts_markdown "| %-25s | %-25s | %.2f | %.2f | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, framework.res.request, framework.res.latency, framework.res.percentile, (framework.res.throughput/1000000)], m_lines, true
+  end
 
-  File.write(path, next_readme)
+  if record
+    path = File.expand_path("../../../README.md", __FILE__)
+    tag_from = "<!-- Result from here -->"
+    tag_till = "<!-- Result till here -->"
+    m_lines.insert(0, tag_from)
+    m_lines.push(tag_till)
+    prev_readme = File.read(path)
+    next_readme = prev_readme.gsub(
+      /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
+      m_lines.join('\n'))
+
+    File.write(path, next_readme)
+  end
 end

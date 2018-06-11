@@ -1,7 +1,4 @@
-FROM gcc
-
-RUN apt-get -qq update
-RUN apt-get -qy install cmake
+FROM rikorose/gcc-cmake
 
 WORKDIR /usr/src/app
 COPY . .

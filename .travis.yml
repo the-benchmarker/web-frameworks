@@ -27,4 +27,4 @@ script:
   - yamllint neph.yaml
   - yamllint .travis.yml
   - make ${TESTLANG}
-  - bin/benchmarker ${TESTLANG} -r 1
+  - bin/benchmarker ${TESTLANG} --check
