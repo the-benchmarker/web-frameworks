@@ -70,6 +70,7 @@ node:
     - express
     - fastify
     - polka
+    - rayo
 
 elixir:
   depends_on:
@@ -223,6 +224,10 @@ fastify:
 polka:
   command: docker build -t polka .
   dir: node/polka
+
+rayo:
+  command: docker build -t rayo .
+  dir: node/rayo
 
 plug:
   command: docker build -t plug .
