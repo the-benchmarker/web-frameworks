@@ -110,6 +110,9 @@ LANGS = [
   {lang: "cpp", targets: [
     {name: "evhtp", repo: "criticalstack/libevhtp"},
   ]},
+  {lang: "php", targets: [
+    {name: "symfony", repo: "symfony/symfony"},
+  ]}
 ]
 
 record Target, lang : String, name : String, repo : String

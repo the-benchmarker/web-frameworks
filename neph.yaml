@@ -13,6 +13,7 @@ main:
     - scala
     - csharp
     - java
+    - php
 
 crystal:
   dependencies:
@@ -92,6 +93,10 @@ csharp:
 java:
   dependencies:
     - act
+
+php:
+  dependencies:
+    - symfony
 
 router.cr:
   commands:
@@ -292,3 +297,8 @@ act:
   commands:
     - docker build -t act .
   directory: java/act
+
+symfony:
+  commands:
+    - docker build -t symfony
+  directory: php/symfony
