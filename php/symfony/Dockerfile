@@ -32,7 +32,7 @@ RUN echo 'server {\n\
     }\n\
 }\n'\
 >> /etc/nginx/conf.d/www.conf
-stat
+
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 EXPOSE 3000
