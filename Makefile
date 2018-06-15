@@ -1,4 +1,4 @@
-all: elixir node ruby crystal go rust swift python nim csharp scala java cpp
+all: elixir node ruby crystal go rust swift python nim csharp scala java cpp php haskell
 
 # --- Elixir ---
 elixir: plug phoenix
@@ -217,6 +217,12 @@ symfony:
 
 laravel:
 	docker build -t laravel php/laravel
+
+# --- Haskell ---
+haskell: wai
+
+wai:
+	docker build -t wai haskell/wai
 
 # Cleaning all executables
 clean:
