@@ -1,7 +1,6 @@
 services: docker
+
 language: crystal
-before_install: pip install yamllint --user
-install: shards build --release
 
 env:
   matrix:
@@ -20,11 +19,6 @@ env:
     - "TESTLANG=java"
 
 script:
-  - crystal spec
-  - bin/ameba tools
-  - bin/ameba crystal/*
-  - yamllint shard.yml
-  - yamllint neph.yaml
-  - yamllint .travis.yml
+  - shards build
   - make ${TESTLANG}
   - bin/benchmarker ${TESTLANG} --check
