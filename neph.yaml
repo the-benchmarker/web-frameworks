@@ -14,6 +14,7 @@ main:
     - csharp
     - java
     - php
+    - haskell
 
 crystal:
   dependencies:
@@ -21,6 +22,7 @@ crystal:
     - amber
     - kemal
     - lucky
+    - amber
     - spider-gazelle
 
 ruby:
@@ -100,6 +102,11 @@ php:
   dependencies:
     - symfony
     - laravel
+
+haskell:
+  depends_on:
+    - wai
+
 
 router.cr:
   commands:
@@ -315,6 +322,11 @@ act:
   commands:
     - docker build -t act .
   directory: java/act
+
+wai:
+  commands:
+    - docker build -t wai .
+  directory: haskell/wai
 
 symfony:
   commands:
