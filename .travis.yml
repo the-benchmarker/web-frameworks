@@ -17,7 +17,7 @@ env:
     - "TESTLANG=scala"
     - "TESTLANG=csharp"
     - "TESTLANG=java"
-    - "TESTLANG=php"
+    - "TESTLANG=haskell"
 
 script:
   - shards build
