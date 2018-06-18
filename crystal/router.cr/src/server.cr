@@ -24,7 +24,8 @@ struct Server
   end
 
   def run
-    server = HTTP::Server.new("0.0.0.0", 3000, route_handler)
+    server = HTTP::Server.new(route_handler)
+    server.bind_tcp("0.0.0.0", 3000, true)
     server.listen
   end
 
