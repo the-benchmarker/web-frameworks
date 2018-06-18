@@ -1,7 +1,10 @@
 FROM haskell
 
 WORKDIR /usr/src/app
-COPY . .
+
+COPY Main.hs .
+COPY Setup.hs .
+COPY wai-app.cabal .
 
 RUN cabal update
 RUN cabal new-configure -O2
