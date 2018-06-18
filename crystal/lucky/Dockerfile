@@ -13,6 +13,7 @@ COPY static static
 COPY tasks tasks
 
 RUN echo '{}'  > public/manifest.json
+RUN echo '{}'  > public/mix-manifest.json
 
 RUN shards build --release --no-debug
 
