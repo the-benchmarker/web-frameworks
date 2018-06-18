@@ -11,7 +11,7 @@ COPY config config
 COPY public public
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install
+RUN composer install --no-dev --prefer-dist --classmap-authoritative
 
 RUN sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /usr/local/etc/php-fpm.d/www.conf
 
