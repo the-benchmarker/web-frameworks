@@ -199,6 +199,12 @@ cpp: evhtp
 evhtp:
 	docker build -t evhtp cpp/evhtp
 
+# --- php ---
+php: symfony
+
+symfony:
+	docker build -t symfony php/symfony
+
 # Cleaning all executables
 clean:
 	rm -rf bin/*

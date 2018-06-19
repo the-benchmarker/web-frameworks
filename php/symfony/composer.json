@@ -1,0 +1,35 @@
+{
+    "require": {
+        "sensio/framework-extra-bundle": "5.1.6",
+        "symfony/yaml": "4.1.0",
+	"symfony/console": "4.1.0"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "replace": {
+        "symfony/polyfill-php71": "*"
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "id": "01C8YV570PPBHY778SBRPH28J4",
+            "allow-contrib": false
+        }
+    }
+}
