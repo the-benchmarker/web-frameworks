@@ -11,7 +11,7 @@ class User::Show < ApiAction
 end
 
 class User::Create < ApiAction
-  action do
+  def call
     head 200
   end
 end
