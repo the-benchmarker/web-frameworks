@@ -7,28 +7,43 @@ RUN docker-php-ext-install zip
 
 WORKDIR /usr/src/app
 
+COPY app app
+COPY bootstrap/app.php bootstrap/app.php
 COPY composer.json .
-COPY src src
+COPY routes routes
 COPY config config
-COPY public public
-COPY bin bin
+COPY public/index.php public/index.php
+COPY artisan artisan
+
+ENV APP_ENV production
+ENV APP_DEBUG false
+ENV APP_KEY base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev --prefer-dist --classmap-authoritative
+RUN composer dumpautoload -o
+
+RUN mkdir bootstrap/cache && chown www-data bootstrap/cache
+RUN mkdir storage/framework/sessions -p && chown www-data storage/framework/sessions
+RUN mkdir storage/framework/views -p && chown www-data storage/framework/views
+RUN mkdir storage/framework/cache -p && chown www-data storage/framework/cache
+
+RUN php artisan cache:clear
+RUN php artisan config:clear
+RUN php artisan view:clear
 
 RUN sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i 's/\(listen =\).*/\1 \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i 's/\(listen =\).*/\1 \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i 's/\;\(listen\.owner.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i 's/\;\(listen\.group.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
 
+
 RUN rm -fr /etc/nginx/sites-enabled/default
 RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 
-ENV APP_ENV prod
 
-RUN mkdir -p var/cache && chown www-data var/cache
-RUN php bin/console cache:warmup
 
 RUN echo 'server {\n\
     root /usr/src/app/public;\n\

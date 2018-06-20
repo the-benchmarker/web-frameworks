@@ -18,10 +18,8 @@ main:
 crystal:
   dependencies:
     - router.cr
-    - raze
     - kemal
     - lucky
-    - amber
     - spider-gazelle
 
 ruby:
@@ -97,6 +95,7 @@ java:
 php:
   dependencies:
     - symfony
+    - laravel
 
 router.cr:
   commands:
@@ -300,5 +299,10 @@ act:
 
 symfony:
   commands:
-    - docker build -t symfony
+    - docker build -t symfony .
   directory: php/symfony
+
+laravel:
+  commands:
+    - docker build -t laravel .
+  directory: php/laravel

@@ -54,9 +54,7 @@ LANGS = [
   {lang: "crystal", targets: [
     {name: "kemal", repo: "kemalcr/kemal"},
     {name: "router.cr", repo: "tbrand/router.cr"},
-    {name: "raze", repo: "samueleaton/raze"},
     {name: "lucky", repo: "luckyframework/lucky"},
-    {name: "amber", repo: "amberframework/amber"},
     {name: "spider-gazelle", repo: "spider-gazelle/spider-gazelle"},
   ]},
   {lang: "go", targets: [
@@ -112,6 +110,7 @@ LANGS = [
   ]},
   {lang: "php", targets: [
     {name: "symfony", repo: "symfony/symfony"},
+    {name: "laravel", repo: "laravel/framework"},
   ]}
 ]
 

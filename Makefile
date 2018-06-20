@@ -200,10 +200,13 @@ evhtp:
 	docker build -t evhtp cpp/evhtp
 
 # --- php ---
-php: symfony
+php: symfony laravel
 
 symfony:
 	docker build -t symfony php/symfony
+
+laravel:
+	docker build -t laravel php/laravel
 
 # Cleaning all executables
 clean:
