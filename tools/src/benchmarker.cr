@@ -112,6 +112,7 @@ LANGS = [
   ]},
   {lang: "php", targets: [
     {name: "symfony", repo: "symfony/symfony"},
+    {name: "laravel", repo: "laravel/framework"},
   ]}
 ]
 
