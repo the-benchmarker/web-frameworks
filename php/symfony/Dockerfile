@@ -18,8 +18,12 @@ RUN composer install --no-dev --prefer-dist --classmap-authoritative
 
 RUN sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i 's/\(listen =\).*/\1 \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i 's/\;\(listen\.owner.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i 's/\;\(listen\.group.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
 
 RUN rm -fr /etc/nginx/sites-enabled/default
+RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 
 ENV APP_ENV prod
 
