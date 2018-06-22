@@ -27,6 +27,7 @@ RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 
 ENV APP_ENV prod
 
+RUN mkdir -p var/log && chown www-data var/log
 RUN mkdir -p var/cache && chown www-data var/cache
 RUN php bin/console cache:warmup
 
