@@ -273,51 +273,45 @@ targets.each do |target|
 end
 
 unless check
-  ranks = all.sort do |rank0, rank1|
+  ranks_by_requests = all.sort do |rank0, rank1|
     rank1.res.request <=> rank0.res.request
+  end
+
+  ranks_by_latency = all.sort do |rank0, rank1|
+    rank0.res.latency <=> rank1.res.latency
   end
 
   # --- Ranking of frameworks
 
   puts_markdown "", m_lines, true
-  puts_markdown "### Ranking (Framework)", m_lines, true
-  puts_markdown "", m_lines, true
-
-  rank = 1
-
-  ranks.each do |ranked|
-    puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo}) (#{ranked.target.lang})", m_lines, true
-    rank += 1
-  end
-
-  # --- Ranking of langages
-
-  puts_markdown "", m_lines, true
-  puts_markdown "### Ranking (Language)", m_lines, true
-  puts_markdown "", m_lines, true
-
-  ranked_langs = [] of String
-  rank = 1
-
-  ranks.each do |ranked|
-    next if ranked_langs.includes?(ranked.target.lang)
-    puts_markdown "#{rank}. #{ranked.target.lang} ([#{ranked.target.name}](https://github.com/#{ranked.target.repo}))", m_lines, true
-    ranked_langs.push(ranked.target.lang)
-    rank += 1
-  end
-
-  # --- Result of all frameworks
-
-  puts_markdown "", m_lines, true
-  puts_markdown "### All frameworks", m_lines, true
+  puts_markdown "<details><summary>Ranked by latency</summary>", m_lines, true
   puts_markdown "", m_lines, true
 
   puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Latency", "99 percentile", "Throughput"], m_lines, true
   puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|-----------:|", m_lines, true
 
-  all.each do |framework|
-    puts_markdown "| %-25s | %-25s | %.2f | %.2f | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, framework.res.request, framework.res.latency, framework.res.percentile, (framework.res.throughput/1000000)], m_lines, true
+  ranks_by_latency.each do |framework|
+    puts_markdown "| %-25s | %-25s | %.2f | %.2f ms | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, framework.res.request, (framework.res.latency/1000), framework.res.percentile, (framework.res.throughput/1000000)], m_lines, true
   end
+
+  puts_markdown "", m_lines, true
+  puts_markdown "</details>", m_lines, true
+  puts_markdown "", m_lines, true
+
+  puts_markdown "", m_lines, true
+  puts_markdown "<details><summary>Ranked by requests</summary>", m_lines, true
+  puts_markdown "", m_lines, true
+
+  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Latency", "99 percentile", "Throughput"], m_lines, true
+  puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|-----------:|", m_lines, true
+
+  ranks_by_requests.each do |framework|
+    puts_markdown "| %-25s | %-25s | %.2f | %.2f ms | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, framework.res.request, (framework.res.latency/1000), framework.res.percentile, (framework.res.throughput/1000000)], m_lines, true
+  end
+
+  puts_markdown "", m_lines, true
+  puts_markdown "</details>", m_lines, true
+  puts_markdown "", m_lines, true
 
   if record
     path = File.expand_path("../../../README.md", __FILE__)
