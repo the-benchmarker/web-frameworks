@@ -5,7 +5,7 @@ var app = new Koa();
 var router = new Router();
  
 router
-  .get('/user', (ctx, next) => {
+  .get('/', (ctx, next) => {
     ctx.body = '';
   })
   .get('/user/:id', (ctx, next) => {
