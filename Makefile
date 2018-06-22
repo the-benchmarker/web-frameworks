@@ -10,7 +10,7 @@ phoenix:
 	docker build -t phoenix elixir/phoenix
 
 # --- node.js ---
-node: express fastify polka rayo koa
+node: express fastify polka rayo koa restify
 
 express:
 	docker build -t express node/express
@@ -39,7 +39,7 @@ criollo:
 
 
 # --- Ruby ---
-ruby: rails sinatra roda rack-routing flame
+ruby: rails sinatra roda rack-routing flame hanami
 
 # Rails
 rails:
