@@ -1,26 +1,33 @@
-import mofuw
+import mofuw, ./nest, uri
+
+var mapper = newRouter[proc(req: mofuwReq, res: mofuwRes): Future[void]]()
+
+mapper.map(
+    proc(req: mofuwReq, res: mofuwRes) {.async.} =
+      mofuwOK("")
+  , "get", "/")
+
+mapper.map(
+  proc(req: mofuwReq, res: mofuwRes) {.async.} =
+    mofuwOK(req.params("id"))
+  , "get", "/user/{id}")
+
+mapper.map(
+  proc(req: mofuwReq, res: mofuwRes) {.async.} =
+    mofuwOK("")
+  , "post", "/user")
+
+mapper.compress()
 
 proc handler(req: mofuwReq, res: mofuwRes) {.async.} =
-  routes:
-    get "/":
-      mofuwResp(
-        HTTP200,
-        "text/plain",
-        ""
-      )
+  var headers = req.toHttpHeaders()
+  let r = mapper.route(req.getMethod, parseUri(req.getPath), headers)
 
-    get "/user/@id":
-      mofuwResp(
-        HTTP200,
-        "text/plain",
-        req.params["id"]
-      )
+  if r.status == routingFailure:
+    mofuwResp(HTTP404, "text/plain", "Not Found")
+  else:
+    req.setParam(r.arguments.pathArgs)
+    req.setQuery(r.arguments.queryArgs)
+    await r.handler(req, res)
 
-    post "/user":
-      mofuwResp(
-        HTTP200,
-        "text/plain",
-        ""
-      )
-
-handler.mofuwRun(port = 3000)
+handler.mofuwRun(3000)

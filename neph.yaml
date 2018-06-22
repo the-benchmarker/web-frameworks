@@ -18,6 +18,7 @@ main:
 crystal:
   dependencies:
     - router.cr
+    - amber
     - kemal
     - lucky
     - spider-gazelle

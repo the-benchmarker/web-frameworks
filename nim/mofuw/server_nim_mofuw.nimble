@@ -7,4 +7,4 @@ license       = "MIT"
 
 # Dependencies
 
-requires "nim >= 0.18.0", "mofuw >= 0.1.1"
+requires "nim >= 0.18.0", "mofuw >= 1.2.0"
