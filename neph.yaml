@@ -30,6 +30,7 @@ ruby:
     - roda
     - rack-routing
     - flame
+    - hanami
 
 nim:
   dependencies:
@@ -152,6 +153,11 @@ flame:
   commands:
     - docker build -t flame .
   directory: ruby/flame
+
+hanami:
+  commands:
+    - docker build -t hanami .
+  directory: ruby/hanami
 
 jester:
   commands:

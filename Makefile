@@ -54,6 +54,10 @@ roda:
 rack-routing:
 	docker build -t rack-routing ruby/rack-routing
 
+# Hanami
+hanami:
+	docker build -t hanami ruby/hanami
+
 # Flame
 flame:
 	docker build -t flame ruby/flame

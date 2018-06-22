@@ -50,6 +50,7 @@ LANGS = [
     {name: "roda", repo: "jeremyevans/roda"},
     {name: "rack-routing", repo: "georgeu2000/rack-routing"},
     {name: "flame", repo: "AlexWayfer/flame"},
+    {name: "hanami", repo: "hanami/hanami"},
   ]},
   {lang: "crystal", targets: [
     {name: "kemal", repo: "kemalcr/kemal"},
