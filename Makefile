@@ -27,6 +27,9 @@ rayo:
 koa:
 	docker build -t koa node/koa
 
+restify:
+	docker build -t restify node/restify
+
 # --- Objective-C ---
 objc: criollo
 
