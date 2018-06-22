@@ -10,7 +10,7 @@ phoenix:
 	docker build -t phoenix elixir/phoenix
 
 # --- node.js ---
-node: express fastify polka rayo
+node: express fastify polka rayo koa
 
 express:
 	docker build -t express node/express
@@ -23,6 +23,9 @@ polka:
 
 rayo:
 	docker build -t rayo node/rayo
+
+koa:
+	docker build -t koa node/koa
 
 # --- Objective-C ---
 objc: criollo

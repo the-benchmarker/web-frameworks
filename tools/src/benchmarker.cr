@@ -76,6 +76,7 @@ LANGS = [
     {name: "fastify", repo: "fastify/fastify"},
     {name: "polka", repo: "lukeed/polka"},
     {name: "rayo", repo: "GetRayo/rayo.js"},
+    {name: "koa", repo: "koajs/koa"},
   ]},
   {lang: "elixir", targets: [
     {name: "plug", repo: "elixir-lang/plug"},
