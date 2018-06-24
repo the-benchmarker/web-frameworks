@@ -78,6 +78,7 @@ LANGS = [
     {name: "polka", repo: "lukeed/polka"},
     {name: "rayo", repo: "GetRayo/rayo.js"},
     {name: "koa", repo: "koajs/koa"},
+    {name: "restify", repo: "restify/node-restify"},
   ]},
   {lang: "elixir", targets: [
     {name: "plug", repo: "elixir-lang/plug"},

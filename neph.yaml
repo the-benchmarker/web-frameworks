@@ -72,6 +72,7 @@ node:
     - fastify
     - polka
     - rayo
+    - restify
 
 elixir:
   dependencies:
@@ -273,6 +274,16 @@ rayo:
   commands:
     - docker build -t rayo .
   directory: node/rayo
+
+koa:
+  commands:
+    - docker build -t koa .
+  directory: node/koa
+
+restify:
+  commands:
+    - docker build -t restify .
+  directory: node/restify
 
 plug:
   commands:
