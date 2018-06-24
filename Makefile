@@ -65,6 +65,10 @@ hanami:
 flame:
 	docker build -t flame ruby/flame
 
+# hanami
+hanami:
+	docker build -t hanami ruby/hanami
+
 # --- Crystal ---
 crystal: kemal router.cr lucky amber spider-gazelle
 
