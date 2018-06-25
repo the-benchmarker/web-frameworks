@@ -278,7 +278,7 @@ unless check
   end
 
   ranks_by_latency = all.sort do |rank0, rank1|
-    rank0.res.latency <=> rank1.res.latency
+    rank0.res.percentile <=> rank1.res.percentile
   end
 
   # --- Ranking of frameworks
