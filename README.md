@@ -8,7 +8,7 @@ Any idea is :heart:, let discuss about it on [![Join the chat at https://gitter.
 ## Result
 
 <!-- Result from here -->
-Last update: 2018-06-22
+Last update: 2018-06-25
 ```
 OS: Linux (version: 4.16.11-100.fc26.x86_64, arch: x86_64)
 CPU Cores: 8
@@ -17,59 +17,62 @@ CPU Cores: 8
 ### Ranking (Framework)
 
 1. [actix-web](https://github.com/actix/actix-web) (rust)
-2. [fasthttprouter](https://github.com/buaazp/fasthttprouter) (go)
-3. [evhtp](https://github.com/criticalstack/libevhtp) (cpp)
+2. [evhtp](https://github.com/criticalstack/libevhtp) (cpp)
+3. [fasthttprouter](https://github.com/buaazp/fasthttprouter) (go)
 4. [act](https://github.com/actframework/actframework) (java)
 5. [mofuw](https://github.com/2vg/mofuw) (nim)
-6. [iris](https://github.com/kataras/iris) (go)
-7. [iron](https://github.com/iron/iron) (rust)
-8. [aspnetcore](https://github.com/aspnet/Home) (csharp)
-9. [gorilla-mux](https://github.com/gorilla/mux) (go)
-10. [echo](https://github.com/labstack/echo) (go)
-11. [rocket](https://github.com/SergioBenitez/Rocket) (rust)
-12. [polka](https://github.com/lukeed/polka) (node)
-13. [rayo](https://github.com/GetRayo/rayo.js) (node)
-14. [nickel](https://github.com/nickel-org/nickel.rs) (rust)
+6. [iron](https://github.com/iron/iron) (rust)
+7. [rocket](https://github.com/SergioBenitez/Rocket) (rust)
+8. [iris](https://github.com/kataras/iris) (go)
+9. [echo](https://github.com/labstack/echo) (go)
+10. [aspnetcore](https://github.com/aspnet/Home) (csharp)
+11. [polka](https://github.com/lukeed/polka) (node)
+12. [gorilla-mux](https://github.com/gorilla/mux) (go)
+13. [nickel](https://github.com/nickel-org/nickel.rs) (rust)
+14. [rayo](https://github.com/GetRayo/rayo.js) (node)
 15. [fastify](https://github.com/fastify/fastify) (node)
-16. [symfony](https://github.com/symfony/symfony) (php)
+16. [akkahttp](https://github.com/akka/akka-http) (scala)
 17. [perfect](https://github.com/PerfectlySoft/Perfect) (swift)
-18. [akkahttp](https://github.com/akka/akka-http) (scala)
-19. [vapor](https://github.com/vapor/vapor) (swift)
-20. [express](https://github.com/expressjs/express) (node)
-21. [japronto](https://github.com/squeaky-pl/japronto) (python)
-22. [plug](https://github.com/elixir-lang/plug) (elixir)
-23. [laravel](https://github.com/laravel/framework) (php)
-24. [roda](https://github.com/jeremyevans/roda) (ruby)
-25. [phoenix](https://github.com/phoenixframework/phoenix) (elixir)
-26. [rack-routing](https://github.com/georgeu2000/rack-routing) (ruby)
-27. [router.cr](https://github.com/tbrand/router.cr) (crystal)
-28. [kitura](https://github.com/IBM-Swift/Kitura) (swift)
-29. [spider-gazelle](https://github.com/spider-gazelle/spider-gazelle) (crystal)
-30. [gin](https://github.com/gin-gonic/gin) (go)
-31. [lucky](https://github.com/luckyframework/lucky) (crystal)
-32. [kemal](https://github.com/kemalcr/kemal) (crystal)
-33. [amber](https://github.com/amberframework/amber) (crystal)
-34. [flame](https://github.com/AlexWayfer/flame) (ruby)
-35. [flask](https://github.com/pallets/flask) (python)
-36. [sanic](https://github.com/channelcat/sanic) (python)
-37. [jester](https://github.com/dom96/jester) (nim)
+18. [express](https://github.com/expressjs/express) (node)
+19. [koa](https://github.com/koajs/koa) (node)
+20. [restify](https://github.com/restify/node-restify) (node)
+21. [symfony](https://github.com/symfony/symfony) (php)
+22. [vapor](https://github.com/vapor/vapor) (swift)
+23. [japronto](https://github.com/squeaky-pl/japronto) (python)
+24. [laravel](https://github.com/laravel/framework) (php)
+25. [plug](https://github.com/elixir-lang/plug) (elixir)
+26. [roda](https://github.com/jeremyevans/roda) (ruby)
+27. [phoenix](https://github.com/phoenixframework/phoenix) (elixir)
+28. [rack-routing](https://github.com/georgeu2000/rack-routing) (ruby)
+29. [kitura](https://github.com/IBM-Swift/Kitura) (swift)
+30. [router.cr](https://github.com/tbrand/router.cr) (crystal)
+31. [spider-gazelle](https://github.com/spider-gazelle/spider-gazelle) (crystal)
+32. [amber](https://github.com/amberframework/amber) (crystal)
+33. [gin](https://github.com/gin-gonic/gin) (go)
+34. [lucky](https://github.com/luckyframework/lucky) (crystal)
+35. [kemal](https://github.com/kemalcr/kemal) (crystal)
+36. [flame](https://github.com/AlexWayfer/flame) (ruby)
+37. [hanami](https://github.com/hanami/hanami) (ruby)
 38. [sinatra](https://github.com/sinatra/sinatra) (ruby)
-39. [django](https://github.com/django/django) (python)
-40. [rails](https://github.com/rails/rails) (ruby)
-41. [tornado](https://github.com/tornadoweb/tornado) (python)
+39. [flask](https://github.com/pallets/flask) (python)
+40. [sanic](https://github.com/channelcat/sanic) (python)
+41. [jester](https://github.com/dom96/jester) (nim)
+42. [django](https://github.com/django/django) (python)
+43. [rails](https://github.com/rails/rails) (ruby)
+44. [tornado](https://github.com/tornadoweb/tornado) (python)
 
 ### Ranking (Language)
 
 1. rust ([actix-web](https://github.com/actix/actix-web))
-2. go ([fasthttprouter](https://github.com/buaazp/fasthttprouter))
-3. cpp ([evhtp](https://github.com/criticalstack/libevhtp))
+2. cpp ([evhtp](https://github.com/criticalstack/libevhtp))
+3. go ([fasthttprouter](https://github.com/buaazp/fasthttprouter))
 4. java ([act](https://github.com/actframework/actframework))
 5. nim ([mofuw](https://github.com/2vg/mofuw))
 6. csharp ([aspnetcore](https://github.com/aspnet/Home))
 7. node ([polka](https://github.com/lukeed/polka))
-8. php ([symfony](https://github.com/symfony/symfony))
+8. scala ([akkahttp](https://github.com/akka/akka-http))
 9. swift ([perfect](https://github.com/PerfectlySoft/Perfect))
-10. scala ([akkahttp](https://github.com/akka/akka-http))
+10. php ([symfony](https://github.com/symfony/symfony))
 11. python ([japronto](https://github.com/squeaky-pl/japronto))
 12. elixir ([plug](https://github.com/elixir-lang/plug))
 13. ruby ([roda](https://github.com/jeremyevans/roda))
@@ -79,47 +82,50 @@ CPU Cores: 8
 
 | Language (Runtime)        | Framework (Middleware)    |    Requests / s |         Latency |   99 percentile |      Throughput |
 |---------------------------|---------------------------|----------------:|----------------:|----------------:|-----------:|
-| ruby                      | rails                     | 4611.33 | 27861.00 | 174566.67 | 4.34 MB |
-| ruby                      | sinatra                   | 16768.67 | 7643.67 | 55288.67 | 14.87 MB |
-| ruby                      | roda                      | 45638.33 | 2788.33 | 16947.33 | 14.92 MB |
-| ruby                      | rack-routing              | 34894.33 | 3681.33 | 23820.33 | 6.31 MB |
-| ruby                      | flame                     | 21713.33 | 5906.33 | 27577.33 | 4.24 MB |
-| crystal                   | kemal                     | 28708.67 | 34784.00 | 56094.67 | 15.25 MB |
-| crystal                   | router.cr                 | 34852.00 | 28777.00 | 45224.67 | 9.42 MB |
-| crystal                   | amber                     | 27261.33 | 36681.67 | 53126.67 | 11.51 MB |
-| crystal                   | lucky                     | 29036.67 | 33977.33 | 51791.00 | 11.04 MB |
-| crystal                   | spider-gazelle            | 30971.67 | 32338.00 | 51724.33 | 8.28 MB |
-| go                        | echo                      | 92976.67 | 11770.33 | 54057.33 | 55.23 MB |
-| go                        | gorilla-mux               | 98665.67 | 10745.67 | 38066.67 | 36.59 MB |
-| go                        | iris                      | 111486.00 | 9012.00 | 26889.67 | 41.78 MB |
-| go                        | fasthttprouter            | 178029.67 | 5292.67 | 15793.33 | 81.36 MB |
-| go                        | gin                       | 30366.00 | 52257.00 | 224732.67 | 17.48 MB |
-| rust                      | actix-web                 | 201039.67 | 4602.00 | 15214.67 | 75.45 MB |
-| rust                      | iron                      | 104908.00 | 561.00 | 2395.67 | 38.96 MB |
-| rust                      | nickel                    | 86370.00 | 98.67 | 203.00 | 61.02 MB |
-| rust                      | rocket                    | 92141.00 | 139.00 | 326.00 | 45.65 MB |
-| node                      | express                   | 54475.00 | 30560.67 | 465009.67 | 46.16 MB |
-| node                      | fastify                   | 72711.33 | 18919.33 | 184683.67 | 65.66 MB |
-| node                      | polka                     | 87658.67 | 14799.33 | 123607.67 | 45.73 MB |
-| node                      | rayo                      | 86668.33 | 14938.00 | 140620.00 | 43.47 MB |
-| elixir                    | plug                      | 49394.00 | 22549.33 | 75481.67 | 33.34 MB |
-| elixir                    | phoenix                   | 41079.33 | 28381.00 | 204433.00 | 27.68 MB |
-| swift                     | vapor                     | 54830.67 | 57292.00 | 1365021.33 | 20.45 MB |
-| swift                     | perfect                   | 60535.33 | 16177.33 | 22070.00 | 16.69 MB |
-| swift                     | kitura                    | 34545.33 | 31251.00 | 120427.33 | 19.17 MB |
-| scala                     | akkahttp                  | 59872.00 | 178780.67 | 4032980.33 | 47.29 MB |
-| csharp                    | aspnetcore                | 103547.00 | 11672.33 | 84094.00 | 51.09 MB |
-| python                    | sanic                     | 17647.00 | 57105.00 | 149797.67 | 9.94 MB |
-| python                    | japronto                  | 52478.67 | 19220.33 | 30166.33 | 20.99 MB |
-| python                    | flask                     | 17737.00 | 61064.00 | 204945.00 | 14.25 MB |
-| python                    | django                    | 11140.00 | 92266.33 | 240016.00 | 9.84 MB |
-| python                    | tornado                   | 1370.67 | 746251.67 | 5150188.67 | 0.91 MB |
-| nim                       | jester                    | 17297.67 | 230566.00 | 4488995.00 | 6.47 MB |
-| nim                       | mofuw                     | 118821.33 | 14601.67 | 131776.67 | 65.92 MB |
-| java                      | act                       | 121048.00 | 9351.00 | 34167.33 | 46.18 MB |
-| cpp                       | evhtp                     | 172703.00 | 5387.00 | 16571.00 | 56.81 MB |
-| php                       | symfony                   | 62136.00 | 128755.00 | 2109841.67 | 100.30 MB |
-| php                       | laravel                   | 46680.00 | 264386.67 | 4136509.00 | 78.59 MB |
+| ruby                      | rails                     | 5341.33 | 24009.00 | 148917.33 | 4.92 MB |
+| ruby                      | sinatra                   | 18576.33 | 6888.33 | 37867.67 | 15.65 MB |
+| ruby                      | roda                      | 45817.00 | 2750.67 | 13510.33 | 15.28 MB |
+| ruby                      | rack-routing              | 36130.00 | 3529.33 | 18580.33 | 6.41 MB |
+| ruby                      | flame                     | 21630.67 | 5980.33 | 34563.00 | 3.78 MB |
+| ruby                      | hanami                    | 19777.67 | 6495.33 | 50932.67 | 49.86 MB |
+| crystal                   | kemal                     | 26464.00 | 38453.67 | 97378.67 | 14.46 MB |
+| crystal                   | router.cr                 | 33809.67 | 31632.33 | 127451.67 | 9.22 MB |
+| crystal                   | amber                     | 28919.67 | 33765.67 | 53829.00 | 12.91 MB |
+| crystal                   | lucky                     | 26826.67 | 36802.67 | 54024.33 | 10.48 MB |
+| crystal                   | spider-gazelle            | 31686.67 | 31566.33 | 48026.33 | 8.50 MB |
+| go                        | echo                      | 102749.00 | 9788.67 | 30439.33 | 58.67 MB |
+| go                        | gorilla-mux               | 93085.67 | 11484.67 | 38809.00 | 34.96 MB |
+| go                        | iris                      | 107121.67 | 9188.67 | 26071.00 | 37.97 MB |
+| go                        | fasthttprouter            | 173023.33 | 5294.33 | 15832.00 | 81.41 MB |
+| go                        | gin                       | 28370.00 | 55352.67 | 243286.67 | 16.35 MB |
+| rust                      | actix-web                 | 187197.00 | 4964.67 | 16960.67 | 68.44 MB |
+| rust                      | iron                      | 109887.33 | 535.67 | 1787.00 | 42.34 MB |
+| rust                      | nickel                    | 90944.00 | 94.67 | 154.67 | 48.64 MB |
+| rust                      | rocket                    | 108408.00 | 126.00 | 258.67 | 49.09 MB |
+| node                      | express                   | 57646.33 | 24613.00 | 324796.67 | 47.84 MB |
+| node                      | fastify                   | 78772.33 | 17032.67 | 171012.67 | 79.21 MB |
+| node                      | polka                     | 93896.33 | 14283.67 | 152223.33 | 47.39 MB |
+| node                      | rayo                      | 82281.67 | 14530.00 | 108914.33 | 41.89 MB |
+| node                      | koa                       | 57094.00 | 28845.33 | 469860.67 | 41.14 MB |
+| node                      | restify                   | 53997.67 | 22747.33 | 190929.00 | 31.75 MB |
+| elixir                    | plug                      | 46006.00 | 22831.00 | 66607.33 | 29.64 MB |
+| elixir                    | phoenix                   | 39535.00 | 29230.33 | 162903.67 | 26.10 MB |
+| swift                     | vapor                     | 52026.33 | 33374.33 | 641201.33 | 18.76 MB |
+| swift                     | perfect                   | 60997.67 | 16129.67 | 23422.67 | 16.99 MB |
+| swift                     | kitura                    | 36085.67 | 27688.67 | 39228.67 | 20.32 MB |
+| scala                     | akkahttp                  | 64107.00 | 207638.33 | 4364330.00 | 52.22 MB |
+| csharp                    | aspnetcore                | 99635.33 | 11286.00 | 70700.67 | 49.43 MB |
+| python                    | sanic                     | 17175.67 | 59193.33 | 163777.67 | 10.04 MB |
+| python                    | japronto                  | 48902.33 | 20567.00 | 32187.67 | 19.65 MB |
+| python                    | flask                     | 17735.00 | 58812.33 | 180922.67 | 13.96 MB |
+| python                    | django                    | 11212.33 | 91561.00 | 263200.00 | 10.32 MB |
+| python                    | tornado                   | 1356.00 | 680218.67 | 3066278.00 | 0.95 MB |
+| nim                       | jester                    | 16922.00 | 235762.67 | 4730227.67 | 6.32 MB |
+| nim                       | mofuw                     | 112493.67 | 13666.00 | 120175.33 | 67.53 MB |
+| java                      | act                       | 130696.00 | 8442.00 | 25991.33 | 47.85 MB |
+| cpp                       | evhtp                     | 174950.33 | 5390.33 | 16729.67 | 56.15 MB |
+| php                       | symfony                   | 53528.67 | 259307.67 | 4103460.33 | 85.64 MB |
+| php                       | laravel                   | 48366.00 | 233432.00 | 3286005.33 | 78.21 MB |
 <!-- Result till here -->
 
 ## The rule
