@@ -291,7 +291,7 @@ unless check
   puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|-----------:|", m_lines, true
 
   ranks_by_latency.each do |framework|
-    puts_markdown "| %-25s | %-25s | %.2f | %.2f ms | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, framework.res.request, (framework.res.latency/1000), framework.res.percentile, (framework.res.throughput/1000000)], m_lines, true
+    puts_markdown "| %-25s | %-25s | %.2f | %.2f ms | %.2f ms | %.2f MB |" % [framework.target.lang, framework.target.name, framework.res.request, (framework.res.latency/1000), (framework.res.percentile/1000), (framework.res.throughput/1000000)], m_lines, true
   end
 
   puts_markdown "", m_lines, true
@@ -306,7 +306,7 @@ unless check
   puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|-----------:|", m_lines, true
 
   ranks_by_requests.each do |framework|
-    puts_markdown "| %-25s | %-25s | %.2f | %.2f ms | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, framework.res.request, (framework.res.latency/1000), framework.res.percentile, (framework.res.throughput/1000000)], m_lines, true
+    puts_markdown "| %-25s | %-25s | %.2f | %.2f ms | %.2f ms | %.2f MB |" % [framework.target.lang, framework.target.name, framework.res.request, (framework.res.latency/1000), (framework.res.percentile/1000), (framework.res.throughput/1000000)], m_lines, true
   end
 
   puts_markdown "", m_lines, true
