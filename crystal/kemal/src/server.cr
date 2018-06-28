@@ -3,6 +3,7 @@ require "kemal"
 Kemal.config do |cfg|
 	cfg.serve_static = false
 	cfg.logging = false
+	cfg.env = "production"
 end
 
 get "/" do |env|
@@ -18,4 +19,4 @@ post "/user" do |env|
 end
 
 Kemal.config.env = "production"
-Kemal.run
+Kemal.run { |cfg| cfg.server.not_nil!.listen("0.0.0.0",3000, reuse_port: true) }
