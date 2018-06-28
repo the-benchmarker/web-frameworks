@@ -3,7 +3,7 @@ module Web::Controllers::Home
     include Web::Action
 
     def call(params)
-      params[:id]
+      self.body = params[:id]
     end
   end
 end
