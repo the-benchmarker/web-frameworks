@@ -6,8 +6,8 @@ app = Vibora()
 async def index():
     return Response(b'', headers={'content-type': 'html'})
 
-@app.route("/user/<int:id>", methods=['GET'])
-async def user_info(id):
+@app.route("/user/<id>", methods=['GET'])
+async def user_info(id : int):
     return Response(f'{id}', headers={'content-type': 'html'})
 
 
