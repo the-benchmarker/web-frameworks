@@ -101,6 +101,7 @@ LANGS = [
     {name: "flask", repo: "pallets/flask"},
     {name: "django", repo: "django/django"},
     {name: "tornado", repo: "tornadoweb/tornado"},
+    {name: "vibora", repo: "vibora-io/vibora"},
   ]},
   {lang: "nim", targets: [
     {name: "jester", repo: "dom96/jester"},
