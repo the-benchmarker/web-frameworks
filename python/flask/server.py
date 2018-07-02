@@ -1,5 +1,4 @@
 from flask import Flask
-from waitress import serve
 
 app = Flask(__name__)
 
