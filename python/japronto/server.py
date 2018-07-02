@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 from japronto import Application
 
 
@@ -21,4 +18,4 @@ app.router.add_route('/', index)
 app.router.add_route('/user', create_user, 'POST')
 app.router.add_route('/user/{id}', get_user, 'GET')
 
-app.run(debug=False, host='0.0.0.0', port=3000)
+app.run(host='0.0.0.0', port=3000)

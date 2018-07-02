@@ -9,4 +9,4 @@ COPY requirements.txt server.py ./
 
 EXPOSE 3000
 
-CMD  gunicorn --chdir /usr/src/app --worker-class meinheld.gmeinheld.MeinheldWorker --bind 0.0.0.0:3000 --workers $(nproc) server:app
+CMD waitress-serve --port=3000 --threads=`nproc` server:app

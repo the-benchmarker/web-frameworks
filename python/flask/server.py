@@ -1,12 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 from flask import Flask
-
-import logging
-
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -24,7 +17,3 @@ def user_info(id):
 @app.route("/user", methods=['POST'])
 def user():
     return ''
-
-
-if __name__ == '__main__':
-    app.run(port=3000)

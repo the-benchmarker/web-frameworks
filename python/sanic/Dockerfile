@@ -9,4 +9,4 @@ COPY requirements.txt server.py ./
 
 EXPOSE 3000
 
-CMD gunicorn --chdir /usr/src/app --bind 0.0.0.0:3000 --worker-class sanic.worker.GunicornWorker --workers $(nproc) server:app
+CMD python server.py
