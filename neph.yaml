@@ -44,6 +44,7 @@ python:
     - django
     - sanic
     - tornado
+    - vibora
 
 go:
   dependencies:
@@ -195,6 +196,11 @@ tornado:
   commands:
     - docker build -t tornado .
   directory: python/tornado
+
+vibora:
+  commands:
+    - docker build -t vibora .
+  directory: python/vibora
 
 iris:
   commands:

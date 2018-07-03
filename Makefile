@@ -163,7 +163,7 @@ aspnetcore:
 	docker build -t aspnetcore csharp/aspnetcore
 
 # --- Python ---
-python: sanic japronto flask django tornado
+python: sanic japronto flask django tornado vibora
 
 # Sanic
 sanic:
@@ -184,6 +184,10 @@ django:
 # Tornado
 tornado:
 	docker build -t tornado python/tornado
+
+# Vibora
+vibora:
+	docker build -t vibora python/vibora
 
 # --- Nim ---
 nim: jester mofuw
