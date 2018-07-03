@@ -1,5 +1,4 @@
 from vibora import Vibora, Response
-import multiprocessing
 
 app = Vibora()
 
