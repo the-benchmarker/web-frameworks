@@ -4,16 +4,15 @@ app = Vibora()
 
 @app.route('/')
 async def index():
-    return Response(b'', headers={'content-type': 'html'})
+    return Response(b'')
 
 @app.route("/user/<id>", methods=['GET'])
 async def user_info(id : int):
-    return Response(f'{id}', headers={'content-type': 'html'})
-
+    return Response(f'{id}')
 
 @app.route("/user", methods=['POST'])
 async def user():
-    return Response(b'', headers={'content-type': 'html'})
+    return Response(b'')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=3000)
+    app.run(host='0.0.0.0', port=3000, debug=False)
