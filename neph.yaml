@@ -75,6 +75,7 @@ node:
     - rayo
     - koa
     - restify
+    - hapi
 
 elixir:
   dependencies:
@@ -291,6 +292,12 @@ restify:
   commands:
     - docker build -t restify .
   directory: node/restify
+
+hapi:
+  commands:
+    - docker build -t hapi .
+  directory: node/hapi
+
 
 plug:
   commands:
