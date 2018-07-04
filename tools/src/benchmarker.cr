@@ -97,7 +97,6 @@ LANGS = [
   ]},
   {lang: "python", targets: [
     {name: "sanic", repo: "channelcat/sanic"},
-    {name: "japronto", repo: "squeaky-pl/japronto"},
     {name: "flask", repo: "pallets/flask"},
     {name: "django", repo: "django/django"},
     {name: "tornado", repo: "tornadoweb/tornado"},

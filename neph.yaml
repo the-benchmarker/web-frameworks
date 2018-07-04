@@ -40,7 +40,6 @@ nim:
 python:
   dependencies:
     - flask
-    - japronto
     - django
     - sanic
     - tornado

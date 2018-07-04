@@ -1,6 +1,1 @@
-appdirs==1.4.3
-japronto==0.1.1
-packaging==17.1
-pyparsing==2.2.0
-six==1.11.0
-uvloop==0.8.1
+-e git+https://github.com/squeaky-pl/japronto.git#egg=japronto
