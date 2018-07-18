@@ -7,4 +7,4 @@ license       = "MIT"
 
 # Dependencies
 
-requires "jester"
+requires "jester#97f6cbc76dfd8"
