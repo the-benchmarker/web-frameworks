@@ -2,6 +2,7 @@ require "http/client"
 require "benchmark"
 require "option_parser"
 require "json"
+require "redis"
 
 ####################
 # # DEFAULT VALUES ##
@@ -11,6 +12,7 @@ threads = (System.cpu_count + 1).to_i
 requests = 100_000.0
 record = false
 check = false
+redis = Redis.new
 
 #################
 # ### OPTIONS ###
@@ -116,14 +118,12 @@ LANGS = [
   {lang: "php", targets: [
     {name: "symfony", repo: "symfony/symfony"},
     {name: "laravel", repo: "laravel/framework"},
-  ]}
+  ]},
 ]
 
 record Target, lang : String, name : String, repo : String
-
-record BenchResult, request : Float64, latency : Float64, percentile : Float64, throughput : Float64
-
-record Ranked, res : BenchResult, target : Target
+record Filter, req : Float64, lat : Float64
+record Ranked, res : Filter, target : Target
 
 def frameworks : Array(Target)
   targets = [] of Target
@@ -187,29 +187,27 @@ end
 # server : server context
 # threads : number of thread to launch simultaneously
 # connections : number of opened connections per thread
-def benchmark(host, threads, connections) : BenchResult
-  request = 0.0
+# target : target
+# redis : redis instance, pass as param before code refactoring
+def benchmark(host, threads, connections, target, redis) : Filter
   latency = 0.0
-  percentile = 0.0
-  throughput = 0.0
+  requests = 0.0
+  `#{CLIENT} --threads #{threads} --url http://#{host}:3000` # warmup no capture
   ["/", "/user/0"].each do |route|
     raw = `#{CLIENT} --threads #{threads} --url http://#{host}:3000#{route}`
     result = Result.from_json(raw)
-    request = request + result.request.per_second
+    redis.set("#{target.lang}:#{target.name}:GET:#{route}", raw)
+    requests = requests + result.request.per_second
     latency = latency + result.latency.average
-    percentile = percentile + result.percentile.ninety_nine
-    throughput = request + result.request.bytes
   end
   ["/user"].each do |route|
     raw = `#{CLIENT} --threads #{threads} --method "POST" --url http://#{host}:3000#{route}`
     result = Result.from_json(raw)
-    request = request + result.request.per_second
+    redis.set("#{target.lang}:#{target.name}:POST:#{route}", raw)
+    requests = requests + result.request.per_second
     latency = latency + result.latency.average
-    percentile = percentile + result.percentile.ninety_nine
-    throughput = request + result.request.bytes
   end
-
-  BenchResult.new((request/3), (latency/3), (percentile/3), (throughput/3))
+  Filter.new((requests/3), (latency/3))
 end
 
 m_lines = [] of String
@@ -262,7 +260,7 @@ targets.each do |target|
       STDERR.puts "Fail to POST on /user for #{target} : [#{r.status_code}] #{r.body}"
     end
   else
-    result = benchmark(remote_ip, threads, requests)
+    result = benchmark(remote_ip, threads, requests, target, redis)
 
     all.push(Ranked.new(result, target))
   end
@@ -274,11 +272,11 @@ end
 
 unless check
   ranks_by_requests = all.sort do |rank0, rank1|
-    rank1.res.request <=> rank0.res.request
+    rank1.res.req <=> rank0.res.req
   end
 
   ranks_by_latency = all.sort do |rank0, rank1|
-    rank0.res.percentile <=> rank1.res.percentile
+    rank0.res.lat <=> rank1.res.lat
   end
 
   # --- Ranking of frameworks
@@ -287,11 +285,13 @@ unless check
   puts_markdown "<details><summary>Ranked by latency</summary>", m_lines, true
   puts_markdown "", m_lines, true
 
-  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Latency", "99 percentile", "Throughput"], m_lines, true
-  puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|-----------:|", m_lines, true
+  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "99 percentile", "Standard deviation"], m_lines, true
+  puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:", m_lines, true
 
   ranks_by_latency.each do |framework|
-    puts_markdown "| %-25s | %-25s | %.2f | %.2f ms | %.2f ms | %.2f MB |" % [framework.target.lang, framework.target.name, framework.res.request, (framework.res.latency/1000), (framework.res.percentile/1000), (framework.res.throughput/1000000)], m_lines, true
+    raw = redis.get("#{framework.target.lang}:#{framework.target.name}:GET:/").as(String)
+    result = Result.from_json(raw)
+    puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.ninety_nine), (result.latency.deviation)], m_lines, true
   end
 
   puts_markdown "", m_lines, true
@@ -302,11 +302,13 @@ unless check
   puts_markdown "<details><summary>Ranked by requests</summary>", m_lines, true
   puts_markdown "", m_lines, true
 
-  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Latency", "99 percentile", "Throughput"], m_lines, true
-  puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|-----------:|", m_lines, true
+  puts_markdown "| %-25s | %-25s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s"], m_lines, true
+  puts_markdown "|---------------------------|---------------------------|----------------:|", m_lines, true
 
   ranks_by_requests.each do |framework|
-    puts_markdown "| %-25s | %-25s | %.2f | %.2f ms | %.2f ms | %.2f MB |" % [framework.target.lang, framework.target.name, framework.res.request, (framework.res.latency/1000), (framework.res.percentile/1000), (framework.res.throughput/1000000)], m_lines, true
+    raw = redis.get("#{framework.target.lang}:#{framework.target.name}:GET:/").as(String)
+    result = Result.from_json(raw)
+    puts_markdown "| %-25s | %-25s | %.2f |" % [framework.target.lang, framework.target.name, result.request.per_second], m_lines, true
   end
 
   puts_markdown "", m_lines, true
