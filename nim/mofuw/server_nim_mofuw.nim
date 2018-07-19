@@ -10,4 +10,7 @@ routes:
   post "/user":
     mofuwOK("")
 
-mofuwRun(3000)
+newServeCtx(
+  port = 3000,
+  handler = mofuwHandler
+).serve()
