@@ -5,7 +5,7 @@ routes:
     mofuwOK("")
 
   get "/user/{id}":
-    mofuwOK(req.params("id"))
+    mofuwOK(ctx.params("id"))
 
   post "/user":
     mofuwOK("")
