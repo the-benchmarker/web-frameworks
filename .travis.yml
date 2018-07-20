@@ -1,4 +1,7 @@
-services: docker
+services:
+  - docker
+  - redis
+
 
 language: crystal
 
