@@ -282,16 +282,16 @@ unless check
   # --- Ranking of frameworks
 
   puts_markdown "", m_lines, true
-  puts_markdown "<details><summary>Ranked by latency</summary>", m_lines, true
+  puts_markdown "<details open><summary>Ranked by latency</summary>", m_lines, true
   puts_markdown "", m_lines, true
 
-  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "99 percentile", "Standard deviation"], m_lines, true
-  puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:", m_lines, true
+  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
+  puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|", m_lines, true
 
   ranks_by_latency.each do |framework|
     raw = redis.get("#{framework.target.lang}:#{framework.target.name}:GET:/").as(String)
     result = Result.from_json(raw)
-    puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.ninety_nine), (result.latency.deviation)], m_lines, true
+    puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
   end
 
   puts_markdown "", m_lines, true
@@ -302,13 +302,13 @@ unless check
   puts_markdown "<details><summary>Ranked by requests</summary>", m_lines, true
   puts_markdown "", m_lines, true
 
-  puts_markdown "| %-25s | %-25s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s"], m_lines, true
-  puts_markdown "|---------------------------|---------------------------|----------------:|", m_lines, true
+  puts_markdown "| %-25s | %-25s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
+  puts_markdown "|---------------------------|---------------------------|----------------:|---------:|", m_lines, true
 
   ranks_by_requests.each do |framework|
     raw = redis.get("#{framework.target.lang}:#{framework.target.name}:GET:/").as(String)
     result = Result.from_json(raw)
-    puts_markdown "| %-25s | %-25s | %.2f |" % [framework.target.lang, framework.target.name, result.request.per_second], m_lines, true
+    puts_markdown "| %-25s | %-25s | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
   end
 
   puts_markdown "", m_lines, true
