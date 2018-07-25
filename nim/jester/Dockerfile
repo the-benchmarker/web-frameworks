@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 
 COPY server_nim_jester.nim server_nim_jester.nimble ./
 
-RUN nimble install -y httpbeast@#995fe86443d4a0
-RUN nimble c -d:release --threads:on --gc:boehm server_nim_jester.nim
+RUN nimble install -y httpbeast@#v0.2.0
+RUN nimble c -d:release --threads:on -y server_nim_jester.nim
 
 CMD ./server_nim_jester
