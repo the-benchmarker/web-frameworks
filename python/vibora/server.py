@@ -8,7 +8,7 @@ async def index():
 
 @app.route("/user/<id>", methods=['GET'])
 async def user_info(id : int):
-    return Response(f'{id}')
+    return Response(f'{id}'.encode())
 
 @app.route("/user", methods=['POST'])
 async def user():
