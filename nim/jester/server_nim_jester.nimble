@@ -7,4 +7,5 @@ license       = "MIT"
 
 # Dependencies
 
-requires "jester"
+requires "nim >= 0.18.0"
+requires "jester#v0.4.0"
