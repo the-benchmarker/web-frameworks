@@ -139,7 +139,6 @@ end
 
 class Result
   JSON.mapping(
-    duration: Float64,
     request: {type: Request, nilable: false},
     error: {type: Error, nilable: false},
     latency: {type: Latency, nilable: false},
@@ -149,6 +148,7 @@ end
 
 class Request
   JSON.mapping(
+    duration: Float64,
     total: Float64,
     bytes: Float64,
     per_second: Float64
@@ -192,22 +192,16 @@ end
 def benchmark(host, threads, connections, target, store) : Filter
   latency = 0.0
   requests = 0.0
-  `#{CLIENT} --threads #{threads} --url http://#{host}:3000` # warmup no capture
-  ["/", "/user/0"].each do |route|
-    raw = `#{CLIENT} --threads #{threads} --url http://#{host}:3000#{route}`
-    result = Result.from_json(raw)
-    store.set("#{target.lang}:#{target.name}:GET:#{route}", raw)
-    requests = requests + result.request.per_second
-    latency = latency + result.latency.average
-  end
-  ["/user"].each do |route|
-    raw = `#{CLIENT} --threads #{threads} --method "POST" --url http://#{host}:3000#{route}`
-    result = Result.from_json(raw)
-    store.set("#{target.lang}:#{target.name}:POST:#{route}", raw)
-    requests = requests + result.request.per_second
-    latency = latency + result.latency.average
-  end
-  Filter.new((requests/3), (latency/3))
+  `#{CLIENT} --threads #{threads} --url http://#{host}:3000`
+
+  raw = `#{CLIENT} --threads #{threads} --url http://#{host}:3000`
+  result = Result.from_json(raw)
+  parser = JSON::PullParser.new(raw)
+  data = Hash(String, Hash(String, Float64)).new(parser)
+  store.set("#{target.lang}:#{target.name}", data.to_json)
+  requests = requests + result.request.per_second
+  latency = latency + result.latency.average
+  Filter.new(result.request.per_second, result.percentile.fifty)
 end
 
 m_lines = [] of String
@@ -282,14 +276,14 @@ unless check
   # --- Ranking of frameworks
 
   puts_markdown "", m_lines, true
-  puts_markdown "<details open><summary>Ranked by latency</summary>", m_lines, true
+  puts_markdown "<details open><summary>Ranked by latency</summary> (ordered by 50th percentile - lowest is better)", m_lines, true
   puts_markdown "", m_lines, true
 
   puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
   puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|", m_lines, true
 
   ranks_by_latency.each do |framework|
-    raw = store.get("#{framework.target.lang}:#{framework.target.name}:GET:/").as(String)
+    raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
     result = Result.from_json(raw)
     puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
   end
@@ -299,14 +293,14 @@ unless check
   puts_markdown "", m_lines, true
 
   puts_markdown "", m_lines, true
-  puts_markdown "<details><summary>Ranked by requests</summary>", m_lines, true
+  puts_markdown "<details><summary>Ranked by requests</summary> (ordered by number or requests per sencond - highest is better)", m_lines, true
   puts_markdown "", m_lines, true
 
   puts_markdown "| %-25s | %-25s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
   puts_markdown "|---------------------------|---------------------------|----------------:|---------:|", m_lines, true
 
   ranks_by_requests.each do |framework|
-    raw = store.get("#{framework.target.lang}:#{framework.target.name}:GET:/").as(String)
+    raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
     result = Result.from_json(raw)
     puts_markdown "| %-25s | %-25s | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
   end
