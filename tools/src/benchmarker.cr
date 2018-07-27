@@ -79,6 +79,7 @@ LANGS = [
     {name: "rayo", repo: "GetRayo/rayo.js"},
     {name: "koa", repo: "koajs/koa"},
     {name: "restify", repo: "restify/node-restify"},
+    {name: "hapi", repo: "hapijs/hapi"},
   ]},
   {lang: "elixir", targets: [
     {name: "plug", repo: "elixir-lang/plug"},
