@@ -205,9 +205,8 @@ def benchmark(host, threads, connections, target, store) : Filter
     data.each do |key, metrics|
       results[key].merge!(metrics) { |_, v1, v2| v1 + (v2/3) }
     end
-    store.set("#{target.lang}:#{target.name}", data.to_json)
     requests = requests + result.request.per_second
-    latency = latency + result.latency.average
+    latency = latency + result.percentile.fifty
   end
 
   ["/user"].each do |route|
@@ -216,15 +215,13 @@ def benchmark(host, threads, connections, target, store) : Filter
     parser = JSON::PullParser.new(raw)
     data = Hash(String, Hash(String, Float64)).new(parser)
     data.each do |key, metrics|
-      results[key].merge!(metrics) { |_, v1, v2| v1 + v2 }
-    end
-    data.each do |key, metrics|
       results[key].merge!(metrics) { |_, v1, v2| v1 + (v2/3) }
     end
-    store.set("#{target.lang}:#{target.name}", data.to_json)
     requests = requests + result.request.per_second
-    latency = latency + result.latency.average
+    latency = latency + result.percentile.fifty
   end
+
+  store.set("#{target.lang}:#{target.name}", results.to_json)
 
   Filter.new((requests/3), (latency/3))
 end
@@ -301,7 +298,7 @@ unless check
   # --- Ranking of frameworks
 
   puts_markdown "", m_lines, true
-  puts_markdown "<details open><summary>Ranked by latency</summary> (ordered by 50th percentile - lowest is better)", m_lines, true
+  puts_markdown "<details open><summary>Ranked by latency (ordered by 50th percentile - lowest is better)</summary> ", m_lines, true
   puts_markdown "", m_lines, true
 
   puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
@@ -318,7 +315,7 @@ unless check
   puts_markdown "", m_lines, true
 
   puts_markdown "", m_lines, true
-  puts_markdown "<details><summary>Ranked by requests</summary> (ordered by number or requests per sencond - highest is better)", m_lines, true
+  puts_markdown "<details><summary>Ranked by requests (ordered by number or requests per sencond - highest is better)</summary>", m_lines, true
   puts_markdown "", m_lines, true
 
   puts_markdown "| %-25s | %-25s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
