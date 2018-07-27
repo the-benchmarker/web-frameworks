@@ -2,7 +2,7 @@ require "http/client"
 require "benchmark"
 require "option_parser"
 require "json"
-require "redis"
+require "kiwi/memory_store"
 
 ####################
 # # DEFAULT VALUES ##
@@ -12,7 +12,7 @@ threads = (System.cpu_count + 1).to_i
 requests = 100_000.0
 record = false
 check = false
-redis = Redis.new
+store = Kiwi::MemoryStore.new
 
 #################
 # ### OPTIONS ###
@@ -188,22 +188,22 @@ end
 # threads : number of thread to launch simultaneously
 # connections : number of opened connections per thread
 # target : target
-# redis : redis instance, pass as param before code refactoring
-def benchmark(host, threads, connections, target, redis) : Filter
+# store : in-memory storage used for results
+def benchmark(host, threads, connections, target, store) : Filter
   latency = 0.0
   requests = 0.0
   `#{CLIENT} --threads #{threads} --url http://#{host}:3000` # warmup no capture
   ["/", "/user/0"].each do |route|
     raw = `#{CLIENT} --threads #{threads} --url http://#{host}:3000#{route}`
     result = Result.from_json(raw)
-    redis.set("#{target.lang}:#{target.name}:GET:#{route}", raw)
+    store.set("#{target.lang}:#{target.name}:GET:#{route}", raw)
     requests = requests + result.request.per_second
     latency = latency + result.latency.average
   end
   ["/user"].each do |route|
     raw = `#{CLIENT} --threads #{threads} --method "POST" --url http://#{host}:3000#{route}`
     result = Result.from_json(raw)
-    redis.set("#{target.lang}:#{target.name}:POST:#{route}", raw)
+    store.set("#{target.lang}:#{target.name}:POST:#{route}", raw)
     requests = requests + result.request.per_second
     latency = latency + result.latency.average
   end
@@ -260,7 +260,7 @@ targets.each do |target|
       STDERR.puts "Fail to POST on /user for #{target} : [#{r.status_code}] #{r.body}"
     end
   else
-    result = benchmark(remote_ip, threads, requests, target, redis)
+    result = benchmark(remote_ip, threads, requests, target, store)
 
     all.push(Ranked.new(result, target))
   end
@@ -289,7 +289,7 @@ unless check
   puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|", m_lines, true
 
   ranks_by_latency.each do |framework|
-    raw = redis.get("#{framework.target.lang}:#{framework.target.name}:GET:/").as(String)
+    raw = store.get("#{framework.target.lang}:#{framework.target.name}:GET:/").as(String)
     result = Result.from_json(raw)
     puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
   end
@@ -306,7 +306,7 @@ unless check
   puts_markdown "|---------------------------|---------------------------|----------------:|---------:|", m_lines, true
 
   ranks_by_requests.each do |framework|
-    raw = redis.get("#{framework.target.lang}:#{framework.target.name}:GET:/").as(String)
+    raw = store.get("#{framework.target.lang}:#{framework.target.name}:GET:/").as(String)
     result = Result.from_json(raw)
     puts_markdown "| %-25s | %-25s | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
   end
