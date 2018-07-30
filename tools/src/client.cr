@@ -12,6 +12,7 @@ class Client
     @url = ""
     @method = "GET"
     @connections = 1000
+    @init = false
 
     OptionParser.parse! do |parser|
       parser.banner = "Usage: time ./bin/benchmark [options]"
@@ -26,6 +27,9 @@ class Client
       end
       parser.on("-m METHOD", "--method=METHOD", "HTTP method to use") do |method|
         @method = method
+      end
+      parser.on("-i", "--init", "Initialize (create json with 0 values)") do |x|
+        @init = true
       end
     end
   end
@@ -42,41 +46,41 @@ class Client
 
     data = JSON.build do |json|
       json.object do
-        json.field "duration", result[0].to_f
 
         json.field "request" do
           json.object do
-            json.field "total", result[1].to_f
-            json.field "per_second", result[2].to_f
-            json.field "bytes", result[3].to_f
+            json.field "duration", (@init ? 0 : result[0].to_f)
+            json.field "total", (@init ? 0 : result[1].to_f)
+            json.field "per_second", (@init ? 0 : result[2].to_f)
+            json.field "bytes", (@init ? 0 : result[3].to_f)
           end
         end
 
         json.field "error" do
           json.object do
-            json.field "socket", result[4].to_f
-            json.field "read", result[5].to_f
-            json.field "write", result[6].to_f
-            json.field "http", result[7].to_f
-            json.field "timeout", result[8].to_f
+            json.field "socket", (@init ? 0 : result[4].to_f)
+            json.field "read", (@init ? 0 : result[5].to_f)
+            json.field "write", (@init ? 0 : result[6].to_f)
+            json.field "http", (@init ? 0 : result[7].to_f)
+            json.field "timeout", (@init ? 0 : result[8].to_f)
           end
         end
 
         json.field "latency" do
           json.object do
-            json.field "minimum", result[9].to_f
-            json.field "maximum", result[10].to_f
-            json.field "average", result[11].to_f
-            json.field "deviation", result[12].to_f
+            json.field "minimum", (@init ? 0 : result[9].to_f)
+            json.field "maximum", (@init ? 0 : result[10].to_f)
+            json.field "average", (@init ? 0 : result[11].to_f)
+            json.field "deviation", (@init ? 0 : result[12].to_f)
           end
         end
 
         json.field "percentile" do
           json.object do
-            json.field "fifty", result[13].to_f
-            json.field "ninety", result[14].to_f
-            json.field "ninety_nine", result[15].to_f
-            json.field "ninety_nine_ninety", result[16].to_f
+            json.field "fifty", (@init ? 0 : result[13].to_f)
+            json.field "ninety", (@init ? 0 : result[14].to_f)
+            json.field "ninety_nine", (@init ? 0 : result[15].to_f)
+            json.field "ninety_nine_ninety", (@init ? 0 : result[16].to_f)
           end
         end
       end

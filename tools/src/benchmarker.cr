@@ -2,6 +2,7 @@ require "http/client"
 require "benchmark"
 require "option_parser"
 require "json"
+require "kiwi/memory_store"
 
 ####################
 # # DEFAULT VALUES ##
@@ -11,6 +12,7 @@ threads = (System.cpu_count + 1).to_i
 requests = 100_000.0
 record = false
 check = false
+store = Kiwi::MemoryStore.new
 
 #################
 # ### OPTIONS ###
@@ -116,14 +118,12 @@ LANGS = [
   {lang: "php", targets: [
     {name: "symfony", repo: "symfony/symfony"},
     {name: "laravel", repo: "laravel/framework"},
-  ]}
+  ]},
 ]
 
 record Target, lang : String, name : String, repo : String
-
-record BenchResult, request : Float64, latency : Float64, percentile : Float64, throughput : Float64
-
-record Ranked, res : BenchResult, target : Target
+record Filter, req : Float64, lat : Float64
+record Ranked, res : Filter, target : Target
 
 def frameworks : Array(Target)
   targets = [] of Target
@@ -139,7 +139,6 @@ end
 
 class Result
   JSON.mapping(
-    duration: Float64,
     request: {type: Request, nilable: false},
     error: {type: Error, nilable: false},
     latency: {type: Latency, nilable: false},
@@ -149,6 +148,7 @@ end
 
 class Request
   JSON.mapping(
+    duration: Float64,
     total: Float64,
     bytes: Float64,
     per_second: Float64
@@ -187,29 +187,43 @@ end
 # server : server context
 # threads : number of thread to launch simultaneously
 # connections : number of opened connections per thread
-def benchmark(host, threads, connections) : BenchResult
-  request = 0.0
+# target : target
+# store : in-memory storage used for results
+def benchmark(host, threads, connections, target, store) : Filter
   latency = 0.0
-  percentile = 0.0
-  throughput = 0.0
+  requests = 0.0
+  raw = `#{CLIENT} --threads #{threads} --url http://#{host}:3000 --init`
+  result = Result.from_json(raw)
+  parser = JSON::PullParser.new(raw)
+  results = Hash(String, Hash(String, Float64)).new(parser)
+
   ["/", "/user/0"].each do |route|
     raw = `#{CLIENT} --threads #{threads} --url http://#{host}:3000#{route}`
     result = Result.from_json(raw)
-    request = request + result.request.per_second
-    latency = latency + result.latency.average
-    percentile = percentile + result.percentile.ninety_nine
-    throughput = request + result.request.bytes
+    parser = JSON::PullParser.new(raw)
+    data = Hash(String, Hash(String, Float64)).new(parser)
+    data.each do |key, metrics|
+      results[key].merge!(metrics) { |_, v1, v2| v1 + (v2/3) }
+    end
+    requests = requests + result.request.per_second
+    latency = latency + result.percentile.fifty
   end
+
   ["/user"].each do |route|
     raw = `#{CLIENT} --threads #{threads} --method "POST" --url http://#{host}:3000#{route}`
     result = Result.from_json(raw)
-    request = request + result.request.per_second
-    latency = latency + result.latency.average
-    percentile = percentile + result.percentile.ninety_nine
-    throughput = request + result.request.bytes
+    parser = JSON::PullParser.new(raw)
+    data = Hash(String, Hash(String, Float64)).new(parser)
+    data.each do |key, metrics|
+      results[key].merge!(metrics) { |_, v1, v2| v1 + (v2/3) }
+    end
+    requests = requests + result.request.per_second
+    latency = latency + result.percentile.fifty
   end
 
-  BenchResult.new((request/3), (latency/3), (percentile/3), (throughput/3))
+  store.set("#{target.lang}:#{target.name}", results.to_json)
+
+  Filter.new((requests/3), (latency/3))
 end
 
 m_lines = [] of String
@@ -262,7 +276,7 @@ targets.each do |target|
       STDERR.puts "Fail to POST on /user for #{target} : [#{r.status_code}] #{r.body}"
     end
   else
-    result = benchmark(remote_ip, threads, requests)
+    result = benchmark(remote_ip, threads, requests, target, store)
 
     all.push(Ranked.new(result, target))
   end
@@ -273,51 +287,49 @@ targets.each do |target|
 end
 
 unless check
-  ranks = all.sort do |rank0, rank1|
-    rank1.res.request <=> rank0.res.request
+  ranks_by_requests = all.sort do |rank0, rank1|
+    rank1.res.req <=> rank0.res.req
+  end
+
+  ranks_by_latency = all.sort do |rank0, rank1|
+    rank0.res.lat <=> rank1.res.lat
   end
 
   # --- Ranking of frameworks
 
   puts_markdown "", m_lines, true
-  puts_markdown "### Ranking (Framework)", m_lines, true
+  puts_markdown "<details open><summary>Ranked by latency (ordered by 50th percentile - lowest is better)</summary> ", m_lines, true
   puts_markdown "", m_lines, true
 
-  rank = 1
+  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
+  puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|", m_lines, true
 
-  ranks.each do |ranked|
-    puts_markdown "#{rank}. [#{ranked.target.name}](https://github.com/#{ranked.target.repo}) (#{ranked.target.lang})", m_lines, true
-    rank += 1
+  ranks_by_latency.each do |framework|
+    raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
+    result = Result.from_json(raw)
+    puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
   end
 
-  # --- Ranking of langages
-
   puts_markdown "", m_lines, true
-  puts_markdown "### Ranking (Language)", m_lines, true
+  puts_markdown "</details>", m_lines, true
   puts_markdown "", m_lines, true
 
-  ranked_langs = [] of String
-  rank = 1
+  puts_markdown "", m_lines, true
+  puts_markdown "<details><summary>Ranked by requests (ordered by number or requests per sencond - highest is better)</summary>", m_lines, true
+  puts_markdown "", m_lines, true
 
-  ranks.each do |ranked|
-    next if ranked_langs.includes?(ranked.target.lang)
-    puts_markdown "#{rank}. #{ranked.target.lang} ([#{ranked.target.name}](https://github.com/#{ranked.target.repo}))", m_lines, true
-    ranked_langs.push(ranked.target.lang)
-    rank += 1
+  puts_markdown "| %-25s | %-25s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
+  puts_markdown "|---------------------------|---------------------------|----------------:|---------:|", m_lines, true
+
+  ranks_by_requests.each do |framework|
+    raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
+    result = Result.from_json(raw)
+    puts_markdown "| %-25s | %-25s | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
   end
 
-  # --- Result of all frameworks
-
   puts_markdown "", m_lines, true
-  puts_markdown "### All frameworks", m_lines, true
+  puts_markdown "</details>", m_lines, true
   puts_markdown "", m_lines, true
-
-  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Latency", "99 percentile", "Throughput"], m_lines, true
-  puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|-----------:|", m_lines, true
-
-  all.each do |framework|
-    puts_markdown "| %-25s | %-25s | %.2f | %.2f | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, framework.res.request, framework.res.latency, framework.res.percentile, (framework.res.throughput/1000000)], m_lines, true
-  end
 
   if record
     path = File.expand_path("../../../README.md", __FILE__)

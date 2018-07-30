@@ -21,3 +21,4 @@ RUN nimble install -y mofuw
 RUN nim c -d:release --threads:on -d:bufSize:512 server_nim_mofuw.nim
 
 CMD [ "./server_nim_mofuw" ]
+
