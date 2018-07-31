@@ -4,7 +4,6 @@ defmodule MyPlug.Mixfile do
   def project do
     [app: :my_plug,
      version: "0.1.0",
-     elixir: "~> 1.6.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps()]
