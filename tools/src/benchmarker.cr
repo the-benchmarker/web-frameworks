@@ -324,7 +324,7 @@ unless check
   ranks_by_requests.each do |framework|
     raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
     result = Result.from_json(raw)
-    puts_markdown "| %-25s | %-25s | %.2f | %.2f B | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/result.request.total) (result.request.bytes/1000000)], m_lines, true
+    puts_markdown "| %-25s | %-25s | %.2f | %.2f B | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/result.request.total), (result.request.bytes/1000000)], m_lines, true	
   end
 
   puts_markdown "", m_lines, true
