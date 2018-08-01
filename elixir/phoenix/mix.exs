@@ -4,7 +4,7 @@ defmodule MyPhoenix.Mixfile do
   def project do
     [app: :my_phoenix,
      version: "0.0.1",
-     elixir: "~> 1.6.4",
+     elixir: "~> 1.7.1",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
