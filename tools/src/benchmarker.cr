@@ -3,6 +3,7 @@ require "benchmark"
 require "option_parser"
 require "json"
 require "kiwi/memory_store"
+require "yaml"
 
 ####################
 # # DEFAULT VALUES ##
@@ -46,91 +47,6 @@ PATH_PREFIX = "../../../bin/"
 CLIENT = File.expand_path(PATH_PREFIX + "client", __FILE__)
 
 # Each framework
-LANGS = [
-  {lang: "ruby", targets: [
-    {name: "rails", repo: "rails/rails"},
-    {name: "sinatra", repo: "sinatra/sinatra"},
-    {name: "roda", repo: "jeremyevans/roda"},
-    {name: "rack-routing", repo: "georgeu2000/rack-routing"},
-    {name: "flame", repo: "AlexWayfer/flame"},
-    {name: "hanami", repo: "hanami/hanami"},
-  ]},
-  {lang: "crystal", targets: [
-    {name: "raze", repo: "samueleaton/raze"},
-    {name: "kemal", repo: "kemalcr/kemal"},
-    {name: "router.cr", repo: "tbrand/router.cr"},
-    {name: "raze", repo: "samueleaton/raze" },
-    {name: "amber", repo: "amberframework/amber"},
-    {name: "lucky", repo: "luckyframework/lucky"},
-    {name: "spider-gazelle", repo: "spider-gazelle/spider-gazelle"},
-    {name: "prism", repo: "vladfaust/prism"},
-  ]},
-  {lang: "go", targets: [
-    {name: "echo", repo: "labstack/echo"},
-    {name: "gorilla-mux", repo: "gorilla/mux"},
-    {name: "iris", repo: "kataras/iris"},
-    {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
-    {name: "gin", repo: "gin-gonic/gin"},
-    {name: "beego", repo: "astaxie/beego"},
-  ]},
-  {lang: "rust", targets: [
-    {name: "actix-web", repo: "actix/actix-web"},
-    {name: "iron", repo: "iron/iron"},
-    {name: "nickel", repo: "nickel-org/nickel.rs"},
-    {name: "rocket", repo: "SergioBenitez/Rocket"},
-  ]},
-  {lang: "node", targets: [
-    {name: "express", repo: "expressjs/express"},
-    {name: "fastify", repo: "fastify/fastify"},
-    {name: "polka", repo: "lukeed/polka"},
-    {name: "rayo", repo: "GetRayo/rayo.js"},
-    {name: "koa", repo: "koajs/koa"},
-    {name: "restify", repo: "restify/node-restify"},
-    {name: "hapi", repo: "hapijs/hapi"},
-  ]},
-  #{lang: "elixir", targets: [
-  # {name: "plug", repo: "elixir-lang/plug"},
-  # {name: "phoenix", repo: "phoenixframework/phoenix"},
-  #]},
-  {lang: "swift", targets: [
-    {name: "vapor", repo: "vapor/vapor"},
-    {name: "perfect", repo: "PerfectlySoft/Perfect"},
-    {name: "kitura", repo: "IBM-Swift/Kitura"},
-  ]},
-  {lang: "scala", targets: [
-    {name: "akkahttp", repo: "akka/akka-http"},
-    {name: "http4s", repo: "http4s/http4s"},
-  ]},
-  {lang: "csharp", targets: [
-    {name: "aspnetcore", repo: "aspnet/Home"},
-  ]},
-  {lang: "python", targets: [
-    {name: "japronto", repo: "squeaky-pl/japronto"},
-    {name: "sanic", repo: "channelcat/sanic"},
-    {name: "flask", repo: "pallets/flask"},
-    {name: "django", repo: "django/django"},
-    {name: "tornado", repo: "tornadoweb/tornado"},
-    {name: "vibora", repo: "vibora-io/vibora"},
-    {name: "bottle", repo: "bottlepy/bottle"},
-    {name: "aiohttp", repo: "aio-libs/aiohttp"},
-    {name: "quart", repo: "pgjones/quart"},
-  ]},
-  {lang: "nim", targets: [
-    #{name: "jester", repo: "dom96/jester"},
-    {name: "mofuw", repo: "2vg/mofuw"},
-  ]},
-  {lang: "java", targets: [
-    {name: "act", repo: "actframework/actframework"},
-  ]},
-  {lang: "cpp", targets: [
-    {name: "evhtp", repo: "criticalstack/libevhtp"},
-  ]},
-  {lang: "php", targets: [
-    {name: "symfony", repo: "symfony/symfony"},
-    {name: "laravel", repo: "laravel/framework"},
-  ]},
-]
-
 record Target, lang : String, name : String, repo : String
 record Filter, req : Float64, lat : Float64
 record Ranked, res : Filter, target : Target
@@ -138,9 +54,10 @@ record Ranked, res : Filter, target : Target
 def frameworks : Array(Target)
   targets = [] of Target
 
-  LANGS.each do |lang|
-    lang[:targets].each do |framework|
-      targets.push(Target.new(lang[:lang], framework[:name], framework[:repo]))
+  YAML.parse(File.read("FRAMEWORKS.yml")).as_h.each do |lang, data|
+    data.as_h.each do |framework, row|
+      link = "toto"
+      targets.push(Target.new(lang.as_s, framework.as_s, link))
     end
   end
 
