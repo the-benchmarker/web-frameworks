@@ -54,9 +54,10 @@ record Ranked, res : Filter, target : Target
 def frameworks : Array(Target)
   targets = [] of Target
 
-  LANGS.each do |lang|
-    lang[:targets].each do |framework|
-      targets.push(Target.new(lang[:lang], framework[:name], framework[:repo]))
+  YAML.parse(File.read("FRAMEWORKS.yml")).as_h.each do |lang, data|
+    data.as_h.each do |framework, row|
+      link = "toto"
+      targets.push(Target.new(lang.as_s, framework.as_s, link))
     end
   end
 
