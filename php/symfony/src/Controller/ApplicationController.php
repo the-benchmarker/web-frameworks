@@ -4,14 +4,12 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ApplicationController extends Controller
 {
     /**
-     * @Route("/")
-     * @Method("GET")
+     * @Route("/", methods={"GET"})
      */
     public function ping()
     {
@@ -19,8 +17,7 @@ class ApplicationController extends Controller
     }
 
     /**
-     * @Route("/user/{id}")
-     * @Method("GET")
+     * @Route("/user/{id}", methods={"GET"})
      */
     public function user($id)
     {
@@ -28,8 +25,7 @@ class ApplicationController extends Controller
     }
 
     /**
-     * @Route("/user")
-     * @Method("POST")
+     * @Route("/user", methods={"POST"})
      */
     public function create()
     {
