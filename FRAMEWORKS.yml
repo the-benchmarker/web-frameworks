@@ -1,0 +1,64 @@
+ruby:
+  rails:
+    website: rubyonrails.org
+    version: 5.2
+  sinatra:
+    website: sinatrarb.com
+    version: 2.0
+  roda:
+    website: roda.jeremyevans.net
+    version: 3.10
+  rack-routing:
+    github: georgeu2000/rack-routing
+    version: 0.0
+  flame:
+    github: AlexWayfer/flame
+    version: 5.0
+  hanami:
+    website: hanamirb.org
+    version: 1.2
+node:
+  express:
+    website: expressjs.com
+    version: 4.16
+  fastify:
+    website: fastify.io
+    version: 1.9
+  polka:
+    github: lukeed/polka
+    version: 0.4
+  rayo:
+    website: rayo.js.org
+    version: 1.2
+  koa:
+    website: koajs.com
+    version: 2.5
+  restify:
+    website: restify.com
+    version: 7.2
+  hapi:
+    website: hapijs.com
+    version: 17.5
+python:
+  sanic:
+    github: channelcat/sanic
+    version: 0.7
+  flask:
+    website: flask.pocoo.org
+    version: 1.0
+  django:
+    website: djangoproject.com
+    version: 2.0
+  tornado:
+    wesite: tornadoweb.org
+    version: 5.1
+  vibora:
+    website: vibora.io
+    version: 0.0
+php:
+  symfony:
+    website: symfony.com
+    version: 4.1
+  laravel:
+    website: laravel.com
+    version: 5.6
