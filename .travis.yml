@@ -7,22 +7,56 @@ language: crystal
 
 env:
   matrix:
-    - "TESTLANG=crystal"
-    - "TESTLANG=ruby"
-    - "TESTLANG=nim"
-    - "TESTLANG=python"
-    - "TESTLANG=go"
-    - "TESTLANG=swift"
-    - "TESTLANG=rust"
-    - "TESTLANG=node"
-    - "TESTLANG=elixir"
-    - "TESTLANG=cpp"
-    - "TESTLANG=scala"
-    - "TESTLANG=csharp"
-    - "TESTLANG=java"
-    - "TESTLANG=php"
+    - FRAMEWORK=aspnetcore
+    - FRAMEWORK=plug
+    - FRAMEWORK=phoenix
+    - FRAMEWORK=akkahttp
+    - FRAMEWORK=evhtp
+    - FRAMEWORK=symfony
+    - FRAMEWORK=laravel
+    - FRAMEWORK=tornado
+    - FRAMEWORK=sanic
+    - FRAMEWORK=japronto
+    - FRAMEWORK=flask
+    - FRAMEWORK=vibora
+    - FRAMEWORK=django
+    - FRAMEWORK=mofuw
+    - FRAMEWORK=jester
+    - FRAMEWORK=act
+    - FRAMEWORK=criollo
+    - FRAMEWORK=rails
+    - FRAMEWORK=rack-routing
+    - FRAMEWORK=sinatra
+    - FRAMEWORK=hanami
+    - FRAMEWORK=roda
+    - FRAMEWORK=flame
+    - FRAMEWORK=raze
+    - FRAMEWORK=kemal
+    - FRAMEWORK=spider-gazelle
+    - FRAMEWORK=lucky
+    - FRAMEWORK=amber
+    - FRAMEWORK=router.cr
+    - FRAMEWORK=kitura
+    - FRAMEWORK=perfect
+    - FRAMEWORK=vapor
+    - FRAMEWORK=gin
+    - FRAMEWORK=fasthttprouter
+    - FRAMEWORK=echo
+    - FRAMEWORK=iris
+    - FRAMEWORK=gorilla-mux
+    - FRAMEWORK=nickel
+    - FRAMEWORK=actix-web
+    - FRAMEWORK=rocket
+    - FRAMEWORK=iron
+    - FRAMEWORK=restify
+    - FRAMEWORK=express
+    - FRAMEWORK=hapi
+    - FRAMEWORK=fastify
+    - FRAMEWORK=koa
+    - FRAMEWORK=polka
+    - FRAMEWORK=rayo
 
 script:
   - shards build
-  - make ${TESTLANG}
-  - bin/benchmarker ${TESTLANG} --check
+  - bin/neph ${FRAMEWORK}
+  - bin/benchmarker ${FRAMEWORK} --check

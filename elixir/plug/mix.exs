@@ -4,7 +4,7 @@ defmodule MyPlug.Mixfile do
   def project do
     [app: :my_plug,
      version: "0.1.0",
-     elixir: "~> 1.6.4",
+     elixir: "~> 1.7.1",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps()]
@@ -29,8 +29,8 @@ defmodule MyPlug.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:cowboy, "~> 1.0.0"},
-     {:plug, "~> 1.5"},
-     {:distillery, "~> 1.0"}]
+    [{:cowboy, "~> 2.4.0"},
+     {:plug, "~> 1.6.1"},
+     {:distillery, "~> 2.0.0-rc.6"}]
   end
 end
