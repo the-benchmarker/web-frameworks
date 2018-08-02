@@ -29,8 +29,8 @@ defmodule MyPlug.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:cowboy, "~> 1.0.0"},
-     {:plug, "~> 1.5"},
-     {:distillery, "~> 1.0"}]
+    [{:cowboy, "~> 2.4.0"},
+     {:plug, "~> 1.6.1"},
+     {:distillery, "~> 2.0.0-rc.6"}]
   end
 end
