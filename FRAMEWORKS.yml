@@ -124,13 +124,13 @@ rust:
   rocket:
     website: rocket.rs
     version: "0.3"
-#elixir:
-#  phoenix:
-#    webiste: phoenixframework.org
-#    version: "1.3"
-#  plug:
-#    github: github.com/elixir-plug/plug
-#    version: "1.5"
+elixir:
+  phoenix:
+    website: phoenixframework.org
+    version: "1.3"
+  plug:
+    github: elixir-plug/plug
+    version: "1.5"
 cpp:
   evhtp:
     github: criticalstack/libevhtp
