@@ -47,7 +47,7 @@ PATH_PREFIX = "../../../bin/"
 CLIENT = File.expand_path(PATH_PREFIX + "client", __FILE__)
 
 # Each framework
-record Target, lang : String, name : String, repo : String, version : Float64
+record Target, lang : String, name : String, repo : String, version : String
 record Filter, req : Float64, lat : Float64
 record Ranked, res : Filter, target : Target
 
@@ -56,12 +56,12 @@ def frameworks : Array(Target)
 
   YAML.parse(File.read("FRAMEWORKS.yml")).as_h.each do |lang, data|
     data.as_h.each do |framework, row|
-      if row.has_key?("github")
-        link = "github.com/#{row["github"]}
+      if row.as_h.has_key?("github")
+        link = "github.com/#{row["github"].as_s}"
       else
-        link = row["website"]
+        link = row["website"].as_s
       end
-      targets.push(Target.new(lang.as_s, framework.as_s, link, row["version"].as_f))
+      targets.push(Target.new(lang.as_s, framework.as_s, link, row["version"].as_s))
     end
   end
 
