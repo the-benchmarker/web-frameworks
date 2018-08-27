@@ -326,12 +326,24 @@ unless check
     puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
   end
 
+
   puts_markdown "", m_lines, true
-  puts_markdown "</details>", m_lines, true
+  puts_markdown "### Requests per second", m_lines, true
   puts_markdown "", m_lines, true
 
   puts_markdown "", m_lines, true
-  puts_markdown "<details><summary>Ranked by requests (ordered by number or requests per sencond - highest is better)</summary>", m_lines, true
+  puts_markdown "#### Ranking (top 5)", m_lines, true
+  puts_markdown "", m_lines, true
+
+  ranks = ranks_by_requests[0..5]
+  ranks.each do |framework|
+    puts_markdown "", m_lines, true
+    puts_markdown "+ %s (%s)" % [framework.target.name, framework.target.lang], m_lines, true
+    puts_markdown "", m_lines, true
+  end
+
+  puts_markdown "", m_lines, true
+  puts_markdown "#### Full table", m_lines, true
   puts_markdown "", m_lines, true
 
   puts_markdown "| %-25s | %-25s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
@@ -342,10 +354,6 @@ unless check
     result = Result.from_json(raw)
     puts_markdown "| %-25s | %-25s | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
   end
-
-  puts_markdown "", m_lines, true
-  puts_markdown "</details>", m_lines, true
-  puts_markdown "", m_lines, true
 
   if record
     path = File.expand_path("../../../README.md", __FILE__)
