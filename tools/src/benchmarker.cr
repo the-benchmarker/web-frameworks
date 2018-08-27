@@ -298,7 +298,22 @@ unless check
   # --- Ranking of frameworks
 
   puts_markdown "", m_lines, true
-  puts_markdown "<details open><summary>Ranked by latency (ordered by 50th percentile - lowest is better)</summary> ", m_lines, true
+  puts_markdown "### Latency", m_lines, true
+  puts_markdown "", m_lines, true
+
+  puts_markdown "", m_lines, true
+  puts_markdown "#### Ranking (top 5)", m_lines, true
+  puts_markdown "", m_lines, true
+
+  ranks = ranks_by_latency[0..5]
+  ranks.each do |framework|
+    puts_markdown "", m_lines, true
+    puts_markdown "+ %s (%s)" % [framework.target.name, framework.target.lang], m_lines, true
+    puts_markdown "", m_lines, true
+  end
+
+  puts_markdown "", m_lines, true
+  puts_markdown "#### Full table", m_lines, true
   puts_markdown "", m_lines, true
 
   puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
