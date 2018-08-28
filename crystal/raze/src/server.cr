@@ -12,6 +12,7 @@ post "/user" do |ctx|
   nil
 end
 
+Raze.config.logging = false
 Raze.config.port = 3000
 Raze.config.env = "production"
 Raze.run
