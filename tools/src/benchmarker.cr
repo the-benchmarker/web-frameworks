@@ -193,13 +193,13 @@ end
 def benchmark(host, threads, connections, target, store) : Filter
   latency = 0.0
   requests = 0.0
-  raw = `#{CLIENT} --threads #{threads} --url http://#{host}:3000 --init`
+  raw = `#{CLIENT} --threads #{threads} --requests #{requests} --url http://#{host}:3000 --init`
   result = Result.from_json(raw)
   parser = JSON::PullParser.new(raw)
   results = Hash(String, Hash(String, Float64)).new(parser)
 
   ["/", "/user/0"].each do |route|
-    raw = `#{CLIENT} --threads #{threads} --url http://#{host}:3000#{route}`
+    raw = `#{CLIENT} --threads #{threads} ---requests #{requests} --url http://#{host}:3000#{route}`
     result = Result.from_json(raw)
     parser = JSON::PullParser.new(raw)
     data = Hash(String, Hash(String, Float64)).new(parser)
@@ -211,7 +211,7 @@ def benchmark(host, threads, connections, target, store) : Filter
   end
 
   ["/user"].each do |route|
-    raw = `#{CLIENT} --threads #{threads} --method "POST" --url http://#{host}:3000#{route}`
+    raw = `#{CLIENT} --threads #{threads} --requests #{requests} --method "POST" --url http://#{host}:3000#{route}`
     result = Result.from_json(raw)
     parser = JSON::PullParser.new(raw)
     data = Hash(String, Hash(String, Float64)).new(parser)
