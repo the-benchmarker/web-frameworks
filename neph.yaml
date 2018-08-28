@@ -20,7 +20,8 @@ crystal:
     - router.cr
     - amber
     - kemal
-    #- lucky
+    - raze
+    - lucky
     - spider-gazelle
 
 ruby:
