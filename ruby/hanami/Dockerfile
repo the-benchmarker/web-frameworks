@@ -6,6 +6,8 @@ COPY Gemfile config.ru ./
 COPY apps apps
 COPY config config
 
+ENV HANAMI_ENV production
+
 RUN bundle install
 
 EXPOSE 3000
