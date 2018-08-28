@@ -276,7 +276,7 @@ targets.each do |target|
 
   remote_ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
 
-  result = benchmark(remote_ip, threads, requests, target, store)
+  result = benchmark(remote_ip, threads, connections, target, store)
 
   all.push(Ranked.new(result, target))
 
@@ -289,9 +289,9 @@ ranks_by_requests = all.sort do |rank0, rank1|
   rank1.res.req <=> rank0.res.req
 end
 
-ranks_by_latency = all.sort do |rank0, rank1|
-  rank0.res.lat <=> rank1.res.lat
-end
+  ranks_by_latency = all.sort do |rank0, rank1|
+    rank0.res.lat <=> rank1.res.lat
+  end
 
 # --- Ranking of frameworks
 
