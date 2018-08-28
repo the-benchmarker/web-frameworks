@@ -9,10 +9,11 @@ require "kiwi/memory_store"
 ####################
 
 threads = (System.cpu_count + 1).to_i
-requests = 100_000.0
+connections = 100_000.0
 record = false
 check = false
 store = Kiwi::MemoryStore.new
+duration = 15
 
 #################
 # ### OPTIONS ###
@@ -20,11 +21,14 @@ store = Kiwi::MemoryStore.new
 
 OptionParser.parse! do |parser|
   parser.banner = "Usage: time ./bin/benchmark [options]"
-  parser.on("-t THREADS", "--threads=THREADS", "# of threads") do |x|
-    threads = x.to_i
+  parser.on("-t THREADS", "--threads THREADS", "# of threads") do |x|
+    threads = x
   end
-  parser.on("-r REQUESTS", "--requests=REQUESTS", "# of iterations of requests") do |x|
-    requests = x.to_i
+  parser.on("-c CONNECTIONS", "--connections CONNECTIONS", "# of iterations of requests") do |x|
+    connections = x
+  end
+  parser.on("-d DURATION", "--duration DURATION", "Time to test, in seconds") do |x|
+    duration = x
   end
   parser.on("--record", "Record results in README.md") do
     record = true
@@ -190,16 +194,16 @@ end
 # connections : number of opened connections per thread
 # target : target
 # store : in-memory storage used for results
-def benchmark(host, threads, connections, target, store) : Filter
+def benchmark(host, threads, connections, duration, target, store) : Filter
   latency = 0.0
   requests = 0.0
-  raw = `#{CLIENT} --threads #{threads} --url http://#{host}:3000 --init`
+  raw = `#{CLIENT} --url http://#{host}:3000 --init`
   result = Result.from_json(raw)
   parser = JSON::PullParser.new(raw)
   results = Hash(String, Hash(String, Float64)).new(parser)
 
   ["/", "/user/0"].each do |route|
-    raw = `#{CLIENT} --threads #{threads} --url http://#{host}:3000#{route}`
+    raw = `#{CLIENT} --duration #{duration} --connections #{connections.to_s} --threads #{threads} --url http://#{host}:3000#{route}`
     result = Result.from_json(raw)
     parser = JSON::PullParser.new(raw)
     data = Hash(String, Hash(String, Float64)).new(parser)
@@ -211,7 +215,7 @@ def benchmark(host, threads, connections, target, store) : Filter
   end
 
   ["/user"].each do |route|
-    raw = `#{CLIENT} --threads #{threads} --method "POST" --url http://#{host}:3000#{route}`
+    raw = `#{CLIENT} --method POST --duration #{duration} --connections #{connections.to_s} --threads #{threads} --url http://#{host}:3000#{route}`
     result = Result.from_json(raw)
     parser = JSON::PullParser.new(raw)
     data = Hash(String, Hash(String, Float64)).new(parser)
@@ -249,12 +253,18 @@ puts_markdown "Last update: #{Time.now.to_s("%Y-%m-%d")}", m_lines, true
 puts_markdown "```", m_lines, true
 puts_markdown "OS: #{`uname -s`.rstrip} (version: #{`uname -r`.rstrip}, arch: #{`uname -m`.rstrip})", m_lines, true
 puts_markdown "CPU Cores: #{System.cpu_count}", m_lines, true
-puts_markdown "threads: #{threads}, requests: #{requests}"
+puts_markdown "threads: #{threads}, connections: #{connections}"
 puts_markdown "```", m_lines, true
 puts_markdown "Benchmark running ..."
 
 all = [] of Ranked
 ranks = [] of Ranked
+emojis = [] of String
+emojis << ":one:"
+emojis << ":two:"
+emojis << ":three:"
+emojis << ":four:"
+emojis << ":five:"
 
 targets.each do |target|
   cid = `docker run -td #{target.name}`.strip
@@ -277,7 +287,7 @@ targets.each do |target|
       STDERR.puts "Fail to POST on /user for #{target} : [#{r.status_code}] #{r.body}"
     end
   else
-    result = benchmark(remote_ip, threads, requests, target, store)
+    result = benchmark(remote_ip, threads, connections, duration, target, store)
 
     all.push(Ranked.new(result, target))
   end
@@ -299,7 +309,22 @@ unless check
   # --- Ranking of frameworks
 
   puts_markdown "", m_lines, true
-  puts_markdown "<details open><summary>Ranked by latency (ordered by 50th percentile - lowest is better)</summary> ", m_lines, true
+  puts_markdown "### Latency", m_lines, true
+  puts_markdown "", m_lines, true
+
+  puts_markdown "", m_lines, true
+  puts_markdown "#### Ranking (top 5)", m_lines, true
+  puts_markdown "", m_lines, true
+
+  ranks = ranks_by_latency[0..5]
+  ranks.each do |framework|
+    puts_markdown "", m_lines, true
+    puts_markdown "+ %s (%s)" % [framework.target.name, framework.target.lang], m_lines, true
+    puts_markdown "", m_lines, true
+  end
+
+  puts_markdown "", m_lines, true
+  puts_markdown "#### Full table", m_lines, true
   puts_markdown "", m_lines, true
 
   puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
@@ -311,12 +336,24 @@ unless check
     puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
   end
 
+
   puts_markdown "", m_lines, true
-  puts_markdown "</details>", m_lines, true
+  puts_markdown "### Requests per second", m_lines, true
   puts_markdown "", m_lines, true
 
   puts_markdown "", m_lines, true
-  puts_markdown "<details><summary>Ranked by requests (ordered by number or requests per sencond - highest is better)</summary>", m_lines, true
+  puts_markdown "#### Ranking (top 5)", m_lines, true
+  puts_markdown "", m_lines, true
+
+  ranks = ranks_by_requests[0..5]
+  ranks.each_with_index do |framework, i|
+    puts_markdown "", m_lines, true
+    puts_markdown "+ %s %s (%s)" % [emojis[i], framework.target.name, framework.target.lang], m_lines, true
+    puts_markdown "", m_lines, true
+  end
+
+  puts_markdown "", m_lines, true
+  puts_markdown "#### Full table", m_lines, true
   puts_markdown "", m_lines, true
 
   puts_markdown "| %-25s | %-25s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
@@ -327,10 +364,6 @@ unless check
     result = Result.from_json(raw)
     puts_markdown "| %-25s | %-25s | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
   end
-
-  puts_markdown "", m_lines, true
-  puts_markdown "</details>", m_lines, true
-  puts_markdown "", m_lines, true
 
   if record
     path = File.expand_path("../../../README.md", __FILE__)
