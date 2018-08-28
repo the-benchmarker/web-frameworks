@@ -69,7 +69,7 @@ flame:
 	docker build -t flame ruby/flame
 
 # --- Crystal ---
-crystal: kemal router.cr lucky amber spider-gazelle
+crystal: kemal router.cr amber spider-gazelle # lucky
 
 # Kemal
 kemal:

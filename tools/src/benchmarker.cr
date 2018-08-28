@@ -57,6 +57,7 @@ LANGS = [
   {lang: "crystal", targets: [
     {name: "kemal", repo: "kemalcr/kemal"},
     {name: "router.cr", repo: "tbrand/router.cr"},
+    {name: "raze", repo: "samueleaton/raze" },
     {name: "amber", repo: "amberframework/amber"},
     {name: "lucky", repo: "luckyframework/lucky"},
     {name: "spider-gazelle", repo: "spider-gazelle/spider-gazelle"},
