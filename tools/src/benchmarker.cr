@@ -58,7 +58,7 @@ LANGS = [
     {name: "kemal", repo: "kemalcr/kemal"},
     {name: "router.cr", repo: "tbrand/router.cr"},
     {name: "amber", repo: "amberframework/amber"},
-    #{name: "lucky", repo: "luckyframework/lucky"},
+    {name: "lucky", repo: "luckyframework/lucky"},
     {name: "spider-gazelle", repo: "spider-gazelle/spider-gazelle"},
   ]},
   {lang: "go", targets: [
