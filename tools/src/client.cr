@@ -11,21 +11,24 @@ class Client
     @duration = 15
     @url = ""
     @method = "GET"
-    @connections = 1000
+    @connections = 1000.0
     @init = false
 
     OptionParser.parse! do |parser|
       parser.banner = "Usage: time ./bin/benchmark [options]"
-      parser.on("-t THREADS", "--threads=THREADS", "# of threads") do |threads|
+      parser.on("-t THREADS", "--threads THREADS", "# of threads") do |threads|
         @threads = threads.to_i
       end
-      parser.on("-c CONNECTIONS", "--requests=CONNECTIONS", "# of opened connections") do |connections|
-        @connections = connections.to_i
+      parser.on("-c CONNECTIONS", "--connections CONNECTIONS", "# of opened connections") do |connections|
+        @connections = connections.to_f
       end
-      parser.on("-u URL", "--url=URL", "URL to call") do |url|
+      parser.on("-d DURATION", "--duration DURATION", "Time to test, in seconds") do |duration|
+        @duration = duration.to_i
+      end
+      parser.on("-u URL", "--url URL", "URL to call") do |url|
         @url = url
       end
-      parser.on("-m METHOD", "--method=METHOD", "HTTP method to use") do |method|
+      parser.on("-m METHOD", "--method METHOD", "HTTP method to use") do |method|
         @method = method
       end
       parser.on("-i", "--init", "Initialize (create json with 0 values)") do |x|
