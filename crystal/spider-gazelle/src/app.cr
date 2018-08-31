@@ -3,7 +3,9 @@ require "./config"
 
 # Server defaults
 port = 3000
-host = "0.0.0.0"
+host = "127.0.0.1"
+cluster = false
+process_count = 1
 
 # Command line options
 OptionParser.parse! do |parser|
@@ -11,6 +13,11 @@ OptionParser.parse! do |parser|
 
   parser.on("-b HOST", "--bind=HOST", "Specifies the server host") { |h| host = h }
   parser.on("-p PORT", "--port=PORT", "Specifies the server port") { |p| port = p.to_i }
+
+  parser.on("-c COUNT", "--cluster=COUNT", "Specifies the number of processes to handle requests") do |c|
+    cluster = true
+    process_count = c.to_i
+  end
 
   parser.on("-r", "--routes", "List the application routes") do
     ActionController::Server.print_routes
@@ -33,14 +40,24 @@ puts "Launching #{APP_NAME} v#{VERSION}"
 server = ActionController::Server.new(port, host)
 
 # Detect ctr-c to shutdown gracefully
-Signal::INT.trap do
-  puts " > terminating gracefully"
-  server.close
+Signal::INT.trap do |signal|
+  if cluster
+    puts " > terminating cluster"
+    signal.ignore
+    spawn { server.close }
+  else
+    puts " > terminating gracefully"
+    server.close
+  end
 end
 
+# Start clustering
+server.cluster(process_count) if cluster
+
 # Start the server
-puts "Listening on tcp://#{host}:#{port}"
-server.run
+server.run do
+  puts "Listening on #{server.print_addresses}"
+end
 
 # Shutdown message
 puts "#{APP_NAME} leaps through the veldt\n"
