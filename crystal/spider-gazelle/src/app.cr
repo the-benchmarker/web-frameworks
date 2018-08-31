@@ -7,6 +7,9 @@ host = "127.0.0.1"
 cluster = false
 process_count = 1
 
+# Option parser modifies ARGV
+args = ARGV.dup
+
 # Command line options
 OptionParser.parse! do |parser|
   parser.banner = "Usage: #{PROGRAM_NAME} [arguments]"
@@ -14,9 +17,9 @@ OptionParser.parse! do |parser|
   parser.on("-b HOST", "--bind=HOST", "Specifies the server host") { |h| host = h }
   parser.on("-p PORT", "--port=PORT", "Specifies the server port") { |p| port = p.to_i }
 
-  parser.on("-c COUNT", "--cluster=COUNT", "Specifies the number of processes to handle requests") do |c|
+  parser.on("-w COUNT", "--workers=COUNT", "Specifies the number of processes to handle requests") do |w|
     cluster = true
-    process_count = c.to_i
+    process_count = w.to_i
   end
 
   parser.on("-r", "--routes", "List the application routes") do
@@ -39,20 +42,15 @@ end
 puts "Launching #{APP_NAME} v#{VERSION}"
 server = ActionController::Server.new(port, host)
 
+# Start clustering
+server.cluster(process_count, "-w", "--workers", args) if cluster
+
 # Detect ctr-c to shutdown gracefully
 Signal::INT.trap do |signal|
-  if cluster
-    puts " > terminating cluster"
-    signal.ignore
-    spawn { server.close }
-  else
-    puts " > terminating gracefully"
-    server.close
-  end
+  puts " > terminating gracefully"
+  spawn { server.close }
+  signal.ignore
 end
-
-# Start clustering
-server.cluster(process_count) if cluster
 
 # Start the server
 server.run do
