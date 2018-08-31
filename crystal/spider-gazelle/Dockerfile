@@ -8,4 +8,4 @@ COPY src src
 
 RUN shards build --release --no-debug
 
-CMD bin/app -c 0
+CMD bin/app -c $(nproc)
