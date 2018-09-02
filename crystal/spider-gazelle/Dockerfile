@@ -1,4 +1,4 @@
-FROM crystallang/crystal:0.25.1
+FROM crystallang/crystal:0.26.1
 
 WORKDIR /usr/src/app
 
@@ -8,4 +8,4 @@ COPY src src
 
 RUN shards build --release --no-debug
 
-CMD bin/app
+CMD bin/app -w $(nproc) -b 0.0.0.0

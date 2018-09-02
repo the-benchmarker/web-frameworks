@@ -4,10 +4,10 @@ version: 1.0.0
 dependencies:
   action-controller:
     github: spider-gazelle/action-controller
-    version: ~> 1.0.5
+    version: ~> 1.1.2
 
 targets:
   app:
     main: src/app.cr
 
-crystal: 0.24.2
+crystal: 0.26.1
