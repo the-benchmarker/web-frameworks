@@ -52,6 +52,7 @@ LANGS = [
     {name: "hanami", repo: "hanami/hanami"},
   ]},
   {lang: "crystal", targets: [
+    {name: "raze", repo: "samueleaton/raze"},
     {name: "kemal", repo: "kemalcr/kemal"},
     {name: "router.cr", repo: "tbrand/router.cr"},
     {name: "raze", repo: "samueleaton/raze" },
