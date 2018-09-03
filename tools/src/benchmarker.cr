@@ -99,6 +99,7 @@ LANGS = [
     {name: "aspnetcore", repo: "aspnet/Home"},
   ]},
   {lang: "python", targets: [
+    {name: "japronto", repo: "squeaky-pl/japronto"},
     {name: "sanic", repo: "channelcat/sanic"},
     {name: "flask", repo: "pallets/flask"},
     {name: "django", repo: "django/django"},
