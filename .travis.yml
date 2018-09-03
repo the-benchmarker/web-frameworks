@@ -8,8 +8,6 @@ language: crystal
 env:
   matrix:
     - FRAMEWORK=aspnetcore
-    - FRAMEWORK=plug
-    - FRAMEWORK=phoenix
     - FRAMEWORK=akkahttp
     - FRAMEWORK=evhtp
     - FRAMEWORK=symfony
@@ -21,7 +19,6 @@ env:
     - FRAMEWORK=vibora
     - FRAMEWORK=django
     - FRAMEWORK=mofuw
-    - FRAMEWORK=jester
     - FRAMEWORK=act
     - FRAMEWORK=rails
     - FRAMEWORK=rack-routing
