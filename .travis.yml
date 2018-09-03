@@ -56,3 +56,6 @@ script:
   - shards build
   - bin/neph ${FRAMEWORK}
   - crystal spec
+
+notifications:
+  email: false
