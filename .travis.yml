@@ -55,4 +55,4 @@ env:
 script:
   - shards build
   - bin/neph ${FRAMEWORK}
-  - bin/benchmarker ${FRAMEWORK} --check
+  - crystal spec
