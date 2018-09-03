@@ -22,6 +22,7 @@ it "get on /user/0" do
   it "should reply with a 200" { r.status_code.should eq 200 }
   it "should rerturn an empty body" { r.body.should eq "0" }
 end
+
 it "post on /user" do
   name = ENV["FRAMEWORK"]
   remote_ip = get_ip(name)
