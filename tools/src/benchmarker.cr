@@ -29,9 +29,6 @@ OptionParser.parse! do |parser|
   parser.on("--record", "Record results in README.md") do
     record = true
   end
-  parser.on("--check", "Check mode (without result, typically run on CI)") do
-    check = true
-  end
 end
 
 ##################
@@ -264,86 +261,69 @@ targets.each do |target|
 
   remote_ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
 
-  if check
-    r = HTTP::Client.get "http://#{remote_ip}:3000/"
-    unless r.status_code == 200 && r.body.empty?
-      STDERR.puts "Fail to GET on / for #{target} : [#{r.status_code}] #{r.body}"
-    end
-    r = HTTP::Client.get "http://#{remote_ip}:3000/user/0"
-    unless r.status_code == 200 && r.body.lines.first == "0"
-      STDERR.puts "Fail to GET on /user/0 for #{target} : [#{r.status_code}] #{r.body}"
-    end
-    r = HTTP::Client.post "http://#{remote_ip}:3000/user"
-    unless r.status_code == 200 && r.body.empty?
-      STDERR.puts "Fail to POST on /user for #{target} : [#{r.status_code}] #{r.body}"
-    end
-  else
-    result = benchmark(remote_ip, threads, requests, target, store)
+  result = benchmark(remote_ip, threads, requests, target, store)
 
-    all.push(Ranked.new(result, target))
-  end
+  all.push(Ranked.new(result, target))
 
   puts_markdown "Done. <- #{target.name}"
 
   `docker stop #{cid}`
 end
 
-unless check
-  ranks_by_requests = all.sort do |rank0, rank1|
-    rank1.res.req <=> rank0.res.req
-  end
+ranks_by_requests = all.sort do |rank0, rank1|
+  rank1.res.req <=> rank0.res.req
+end
 
-  ranks_by_latency = all.sort do |rank0, rank1|
-    rank0.res.lat <=> rank1.res.lat
-  end
+ranks_by_latency = all.sort do |rank0, rank1|
+  rank0.res.lat <=> rank1.res.lat
+end
 
-  # --- Ranking of frameworks
+# --- Ranking of frameworks
 
-  puts_markdown "", m_lines, true
-  puts_markdown "<details open><summary>Ranked by latency (ordered by 50th percentile - lowest is better)</summary> ", m_lines, true
-  puts_markdown "", m_lines, true
+puts_markdown "", m_lines, true
+puts_markdown "<details open><summary>Ranked by latency (ordered by 50th percentile - lowest is better)</summary> ", m_lines, true
+puts_markdown "", m_lines, true
 
-  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
-  puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|", m_lines, true
+puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
+puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|", m_lines, true
 
-  ranks_by_latency.each do |framework|
-    raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
-    result = Result.from_json(raw)
-    puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
-  end
+ranks_by_latency.each do |framework|
+  raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
+  result = Result.from_json(raw)
+  puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
+end
 
-  puts_markdown "", m_lines, true
-  puts_markdown "</details>", m_lines, true
-  puts_markdown "", m_lines, true
+puts_markdown "", m_lines, true
+puts_markdown "</details>", m_lines, true
+puts_markdown "", m_lines, true
 
-  puts_markdown "", m_lines, true
-  puts_markdown "<details><summary>Ranked by requests (ordered by number or requests per sencond - highest is better)</summary>", m_lines, true
-  puts_markdown "", m_lines, true
+puts_markdown "", m_lines, true
+puts_markdown "<details><summary>Ranked by requests (ordered by number or requests per sencond - highest is better)</summary>", m_lines, true
+puts_markdown "", m_lines, true
 
-  puts_markdown "| %-25s | %-25s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
-  puts_markdown "|---------------------------|---------------------------|----------------:|---------:|", m_lines, true
+puts_markdown "| %-25s | %-25s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
+puts_markdown "|---------------------------|---------------------------|----------------:|---------:|", m_lines, true
 
-  ranks_by_requests.each do |framework|
-    raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
-    result = Result.from_json(raw)
-    puts_markdown "| %-25s | %-25s | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
-  end
+ranks_by_requests.each do |framework|
+  raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
+  result = Result.from_json(raw)
+  puts_markdown "| %-25s | %-25s | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
+end
 
-  puts_markdown "", m_lines, true
-  puts_markdown "</details>", m_lines, true
-  puts_markdown "", m_lines, true
+puts_markdown "", m_lines, true
+puts_markdown "</details>", m_lines, true
+puts_markdown "", m_lines, true
 
-  if record
-    path = File.expand_path("../../../README.md", __FILE__)
-    tag_from = "<!-- Result from here -->"
-    tag_till = "<!-- Result till here -->"
-    m_lines.insert(0, tag_from)
-    m_lines.push(tag_till)
-    prev_readme = File.read(path)
-    next_readme = prev_readme.gsub(
-      /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
-      m_lines.join('\n'))
+if record
+  path = File.expand_path("../../../README.md", __FILE__)
+  tag_from = "<!-- Result from here -->"
+  tag_till = "<!-- Result till here -->"
+  m_lines.insert(0, tag_from)
+  m_lines.push(tag_till)
+  prev_readme = File.read(path)
+  next_readme = prev_readme.gsub(
+    /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
+    m_lines.join('\n'))
 
-    File.write(path, next_readme)
-  end
+  File.write(path, next_readme)
 end
