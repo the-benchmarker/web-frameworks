@@ -192,6 +192,10 @@ tornado:
 vibora:
 	docker build -t vibora python/vibora
 
+# Cyclone
+cyclone:
+	docker build -t cyclone python/cyclone
+
 # --- Nim ---
 nim: jester mofuw
 

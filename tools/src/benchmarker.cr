@@ -105,6 +105,7 @@ LANGS = [
     {name: "django", repo: "django/django"},
     {name: "tornado", repo: "tornadoweb/tornado"},
     {name: "vibora", repo: "vibora-io/vibora"},
+    {name: "cyclone", repo: "ygl-rg/cyclone3"},
   ]},
   {lang: "nim", targets: [
     {name: "jester", repo: "dom96/jester"},

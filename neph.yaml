@@ -45,6 +45,7 @@ python:
     - sanic
     - tornado
     - vibora
+    - cyclone
 
 go:
   dependencies:
