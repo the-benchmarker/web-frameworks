@@ -4,7 +4,7 @@ class User < Application
   end
 
   def show
-    render text: params["id"]
+    render text: route_params["id"]
   end
 
   def create
