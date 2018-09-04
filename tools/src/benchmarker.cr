@@ -54,14 +54,9 @@ record Ranked, res : Filter, target : Target
 def frameworks : Array(Target)
   targets = [] of Target
 
-  YAML.parse(File.read("FRAMEWORKS.yml")).as_h.each do |lang, data|
-    data.as_h.each do |framework, row|
-      if row.as_h.has_key?("github")
-        link = "github.com/#{row["github"].as_s}"
-      else
-        link = row["website"].as_s
-      end
-      targets.push(Target.new(lang.as_s, framework.as_s, link, row["version"].as_s))
+  LANGS.each do |lang|
+    lang[:targets].each do |framework|
+      targets.push(Target.new(lang[:lang], framework[:name], framework[:repo]))
     end
   end
 

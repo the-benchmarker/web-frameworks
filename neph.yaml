@@ -145,6 +145,11 @@ prism:
     docker build -t prism .
   dir: crystal/prism
 
+prism:
+  commands:
+    - docker build -t prism .
+  directory: crystal/prism
+
 rails:
   command: |
     docker build -t rails .
