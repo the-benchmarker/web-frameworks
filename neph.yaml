@@ -23,6 +23,7 @@ crystal:
     - raze
     - lucky
     - spider-gazelle
+    - prism
 
 ruby:
   dependencies:
@@ -132,6 +133,11 @@ spider-gazelle:
   commands:
     - docker build -t spider-gazelle .
   directory: crystal/spider-gazelle
+
+prism:
+  commands:
+    - docker build -t prism .
+  directory: crystal/prism
 
 rails:
   commands:
