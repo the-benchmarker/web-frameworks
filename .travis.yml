@@ -18,6 +18,7 @@ env:
     - FRAMEWORK=flask
     - FRAMEWORK=vibora
     - FRAMEWORK=django
+    - FRAMEWORK=bottle
     - FRAMEWORK=mofuw
     - FRAMEWORK=act
     - FRAMEWORK=rails
