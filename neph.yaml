@@ -42,6 +42,7 @@ nim:
 python:
   dependencies:
     - flask
+    - japronto
     - django
     - sanic
     - tornado
@@ -209,6 +210,11 @@ vibora:
   commands:
     - docker build -t vibora .
   directory: python/vibora
+
+bottle:
+  commands:
+    - docker build -t bottle .
+  directory: python/bottle
 
 iris:
   commands:
