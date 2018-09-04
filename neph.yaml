@@ -210,6 +210,12 @@ vibora:
     - docker build -t vibora .
   directory: python/vibora
 
+cyclone:
+  commands:
+    - docker build -t cyclone .
+  directory: python/cyclone
+
+
 iris:
   commands:
     - docker build -t iris .
