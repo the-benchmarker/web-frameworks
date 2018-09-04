@@ -1,0 +1,12 @@
+name: prism
+
+version: 0.1.0
+
+targets:
+  server:
+    main: server.cr
+
+dependencies:
+  prism:
+    github: vladfaust/prism
+    tag: v0.4.0-beta.3

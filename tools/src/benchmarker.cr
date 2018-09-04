@@ -59,6 +59,7 @@ LANGS = [
     {name: "amber", repo: "amberframework/amber"},
     {name: "lucky", repo: "luckyframework/lucky"},
     {name: "spider-gazelle", repo: "spider-gazelle/spider-gazelle"},
+    {name: "prism", repo: "vladfaust/prism"},
   ]},
   {lang: "go", targets: [
     {name: "echo", repo: "labstack/echo"},
