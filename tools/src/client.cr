@@ -39,9 +39,9 @@ class Client
 
   def run
     if @method == "POST"
-      `wrk -H 'Connection: keep-alive' --latency -d #{@duration}s -s #{PIPELINE_POST} -c #{@connections} --timeout 8 -t #{@threads} #{@url}`
+      `wrk -H 'Connection: keep-alive' --latency -d #{@duration}s -s #{PIPELINE_POST} -c #{@connections.to_i} --timeout 8 -t #{@threads} #{@url}`
     else
-      `wrk -H 'Connection: keep-alive' --latency -d #{@duration}s -s #{PIPELINE_GET} -c #{@connections} --timeout 8 -t #{@threads} #{@url}`
+      `wrk -H 'Connection: keep-alive' --latency -d #{@duration}s -s #{PIPELINE_GET} -c #{@connections.to_i} --timeout 8 -t #{@threads} #{@url}`
     end
 
     result = File.read("/tmp/which_is_the_fastest.out").split(",")
@@ -49,7 +49,6 @@ class Client
 
     data = JSON.build do |json|
       json.object do
-
         json.field "request" do
           json.object do
             json.field "duration", (@init ? 0 : result[0].to_f)

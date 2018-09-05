@@ -88,8 +88,8 @@ LANGS = [
     {name: "hapi", repo: "hapijs/hapi"},
   ]},
   #{lang: "elixir", targets: [
-  #  {name: "plug", repo: "elixir-lang/plug"},
-  #  {name: "phoenix", repo: "phoenixframework/phoenix"},
+  # {name: "plug", repo: "elixir-lang/plug"},
+  # {name: "phoenix", repo: "phoenixframework/phoenix"},
   #]},
   {lang: "swift", targets: [
     {name: "vapor", repo: "vapor/vapor"},
@@ -276,7 +276,7 @@ targets.each do |target|
 
   remote_ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
 
-  result = benchmark(remote_ip, threads, connections, target, store)
+  result = benchmark(remote_ip, threads, connections, duration, target, store)
 
   all.push(Ranked.new(result, target))
 
@@ -289,21 +289,21 @@ ranks_by_requests = all.sort do |rank0, rank1|
   rank1.res.req <=> rank0.res.req
 end
 
-  ranks_by_latency = all.sort do |rank0, rank1|
-    rank0.res.lat <=> rank1.res.lat
-  end
+ranks_by_latency = all.sort do |rank0, rank1|
+  rank0.res.lat <=> rank1.res.lat
+end
 
 # --- Ranking of frameworks
 
-  puts_markdown "", m_lines, true
-  puts_markdown "### Latency", m_lines, true
-  puts_markdown "", m_lines, true
+puts_markdown "", m_lines, true
+puts_markdown "### Latency", m_lines, true
+puts_markdown "", m_lines, true
 
-  puts_markdown "", m_lines, true
-  puts_markdown "#### Ranking (top 5)", m_lines, true
-  puts_markdown "", m_lines, true
+puts_markdown "", m_lines, true
+puts_markdown "#### Ranking (top 5)", m_lines, true
+puts_markdown "", m_lines, true
 
-  ranks = ranks_by_latency[0..5]
+ranks = ranks_by_latency[0...5]
   ranks.each do |framework|
     puts_markdown "", m_lines, true
     puts_markdown "+ %s (%s)" % [framework.target.name, framework.target.lang], m_lines, true
@@ -342,8 +342,11 @@ end
   puts_markdown "#### Full table", m_lines, true
   puts_markdown "", m_lines, true
 
-  puts_markdown "| %-25s | %-25s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
-  puts_markdown "|---------------------------|---------------------------|----------------:|---------:|", m_lines, true
+ranks_by_requests.each do |framework|
+  raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
+  result = Result.from_json(raw)
+  puts_markdown "| %-25s | %-25s | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
+end
 
   ranks_by_requests.each do |framework|
     raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
