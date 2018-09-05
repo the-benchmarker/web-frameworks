@@ -83,10 +83,10 @@ LANGS = [
     {name: "restify", repo: "restify/node-restify"},
     {name: "hapi", repo: "hapijs/hapi"},
   ]},
-  {lang: "elixir", targets: [
-    {name: "plug", repo: "elixir-lang/plug"},
-    {name: "phoenix", repo: "phoenixframework/phoenix"},
-  ]},
+  #{lang: "elixir", targets: [
+  #  {name: "plug", repo: "elixir-lang/plug"},
+  #  {name: "phoenix", repo: "phoenixframework/phoenix"},
+  #]},
   {lang: "swift", targets: [
     {name: "vapor", repo: "vapor/vapor"},
     {name: "perfect", repo: "PerfectlySoft/Perfect"},
@@ -107,7 +107,7 @@ LANGS = [
     {name: "vibora", repo: "vibora-io/vibora"},
   ]},
   {lang: "nim", targets: [
-    {name: "jester", repo: "dom96/jester"},
+    #{name: "jester", repo: "dom96/jester"},
     {name: "mofuw", repo: "2vg/mofuw"},
   ]},
   {lang: "java", targets: [

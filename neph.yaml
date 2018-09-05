@@ -8,7 +8,7 @@ main:
     - swift
     - rust
     - node
-    - elixir
+    #- elixir
     - cpp
     - scala
     - csharp
@@ -36,12 +36,13 @@ ruby:
 
 nim:
   dependencies:
-    - jester
+    #- jester
     - mofuw
 
 python:
   dependencies:
     - flask
+    - japronto
     - django
     - sanic
     - tornado
