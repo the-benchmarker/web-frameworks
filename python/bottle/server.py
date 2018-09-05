@@ -1,19 +1,17 @@
-from bottle import route, run
+from bottle import Bottle, run
 
+app = Bottle()
 
-@route('/')
+@app.route('/')
 def index():
-    return ''
+    return ""
 
 
-@route('/user/<id>')
+@app.route('/user/<id:int>')
 def user_info(id):
     return id
 
 
-@route('/user', method='POST')
+@app.route('/user', method='POST')
 def user():
     return ''
-
-if __name__ == "__main__":
-    run(host='0.0.0.0', port=3000)
