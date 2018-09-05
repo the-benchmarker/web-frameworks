@@ -293,7 +293,7 @@ ranks_by_latency = all.sort do |rank0, rank1|
   rank0.res.lat <=> rank1.res.lat
 end
 
-  # --- Ranking of frameworks
+# --- Ranking of frameworks
 
   puts_markdown "", m_lines, true
   puts_markdown "### Latency", m_lines, true
