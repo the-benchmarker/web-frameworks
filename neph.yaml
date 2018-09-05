@@ -45,8 +45,10 @@ python:
     - japronto
     - django
     - sanic
+    - japronto
     - tornado
     - vibora
+    - cyclone
 
 go:
   dependencies:
@@ -209,6 +211,12 @@ vibora:
   commands:
     - docker build -t vibora .
   directory: python/vibora
+
+cyclone:
+  commands:
+    - docker build -t cyclone .
+  directory: python/cyclone
+
 
 iris:
   commands:
