@@ -9,7 +9,7 @@ def index():
 
 @app.route('/user/<id:int>')
 def user_info(id):
-    return id
+    return str(id)
 
 
 @app.route('/user', method='POST')
