@@ -206,7 +206,7 @@ def benchmark(host, threads, connections, duration, target, store) : Filter
   results = Hash(String, Hash(String, Float64)).new(parser)
 
   ["/", "/user/0"].each do |route|
-    raw = `#{CLIENT} --duration #{duration} --connections #{connections.to_s} --threads #{threads} --url http://#{host}:3000#{route}`
+    raw = `#{CLIENT} --duration #{duration} --connections #{connections.to_i.to_s} --threads #{threads} --url http://#{host}:3000#{route}`
     result = Result.from_json(raw)
     parser = JSON::PullParser.new(raw)
     data = Hash(String, Hash(String, Float64)).new(parser)
@@ -218,7 +218,7 @@ def benchmark(host, threads, connections, duration, target, store) : Filter
   end
 
   ["/user"].each do |route|
-    raw = `#{CLIENT} --method POST --duration #{duration} --connections #{connections.to_s} --threads #{threads} --url http://#{host}:3000#{route}`
+    raw = `#{CLIENT} --method POST --duration #{duration} --connections #{connections.to_i.to_s} --threads #{threads} --url http://#{host}:3000#{route}`
     result = Result.from_json(raw)
     parser = JSON::PullParser.new(raw)
     data = Hash(String, Hash(String, Float64)).new(parser)
@@ -263,11 +263,11 @@ puts_markdown "Benchmark running ..."
 all = [] of Ranked
 ranks = [] of Ranked
 emojis = [] of String
-emojis << ":one:"
-emojis << ":two:"
-emojis << ":three:"
-emojis << ":four:"
-emojis << ":five:"
+emojis << "one"
+emojis << "two"
+emojis << "three"
+emojis << "four"
+emojis << "five"
 
 targets.each do |target|
   cid = `docker run -td #{target.name}`.strip
@@ -304,28 +304,24 @@ puts_markdown "#### Ranking (top 5)", m_lines, true
 puts_markdown "", m_lines, true
 
 ranks = ranks_by_latency[0...5]
-  ranks.each do |framework|
-    puts_markdown "", m_lines, true
-    puts_markdown "+ %s (%s)" % [framework.target.name, framework.target.lang], m_lines, true
-    puts_markdown "", m_lines, true
-  end
-
+ranks.each_with_index do |framework, i|
   puts_markdown "", m_lines, true
-  puts_markdown "#### Full table", m_lines, true
+  puts_markdown ":%s: %s (%s)" % [emojis[i], framework.target.name, framework.target.lang], m_lines, true
   puts_markdown "", m_lines, true
+end
 
-  puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
-  puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|", m_lines, true
+puts_markdown "", m_lines, true
+puts_markdown "#### Full table", m_lines, true
+puts_markdown "", m_lines, true
 
-  ranks_by_latency.each do |framework|
-    raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
-    result = Result.from_json(raw)
-    puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
-  end
+puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
+puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|", m_lines, true
 
-  puts_markdown "", m_lines, true
-  puts_markdown "### Requests per second", m_lines, true
-  puts_markdown "", m_lines, true
+ranks_by_latency.each do |framework|
+  raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
+  result = Result.from_json(raw)
+  puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
+end
 
   puts_markdown "", m_lines, true
   puts_markdown "#### Ranking (top 5)", m_lines, true
@@ -338,9 +334,19 @@ ranks = ranks_by_latency[0...5]
     puts_markdown "", m_lines, true
   end
 
+ranks = ranks_by_requests[0...5]
+ranks.each_with_index do |framework, i|
   puts_markdown "", m_lines, true
-  puts_markdown "#### Full table", m_lines, true
+  puts_markdown ":%s: %s (%s)" % [emojis[i], framework.target.name, framework.target.lang], m_lines, true
   puts_markdown "", m_lines, true
+end
+
+puts_markdown "", m_lines, true
+puts_markdown "#### Full table", m_lines, true
+puts_markdown "", m_lines, true
+
+puts_markdown "| %-25s | %-25s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
+puts_markdown "|---------------------------|---------------------------|----------------:|---------:|", m_lines, true
 
 ranks_by_requests.each do |framework|
   raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
