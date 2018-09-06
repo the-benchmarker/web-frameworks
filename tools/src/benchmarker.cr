@@ -107,6 +107,7 @@ LANGS = [
     {name: "vibora", repo: "vibora-io/vibora"},
     {name: "bottle", repo: "bottlepy/bottle"},
     {name: "aiohttp", repo: "aio-libs/aiohttp"},
+    {name: "quart", repo: "pgjones/quart"},
   ]},
   {lang: "nim", targets: [
     #{name: "jester", repo: "dom96/jester"},
