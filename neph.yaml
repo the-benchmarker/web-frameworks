@@ -49,6 +49,7 @@ python:
     - vibora
     - bottle
     - aiohttp
+    - quart
 
 go:
   dependencies:
@@ -217,10 +218,10 @@ bottle:
     - docker build -t bottle .
   directory: python/bottle
 
-aiohttp:
+quart:
   commands:
-    - docker build -t aiohttp .
-  directory: python/aiohttp
+    - docker build -t quart .
+  directory: python/quart
 
 iris:
   commands:
