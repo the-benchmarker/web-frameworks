@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 3000
 
-CMD gunicorn --bind 0.0.0.0:3000 --reuse-port --worker-class aiohttp.GunicornWebWorker --workers $(nproc) server:app
+CMD gunicorn --bind 0.0.0.0:3000 --reuse-port --worker-class aiohttp.GunicornUVLoopWebWorker --workers $(nproc) server:app
