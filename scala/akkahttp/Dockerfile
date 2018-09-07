@@ -10,4 +10,4 @@ RUN sbt assembly
 
 EXPOSE 3000
 
-CMD sbt run
+CMD java -jar target/scala-2.12/server_scala_akkahttp
