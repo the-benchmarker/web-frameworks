@@ -16,6 +16,3 @@ async def user_info(id):
 @app.route('/user', methods=['POST'])
 async def user():
     return ''
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=3000)

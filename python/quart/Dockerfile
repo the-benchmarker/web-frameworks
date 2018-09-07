@@ -1,4 +1,4 @@
-FROM python
+FROM python:3.6
 
 WORKDIR /usr/src/app
 
@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 3000
 
-CMD python server.py
+CMD hypercorn --bind 0.0.0.0:3000 --workers $(nproc) server:app
