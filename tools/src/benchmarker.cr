@@ -323,16 +323,9 @@ ranks_by_latency.each do |framework|
   puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
 end
 
-  puts_markdown "", m_lines, true
-  puts_markdown "#### Ranking (top 5)", m_lines, true
-  puts_markdown "", m_lines, true
-
-  ranks = ranks_by_requests[0..5]
-  ranks.each_with_index do |framework, i|
-    puts_markdown "", m_lines, true
-    puts_markdown "+ %s %s (%s)" % [emojis[i], framework.target.name, framework.target.lang], m_lines, true
-    puts_markdown "", m_lines, true
-  end
+puts_markdown "", m_lines, true
+puts_markdown "#### Ranking (top 5)", m_lines, true
+puts_markdown "", m_lines, true
 
 ranks = ranks_by_requests[0...5]
 ranks.each_with_index do |framework, i|
