@@ -17,8 +17,7 @@ async def user_info(request):
 async def user_id(request):
     return web.Response(text=request.match_info['id'])
 
-
-if __name__ == "__main__":
+async def app():
     app = web.Application()
     app.add_routes(routes)
-    web.run_app(app, port=3000)
+    return app
