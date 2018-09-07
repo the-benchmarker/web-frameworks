@@ -19,6 +19,7 @@ env:
     - FRAMEWORK=vibora
     - FRAMEWORK=django
     - FRAMEWORK=bottle
+    - FRAMEWORK=aiohttp
     - FRAMEWORK=mofuw
     - FRAMEWORK=act
     - FRAMEWORK=rails
