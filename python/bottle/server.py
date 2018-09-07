@@ -1,3 +1,6 @@
+from meinheld import patch
+patch.patch_all()
+
 from bottle import Bottle, run
 
 app = Bottle()
