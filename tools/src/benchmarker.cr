@@ -106,6 +106,7 @@ LANGS = [
     {name: "tornado", repo: "tornadoweb/tornado"},
     {name: "vibora", repo: "vibora-io/vibora"},
     {name: "bottle", repo: "bottlepy/bottle"},
+    {name: "aiohttp", repo: "aio-libs/aiohttp"},
   ]},
   {lang: "nim", targets: [
     #{name: "jester", repo: "dom96/jester"},
