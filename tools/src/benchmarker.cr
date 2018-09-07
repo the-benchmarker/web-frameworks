@@ -9,7 +9,7 @@ require "kiwi/memory_store"
 ####################
 
 threads = (System.cpu_count + 1).to_i
-connections = 100_000.0
+connections = 10_000.0
 record = false
 check = false
 store = Kiwi::MemoryStore.new
