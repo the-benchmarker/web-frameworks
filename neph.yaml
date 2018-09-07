@@ -218,6 +218,11 @@ bottle:
     - docker build -t bottle .
   directory: python/bottle
 
+quart:
+  commands:
+    - docker build -t quart .
+  directory: python/quart
+
 iris:
   commands:
     - docker build -t iris .
