@@ -223,6 +223,11 @@ quart:
     - docker build -t quart .
   directory: python/quart
 
+aiohttp:
+  commands:
+    - docker build -t aiohttp .
+  directory: python/aiohttp
+
 iris:
   commands:
     - docker build -t iris .
