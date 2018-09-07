@@ -217,6 +217,11 @@ bottle:
     - docker build -t bottle .
   directory: python/bottle
 
+aiohttp:
+  commands:
+    - docker build -t aiohttp .
+  directory: python/aiohttp
+
 iris:
   commands:
     - docker build -t iris .
