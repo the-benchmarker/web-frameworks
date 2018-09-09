@@ -98,6 +98,7 @@ LANGS = [
   ]},
   {lang: "scala", targets: [
     {name: "akkahttp", repo: "akka/akka-http"},
+    {name: "http4s", repo: "http4s/http4s"},
   ]},
   {lang: "csharp", targets: [
     {name: "aspnetcore", repo: "aspnet/Home"},

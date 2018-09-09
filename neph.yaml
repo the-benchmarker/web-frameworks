@@ -94,6 +94,7 @@ cpp:
 scala:
   dependencies:
     - akkahttp
+    - http4s
 
 csharp:
   dependencies:
@@ -343,6 +344,11 @@ akkahttp:
   commands:
     - docker build -t akkahttp .
   directory: scala/akkahttp
+
+http4s:
+  commands:
+    - docker build -t http4s .
+  directory: scala/http4s
 
 aspnetcore:
   commands:
