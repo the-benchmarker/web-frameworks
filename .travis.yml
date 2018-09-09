@@ -9,6 +9,7 @@ env:
   matrix:
     - FRAMEWORK=aspnetcore
     - FRAMEWORK=akkahttp
+    - FRAMEWORK=http4s
     - FRAMEWORK=evhtp
     - FRAMEWORK=symfony
     - FRAMEWORK=laravel
