@@ -39,13 +39,14 @@ class Client
 
   def run
     if @method == "POST"
-      `wrk -H 'Connection: keep-alive' --latency -d #{@duration}s -s #{PIPELINE_POST} -c #{@connections.to_i} --timeout 8 -t #{@threads} #{@url}`
+      command = "wrk -H 'Connection: keep-alive' --latency -d #{@duration}s -s #{PIPELINE_POST} -c #{@connections.to_i} --timeout 8 -t #{@threads} #{@url}"
     else
-      `wrk -H 'Connection: keep-alive' --latency -d #{@duration}s -s #{PIPELINE_GET} -c #{@connections.to_i} --timeout 8 -t #{@threads} #{@url}`
+      command = "wrk -H 'Connection: keep-alive' --latency -d #{@duration}s -s #{PIPELINE_GET} -c #{@connections.to_i} --timeout 8 -t #{@threads} #{@url}"
     end
+    io = IO::Memory.new
+    Process.run(command, shell: true, error: io)
 
-    result = File.read("/tmp/which_is_the_fastest.out").split(",")
-    File.delete("/tmp/which_is_the_fastest.out")
+    result = io.to_s.split(",")
 
     data = JSON.build do |json|
       json.object do
