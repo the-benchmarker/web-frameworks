@@ -23,7 +23,7 @@ node:
     version: "4.16"
   fastify:
     website: fastify.io
-    version: "1.9"
+    version: "1.11"
   polka:
     github: lukeed/polka
     version: "0.4"
@@ -55,6 +55,12 @@ python:
   vibora:
     website: vibora.io
     version: "0.0"
+  aiohttp:
+    website: aiohttp.readthedocs.io
+    version: "3.4"
+  bottle:
+    website: bottlepy.org
+    version: "0.12"
 php:
   symfony:
     website: symfony.com
@@ -65,7 +71,7 @@ php:
 crystal:
   kemal:
     website: kemalcr.com
-    version: "0.23"
+    version: "0.24"
   router.cr:
     github: tbrand/router.cr
     version: "0.2"
@@ -77,30 +83,30 @@ crystal:
     version: "0.11"
   spider-gazelle:
     website: spider-gazelle.net
-    version: "1.0"
+    version: "1.1"
 nim:
-  jester:
-    github: dom96/jester
-    version: "0.4"
+  #jester:
+  #  github: dom96/jester
+  #  version: "0.4"
   mofuw:
     github: 2vg/mofuw
-    version: "2.0"
+    version: "???"
 go:
   echo:
     website: echo.labstack.com
-    version: "0.0"
+    version: "??"
   fasthttprouter:
     github: godoc.org/github.com/buaazp/fasthttprouter
-    version: "0.0"
+    version: "??"
   gin:
     website: gin-gonic.github.io/gin
-    version: "0.0"
+    version: "??"
   gorilla-mux:
     website: gorillatoolkit.org/pkg/mux
-    version: "0.0"
+    version: "??"
   iris:
     website: iris-go.com
-    version: "0.0"
+    version: "??"
 swift:
   kitura:
     website: kitura.io
@@ -117,7 +123,7 @@ rust:
     version: "0.6"
   iron:
     website: ironframework.io
-    version: "0.6"
+    version: "0.7"
   nickel:
     website: nickel.rs
     version: "0.10"
@@ -130,15 +136,18 @@ elixir:
     version: "1.3"
   plug:
     github: elixir-plug/plug
-    version: "1.5"
+    version: "1.6"
 cpp:
   evhtp:
     github: criticalstack/libevhtp
-    version: "0.0"
+    version: "??"
 scala:
   akkahttp:
     website: akka.io
     version: "10.0"
+  http4s:
+    website: http4s.org
+    version: "0.0"
 csharp:
   aspnetcore:
     website: docs.microsoft.com/en-us/aspnet/index
