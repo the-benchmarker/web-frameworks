@@ -10,8 +10,10 @@ require "yaml"
 ####################
 
 threads = (System.cpu_count + 1).to_i
-connections = 10_000.0
+connections = 1000
 record = false
+ns =
+
 check = false
 store = Kiwi::MemoryStore.new
 duration = 15
