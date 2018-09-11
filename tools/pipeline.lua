@@ -17,7 +17,6 @@
 -- percentile : 99.999
   
 done = function(summary, latency, requests)
-  file = io.open('/tmp/which_is_the_fastest.out', 'w')
 
   out = {
     summary.duration,
@@ -41,10 +40,9 @@ done = function(summary, latency, requests)
 
   for key, value in pairs(out) do
     if key > 1 then
-      file:write(",")
+      io.stderr:write(",")
     end
-    file:write(string.format("%d", value))
+    io.stderr:write(string.format("%d", value))
   end
 
-  file.close(file)
 end

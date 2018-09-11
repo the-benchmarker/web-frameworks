@@ -348,23 +348,16 @@ ranks_by_requests.each do |framework|
   puts_markdown "| %-25s | %-25s | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
 end
 
-  ranks_by_requests.each do |framework|
-    raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
-    result = Result.from_json(raw)
-    puts_markdown "| %-25s | %-25s | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
-  end
-
-
-  if record
-    path = File.expand_path("../../../README.md", __FILE__)
-    tag_from = "<!-- Result from here -->"
-    tag_till = "<!-- Result till here -->"
-    m_lines.insert(0, tag_from)
-    m_lines.push(tag_till)
-    prev_readme = File.read(path)
-    next_readme = prev_readme.gsub(
-      /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
-      m_lines.join('\n'))
+if record
+  path = File.expand_path("../../../README.md", __FILE__)
+  tag_from = "<!-- Result from here -->"
+  tag_till = "<!-- Result till here -->"
+  m_lines.insert(0, tag_from)
+  m_lines.push(tag_till)
+  prev_readme = File.read(path)
+  next_readme = prev_readme.gsub(
+    /\<!--\sResult\sfrom\shere\s-->[\s\S]*?<!--\sResult\still\shere\s-->/,
+    m_lines.join('\n'))
 
   File.write(path, next_readme)
 end
