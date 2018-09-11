@@ -58,7 +58,7 @@ env:
 
 script:
   - shards build
-  - bin/neph ${FRAMEWORK}
+  - bin/neph ${FRAMEWORK} --mode=CI
   - crystal spec
 
 notifications:
