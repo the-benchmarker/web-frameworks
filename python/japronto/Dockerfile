@@ -9,4 +9,4 @@ COPY requirements.txt server.py ./
 
 EXPOSE 3000
 
-CMD python server.py
+CMD python server.py $(nproc)

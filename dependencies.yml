@@ -1,0 +1,65 @@
+version: 2
+
+dependencies:
+
+  - type: python
+    path: python/flask/requirements.txt
+
+  - type: python
+    path: python/tornado/requirements.txt
+
+  - type: python
+    path: python/quart/requirements.txt
+    settings:
+      python_version: 3.6.6
+
+  - type: python
+    path: python/bottle/requirements.txt
+
+  - type: python
+    path: python/vibora/requirements.txt
+    settings:
+      python_version: 3.6.6
+
+  - type: python
+    path: python/aiohttp/requirements.txt
+    settings:
+      python_version: 3.6.6
+
+  - type: python
+    path: python/sanic/requirements.txt
+  
+  - type: python
+    path: python/japronto/requirements.txt
+    settiings:
+      python_version: 3.6.6
+
+  - type: python
+    path: python/django/requirements.txt
+
+  - type: js
+    path: node/restify/package.json
+
+  - type: js
+    path: node/express/package.json
+
+  - type: js
+    path: node/fastify/package.json
+
+  - type: js
+    path: node/hapi/package.json
+
+  - type: js
+    path: node/polka/package.json
+
+  - type: js
+    path: node/koa/package.json
+
+  - type: js
+    path: node/rayo/package.json
+
+  - type: php
+    path: php/symfony/composer.json
+
+  - type: php
+    path: php/laravel/composer.json
