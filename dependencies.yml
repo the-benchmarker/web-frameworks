@@ -31,7 +31,7 @@ dependencies:
   
   - type: python
     path: python/japronto/requirements.txt
-    settiings:
+    settings:
       python_version: 3.6.6
 
   - type: python
@@ -59,7 +59,7 @@ dependencies:
     path: node/rayo/package.json
 
   - type: php
-    path: php/symfony/composer.json
+    path: php/symfony
 
   - type: php
-    path: php/laravel/composer.json
+    path: php/laravel
