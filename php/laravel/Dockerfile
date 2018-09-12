@@ -19,7 +19,7 @@ ENV APP_ENV production
 ENV APP_DEBUG false
 ENV APP_KEY base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev --prefer-dist --classmap-authoritative
 RUN composer dumpautoload -o
 
