@@ -261,7 +261,7 @@ puts_markdown "", m_lines, true
 ranks = ranks_by_requests[0...5]
 ranks.each_with_index do |framework, i|
   puts_markdown "", m_lines, true
-  puts_markdown ":%s: %s (%s) (%s)" % [emojis[i], framework.target.name, framework.target.lang], m_lines, true
+  puts_markdown ":%s: (%s) (%s)" % [emojis[i], framework.target.name, framework.target.lang], m_lines, true
   puts_markdown "", m_lines, true
 end
 
