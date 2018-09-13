@@ -7,7 +7,9 @@ import (
 )
 
 func main() {
-	r := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
+	
+	r := gin.New()
 
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "")
