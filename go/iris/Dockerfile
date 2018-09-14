@@ -1,9 +1,11 @@
 FROM golang
 
-WORKDIR /usr/src/app
-COPY main.go .
+WORKDIR /go/src/app
+COPY main.go ./
 
-RUN go get -u github.com/kataras/iris
+RUN go get -u github.com/kardianos/govendor
+RUN govendor init
+RUN govendor fetch github.com/kataras/iris@v10.7.0
 RUN go build main.go
 
 EXPOSE 3000
