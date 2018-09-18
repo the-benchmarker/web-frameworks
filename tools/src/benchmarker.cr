@@ -49,7 +49,7 @@ PATH_PREFIX = "../../../bin/"
 CLIENT = File.expand_path(PATH_PREFIX + "client", __FILE__)
 
 # Each framework
-record Target, lang : String, name : String, website : String, version : String
+record Target, lang : String, name : String, link : String, version : String
 record Filter, req : Float64, lat : Float64
 record Ranked, res : Filter, target : Target
 
@@ -64,7 +64,7 @@ def frameworks : Array(Target)
       elsif row.has_key?("website")
         link = row["website"]
       end
-      target = Target.new(lang.as_s, framework.as_s, link.to_s, row["version"].to_s)
+      target = Target.new(lang.as_s, framework.as_s, "http://#{link.to_s}", row["version"].to_s)
       targets.push(target)
     end
   end
@@ -241,13 +241,13 @@ puts_markdown "", m_lines, true
 puts_markdown "#### Full table", m_lines, true
 puts_markdown "", m_lines, true
 
-puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
+puts_markdown "| %s | %s | %s | %s | %s | %s | %s | %s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
 puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|", m_lines, true
 
 ranks_by_latency.each do |framework|
   raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
   result = Result.from_json(raw)
-  puts_markdown "| %-25s | %-25s (%s) | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, framework.target.version, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
+  puts_markdown "| %s | [%s](%s) (%s) | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, framework.target.link, framework.target.version, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
 end
 
 puts_markdown "", m_lines, true
@@ -269,13 +269,13 @@ puts_markdown "", m_lines, true
 puts_markdown "#### Full table", m_lines, true
 puts_markdown "", m_lines, true
 
-puts_markdown "| %-25s | %-25s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
+puts_markdown "| %s | %s | %s | %s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
 puts_markdown "|---------------------------|---------------------------|----------------:|---------:|", m_lines, true
 
 ranks_by_requests.each do |framework|
   raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
   result = Result.from_json(raw)
-  puts_markdown "| %-25s | %-25s (%s) | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, framework.target.version, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
+  puts_markdown "| %s | [%s](%s) (%s) | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, framework.target.link, framework.target.version, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
 end
 
 if record
