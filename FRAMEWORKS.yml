@@ -84,13 +84,16 @@ crystal:
   spider-gazelle:
     website: spider-gazelle.net
     version: "1.1"
+  prism:
+    github: vladfaust/prism
+    version: "0.4 (beta 3)"
 nim:
   #jester:
   #  github: dom96/jester
   #  version: "0.4"
   mofuw:
     github: 2vg/mofuw
-    version: "???"
+    version: "2.0"
 go:
   echo:
     website: echo.labstack.com
@@ -120,7 +123,7 @@ swift:
 rust:
   actix-web:
     website: actix.rs
-    version: "0.6"
+    version: "0.7"
   iron:
     website: ironframework.io
     version: "0.7"
