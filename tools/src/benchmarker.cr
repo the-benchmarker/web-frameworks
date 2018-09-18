@@ -325,6 +325,10 @@ ranks_by_latency.each do |framework|
 end
 
 puts_markdown "", m_lines, true
+puts_markdown "### Requests per seconds", m_lines, true
+puts_markdown "", m_lines, true
+
+puts_markdown "", m_lines, true
 puts_markdown "#### Ranking (top 5)", m_lines, true
 puts_markdown "", m_lines, true
 
