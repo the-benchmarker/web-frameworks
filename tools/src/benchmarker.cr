@@ -241,7 +241,7 @@ puts_markdown "", m_lines, true
 puts_markdown "#### Full table", m_lines, true
 puts_markdown "", m_lines, true
 
-puts_markdown "| %s | %s | %s | %s | %s | %s | %s | %s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
+puts_markdown "| %s | %s | %s | %s | %s | %s | %s | %s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50th percentile", "90th percentile", "99th percentile", "99.9th percentile", "Standard deviation"], m_lines, true
 puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|", m_lines, true
 
 ranks_by_latency.each do |framework|
