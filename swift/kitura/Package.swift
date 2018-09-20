@@ -1,10 +1,12 @@
-// swift-tools-version:3.1
-
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
     name: "server",
     dependencies: [
-        .Package(url: "https://github.com/IBM-Swift/Kitura.git", majorVersion: 2, minor: 2)
+        .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "2.5.2"),
+    ],
+    targets: [
+        .target(name: "server", dependencies: ["Kitura"], path: "."),
     ]
 )
