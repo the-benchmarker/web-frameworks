@@ -43,6 +43,7 @@ env:
     - FRAMEWORK=fasthttprouter
     - FRAMEWORK=echo
     - FRAMEWORK=iris
+    - FRAMEWORK=beego
     - FRAMEWORK=gorilla-mux
     - FRAMEWORK=nickel
     - FRAMEWORK=actix-web
