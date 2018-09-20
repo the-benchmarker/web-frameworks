@@ -6,10 +6,8 @@ RUN apt-get -qq update
 RUN apt-get -qy install clang libicu-dev libcurl4-openssl-dev libssl-dev
 WORKDIR /usr/src/app
 
-COPY Package.swift ./
-COPY Sources Sources
+COPY Package.swift main.swift ./
 
-RUN swift package update
 RUN swift build -c release
 
 CMD .build/release/server
