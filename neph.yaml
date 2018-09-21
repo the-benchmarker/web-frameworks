@@ -58,6 +58,7 @@ go:
     - gorilla-mux
     - fasthttprouter
     - gin
+    - beego
 
 swift:
   depends_on:
@@ -253,6 +254,11 @@ gin:
   command: |
     docker build -t gin .
   dir: go/gin
+
+beego:
+  command: |
+    docker build -t beego .
+  dir: go/beego
 
 vapor:
   command: |

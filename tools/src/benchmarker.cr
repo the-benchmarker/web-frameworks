@@ -71,6 +71,7 @@ LANGS = [
     {name: "iris", repo: "kataras/iris"},
     {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
     {name: "gin", repo: "gin-gonic/gin"},
+    {name: "beego", repo: "astaxie/beego"},
   ]},
   {lang: "rust", targets: [
     {name: "actix-web", repo: "actix/actix-web"},
