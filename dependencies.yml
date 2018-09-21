@@ -39,24 +39,38 @@ dependencies:
 
   - type: js
     path: node/restify/package.json
+    settings:
+      constraint_prefix: '~'
 
   - type: js
     path: node/express/package.json
+    settings:
+      constraint_prefix: '~'
 
   - type: js
     path: node/fastify/package.json
+    settings:
+      constraint_prefix: '~'
 
   - type: js
     path: node/hapi/package.json
+    settings:
+      constraint_prefix: '~'
 
   - type: js
     path: node/polka/package.json
+    settings:
+      constraint_prefix: '~'
 
   - type: js
     path: node/koa/package.json
+    settings:
+      constraint_prefix: '~'
 
   - type: js
     path: node/rayo/package.json
+    settings:
+      constraint_prefix: '~'
 
   - type: php
     path: php/symfony
