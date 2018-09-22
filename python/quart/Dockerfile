@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python
 
 WORKDIR /usr/src/app
 
@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 3000
 
-CMD uvicorn --host 0.0.0.0 --port 3000 --no-access-log server:app
+CMD gunicorn --bind 0.0.0.0:3000 --reuse-port --worker-class uvicorn.workers.UvicornWorker --workers $(nproc) server:app
