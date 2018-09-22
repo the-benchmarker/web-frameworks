@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 3000
 
-CMD hypercorn --bind 0.0.0.0:3000 --workers $(nproc) server:app
+CMD uvicorn --host 0.0.0.0 --port 3000 --no-access-log server:app
