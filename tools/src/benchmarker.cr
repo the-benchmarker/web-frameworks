@@ -3,14 +3,17 @@ require "benchmark"
 require "option_parser"
 require "json"
 require "kiwi/memory_store"
+require "yaml"
 
 ####################
 # # DEFAULT VALUES ##
 ####################
 
 threads = (System.cpu_count + 1).to_i
-connections = 10_000.0
+connections = 1000
 record = false
+ns =
+
 check = false
 store = Kiwi::MemoryStore.new
 duration = 15
@@ -46,101 +49,23 @@ PATH_PREFIX = "../../../bin/"
 CLIENT = File.expand_path(PATH_PREFIX + "client", __FILE__)
 
 # Each framework
-LANGS = [
-  {lang: "ruby", targets: [
-    {name: "rails", repo: "rails/rails"},
-    {name: "sinatra", repo: "sinatra/sinatra"},
-    {name: "roda", repo: "jeremyevans/roda"},
-    {name: "rack-routing", repo: "georgeu2000/rack-routing"},
-    {name: "flame", repo: "AlexWayfer/flame"},
-    {name: "hanami", repo: "hanami/hanami"},
-  ]},
-  {lang: "crystal", targets: [
-    {name: "raze", repo: "samueleaton/raze"},
-    {name: "kemal", repo: "kemalcr/kemal"},
-    {name: "router.cr", repo: "tbrand/router.cr"},
-    {name: "raze", repo: "samueleaton/raze" },
-    {name: "amber", repo: "amberframework/amber"},
-    {name: "lucky", repo: "luckyframework/lucky"},
-    {name: "spider-gazelle", repo: "spider-gazelle/spider-gazelle"},
-    {name: "prism", repo: "vladfaust/prism"},
-  ]},
-  {lang: "go", targets: [
-    {name: "echo", repo: "labstack/echo"},
-    {name: "gorilla-mux", repo: "gorilla/mux"},
-    {name: "iris", repo: "kataras/iris"},
-    {name: "fasthttprouter", repo: "buaazp/fasthttprouter"},
-    {name: "gin", repo: "gin-gonic/gin"},
-    {name: "beego", repo: "astaxie/beego"},
-  ]},
-  {lang: "rust", targets: [
-    {name: "actix-web", repo: "actix/actix-web"},
-    {name: "iron", repo: "iron/iron"},
-    {name: "nickel", repo: "nickel-org/nickel.rs"},
-    {name: "rocket", repo: "SergioBenitez/Rocket"},
-  ]},
-  {lang: "node", targets: [
-    {name: "express", repo: "expressjs/express"},
-    {name: "fastify", repo: "fastify/fastify"},
-    {name: "polka", repo: "lukeed/polka"},
-    {name: "rayo", repo: "GetRayo/rayo.js"},
-    {name: "koa", repo: "koajs/koa"},
-    {name: "restify", repo: "restify/node-restify"},
-    {name: "hapi", repo: "hapijs/hapi"},
-  ]},
-  #{lang: "elixir", targets: [
-  # {name: "plug", repo: "elixir-lang/plug"},
-  # {name: "phoenix", repo: "phoenixframework/phoenix"},
-  #]},
-  {lang: "swift", targets: [
-    {name: "vapor", repo: "vapor/vapor"},
-    {name: "perfect", repo: "PerfectlySoft/Perfect"},
-    {name: "kitura", repo: "IBM-Swift/Kitura"},
-  ]},
-  {lang: "scala", targets: [
-    {name: "akkahttp", repo: "akka/akka-http"},
-    {name: "http4s", repo: "http4s/http4s"},
-  ]},
-  {lang: "csharp", targets: [
-    {name: "aspnetcore", repo: "aspnet/Home"},
-  ]},
-  {lang: "python", targets: [
-    {name: "japronto", repo: "squeaky-pl/japronto"},
-    {name: "sanic", repo: "channelcat/sanic"},
-    {name: "flask", repo: "pallets/flask"},
-    {name: "django", repo: "django/django"},
-    {name: "tornado", repo: "tornadoweb/tornado"},
-    {name: "vibora", repo: "vibora-io/vibora"},
-    {name: "bottle", repo: "bottlepy/bottle"},
-    {name: "aiohttp", repo: "aio-libs/aiohttp"},
-    {name: "quart", repo: "pgjones/quart"},
-  ]},
-  {lang: "nim", targets: [
-    #{name: "jester", repo: "dom96/jester"},
-    {name: "mofuw", repo: "2vg/mofuw"},
-  ]},
-  {lang: "java", targets: [
-    {name: "act", repo: "actframework/actframework"},
-  ]},
-  {lang: "cpp", targets: [
-    {name: "evhtp", repo: "criticalstack/libevhtp"},
-  ]},
-  {lang: "php", targets: [
-    {name: "symfony", repo: "symfony/symfony"},
-    {name: "laravel", repo: "laravel/framework"},
-  ]},
-]
-
-record Target, lang : String, name : String, repo : String
+record Target, lang : String, name : String, link : String, version : String
 record Filter, req : Float64, lat : Float64
 record Ranked, res : Filter, target : Target
 
 def frameworks : Array(Target)
   targets = [] of Target
 
-  LANGS.each do |lang|
-    lang[:targets].each do |framework|
-      targets.push(Target.new(lang[:lang], framework[:name], framework[:repo]))
+  YAML.parse(File.read("FRAMEWORKS.yml")).as_h.each do |lang, data|
+    data.as_h.each do |framework, line|
+      row = line.as_h
+      if row.has_key?("github")
+        link = "github.com/#{row["github"]}"
+      elsif row.has_key?("website")
+        link = row["website"]
+      end
+      target = Target.new(lang.as_s, framework.as_s, "http://#{link.to_s}", row["version"].to_s)
+      targets.push(target)
     end
   end
 
@@ -316,13 +241,13 @@ puts_markdown "", m_lines, true
 puts_markdown "#### Full table", m_lines, true
 puts_markdown "", m_lines, true
 
-puts_markdown "| %-25s | %-25s | %15s | %15s | %15s | %15s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50% percentile", "90% percentile", "99% percentile", "99.9% percentile", "Standard deviation"], m_lines, true
+puts_markdown "| %s | %s | %s | %s | %s | %s | %s | %s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50th percentile", "90th percentile", "99th percentile", "99.9th percentile", "Standard deviation"], m_lines, true
 puts_markdown "|---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|", m_lines, true
 
 ranks_by_latency.each do |framework|
   raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
   result = Result.from_json(raw)
-  puts_markdown "| %-25s | %-25s | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
+  puts_markdown "| %s | [%s](%s) (%s) | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.name, framework.target.link, framework.target.version, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
 end
 
 puts_markdown "", m_lines, true
@@ -336,7 +261,7 @@ puts_markdown "", m_lines, true
 ranks = ranks_by_requests[0...5]
 ranks.each_with_index do |framework, i|
   puts_markdown "", m_lines, true
-  puts_markdown ":%s: %s (%s)" % [emojis[i], framework.target.name, framework.target.lang], m_lines, true
+  puts_markdown ":%s: (%s) (%s)" % [emojis[i], framework.target.name, framework.target.lang], m_lines, true
   puts_markdown "", m_lines, true
 end
 
@@ -344,13 +269,13 @@ puts_markdown "", m_lines, true
 puts_markdown "#### Full table", m_lines, true
 puts_markdown "", m_lines, true
 
-puts_markdown "| %-25s | %-25s | %15s | %15s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
+puts_markdown "| %s | %s | %s | %s |" % ["Language (Runtime)", "Framework (Middleware)", "Requests / s", "Throughput"], m_lines, true
 puts_markdown "|---------------------------|---------------------------|----------------:|---------:|", m_lines, true
 
 ranks_by_requests.each do |framework|
   raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
   result = Result.from_json(raw)
-  puts_markdown "| %-25s | %-25s | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
+  puts_markdown "| %s | [%s](%s) (%s) | %.2f | %.2f MB |" % [framework.target.lang, framework.target.name, framework.target.link, framework.target.version, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
 end
 
 if record

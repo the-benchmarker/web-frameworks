@@ -17,7 +17,7 @@ ENV PATH $PATH:/nim/nim-devel/bin:/root/.nimble/bin
 
 COPY server_nim_mofuw.nim ./
 
-RUN nimble install -y mofuw 
+RUN nimble install -y mofuw@2.0.0
 RUN nim c -d:release --threads:on -d:bufSize:512 server_nim_mofuw.nim
 
 CMD [ "./server_nim_mofuw" ]
