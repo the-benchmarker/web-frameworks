@@ -61,6 +61,9 @@ python:
   bottle:
     website: bottlepy.org
     version: "0.12"
+  quart:
+    website: pgjones.gitlab.io/quart
+    version: "0.6"
 php:
   symfony:
     website: symfony.com
