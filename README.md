@@ -106,7 +106,7 @@ CPU Cores: 8
 | rust | [actix-web](http://actix.rs) (0.7) | 5.47 ms | 4.66 ms | 9.84 ms | 16.27 ms | 71.86 ms | 3378.67 | 
 | php | [symfony](http://symfony.com) (4.1) | 186.46 ms | 4.89 ms | 488.31 ms | 3027.86 ms | 6731.12 ms | 579195.00 | 
 | php | [laravel](http://laravel.com) (5.7) | 289.80 ms | 5.12 ms | 536.73 ms | 4998.33 ms | 6514.35 ms | 939221.67 | 
-| go | [fasthttprouter](https://godoc.org/github.com/buaazp/fasthttprouter) (0.1) | 5.95 ms | 5.17 ms | 9.10 ms | 18.06 ms | 216.26 ms | 5263.00 | 
+| go | [fasthttprouter](https://github.com/buaazp/fasthttprouter) (0.1) | 5.95 ms | 5.17 ms | 9.10 ms | 18.06 ms | 216.26 ms | 5263.00 | 
 | cpp | [evhtp](http://github.com/criticalstack/libevhtp) (1.2) | 6.15 ms | 5.28 ms | 10.63 ms | 18.16 ms | 66.59 ms | 3590.00 | 
 | crystal | [spider-gazelle](http://spider-gazelle.net) (1.1) | 6.70 ms | 5.69 ms | 11.83 ms | 20.05 ms | 43.92 ms | 3978.67 | 
 | python | [vibora](http://vibora.io) (0.0) | 6.51 ms | 5.79 ms | 12.17 ms | 19.73 ms | 38.93 ms | 4229.00 | 
@@ -170,7 +170,7 @@ CPU Cores: 8
 | Language (Runtime) | Framework (Middleware) | Requests / s | Throughput |
 |---------------------------|---------------------------|----------------:|---------:|
 | rust | [actix-web](http://actix.rs) (0.7) | 171628.67 | 195.18 MB |
-| go | [fasthttprouter](https://godoc.org/github.com/buaazp/fasthttprouter) (0.1) | 160512.33 | 261.32 MB |
+| go | [fasthttprouter](https://github.com/buaazp/fasthttprouter) (0.1) | 160512.33 | 261.32 MB |
 | python | [vibora](http://vibora.io) (0.0) | 159620.33 | 181.25 MB |
 | cpp | [evhtp](http://github.com/criticalstack/libevhtp) (1.2) | 155354.00 | 150.82 MB |
 | crystal | [spider-gazelle](http://spider-gazelle.net) (1.1) | 145037.33 | 155.39 MB |
