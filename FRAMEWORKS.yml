@@ -41,7 +41,7 @@ node:
     version: "17.5"
 python:
   sanic:
-    github: channelcat/sanic
+    github: huge-success/sanic
     version: "0.8"
   flask:
     website: flask.pocoo.org
@@ -102,13 +102,13 @@ go:
     website: echo.labstack.com
     version: "3.3"
   fasthttprouter:
-    github: godoc.org/github.com/buaazp/fasthttprouter
+    website: godoc.org/github.com/buaazp/fasthttprouter
     version: "0.1"
   gin:
     website: gin-gonic.github.io/gin
     version: "1.3"
   gorilla-mux:
-    website: gorillatoolkit.org/pkg/mux
+    website: www.gorillatoolkit.org/pkg/mux
     version: "1.6"
   iris:
     website: iris-go.com
@@ -137,7 +137,7 @@ rust:
     website: nickel.rs
     version: "0.10"
   rocket:
-    website: rocket.rs
+    website: nickel-org.github.io
     version: "0.3"
 #elixir:
 #  phoenix:
