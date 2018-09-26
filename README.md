@@ -96,7 +96,7 @@ CPU Cores: 8
 | Language (Runtime) | Framework (Middleware) | Average | 50th percentile | 90th percentile | 99th percentile | 99.9th percentile | Standard deviation |
 |---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|
 | rust | [nickel](http://nickel.rs) (0.10) | 0.14 ms | 0.12 ms | 0.17 ms | 0.89 ms | 10.61 ms | 199.00 | 
-| rust | [rocket](http://nickel-org.github.io) (0.3) | 0.25 ms | 0.15 ms | 0.36 ms | 2.60 ms | 16.55 ms | 477.67 | 
+| rust | [rocket](https://rocket.rs) (0.3) | 0.25 ms | 0.15 ms | 0.36 ms | 2.60 ms | 16.55 ms | 477.67 | 
 | rust | [iron](http://ironframework.io) (0.7) | 0.98 ms | 0.67 ms | 2.00 ms | 5.92 ms | 54.06 ms | 1260.00 | 
 | ruby | [roda](http://roda.jeremyevans.net) (3.12) | 2.81 ms | 1.98 ms | 5.87 ms | 14.88 ms | 76.26 ms | 3026.00 | 
 | ruby | [rack-routing](http://github.com/georgeu2000/rack-routing) (0.0) | 4.23 ms | 2.33 ms | 9.71 ms | 32.39 ms | 123.06 ms | 6387.33 | 
