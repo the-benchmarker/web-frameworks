@@ -231,6 +231,11 @@ aiohttp:
     docker build -t aiohttp .
   dir: python/aiohttp
 
+cyclone:
+  command: |
+    docker build -t cyclone .
+  dir: python/cyclone
+
 iris:
   command: |
     docker build -t iris .
