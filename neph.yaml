@@ -50,6 +50,7 @@ python:
     - bottle
     - aiohttp
     - quart
+    - cyclone
 
 go:
   depends_on:
