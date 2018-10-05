@@ -82,6 +82,7 @@ node:
     - koa
     - restify
     - hapi
+    - turbo_polka
 
 elixir:
   depends_on:
@@ -330,6 +331,10 @@ hapi:
     docker build -t hapi .
   dir: node/hapi
 
+turbo_polka:
+  command: |
+    docker build -t turbo_polka .
+  dir: node/turbo_polka
 
 plug:
   command: |

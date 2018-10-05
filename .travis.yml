@@ -57,6 +57,7 @@ env:
     - FRAMEWORK=koa
     - FRAMEWORK=polka
     - FRAMEWORK=rayo
+    - FRAMEWORK=turbo_polka
 
 script:
   - shards build
