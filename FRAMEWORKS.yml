@@ -39,6 +39,10 @@ node:
   hapi:
     website: hapijs.com
     version: "17.6"
+  turbo_polka:
+    github: mafintosh/turbo-http
+    version: "0.3"
+    type: experimental
 python:
   sanic:
     github: huge-success/sanic
