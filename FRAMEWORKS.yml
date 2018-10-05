@@ -68,6 +68,10 @@ python:
   quart:
     website: pgjones.gitlab.io/quart
     version: "0.6"
+  cyclone:
+    website: cyclone.io
+    version: "0.0 (dev preview)"
+    type: experimental
 php:
   symfony:
     website: symfony.com

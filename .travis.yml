@@ -22,6 +22,7 @@ env:
     - FRAMEWORK=bottle
     - FRAMEWORK=aiohttp
     - FRAMEWORK=quart
+    - FRAMEWORK=cyclone
     - FRAMEWORK=mofuw
     - FRAMEWORK=act
     - FRAMEWORK=rails

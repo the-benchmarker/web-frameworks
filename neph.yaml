@@ -50,6 +50,7 @@ python:
     - bottle
     - aiohttp
     - quart
+    - cyclone
 
 go:
   depends_on:
@@ -230,6 +231,11 @@ aiohttp:
   command: |
     docker build -t aiohttp .
   dir: python/aiohttp
+
+cyclone:
+  command: |
+    docker build -t cyclone .
+  dir: python/cyclone
 
 iris:
   command: |
