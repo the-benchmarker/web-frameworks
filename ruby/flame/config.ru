@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-require 'rubygems' unless defined? ::Gem
-
 require 'flame'
 
-Flame::Application.require_dirs(
-  %w[controllers]
-)
+Dir['controllers/**/*'].each { |controller| require_relative controller }
 
-require './application'
+require_relative 'application'
 
 run FlameTest::Application
