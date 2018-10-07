@@ -2,5 +2,5 @@
 
 source 'https://rubygems.org'
 
-gem 'flame'
+gem 'flame', '~> 4.18.1'
 gem 'puma', '~> 3.12.0'
