@@ -112,7 +112,7 @@ CPU Cores: 8
 | python | [vibora](http://vibora.io) (0.0) | 7.07 ms | 6.09 ms | 13.40 ms | 22.99 ms | 56.87 ms | 4878.33 | 
 | ruby | [rails](http://rubyonrails.org) (5.2) | 32.30 ms | 6.81 ms | 106.49 ms | 200.71 ms | 403.26 ms | 48330.67 | 
 | java | [act](http://actframework.org) (1.8) | 8.46 ms | 7.47 ms | 12.24 ms | 21.84 ms | 221.57 ms | 6457.33 | 
-| scala | [akkahttp](http://akka.io) (10.0) | 200.01 ms | 8.55 ms | 56.12 ms | 4629.18 ms | 7916.37 ms | 811798.67 | 
+| scala | [akkahttp](http://akka.io) (10.1) | 200.01 ms | 8.55 ms | 56.12 ms | 4629.18 ms | 7916.37 ms | 811798.67 | 
 | csharp | [aspnetcore](http://docs.microsoft.com/en-us/aspnet/index) (1.1) | 10.21 ms | 8.56 ms | 15.53 ms | 24.99 ms | 443.51 ms | 12445.67 | 
 | go | [iris](http://iris-go.com) (10.7) | 9.93 ms | 8.83 ms | 15.28 ms | 29.35 ms | 126.24 ms | 5407.00 | 
 | go | [echo](http://echo.labstack.com) (3.3) | 10.74 ms | 9.33 ms | 16.63 ms | 32.51 ms | 302.63 ms | 8021.67 | 
@@ -126,7 +126,7 @@ CPU Cores: 8
 | node | [polka](http://github.com/lukeed/polka) (0.5) | 26.63 ms | 16.45 ms | 40.65 ms | 243.42 ms | 1039.90 ms | 53737.00 | 
 | swift | [vapor](http://vapor.codes) (3.0) | 49.25 ms | 17.01 ms | 33.04 ms | 1072.45 ms | 2731.84 ms | 195691.33 | 
 | node | [fastify](http://fastify.io) (1.12) | 30.08 ms | 17.54 ms | 39.31 ms | 383.16 ms | 1221.57 ms | 70694.00 | 
-| scala | [http4s](http://http4s.org) (0.0) | 20.94 ms | 17.60 ms | 33.51 ms | 63.95 ms | 1029.10 ms | 33535.00 | 
+| scala | [http4s](http://http4s.org) (0.18) | 20.94 ms | 17.60 ms | 33.51 ms | 63.95 ms | 1029.10 ms | 33535.00 | 
 | node | [koa](http://koajs.com) (2.5) | 30.37 ms | 18.78 ms | 41.02 ms | 342.33 ms | 1163.02 ms | 65382.00 | 
 | node | [restify](http://restify.com) (7.2) | 29.44 ms | 20.75 ms | 41.88 ms | 206.14 ms | 904.40 ms | 46636.00 | 
 | node | [express](http://expressjs.com) (4.16) | 40.30 ms | 23.63 ms | 52.76 ms | 519.06 ms | 1453.65 ms | 89511.33 | 
@@ -185,11 +185,11 @@ CPU Cores: 8
 | go | [gin](http://gin-gonic.github.io/gin) (1.3) | 82760.67 | 145.18 MB |
 | rust | [nickel](http://nickel.rs) (0.10) | 76027.00 | 150.82 MB |
 | nim | [mofuw](http://github.com/2vg/mofuw) (2.0) | 75525.00 | 132.54 MB |
-| scala | [akkahttp](http://akka.io) (10.0) | 67689.00 | 145.44 MB |
+| scala | [akkahttp](http://akka.io) (10.1) | 67689.00 | 145.44 MB |
 | node | [rayo](http://rayo.js.org) (1.2) | 64413.33 | 96.58 MB |
 | swift | [perfect](http://perfect.org) (3.0) | 60628.67 | 57.05 MB |
 | python | [bottle](http://bottlepy.org) (0.12) | 52951.00 | 130.52 MB |
-| scala | [http4s](http://http4s.org) (0.0) | 52873.67 | 92.61 MB |
+| scala | [http4s](http://http4s.org) (0.18) | 52873.67 | 92.61 MB |
 | swift | [vapor](http://vapor.codes) (3.0) | 50517.00 | 86.07 MB |
 | node | [polka](http://github.com/lukeed/polka) (0.5) | 49454.33 | 74.09 MB |
 | node | [fastify](http://fastify.io) (1.12) | 48239.33 | 117.69 MB |
