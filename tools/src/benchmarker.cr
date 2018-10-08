@@ -12,11 +12,14 @@ require "yaml"
 threads = (System.cpu_count + 1).to_i
 connections = 1000
 record = false
-ns =
 
 check = false
 store = Kiwi::MemoryStore.new
 duration = 15
+
+class Options
+  class_property with_experimental : Bool = false
+end
 
 #################
 # ### OPTIONS ###
@@ -35,6 +38,9 @@ OptionParser.parse! do |parser|
   end
   parser.on("--record", "Record results in README.md") do
     record = true
+  end
+  parser.on("--experimental", "Display experimental stuff (non-native, not versioned)") do
+    Options.with_experimental = true
   end
 end
 
@@ -59,6 +65,7 @@ def frameworks : Array(Target)
   YAML.parse(File.read("FRAMEWORKS.yml")).as_h.each do |lang, data|
     data.as_h.each do |framework, line|
       row = line.as_h
+      next if row.has_key?("type") && row["type"] == "experimental" && !Options.with_experimental
       if row.has_key?("github")
         link = "github.com/#{row["github"]}"
       elsif row.has_key?("website")

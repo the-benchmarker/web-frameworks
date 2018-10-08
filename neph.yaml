@@ -49,6 +49,7 @@ python:
     - bottle
     - aiohttp
     - quart
+    - cyclone
 
 go:
   depends_on:
@@ -81,6 +82,7 @@ node:
     - koa
     - restify
     - hapi
+    - turbo_polka
 
 elixir:
   depends_on:
@@ -224,6 +226,11 @@ aiohttp:
     docker build -t aiohttp .
   dir: python/aiohttp
 
+cyclone:
+  command: |
+    docker build -t cyclone .
+  dir: python/cyclone
+
 iris:
   command: |
     docker build -t iris .
@@ -324,6 +331,10 @@ hapi:
     docker build -t hapi .
   dir: node/hapi
 
+turbo_polka:
+  command: |
+    docker build -t turbo_polka .
+  dir: node/turbo_polka
 
 plug:
   command: |
