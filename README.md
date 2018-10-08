@@ -100,7 +100,7 @@ CPU Cores: 8
 | rust | [iron](http://ironframework.io) (0.7) | 0.61 ms | 0.44 ms | 1.14 ms | 3.61 ms | 33.47 ms | 779.33 | 
 | ruby | [roda](http://roda.jeremyevans.net) (3.12) | 3.13 ms | 1.97 ms | 6.67 ms | 20.57 ms | 101.83 ms | 4197.67 | 
 | ruby | [rack-routing](http://github.com/georgeu2000/rack-routing) (0.0) | 4.25 ms | 2.35 ms | 9.98 ms | 30.24 ms | 118.29 ms | 6137.67 | 
-| ruby | [flame](http://github.com/AlexWayfer/flame) (5.0 (rc)) | 6.61 ms | 3.38 ms | 16.39 ms | 45.91 ms | 142.71 ms | 9371.00 | 
+| ruby | [flame](http://github.com/AlexWayfer/flame) (4.18) | 6.61 ms | 3.38 ms | 16.39 ms | 45.91 ms | 142.71 ms | 9371.00 | 
 | php | [symfony](http://symfony.com) (4.1) | 193.15 ms | 3.66 ms | 529.87 ms | 3505.07 ms | 5903.08 ms | 614762.67 | 
 | ruby | [hanami](http://hanamirb.org) (1.2) | 7.06 ms | 4.18 ms | 17.10 ms | 40.80 ms | 133.92 ms | 8531.33 | 
 | php | [laravel](http://laravel.com) (5.7) | 243.99 ms | 4.42 ms | 587.04 ms | 3831.52 ms | 6494.07 ms | 735153.33 | 
@@ -209,7 +209,7 @@ CPU Cores: 8
 | crystal | [kemal](http://kemalcr.com) (0.24) | 24735.33 | 40.28 MB |
 | python | [aiohttp](http://aiohttp.readthedocs.io) (3.4) | 23306.00 | 52.82 MB |
 | python | [flask](http://flask.pocoo.org) (1.0) | 20520.67 | 50.59 MB |
-| ruby | [flame](http://github.com/AlexWayfer/flame) (5.0 (rc)) | 19625.67 | 11.32 MB |
+| ruby | [flame](http://github.com/AlexWayfer/flame) (4.18) | 19625.67 | 11.32 MB |
 | ruby | [hanami](http://hanamirb.org) (1.2) | 18047.33 | 136.80 MB |
 | python | [sanic](http://github.com/huge-success/sanic) (0.8) | 17514.33 | 31.17 MB |
 | ruby | [sinatra](http://sinatrarb.com) (2.0) | 15898.00 | 41.33 MB |
