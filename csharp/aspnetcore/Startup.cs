@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace aspnetcore
 {
@@ -14,22 +14,21 @@ namespace aspnetcore
 
         public void Configure(IApplicationBuilder app)
         {
-            var routeBuilder = new RouteBuilder(app);
+            app.UseRouter(routes =>
+            {
+                routes.MapGet("", context => {
+                    return context.Response.WriteAsync("");
+                });
 
-            routeBuilder.MapGet("", context => {
-                return context.Response.WriteAsync("");
+                routes.MapGet("user/{id}", context => {
+                    var id = context.GetRouteValue("id").ToString();
+                    return context.Response.WriteAsync(id);
+                });
+
+                routes.MapPost("user", context => {
+                    return context.Response.WriteAsync("");
+                });
             });
-
-            routeBuilder.MapGet("user/{id}", context => {
-                return context.Response.WriteAsync($"{context.GetRouteValue("id")}");
-            });
-
-            routeBuilder.MapPost("user", context => {
-                return context.Response.WriteAsync("");
-            });
-
-            var routes = routeBuilder.Build();
-            app.UseRouter(routes);
         }
     }
 }
