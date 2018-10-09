@@ -1,0 +1,12 @@
+name: atom-web
+
+version: 0.1.0
+
+targets:
+  server:
+    main: server.cr
+
+dependencies:
+  atom-web:
+    github: atomframework/web
+    tag: v0.5.0-alpha.1
