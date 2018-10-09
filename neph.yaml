@@ -23,7 +23,6 @@ crystal:
     - raze
     - lucky
     - spider-gazelle
-    - prism
 
 ruby:
   depends_on:
@@ -139,11 +138,6 @@ spider-gazelle:
   command: |
     docker build -t spider-gazelle .
   dir: crystal/spider-gazelle
-
-prism:
-  command: |
-    docker build -t prism .
-  dir: crystal/prism
 
 rails:
   command: |
