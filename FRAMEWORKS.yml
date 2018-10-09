@@ -65,6 +65,9 @@ python:
     website: pgjones.gitlab.io/quart
     version: "0.6"
 php:
+  slim:
+    website: slimframework.com
+    version: "3.11"
   symfony:
     website: symfony.com
     version: "4.1"

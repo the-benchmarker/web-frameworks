@@ -11,6 +11,7 @@ env:
     - FRAMEWORK=akkahttp
     - FRAMEWORK=http4s
     - FRAMEWORK=evhtp
+    - FRAMEWORK=slim
     - FRAMEWORK=symfony
     - FRAMEWORK=laravel
     - FRAMEWORK=tornado

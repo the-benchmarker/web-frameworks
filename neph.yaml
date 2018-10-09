@@ -106,6 +106,7 @@ java:
 
 php:
   depends_on:
+    - slim
     - symfony
     - laravel
 
@@ -359,6 +360,11 @@ act:
   command: |
     docker build -t act .
   dir: java/act
+
+slim:
+  command: |
+    docker build -t slim .
+  dir: php/slim
 
 symfony:
   command: |
