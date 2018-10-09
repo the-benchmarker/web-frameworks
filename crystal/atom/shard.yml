@@ -1,4 +1,4 @@
-name: prism
+name: atom-web
 
 version: 0.1.0
 
@@ -7,6 +7,6 @@ targets:
     main: server.cr
 
 dependencies:
-  prism:
-    github: vladfaust/prism
-    tag: v0.4.0-beta.3
+  atom-web:
+    github: atomframework/web
+    tag: v0.5.0-alpha.1
