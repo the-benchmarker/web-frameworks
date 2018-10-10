@@ -28,9 +28,13 @@ RUN echo 'server {\n\
     root /usr/src/app/public;\n\
     listen 0.0.0.0:3000;\n\
     location / {\n\
+        try_files $uri /index.php$is_args$args;\n\
+    }\n\
+    location ~ index\\.php {\n\
         fastcgi_pass unix:/var/run/php-fpm.sock;\n\
         fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
         include fastcgi_params;\n\
+        internal;\n\
     }\n\
 }\n'\
 >> /etc/nginx/conf.d/www.conf
