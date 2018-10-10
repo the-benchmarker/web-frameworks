@@ -139,6 +139,13 @@ spider-gazelle:
     docker build -t spider-gazelle .
   dir: crystal/spider-gazelle
 
+orion:
+  command: |
+    docker build -t orion .
+  dir: crystal/orion
+
+kemal:
+
 rails:
   command: |
     docker build -t rails .
