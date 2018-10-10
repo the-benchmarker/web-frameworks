@@ -25,6 +25,7 @@ env:
     - FRAMEWORK=quart
     - FRAMEWORK=cyclone
     - FRAMEWORK=mofuw
+    - FRAMEWORK=jester
     - FRAMEWORK=act
     - FRAMEWORK=rails
     - FRAMEWORK=rack-routing
@@ -35,6 +36,7 @@ env:
     - FRAMEWORK=raze
     - FRAMEWORK=kemal
     - FRAMEWORK=spider-gazelle
+    - FRAMEWORK=prism
     - FRAMEWORK=lucky
     - FRAMEWORK=amber
     - FRAMEWORK=router.cr
