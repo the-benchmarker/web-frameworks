@@ -36,6 +36,7 @@ env:
     - FRAMEWORK=lucky
     - FRAMEWORK=amber
     - FRAMEWORK=router.cr
+    - FRAMEWORK=orion
     - FRAMEWORK=kitura
     - FRAMEWORK=perfect
     - FRAMEWORK=vapor
