@@ -81,3 +81,8 @@ dependencies:
     path: php/laravel
     settings:
       constraint_prefix: '~'
+
+  - type: php
+    path: php/slim
+    settings:
+      constraint_prefix: '~'

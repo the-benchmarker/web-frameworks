@@ -73,6 +73,9 @@ python:
     version: "0.0 (dev preview)"
     type: experimental
 php:
+  slim:
+    website: slimframework.com
+    version: "3.11"
   symfony:
     website: symfony.com
     version: "4.1"

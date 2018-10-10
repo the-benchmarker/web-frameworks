@@ -64,7 +64,7 @@ bin/benchmarker [tools]
 ## Results
 
 <!-- Result from here -->
-Last update: 2018-10-09
+Last update: 2018-10-10
 ```
 OS: Linux (version: 4.16.11-100.fc26.x86_64, arch: x86_64)
 CPU Cores: 8
@@ -95,53 +95,54 @@ CPU Cores: 8
 
 | Language (Runtime) | Framework (Middleware) | Average | 50th percentile | 90th percentile | 99th percentile | 99.9th percentile | Standard deviation |
 |---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|
-| rust | [nickel](http://nickel-org.github.io) (0.10) | 0.11 ms | 0.09 ms | 0.13 ms | 0.68 ms | 6.35 ms | 155.67 | 
-| rust | [rocket](http://rocket.rs) (0.3) | 0.15 ms | 0.12 ms | 0.20 ms | 1.05 ms | 7.36 ms | 205.00 | 
-| rust | [iron](http://ironframework.io) (0.6) | 0.59 ms | 0.40 ms | 1.17 ms | 3.68 ms | 27.20 ms | 722.33 | 
-| ruby | [roda](http://roda.jeremyevans.net) (3.12) | 2.67 ms | 1.99 ms | 5.35 ms | 13.32 ms | 78.67 ms | 2711.33 | 
-| ruby | [rack-routing](http://github.com/georgeu2000/rack-routing) (0.0) | 3.70 ms | 2.61 ms | 7.56 ms | 20.29 ms | 135.04 ms | 4199.67 | 
-| ruby | [flame](http://github.com/AlexWayfer/flame) (4.18) | 5.72 ms | 4.16 ms | 12.56 ms | 25.96 ms | 111.62 ms | 5547.67 | 
-| ruby | [hanami](http://hanamirb.org) (1.2) | 6.68 ms | 4.66 ms | 14.94 ms | 32.81 ms | 121.18 ms | 6901.33 | 
-| go | [fasthttprouter](http://godoc.org/github.com/buaazp/fasthttprouter) (0.1) | 5.61 ms | 4.86 ms | 9.42 ms | 16.74 ms | 46.46 ms | 3093.33 | 
-| cpp | [evhtp](http://github.com/criticalstack/libevhtp) (1.2) | 5.48 ms | 4.95 ms | 9.10 ms | 14.47 ms | 54.70 ms | 2851.33 | 
-| rust | [actix-web](http://actix.rs) (0.7) | 5.72 ms | 4.99 ms | 10.76 ms | 19.55 ms | 106.89 ms | 4418.00 | 
-| php | [symfony](http://symfony.com) (4.1) | 159.56 ms | 5.15 ms | 444.49 ms | 2219.47 ms | 6205.30 ms | 474888.67 | 
-| ruby | [sinatra](http://sinatrarb.com) (2.0) | 7.21 ms | 5.34 ms | 15.85 ms | 31.31 ms | 81.83 ms | 6706.33 | 
-| php | [laravel](http://laravel.com) (5.7) | 260.68 ms | 5.64 ms | 344.57 ms | 4689.98 ms | 6493.86 ms | 871259.67 | 
-| crystal | [spider-gazelle](http://spider-gazelle.net) (1.1) | 6.81 ms | 6.01 ms | 11.96 ms | 19.55 ms | 45.63 ms | 3987.67 | 
-| python | [vibora](http://vibora.io) (0.0) | 6.67 ms | 6.08 ms | 12.45 ms | 19.71 ms | 45.15 ms | 4350.67 | 
-| ruby | [rails](http://rubyonrails.org) (5.2) | 26.66 ms | 7.87 ms | 82.36 ms | 166.24 ms | 326.34 ms | 38449.67 | 
-| java | [act](http://actframework.org) (1.8) | 9.02 ms | 8.01 ms | 13.65 ms | 26.74 ms | 197.09 ms | 7141.33 | 
-| go | [iris](http://iris-go.com) (10.7) | 9.21 ms | 8.36 ms | 14.18 ms | 24.90 ms | 113.52 ms | 4538.00 | 
-| scala | [akkahttp](http://akka.io) (10.1) | 176.06 ms | 8.61 ms | 74.82 ms | 3985.24 ms | 6975.82 ms | 693415.67 | 
-| go | [gorilla-mux](http://www.gorillatoolkit.org/pkg/mux) (1.6) | 10.39 ms | 9.20 ms | 16.45 ms | 31.26 ms | 166.13 ms | 5714.33 | 
-| go | [gin](http://gin-gonic.github.io/gin) (1.3) | 10.68 ms | 9.35 ms | 16.73 ms | 30.95 ms | 175.00 ms | 6230.00 | 
-| go | [echo](http://echo.labstack.com) (3.3) | 10.87 ms | 9.47 ms | 17.15 ms | 31.59 ms | 232.00 ms | 6830.33 | 
-| csharp | [aspnetcore](http://docs.microsoft.com/en-us/aspnet/index) (2.1) | 12.98 ms | 9.87 ms | 19.12 ms | 69.06 ms | 582.98 ms | 21754.67 | 
-| go | [beego](http://beego.me) (1.10) | 11.37 ms | 9.89 ms | 18.13 ms | 33.52 ms | 141.96 ms | 6317.67 | 
-| nim | [mofuw](http://github.com/2vg/mofuw) (2.0) | 30.83 ms | 10.73 ms | 92.56 ms | 277.50 ms | 418.09 ms | 58164.67 | 
-| node | [polka](http://github.com/lukeed/polka) (0.5) | 19.87 ms | 12.93 ms | 27.67 ms | 187.84 ms | 796.95 ms | 41261.00 | 
-| node | [rayo](http://rayo.js.org) (1.2) | 21.76 ms | 14.06 ms | 35.73 ms | 136.45 ms | 797.76 ms | 37824.00 | 
-| python | [bottle](http://bottlepy.org) (0.12) | 19.79 ms | 15.40 ms | 37.12 ms | 66.32 ms | 243.49 ms | 13111.00 | 
-| node | [fastify](http://fastify.io) (1.12) | 24.10 ms | 15.58 ms | 33.20 ms | 221.74 ms | 973.44 ms | 49881.33 | 
-| swift | [perfect](http://perfect.org) (3.0) | 18.04 ms | 18.03 ms | 20.46 ms | 23.89 ms | 114.04 ms | 4103.67 | 
-| swift | [vapor](http://vapor.codes) (3.0) | 32.50 ms | 18.14 ms | 31.70 ms | 542.04 ms | 1726.30 ms | 102837.00 | 
-| scala | [http4s](http://http4s.org) (0.18) | 23.72 ms | 19.42 ms | 36.02 ms | 72.29 ms | 1353.12 ms | 47043.67 | 
-| node | [koa](http://koajs.com) (2.5) | 34.35 ms | 20.41 ms | 45.35 ms | 461.60 ms | 1325.29 ms | 81203.00 | 
-| node | [restify](http://restify.com) (7.2) | 27.96 ms | 21.62 ms | 38.81 ms | 139.52 ms | 772.63 ms | 36439.67 | 
-| node | [express](http://expressjs.com) (4.16) | 42.24 ms | 25.37 ms | 56.12 ms | 541.70 ms | 1481.42 ms | 94196.67 | 
-| crystal | [kemal](http://kemalcr.com) (0.24) | 35.51 ms | 32.21 ms | 48.34 ms | 60.11 ms | 499.12 ms | 18239.33 | 
-| crystal | [router.cr](http://github.com/tbrand/router.cr) (0.2) | 33.89 ms | 32.44 ms | 44.49 ms | 54.44 ms | 251.67 ms | 9159.67 | 
-| python | [aiohttp](http://aiohttp.readthedocs.io) (3.4) | 38.10 ms | 33.39 ms | 65.64 ms | 98.13 ms | 141.23 ms | 19864.67 | 
-| swift | [kitura](http://kitura.io) (2.2) | 35.08 ms | 33.41 ms | 44.42 ms | 62.88 ms | 214.79 ms | 8489.33 | 
-| crystal | [amber](http://amberframework.org) (0.9) | 43.88 ms | 36.40 ms | 52.05 ms | 333.04 ms | 910.76 ms | 58906.00 | 
-| node | [hapi](http://hapijs.com) (17.6) | 73.18 ms | 37.81 ms | 78.94 ms | 1144.16 ms | 2144.19 ms | 180239.33 | 
-| crystal | [lucky](http://luckyframework.org) (0.11) | 39.76 ms | 39.35 ms | 47.09 ms | 55.83 ms | 128.74 ms | 7124.67 | 
-| python | [flask](http://flask.pocoo.org) (1.0) | 57.80 ms | 39.37 ms | 122.45 ms | 163.79 ms | 374.18 ms | 37245.00 | 
-| python | [sanic](http://github.com/huge-success/sanic) (0.8) | 62.51 ms | 56.48 ms | 101.50 ms | 163.36 ms | 251.32 ms | 29383.00 | 
-| python | [django](http://djangoproject.com) (2.1) | 74.90 ms | 69.01 ms | 104.33 ms | 160.46 ms | 544.19 ms | 26682.00 | 
-| python | [tornado](http://tornadoweb.org) (5.1) | 108.64 ms | 107.27 ms | 136.98 ms | 189.96 ms | 645.75 ms | 37902.00 | 
-| python | [quart](http://pgjones.gitlab.io/quart) (0.6) | 124.87 ms | 114.60 ms | 206.55 ms | 285.49 ms | 372.25 ms | 57824.67 | 
+| rust | [nickel](http://nickel-org.github.io) (0.10) | 0.10 ms | 0.09 ms | 0.12 ms | 0.37 ms | 5.37 ms | 111.00 | 
+| rust | [rocket](http://rocket.rs) (0.3) | 0.16 ms | 0.12 ms | 0.21 ms | 1.08 ms | 14.89 ms | 258.33 | 
+| rust | [iron](http://ironframework.io) (0.6) | 0.60 ms | 0.46 ms | 1.07 ms | 3.42 ms | 25.11 ms | 661.33 | 
+| ruby | [roda](http://roda.jeremyevans.net) (3.12) | 2.49 ms | 1.85 ms | 4.74 ms | 13.69 ms | 96.57 ms | 2945.33 | 
+| ruby | [rack-routing](http://github.com/georgeu2000/rack-routing) (0.0) | 3.51 ms | 2.46 ms | 7.44 ms | 18.63 ms | 112.41 ms | 3910.67 | 
+| ruby | [hanami](http://hanamirb.org) (1.2) | 6.08 ms | 4.17 ms | 13.94 ms | 28.63 ms | 90.26 ms | 6124.67 | 
+| ruby | [flame](http://github.com/AlexWayfer/flame) (4.18) | 5.83 ms | 4.20 ms | 12.91 ms | 25.07 ms | 73.11 ms | 5397.67 | 
+| rust | [actix-web](http://actix.rs) (0.7) | 5.08 ms | 4.45 ms | 9.36 ms | 15.77 ms | 61.08 ms | 3420.67 | 
+| php | [slim](http://slimframework.com) (3.11) | 150.76 ms | 4.63 ms | 388.11 ms | 2657.33 ms | 6884.17 ms | 511973.67 | 
+| cpp | [evhtp](http://github.com/criticalstack/libevhtp) (1.2) | 5.86 ms | 4.96 ms | 9.71 ms | 21.25 ms | 77.56 ms | 4367.00 | 
+| go | [fasthttprouter](http://godoc.org/github.com/buaazp/fasthttprouter) (0.1) | 5.91 ms | 5.03 ms | 10.10 ms | 18.78 ms | 50.47 ms | 3568.33 | 
+| ruby | [sinatra](http://sinatrarb.com) (2.0) | 7.19 ms | 5.06 ms | 16.25 ms | 31.77 ms | 98.07 ms | 6891.67 | 
+| php | [laravel](http://laravel.com) (5.7) | 263.16 ms | 5.75 ms | 354.07 ms | 4757.24 ms | 6845.82 ms | 884354.00 | 
+| python | [vibora](http://vibora.io) (0.0) | 6.43 ms | 5.77 ms | 12.03 ms | 19.75 ms | 50.52 ms | 4282.67 | 
+| php | [symfony](http://symfony.com) (4.1) | 69.26 ms | 5.88 ms | 63.51 ms | 1797.86 ms | 6925.21 ms | 423098.00 | 
+| crystal | [spider-gazelle](http://spider-gazelle.net) (1.1) | 7.03 ms | 6.16 ms | 12.47 ms | 21.12 ms | 55.40 ms | 4322.67 | 
+| java | [act](http://actframework.org) (1.8) | 8.10 ms | 7.04 ms | 12.52 ms | 25.99 ms | 162.41 ms | 5598.67 | 
+| ruby | [rails](http://rubyonrails.org) (5.2) | 27.85 ms | 7.31 ms | 88.26 ms | 171.97 ms | 346.83 ms | 40438.33 | 
+| scala | [akkahttp](http://akka.io) (10.1) | 190.28 ms | 8.29 ms | 25.36 ms | 4867.20 ms | 7918.70 ms | 816651.67 | 
+| go | [iris](http://iris-go.com) (10.7) | 9.96 ms | 8.80 ms | 15.83 ms | 30.31 ms | 162.11 ms | 5436.33 | 
+| csharp | [aspnetcore](http://docs.microsoft.com/en-us/aspnet/index) (2.1) | 10.90 ms | 9.02 ms | 16.78 ms | 36.85 ms | 368.18 ms | 12176.67 | 
+| go | [gorilla-mux](http://www.gorillatoolkit.org/pkg/mux) (1.6) | 10.70 ms | 9.27 ms | 17.02 ms | 33.91 ms | 249.38 ms | 8138.67 | 
+| go | [beego](http://beego.me) (1.10) | 11.33 ms | 9.73 ms | 17.86 ms | 34.05 ms | 242.30 ms | 8090.33 | 
+| go | [gin](http://gin-gonic.github.io/gin) (1.3) | 11.49 ms | 9.87 ms | 18.45 ms | 34.38 ms | 240.69 ms | 7781.00 | 
+| go | [echo](http://echo.labstack.com) (3.3) | 12.47 ms | 10.64 ms | 20.32 ms | 39.14 ms | 144.05 ms | 7356.33 | 
+| nim | [mofuw](http://github.com/2vg/mofuw) (2.0) | 32.45 ms | 11.07 ms | 96.86 ms | 307.52 ms | 509.79 ms | 62835.67 | 
+| node | [rayo](http://rayo.js.org) (1.2) | 16.89 ms | 11.74 ms | 23.72 ms | 125.33 ms | 636.97 ms | 31015.33 | 
+| node | [polka](http://github.com/lukeed/polka) (0.5) | 18.79 ms | 12.08 ms | 26.36 ms | 173.17 ms | 768.63 ms | 39216.33 | 
+| node | [fastify](http://fastify.io) (1.12) | 28.24 ms | 16.11 ms | 36.85 ms | 349.16 ms | 1089.70 ms | 65135.33 | 
+| node | [koa](http://koajs.com) (2.5) | 26.16 ms | 16.24 ms | 37.35 ms | 234.26 ms | 1011.58 ms | 52857.33 | 
+| python | [bottle](http://bottlepy.org) (0.12) | 20.77 ms | 16.91 ms | 36.54 ms | 65.48 ms | 303.88 ms | 14669.33 | 
+| swift | [perfect](http://perfect.org) (3.0) | 16.81 ms | 16.94 ms | 19.22 ms | 22.23 ms | 55.57 ms | 2371.00 | 
+| swift | [vapor](http://vapor.codes) (3.0) | 34.47 ms | 17.31 ms | 31.02 ms | 645.52 ms | 2230.82 ms | 118088.33 | 
+| scala | [http4s](http://http4s.org) (0.18) | 26.73 ms | 18.45 ms | 35.51 ms | 273.24 ms | 1786.84 ms | 75468.00 | 
+| node | [restify](http://restify.com) (7.2) | 25.11 ms | 19.26 ms | 38.51 ms | 93.21 ms | 614.40 ms | 26547.33 | 
+| node | [express](http://expressjs.com) (4.16) | 39.78 ms | 22.52 ms | 51.42 ms | 565.43 ms | 1488.64 ms | 95150.00 | 
+| swift | [kitura](http://kitura.io) (2.2) | 28.24 ms | 28.27 ms | 32.73 ms | 38.21 ms | 309.73 ms | 7645.67 | 
+| crystal | [router.cr](http://github.com/tbrand/router.cr) (0.2) | 32.07 ms | 31.79 ms | 42.01 ms | 50.82 ms | 287.55 ms | 8945.67 | 
+| node | [hapi](http://hapijs.com) (17.6) | 65.18 ms | 32.83 ms | 68.59 ms | 1031.34 ms | 2081.26 ms | 166595.33 | 
+| crystal | [kemal](http://kemalcr.com) (0.24) | 36.22 ms | 32.96 ms | 50.69 ms | 60.18 ms | 127.34 ms | 8919.33 | 
+| python | [aiohttp](http://aiohttp.readthedocs.io) (3.4) | 44.29 ms | 38.90 ms | 74.13 ms | 125.16 ms | 211.10 ms | 23336.00 | 
+| crystal | [lucky](http://luckyframework.org) (0.11) | 39.22 ms | 39.76 ms | 44.25 ms | 52.59 ms | 364.13 ms | 10314.33 | 
+| python | [flask](http://flask.pocoo.org) (1.0) | 48.41 ms | 40.93 ms | 75.52 ms | 126.31 ms | 526.16 ms | 25075.00 | 
+| crystal | [amber](http://amberframework.org) (0.9) | 38.76 ms | 43.54 ms | 48.14 ms | 57.25 ms | 216.86 ms | 10681.00 | 
+| python | [sanic](http://github.com/huge-success/sanic) (0.8) | 67.46 ms | 61.92 ms | 108.42 ms | 176.50 ms | 311.02 ms | 32539.00 | 
+| python | [django](http://djangoproject.com) (2.1) | 86.02 ms | 63.40 ms | 181.16 ms | 242.73 ms | 587.75 ms | 53233.00 | 
+| python | [tornado](http://tornadoweb.org) (5.1) | 108.29 ms | 103.71 ms | 134.35 ms | 227.44 ms | 1096.39 ms | 53344.67 | 
+| python | [quart](http://pgjones.gitlab.io/quart) (0.6) | 121.29 ms | 107.96 ms | 202.43 ms | 279.61 ms | 409.56 ms | 57111.00 | 
 
 ### Requests per seconds
 
@@ -149,16 +150,16 @@ CPU Cores: 8
 #### Ranking (top 5)
 
 
-:one: (evhtp) (cpp)
+:one: (actix-web) (rust)
 
 
-:two: (fasthttprouter) (go)
+:two: (evhtp) (cpp)
 
 
-:three: (actix-web) (rust)
+:three: (vibora) (python)
 
 
-:four: (vibora) (python)
+:four: (fasthttprouter) (go)
 
 
 :five: (spider-gazelle) (crystal)
@@ -168,53 +169,54 @@ CPU Cores: 8
 
 | Language (Runtime) | Framework (Middleware) | Requests / s | Throughput |
 |---------------------------|---------------------------|----------------:|---------:|
-| cpp | [evhtp](http://github.com/criticalstack/libevhtp) (1.2) | 164413.33 | 159.67 MB |
-| go | [fasthttprouter](http://godoc.org/github.com/buaazp/fasthttprouter) (0.1) | 161730.33 | 260.17 MB |
-| rust | [actix-web](http://actix.rs) (0.7) | 160016.00 | 181.96 MB |
-| python | [vibora](http://vibora.io) (0.0) | 151188.33 | 171.53 MB |
-| crystal | [spider-gazelle](http://spider-gazelle.net) (1.1) | 139499.00 | 149.40 MB |
-| java | [act](http://actframework.org) (1.8) | 120500.00 | 206.19 MB |
-| go | [iris](http://iris-go.com) (10.7) | 104314.00 | 139.37 MB |
-| rust | [iron](http://ironframework.io) (0.6) | 98968.00 | 124.82 MB |
-| go | [gorilla-mux](http://www.gorillatoolkit.org/pkg/mux) (1.6) | 94483.33 | 126.29 MB |
-| go | [gin](http://gin-gonic.github.io/gin) (1.3) | 91961.33 | 161.40 MB |
-| go | [echo](http://echo.labstack.com) (3.3) | 90194.33 | 158.31 MB |
-| rust | [rocket](http://rocket.rs) (0.3) | 87814.00 | 139.28 MB |
-| go | [beego](http://beego.me) (1.10) | 87009.67 | 117.31 MB |
-| csharp | [aspnetcore](http://docs.microsoft.com/en-us/aspnet/index) (2.1) | 83404.67 | 135.81 MB |
-| rust | [nickel](http://nickel-org.github.io) (0.10) | 80589.00 | 160.36 MB |
-| nim | [mofuw](http://github.com/2vg/mofuw) (2.0) | 74356.67 | 130.60 MB |
-| scala | [akkahttp](http://akka.io) (10.1) | 69082.33 | 148.11 MB |
-| php | [laravel](http://laravel.com) (5.7) | 68007.67 | 338.57 MB |
-| node | [polka](http://github.com/lukeed/polka) (0.5) | 64612.33 | 96.84 MB |
-| node | [rayo](http://rayo.js.org) (1.2) | 56794.00 | 85.00 MB |
-| swift | [perfect](http://perfect.org) (3.0) | 54737.67 | 51.42 MB |
-| python | [bottle](http://bottlepy.org) (0.12) | 54455.67 | 134.23 MB |
-| node | [fastify](http://fastify.io) (1.12) | 54268.67 | 133.38 MB |
-| php | [symfony](http://symfony.com) (4.1) | 51347.33 | 255.56 MB |
-| scala | [http4s](http://http4s.org) (0.18) | 48237.33 | 84.59 MB |
-| swift | [vapor](http://vapor.codes) (3.0) | 47973.00 | 81.69 MB |
-| ruby | [roda](http://roda.jeremyevans.net) (3.12) | 46919.67 | 44.83 MB |
-| node | [koa](http://koajs.com) (2.5) | 41469.00 | 87.77 MB |
-| node | [restify](http://restify.com) (7.2) | 40341.00 | 70.78 MB |
-| ruby | [rack-routing](http://github.com/georgeu2000/rack-routing) (0.0) | 34275.67 | 19.81 MB |
-| node | [express](http://expressjs.com) (4.16) | 33507.67 | 82.02 MB |
-| crystal | [router.cr](http://github.com/tbrand/router.cr) (0.2) | 29380.67 | 27.56 MB |
-| swift | [kitura](http://kitura.io) (2.2) | 28164.00 | 52.45 MB |
-| crystal | [kemal](http://kemalcr.com) (0.24) | 28062.00 | 45.72 MB |
-| python | [aiohttp](http://aiohttp.readthedocs.io) (3.4) | 26611.00 | 60.38 MB |
-| crystal | [amber](http://amberframework.org) (0.9) | 26213.67 | 37.98 MB |
-| crystal | [lucky](http://luckyframework.org) (0.11) | 25004.00 | 30.68 MB |
-| node | [hapi](http://hapijs.com) (17.6) | 23602.33 | 61.23 MB |
-| ruby | [flame](http://github.com/AlexWayfer/flame) (4.18) | 22210.33 | 12.84 MB |
-| python | [flask](http://flask.pocoo.org) (1.0) | 19055.67 | 47.00 MB |
-| ruby | [hanami](http://hanamirb.org) (1.2) | 19049.33 | 144.44 MB |
-| ruby | [sinatra](http://sinatrarb.com) (2.0) | 17645.00 | 45.89 MB |
-| python | [sanic](http://github.com/huge-success/sanic) (0.8) | 16132.67 | 28.81 MB |
-| python | [django](http://djangoproject.com) (2.1) | 13044.67 | 37.87 MB |
-| python | [tornado](http://tornadoweb.org) (5.1) | 8955.67 | 24.05 MB |
-| python | [quart](http://pgjones.gitlab.io/quart) (0.6) | 7942.67 | 15.87 MB |
-| ruby | [rails](http://rubyonrails.org) (5.2) | 4813.33 | 14.65 MB |
+| rust | [actix-web](http://actix.rs) (0.7) | 180423.33 | 205.19 MB |
+| cpp | [evhtp](http://github.com/criticalstack/libevhtp) (1.2) | 162571.33 | 157.89 MB |
+| python | [vibora](http://vibora.io) (0.0) | 160044.00 | 181.74 MB |
+| go | [fasthttprouter](http://godoc.org/github.com/buaazp/fasthttprouter) (0.1) | 155972.00 | 250.14 MB |
+| crystal | [spider-gazelle](http://spider-gazelle.net) (1.1) | 136271.67 | 145.58 MB |
+| java | [act](http://actframework.org) (1.8) | 134279.67 | 229.72 MB |
+| rust | [iron](http://ironframework.io) (0.6) | 98004.67 | 123.32 MB |
+| go | [iris](http://iris-go.com) (10.7) | 97472.33 | 132.68 MB |
+| go | [gorilla-mux](http://www.gorillatoolkit.org/pkg/mux) (1.6) | 93179.67 | 125.11 MB |
+| csharp | [aspnetcore](http://docs.microsoft.com/en-us/aspnet/index) (2.1) | 91244.00 | 148.64 MB |
+| rust | [nickel](http://nickel-org.github.io) (0.10) | 88162.00 | 175.31 MB |
+| go | [beego](http://beego.me) (1.10) | 87972.00 | 118.79 MB |
+| rust | [rocket](http://rocket.rs) (0.3) | 86448.67 | 135.40 MB |
+| go | [gin](http://gin-gonic.github.io/gin) (1.3) | 86040.67 | 151.12 MB |
+| go | [echo](http://echo.labstack.com) (3.3) | 79883.67 | 140.22 MB |
+| nim | [mofuw](http://github.com/2vg/mofuw) (2.0) | 72842.33 | 127.92 MB |
+| node | [rayo](http://rayo.js.org) (1.2) | 71632.00 | 107.39 MB |
+| node | [polka](http://github.com/lukeed/polka) (0.5) | 68407.33 | 102.51 MB |
+| php | [laravel](http://laravel.com) (5.7) | 67039.67 | 333.95 MB |
+| scala | [akkahttp](http://akka.io) (10.1) | 65707.00 | 141.09 MB |
+| swift | [perfect](http://perfect.org) (3.0) | 58486.00 | 55.03 MB |
+| php | [symfony](http://symfony.com) (4.1) | 57951.00 | 288.72 MB |
+| php | [slim](http://slimframework.com) (3.11) | 54502.00 | 271.21 MB |
+| node | [fastify](http://fastify.io) (1.12) | 51879.33 | 126.74 MB |
+| python | [bottle](http://bottlepy.org) (0.12) | 50270.33 | 123.88 MB |
+| scala | [http4s](http://http4s.org) (0.18) | 50181.33 | 88.02 MB |
+| ruby | [roda](http://roda.jeremyevans.net) (3.12) | 49845.33 | 47.63 MB |
+| swift | [vapor](http://vapor.codes) (3.0) | 49759.67 | 85.03 MB |
+| node | [koa](http://koajs.com) (2.5) | 48976.33 | 103.74 MB |
+| node | [restify](http://restify.com) (7.2) | 43485.00 | 76.14 MB |
+| node | [express](http://expressjs.com) (4.16) | 36915.33 | 90.46 MB |
+| ruby | [rack-routing](http://github.com/georgeu2000/rack-routing) (0.0) | 36097.00 | 20.87 MB |
+| swift | [kitura](http://kitura.io) (2.2) | 34713.00 | 64.52 MB |
+| crystal | [router.cr](http://github.com/tbrand/router.cr) (0.2) | 30672.33 | 28.76 MB |
+| crystal | [kemal](http://kemalcr.com) (0.24) | 27245.00 | 44.40 MB |
+| node | [hapi](http://hapijs.com) (17.6) | 27132.67 | 70.37 MB |
+| crystal | [lucky](http://luckyframework.org) (0.11) | 25417.00 | 31.29 MB |
+| crystal | [amber](http://amberframework.org) (0.9) | 25358.33 | 36.74 MB |
+| python | [aiohttp](http://aiohttp.readthedocs.io) (3.4) | 23185.00 | 52.60 MB |
+| ruby | [flame](http://github.com/AlexWayfer/flame) (4.18) | 21873.00 | 12.64 MB |
+| ruby | [hanami](http://hanamirb.org) (1.2) | 20962.00 | 158.84 MB |
+| python | [flask](http://flask.pocoo.org) (1.0) | 20607.67 | 50.83 MB |
+| ruby | [sinatra](http://sinatrarb.com) (2.0) | 17703.67 | 46.04 MB |
+| python | [sanic](http://github.com/huge-success/sanic) (0.8) | 14977.33 | 26.75 MB |
+| python | [django](http://djangoproject.com) (2.1) | 12269.33 | 35.61 MB |
+| python | [tornado](http://tornadoweb.org) (5.1) | 9053.33 | 24.26 MB |
+| python | [quart](http://pgjones.gitlab.io/quart) (0.6) | 8214.67 | 16.39 MB |
+| ruby | [rails](http://rubyonrails.org) (5.2) | 4595.67 | 14.03 MB |
 <!-- Result till here -->
 
 ## How to contribute ?
