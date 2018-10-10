@@ -11,7 +11,7 @@ it "get on /" do
   name = ENV["FRAMEWORK"]
   remote_ip = get_ip(name)
   r = HTTP::Client.get "http://#{remote_ip}:3000/"
-  it "should reply with a 200" { r.status_code.should eq 200 }
+  it "should reply with a 200 status code" { r.status_code.should eq 200 }
   it "should rerturn an empty body" { r.body.should eq "" }
 end
 
@@ -19,8 +19,8 @@ it "get on /user/0" do
   name = ENV["FRAMEWORK"]
   remote_ip = get_ip(name)
   r = HTTP::Client.get "http://#{remote_ip}:3000/user/0"
-  it "should reply with a 200" { r.status_code.should eq 200 }
-  it "should rerturn an empty body" { r.body.should eq "0" }
+  it "should reply with a 200 status code" { r.status_code.should eq 200 }
+  it "should return <0>" { r.body.should eq "0" }
 end
 
 it "post on /user" do
