@@ -16,7 +16,7 @@ $app->get('/user/{id}', function(Http\Request $request, Http\Response $response,
     return $response->write($args['id']);
 });
 
-$app->get('/user', function(Http\Request $request, Http\Response $response): Http\Response {
+$app->post('/user', function(Http\Request $request, Http\Response $response): Http\Response {
     return $response->write('');
 });
 
