@@ -74,6 +74,10 @@ dependencies:
 
   - type: php
     path: php/symfony
+    settings:
+      constraint_prefix: '~'
 
   - type: php
     path: php/laravel
+    settings:
+      constraint_prefix: '~'

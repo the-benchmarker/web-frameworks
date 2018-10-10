@@ -22,6 +22,7 @@ env:
     - FRAMEWORK=bottle
     - FRAMEWORK=aiohttp
     - FRAMEWORK=quart
+    - FRAMEWORK=cyclone
     - FRAMEWORK=mofuw
     - FRAMEWORK=act
     - FRAMEWORK=rails
@@ -56,6 +57,7 @@ env:
     - FRAMEWORK=koa
     - FRAMEWORK=polka
     - FRAMEWORK=rayo
+    - FRAMEWORK=turbo_polka
 
 script:
   - shards build
