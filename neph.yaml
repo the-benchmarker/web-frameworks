@@ -14,6 +14,7 @@ main:
     - csharp
     - java
     - php
+    - c
 
 crystal:
   depends_on:
@@ -111,6 +112,10 @@ php:
     - slim
     - symfony
     - laravel
+
+c:
+  depends_on:
+    - kore
 
 router.cr:
   command: |
@@ -386,3 +391,8 @@ laravel:
   command: |
     docker  build -t laravel .
   dir: php/laravel
+
+kore:
+  command: |
+    docker build -t kore .
+  dir: c/kore
