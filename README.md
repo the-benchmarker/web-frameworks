@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/the-benchmarker/web-frameworks.svg?branch=master)](https://travis-ci.com/the-benchmarker/web-frameworks)
 [![Join the chat at https://gitter.im/which_is_the_fastest/Lobby](https://badges.gitter.im/which_is_the_fastest/Lobby.svg)](https://gitter.im/which_is_the_fastest/Lobby)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fthe-benchmarker%2Fweb-frameworks.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fthe-benchmarker%2Fweb-frameworks?ref=badge_shield)
 
 This project aims to be a load benchmarking suite, no more, no less
 
@@ -235,3 +236,7 @@ Any kind of idea is :heart:
 - [Taichiro Suzuki](https://github.com/tbrand) - Author, maintainer
 - [OvermindDL1](https://github.com/OvermindDL1) - Maintainer
 - [Marwan Rabbâa](https://github.com/waghanza) - Mainainer
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fthe-benchmarker%2Fweb-frameworks.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fthe-benchmarker%2Fweb-frameworks?ref=badge_large)
