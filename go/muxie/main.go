@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	r := mux.NewMux()
+	r := muxie.NewMux()
 
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "GET" {
