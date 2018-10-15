@@ -59,6 +59,7 @@ go:
     - fasthttprouter
     - gin
     - beego
+    - muxie
 
 swift:
   depends_on:
@@ -261,6 +262,11 @@ beego:
   command: |
     docker build -t beego .
   dir: go/beego
+
+muxie:
+  command: |
+    docker build -t muxie .
+  dir: go/muxie
 
 vapor:
   command: |
