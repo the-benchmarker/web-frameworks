@@ -1,43 +1,63 @@
-#include <kore/kore.h>
 #include <kore/http.h>
+#include <kore/kore.h>
 
-int		home(struct http_request *);
-int		user(struct http_request *);
-int		user_details(struct http_request *);
+int home(struct http_request *req);
+int user(struct http_request *req);
+int user_details(struct http_request *req);
 
 int
 home(struct http_request *req)
 {
-	http_response(req, 200, NULL, 0);
-	return (KORE_RESULT_OK);
+    http_response(req, 200, NULL, 0);
+    return (KORE_RESULT_OK);
 }
 
 int
 user(struct http_request *req)
 {
-	http_response(req, 200, NULL, 0);
-	return (KORE_RESULT_OK);
+    http_response(req, 200, NULL, 0);
+    return (KORE_RESULT_OK);
 }
 
 int
 user_details(struct http_request *req)
 {
-	char		*id;
-	size_t		len;
-	struct kore_buf		*buf;
-	u_int8_t		*data;
+    size_t      nmatch = 2;
 
-	http_populate_get(req);
+    char        *id;
+    struct      kore_buf     *buf;
+    regex_t     re;
+    regmatch_t  pmatch[nmatch];
 
-	buf = kore_buf_alloc(1024);
+    buf = kore_buf_alloc(1024);
 
-	if (http_argument_get_string(req, "id", &id))
-		kore_buf_appendf(buf, id);
+    //kore_log(LOG_NOTICE, "path: %s", req->path);
+    //kore_log(LOG_NOTICE, "hdlr path: %s", req->hdlr->path);
 
-	data = kore_buf_release(buf, &len);
+    if (regcomp(&re, req->hdlr->path, REG_EXTENDED)) {
+        kore_debug("regcomp() on %s failed", req->path);
+        kore_buf_free(buf);
 
-	http_response(req, 200, data, len);
-	kore_free(data);
+        return (KORE_RESULT_ERROR);
+    }
 
-	return (KORE_RESULT_OK);
+    if (regexec(&re, req->path, nmatch, pmatch, 0) != 0) {
+        kore_debug("regexec() on %s failed", req->path);
+        kore_buf_free(buf);
+
+        return (KORE_RESULT_ERROR);
+    }
+
+    //id = strndup(req->path + pmatch[1].rm_so, pmatch[1].rm_eo - pmatch[1].rm_so);
+    unsigned int id_len = pmatch[1].rm_eo - pmatch[1].rm_so + 1;
+    id = kore_malloc(id_len);
+    kore_strlcpy(id, req->path + pmatch[1].rm_so, id_len);
+
+    kore_buf_appendf(buf, id);
+
+    http_response(req, 200, buf->data, buf->offset);
+    kore_buf_free(buf);
+    //free(id);
+
+    return (KORE_RESULT_OK);
 }
