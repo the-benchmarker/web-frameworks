@@ -1,10 +1,12 @@
-// swift-tools-version:3.1
-
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
     name: "server",
     dependencies: [
-        .Package(url: "https://github.com/PerfectlySoft/Perfect-HTTPServer.git",  majorVersion: 3, minor: 0)
+        .package(url: "https://github.com/PerfectlySoft/Perfect-HTTPServer.git", from: "3.0.0"),
+    ],
+    targets: [
+        .target(name: "server", dependencies: ["PerfectHTTPServer"], path: "."),
     ]
 )
