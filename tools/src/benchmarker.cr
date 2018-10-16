@@ -65,7 +65,7 @@ def frameworks : Array(Target)
   YAML.parse(File.read("FRAMEWORKS.yml")).as_h.each do |lang, data|
     data.as_h.each do |framework, line|
       row = line.as_h
-      next if row.has_key?("type") && row["type"] == "experimental" && !Options.with_experimental
+      next if row.has_key?("type") && row["type"].to_s == "experimental" && !Options.with_experimental
       if row.has_key?("github")
         link = "github.com/#{row["github"]}"
       elsif row.has_key?("website")

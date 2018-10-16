@@ -23,6 +23,7 @@ crystal:
     - raze
     - lucky
     - spider-gazelle
+    - orion
 
 ruby:
   depends_on:
@@ -35,7 +36,7 @@ ruby:
 
 nim:
   depends_on:
-    #- jester
+    - jester
     - mofuw
 
 python:
@@ -142,6 +143,11 @@ spider-gazelle:
   command: |
     docker build -t spider-gazelle .
   dir: crystal/spider-gazelle
+
+orion:
+  command: |
+    docker build -t orion .
+  dir: crystal/orion
 
 rails:
   command: |

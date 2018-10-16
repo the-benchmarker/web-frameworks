@@ -36,10 +36,10 @@ env:
     - FRAMEWORK=raze
     - FRAMEWORK=kemal
     - FRAMEWORK=spider-gazelle
-    - FRAMEWORK=prism
     - FRAMEWORK=lucky
     - FRAMEWORK=amber
     - FRAMEWORK=router.cr
+    - FRAMEWORK=orion
     - FRAMEWORK=kitura
     - FRAMEWORK=perfect
     - FRAMEWORK=vapor
