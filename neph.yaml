@@ -403,8 +403,3 @@ laravel:
   command: |
     docker  build -t laravel .
   dir: php/laravel
-
-kore:
-  command: |
-    docker build -t kore .
-  dir: c/kore
