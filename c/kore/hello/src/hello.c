@@ -37,6 +37,7 @@ user_details(struct http_request *req)
     if (regcomp(&re, req->hdlr->path, REG_EXTENDED)) {
         kore_debug("regcomp() on %s failed", req->path);
         kore_buf_free(buf);
+        regfree(&re);
 
         return (KORE_RESULT_ERROR);
     }
@@ -44,6 +45,7 @@ user_details(struct http_request *req)
     if (regexec(&re, req->path, nmatch, pmatch, 0) != 0) {
         kore_debug("regexec() on %s failed", req->path);
         kore_buf_free(buf);
+        regfree(&re);
 
         return (KORE_RESULT_ERROR);
     }
@@ -57,7 +59,9 @@ user_details(struct http_request *req)
 
     http_response(req, 200, buf->data, buf->offset);
     kore_buf_free(buf);
+    // Manually free `id` if `strndup` is used above.
     //free(id);
+    regfree(&re);
 
     return (KORE_RESULT_OK);
 }
