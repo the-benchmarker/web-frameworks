@@ -1,11 +1,11 @@
-Before submitting your PR, please review the following checklist:
+Before submitting your PR, please review the following checklist :
 
 ## If you are adding a framework
 
-+ [ ] The framework is listed
-   + [ ] On [neph](http://tbrand.github.io/neph)
-   + [ ] On `FRAMEWORKS.yml`
-   + [ ] On `travis.yml`
++ [ ] Please check configuration files
+   + [ ] `neph.yml`, for [neph](http://tbrand.github.io/neph) job processing
+   + [ ] `FRAMEWORKS.yml`, for **frameworks** list
+   + [ ] `travis.yml`, for CI
 + [ ] A `Dockerfile` exists ?
 + [ ] All tests passes ?
 ~~~
