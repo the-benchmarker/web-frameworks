@@ -1,4 +1,4 @@
-FROM bigtruedata/sbt
+FROM bigtruedata/sbt:0.13.15-2.12.3
 
 WORKDIR /usr/src/app
 
