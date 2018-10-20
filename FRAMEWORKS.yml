@@ -2,183 +2,246 @@ ruby:
   rails:
     website: rubyonrails.org
     version: "5.2"
+    language: "2.5"
   sinatra:
     website: sinatrarb.com
     version: "2.0"
+    language: "2.5"
   roda:
     website: roda.jeremyevans.net
     version: "3.13"
+    language: "2.5"
   rack-routing:
     github: georgeu2000/rack-routing
     version: "0.0"
+    language: "2.5"
   flame:
     github: AlexWayfer/flame
     version: "4.18"
+    language: "2.5"
   hanami:
     website: hanamirb.org
     version: "1.2"
+    language: "2.5"
 node:
   express:
     website: expressjs.com
     version: "4.16"
+    language: "10.12"
   fastify:
     website: fastify.io
     version: "1.12"
+    language: "10.12"
   polka:
     github: lukeed/polka
     version: "0.5"
+    language: "10.12"
   rayo:
     website: rayo.js.org
     version: "1.2"
+    language: "10.12"
   koa:
     website: koajs.com
     version: "2.5"
+    language: "10.12"
   restify:
     website: restify.com
     version: "7.2"
+    language: "10.12"
   hapi:
     website: hapijs.com
     version: "17.6"
+    language: "10.12"
   turbo_polka:
     github: mafintosh/turbo-http
     version: "0.3"
     type: experimental
+    language: "10.12"
 python:
   sanic:
     github: huge-success/sanic
     version: "0.8"
+    language: "3.7"
   flask:
     website: flask.pocoo.org
     version: "1.0"
+    language: "3.7"
   django:
     website: djangoproject.com
     version: "2.1"
+    language: "3.7"
   tornado:
     website: tornadoweb.org
     version: "5.1"
+    language: "3.7"
   vibora:
     website: vibora.io
     version: "0.0"
+    language: "3.6"
   aiohttp:
     website: aiohttp.readthedocs.io
     version: "3.4"
+    language: "3.6"
   bottle:
     website: bottlepy.org
     version: "0.12"
+    language: "3.7"
   quart:
     website: pgjones.gitlab.io/quart
     version: "0.6"
+    language: "3.7"
   cyclone:
     website: cyclone.io
     version: "0.0 (dev preview)"
     type: experimental
+    language: "3.7"
+  japronto:
+    language: "3.6"
+    version: "1.1"
+    github: squeaky-pl/japronto
 php:
   slim:
     website: slimframework.com
     version: "3.11"
+    language: "7.2"
   symfony:
     website: symfony.com
     version: "4.1"
+    language: "7.2"
   laravel:
     website: laravel.com
     version: "5.7"
+    language: "7.2"
 crystal:
   kemal:
     website: kemalcr.com
     version: "0.24"
+    language: "0.26.1"
   router.cr:
     github: tbrand/router.cr
     version: "0.2"
+    language: "0.26.1"
   amber:
     website: amberframework.org
     version: "0.9"
+    language: "0.26.1"
   lucky:
     website: luckyframework.org
     version: "0.11"
+    language: "0.25.1"
   spider-gazelle:
     website: spider-gazelle.net
     version: "1.1"
+    language: "0.26.1"
   orion:
     github: obsidian/orion
     version: "1.6"
+    language: "0.26.1"
+  raze:
+    website: razecr.com
+    version: "0.3"
+    language: "0.25.1"
 nim:
   jester:
     github: dom96/jester
     version: "0.4"
+    language: "0.19"
   mofuw:
     github: 2vg/mofuw
     version: "2.0"
+    language: "0.19"
 go:
   beego:
     website: beego.me
     version: "1.10"
+    language: "1.11"
   echo:
     website: echo.labstack.com
     version: "3.3"
+    language: "1.11"
   iris:
     website: iris-go.com
     version: "10.7"
+    language: "1.11"
   muxie:
     website: godoc.org/github.com/kataras/muxie
     version: "1.0"
+    language: "1.11"
   gin:
     website: gin-gonic.github.io/gin
     version: "1.3"
+    language: "1.11"
   gorilla-mux:
     website: www.gorillatoolkit.org/pkg/mux
     version: "1.6"
+    language: "1.11"
   fasthttprouter:
     website: godoc.org/github.com/buaazp/fasthttprouter
     version: "0.1"
+    language: "1.11"
 swift:
   kitura:
     website: kitura.io
     version: "2.5"
+    language: "4.2"
   vapor:
     website: vapor.codes
     version: "3.0"
+    language: "4.2"
   perfect:
     website: perfect.org
     version: "3.0"
+    language: "4.2"
 rust:
   actix-web:
     website: actix.rs
     version: "0.7"
+    language: "1.29"
   iron:
     website: ironframework.io
     version: "0.6"
+    language: "1.29"
   nickel:
     website: nickel-org.github.io
     version: "0.10"
+    language: "1.29"
   rocket:
     website: rocket.rs
     version: "0.3"
+    language: "nightly"
 #elixir:
 #  phoenix:
 #    website: phoenixframework.org
 #    version: "1.3"
+#    language: "1.7"
 #  plug:
 #    github: elixir-plug/plug
 #    version: "1.6"
+#    language: "1.7"
 cpp:
   evhtp:
     github: criticalstack/libevhtp
     version: "1.2"
+    language: "11.0"
 scala:
   akkahttp:
     website: akka.io
     version: "10.1"
+    language: "2.12"
   http4s:
     website: http4s.org
     version: "0.18"
+    language: "2.12"
 csharp:
   aspnetcore:
     website: docs.microsoft.com/en-us/aspnet/index
     version: "2.1"
+    language: "7.3"
 java:
   act:
     website: actframework.org
     version: "1.8"
+    language: "8"
 c:
   kore:
     website: kore.io

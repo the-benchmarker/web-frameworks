@@ -1,4 +1,4 @@
-FROM rikorose/gcc-cmake
+FROM rikorose/gcc-cmake:gcc-8
 
 WORKDIR /usr/src/app
 COPY . .

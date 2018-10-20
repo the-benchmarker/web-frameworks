@@ -1,4 +1,4 @@
-FROM swift
+FROM swift:4.2
 
 WORKDIR /usr/src/app
 

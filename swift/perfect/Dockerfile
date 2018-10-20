@@ -1,4 +1,4 @@
-FROM swift
+FROM swift:4.2
 
 # install perfect deps
 # @see https://www.perfect.org/docs/gettingStarted.html
