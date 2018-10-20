@@ -2,7 +2,7 @@ FROM php:7.2-fpm
 
 RUN apt-get -qq update
 RUN apt-get -y install git nginx zlib1g-dev
-RUN docker-php-ext-install zip
+RUN docker-php-ext-install zip opcache
 
 
 WORKDIR /usr/src/app
@@ -41,6 +41,15 @@ RUN echo 'server {\n\
     }\n\
 }\n'\
 >> /etc/nginx/conf.d/www.conf
+
+RUN echo 'opcache.enable=1\n\
+opcache.memory_consumption=512\n\
+opcache.interned_strings_buffer=64\n\
+opcache.max_accelerated_files=32531\n\
+opcache.validate_timestamps=0\n\
+opcache.save_comments=1\n\
+opcache.fast_shutdown=0\n'\
+>> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 

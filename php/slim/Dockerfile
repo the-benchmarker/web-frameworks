@@ -2,7 +2,7 @@ FROM php:7.2-fpm
 
 RUN apt-get -qq update
 RUN apt-get -y install git nginx zlib1g-dev
-RUN docker-php-ext-install zip
+RUN docker-php-ext-install zip opcache
 
 
 WORKDIR /usr/src/app
@@ -25,19 +25,29 @@ RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 ENV APP_ENV prod
 
 RUN echo 'server {\n\
-    root /usr/src/app/public;\n\
     listen 0.0.0.0:3000;\n\
+
+    root /usr/src/app/public;\n\
+    set $front_controller /index.php;\n\
+
     location / {\n\
-        try_files $uri /index.php$is_args$args;\n\
-    }\n\
-    location ~ index\\.php {\n\
         fastcgi_pass unix:/var/run/php-fpm.sock;\n\
-        fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
+
         include fastcgi_params;\n\
-        internal;\n\
+        fastcgi_param SCRIPT_FILENAME $document_root$front_controller;\n\
+        fastcgi_param SCRIPT_NAME $front_controller;\n\
     }\n\
 }\n'\
 >> /etc/nginx/conf.d/www.conf
+
+RUN echo 'opcache.enable=1\n\
+opcache.memory_consumption=512\n\
+opcache.interned_strings_buffer=64\n\
+opcache.max_accelerated_files=32531\n\
+opcache.validate_timestamps=0\n\
+opcache.save_comments=1\n\
+opcache.fast_shutdown=0\n'\
+>> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
