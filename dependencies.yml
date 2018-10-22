@@ -28,7 +28,7 @@ dependencies:
 
   - type: python
     path: python/sanic/requirements.txt
-  
+
   - type: python
     path: python/japronto/requirements.txt
     settings:
@@ -86,3 +86,176 @@ dependencies:
     path: php/slim
     settings:
       constraint_prefix: '~'
+
+  - type: dockerfile
+    path: cpp/evhtp/Dockerfile
+  - type: dockerfile
+    path: crystal/orion/Dockerfile
+
+  - type: dockerfile
+    path: crystal/router.cr/Dockerfile
+
+  - type: dockerfile
+    path: crystal/lucky/Dockerfile
+
+  - type: dockerfile
+    path: crystal/raze/Dockerfile
+
+  - type: dockerfile
+    path: crystal/spider-gazelle/Dockerfile
+
+  - type: dockerfile
+    path: crystal/amber/Dockerfile
+
+  - type: dockerfile
+    path: crystal/kemal/Dockerfile
+
+  - type: dockerfile
+    path: rust/rocket/Dockerfile
+
+  - type: dockerfile
+    path: rust/nickel/Dockerfile
+
+  - type: dockerfile
+    path:rust/iron/Dockerfile
+
+  - type: dockerfile
+    path: rust/actix-web/Dockerfile
+
+  - type: dockerfile
+    path: csharp/aspnetcore/Dockerfile
+
+  - type: dockerfile
+    path: ruby/rack-routing/Dockerfile
+
+  - type: dockerfile
+    path: ruby/hanami/Dockerfile
+
+  - type: dockerfile
+    path: ruby/rails/Dockerfile
+
+  - type: dockerfile
+    path: ruby/roda/Dockerfile
+
+  - type: dockerfile
+    path: ruby/sinatra/Dockerfile
+
+  - type: dockerfile
+    path: ruby/flame/Dockerfile
+
+  - type: dockerfile
+    path: node/restify/Dockerfile
+
+  - type: dockerfile
+    path: node/express/Dockerfile
+
+  - type: dockerfile
+    path: node/fastify/Dockerfile
+
+  - type: dockerfile
+    path: node/hapi/Dockerfile
+
+  - type: dockerfile
+    path: node/turbo_polka/Dockerfile
+
+  - type: dockerfile
+    path: node/polka/Dockerfile
+
+  - type: dockerfile
+    path: node/koa/Dockerfile
+
+  - type: dockerfile
+    path: node/rayo/Dockerfile
+
+  - type: dockerfile
+    path: c/kore/Dockerfile
+
+  - type: dockerfile
+    path: scala/akkahttp/Dockerfile
+
+  - type: dockerfile
+    path: scala/http4s/Dockerfile
+
+  - type: dockerfile
+    path: nim/mofuw/Dockerfile
+
+  - type: dockerfile
+    path: nim/jester/Dockerfile
+
+  - type: dockerfile
+    path: php/slim/Dockerfile
+
+  - type: dockerfile
+    path: php/symfony/Dockerfile
+
+  - type: dockerfile
+    path: php/laravel/Dockerfile
+
+  - type: dockerfile
+    path: java/act/Dockerfile
+
+  - type: dockerfile
+    path: python/flask/Dockerfile
+
+  - type: dockerfile
+    path: python/tornado/Dockerfile
+
+  - type: dockerfile
+    path: python/quart/Dockerfile
+
+  - type: dockerfile
+    path: python/bottle/Dockerfile
+
+  - type: dockerfile
+    path: python/vibora/Dockerfile
+
+  - type: dockerfile
+    path: python/aiohttp/Dockerfile
+
+  - type: dockerfile
+    path: python/sanic/Dockerfile
+
+  - type: dockerfile
+    path: python/japronto/Dockerfile
+
+  - type: dockerfile
+    path: python/cyclone/Dockerfile
+
+  - type: dockerfile
+    path: python/django/Dockerfile
+
+  - type: dockerfile
+    path: swift/vapor/Dockerfile
+
+  - type: dockerfile
+    path: swift/kitura/Dockerfile
+
+  - type: dockerfile
+    path: swift/perfect/Dockerfile
+
+  - type: dockerfile
+    path: go/muxie/Dockerfile
+
+  - type: dockerfile
+    path: go/beego/Dockerfile
+
+  - type: dockerfile
+    path: go/gorilla-mux/Dockerfile
+
+  - type: dockerfile
+    path: go/iris/Dockerfile
+
+  - type: dockerfile
+    path: go/gin/Dockerfile
+
+  - type: dockerfile
+    path: go/echo/Dockerfile
+
+  - type: dockerfile
+    path: go/fasthttprouter/Dockerfile
+
+  - type: dockerfile
+    path: elixir/plug/Dockerfile
+
+  - type: dockerfile
+    path: elixir/phoenix/Dockerfile
