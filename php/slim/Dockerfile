@@ -1,4 +1,4 @@
-FROM php:7.2.11
+FROM php:7.2.11-fpm
 
 RUN apt-get -qq update
 RUN apt-get -y install git nginx zlib1g-dev
@@ -21,6 +21,9 @@ RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
 
 RUN rm -fr /etc/nginx/sites-enabled/default
 RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
+
+RUN echo '<?php chmod(sys_get_temp_dir(), 1777);' > /tmp/fix.php
+RUN php -f /tmp/fix.php
 
 ENV APP_ENV prod
 
@@ -50,6 +53,7 @@ opcache.fast_shutdown=0\n'\
 >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+
 
 EXPOSE 3000
 
