@@ -5,7 +5,7 @@ use Slim\Http;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$app = new App(['settings' => ['routerCacheFile' => '/tmp']]);
+$app = new App(['settings' => ['routerCacheFile' => __DIR__ . '/../var/routes.cache.php']]);
 
 $app->get('/', function(Http\Request $request, Http\Response $response): Http\Response {
     return $response->write('');
