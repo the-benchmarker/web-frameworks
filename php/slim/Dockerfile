@@ -22,9 +22,6 @@ RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
 RUN rm -fr /etc/nginx/sites-enabled/default
 RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 
-RUN echo '<?php chmod(sys_get_temp_dir(), 1777);' > /tmp/fix.php
-RUN php -f /tmp/fix.php
-
 ENV APP_ENV prod
 
 RUN echo 'server {\n\
