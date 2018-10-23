@@ -6,6 +6,8 @@ COPY shard.yml ./
 COPY src src
 COPY config config
 
+ENV PROCESS_COUNT $(nproc)
+
 RUN shards build --release --no-debug
 
 CMD bin/server
