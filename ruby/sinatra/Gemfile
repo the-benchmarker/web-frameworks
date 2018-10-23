@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
 gem 'sinatra', '~> 2.0.4'
-gem 'falcon', '~> 0.18.14'
+gem 'puma', '~> 3.12.0'
