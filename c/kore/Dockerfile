@@ -1,15 +1,4 @@
-FROM ubuntu:18.04
-
-RUN apt-get update -qq && \
-    apt-get install -qq -y \
-            wget \
-            make \
-            gcc \
-            openssl \
-            libssl-dev && \
-    apt-get clean -qq -y && \
-    apt-get autoclean -qq -y && \
-    apt-get autoremove -qq -y
+FROM gcc:8
 
 RUN wget -c https://kore.io/releases/kore-3.1.0.tar.gz && tar xvf kore-3.1.0.tar.gz
 RUN cd kore-3.1.0 && TASKS=1 NOTLS=1 make && make install
