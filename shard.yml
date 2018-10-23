@@ -15,8 +15,6 @@ dependencies:
     version: 0.1.0
 
 targets:
-  do:
-    main: tools/providers/digitalocean.cr
   benchmarker:
     main: tools/src/benchmarker.cr
   client:
