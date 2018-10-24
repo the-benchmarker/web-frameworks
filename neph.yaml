@@ -8,7 +8,7 @@ main:
     - swift
     - rust
     - node
-    #- elixir
+    - elixir
     - cpp
     - scala
     - csharp
@@ -91,7 +91,7 @@ node:
 elixir:
   depends_on:
     - plug
-    - phoenix
+    # - phoenix
 
 cpp:
   depends_on:
