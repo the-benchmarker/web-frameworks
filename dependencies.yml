@@ -153,6 +153,9 @@ dependencies:
     path: node/fastify/Dockerfile
 
   - type: dockerfile
+    path: node/foxify/Dockerfile
+
+  - type: dockerfile
     path: node/hapi/Dockerfile
 
   - type: dockerfile

@@ -1,19 +1,16 @@
-var Foxify = require('foxify')
+const Foxify = require("foxify");
 
-var app = new Foxify()
+const app = new Foxify();
 
-app.disable('X-Powered-By');
+app
+  .disable("x-powered-by")
+  .set("workers", 1)
+  .set("url", "0.0.0.0")
+  .set("port", 3000);
 
-app.get('/', function (req, res) {
-  res.send('')
-})
+app
+  .get("/", (req, res) => res.send(""))
+  .get("/user/:id", (req, res) => res.send(req.params.id))
+  .post("/user", (req, res) => res.send(""));
 
-app.get('/user/:id', function (req, res) {
-  res.send(req.params.id)
-})
-
-app.post('/user', function (req, res) {
-  res.send('')
-})
-
-app.start(function() {})
+app.start();
