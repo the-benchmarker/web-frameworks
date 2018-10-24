@@ -13,7 +13,6 @@ COPY composer.json .
 COPY routes routes
 COPY config config
 COPY public/index.php public/index.php
-COPY artisan artisan
 
 ENV APP_ENV production
 ENV APP_DEBUG false
@@ -23,14 +22,15 @@ RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/loca
 RUN composer install --no-dev --prefer-dist --classmap-authoritative
 RUN composer dumpautoload -o
 
-RUN mkdir bootstrap/cache && chown www-data bootstrap/cache
-RUN mkdir storage/framework/sessions -p && chown www-data storage/framework/sessions
-RUN mkdir storage/framework/views -p && chown www-data storage/framework/views
-RUN mkdir storage/framework/cache -p && chown www-data storage/framework/cache
+RUN mkdir bootstrap/cache
+RUN mkdir storage/framework/sessions -p
+RUN mkdir storage/framework/views -p
+RUN mkdir storage/framework/cache -p
 
-RUN php artisan cache:clear
-RUN php artisan config:clear
-RUN php artisan view:clear
+RUN chown -R www-data:www-data /usr/src/app
+RUN find /usr/src/app -type f -exec chmod 644 {} \;
+RUN find /usr/src/app -type d -exec chmod 755 {} \;
+RUN chmod -R ug+rwx storage /usr/src/app/bootstrap/cache
 
 RUN sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i 's/\(listen =\).*/\1 \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
@@ -46,12 +46,11 @@ RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 RUN echo 'server {\n\
     root /usr/src/app/public;\n\
     listen 0.0.0.0:3000;\n\
+    index index.php;\n\
 \n\
     add_header X-Frame-Options "SAMEORIGIN";\n\
     add_header X-XSS-Protection "1; mode=block";\n\
     add_header X-Content-Type-Options "nosniff";\n\
-\n\
-    index index.html index.htm index.php;\n\
 \n\
     charset utf-8;\n\
 \n\
@@ -59,20 +58,12 @@ RUN echo 'server {\n\
         try_files $uri $uri/ /index.php?$query_string;\n\
     }\n\
 \n\
-    location = /favicon.ico { access_log off; log_not_found off; }\n\
-    location = /robots.txt  { access_log off; log_not_found off; }\n\
-\n\
-    error_page 404 /index.php;\n\
-\n\
     location ~ \.php$ {\n\
         fastcgi_split_path_info ^(.+\.php)(/.+)$;\n\
         fastcgi_pass unix:/var/run/php-fpm.sock;\n\
         fastcgi_index index.php;\n\
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;\n\
         include fastcgi_params;\n\
-    }\n\
-\n\
-    location ~ /\.(?!well-known).* {\n\
-        deny all;\n\
     }\n\
 }\n'\
 >> /etc/nginx/conf.d/www.conf
