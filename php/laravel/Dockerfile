@@ -43,15 +43,36 @@ RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
 RUN rm -fr /etc/nginx/sites-enabled/default
 RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 
-
-
 RUN echo 'server {\n\
     root /usr/src/app/public;\n\
     listen 0.0.0.0:3000;\n\
+\n\
+    add_header X-Frame-Options "SAMEORIGIN";\n\
+    add_header X-XSS-Protection "1; mode=block";\n\
+    add_header X-Content-Type-Options "nosniff";\n\
+\n\
+    index index.html index.htm index.php;\n\
+\n\
+    charset utf-8;\n\
+\n\
     location / {\n\
+        try_files $uri $uri/ /index.php?$query_string;\n\
+    }\n\
+\n\
+    location = /favicon.ico { access_log off; log_not_found off; }\n\
+    location = /robots.txt  { access_log off; log_not_found off; }\n\
+\n\
+    error_page 404 /index.php;\n\
+\n\
+    location ~ \.php$ {\n\
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;\n\
         fastcgi_pass unix:/var/run/php-fpm.sock;\n\
-        fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
+        fastcgi_index index.php;\n\
         include fastcgi_params;\n\
+    }\n\
+\n\
+    location ~ /\.(?!well-known).* {\n\
+        deny all;\n\
     }\n\
 }\n'\
 >> /etc/nginx/conf.d/www.conf
