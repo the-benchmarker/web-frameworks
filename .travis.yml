@@ -64,6 +64,7 @@ env:
     - FRAMEWORK=rayo
     - FRAMEWORK=turbo_polka
     - FRAMEWORK=kore
+    - FRAMEWORK=plug
 
 script:
   - shards build
