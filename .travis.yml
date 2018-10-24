@@ -75,7 +75,7 @@ before_script:
 
 script:
   - shards build
-  - bin/neph ${FRAMEWORK} --mode=CI
+  - bin/neph ${FRAMEWORK} --mode=CI --seq
   - crystal spec
 
 notifications:
