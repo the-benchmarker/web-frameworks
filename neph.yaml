@@ -80,6 +80,7 @@ node:
   depends_on:
     - express
     - fastify
+    - foxify
     - polka
     - rayo
     - koa
@@ -323,6 +324,11 @@ fastify:
   command: |
     docker build -t fastify .
   dir: node/fastify
+
+foxify:
+  command: |
+    docker build -t foxify .
+  dir: node/foxify
 
 polka:
   command: |
