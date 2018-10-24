@@ -68,7 +68,7 @@ env:
 
 before_script:
   # Install yaml lint tool to check syntax
-  - pip install yamllint
+  - sudo pip install yamllint
 
   # Check yaml syntax for all yaml files
   - find . -type f -name '*.yml' -or -name '*.yaml' -exec yamllint {} \;
