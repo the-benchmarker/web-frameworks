@@ -1,7 +1,7 @@
-require 'bundler/setup'
-require 'hanami/setup'
-require_relative '../apps/web/application'
+require "bundler/setup"
+require "hanami/setup"
+require_relative "../apps/web/application"
 
 Hanami.configure do
-  mount Web::Application, at: '/'
+  mount Web::Application, at: "/"
 end
