@@ -12,14 +12,13 @@
 */
 
 Route::get('/', function () {
-	return '';
+    return '';
 });
 
 Route::get('/user/{id}', function ($id) {
-	return $id;
+    return $id;
 });
 
-Route::post('/user', function() {
-	return '';
+Route::post('/user', function () {
+    return '';
 });
-
