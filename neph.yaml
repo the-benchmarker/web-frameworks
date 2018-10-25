@@ -8,7 +8,7 @@ main:
     - swift
     - rust
     - node
-    # - elixir
+    #- elixir
     - cpp
     - scala
     - csharp
@@ -121,208 +121,208 @@ c:
     - kore
 
 router.cr:
-  commands:
-    - docker build -t router.cr .
+  command: |
+    docker build -t router.cr .
   dir: crystal/router.cr
 
 raze:
-  commands:
-    - docker build -t raze .
+  command: |
+    docker build -t raze .
   dir: crystal/raze
 
 kemal:
-  commands:
-    - docker build -t kemal .
+  command: |
+    docker build -t kemal .
   dir: crystal/kemal
 
 lucky:
-  commands:
-    - docker build -t lucky .
+  command: |
+    docker build -t lucky .
   dir: crystal/lucky
 
 amber:
-  commands:
-    - docker build -t amber .
+  command: |
+    docker build -t amber .
   dir: crystal/amber
 
 spider-gazelle:
-  commands:
-    - docker build -t spider-gazelle .
+  command: |
+    docker build -t spider-gazelle .
   dir: crystal/spider-gazelle
 
 orion:
-  commands:
-    - docker build -t orion .
+  command: |
+    docker build -t orion .
   dir: crystal/orion
 
 rails:
-  commands:
-    - docker build -t rails .
+  command: |
+    docker build -t rails .
   dir: ruby/rails
 
 sinatra:
-  commands:
-    - docker build -t sinatra .
+  command: |
+    docker build -t sinatra .
   dir: ruby/sinatra
 
 roda:
-  commands:
-    - docker build -t roda .
+  command: |
+    docker build -t roda .
   dir: ruby/roda
 
 rack-routing:
-  commands:
-    - docker build -t rack-routing .
+  command: |
+    docker build -t rack-routing .
   dir: ruby/rack-routing
 
 flame:
-  commands:
-    - docker build -t flame .
+  command: |
+    docker build -t flame .
   dir: ruby/flame
 
 hanami:
-  commands:
-    - docker build -t hanami .
+  command: |
+    docker build -t hanami .
   dir: ruby/hanami
 
 jester:
-  commands:
-    - docker build -t jester .
+  command: |
+    docker build -t jester .
   dir: nim/jester
 
 mofuw:
-  commands:
-    - docker build -t mofuw .
+  command: |
+    docker build -t mofuw .
   dir: nim/mofuw
 
 flask:
-  commands:
-    - docker build -t flask .
+  command: |
+    docker build -t flask .
   dir: python/flask
 
 japronto:
-  commands:
-    - docker build -t japronto .
+  command: |
+    docker build -t japronto .
   dir: python/japronto
 
 django:
-  commands:
-    - docker build -t django .
+  command: |
+    docker build -t django .
   dir: python/django
 
 sanic:
-  commands:
-    - docker build -t sanic .
+  command: |
+    docker build -t sanic .
   dir: python/sanic
 
 tornado:
-  commands:
-    - docker build -t tornado .
+  command: |
+    docker build -t tornado .
   dir: python/tornado
 
 vibora:
-  commands:
-    - docker build -t vibora .
+  command: |
+    docker build -t vibora .
   dir: python/vibora
 
 bottle:
-  commands:
-    - docker build -t bottle .
+  command: |
+    docker build -t bottle .
   dir: python/bottle
 
 quart:
-  commands:
-    - docker build -t quart .
+  command: |
+    docker build -t quart .
   dir: python/quart
 
 aiohttp:
-  commands:
-    - docker build -t aiohttp .
+  command: |
+    docker build -t aiohttp .
   dir: python/aiohttp
 
 cyclone:
-  commands:
-    - docker build -t cyclone .
+  command: |
+    docker build -t cyclone .
   dir: python/cyclone
 
 iris:
-  commands:
-    - docker build -t iris .
+  command: |
+    docker build -t iris .
   dir: go/iris
 
 echo:
-  commands:
-    - docker build -t echo .
+  command: |
+    docker build -t echo .
   dir: go/echo
 
 gorilla-mux:
-  commands:
-    - docker build -t gorilla-mux .
+  command: |
+    docker build -t gorilla-mux .
   dir: go/gorilla-mux
 
 fasthttprouter:
-  commands:
-    - docker build -t fasthttprouter .
+  command: |
+    docker build -t fasthttprouter .
   dir: go/fasthttprouter
 
 gin:
-  commands:
-    - docker build -t gin .
+  command: |
+    docker build -t gin .
   dir: go/gin
 
 beego:
-  commands:
-    - docker build -t beego .
+  command: |
+    docker build -t beego .
   dir: go/beego
 
 muxie:
-  commands:
-    - docker build -t muxie .
+  command: |
+    docker build -t muxie .
   dir: go/muxie
 
 vapor:
-  commands:
-    - docker build -t vapor .
+  command: |
+    docker build -t vapor .
   dir: swift/vapor
 
 perfect:
-  commands:
-    - docker build -t perfect .
+  command: |
+    docker build -t perfect .
   dir: swift/perfect
 
 kitura:
-  commands:
-    - docker build -t kitura .
+  command: |
+    docker build -t kitura .
   dir: swift/kitura
 
 actix-web:
-  commands:
-    - docker build -t actix-web .
+  command: |
+    docker build -t actix-web .
   dir: rust/actix-web
 
 iron:
-  commands:
-    - docker build -t iron .
+  command: |
+    docker build -t iron .
   dir: rust/iron
 
 rocket:
-  commands:
-    - docker build -t rocket .
+  command: |
+    docker build -t rocket .
   dir: rust/rocket
 
 nickel:
-  commands:
-    - docker build -t nickel .
+  command: |
+    docker build -t nickel .
   dir: rust/nickel
 
 express:
-  commands:
-    - docker build -t express .
+  command: |
+    docker build -t express .
   dir: node/express
 
 fastify:
-  commands:
-    - docker build -t fastify .
+  command: |
+    docker build -t fastify .
   dir: node/fastify
 
 foxify:
@@ -331,86 +331,86 @@ foxify:
   dir: node/foxify
 
 polka:
-  commands:
-    - docker build -t polka .
+  command: |
+    docker build -t polka .
   dir: node/polka
 
 rayo:
-  commands:
-    - docker build -t rayo .
+  command: |
+    docker build -t rayo .
   dir: node/rayo
 
 koa:
-  commands:
-    - docker build -t koa .
+  command: |
+    docker build -t koa .
   dir: node/koa
 
 restify:
-  commands:
-    - docker build -t restify .
+  command: |
+    docker build -t restify .
   dir: node/restify
 
 hapi:
-  commands:
-    - docker build -t hapi .
+  command: |
+    docker build -t hapi .
   dir: node/hapi
 
 turbo_polka:
-  commands:
-    - docker build -t turbo_polka .
+  command: |
+    docker build -t turbo_polka .
   dir: node/turbo_polka
 
 plug:
-  commands:
-    - docker build -t plug .
+  command: |
+    docker build -t plug .
   dir: elixir/plug
 
 phoenix:
-  commands:
-    - docker build -t phoenix .
+  command: |
+    docker build -t phoenix .
   dir: elixir/phoenix
 
 evhtp:
-  commands:
-    - docker build -t evhtp .
+  command: |
+    docker build -t evhtp .
   dir: cpp/evhtp
 
 akkahttp:
-  commands:
-    - docker build -t akkahttp .
+  command: |
+    docker build -t akkahttp .
   dir: scala/akkahttp
 
 http4s:
-  commands:
-    - docker build -t http4s .
+  command: |
+    docker build -t http4s .
   dir: scala/http4s
 
 aspnetcore:
-  commands:
-    - docker build -t aspnetcore .
+  command: |
+    docker build -t aspnetcore .
   dir: csharp/aspnetcore
 
 act:
-  commands:
-    - docker build -t act .
+  command: |
+    docker build -t act .
   dir: java/act
 
 slim:
-  commands:
-    - docker build -t slim .
+  command: |
+    docker build -t slim .
   dir: php/slim
 
 symfony:
-  commands:
-    - docker build -t symfony .
+  command: |
+    docker build -t symfony .
   dir: php/symfony
 
 laravel:
-  commands:
-    - docker  build -t laravel .
+  command: |
+    docker  build -t laravel .
   dir: php/laravel
 
 kore:
-  commands:
-    - docker  build -t kore .
+  command: |
+    docker build -t kore .
   dir: c/kore
