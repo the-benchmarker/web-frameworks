@@ -13,7 +13,7 @@ class ApplicationController extends Controller
      */
     public function ping()
     {
-        return new Response("");
+        return new Response('');
     }
 
     /**
@@ -29,7 +29,6 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        return new Response("");
+        return new Response('');
     }
-
 }
