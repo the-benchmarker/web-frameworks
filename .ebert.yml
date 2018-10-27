@@ -1,48 +1,58 @@
-# This configuration was used Ebert to review the the-benchmarker/web-frameworks repository
-# on 80d6b9e612964e2294f1eedd163e006642ecd36a.
-# You can make this the default configuration for future reviews by moving this
-# file to your repository as `.ebert.yml` and pushing it to GitHub, and tweak
-# it as you wish - To know more on how to change this file to better review your
-# repository you can go to https://docs.ebertapp.io/configuration and see the configuration
-# details.
----
 styleguide: plataformatec/linters
 engines:
+
+  ######################################
+  ########## Static analyzers ##########
+  ######################################
+
+  # PHP
+  phpmd:
+    enabled: true
   phan:
+    enabled: true
+
+  # Ruby
+  rubocop:
     enabled: true
   reek:
     enabled: true
-  credo:
-    enabled: true
-  fixme:
-    enabled: true
-  gofmt:
-    enabled: true
-  govet:
-    enabled: true
-  phpmd:
-    enabled: true
+
+  # Python
   radon:
     enabled: true
-  eslint:
+
+  # Elixir
+  credo:
     enabled: true
-  golint:
+  
+  # Go
+  govet:
     enabled: true
+
+  # Swift
   tailor:
     enabled: true
-  csslint:
-    enabled: true
-  rubocop:
-    enabled: true
-  duplication:
-    config:
-      languages:
-      - ruby
-    enabled: true
-  remark-lint:
-    enabled: true
+  
+  # C
   gnu-complexity:
     enabled: true
-exclude_paths:
-- spec
 
+  ######################################
+  ############## Formaters #############
+  ######################################
+
+  # Go
+  gofmt:
+    enabled: true
+
+  ######################################
+  ############### Linters ##############
+  ######################################
+
+  # Javascript
+  eslint:
+    enabled: true
+
+  # Go
+  golint:
+    enabled: true
