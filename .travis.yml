@@ -73,6 +73,8 @@ before_script:
   # Check yaml syntax for all yaml files
   - find . -type f -name '*.yml' -or -name '*.yaml' -exec yamllint {} \;
 
+  - bash .ci/preflight.sh
+
 script:
   - shards build
   - bin/neph -v
