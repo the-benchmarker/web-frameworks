@@ -1,0 +1,40 @@
+rubocop:
+  enabled: true
+
+reek:
+  enabled: true
+
+eslint:
+  enabled: true
+
+tslint:
+  enabled: false
+
+jshint:
+  enabled: false
+
+scss:
+  enabled: false
+
+sass-lint:
+  enabled: true
+
+flake8:
+  enabled: true
+
+
+swiftlint:
+  enabled: true
+
+
+shellcheck:
+  enabled: false
+
+coffeescript:
+  enabled: false
+
+haml:
+  enabled: false
+
+golint:
+  enabled: false
