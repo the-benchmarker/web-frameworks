@@ -1,0 +1,4 @@
+approvals:
+  # Only collaborators could approve PRs
+  from:
+    collaborators: true
