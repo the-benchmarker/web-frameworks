@@ -183,6 +183,10 @@ go:
     website: godoc.org/github.com/buaazp/fasthttprouter
     version: "0.1"
     language: "1.11"
+  chi:
+    github: go-chi/chi
+    version: "3.3"
+    language: "1.11"
 swift:
   kitura:
     website: kitura.io
