@@ -49,6 +49,7 @@ env:
     - FRAMEWORK=iris
     - FRAMEWORK=beego
     - FRAMEWORK=gorilla-mux
+    - FRAMEWORK=chi
     - FRAMEWORK=muxie
     - FRAMEWORK=nickel
     - FRAMEWORK=actix-web
