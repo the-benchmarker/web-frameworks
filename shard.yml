@@ -13,10 +13,18 @@ dependencies:
   kiwi:
     github: crystal-community/kiwi
     version: 0.1.0
+  admiral:
+    github: jwaldrip/admiral.cr
+    version: 1.7.3
 
 targets:
+<<<<<<< HEAD
   neph:
     main: lib/neph/src/bin/neph_bin.cr
+=======
+  droplet:
+    main: tools/providers/digitalocean.cr
+>>>>>>> wip : create cloud target using cli
   benchmarker:
     main: tools/src/benchmarker.cr
   client:
