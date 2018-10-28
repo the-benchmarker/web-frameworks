@@ -62,6 +62,7 @@ go:
     - gin
     - beego
     - muxie
+    - chi
 
 swift:
   depends_on:
@@ -279,6 +280,11 @@ muxie:
   command: |
     docker build -t muxie .
   dir: go/muxie
+
+chi:
+  command: |
+    docker build -t chi .
+  dir: go/chi
 
 vapor:
   command: |
