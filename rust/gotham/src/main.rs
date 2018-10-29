@@ -18,7 +18,10 @@ fn main() {
     let router = build_simple_router(|route| {
         route.get("/").to(say_ok);
         route.post("/user").to(say_ok);
-        route.get("/user/:id").to(log_user);
+        route
+            .get("/user/:id")
+            .with_path_extractor::<PathExtractor>()
+            .to(log_user);
     });
 
     gotham::start(addr, router)
