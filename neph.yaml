@@ -332,8 +332,8 @@ fastify:
   dir: node/fastify
 
 foxify:
-  command: |
-    docker build -t foxify .
+  commands:
+    - docker build -t foxify .
   dir: node/foxify
 
 polka:
