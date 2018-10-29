@@ -282,8 +282,8 @@ muxie:
   dir: go/muxie
 
 chi:
-  command: |
-    docker build -t chi .
+  commands:
+    - docker build -t chi .
   dir: go/chi
 
 vapor:
