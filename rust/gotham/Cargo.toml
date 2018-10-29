@@ -1,0 +1,16 @@
+[package]
+name = "server"
+version = "0.1.0"
+authors = ["Isaac Whitfield <iw@whitfin.io>"]
+
+[dependencies]
+gotham = "0.3"
+gotham_derive = "0.3"
+hyper = "0.12"
+serde = "1.0"
+serde_derive = "1.0"
+
+[profile.release]
+codegen-units = 1
+opt-level = 3
+lto = true

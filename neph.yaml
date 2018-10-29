@@ -73,6 +73,7 @@ swift:
 rust:
   depends_on:
     - actix-web
+    - gotham
     - iron
     - rocket
     - nickel
@@ -305,6 +306,11 @@ actix-web:
   commands:
     - docker build -t actix-web .
   dir: rust/actix-web
+
+gotham:
+  commands:
+    - docker build -t gotham .
+  dir: rust/gotham
 
 iron:
   commands:
