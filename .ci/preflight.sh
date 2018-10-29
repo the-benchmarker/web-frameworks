@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 travis_terminate() {
   if [[ ! "${TRAVIS_OS_NAME}" ]]; then
     return
