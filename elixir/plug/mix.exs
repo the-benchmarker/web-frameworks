@@ -30,7 +30,7 @@ defmodule MyPlug.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:cowboy, "~> 2.4.0"},
-     {:plug, "~> 1.6.1"},
+     {:plug, "~> 1.7.1"},
      {:distillery, "~> 2.0.0-rc.6"}]
   end
 end
