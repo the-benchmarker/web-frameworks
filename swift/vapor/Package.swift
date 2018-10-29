@@ -4,9 +4,9 @@ import PackageDescription
 let package = Package(
     name: "which_is_the_fastest",
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", "3.1.0"..<"3.2.0"),
+        .package(url: "https://github.com/vapor/vapor.git", "3.1.0"..<"3.2.0")
     ],
     targets: [
-        .target(name: "server", dependencies: ["Vapor"], path: "."),
+        .target(name: "server", dependencies: ["Vapor"], path: ".")
     ]
 )
