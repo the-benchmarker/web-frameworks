@@ -66,9 +66,17 @@ env:
     - FRAMEWORK=turbo_polka
     - FRAMEWORK=kore
 
+before_script:
+  # Install yaml lint tool to check syntax
+  - sudo pip install yamllint
+
+  # Check yaml syntax for all yaml files
+  - find . -type f -name '*.yml' -or -name '*.yaml' -exec yamllint {} \;
+
 script:
   - shards build
-  - bin/neph ${FRAMEWORK} --mode=CI
+  - bin/neph -v
+  - bin/neph ${FRAMEWORK} --mode=CI --seq
   - crystal spec
 
 notifications:
