@@ -5,3 +5,8 @@ authors = ["taicsuzu <taicsuzu@yahoo-corp.jp>"]
 
 [dependencies]
 nickel = "0.10.1"
+
+[profile.release]
+codegen-units = 1
+opt-level = 3
+lto = true
