@@ -10,14 +10,14 @@ func main() {
 	r := chi.NewRouter()
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == "GET" {
-			w.Write([]byte(""))
-		}
+		w.Write([]byte(""))
 	})
+
 	r.Get("/user/{id}", func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
 		w.Write([]byte(id))
 	})
+
 	r.Post("/user", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(""))
 	})
