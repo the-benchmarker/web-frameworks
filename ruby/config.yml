@@ -11,22 +11,6 @@ providers:
         - yum --assumeyes install rubygems
         - gem install bundler --no-ri --no-rdoc
         - gem install puma --no-ri --no-rdoc
-        - systemctl enable web
-      write_files:
-        - path: /usr/lib/systemd/system/web.service
-          content: |
-            [Unit]
-            Description=Puma HTTP Server
-            After=network.target
-            [Service]
-            Type=simple
-            WorkingDirectory=/home/ec2-user/web
-            ExecStart=/usr/local/bin/bundle exec puma -p 80 -e production -w 2
-            Restart=always
-            [Install]
-            WantedBy=multi-user.target
-    after_upload:
-        - /usr/bin/sudo /usr/local/bin/bundle install --without development test
   digitalocean:
     # cloud-init 17.1
     version: 2.5
@@ -40,21 +24,6 @@ providers:
         - "@development-tools"
         - "@rpm-development-tools"
         - "@c-development"
-      write_files:
-        - path: /usr/lib/systemd/system/web.service
-          content: |
-            [Unit]
-            Description=Puma HTTP Server
-            After=network.target
-            [Service]
-            Type=simple
-            WorkingDirectory=/opt/www
-            ExecStart=/usr/local/bin/bundle exec falcon serve --bind tcp://0.0.0.0:3000
-            Restart=always
-            [Install]
-            WantedBy=multi-user.target
       runcmd:
         - systemctl enable web
         - gem install bundler --no-ri --no-rdoc
-    after_upload:
-      - /usr/local/bin/bundle install --without development test
