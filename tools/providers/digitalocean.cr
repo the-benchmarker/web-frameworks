@@ -4,8 +4,7 @@ require "io/memory"
 require "yaml"
 require "kiwi/file_store"
 require "admiral"
-
-
+require "ssh2"
 
 def execute(cmd)
   error = IO::Memory.new
@@ -25,14 +24,12 @@ def execute(cmd)
 end
 
 class App < Admiral::Command
-
   class Create < Admiral::Command
     define_flag language : String, description: "language selected, to set-up environment", required: true, short: l
     define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
 
     # ssh configuration
     define_flag key : String, description: "ssh key fingerprint", required: true, short: k
-    define_flag key_file : String, description: "ssh key file", required: true
 
     # droplet configuration
     define_flag image : String, description: "droplet image / os", short: i, default: "fedora-28-x64"
@@ -40,8 +37,7 @@ class App < Admiral::Command
     define_flag size : String, description: "droplet size (default the cheaper)", short: s, default: "s-1vcpu-1gb"
 
     def run
-      db_path = "/tmp/#{flags.language}/#{flags.framework}"
-      database = Kiwi::FileStore.new(db_path)
+      database = Kiwi::FileStore.new("config.db")
       config = YAML.parse(File.read("#{flags.language}/config.yml"))
 
       template = config["providers"]["digitalocean"]["config"]
@@ -55,20 +51,48 @@ class App < Admiral::Command
       instance = execute("doctl compute droplet get #{instance_id}")
       ip = instance[0]["networks"]["v4"][0]["ip_address"]
       database.set("#{flags.framework.to_s.upcase}_USERNAME", "root")
-      database.set("#{flags.framework.to_s.upcase}_SSHKEY", flags.key_file)
       database.set("#{flags.framework.to_s.upcase}_IP", ip)
+    end
+  end
 
+  class Upload < Admiral::Command
+    define_flag language : String, description: "language selected, to set-up environment", required: true, short: l
+    define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
+
+    # ssh configuration
+    define_flag key : String, description: "ssh key fingefile", required: true, short: k
+
+    def run
+      database = Kiwi::FileStore.new("config.db")
+      username = database.get("#{flags.framework.to_s.upcase}_USERNAME")
+      ip = database.get("#{flags.framework.to_s.upcase}_IP")
+
+      SSH2::Session.open(ip.to_s, 22) do |session|
+        session.login_with_pubkey(username.to_s, flags.key)
+
+        # Create directory
+        session.open_session do |ch|
+          ch.command("mkdir -p /usr/src/app")
+          IO.copy(ch, STDOUT)
+        end
+
+        # Upload files
+        arguments.each do |file|
+          path = File.join(Dir.current, flags.language.to_s, flags.framework.to_s, file)
+          session.scp_send(File.join("/usr/src/app", file.to_s), 0o0644, File.size(path)) do |ch|
+            ch.puts File.read(path)
+          end
+        end
+      end
     end
   end
 
   register_sub_command create : Create, description "Create droplet for specific language"
+  register_sub_command upload : Upload, description "Upload file (or folders) to previously created droplet"
 
   def run
     puts "help"
   end
-
 end
 
 App.run
-
-

@@ -16,6 +16,8 @@ dependencies:
   admiral:
     github: jwaldrip/admiral.cr
     version: 1.7.3
+  ssh2:
+    github: datanoise/ssh2.cr
 
 targets:
 <<<<<<< HEAD
