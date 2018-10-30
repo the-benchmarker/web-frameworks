@@ -16,17 +16,12 @@ dependencies:
   admiral:
     github: jwaldrip/admiral.cr
     version: 1.7.3
-  ssh2:
-    github: datanoise/ssh2.cr
 
 targets:
-<<<<<<< HEAD
   neph:
     main: lib/neph/src/bin/neph_bin.cr
-=======
   droplet:
     main: tools/providers/digitalocean.cr
->>>>>>> wip : create cloud target using cli
   benchmarker:
     main: tools/src/benchmarker.cr
   client:
