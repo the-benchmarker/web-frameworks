@@ -87,8 +87,34 @@ class App < Admiral::Command
     end
   end
 
+  class Exec < Admiral::Command
+    define_flag language : String, description: "language selected, to set-up environment", required: true, short: l
+    define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
+
+    # ssh configuration
+    define_flag key : String, description: "ssh key fingefile", required: true, short: k
+
+    def run
+      database = Kiwi::FileStore.new("config.db")
+      username = database.get("#{flags.framework.to_s.upcase}_USERNAME")
+      ip = database.get("#{flags.framework.to_s.upcase}_IP")
+
+      SSH2::Session.open(ip.to_s, 22) do |session|
+        session.login_with_pubkey(username.to_s, flags.key)
+
+        session.open_session do |ch|
+          arguments.each do |cmd|
+            ch.command("cd /usr/src/app && #{cmd}")
+            IO.copy(ch, STDOUT)
+          end
+        end
+      end
+    end
+  end
+
   register_sub_command create : Create, description "Create droplet for specific language"
   register_sub_command upload : Upload, description "Upload file (or folders) to previously created droplet"
+  register_sub_command exec : Exec, description "Execute command on previously create droplet"
 
   def run
     puts "help"
