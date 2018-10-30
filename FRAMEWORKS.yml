@@ -205,6 +205,10 @@ rust:
     website: actix.rs
     version: "0.7"
     language: "1.30"
+  gotham:
+    website: gotham.rs
+    version: "0.3"
+    language: "1.30"
   iron:
     website: ironframework.io
     version: "0.6"

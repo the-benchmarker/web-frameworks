@@ -6,3 +6,8 @@ authors = ["taicsuzu <taicsuzu@yahoo-corp.jp>"]
 [dependencies]
 iron = "0.6.0"
 router = "0.6.0"
+
+[profile.release]
+codegen-units = 1
+opt-level = 3
+lto = true
