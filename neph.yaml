@@ -286,6 +286,13 @@ chi:
     - docker build -t chi .
   dir: go/chi
 
+ion:
+  commands:
+    - docker build -t ion .
+  dir: go/ion
+
+echo:
+
 vapor:
   commands:
     - docker build -t vapor .
