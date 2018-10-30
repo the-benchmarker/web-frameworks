@@ -17,7 +17,7 @@ func main() {
 		id := chi.URLParam(r, "id")
 		w.Write([]byte(id))
 	})
-	
+
 	r.Post("/user", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(""))
 	})
