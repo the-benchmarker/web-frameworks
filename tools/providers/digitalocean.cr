@@ -6,10 +6,20 @@ require "kiwi/file_store"
 require "admiral"
 require "ssh2"
 
-def execute(cmd)
+# Wrapper around doctl tool
+# -> by default, parse json output
+# -> could also return return value
+def execute(cmd, output : Bool = true)
   error = IO::Memory.new
   output = IO::Memory.new
-  Process.run(cmd, shell: true, output: output, error: error)
+
+  retval = Process.run(cmd, shell: true, output: output, error: error)
+
+  # if no output
+  if output == false
+    return retval
+  end
+
   # if stderr is not empty
   if error.size > 0
     msg = error.to_s.strip
@@ -45,7 +55,7 @@ class App < Admiral::Command
       f.puts("#cloud-config")
       f.puts(YAML.dump(template).gsub("---", "")) # cloud-init does not accepts start-comment in yaml
       f.close
-      instances = execute("doctl compute droplet create sinatra --image #{flags.image} --region #{flags.region} --size #{flags.size} --ssh-keys #{flags.key} --user-data-file /tmp/template.yml")
+      instances = execute("doctl compute droplet create #{flags.framework} --image #{flags.image} --region #{flags.region} --size #{flags.size} --ssh-keys #{flags.key} --user-data-file /tmp/template.yml")
       instance_id = instances[0]["id"]
       sleep 1 # wait droplet's network to be available
       instance = execute("doctl compute droplet get #{instance_id}")
@@ -112,9 +122,23 @@ class App < Admiral::Command
     end
   end
 
+  class Delete < Admiral::Command
+    define_flag language : String, description: "language selected, to set-up environment", required: true, short: l
+    define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
+
+    def run
+      retval execute("doctl compute droplet delete #{flags.framework} --force")
+
+      if retval
+        raise "Failed to delete #{flags.framework} droplet"
+      end
+    end
+  end
+
   register_sub_command create : Create, description "Create droplet for specific language"
   register_sub_command upload : Upload, description "Upload file (or folders) to previously created droplet"
-  register_sub_command exec : Exec, description "Execute command on previously create droplet"
+  register_sub_command exec : Exec, description "Execute command on previously created droplet"
+  register_sub_command delete : Delete, description "Delet previously created droplet"
 
   def run
     puts "help"
