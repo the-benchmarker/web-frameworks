@@ -22,6 +22,8 @@ targets:
     main: lib/neph/src/bin/neph_bin.cr
   droplet:
     main: tools/providers/digitalocean.cr
+  benchmark:
+    main: tools/benchmark.cr
   benchmarker:
     main: tools/src/benchmarker.cr
   client:
