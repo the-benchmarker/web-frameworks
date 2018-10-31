@@ -7,18 +7,12 @@ require "admiral"
 require "ssh2"
 
 # Wrapper around doctl tool
-# -> by default, parse json output
-# -> could also return return value
-def execute(cmd, output : Bool = true)
+
+def execute(cmd)
   error = IO::Memory.new
   output = IO::Memory.new
 
   retval = Process.run(cmd, shell: true, output: output, error: error)
-
-  # if no output
-  if output == false
-    return retval
-  end
 
   # if stderr is not empty
   if error.size > 0
@@ -127,11 +121,7 @@ class App < Admiral::Command
     define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
 
     def run
-      retval execute("doctl compute droplet delete #{flags.framework} --force")
-
-      if retval
-        raise "Failed to delete #{flags.framework} droplet"
-      end
+      execute("doctl compute droplet delete #{flags.framework} --force")
     end
   end
 
