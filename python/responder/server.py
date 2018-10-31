@@ -17,6 +17,3 @@ async def user_info(req, resp, *, id):
 async def user(req, resp):
     if req.method == 'post':
         resp.text = ''
-
-if __name__ == "__main__":
-    api.run(port=3000)
