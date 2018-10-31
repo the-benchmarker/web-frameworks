@@ -54,6 +54,7 @@ python:
     - cyclone
     - falcon
     - starlette
+    - responder
 
 go:
   depends_on:
@@ -253,6 +254,11 @@ falcon:
   commands:
     - docker build -t falcon .
   dir: python/falcon
+
+responder:
+  commands:
+    - docker build -t responder .
+  dir: python/responder
 
 starlette:
   commands:
