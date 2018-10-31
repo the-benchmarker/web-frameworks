@@ -52,6 +52,7 @@ python:
     - aiohttp
     - quart
     - cyclone
+    - falcon
 
 go:
   depends_on:
@@ -246,6 +247,11 @@ cyclone:
   commands:
     - docker build -t cyclone .
   dir: python/cyclone
+
+falcon:
+  commands:
+    - docker build -t falcon .
+  dir: python/falcon
 
 iris:
   commands:

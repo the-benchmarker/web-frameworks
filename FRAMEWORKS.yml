@@ -103,6 +103,10 @@ python:
     language: "3.6"
     version: "1.1"
     github: squeaky-pl/japronto
+  falcon:
+    language: "3.7"
+    version: "1.4"
+    website: falconframework.org
 php:
   slim:
     website: slimframework.com
