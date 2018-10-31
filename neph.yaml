@@ -247,6 +247,11 @@ cyclone:
     - docker build -t cyclone .
   dir: python/cyclone
 
+falcon:
+  commands:
+    - docker build -t falcon .
+  dir: python/falcon
+
 iris:
   commands:
     - docker build -t iris .
