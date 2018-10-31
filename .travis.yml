@@ -24,6 +24,7 @@ env:
     - FRAMEWORK=aiohttp
     - FRAMEWORK=quart
     - FRAMEWORK=cyclone
+    - FRAMEWORK=falcon
     - FRAMEWORK=mofuw
     - FRAMEWORK=jester
     - FRAMEWORK=act
