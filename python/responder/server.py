@@ -1,19 +1,19 @@
 import responder
 
-api = responder.API()
+app = responder.API()
 
 
-@api.route("/")
+@app.route("/")
 async def index(req, resp):
     resp.text = ""
 
 
-@api.route('/user/{id}')
+@app.route('/user/{id}')
 async def user_info(req, resp, *, id):
     resp.text = id
 
 
-@api.route('/user')
+@app.route('/user')
 async def user(req, resp):
     if req.method == 'post':
         resp.text = ''
