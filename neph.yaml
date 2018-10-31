@@ -52,6 +52,7 @@ python:
     - aiohttp
     - quart
     - cyclone
+    - falcon
 
 go:
   depends_on:
