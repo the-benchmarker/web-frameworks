@@ -9,4 +9,4 @@ COPY requirements.txt server.py ./
 
 EXPOSE 3000
 
-CMD gunicorn server:app --bind 0.0.0.0:3000 --worker-class sanic.worker.GunicornWorker --workers `nproc`
+CMD gunicorn --log-level warning --bind 0.0.0.0:3000 --reuse-port --workers $(nproc) --worker-class sanic.worker.GunicornWorker server:app

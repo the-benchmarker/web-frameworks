@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 3000
 
-CMD gunicorn --bind 0.0.0.0:3000 --reuse-port --worker-class uvicorn.workers.UvicornWorker server:app
+CMD gunicorn --log-level warning --bind 0.0.0.0:3000 --reuse-port --workers $(nproc) --worker-class uvicorn.workers.UvicornWorker server:app
