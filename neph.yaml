@@ -53,6 +53,7 @@ python:
     - quart
     - cyclone
     - falcon
+    - starlette
 
 go:
   depends_on:
