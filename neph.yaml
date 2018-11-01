@@ -254,6 +254,11 @@ falcon:
     - docker build -t falcon .
   dir: python/falcon
 
+starlette:
+  commands:
+    - docker build -t starlette .
+  dir: python/starlette
+
 iris:
   commands:
     - docker build -t iris .
