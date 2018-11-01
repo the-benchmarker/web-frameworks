@@ -53,6 +53,7 @@ python:
     - quart
     - cyclone
     - falcon
+    - starlette
 
 go:
   depends_on:
@@ -252,6 +253,11 @@ falcon:
   commands:
     - docker build -t falcon .
   dir: python/falcon
+
+starlette:
+  commands:
+    - docker build -t starlette .
+  dir: python/starlette
 
 iris:
   commands:

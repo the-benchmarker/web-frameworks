@@ -107,6 +107,10 @@ python:
     language: "3.7"
     version: "1.4"
     website: falconframework.org
+  starlette:
+    language: "3.7"
+    version: "0.6"
+    website: starlette.io
 php:
   slim:
     website: slimframework.com

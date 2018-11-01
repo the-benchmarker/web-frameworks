@@ -25,6 +25,7 @@ env:
     - FRAMEWORK=quart
     - FRAMEWORK=cyclone
     - FRAMEWORK=falcon
+    - FRAMEWORK=starlette
     - FRAMEWORK=mofuw
     - FRAMEWORK=jester
     - FRAMEWORK=act
