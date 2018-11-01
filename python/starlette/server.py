@@ -19,6 +19,3 @@ async def user(request):
 @app.route('/user', methods=['POST'])
 async def userinfo(request):
     return PlainTextResponse('')
-
-if __name__ == '__main__':
-    uvicorn.run(app, port=3000)
