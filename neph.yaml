@@ -254,10 +254,6 @@ falcon:
   commands:
     - docker build -t falcon .
   dir: python/falcon
-responder:
-  commands:
-    - docker build -t responder .
-  dir: python/responder
 
 responder:
   commands:
