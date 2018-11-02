@@ -111,6 +111,10 @@ python:
     language: "3.7"
     version: "0.6"
     website: starlette.io
+  responder:
+    language: "3.7"
+    version: "1.1"
+    github: kennethreitz/responder
 php:
   slim:
     website: slimframework.com
