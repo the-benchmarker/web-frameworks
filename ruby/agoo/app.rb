@@ -16,9 +16,9 @@ Agoo::Log.configure(dir: '',
                       push: false
                     })
 
-$worker_count = 4
-$worker_count = ENV['AGOO_WORKER_COUNT'].to_i if ENV.has_key?('AGOO_WORKER_COUNT')
-Agoo::Server.init(3000, '.', thread_count: 0, worker_count: $worker_count)
+worker_count = 4
+worker_count = ENV['AGOO_WORKER_COUNT'].to_i if ENV.key?('AGOO_WORKER_COUNT')
+Agoo::Server.init(3000, '.', thread_count: 0, worker_count: worker_count)
 
 # Empty response.
 class Empty
