@@ -13,7 +13,7 @@ Agoo::Log.configure(dir: '',
                       request: false,
                       response: false,
                       eval: false,
-                      push: false,
+                      push: false
                     })
 
 Agoo::Server.init(3000, '.', thread_count: 0, worker_count: 4)
