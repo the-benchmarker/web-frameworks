@@ -7,4 +7,4 @@ COPY shard.yml ./
 
 RUN shards build --release --no-debug
 
-CMD bin/server
+CMD for i in $(seq 1 $(nproc --all)); do bin/server & done
