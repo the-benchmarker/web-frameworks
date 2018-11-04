@@ -35,6 +35,7 @@ env:
     - FRAMEWORK=sinatra
     - FRAMEWORK=hanami
     - FRAMEWORK=roda
+    - FRAMEWORK=agoo
     - FRAMEWORK=flame
     - FRAMEWORK=raze
     - FRAMEWORK=kemal

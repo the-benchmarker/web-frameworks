@@ -132,6 +132,9 @@ dependencies:
     path: ruby/hanami/Dockerfile
 
   - type: dockerfile
+    path: ruby/agoo/Dockerfile
+
+  - type: dockerfile
     path: ruby/rails/Dockerfile
 
   - type: dockerfile

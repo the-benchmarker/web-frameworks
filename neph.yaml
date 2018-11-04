@@ -34,6 +34,7 @@ ruby:
     - rack-routing
     - flame
     - hanami
+    - agoo
 
 nim:
   depends_on:
@@ -189,6 +190,11 @@ hanami:
   commands:
     - docker build -t hanami .
   dir: ruby/hanami
+
+agoo:
+  commands:
+    - docker build -t agoo .
+  dir: ruby/agoo
 
 jester:
   commands:
