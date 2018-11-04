@@ -14,6 +14,7 @@ env:
     - FRAMEWORK=slim
     - FRAMEWORK=symfony
     - FRAMEWORK=laravel
+    - FRAMEWORK=lumen
     - FRAMEWORK=tornado
     - FRAMEWORK=sanic
     - FRAMEWORK=japronto
