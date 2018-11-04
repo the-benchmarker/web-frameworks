@@ -121,6 +121,7 @@ php:
     - slim
     - symfony
     - laravel
+    - lumen
 
 c:
   depends_on:
@@ -445,6 +446,11 @@ laravel:
   commands:
     - docker  build -t laravel .
   dir: php/laravel
+
+lumen:
+  commands:
+    - docker  build -t lumen .
+  dir: php/lumen
 
 kore:
   commands:
