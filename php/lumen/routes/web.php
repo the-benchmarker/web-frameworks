@@ -1,7 +1,7 @@
 <?php
 
 $router->get('/', [
-    'uses' => 'ApplicationController@index'
+    'uses' => 'ApplicationController@index',
 ]);
 
 $router->get('/user/{id}', [
