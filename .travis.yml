@@ -1,7 +1,5 @@
-services:
-  - docker
-  - redis
-
+# Use docker to containerize frameworks
+services: docker
 
 language: crystal
 
