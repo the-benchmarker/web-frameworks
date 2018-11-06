@@ -77,8 +77,8 @@ jobs:
       script: .ci/lint.sh
       env: FRAMEWORK=rails
 
-# Exit build if framework has not been modified
-before_script: bash .ci/has_to_run.sh || travis_terminate 0
+# Exit build if framework has not been modified on PR
+before_script: if [ "${TRAVIS_PULL_REQUEST}" != "false" ] ; then bash .ci/has_to_run.sh || travis_terminate 0 ; fi
 
 script:
   - shards build
