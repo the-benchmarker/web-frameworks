@@ -11,8 +11,8 @@ targets:
 dependencies:
   router:
     github: tbrand/router.cr
-    version: ~> 0.2.3
+    version: ~> 0.2.7
 
-crystal: 0.24.2
+crystal: 0.27.0
 
 license: MIT

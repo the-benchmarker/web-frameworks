@@ -1,0 +1,48 @@
+# This configuration was used Ebert to review the the-benchmarker/web-frameworks repository
+# on 387074b492dad194fe583d7669c0f6eb6b2ce2bc.
+# You can make this the default configuration for future reviews by moving this
+# file to your repository as `.ebert.yml` and pushing it to GitHub, and tweak
+# it as you wish - To know more on how to change this file to better review your
+# repository you can go to https://docs.ebertapp.io/configuration and see the configuration
+# details.
+---
+styleguide: plataformatec/linters
+engines:
+  phan:
+    enabled: false
+  reek:
+    enabled: true
+  credo:
+    enabled: true
+  fixme:
+    enabled: true
+  gofmt:
+    enabled: true
+  govet:
+    enabled: true
+  phpmd:
+    enabled: true
+  radon:
+    enabled: true
+  eslint:
+    enabled: true
+  golint:
+    enabled: true
+  tailor:
+    enabled: true
+  csslint:
+    enabled: true
+  rubocop:
+    enabled: true
+  duplication:
+    config:
+      languages:
+      - ruby
+    enabled: true
+  remark-lint:
+    enabled: true
+  gnu-complexity:
+    enabled: true
+exclude_paths:
+- spec
+

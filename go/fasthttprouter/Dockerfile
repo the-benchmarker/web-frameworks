@@ -1,13 +1,10 @@
-FROM golang:1.11.1
+FROM golang:1.11.2
 
 WORKDIR /go/src/app
-COPY main.go ./
+COPY main.go go.mod ./
 
-RUN go get -u github.com/kardianos/govendor
-RUN govendor init
-RUN govendor fetch github.com/buaazp/fasthttprouter@v0.1.1
-RUN govendor fetch github.com/valyala/fasthttp@v20180529
-RUN go build main.go
+ENV GO111MODULE=on
+RUN go build .
 
 EXPOSE 3000
 CMD [ "./main" ]

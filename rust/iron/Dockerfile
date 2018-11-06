@@ -1,11 +1,11 @@
-FROM rust:1.29.2
+FROM rust:1.30
 
 WORKDIR /usr/src/app
 
 COPY Cargo.toml ./
 COPY src src
 
-RUN cargo build --release
+RUN RUSTFLAGS="-C target-cpu=native" cargo build --release
 
 EXPOSE 3000
 

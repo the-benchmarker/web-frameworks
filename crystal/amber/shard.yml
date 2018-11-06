@@ -4,9 +4,9 @@ version: 0.1.0
 authors:
   - Marwan Rabbâa <waghanza@gmail.com>
 
-crystal: 0.24.2
+crystal: 0.27.0
 
-license: UNLICENSED
+license: MIT
 
 targets:
 
@@ -16,4 +16,4 @@ targets:
 dependencies:
   amber:
     github: amberframework/amber
-    version: ~> 0.9.0
+    version: ~> 0.11.0

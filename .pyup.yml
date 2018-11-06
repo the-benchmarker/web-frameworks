@@ -1,0 +1,12 @@
+# Define regularity
+schedule: "every day"
+
+# Labelize PR
+label_prs:
+  - dependencies
+  - language:python
+
+# Auto-assign PR for review
+assignees:
+ - waghanza
+ - greed2411

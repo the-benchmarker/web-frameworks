@@ -1,4 +1,4 @@
-FROM rust:1.29.2
+FROM rust:1.30
 
 WORKDIR /usr/src/app
 
@@ -9,7 +9,7 @@ COPY src src
 
 ENV ROCKET_ENV=production
 
-RUN cargo build --release
+RUN RUSTFLAGS="-C target-cpu=native" cargo build --release
 
 EXPOSE 3000
 

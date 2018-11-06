@@ -14,6 +14,7 @@ env:
     - FRAMEWORK=slim
     - FRAMEWORK=symfony
     - FRAMEWORK=laravel
+    - FRAMEWORK=lumen
     - FRAMEWORK=tornado
     - FRAMEWORK=sanic
     - FRAMEWORK=japronto
@@ -24,6 +25,9 @@ env:
     - FRAMEWORK=aiohttp
     - FRAMEWORK=quart
     - FRAMEWORK=cyclone
+    - FRAMEWORK=falcon
+    - FRAMEWORK=starlette
+    - FRAMEWORK=responder
     - FRAMEWORK=mofuw
     - FRAMEWORK=jester
     - FRAMEWORK=act
@@ -32,6 +36,7 @@ env:
     - FRAMEWORK=sinatra
     - FRAMEWORK=hanami
     - FRAMEWORK=roda
+    - FRAMEWORK=agoo
     - FRAMEWORK=flame
     - FRAMEWORK=raze
     - FRAMEWORK=kemal
@@ -49,9 +54,11 @@ env:
     - FRAMEWORK=iris
     - FRAMEWORK=beego
     - FRAMEWORK=gorilla-mux
+    - FRAMEWORK=chi
     - FRAMEWORK=muxie
     - FRAMEWORK=nickel
     - FRAMEWORK=actix-web
+    - FRAMEWORK=gotham
     - FRAMEWORK=rocket
     - FRAMEWORK=iron
     - FRAMEWORK=restify
@@ -65,9 +72,17 @@ env:
     - FRAMEWORK=turbo_polka
     - FRAMEWORK=kore
 
+before_script:
+  # Install yaml lint tool to check syntax
+  - sudo pip install yamllint
+
+  # Check yaml syntax for all yaml files
+  - find . -type f -name '*.yml' -or -name '*.yaml' -exec yamllint {} \;
+
 script:
   - shards build
-  - bin/neph ${FRAMEWORK} --mode=CI
+  - bin/neph -v
+  - bin/neph ${FRAMEWORK} --mode=CI --seq
   - crystal spec
 
 notifications:
