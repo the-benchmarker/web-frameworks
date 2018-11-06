@@ -4,8 +4,11 @@ before_install: if [ "${TRAVIS_PULL_REQUEST}" != "false" ] ; then bash .ci/has_t
 # Use docker to containerize frameworks
 services: docker
 
+# This tool is written in crystal
 language: crystal
 
+# One build per framework
+# ! This list list has to be updated manually !
 env:
   matrix:
     - FRAMEWORK=aspnetcore
