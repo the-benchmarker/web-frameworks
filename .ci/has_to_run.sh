@@ -31,7 +31,7 @@ _travis_terminate_unix() {
 
 
 # List updated frameworks
-git diff --name-only master...${TRAVIS_COMMIT} | awk -F '/' '{print $2}' | sort | uniq | sed '/^$/d' > /tmp/changed
+git diff --name-only HEAD...$TRAVIS_BRANCH > /tmp/changed
 
 # If current framework was updated
 grep -q "^$FRAMEWORK$" /tmp/changed
