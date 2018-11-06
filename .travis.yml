@@ -71,7 +71,7 @@ env:
     - FRAMEWORK=restana
     - FRAMEWORK=hapi
     - FRAMEWORK=fastify
-    # - FRAMEWORK=foxify
+    - FRAMEWORK=foxify
     - FRAMEWORK=koa
     - FRAMEWORK=polka
     - FRAMEWORK=rayo
