@@ -72,15 +72,15 @@ env:
     - FRAMEWORK=turbo_polka
     - FRAMEWORK=kore
 
-before_script:
-  # Exit build if framework has not been modified
-  - sh .ci/has_to_run.sh || travis_terminate 0
+# Liny yaml files in a specific jobs
+jobs:
+  include:
+    - stage: lint
+      script: .ci/lint.sh
+      env: FRAMEWORK=rails
 
-  # Install yaml lint tool to check syntax
-  - sudo pip install yamllint
-
-  # Check yaml syntax for all yaml files
-  - find . -type f -name '*.yml' -or -name '*.yaml' -exec yamllint {} \;
+# Exit build if framework has not been modified
+before_script: sh .ci/has_to_run.sh || travis_terminate 0
 
 script:
   - shards build
