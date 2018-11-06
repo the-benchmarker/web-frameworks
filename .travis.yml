@@ -1,3 +1,6 @@
+# Exit build if framework has not been modified on PR
+before_install: if [ "${TRAVIS_PULL_REQUEST}" != "false" ] ; then bash .ci/has_to_run.sh || travis_terminate 0 ; fi
+
 # Use docker to containerize frameworks
 services: docker
 
@@ -76,9 +79,6 @@ jobs:
     - stage: lint
       script: .ci/lint.sh
       env: FRAMEWORK=rails
-
-# Exit build if framework has not been modified on PR
-before_script: if [ "${TRAVIS_PULL_REQUEST}" != "false" ] ; then bash .ci/has_to_run.sh || travis_terminate 0 ; fi
 
 script:
   - shards build
