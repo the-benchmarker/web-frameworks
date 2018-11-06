@@ -1,15 +1,14 @@
-FROM crystallang/crystal:0.26.1
+FROM crystallang/crystal:0.27.0
 
 WORKDIR /usr/src/app
 
 COPY .postcssrc.yml Procfile Procfile.dev brunch-config.js bs-config.js ./
 COPY package.json shard.yml tasks.cr ./
-COPY config config
 COPY db db
 COPY public public
-COPY spec spec
 COPY src src
 COPY static static
+COPY config config
 COPY tasks tasks
 
 RUN echo '{}'  > public/manifest.json

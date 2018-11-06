@@ -8,11 +8,11 @@ targets:
   server:
     main: src/benchmark_lucky.cr
 
-crystal: 0.24.2
+crystal: 0.27.0
 
 license: MIT
 
 dependencies:
   lucky:
     github: luckyframework/lucky
-    version: ~> 0.11.0
+    version: ~> 0.12.0

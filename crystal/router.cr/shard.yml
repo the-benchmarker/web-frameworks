@@ -11,7 +11,7 @@ targets:
 dependencies:
   router:
     github: tbrand/router.cr
-    version: ~> 0.2.6
+    version: ~> 0.2.7
 
 crystal: 0.27.0
 
