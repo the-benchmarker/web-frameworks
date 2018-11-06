@@ -73,6 +73,9 @@ env:
     - FRAMEWORK=kore
 
 before_script:
+  # Exit build if framework has not been modified
+  - sh .ci/has_to_run.sh || travis_terminate 0
+
   # Install yaml lint tool to check syntax
   - sudo pip install yamllint
 
