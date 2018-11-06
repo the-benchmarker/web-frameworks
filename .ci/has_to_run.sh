@@ -30,11 +30,11 @@ _travis_terminate_unix() {
 }
 
 
-# List updated frameworks
-git diff --name-only HEAD...$TRAVIS_BRANCH > /tmp/changed
+# List of updated files
+git diff-tree --no-commit-id --name-only -r HEAD > /tmp/changed
 
 # If current framework was updated
-grep -q "^$FRAMEWORK$" /tmp/changed
+grep -q "$FRAMEWORK" /tmp/changed
 
 if [[ $? != 0 ]]; then
   echo "$FRAMEWORK was not modified, exiting."
