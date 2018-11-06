@@ -80,7 +80,7 @@ jobs:
       env: FRAMEWORK=rails
 
 # Exit build if framework has not been modified
-before_script: sh .ci/has_to_run.sh || travis_terminate 0
+before_script: bash .ci/has_to_run.sh || travis_terminate 0
 
 script:
   - shards build
