@@ -1,7 +1,8 @@
-services:
-  - docker
-  - redis
+# Exit build if framework has not been modified on PR
+before_install: if [ "${TRAVIS_PULL_REQUEST}" != "false" ] ; then bash .ci/has_to_run.sh || travis_terminate 0 ; fi
 
+# Use docker to containerize frameworks
+services: docker
 
 language: crystal
 
@@ -72,12 +73,12 @@ env:
     - FRAMEWORK=turbo_polka
     - FRAMEWORK=kore
 
-before_script:
-  # Install yaml lint tool to check syntax
-  - sudo pip install yamllint
-
-  # Check yaml syntax for all yaml files
-  - find . -type f -name '*.yml' -or -name '*.yaml' -exec yamllint {} \;
+# Liny yaml files in a specific jobs
+jobs:
+  include:
+    - stage: lint
+      script: .ci/lint.sh
+      env: FRAMEWORK=rails
 
 script:
   - shards build
