@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set +e
+
 travis_terminate() {
   if [[ ! "${TRAVIS_OS_NAME}" ]]; then
     return
@@ -31,7 +33,7 @@ _travis_terminate_unix() {
 
 
 # List of updated files
-git diff-tree --no-commit-id --name-only -r HEAD > /tmp/changed
+git diff ${TRAVIS_COMMIT_RANGE} --name-only > /tmp/changed
 
 # If current framework was updated
 grep -q "$FRAMEWORK" /tmp/changed
