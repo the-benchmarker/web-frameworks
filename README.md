@@ -47,10 +47,10 @@ shards build
 
 + Build containers
 
-> job is either a language (example : crystal) or a framework (example : router.cr)
+> jobs are either languages (example : crystal) or frameworks (example : router.cr)
 
 ~~~sh
-bin/neph [job]
+bin/neph [job1] [job2] [job3] ...
 ~~~
 
 + Start the benchmark ....
