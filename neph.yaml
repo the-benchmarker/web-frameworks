@@ -86,7 +86,6 @@ node:
   depends_on:
     - express
     - fastify
-    - foxify
     - polka
     - rayo
     - koa
