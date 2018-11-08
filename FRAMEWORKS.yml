@@ -36,10 +36,10 @@ node:
     website: fastify.io
     version: "1.13"
     language: "10.12"
-  foxify:
-    website: foxify.js.org
-    version: "0.10"
-    language: "10.12"
+  # foxify:
+  #  website: foxify.js.org
+  #  version: "0.10"
+  #  language: "10.12"
   polka:
     github: lukeed/polka
     version: "0.5"
@@ -115,10 +115,10 @@ python:
     language: "3.7"
     version: "0.6"
     website: starlette.io
-  responder:
-    language: "3.7"
-    version: "1.1"
-    github: kennethreitz/responder
+  # responder:
+  #  language: "3.7"
+  #  version: "1.1"
+  #  github: kennethreitz/responder
 php:
   slim:
     website: slimframework.com
