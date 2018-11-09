@@ -83,8 +83,6 @@ jobs:
       script: bash .ci/lint.sh
       env: FRAMEWORK=rails
 
-before_script: bash .ci/preflight.sh || travis_terminate 0
-
 script:
   - shards build
   - bin/neph -v
