@@ -1,4 +1,4 @@
-FROM maven:3.5.4
+FROM maven:3.6-jdk-8
 
 WORKDIR /usr/src/app
 
