@@ -47,7 +47,8 @@ end
 # Since the /index.html path is for a static asset Agoo will handle that
 # without involving Ruby. To have Ruby handle the /index.html static asset the
 # next line can be uncommented.
-#Agoo::Server.handle(:GET, '/', Empty)
+
+# Agoo::Server.handle(:GET, '/', Empty)
 
 Agoo::Server.handle(:GET, '/user/*', Reflect)
 Agoo::Server.handle(:POST, '/user', Empty)
