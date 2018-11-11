@@ -6,4 +6,4 @@ COPY Gemfile app.rb ./
 
 RUN bundle install
 
-CMD ruby app.rb
+CMD AGOO_WORKER_COUNT=$(nproc) ruby app.rb
