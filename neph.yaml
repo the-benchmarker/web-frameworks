@@ -93,6 +93,7 @@ node:
     - hapi
     - foxify
     - turbo_polka
+    - restana
 
 elixir:
   depends_on:
@@ -356,6 +357,11 @@ express:
   commands:
     - docker build -t express .
   dir: node/express
+
+restana:
+  commands:
+    - docker build -t restana .
+  dir: node/restana
 
 fastify:
   commands:
