@@ -57,6 +57,7 @@ env:
     - FRAMEWORK=echo
     - FRAMEWORK=iris
     - FRAMEWORK=beego
+    - FRAMEWORK=gf
     - FRAMEWORK=gorilla-mux
     - FRAMEWORK=chi
     - FRAMEWORK=muxie

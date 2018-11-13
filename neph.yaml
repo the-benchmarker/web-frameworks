@@ -63,6 +63,7 @@ go:
     - echo
     - gorilla-mux
     - fasthttprouter
+    - gf
     - gin
     - beego
     - muxie
@@ -291,6 +292,11 @@ fasthttprouter:
   commands:
     - docker build -t fasthttprouter .
   dir: go/fasthttprouter
+
+gf:
+  commands:
+    - docker build -t gf .
+  dir: go/gf
 
 gin:
   commands:
