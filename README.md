@@ -88,7 +88,7 @@ CPU Cores: 8
 :four: laravel (php)
 
 
-:five: rack-routing (ruby)
+:five: laravel (php)
 
 
 #### Full table
@@ -170,7 +170,7 @@ CPU Cores: 8
 :two: (actix-web) (rust)
 
 
-:three: (vibora) (python)
+:three: (evhtp) (cpp)
 
 
 :four: (evhtp) (cpp)
