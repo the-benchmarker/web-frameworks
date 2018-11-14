@@ -25,6 +25,9 @@ class Empty
   def self.call(_req)
     [200, {}, []]
   end
+  def static?
+    true
+  end
 end
 
 # Reflects the id as the returned value.
@@ -34,8 +37,15 @@ class Reflect
   end
 end
 
+# post response.
+class Empty
+  def self.call(_req)
+    [200, {}, []]
+  end
+end
+
 Agoo::Server.handle(:GET, '/', Empty)
 Agoo::Server.handle(:GET, '/user/*', Reflect)
-Agoo::Server.handle(:POST, '/user', Empty)
+Agoo::Server.handle(:POST, '/user', Post)
 
 Agoo::Server.start
