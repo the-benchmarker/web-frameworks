@@ -25,7 +25,7 @@ class Empty
   def self.call(_req)
     [200, {}, []]
   end
-  
+
   def static?
     true
   end
