@@ -68,6 +68,7 @@ env:
     - FRAMEWORK=iron
     - FRAMEWORK=restify
     - FRAMEWORK=express
+    - FRAMEWORK=restana
     - FRAMEWORK=hapi
     - FRAMEWORK=fastify
     - FRAMEWORK=foxify
