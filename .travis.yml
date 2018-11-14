@@ -75,6 +75,7 @@ env:
     - FRAMEWORK=rayo
     - FRAMEWORK=turbo_polka
     - FRAMEWORK=kore
+    - FRAMEWORK=agoo-c
 
 # Lint yaml files in a specific jobs
 jobs:

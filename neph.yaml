@@ -126,6 +126,7 @@ php:
 c:
   depends_on:
     - kore
+    - agoo-c
 
 router.cr:
   commands:
@@ -456,3 +457,9 @@ kore:
   commands:
     - docker  build -t kore .
   dir: c/kore
+
+agoo-c:
+  commands:
+    - docker  build -t agoo-c .
+  dir: c/agoo-c
+  
