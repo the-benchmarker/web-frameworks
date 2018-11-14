@@ -32,14 +32,18 @@ node:
     website: expressjs.com
     version: "4.16"
     language: "11.1"
+  restana:
+    github: jkyberneees/ana
+    version: "2.3"
+    language: "11.1"
   fastify:
     website: fastify.io
     version: "1.13"
-    language: "10.12"
+    language: "11.1"
   foxify:
     website: foxify.js.org
     version: "0.10"
-    language: "10.12"
+    language: "11.1"
   polka:
     github: lukeed/polka
     version: "0.5"
@@ -111,10 +115,10 @@ python:
     language: "3.7"
     version: "1.4"
     website: falconframework.org
-  starlette:
-    language: "3.7"
-    version: "0.8"
-    website: starlette.io
+  #starlette:
+  #  language: "3.7"
+  #  version: "0.8"
+  #  website: starlette.io
   # responder:
   #  language: "3.7"
   #  version: "1.1"
