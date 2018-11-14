@@ -25,6 +25,7 @@ class Empty
   def self.call(_req)
     [200, {}, []]
   end
+  
   def static?
     true
   end
@@ -38,7 +39,7 @@ class Reflect
 end
 
 # post response.
-class Empty
+class Post
   def self.call(_req)
     [200, {}, []]
   end
