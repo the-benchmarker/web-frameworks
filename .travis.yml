@@ -71,7 +71,7 @@ env:
     - FRAMEWORK=restana
     - FRAMEWORK=hapi
     - FRAMEWORK=fastify
-    # - FRAMEWORK=foxify
+    - FRAMEWORK=foxify
     - FRAMEWORK=koa
     - FRAMEWORK=polka
     - FRAMEWORK=rayo
@@ -84,8 +84,6 @@ jobs:
     - stage: lint
       script: bash .ci/lint.sh
       env: FRAMEWORK=rails
-
-before_script: bash .ci/preflight.sh || travis_terminate 0
 
 script:
   - shards build
