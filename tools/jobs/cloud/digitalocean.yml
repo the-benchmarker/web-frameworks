@@ -1,0 +1,14 @@
+main:
+  depends_on:
+    - ruby
+
+ruby:
+  depends_on:
+    - sinatra
+
+sinatra:
+  commands:
+    - bin/droplet create -l ruby -f sinatra
+    - bin/droplet exec '/usr/local/bin/bundle install --without development test' -l ruby -f sinatra
+    - bin/droplet exec '/usr/local/bin/bundle exec puma -p 80 -e production -w $(nproc) -d' -l -f sinatra
+    - bin/benchmark extract -l ruby -f sinatra
