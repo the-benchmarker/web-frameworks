@@ -15,7 +15,10 @@ dependencies:
     version: 0.1.0
   admiral:
     github: jwaldrip/admiral.cr
-    version: 1.7.3
+    version: 1.8.0
+  dotenv:
+    github: gdotdesign/cr-dotenv
+    version: 0.1.0
 
 targets:
   neph:
