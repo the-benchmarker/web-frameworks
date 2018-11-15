@@ -65,6 +65,9 @@ class App < Admiral::Command
         end
       end
 
+      database = Kiwi::FileStore.new("config.db")
+      database.set("#{flags.framework.to_s.upcase}_IP", ip.to_s)
+
       SSH2::Session.open(ip.to_s, 22) do |session|
         session.login_with_pubkey("root", File.expand_path(ENV["SSH_KEY"]))
 
@@ -91,11 +94,10 @@ class App < Admiral::Command
 
     def run
       database = Kiwi::FileStore.new("config.db")
-      username = database.get("#{flags.framework.to_s.upcase}_USERNAME")
       ip = database.get("#{flags.framework.to_s.upcase}_IP")
 
       SSH2::Session.open(ip.to_s, 22) do |session|
-        session.login_with_pubkey(username.to_s, File.expand_path(ENV["SSH_KEY"]))
+        session.login_with_pubkey("root", File.expand_path(ENV["SSH_KEY"]))
 
         session.open_session do |ch|
           arguments.each do |cmd|
