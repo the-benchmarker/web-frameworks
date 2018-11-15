@@ -44,6 +44,8 @@ class App < Admiral::Command
     def run
       database = Kiwi::FileStore.new("config.db")
       config = YAML.parse(File.read("#{flags.language}/config.yml"))
+      fwk_config = YAML.parse(File.read("#{flags.language}/#{flags.framework}/config.yml"))
+      files = fwk_config["files"].as_a
 
       template = config["providers"]["digitalocean"]["config"]
       f = File.open("/tmp/template.yml", "w")
@@ -57,28 +59,14 @@ class App < Admiral::Command
       loop do
         sleep 5
         instance = execute("doctl compute droplet get #{instance_id}")
-	p instance[0]["networks"].size
         if instance[0]["networks"].size > 0
           ip = instance[0]["networks"]["v4"][0]["ip_address"]
           break
         end
       end
-      database.set("#{flags.framework.to_s.upcase}_USERNAME", "root")
-      database.set("#{flags.framework.to_s.upcase}_IP", ip)
-    end
-  end
-
-  class Upload < Admiral::Command
-    define_flag language : String, description: "language selected, to set-up environment", required: true, short: l
-    define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
-
-    def run
-      database = Kiwi::FileStore.new("config.db")
-      username = database.get("#{flags.framework.to_s.upcase}_USERNAME")
-      ip = database.get("#{flags.framework.to_s.upcase}_IP")
 
       SSH2::Session.open(ip.to_s, 22) do |session|
-        session.login_with_pubkey(username.to_s, File.expand_path(ENV["SSH_KEY"]))
+        session.login_with_pubkey("root", File.expand_path(ENV["SSH_KEY"]))
 
         # Create directory
         session.open_session do |ch|
@@ -87,8 +75,8 @@ class App < Admiral::Command
         end
 
         # Upload files
-        arguments.each do |file|
-          path = File.join(Dir.current, flags.language.to_s, flags.framework.to_s, file)
+        files.each do |file|
+          path = File.join(Dir.current, flags.language.to_s, flags.framework.to_s, file.to_s)
           session.scp_send(File.join("/usr/src/app", file.to_s), 0o0644, File.size(path)) do |ch|
             ch.puts File.read(path)
           end
@@ -129,7 +117,6 @@ class App < Admiral::Command
   end
 
   register_sub_command create : Create, description "Create droplet for specific language"
-  register_sub_command upload : Upload, description "Upload file (or folders) to previously created droplet"
   register_sub_command exec : Exec, description "Execute command on previously created droplet"
   register_sub_command delete : Delete, description "Delet previously created droplet"
 
