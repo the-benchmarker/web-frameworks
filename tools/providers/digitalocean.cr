@@ -52,16 +52,17 @@ class App < Admiral::Command
       f.close
       instances = execute("doctl compute droplet create #{flags.framework} --image #{flags.image} --region #{flags.region} --size #{flags.size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file /tmp/template.yml")
       instance_id = instances[0]["id"]
+      ip = String.new
       # wait droplet's network to be available
-      while true
+      loop do
         sleep 5
         instance = execute("doctl compute droplet get #{instance_id}")
+	p instance[0]["networks"].size
         if instance[0]["networks"].size > 0
           ip = instance[0]["networks"]["v4"][0]["ip_address"]
           break
         end
       end
-      p ip
       database.set("#{flags.framework.to_s.upcase}_USERNAME", "root")
       database.set("#{flags.framework.to_s.upcase}_IP", ip)
     end
