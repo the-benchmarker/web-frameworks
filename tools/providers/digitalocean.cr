@@ -5,6 +5,10 @@ require "yaml"
 require "kiwi/file_store"
 require "admiral"
 require "ssh2"
+require "dotenv"
+
+# Load env var + raise if not found
+Dotenv.load!
 
 # Wrapper around doctl tool
 
@@ -32,9 +36,6 @@ class App < Admiral::Command
     define_flag language : String, description: "language selected, to set-up environment", required: true, short: l
     define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
 
-    # ssh configuration
-    define_flag key : String, description: "ssh key fingerprint", required: true, short: k
-
     # droplet configuration
     define_flag image : String, description: "droplet image / os", short: i, default: "fedora-28-x64"
     define_flag region : String, description: "droplet region", short: r, default: "fra1"
@@ -49,11 +50,18 @@ class App < Admiral::Command
       f.puts("#cloud-config")
       f.puts(YAML.dump(template).gsub("---", "")) # cloud-init does not accepts start-comment in yaml
       f.close
-      instances = execute("doctl compute droplet create #{flags.framework} --image #{flags.image} --region #{flags.region} --size #{flags.size} --ssh-keys #{flags.key} --user-data-file /tmp/template.yml")
+      instances = execute("doctl compute droplet create #{flags.framework} --image #{flags.image} --region #{flags.region} --size #{flags.size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file /tmp/template.yml")
       instance_id = instances[0]["id"]
-      sleep 1 # wait droplet's network to be available
-      instance = execute("doctl compute droplet get #{instance_id}")
-      ip = instance[0]["networks"]["v4"][0]["ip_address"]
+      # wait droplet's network to be available
+      while true
+        sleep 5
+        instance = execute("doctl compute droplet get #{instance_id}")
+        if instance[0]["networks"].size > 0
+          ip = instance[0]["networks"]["v4"][0]["ip_address"]
+          break
+        end
+      end
+      p ip
       database.set("#{flags.framework.to_s.upcase}_USERNAME", "root")
       database.set("#{flags.framework.to_s.upcase}_IP", ip)
     end
@@ -63,16 +71,13 @@ class App < Admiral::Command
     define_flag language : String, description: "language selected, to set-up environment", required: true, short: l
     define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
 
-    # ssh configuration
-    define_flag key : String, description: "ssh key fingefile", required: true, short: k
-
     def run
       database = Kiwi::FileStore.new("config.db")
       username = database.get("#{flags.framework.to_s.upcase}_USERNAME")
       ip = database.get("#{flags.framework.to_s.upcase}_IP")
 
       SSH2::Session.open(ip.to_s, 22) do |session|
-        session.login_with_pubkey(username.to_s, flags.key)
+        session.login_with_pubkey(username.to_s, File.expand_path(ENV["SSH_KEY"]))
 
         # Create directory
         session.open_session do |ch|
@@ -95,16 +100,13 @@ class App < Admiral::Command
     define_flag language : String, description: "language selected, to set-up environment", required: true, short: l
     define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
 
-    # ssh configuration
-    define_flag key : String, description: "ssh key fingefile", required: true, short: k
-
     def run
       database = Kiwi::FileStore.new("config.db")
       username = database.get("#{flags.framework.to_s.upcase}_USERNAME")
       ip = database.get("#{flags.framework.to_s.upcase}_IP")
 
       SSH2::Session.open(ip.to_s, 22) do |session|
-        session.login_with_pubkey(username.to_s, flags.key)
+        session.login_with_pubkey(username.to_s, File.expand_path(ENV["SSH_KEY"]))
 
         session.open_session do |ch|
           arguments.each do |cmd|
