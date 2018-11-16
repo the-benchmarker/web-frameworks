@@ -51,11 +51,11 @@ class App < Admiral::Command
       files = fwk_config["files"].as_a
 
       template = config["providers"]["digitalocean"]["config"]
-      f = File.open("/tmp/template.yml", "w")
+      f = File.tempfile
       f.puts("#cloud-config")
       f.puts(YAML.dump(template).gsub("---", "")) # cloud-init does not accepts start-comment in yaml
       f.close
-      instances = execute("doctl compute droplet create #{flags.framework} --image #{flags.image} --region #{flags.region} --size #{flags.size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file /tmp/template.yml")
+      instances = execute("doctl compute droplet create #{flags.framework} --image #{flags.image} --region #{flags.region} --size #{flags.size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file #{f.path}")
       instance_id = instances[0]["id"]
       ip = String.new
       # wait droplet's network to be available
@@ -84,6 +84,14 @@ class App < Admiral::Command
         # Upload files
         files.each do |file|
           path = File.join(Dir.current, flags.language.to_s, flags.framework.to_s, file.to_s)
+          parts = file.to_s.split("/")
+          if parts.size > 1
+            tree = parts[0...(parts.size - 1)].join("/")
+            session.open_session do |ch|
+              ch.command("cd /usr/src/app && mkdir -p #{tree}")
+              IO.copy(ch, STDOUT)
+            end
+          end
           session.scp_send(File.join("/usr/src/app", file.to_s), 0o0644, File.size(path)) do |ch|
             ch.puts File.read(path)
           end
