@@ -1,0 +1,28 @@
+providers:
+  digitalocean:
+    version: 7.2
+    config:
+      package_update: true
+      package_upgrade: true
+      packages:
+        - php-fpm
+        - nginx
+        - composer
+        - unzip
+      write_files:
+        -
+          path: /etc/nginx/sites-enabled/default
+          content : |
+            server {
+              listen 0.0.0.0:80;
+              
+              root /usr/src/app/public;
+              set $front_controller /index.php;
+
+              location / {
+                fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+                include fastcgi_params;
+                fastcgi_param SCRIPT_FILENAME $document_root$front_controller;
+                fastcgi_param SCRIPT_NAME $front_controller;
+              }
+            }

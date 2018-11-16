@@ -1,14 +1,35 @@
-main:
-  depends_on:
-    - ruby
-
-ruby:
-  depends_on:
-    - sinatra
-
 sinatra:
   commands:
     - bin/droplet create -l ruby -f sinatra -w
-    - bin/droplet exec -l ruby -f sinatra '/usr/local/bin/bundle install --without development test'
-    - bin/droplet exec -l ruby -f sinatra  '/usr/local/bin/bundle exec puma -p 80 -e production -w $(nproc) -d'
+    - bin/droplet exec -l ruby -f sinatra 'bundle install --without development test'
+    - bin/droplet exec -l ruby -f sinatra  'bundle exec puma -p 80 -e production -w $(nproc) -d'
     - bin/benchmark extract -l ruby -f sinatra
+    - bin/droplet delete -l ruby -f sinatra
+
+flask:
+  commands:
+    - bin/droplet create -l python -f flask -w
+    - bin/droplet exec -l python -f flask 'pip3 install -r requirements.txt -U'
+    - bin/droplet exec -l python -f flask  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class meinheld.gmeinheld.MeinheldWorker server:app --daemon'
+    - bin/benchmark extract -l python -f flask
+    - bin/droplet delete -l python -f flask
+
+express:
+  commands:
+    - bin/droplet create -l node -f express -w
+    - bin/droplet exec -l node -f express 'npm install --production'
+    - bin/droplet exec -l node -f express  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - bin/benchmark extract -l node -f express
+    - bin/droplet delete -l node -f express
+
+slim:
+  commands:
+    - bin/droplet create -l php -f slim -w
+    - bin/droplet exec -l php -f slim 'composer install --no-dev --prefer-dist --classmap-authoritative'
+    - bin/droplet exec -l php -f slim 'mkdir /usr/src/app/var'
+    - bin/droplet exec -l php -f slim 'chmod 777 -R /usr/src/app/var'
+    - bin/droplet exec -l php -f slim  "sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /etc/php/7.2/fpm/pool.d/www.conf"
+    - bin/droplet exec -l php -f slim  'service php-fpm7.2 restart'
+    - bin/droplet exec -l php -f slim  'service nginx restart'
+    - bin/benchmark extract -l php -f slim
+    - bin/droplet delete -l php -f slim

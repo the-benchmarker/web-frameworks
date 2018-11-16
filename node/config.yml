@@ -1,12 +1,11 @@
 providers:
   digitalocean:
-    version: 2.5
+    version: 8.11
     config:
       package_update: true
       package_upgrade: true
       packages:
-        - ruby
-        - ruby-dev
-        - build-essential
+        - nodejs
+        - npm
       runcmd:
-        - gem install bundler --no-ri --no-rdoc
+        - npm -g install pm2
