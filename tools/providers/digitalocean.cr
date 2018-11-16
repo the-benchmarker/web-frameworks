@@ -37,7 +37,7 @@ class App < Admiral::Command
     define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
 
     # droplet configuration
-    define_flag image : String, description: "droplet image / os", short: i, default: "fedora-28-x64"
+    define_flag image : String, description: "droplet image / os", short: i, default: "ubuntu-18-10-x64"
     define_flag region : String, description: "droplet region", short: r, default: "fra1"
     define_flag size : String, description: "droplet size (default the cheaper)", short: s, default: "s-1vcpu-1gb"
 

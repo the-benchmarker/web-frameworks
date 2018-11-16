@@ -19,11 +19,7 @@ providers:
       package_upgrade: true
       packages:
         - ruby
-        - ruby-devel
-        - rubygems
-        - "@development-tools"
-        - "@rpm-development-tools"
-        - "@c-development"
+        - ruby-dev
+        - build-essential
       runcmd:
-        - systemctl enable web
         - gem install bundler --no-ri --no-rdoc
