@@ -41,6 +41,9 @@ class App < Admiral::Command
     define_flag region : String, description: "droplet region", short: r, default: "fra1"
     define_flag size : String, description: "droplet size (default the cheaper)", short: s, default: "s-1vcpu-1gb"
 
+    # optional flag
+    define_flag wait : Bool, description: "Wait for cloud-init to finish", default: false, short: w
+
     def run
       database = Kiwi::FileStore.new("config.db")
       config = YAML.parse(File.read("#{flags.language}/config.yml"))
@@ -61,6 +64,7 @@ class App < Admiral::Command
         instance = execute("doctl compute droplet get #{instance_id}")
         if instance[0]["networks"].size > 0
           ip = instance[0]["networks"]["v4"][0]["ip_address"]
+          sleep 10 # wait chanel to be reachable
           break
         end
       end
@@ -82,6 +86,17 @@ class App < Admiral::Command
           path = File.join(Dir.current, flags.language.to_s, flags.framework.to_s, file.to_s)
           session.scp_send(File.join("/usr/src/app", file.to_s), 0o0644, File.size(path)) do |ch|
             ch.puts File.read(path)
+          end
+        end
+
+        if flags.wait
+          status = String.new
+          while status != "done"
+            session.open_session do |ch|
+              sleep 30
+              ch.command("cloud-init status")
+              status = ch.read_line.split(":").pop.strip
+            end
           end
         end
       end
