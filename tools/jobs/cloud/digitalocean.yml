@@ -8,7 +8,7 @@ ruby:
 
 sinatra:
   commands:
-    - bin/droplet create -l ruby -f sinatra
-    - bin/droplet exec '/usr/local/bin/bundle install --without development test' -l ruby -f sinatra
-    - bin/droplet exec '/usr/local/bin/bundle exec puma -p 80 -e production -w $(nproc) -d' -l -f sinatra
+    - bin/droplet create -l ruby -f sinatra -w
+    - bin/droplet exec -l ruby -f sinatra '/usr/local/bin/bundle install --without development test'
+    - bin/droplet exec -l ruby -f sinatra  '/usr/local/bin/bundle exec puma -p 80 -e production -w $(nproc) -d'
     - bin/benchmark extract -l ruby -f sinatra
