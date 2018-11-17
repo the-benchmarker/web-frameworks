@@ -109,7 +109,7 @@ python:
     language: "3.7"
   japronto:
     language: "3.6"
-    version: "1.1"
+    version: "0.1"
     github: squeaky-pl/japronto
   falcon:
     language: "3.7"
@@ -287,3 +287,7 @@ c:
     website: kore.io
     version: "3.1"
     language: "99"
+  agoo-c:
+    website: github.com/ohler55/agoo-c
+    version: "0.1"
+    language: "11"
