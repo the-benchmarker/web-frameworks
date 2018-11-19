@@ -14,7 +14,7 @@ func main() {
 
 	})
 	s.BindHandler("/user/:id", func(r *ghttp.Request) {
-		r.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		r.Response.Header().Set("Content-Type", "text/plain; charset=utf-8")
 		r.Response.Write(r.Get("id"))
 	})
 	s.SetPort(3000)
