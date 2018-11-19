@@ -1,3 +1,26 @@
+main:
+  depends_on:
+    - ruby
+    - python
+    - node
+    - php
+
+ruby:
+  depends_on:
+    - sinatra
+
+python:
+  depends_on:
+    - flask
+
+node:
+  depends_on:
+    - express
+
+php:
+  depends_on:
+    - slim
+
 sinatra:
   commands:
     - bin/droplet create -l ruby -f sinatra -w
@@ -9,9 +32,7 @@ sinatra:
 flask:
   commands:
     - bin/droplet create -l python -f flask -w
-    - sleep 2
     - bin/droplet exec -l python -f flask 'pip3 install -r requirements.txt -U'
-    - sleep 1
     - bin/droplet exec -l python -f flask  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class meinheld.gmeinheld.MeinheldWorker server:app --daemon'
     - bin/benchmark extract -l python -f flask
     - bin/droplet delete -l python -f flask
@@ -19,7 +40,6 @@ flask:
 express:
   commands:
     - bin/droplet create -l node -f express -w
-    - sleep 1
     - bin/droplet exec -l node -f express 'npm install --production'
     - bin/droplet exec -l node -f express  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
     - bin/benchmark extract -l node -f express
