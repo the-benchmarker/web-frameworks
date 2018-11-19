@@ -10,3 +10,4 @@ providers:
         - build-essential
       runcmd:
         - gem install bundler --no-ri --no-rdoc
+        - sleep 1
