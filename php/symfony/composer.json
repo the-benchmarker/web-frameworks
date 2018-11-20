@@ -14,22 +14,5 @@
         "psr-4": {
             "App\\": "src/"
         }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "App\\Tests\\": "tests/"
-        }
-    },
-    "replace": {
-        "symfony/polyfill-php71": "*"
-    },
-    "conflict": {
-        "symfony/symfony": "*"
-    },
-    "extra": {
-        "symfony": {
-            "id": "01C8YV570PPBHY778SBRPH28J4",
-            "allow-contrib": false
-        }
     }
 }

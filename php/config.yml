@@ -6,6 +6,7 @@ providers:
       package_upgrade: true
       packages:
         - php-fpm
+        - php-xml # TODO only required for symfony
         - nginx
         - composer
         - unzip

@@ -20,6 +20,7 @@ node:
 php:
   depends_on:
     - slim
+    - symfony
 
 sinatra:
   commands:
@@ -78,3 +79,18 @@ slim:
     - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l php -f slim
     - doctl compute droplet delete slim --force
+
+symfony:
+  commands:
+    - bin/droplet create -l php -f symfony -w
+    - bin/droplet exec -l php -f symfony 'composer install --no-dev --prefer-dist --classmap-authoritative'
+    - bin/droplet exec -l php -f symfony 'mkdir -p /usr/src/app/var/log'
+    - bin/droplet exec -l php -f symfony 'chmod 777 -R /usr/src/app/var/log'
+    - bin/droplet exec -l php -f symfony 'mkdir -p /usr/src/app/var/cache'
+    - bin/droplet exec -l php -f symfony 'chmod 777 -R /usr/src/app/var/cache'
+    - bin/droplet exec -l php -f symfony  "sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /etc/php/7.2/fpm/pool.d/www.conf"
+    - bin/droplet exec -l php -f symfony  'service php-fpm7.2 restart'
+    - bin/droplet exec -l php -f symfony  'service nginx restart'
+    - sleep 1 # I do not know why required ?
+    - bin/benchmark extract -l php -f symfony
+    - doctl compute droplet delete symfony --force
