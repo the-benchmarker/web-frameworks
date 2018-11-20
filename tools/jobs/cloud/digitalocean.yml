@@ -27,23 +27,44 @@ sinatra:
     - bin/droplet exec -l ruby -f sinatra 'bundle install --without development test'
     - bin/droplet exec -l ruby -f sinatra  'bundle exec puma -p 80 -e production -w $(nproc) -d'
     - bin/benchmark extract -l ruby -f sinatra
-    - bin/droplet delete -l ruby -f sinatra
+    - doctl compute droplet delete sinatra --force
 
 flask:
   commands:
     - bin/droplet create -l python -f flask -w
-    - bin/droplet exec -l python -f flask 'pip3 install -r requirements.txt -U'
+    - bin/droplet exec -l python -f flask 'pip install -r requirements.txt -U'
     - bin/droplet exec -l python -f flask  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class meinheld.gmeinheld.MeinheldWorker server:app --daemon'
     - bin/benchmark extract -l python -f flask
-    - bin/droplet delete -l python -f flask
+    - doctl compute droplet delete flask --force
+
+# NOT WORKING
+starlette:
+  commands:
+    - bin/droplet create -l python -f starlette -w
+    - bin/droplet exec -l python -f starlette 'pip3 install -r requirements.txt -U'
+    - bin/droplet exec -l python -f starlette  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class uvicorn.workers.UvicornWorker server:app --daemon'
+    - sleep 1 # I do not know why required ?
+    - bin/benchmark extract -l python -f starlette
+    - doctl compute droplet delete starlette --force
+
+# NOT WORKING
+responder:
+  commands:
+    - bin/droplet create -l python -f responder -w
+    - bin/droplet exec -l python -f responder 'pip3 install -r requirements.txt -U'
+    - bin/droplet exec -l python -f responder  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class uvicorn.workers.UvicornWorker server:app --daemon'
+    - sleep 1 # I do not know why required ?
+    - bin/benchmark extract -l python -f responder
+    - doctl compute droplet delete responder --force
 
 express:
   commands:
     - bin/droplet create -l node -f express -w
     - bin/droplet exec -l node -f express 'npm install --production'
     - bin/droplet exec -l node -f express  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l node -f express
-    - bin/droplet delete -l node -f express
+    - doctl compute droplet delete express --force
 
 slim:
   commands:
@@ -54,5 +75,6 @@ slim:
     - bin/droplet exec -l php -f slim  "sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /etc/php/7.2/fpm/pool.d/www.conf"
     - bin/droplet exec -l php -f slim  'service php-fpm7.2 restart'
     - bin/droplet exec -l php -f slim  'service nginx restart'
+    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l php -f slim
-    - bin/droplet delete -l php -f slim
+    - doctl compute droplet delete slim --force
