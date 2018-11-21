@@ -40,6 +40,7 @@ class App < Admiral::Command
     define_flag size : String, description: "droplet size (default the cheaper)", short: s, default: "s-1vcpu-1gb"
     define_flag image : String, description: "droplet image / os", short: i, default: "ubuntu-18-10-x64"
     define_flag region : String, description: "droplet region", short: r, default: "fra1"
+    define_flag network : String, description: "network type to use", short: n, default: "public"
 
     # optional flag
     define_flag wait : Bool, description: "Wait for cloud-init to finish", default: false, short: w
@@ -57,6 +58,11 @@ class App < Admiral::Command
       if ENV["DO_REGION"]
         region = ENV["DO_REGION"]
       end
+      network = flags.network
+      if ENV["DO_REGION"]
+        region = ENV["DO_NETWORK"]
+      end
+
       database = Kiwi::FileStore.new("config.db")
       config = YAML.parse(File.read("#{flags.language}/config.yml"))
       fwk_config = YAML.parse(File.read("#{flags.language}/#{flags.framework}/config.yml"))
@@ -67,7 +73,13 @@ class App < Admiral::Command
       f.puts("#cloud-config")
       f.puts(YAML.dump(template).gsub("---", "")) # cloud-init does not accepts start-comment in yaml
       f.close
-      instances = execute("doctl compute droplet create #{flags.framework} --image #{image} --region #{region} --size #{size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file #{f.path}")
+
+      if ENV["DO_NETWORK"] && ENV["DO_NETWORK"] == "private"
+        instances = execute("doctl compute droplet create #{flags.framework} --image #{image} --region #{region} --size #{size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file #{f.path} --enable-private-networking")
+      else
+        instances = execute("doctl compute droplet create #{flags.framework} --image #{image} --region #{region} --size #{size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file #{f.path}")
+      end
+
       instance_id = instances[0]["id"]
       ip = String.new
       # wait droplet's network to be available
@@ -75,9 +87,13 @@ class App < Admiral::Command
         sleep 5
         instance = execute("doctl compute droplet get #{instance_id}")
         if instance[0]["networks"].size > 0
-          ip = instance[0]["networks"]["v4"][0]["ip_address"]
+          ip = instance[0]["networks"]["v4"].each do |net|
+            if net["type"] == network
+              ip = net["ip_address"]
+              break
+            end
+          end
           sleep 10 # wait chanel to be reachable
-          break
         end
       end
 
