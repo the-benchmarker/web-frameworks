@@ -29,6 +29,7 @@ php:
   depends_on:
     - slim
     - symfony
+    - laravel
 
 sinatra:
   commands:
@@ -74,7 +75,6 @@ express:
     - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l node -f express
     - doctl compute droplet delete express --force
-
 
 fastify:
   commands:
@@ -164,6 +164,19 @@ turbo_polka:
     - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l node -f turbo_polka
     - doctl compute droplet delete turbo_polka --force
+
+laravel:
+  commands:
+    - bin/droplet create -l php -f laravel -w
+    - bin/droplet exec -l php -f laravel 'composer install --no-dev --prefer-dist --classmap-authoritative'
+    - bin/droplet exec -l php -f laravel 'mkdir /usr/src/app/var'
+    - bin/droplet exec -l php -f laravel 'chmod 777 -R /usr/src/app/var'
+    - bin/droplet exec -l php -f laravel  "sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /etc/php/7.2/fpm/pool.d/www.conf"
+    - bin/droplet exec -l php -f laravel  'service php-fpm7.2 restart'
+    - bin/droplet exec -l php -f laravel  'service nginx restart'
+    - sleep 1 # I do not know why required ?
+    - bin/benchmark extract -l php -f laravel
+    - doctl compute droplet delete laravel --force
 
 slim:
   commands:

@@ -82,14 +82,13 @@ class App < Admiral::Command
 
       instance_id = instances[0]["id"]
       ip = String.new
-      # wait droplet's network to be available
-      loop do
-        sleep 5
+      while ip.empty?
+        sleep 15
         instance = execute("doctl compute droplet get #{instance_id}")
         if instance[0]["networks"].size > 0
-          ip = instance[0]["networks"]["v4"].as_a.each do |net|
+          instance[0]["networks"]["v4"].as_a.each do |net|
             if net["type"].to_s == network
-              ip = net["ip_address"]
+              ip = net["ip_address"].to_s
               break
             end
           end
