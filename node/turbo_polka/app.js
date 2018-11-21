@@ -12,4 +12,4 @@ polka({ server })
   .post('/user', (req, res) => {
     res.end('');
   })
-  .listen(3000);
+  .listen(80);

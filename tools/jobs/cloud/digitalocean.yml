@@ -16,6 +16,14 @@ python:
 node:
   depends_on:
     - express
+    - fastify
+    # - foxify => disabled because of required node >= 8.12
+    - hapi
+    - koa
+    - polka
+    - rayo
+    - restana
+    - restify
 
 php:
   depends_on:
@@ -66,6 +74,96 @@ express:
     - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l node -f express
     - doctl compute droplet delete express --force
+
+
+fastify:
+  commands:
+    - bin/droplet create -l node -f fastify -w
+    - bin/droplet exec -l node -f fastify 'npm install --production'
+    - bin/droplet exec -l node -f fastify  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # I do not know why required ?
+    - bin/benchmark extract -l node -f fastify
+    - doctl compute droplet delete fastify --force
+
+
+# foxify:
+#   commands:
+#     - bin/droplet create -l node -f foxify -w
+#     - bin/droplet exec -l node -f foxify 'npm install --production'
+#     - bin/droplet exec -l node -f foxify  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+#     - sleep 5 # I do not know why required ?
+#     - bin/benchmark extract -l node -f foxify
+#     - doctl compute droplet delete foxify --force
+
+
+hapi:
+  commands:
+    - bin/droplet create -l node -f hapi -w
+    - bin/droplet exec -l node -f hapi 'npm install --production'
+    - bin/droplet exec -l node -f hapi  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # I do not know why required ?
+    - bin/benchmark extract -l node -f hapi
+    - doctl compute droplet delete hapi --force
+
+
+koa:
+  commands:
+    - bin/droplet create -l node -f koa -w
+    - bin/droplet exec -l node -f koa 'npm install --production'
+    - bin/droplet exec -l node -f koa  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # I do not know why required ?
+    - bin/benchmark extract -l node -f koa
+    - doctl compute droplet delete koa --force
+
+
+polka:
+  commands:
+    - bin/droplet create -l node -f polka -w
+    - bin/droplet exec -l node -f polka 'npm install --production'
+    - bin/droplet exec -l node -f polka  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # I do not know why required ?
+    - bin/benchmark extract -l node -f polka
+    - doctl compute droplet delete polka --force
+
+
+rayo:
+  commands:
+    - bin/droplet create -l node -f rayo -w
+    - bin/droplet exec -l node -f rayo 'npm install --production'
+    - bin/droplet exec -l node -f rayo  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # I do not know why required ?
+    - bin/benchmark extract -l node -f rayo
+    - doctl compute droplet delete rayo --force
+
+
+restana:
+  commands:
+    - bin/droplet create -l node -f restana -w
+    - bin/droplet exec -l node -f restana 'npm install --production'
+    - bin/droplet exec -l node -f restana  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # I do not know why required ?
+    - bin/benchmark extract -l node -f restana
+    - doctl compute droplet delete restana --force
+
+
+restify:
+  commands:
+    - bin/droplet create -l node -f restify -w
+    - bin/droplet exec -l node -f restify 'npm install --production'
+    - bin/droplet exec -l node -f restify  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # I do not know why required ?
+    - bin/benchmark extract -l node -f restify
+    - doctl compute droplet delete restify --force
+
+
+turbo_polka:
+  commands:
+    - bin/droplet create -l node -f turbo_polka -w
+    - bin/droplet exec -l node -f turbo_polka 'npm install --production'
+    - bin/droplet exec -l node -f turbo_polka  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # I do not know why required ?
+    - bin/benchmark extract -l node -f turbo_polka
+    - doctl compute droplet delete turbo_polka --force
 
 slim:
   commands:
