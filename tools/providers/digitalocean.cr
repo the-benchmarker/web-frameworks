@@ -37,14 +37,26 @@ class App < Admiral::Command
     define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
 
     # droplet configuration
+    define_flag size : String, description: "droplet size (default the cheaper)", short: s, default: "s-1vcpu-1gb"
     define_flag image : String, description: "droplet image / os", short: i, default: "ubuntu-18-10-x64"
     define_flag region : String, description: "droplet region", short: r, default: "fra1"
-    define_flag size : String, description: "droplet size (default the cheaper)", short: s, default: "s-1vcpu-1gb"
 
     # optional flag
     define_flag wait : Bool, description: "Wait for cloud-init to finish", default: false, short: w
 
     def run
+      size = flags.size
+      if ENV["DO_SIZE"]
+        size = ENV["DO_SIZE"]
+      end
+      image = flags.image
+      if ENV["DO_IMAGE"]
+        image = ENV["DO_IMAGE"]
+      end
+      region = flags.region
+      if ENV["DO_REGION"]
+        region = ENV["DO_REGION"]
+      end
       database = Kiwi::FileStore.new("config.db")
       config = YAML.parse(File.read("#{flags.language}/config.yml"))
       fwk_config = YAML.parse(File.read("#{flags.language}/#{flags.framework}/config.yml"))
@@ -55,7 +67,7 @@ class App < Admiral::Command
       f.puts("#cloud-config")
       f.puts(YAML.dump(template).gsub("---", "")) # cloud-init does not accepts start-comment in yaml
       f.close
-      instances = execute("doctl compute droplet create #{flags.framework} --image #{flags.image} --region #{flags.region} --size #{flags.size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file #{f.path}")
+      instances = execute("doctl compute droplet create #{flags.framework} --image #{image} --region #{region} --size #{size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file #{f.path}")
       instance_id = instances[0]["id"]
       ip = String.new
       # wait droplet's network to be available
