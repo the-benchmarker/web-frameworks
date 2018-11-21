@@ -60,7 +60,7 @@ class App < Admiral::Command
       end
       network = flags.network
       if ENV["DO_REGION"]
-        region = ENV["DO_NETWORK"]
+        network = ENV["DO_NETWORK"]
       end
 
       database = Kiwi::FileStore.new("config.db")
@@ -87,13 +87,12 @@ class App < Admiral::Command
         sleep 5
         instance = execute("doctl compute droplet get #{instance_id}")
         if instance[0]["networks"].size > 0
-          ip = instance[0]["networks"]["v4"].each do |net|
-            if net["type"] == network
+          ip = instance[0]["networks"]["v4"].as_a.each do |net|
+            if net["type"].to_s == network
               ip = net["ip_address"]
               break
             end
           end
-          sleep 10 # wait chanel to be reachable
         end
       end
 
