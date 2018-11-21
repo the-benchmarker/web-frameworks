@@ -1,15 +1,15 @@
 const restana = require('restana');
 const service = restana();
 
-service.get('/', function (req, res) {
+service.get('/', function(req, res) {
   res.send(200);
 });
 
-service.get('/user/:id', function (req, res) {
+service.get('/user/:id', function(req, res) {
   res.send(req.params.id);
 });
 
-service.post('/user', function (req, res) {
+service.post('/user', function(req, res) {
   res.send(200);
 });
 
