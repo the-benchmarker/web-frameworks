@@ -74,7 +74,7 @@ class App < Admiral::Command
       f.puts(YAML.dump(template).gsub("---", "")) # cloud-init does not accepts start-comment in yaml
       f.close
 
-      if ENV["DO_NETWORK"] && ENV["DO_NETWORK"] == "private"
+      if network == "private"
         instances = execute("doctl compute droplet create #{flags.framework} --image #{image} --region #{region} --size #{size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file #{f.path} --enable-private-networking")
       else
         instances = execute("doctl compute droplet create #{flags.framework} --image #{image} --region #{region} --size #{size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file #{f.path}")
