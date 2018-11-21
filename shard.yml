@@ -19,6 +19,9 @@ dependencies:
   dotenv:
     github: gdotdesign/cr-dotenv
     version: 0.1.0
+  ssh2:
+    github: waghanza/ssh2.cr
+    branch: compat_0.27
 
 targets:
   neph:
