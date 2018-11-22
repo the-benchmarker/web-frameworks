@@ -47,19 +47,19 @@ class App < Admiral::Command
 
     def run
       size = flags.size
-      if ENV["DO_SIZE"]
+      if ENV.has_key?("DO_SIZE")
         size = ENV["DO_SIZE"]
       end
       image = flags.image
-      if ENV["DO_IMAGE"]
+      if ENV.has_key?("DO_IMAGE")
         image = ENV["DO_IMAGE"]
       end
       region = flags.region
-      if ENV["DO_REGION"]
+      if ENV.has_key?("DO_REGION")
         region = ENV["DO_REGION"]
       end
       network = flags.network
-      if ENV["DO_REGION"]
+      if ENV.has_key?("DO_NETWORK")
         network = ENV["DO_NETWORK"]
       end
 
@@ -80,7 +80,12 @@ class App < Admiral::Command
         instances = execute("doctl compute droplet create #{flags.framework} --image #{image} --region #{region} --size #{size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file #{f.path}")
       end
 
+      if instances[0].as_h.has_key?("errors")
+        raise instances["errors"][0]["details"].as_s
+      end
+
       instance_id = instances[0]["id"]
+
       ip = String.new
       while ip.empty?
         sleep 15
