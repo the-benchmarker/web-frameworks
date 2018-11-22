@@ -98,6 +98,10 @@ class App < Admiral::Command
       database = Kiwi::FileStore.new("config.db")
       database.set("#{flags.framework.to_s.upcase}_IP", ip.to_s)
 
+      if ENV["DO_WAIT"]
+        sleep ENV["DO_WAIT"].to_i
+      end
+
       SSH2::Session.open(ip.to_s, 22) do |session|
         session.login_with_pubkey("root", File.expand_path(ENV["SSH_KEY"]))
 
