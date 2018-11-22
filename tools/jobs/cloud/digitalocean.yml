@@ -12,6 +12,7 @@ ruby:
 python:
   depends_on:
     - flask
+    - django
 
 node:
   depends_on:
@@ -46,6 +47,14 @@ flask:
     - bin/droplet exec -l python -f flask  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class meinheld.gmeinheld.MeinheldWorker server:app --daemon'
     - bin/benchmark extract -l python -f flask
     - doctl compute droplet delete flask --force
+
+django:
+  commands:
+    - bin/droplet create -l python -f django -w
+    - bin/droplet exec -l python -f django 'pip install -r requirements.txt -U'
+    - bin/droplet exec -l python -f django  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class meinheld.gmeinheld.MeinheldWorker app.wsgi --daemon'
+    - bin/benchmark extract -l python -f django
+    - doctl compute droplet delete django --force
 
 # NOT WORKING
 starlette:
