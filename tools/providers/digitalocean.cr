@@ -86,6 +86,8 @@ class App < Admiral::Command
 
       instance_id = instances[0]["id"]
 
+      # Getting IP
+
       ip = String.new
       while ip.empty?
         sleep 15
@@ -100,12 +102,40 @@ class App < Admiral::Command
         end
       end
 
+      # Waiting for IP to be reachable
+      unreachable = true
+      while unreachable
+        p "Waiting for ssh connection"
+        begin
+          SSH2::Session.open(ip.to_s, 22) do |session|
+            session.login_with_pubkey("root", File.expand_path(ENV["SSH_KEY"]))
+            session.open_session do |ch|
+              ch.request_pty("vt100")
+              ch.shell
+              session.blocking = false
+
+              buf_space = uninitialized UInt8[1024]
+              buf = buf_space.to_slice
+              loop do
+                len = ch.read(buf).to_i32
+                if len > 0
+                  unreachable = false
+                  break
+                end
+              end
+            end
+          end
+        rescue e
+          p e.class
+          p e.message
+        end
+        sleep 15
+      end
+
       database = Kiwi::FileStore.new("config.db")
       database.set("#{flags.framework.to_s.upcase}_IP", ip.to_s)
 
-      if ENV.has_key?("DO_WAIT")
-        sleep ENV["DO_WAIT"].to_i
-      end
+      p "Waiting to create directory"
 
       SSH2::Session.open(ip.to_s, 22) do |session|
         session.login_with_pubkey("root", File.expand_path(ENV["SSH_KEY"]))
@@ -133,6 +163,8 @@ class App < Admiral::Command
         end
 
         if flags.wait
+          p "Waiting fot cloud-init to finish"
+
           status = String.new
           while status != "done"
             session.open_session do |ch|
