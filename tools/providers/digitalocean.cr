@@ -103,7 +103,7 @@ class App < Admiral::Command
       database = Kiwi::FileStore.new("config.db")
       database.set("#{flags.framework.to_s.upcase}_IP", ip.to_s)
 
-      if ENV["DO_WAIT"]
+      if ENV.has_key?("DO_WAIT")
         sleep ENV["DO_WAIT"].to_i
       end
 
