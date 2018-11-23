@@ -12,7 +12,7 @@ ruby:
 python:
   depends_on:
     - flask
-    - django
+    # - django => disabled since I have a 400
 
 node:
   depends_on:
@@ -63,7 +63,7 @@ starlette:
     - bin/droplet exec -l python -f starlette 'pip3 install -r requirements.txt -U'
     - bin/droplet exec -l python -f starlette  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class uvicorn.workers.UvicornWorker server:app --daemon'
     - sleep 1 # I do not know why required ?
-    - bin/benchmark extract -l python -f starlette
+    - bin/benchm.neph/django/log/log.errark extract -l python -f starlette
     - doctl compute droplet delete starlette --force
 
 # NOT WORKING
