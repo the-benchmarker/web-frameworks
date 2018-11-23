@@ -23,4 +23,4 @@ app.post("/user", function(request, reply) {
   reply.send();
 });
 
-app.listen(3000, "0.0.0.0", function() {});
+app.listen(80, "0.0.0.0", function() {});
