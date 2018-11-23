@@ -17,6 +17,7 @@ func main() {
 		r.Response.Header().Set("Content-Type", "text/plain; charset=utf-8")
 		r.Response.Write(r.Get("id"))
 	})
+	s.SetFileServerEnabled(false)
 	s.SetPort(3000)
 	s.Run()
 }
