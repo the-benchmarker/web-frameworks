@@ -12,15 +12,15 @@ ruby:
 python:
   depends_on:
     - flask
-    - tornado
-    - quart
-    - bottle
-    - vibora
-    - falcon
-    - sanic
-    - japronto
-    # - starlette => TODO fixme -> not working
-    - cyclone
+    # - tornado
+    # - quart
+    # - bottle
+    # - vibora
+    # - falcon
+    # - sanic
+    # - japronto
+    # # - starlette => TODO fixme -> not working
+    # - cyclone
     # - responder => TODO fixme -> not working
     # - django => TODO fixme -> disabled since I have a 400
 
