@@ -170,12 +170,12 @@ restify:
 
 turbo_polka:
   commands:
-    - bin/droplet create -l node -f turbo_polka -w
-    - bin/droplet exec -l node -f turbo_polka 'npm install --production'
-    - bin/droplet exec -l node -f turbo_polka  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - bin/droplet create -l node -f turbo.polka -w
+    - bin/droplet exec -l node -f turbo.polka 'npm install --production'
+    - bin/droplet exec -l node -f turbo.polka  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
     - sleep 1 # why ?
-    - bin/benchmark extract -l node -f turbo_polka
-    - doctl compute droplet delete turbo_polka --force
+    - bin/benchmark extract -l node -f turbo.polka
+    - doctl compute droplet delete turbo.polka --force
 
 laravel:
   commands:
