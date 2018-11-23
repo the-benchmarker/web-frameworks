@@ -12,9 +12,17 @@ ruby:
 python:
   depends_on:
     - flask
-    # - django => TODO fixme -> disabled since I have a 400
-    # - responder => TODO fixme -> not working
+    - tornado
+    - quart
+    - bottle
+    - vibora
+    - falcon
+    - sanic
+    - japronto
     # - starlette => TODO fixme -> not working
+    - cyclone
+    # - responder => TODO fixme -> not working
+    # - django => TODO fixme -> disabled since I have a 400
 
 node:
   depends_on:
@@ -105,6 +113,7 @@ hapi:
     - bin/droplet create -l node -f hapi -w
     - bin/droplet exec -l node -f hapi 'npm install --production'
     - bin/droplet exec -l node -f hapi  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # why ?
     - bin/benchmark extract -l node -f hapi
     - doctl compute droplet delete hapi --force
 
@@ -114,6 +123,7 @@ koa:
     - bin/droplet create -l node -f koa -w
     - bin/droplet exec -l node -f koa 'npm install --production'
     - bin/droplet exec -l node -f koa  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # why ?
     - bin/benchmark extract -l node -f koa
     - doctl compute droplet delete koa --force
 
@@ -123,6 +133,7 @@ polka:
     - bin/droplet create -l node -f polka -w
     - bin/droplet exec -l node -f polka 'npm install --production'
     - bin/droplet exec -l node -f polka  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # why ?
     - bin/benchmark extract -l node -f polka
     - doctl compute droplet delete polka --force
 
@@ -132,6 +143,7 @@ rayo:
     - bin/droplet create -l node -f rayo -w
     - bin/droplet exec -l node -f rayo 'npm install --production'
     - bin/droplet exec -l node -f rayo  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # why ?
     - bin/benchmark extract -l node -f rayo
     - doctl compute droplet delete rayo --force
 
@@ -141,6 +153,7 @@ restana:
     - bin/droplet create -l node -f restana -w
     - bin/droplet exec -l node -f restana 'npm install --production'
     - bin/droplet exec -l node -f restana  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # why ?
     - bin/benchmark extract -l node -f restana
     - doctl compute droplet delete restana --force
 
@@ -160,6 +173,7 @@ turbo_polka:
     - bin/droplet create -l node -f turbo_polka -w
     - bin/droplet exec -l node -f turbo_polka 'npm install --production'
     - bin/droplet exec -l node -f turbo_polka  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - sleep 1 # why ?
     - bin/benchmark extract -l node -f turbo_polka
     - doctl compute droplet delete turbo_polka --force
 
