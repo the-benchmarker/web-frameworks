@@ -9,7 +9,7 @@ ruby:
     language: "2.5"
   roda:
     website: roda.jeremyevans.net
-    version: "3.13"
+    version: "3.14"
     language: "2.5"
   rack-routing:
     github: georgeu2000/rack-routing
@@ -189,7 +189,7 @@ go:
     language: "1.11"
   iris:
     website: iris-go.com
-    version: "11.0"
+    version: "11.1"
     language: "1.11"
   muxie:
     website: godoc.org/github.com/kataras/muxie
