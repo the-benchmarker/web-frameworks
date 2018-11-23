@@ -80,10 +80,6 @@ class App < Admiral::Command
         instances = execute("doctl compute droplet create #{flags.framework} --image #{image} --region #{region} --size #{size} --ssh-keys #{ENV["SSH_FINGERPINT"]} --user-data-file #{f.path}")
       end
 
-      if instances[0].as_h.has_key?("errors")
-        raise instances["errors"][0]["details"].as_s
-      end
-
       instance_id = instances[0]["id"]
 
       # Getting IP

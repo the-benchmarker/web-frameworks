@@ -12,7 +12,9 @@ ruby:
 python:
   depends_on:
     - flask
-    # - django => disabled since I have a 400
+    # - django => TODO fixme -> disabled since I have a 400
+    # - responder => TODO fixme -> not working
+    # - starlette => TODO fixme -> not working
 
 node:
   depends_on:
@@ -56,23 +58,19 @@ django:
     - bin/benchmark extract -l python -f django
     - doctl compute droplet delete django --force
 
-# NOT WORKING
 starlette:
   commands:
     - bin/droplet create -l python -f starlette -w
     - bin/droplet exec -l python -f starlette 'pip3 install -r requirements.txt -U'
     - bin/droplet exec -l python -f starlette  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class uvicorn.workers.UvicornWorker server:app --daemon'
-    - sleep 1 # I do not know why required ?
     - bin/benchm.neph/django/log/log.errark extract -l python -f starlette
     - doctl compute droplet delete starlette --force
 
-# NOT WORKING
 responder:
   commands:
     - bin/droplet create -l python -f responder -w
     - bin/droplet exec -l python -f responder 'pip3 install -r requirements.txt -U'
     - bin/droplet exec -l python -f responder  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class uvicorn.workers.UvicornWorker server:app --daemon'
-    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l python -f responder
     - doctl compute droplet delete responder --force
 
@@ -81,7 +79,6 @@ express:
     - bin/droplet create -l node -f express -w
     - bin/droplet exec -l node -f express 'npm install --production'
     - bin/droplet exec -l node -f express  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
-    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l node -f express
     - doctl compute droplet delete express --force
 
@@ -90,19 +87,17 @@ fastify:
     - bin/droplet create -l node -f fastify -w
     - bin/droplet exec -l node -f fastify 'npm install --production'
     - bin/droplet exec -l node -f fastify  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
-    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l node -f fastify
     - doctl compute droplet delete fastify --force
 
 
-# foxify:
-#   commands:
-#     - bin/droplet create -l node -f foxify -w
-#     - bin/droplet exec -l node -f foxify 'npm install --production'
-#     - bin/droplet exec -l node -f foxify  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
-#     - sleep 5 # I do not know why required ?
-#     - bin/benchmark extract -l node -f foxify
-#     - doctl compute droplet delete foxify --force
+foxify:
+  commands:
+    - bin/droplet create -l node -f foxify -w
+    - bin/droplet exec -l node -f foxify 'npm install --production'
+    - bin/droplet exec -l node -f foxify  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
+    - bin/benchmark extract -l node -f foxify
+    - doctl compute droplet delete foxify --force
 
 
 hapi:
@@ -110,7 +105,6 @@ hapi:
     - bin/droplet create -l node -f hapi -w
     - bin/droplet exec -l node -f hapi 'npm install --production'
     - bin/droplet exec -l node -f hapi  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
-    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l node -f hapi
     - doctl compute droplet delete hapi --force
 
@@ -120,7 +114,6 @@ koa:
     - bin/droplet create -l node -f koa -w
     - bin/droplet exec -l node -f koa 'npm install --production'
     - bin/droplet exec -l node -f koa  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
-    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l node -f koa
     - doctl compute droplet delete koa --force
 
@@ -130,7 +123,6 @@ polka:
     - bin/droplet create -l node -f polka -w
     - bin/droplet exec -l node -f polka 'npm install --production'
     - bin/droplet exec -l node -f polka  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
-    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l node -f polka
     - doctl compute droplet delete polka --force
 
@@ -140,7 +132,6 @@ rayo:
     - bin/droplet create -l node -f rayo -w
     - bin/droplet exec -l node -f rayo 'npm install --production'
     - bin/droplet exec -l node -f rayo  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
-    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l node -f rayo
     - doctl compute droplet delete rayo --force
 
@@ -150,7 +141,6 @@ restana:
     - bin/droplet create -l node -f restana -w
     - bin/droplet exec -l node -f restana 'npm install --production'
     - bin/droplet exec -l node -f restana  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
-    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l node -f restana
     - doctl compute droplet delete restana --force
 
@@ -170,7 +160,6 @@ turbo_polka:
     - bin/droplet create -l node -f turbo_polka -w
     - bin/droplet exec -l node -f turbo_polka 'npm install --production'
     - bin/droplet exec -l node -f turbo_polka  'NODE_ENV=production pm2 start app.js -i $(nproc) --daemon'
-    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l node -f turbo_polka
     - doctl compute droplet delete turbo_polka --force
 
@@ -183,7 +172,6 @@ laravel:
     - bin/droplet exec -l php -f laravel  "sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /etc/php/7.2/fpm/pool.d/www.conf"
     - bin/droplet exec -l php -f laravel  'service php-fpm7.2 restart'
     - bin/droplet exec -l php -f laravel  'service nginx restart'
-    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l php -f laravel
     - doctl compute droplet delete laravel --force
 
@@ -196,7 +184,6 @@ slim:
     - bin/droplet exec -l php -f slim  "sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /etc/php/7.2/fpm/pool.d/www.conf"
     - bin/droplet exec -l php -f slim  'service php-fpm7.2 restart'
     - bin/droplet exec -l php -f slim  'service nginx restart'
-    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l php -f slim
     - doctl compute droplet delete slim --force
 
@@ -211,6 +198,5 @@ symfony:
     - bin/droplet exec -l php -f symfony  "sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /etc/php/7.2/fpm/pool.d/www.conf"
     - bin/droplet exec -l php -f symfony  'service php-fpm7.2 restart'
     - bin/droplet exec -l php -f symfony  'service nginx restart'
-    - sleep 1 # I do not know why required ?
     - bin/benchmark extract -l php -f symfony
     - doctl compute droplet delete symfony --force
