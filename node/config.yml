@@ -6,9 +6,6 @@ providers:
       package_upgrade: true
       packages:
         - nodejs
+        - npm
       runcmd:
-        - curl -sL https://rpm.nodesource.com/setup_10.x > /tmp/setup.sh
-        - bash /tmp/setup.sh
-        - rm -fr /tmp/setup.sh
-        - apt-get install -y nodejs
         - npm -g install pm2
