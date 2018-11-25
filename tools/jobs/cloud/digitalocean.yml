@@ -13,15 +13,15 @@ ruby:
 python:
   depends_on:
     - flask
-    # - tornado
-    # - quart
+    #- tornado
+    - quart
     # - bottle
-    # - vibora
-    # - falcon
-    # - sanic
-    # - japronto
+    #- vibora
+    #- falcon
+    #- sanic
+    #- japronto
     # # - starlette => TODO fixme -> not working
-    # - cyclone
+    #- cyclone
     # - responder => TODO fixme -> not working
     # - django => TODO fixme -> disabled since I have a 400
 
@@ -63,6 +63,22 @@ flask:
     - bin/benchmark extract -l python -f flask
     - doctl compute droplet delete flask --force
 
+tornado:
+  commands:
+    - bin/droplet create -l python -f tornado -w
+    - bin/droplet exec -l python -f tornado 'pip install -r requirements.txt -U'
+    - bin/droplet exec -l python -f tornado  'python3 server.py'
+    - bin/benchmark extract -l python -f tornado
+    - doctl compute droplet delete tornado --force
+
+quart:
+  commands:
+    - bin/droplet create -l python -f quart -w
+    - bin/droplet exec -l python -f quart 'pip install -r requirements.txt -U'
+    - bin/droplet exec -l python -f quart  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class uvicorn.workers.UvicornWorker server:app --daemon'
+    - bin/benchmark extract -l python -f quart
+    - doctl compute droplet delete quart --force
+
 django:
   commands:
     - bin/droplet create -l python -f django -w
@@ -79,13 +95,28 @@ starlette:
     - bin/benchm.neph/django/log/log.errark extract -l python -f starlette
     - doctl compute droplet delete starlette --force
 
+cyclone:
+    - bin/droplet create -l python -f cyclone -w
+    - bin/droplet exec -l python -f cyclone 'pip install -r requirements.txt -U'
+    - bin/droplet exec -l python -f cyclone 'python server.py'
+    - bin/benchm.neph/django/log/log.errark extract -l python -f cyclone
+    - doctl compute droplet delete cyclone --force  
+
 responder:
   commands:
     - bin/droplet create -l python -f responder -w
-    - bin/droplet exec -l python -f responder 'pip3 install -r requirements.txt -U'
+    - bin/droplet exec -l python -f responder 'pip install -r requirements.txt -U'
     - bin/droplet exec -l python -f responder  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class uvicorn.workers.UvicornWorker server:app --daemon'
     - bin/benchmark extract -l python -f responder
     - doctl compute droplet delete responder --force
+
+django:
+  commands:
+    - bin/droplet create -l python -f django -w
+    - bin/droplet exec -l python -f django 'pip install -r requirements.txt -U'
+    - bin/droplet exec -l python -f django  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class meinheld.gmeinheld.MeinheldWorker app.wsgi --daemon'
+    - bin/benchmark extract -l python -f django
+    - doctl compute droplet delete django --force
 
 express:
   commands:
