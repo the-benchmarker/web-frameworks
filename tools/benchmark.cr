@@ -4,6 +4,7 @@ require "io/memory"
 require "yaml"
 require "kiwi/file_store"
 require "admiral"
+require "random"
 
 # Path for client binary
 CLIENT = File.join(Dir.current, "bin", "client")
@@ -117,6 +118,18 @@ def frameworks : Array(Target)
 end
 
 class App < Admiral::Command
+  class Compile < Admiral::Command
+    define_flag language : String, description: "language selected, to set-up environment", required: true, short: l
+    define_flag framework : String, description: "framework that will be set-up", required: true, short: f
+
+    def run
+      id = Random.new.hex
+      `docker build -t #{id} -f #{flags.language}/#{flags.framework}/digitalocean.dockerfile #{flags.language}/#{flags.framework}`
+      cid = `docker run -td #{id}`.strip
+      `docker cp #{cid}:/usr/src/app/server #{flags.language}/#{flags.framework}/server`
+    end
+  end
+
   class Extract < Admiral::Command
     define_flag language : String, description: "language selected, to set-up environment", required: true, short: l
     define_flag framework : String, description: "framework that will be set-up", required: true, short: f
@@ -147,6 +160,7 @@ class App < Admiral::Command
     end
   end
 
+  register_sub_command compile : Compile, description "Compile code according to dist used in provider"
   register_sub_command extract : Extract, description "Get result and store them"
   register_sub_command export : Export, description "Export all availables results"
 
