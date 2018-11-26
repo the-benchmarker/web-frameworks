@@ -1,0 +1,6 @@
+providers:
+  digitalocean:
+    version: 1.11
+    config:
+      package_update: true
+      package_upgrade: true

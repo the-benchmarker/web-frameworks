@@ -18,6 +18,6 @@ func main() {
 		r.Response.Write(r.Get("id"))
 	})
 	s.SetFileServerEnabled(false)
-	s.SetPort(3000)
+	s.SetPort(80)
 	s.Run()
 }

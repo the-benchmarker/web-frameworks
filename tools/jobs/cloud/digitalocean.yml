@@ -4,6 +4,7 @@ main:
     - python
     - node
     - php
+    - go
 
 ruby:
   depends_on:
@@ -35,6 +36,10 @@ node:
     - rayo
     - restana
     - restify
+
+go:
+  depends_on:
+    - gf
 
 php:
   depends_on:
@@ -214,3 +219,21 @@ symfony:
     - bin/droplet exec -l php -f symfony  'service nginx restart'
     - bin/benchmark extract -l php -f symfony
     - doctl compute droplet delete symfony --force
+
+gf:
+  commads:
+    - bin/benchmark compile -l go -f gf
+    - bin/droplet create -l go -f gf -w
+    - bin/droplet upload -l go -f gf 'server'
+    - bin/droplet exec -l go -f gf 'chmod +x /usr/src/app/server'
+    - bin/benchmark extract -l go -f gf
+    - doctl compute droplet delete gf --force
+
+kemal:
+  commads:
+    - bin/benchmark compile -l crystal -f kemal
+    - bin/droplet create -l crystal -f kemal -w
+    - bin/droplet upload -l crystal -f kemal 'server'
+    - bin/droplet exec -l crystal -f kemal 'chmod +x /usr/src/app/server'
+    - bin/benchmark extract -l crystal -f kemal
+    - doctl compute droplet delete crystal --force
