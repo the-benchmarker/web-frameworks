@@ -44,6 +44,7 @@ class App < Admiral::Command
 
     # optional flag
     define_flag wait : Bool, description: "Wait for cloud-init to finish", default: false, short: w
+    define_flag executable : Bool, description: "Should uploaded files been executable", default: false, short: x
 
     def run
       size = flags.size
@@ -61,6 +62,12 @@ class App < Admiral::Command
       network = flags.network
       if ENV.has_key?("DO_NETWORK")
         network = ENV["DO_NETWORK"]
+      end
+
+      if flags.executable
+        mode = 0o755
+      else
+        mode = 0o644
       end
 
       database = Kiwi::FileStore.new("config.db")
@@ -144,7 +151,9 @@ class App < Admiral::Command
 
         # Upload files
         files.each do |file|
-          path = File.join(Dir.current, flags.language.to_s, flags.framework.to_s, file.to_s)
+          remote_path = File.join("/usr/src/app", file.to_s).to_s
+          local_path = File.join(Dir.current, flags.language.to_s, flags.framework.to_s, file.to_s)
+
           parts = file.to_s.split("/")
           if parts.size > 1
             tree = parts[0...(parts.size - 1)].join("/")
@@ -153,8 +162,14 @@ class App < Admiral::Command
               IO.copy(ch, STDOUT)
             end
           end
-          session.scp_send(File.join("/usr/src/app", file.to_s), 0o0644, File.size(path)) do |ch|
-            ch.puts File.read(path)
+          session.sftp_session do |sftp|
+            file = sftp.open(remote_path, flags: "wc+", mode: mode)
+            File.open(local_path) do |io|
+              buffer = Bytes.new(io.size)
+              io.read(buffer)
+              file.write(buffer)
+            end
+            file.close
           end
         end
 

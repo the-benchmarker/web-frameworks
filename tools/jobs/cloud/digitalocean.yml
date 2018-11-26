@@ -15,7 +15,7 @@ python:
     - flask
     #- tornado
     - quart
-    # - bottle
+    - bottle
     #- vibora
     #- falcon
     #- sanic
@@ -67,7 +67,7 @@ tornado:
   commands:
     - bin/droplet create -l python -f tornado -w
     - bin/droplet exec -l python -f tornado 'pip install -r requirements.txt -U'
-    - bin/droplet exec -l python -f tornado  'python3 server.py'
+    - bin/droplet exec -l python -f tornado  'nohup python3 server.py'
     - bin/benchmark extract -l python -f tornado
     - doctl compute droplet delete tornado --force
 
@@ -86,6 +86,14 @@ django:
     - bin/droplet exec -l python -f django  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class meinheld.gmeinheld.MeinheldWorker app.wsgi --daemon'
     - bin/benchmark extract -l python -f django
     - doctl compute droplet delete django --force
+bottle:
+  commands:
+    - bin/droplet create -l python -f bottle -w
+    - bin/droplet exec -l python -f bottle 'pip install -r requirements.txt -U'
+    - bin/droplet exec -l python -f bottle  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class meinheld.gmeinheld.MeinheldWorker server:app --daemon'
+    - bin/benchmark extract -l python -f bottle
+    - doctl compute droplet delete bottle --force
+
 
 starlette:
   commands:
@@ -254,17 +262,14 @@ symfony:
 gf:
   commads:
     - bin/benchmark compile -l go -f gf
-    - bin/droplet create -l go -f gf -w
-    - bin/droplet upload -l go -f gf 'server'
-    - bin/droplet exec -l go -f gf 'chmod +x /usr/src/app/server'
+    - bin/droplet create -l go -f gf -w -x
     - bin/benchmark extract -l go -f gf
     - doctl compute droplet delete gf --force
 
 kemal:
   commads:
     - bin/benchmark compile -l crystal -f kemal
-    - bin/droplet create -l crystal -f kemal -w
-    - bin/droplet upload -l crystal -f kemal 'server'
-    - bin/droplet exec -l crystal -f kemal 'chmod +x /usr/src/app/server'
+    - bin/droplet create -l crystal -f kemal -w -x
+    - bin/droplet upload -l crystal -f kemal server
     - bin/benchmark extract -l crystal -f kemal
     - doctl compute droplet delete crystal --force
