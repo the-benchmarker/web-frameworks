@@ -263,13 +263,8 @@ gf:
   commads:
     - bin/benchmark compile -l go -f gf
     - bin/droplet create -l go -f gf -w -x
-    - bin/benchmark extract -l go -f gf
-    - doctl compute droplet delete gf --force
-
+    
 kemal:
   commads:
     - bin/benchmark compile -l crystal -f kemal
     - bin/droplet create -l crystal -f kemal -w -x
-    - bin/droplet upload -l crystal -f kemal server
-    - bin/benchmark extract -l crystal -f kemal
-    - doctl compute droplet delete crystal --force
