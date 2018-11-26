@@ -195,6 +195,21 @@ class App < Admiral::Command
     end
   end
 
+  class Upload < Admiral::Command
+    define_flag language : String, description: "language selected, to set-up environment", required: true, short: l
+    define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
+
+    def run
+      database = Kiwi::FileStore.new("config.db")
+      ip = database.get("#{flags.framework.to_s.upcase}_IP")
+
+      arguments.each do |file|
+        path = File.join(Dir.current, flags.language.to_s, flags.framework.to_s, file.to_s)
+        p `scp -i #{ENV["SSH_KEY"]} #{path} root@#{ip.to_s}:/usr/src/app`
+      end
+    end
+  end
+
   class Delete < Admiral::Command
     define_flag language : String, description: "language selected, to set-up environment", required: true, short: l
     define_flag framework : String, description: "framework that will eb set-up", required: true, short: f
@@ -206,6 +221,7 @@ class App < Admiral::Command
 
   register_sub_command create : Create, description "Create droplet for specific language"
   register_sub_command exec : Exec, description "Execute command on previously created droplet"
+  register_sub_command upload : Upload, description "Upload binary files using system scp"
   register_sub_command delete : Delete, description "Delet previously created droplet"
 
   def run
