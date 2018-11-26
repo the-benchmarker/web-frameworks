@@ -2,5 +2,37 @@ providers:
   digitalocean:
     version: 1.11
     config:
+
+      # Update distibution
+
       package_update: true
       package_upgrade: true
+
+      # Write systemd config file
+
+      write_files:
+        - path: /lib/systemd/system/web.service
+          content: |
+            [Unit]
+            Description=web
+
+            [Service]
+            Type=simple
+            Restart=always
+            RestartSec=5s
+            ExecStart=/usr/src/app/server
+
+            [Install]
+            WantedBy=multi-user.target
+
+
+      runcmd:
+
+        # Reload systemd config
+        - systemcl daemon-reload
+
+        # Enable created service
+        - systemctl enable web
+
+        # Disable cloud-init
+        - systemcl disable cloud-init
