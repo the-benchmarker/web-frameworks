@@ -65,9 +65,9 @@ class App < Admiral::Command
       end
 
       if flags.executable
-        mode = 0o755
+        mode = 0o100 # execute
       else
-        mode = 0o644
+        mode = 0o400 # read
       end
 
       database = Kiwi::FileStore.new("config.db")
