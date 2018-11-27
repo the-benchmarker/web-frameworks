@@ -45,6 +45,7 @@ class App < Admiral::Command
     # optional flag
     define_flag wait : Bool, description: "Wait for cloud-init to finish", default: false, short: w
     define_flag executable : Bool, description: "Should uploaded files been executable", default: false, short: x
+    define_flag reboot : Bool, description: "Should a reboot being performed", default: false, short: c
 
     def run
       size = flags.size
@@ -145,6 +146,7 @@ class App < Admiral::Command
 
         # Create directory
         session.open_session do |ch|
+          p "Create directory"
           ch.command("mkdir -p /usr/src/app")
           IO.copy(ch, STDOUT)
         end
@@ -164,12 +166,14 @@ class App < Admiral::Command
           end
           session.sftp_session do |sftp|
             file = sftp.open(remote_path, flags: "wc+", mode: mode)
+            p "Uploading #{file.to_s}"
             File.open(local_path) do |io|
               buffer = Bytes.new(io.size)
               io.read(buffer)
               file.write(buffer)
             end
             file.close
+            p "End upload of #{file.to_s}"
           end
         end
 
@@ -177,11 +181,60 @@ class App < Admiral::Command
           p "Waiting fot cloud-init to finish"
 
           status = String.new
-          while status != "done"
+          while status == "running"
             session.open_session do |ch|
               sleep 30
               ch.command("cloud-init status")
               status = ch.read_line.split(":").pop.strip
+              if status == "error"
+                raise "Cloud init error"
+              end
+            end
+          end
+
+          p "End cloud-init"
+        end
+
+        if flags.reboot
+          SSH2::Session.open(ip.to_s, 22) do |session|
+            session.login_with_pubkey("root", File.expand_path(ENV["SSH_KEY"]))
+
+            # Create directory
+            session.open_session do |ch|
+              p "Reboot"
+              # Reboot command could not be used because it break ssh connection, so we plan a reboot in one minute
+              ch.command("shutdown -r +1")
+              sleep 60
+            end
+
+            # Waiting for IP to be reachable
+            unreachable = true
+            while unreachable
+              p "Waiting for ssh connection"
+              begin
+                SSH2::Session.open(ip.to_s, 22) do |session|
+                  session.login_with_pubkey("root", File.expand_path(ENV["SSH_KEY"]))
+                  session.open_session do |ch|
+                    ch.request_pty("vt100")
+                    ch.shell
+                    session.blocking = false
+
+                    buf_space2 = uninitialized UInt8[1024]
+                    buf = buf_space2.to_slice
+                    loop do
+                      len = ch.read(buf).to_i32
+                      if len > 0
+                        unreachable = false
+                        break
+                      end
+                    end
+                  end
+                end
+              rescue e
+                p e.class
+                p e.message
+              end
+              sleep 15
             end
           end
         end
