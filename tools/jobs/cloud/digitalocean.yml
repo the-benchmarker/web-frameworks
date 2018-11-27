@@ -13,15 +13,15 @@ ruby:
 python:
   depends_on:
     - flask
-    #- tornado
+    # - tornado
     - quart
     - bottle
-    #- vibora
-    #- falcon
-    #- sanic
-    #- japronto
-    # # - starlette => TODO fixme -> not working
-    #- cyclone
+    # - vibora
+    # - falcon
+    # - sanic
+    # - japronto
+    # - starlette => TODO fixme -> not working
+    # - cyclone
     # - responder => TODO fixme -> not working
     # - django => TODO fixme -> disabled since I have a 400
 
@@ -39,7 +39,15 @@ node:
 
 go:
   depends_on:
+    - muxie
+    - chi
+    - beego
+    - gorilla-mux
+    - iris
+    - gin
+    - echo
     - gf
+    - fasthttprouter
 
 php:
   depends_on:
@@ -79,13 +87,6 @@ quart:
     - bin/benchmark extract -l python -f quart
     - doctl compute droplet delete quart --force
 
-django:
-  commands:
-    - bin/droplet create -l python -f django -w
-    - bin/droplet exec -l python -f django 'pip install -r requirements.txt -U'
-    - bin/droplet exec -l python -f django  'gunicorn --log-level warning --bind 0.0.0.0:80 --reuse-port --workers $(nproc) --worker-class meinheld.gmeinheld.MeinheldWorker app.wsgi --daemon'
-    - bin/benchmark extract -l python -f django
-    - doctl compute droplet delete django --force
 bottle:
   commands:
     - bin/droplet create -l python -f bottle -w
@@ -104,11 +105,12 @@ starlette:
     - doctl compute droplet delete starlette --force
 
 cyclone:
+  commands:
     - bin/droplet create -l python -f cyclone -w
     - bin/droplet exec -l python -f cyclone 'pip install -r requirements.txt -U'
     - bin/droplet exec -l python -f cyclone 'python server.py'
     - bin/benchm.neph/django/log/log.errark extract -l python -f cyclone
-    - doctl compute droplet delete cyclone --force  
+    - doctl compute droplet delete cyclone --force
 
 responder:
   commands:
@@ -259,12 +261,72 @@ symfony:
     - bin/benchmark extract -l php -f symfony
     - doctl compute droplet delete symfony --force
 
+muxie:
+  commands:
+    - bin/benchmark compile -l go -f muxie
+    - bin/droplet create -l go -f muxie -w -x -c
+    - bin/benchmark extract -l go -f muxie
+    - doctl compute droplet delete muxie --force
+
+chi:
+  commands:
+    - bin/benchmark compile -l go -f chi
+    - bin/droplet create -l go -f chi -w -x -c
+    - bin/benchmark extract -l go -f chi
+    - doctl compute droplet delete chi --force
+
+beego:
+  commands:
+    - bin/benchmark compile -l go -f beego
+    - bin/droplet create -l go -f beego -w -x -c
+    - bin/benchmark extract -l go -f beego
+    - doctl compute droplet delete beego --force
+
+gorilla-mux:
+  commands:
+    - bin/benchmark compile -l go -f gorilla-mux
+    - bin/droplet create -l go -f gorilla-mux -w -x -c
+    - bin/benchmark extract -l go -f gorilla-mux
+    - doctl compute droplet delete gorilla-mux --force
+
+iris:
+  commands:
+    - bin/benchmark compile -l go -f iris
+    - bin/droplet create -l go -f iris -w -x -c
+    - bin/benchmark extract -l go -f iris
+    - doctl compute droplet delete iris --force
+
+gin:
+  commands:
+    - bin/benchmark compile -l go -f gin
+    - bin/droplet create -l go -f gin -w -x -c
+    - bin/benchmark extract -l go -f gin
+    - doctl compute droplet delete gin --force
+
+echo:
+  commands:
+    - bin/benchmark compile -l go -f echo
+    - bin/droplet create -l go -f echo -w -x -c
+    - bin/benchmark extract -l go -f echo
+    - doctl compute droplet delete echo --force
+
 gf:
-  commads:
+  commands:
     - bin/benchmark compile -l go -f gf
-    - bin/droplet create -l go -f gf -w -x
-    
+    - bin/droplet create -l go -f gf -w -x -c
+    - bin/benchmark extract -l go -f gf
+    - doctl compute droplet delete gf --force
+
+fasthttprouter:
+  commands:
+    - bin/benchmark compile -l go -f fasthttprouter
+    - bin/droplet create -l go -f fasthttprouter -w -x -c
+    - bin/benchmark extract -l go -f fasthttprouter
+    - doctl compute droplet delete fasthttprouter --force
+
 kemal:
-  commads:
+  commands:
     - bin/benchmark compile -l crystal -f kemal
-    - bin/droplet create -l crystal -f kemal -w -x
+    - bin/droplet create -l crystal -f kemal -w -x -c
+    - bin/benchmark extract -l crystal -f kemal
+    - doctl compute droplet delete kemal --force

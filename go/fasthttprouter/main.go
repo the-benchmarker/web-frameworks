@@ -19,5 +19,5 @@ func main() {
 		fmt.Fprintf(ctx, "")
 	})
 
-	fasthttp.ListenAndServe(":3000", router.Handler)
+	fasthttp.ListenAndServe(":80", router.Handler)
 }

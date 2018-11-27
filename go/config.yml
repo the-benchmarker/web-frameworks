@@ -12,15 +12,17 @@ providers:
 
       write_files:
         - path: /lib/systemd/system/web.service
+          permission: 0644
           content: |
             [Unit]
             Description=web
+            After=network.target
 
             [Service]
             Type=simple
-            Restart=always
-            RestartSec=5s
+            WorkingDirectory=/usr/src/app
             ExecStart=/usr/src/app/server
+            Restart=always
 
             [Install]
             WantedBy=multi-user.target
@@ -29,10 +31,12 @@ providers:
       runcmd:
 
         # Reload systemd config
-        - systemcl daemon-reload
+        - systemctl daemon-reload
 
+         # Disable cloud-init
+        - systemctl disable cloud-init
+
+        - systemctl start web
+        
         # Enable created service
         - systemctl enable web
-
-        # Disable cloud-init
-        - systemcl disable cloud-init
