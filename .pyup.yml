@@ -1,0 +1,28 @@
+# Configuration file for pyup.io
+# This service provide a bot pinning all dependencies
+# on python based frameworks (using pypi)
+
+# Global updates, not only security fix
+update: all
+
+# One run per week is enough
+schedule: "every week"
+
+# Specify branch to base PR from
+# <master> is the default branch on github
+branch: master
+
+# This option enable recursive search
+# for requirements.txt
+search: True
+
+# Specify label to PR
+label_prs: 
+  - language:python
+
+# Auto-assign PR
+assignees:
+  - waghanza
+  - greed2411
+
+
