@@ -181,7 +181,7 @@ nim:
 go:
   beego:
     website: beego.me
-    version: "1.10"
+    version: "1.11"
     language: "1.11"
   echo:
     website: echo.labstack.com
@@ -289,5 +289,5 @@ c:
     language: "99"
   agoo-c:
     website: github.com/ohler55/agoo-c
-    version: "0.1"
+    version: "0.3"
     language: "11"
