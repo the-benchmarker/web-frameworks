@@ -39,7 +39,7 @@ class App < Admiral::Command
     # droplet configuration
     define_flag size : String, description: "droplet size (default the cheaper)", short: s, default: "s-1vcpu-1gb"
     define_flag image : String, description: "droplet image / os", short: i, default: "ubuntu-18-10-x64"
-    define_flag region : String, description: "droplet region", short: r, default: "fra1"
+    define_flag region : String, description: "droplet region", short: r, default: "ams3"
     define_flag network : String, description: "network type to use", short: n, default: "public"
 
     # optional flag
@@ -66,7 +66,7 @@ class App < Admiral::Command
       end
 
       if flags.executable
-        mode = 0o100 # execute
+        mode = 0o777 # execute
       else
         mode = 0o400 # read
       end
@@ -204,7 +204,7 @@ class App < Admiral::Command
               p "Reboot"
               # Reboot command could not be used because it break ssh connection, so we plan a reboot in one minute
               ch.command("shutdown -r +1")
-              sleep 60
+              sleep 90
             end
 
             # Waiting for IP to be reachable
