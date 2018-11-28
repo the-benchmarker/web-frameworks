@@ -22,7 +22,6 @@ providers:
             Type=simple
             WorkingDirectory=/usr/src/app
             ExecStart=/usr/src/app/server
-            Restart=always
 
             [Install]
             WantedBy=multi-user.target
