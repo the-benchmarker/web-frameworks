@@ -2,35 +2,40 @@ providers:
   digitalocean:
     version: 0.27
     config:
+
+      # Update distibution
+
       package_update: true
       package_upgrade: true
-      packages:
-        - libssl-dev
-        - libxml2-dev
-        - libyaml-dev
-        - libgmp-dev
-        - libreadline-dev
 
-      runcmd:
-        - systemctl disable cloud-init
-        
-      groups:
-        - web
-      users:
-        - name: www-data
+      # Write systemd config file
 
       write_files:
-        - path: /etc/systemd/system/web.service
+        - path: /lib/systemd/system/web.service
+          permission: 0644
           content: |
             [Unit]
             Description=web
-            After=syslog.target network.target
+            After=network.target
 
             [Service]
             Type=simple
-            Environment="KEMAL_ENV=production"
             WorkingDirectory=/usr/src/app
             ExecStart=/usr/src/app/server
 
             [Install]
             WantedBy=multi-user.target
+
+
+      runcmd:
+
+        # Reload systemd config
+        - systemctl daemon-reload
+
+         # Disable cloud-init
+        - systemctl disable cloud-init
+
+        - systemctl start web
+        
+        # Enable created service
+        - systemctl enable web
