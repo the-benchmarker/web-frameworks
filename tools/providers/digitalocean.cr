@@ -39,7 +39,7 @@ class App < Admiral::Command
     # droplet configuration
     define_flag size : String, description: "droplet size (default the cheaper)", short: s, default: "s-1vcpu-1gb"
     define_flag image : String, description: "droplet image / os", short: i, default: "ubuntu-18-10-x64"
-    define_flag region : String, description: "droplet region", short: r, default: "ams3"
+    define_flag region : String, description: "droplet region", short: r, default: "fra1"
     define_flag network : String, description: "network type to use", short: n, default: "public"
 
     # optional flag
@@ -165,16 +165,11 @@ class App < Admiral::Command
             end
           end
           session.sftp_session do |sftp|
-            file = sftp.open(remote_path, flags: "wc+", mode: mode)
-            p "Uploading #{file.to_s} [#{File.size(local_path)}]"
-            File.open(local_path) do |io|
-              p "Uploading #{io.size} bytes"
-              buffer = Bytes.new(io.size)
-              io.read(buffer)
-              file.write(buffer)
-            end
-            file.close
-            p "End upload of #{file.to_s}"
+            local_file = File.open(local_path, "rb")
+            remote_file = sftp.open(remote_path, flags: "wc", mode: mode)
+            size = File.size(local_path)
+            p "Uploading #{file.to_s} [#{size}]"
+            IO.copy(local_file, remote_file)
           end
         end
 
