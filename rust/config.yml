@@ -41,4 +41,8 @@ providers:
 
         # Enable created service at startup 
         - systemctl start web
+<<<<<<< HEAD
         - systemctl enable web
+=======
+        - systemctl enable web
+>>>>>>> add rust challengers
