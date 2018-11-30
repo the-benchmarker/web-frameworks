@@ -5,6 +5,7 @@ main:
     - node
     - php
     - go
+    - rust
 
 ruby:
   depends_on:
@@ -48,6 +49,14 @@ go:
     - echo
     - gf
     - fasthttprouter
+
+rust:
+  depends_on:
+      - actix-web
+      - gotham
+      - iron
+      - nickel
+      - rocket
 
 php:
   depends_on:
@@ -330,3 +339,38 @@ kemal:
     - bin/droplet create -l crystal -f kemal -w -x -c
     - bin/benchmark extract -l crystal -f kemal
     - doctl compute droplet delete kemal --force
+
+gotham:
+  commands:
+    - bin/benchmark compile -l rust -f gotham
+    - bin/droplet create -l rust -f gotham -w -x -c
+    - bin/benchmark extract -l rust -f gotham
+    - doctl compute droplet delete gotham --force
+
+actix-web:
+  commands:
+    - bin/benchmark compile -l rust -f actix-web
+    - bin/droplet create -l rust -f actix-web -w -x -c
+    - bin/benchmark extract -l rust -f actix-web
+    - doctl compute droplet delete actix-web --force
+
+iron:
+  commands:
+    - bin/benchmark compile -l rust -f iron
+    - bin/droplet create -l rust -f iron -w -x -c
+    - bin/benchmark extract -l rust -f iron
+    - doctl compute droplet delete iron --force
+
+nickel:
+  commands:
+    - bin/benchmark compile -l rust -f nickel
+    - bin/droplet create -l rust -f nickel -w -x -c
+    - bin/benchmark extract -l rust -f nickel
+    - doctl compute droplet delete nickel --force
+
+rocket:
+  commands:
+    - bin/benchmark compile -l rust -f rocket
+    - bin/droplet create -l rust -f rocket -w -x -c
+    - bin/benchmark extract -l rust -f rocket
+    - doctl compute droplet delete rocket --force
