@@ -12,7 +12,7 @@ use gotham::state::*;
 use hyper::{Body, Response, StatusCode};
 
 fn main() {
-    let addr = "0.0.0.0:3000";
+    let addr = "0.0.0.0:80";
     println!("Listening for requests at http://{}", addr);
 
     let router = build_simple_router(|route| {
