@@ -28,7 +28,7 @@ defmodule MyPhoenix.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.3.3"},
+    [{:phoenix, "~> 1.4.0"},
      {:gettext, "~> 0.15.0"},
      {:cowboy, "~> 1.1.2"},
      {:distillery, "~> 2.0.0-rc.6"}]
