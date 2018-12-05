@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --no-binary :all: falcon==1.4.1
 
 COPY requirements.txt server.py ./
 
