@@ -23,6 +23,10 @@ providers:
             WorkingDirectory=/usr/src/app
             ExecStart=/usr/src/app/server
 
+            # customize limit for this service only
+            # @see https://unix.stackexchange.com/questions/345595/how-to-set-ulimits-on-service-with-systemd
+            LimitNOFILE=65536
+
             [Install]
             WantedBy=multi-user.target
 
