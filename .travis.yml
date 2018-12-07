@@ -19,6 +19,7 @@ env:
     - FRAMEWORK=symfony
     - FRAMEWORK=laravel
     - FRAMEWORK=lumen
+    - FRAMEWORK=zend-expressive
     - FRAMEWORK=tornado
     - FRAMEWORK=sanic
     - FRAMEWORK=japronto
