@@ -124,6 +124,7 @@ php:
     - symfony
     - laravel
     - lumen
+    - zend-expressive
 
 c:
   depends_on:
@@ -464,6 +465,11 @@ lumen:
   commands:
     - docker  build -t lumen .
   dir: php/lumen
+
+zend-expressive:
+  commands:
+    - docker build -t zend-expressive .
+  dir: php/zend-expressive
 
 kore:
   commands:
