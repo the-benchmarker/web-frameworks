@@ -1,7 +1,6 @@
-#![feature(plugin)]
-#![plugin(rocket_codegen)]
+#![feature(proc_macro_hygiene, decl_macro)]
 
-extern crate rocket;
+#[macro_use] extern crate rocket;
 
 use rocket::config::{Config, Environment};
 
@@ -22,6 +21,6 @@ fn main() {
         .port(3000)
         .finalize()
         .unwrap();
-    let app = rocket::custom(config, false);
+    let app = rocket::custom(config);
     app.mount("/", routes![index_route, user_route, user_register_route]).launch();
 }
