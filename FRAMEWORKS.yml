@@ -236,22 +236,22 @@ rust:
   actix-web:
     website: actix.rs
     version: "0.7"
-    language: "1.30"
+    language: "1.31"
   gotham:
     website: gotham.rs
     version: "0.3"
-    language: "1.30"
+    language: "1.31"
   iron:
     website: ironframework.io
     version: "0.6"
-    language: "1.30"
+    language: "1.31"
   nickel:
     website: nickel-org.github.io
     version: "0.10"
-    language: "1.30"
+    language: "1.31"
   rocket:
     website: rocket.rs
-    version: "0.3"
+    version: "0.4"
     language: "nightly"
 #elixir:
 #  phoenix:
