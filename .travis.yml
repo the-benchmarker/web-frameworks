@@ -20,6 +20,7 @@ env:
     - FRAMEWORK=laravel
     - FRAMEWORK=lumen
     - FRAMEWORK=zend-expressive
+    - FRAMEWORK=zend-framework
     - FRAMEWORK=tornado
     - FRAMEWORK=sanic
     - FRAMEWORK=japronto
