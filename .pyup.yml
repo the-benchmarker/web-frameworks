@@ -5,9 +5,6 @@
 # Global updates, not only security fix
 update: all
 
-# One run per week is enough
-schedule: "every week"
-
 # Specify branch to base PR from
 # <master> is the default branch on github
 branch: master
