@@ -471,6 +471,11 @@ zend-expressive:
     - docker build -t zend-expressive .
   dir: php/zend-expressive
 
+zend-framework:
+  commands:
+    - docker build -t zend-framework .
+  dir: php/zend-framework
+
 kore:
   commands:
     - docker  build -t kore .
