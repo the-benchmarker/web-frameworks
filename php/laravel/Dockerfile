@@ -1,4 +1,4 @@
-FROM php:7.2.12-fpm
+FROM php:7.3.0-fpm
 
 RUN apt-get -qq update
 RUN apt-get -y install git nginx zlib1g-dev
