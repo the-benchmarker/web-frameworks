@@ -1,5 +1,11 @@
-# Exit build if framework has not been modified on PR
-before_install: if [ "${TRAVIS_PULL_REQUEST}" != "false" ] ; then bash .ci/has_to_run.sh || travis_terminate 0 ; fi
+# Exit build if not necessary
+before_install:
+  # if we are on PR and the current framework has not been modified
+  - if [ "${TRAVIS_PULL_REQUEST}" != "false" ] ; then bash .ci/has_to_run.sh || travis_terminate 0 ; fi
+
+  # if we are on a bot branch and NOT on a PR
+  - if [ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "pyup*" ] ; then travis_terminate 0 ; fi
+  - if [ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "renovate/*" ] ; then travis_terminate 0 ; fi
 
 # Use docker to containerize frameworks
 services: docker
