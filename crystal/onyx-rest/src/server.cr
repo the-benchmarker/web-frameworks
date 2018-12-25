@@ -4,7 +4,7 @@ router = Onyx::REST::Router.new do
   get "/" { }
 
   get "/user/:id" do |env|
-    env.request.path_params["id"]
+    env.response.output << env.request.path_params["id"]
   end
 
   post "/user" { }
