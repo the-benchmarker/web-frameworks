@@ -24,7 +24,7 @@ crystal:
     - raze
     - lucky
     - spider-gazelle
-    - onyx-rest
+    - onyx
     - orion
 
 ruby:
@@ -163,10 +163,10 @@ spider-gazelle:
     - docker build -t spider-gazelle .
   dir: crystal/spider-gazelle
 
-onyx-rest:
+onyx:
   commands:
-    - docker build -t onyx-rest .
-  dir: crystal/onyx-rest
+    - docker build -t onyx .
+  dir: crystal/onyx
 
 orion:
   commands:
