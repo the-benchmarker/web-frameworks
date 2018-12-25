@@ -24,6 +24,7 @@ crystal:
     - raze
     - lucky
     - spider-gazelle
+    - onyx-rest
     - orion
 
 ruby:
@@ -161,6 +162,11 @@ spider-gazelle:
   commands:
     - docker build -t spider-gazelle .
   dir: crystal/spider-gazelle
+
+onyx-rest:
+  commands:
+    - docker build -t onyx-rest .
+  dir: crystal/onyx-rest
 
 orion:
   commands:
@@ -486,4 +492,4 @@ agoo-c:
   commands:
     - docker  build -t agoo-c .
   dir: c/agoo-c
-  
+
