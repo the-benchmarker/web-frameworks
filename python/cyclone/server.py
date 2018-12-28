@@ -1,9 +1,6 @@
 import cyclone.web
-import sys
-
-from twisted.internet import reactor
-from twisted.python import log
-
+from twisted.application import internet
+from twisted.application import service
 
 class MainHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
