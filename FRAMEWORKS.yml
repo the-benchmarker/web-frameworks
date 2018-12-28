@@ -72,7 +72,7 @@ node:
 python:
   sanic:
     github: huge-success/sanic
-    version: "0.8"
+    version: "18.12"
     language: "3.7"
   flask:
     website: flask.pocoo.org
