@@ -20,11 +20,6 @@ class UserInfoHandler(tornado.web.RequestHandler):
         self.write(id)
 
 
-if __name__ == '__main__':
-    app = tornado.web.Application(handlers=[(r'/', MainHandler),
-                                  (r"/user", UserHandler),
-                                  (r"/user/(\d+)", UserInfoHandler)])
-    http_server = tornado.httpserver.HTTPServer(app)
-    http_server.bind(3000, address='0.0.0.0', reuse_port=True)
-    http_server.start(0)
-    tornado.ioloop.IOLoop.current().start()
+app = tornado.web.Application(handlers=[(r'/', MainHandler),
+                              (r"/user", UserHandler),
+                              (r"/user/(\d+)", UserInfoHandler)])
