@@ -384,6 +384,11 @@ fastify:
     - docker build -t fastify .
   dir: node/fastify
 
+muneem:
+  commands:
+    - docker build -t muneem .
+  dir: node/muneem
+
 foxify:
   commands:
     - docker build -t foxify .
