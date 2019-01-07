@@ -96,6 +96,7 @@ node:
     - foxify
     - turbo_polka
     - restana
+    - muneem
 
 elixir:
   depends_on:
@@ -382,6 +383,11 @@ fastify:
   commands:
     - docker build -t fastify .
   dir: node/fastify
+
+muneem:
+  commands:
+    - docker build -t muneem .
+  dir: node/muneem
 
 foxify:
   commands:

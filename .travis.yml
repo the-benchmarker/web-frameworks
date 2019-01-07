@@ -88,6 +88,7 @@ env:
     - FRAMEWORK=turbo_polka
     - FRAMEWORK=kore
     - FRAMEWORK=agoo-c
+    - FRAMEWORK=muneem
 
 # Lint yaml files in a specific jobs
 jobs:

@@ -36,6 +36,10 @@ node:
     github: jkyberneees/ana
     version: "2.3"
     language: "11.2"
+  muneem:
+    github: node-muneem/muneem/
+    version: "2.4"
+    language: "11.2"
   fastify:
     website: fastify.io
     version: "1.13"
