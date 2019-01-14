@@ -34,7 +34,7 @@ node:
     language: "11.6"
   restana:
     github: jkyberneees/ana
-    version: "2.3"
+    version: "2.7"
     language: "11.6"
   muneem:
     github: node-muneem/muneem/
@@ -62,11 +62,11 @@ node:
     language: "11.6"
   restify:
     website: restify.com
-    version: "7.2"
+    version: "7.44"
     language: "11.6"
   hapi:
     website: hapijs.com
-    version: "17.7"
+    version: "17.8"
     language: "11.6"
   turbo_polka:
     github: mafintosh/turbo-http
@@ -146,11 +146,11 @@ php:
     language: "7.2"
   zend-expressive:
     website: zendframework.github.io/zend-expressive
-    version: "3.0"
+    version: "3.2"
     language: "7.2"
   zend-framework:
     website: framework.zend.com
-    version: "3.0"
+    version: "3.1"
     language: "7.2"
 crystal:
   kemal:

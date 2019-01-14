@@ -4,7 +4,7 @@ before_install:
   - if [[ "${TRAVIS_PULL_REQUEST}" != "false" ]] ; then bash .ci/has_to_run.sh || travis_terminate 0 ; fi
 
   # if we are on a bot branch and NOT on a PR
-  - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == pyup*" ]] ; then travis_terminate 0 ; fi
+  - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == pyup* ]] ; then travis_terminate 0 ; fi
   - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == renovate/* ]] ; then travis_terminate 0 ; fi
   - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == dependabot/* ]] ; then travis_terminate 0 ; fi
 

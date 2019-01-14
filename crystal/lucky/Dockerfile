@@ -3,7 +3,7 @@ FROM crystallang/crystal:0.27.0
 WORKDIR /usr/src/app
 
 COPY .postcssrc.yml Procfile Procfile.dev brunch-config.js bs-config.js ./
-COPY package.json shard.yml tasks.cr ./
+COPY shard.yml tasks.cr ./
 COPY db db
 COPY public public
 COPY src src
