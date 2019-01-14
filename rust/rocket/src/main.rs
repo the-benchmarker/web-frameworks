@@ -21,6 +21,6 @@ fn main() {
         .port(3000)
         .finalize()
         .unwrap();
-    let app = rocket::custom(config);
+    let app = rocket::custom(config, false);
     app.mount("/", routes![index_route, user_route, user_register_route]).launch();
 }
