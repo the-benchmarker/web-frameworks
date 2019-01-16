@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["taicsuzu <taicsuzu@yahoo-corp.jp>"]
 
 [dependencies]
-nickel = "0.10.1"
+nickel = "0.11.0"
 
 [profile.release]
 codegen-units = 1
