@@ -40,7 +40,6 @@ ruby:
 nim:
   depends_on:
     - jester
-    - mofuw
 
 python:
   depends_on:
@@ -213,11 +212,6 @@ jester:
   commands:
     - docker build -t jester .
   dir: nim/jester
-
-mofuw:
-  commands:
-    - docker build -t mofuw .
-  dir: nim/mofuw
 
 flask:
   commands:
