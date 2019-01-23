@@ -29,7 +29,7 @@ RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 ENV APP_ENV prod
 
 RUN echo 'server {\n\
-    listen 0.0.0.0:3000;\n\
+    listen 0.0.0.0:3000 reuseport;\n\
     root /usr/src/app/public;\n\
     set $front_controller /index.php;\n\
     location / {\n\

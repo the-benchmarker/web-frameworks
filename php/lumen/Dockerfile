@@ -44,7 +44,7 @@ RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 
 RUN echo 'server {\n\
     root /usr/src/app/public;\n\
-    listen 0.0.0.0:3000;\n\
+    listen 0.0.0.0:3000 reuseport;\n\
     index index.php;\n\
 \n\
     add_header X-Frame-Options "SAMEORIGIN";\n\

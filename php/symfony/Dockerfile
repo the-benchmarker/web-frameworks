@@ -33,7 +33,7 @@ RUN php bin/console cache:warmup
 
 RUN echo 'server {\n\
     root /usr/src/app/public;\n\
-    listen 0.0.0.0:3000;\n\
+    listen 0.0.0.0:3000 reuseport;\n\
     location / {\n\
         fastcgi_pass unix:/var/run/php-fpm.sock;\n\
         fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
