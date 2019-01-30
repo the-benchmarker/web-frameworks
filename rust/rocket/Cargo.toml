@@ -10,3 +10,4 @@ rocket = "=0.4.0"
 codegen-units = 1
 opt-level = 3
 lto = true
+incremental = false
