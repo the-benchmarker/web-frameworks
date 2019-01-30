@@ -11,3 +11,4 @@ actix-web = "0.7"
 lto = true
 opt-level = 3
 codegen-units = 1
+incremental = false
