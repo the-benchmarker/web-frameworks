@@ -31,48 +31,48 @@ node:
   express:
     website: expressjs.com
     version: "4.16"
-    language: "11.8"
+    language: "11.9"
   restana:
     github: jkyberneees/ana
     version: "2.7"
-    language: "11.8"
+    language: "11.9"
   muneem:
     github: node-muneem/muneem/
     version: "2.4"
-    language: "11.8"
+    language: "11.9"
   fastify:
     website: fastify.io
     version: "1.13"
-    language: "11.8"
+    language: "11.9"
   foxify:
     website: foxify.js.org
     version: "0.10"
-    language: "11.8"
+    language: "11.9"
   polka:
     github: lukeed/polka
     version: "0.5"
-    language: "11.8"
+    language: "11.9"
   rayo:
     website: rayo.js.org
     version: "1.2"
-    language: "11.8"
+    language: "11.9"
   koa:
     website: koajs.com
     version: "2.7"
-    language: "11.6"
+    language: "11.9"
   restify:
     website: restify.com
     version: "7.6"
-    language: "11.8"
+    language: "11.9"
   hapi:
     website: hapijs.com
     version: "18.0"
-    language: "11.8"
+    language: "11.9"
   turbo_polka:
     github: mafintosh/turbo-http
     version: "0.3"
     type: experimental
-    language: "11.8"
+    language: "11.9"
 python:
   sanic:
     github: huge-success/sanic
