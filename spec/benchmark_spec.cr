@@ -7,7 +7,7 @@ def get_ip(name)
   ip
 end
 
-it "get on /" do
+describe "get on /" do
   name = ENV["FRAMEWORK"]
   remote_ip = get_ip(name)
   r = HTTP::Client.get "http://#{remote_ip}:3000/"
@@ -15,7 +15,7 @@ it "get on /" do
   it "should rerturn an empty body" { r.body.should eq "" }
 end
 
-it "get on /user/0" do
+describe "get on /user/0" do
   name = ENV["FRAMEWORK"]
   remote_ip = get_ip(name)
   r = HTTP::Client.get "http://#{remote_ip}:3000/user/0"
@@ -23,7 +23,7 @@ it "get on /user/0" do
   it "should return <0>" { r.body.should eq "0" }
 end
 
-it "post on /user" do
+describe "post on /user" do
   name = ENV["FRAMEWORK"]
   remote_ip = get_ip(name)
   r = HTTP::Client.post "http://#{remote_ip}:3000/user"
