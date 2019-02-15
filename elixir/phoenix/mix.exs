@@ -30,7 +30,7 @@ defmodule MyPhoenix.Mixfile do
   defp deps do
     [{:phoenix, "~> 1.4.1"},
      {:gettext, "~> 0.15.0"},
-     {:cowboy, "~> 1.1.2"},
+     {:cowboy, "~> 2.6.1"},
      {:distillery, "~> 2.0.0-rc.6"}]
   end
 end
