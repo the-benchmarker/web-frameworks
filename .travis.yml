@@ -41,6 +41,7 @@ env:
     - FRAMEWORK=falcon
     - FRAMEWORK=starlette
     - FRAMEWORK=responder
+    - FRAMEWORK=hug
     - FRAMEWORK=jester
     - FRAMEWORK=act
     - FRAMEWORK=rails
