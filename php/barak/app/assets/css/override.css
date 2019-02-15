@@ -1,0 +1,8 @@
+body { background: url("../img/bg.png") repeat scroll 0 0 transparent; font-family: 'Monda', sans-serif; }
+hr { margin: 10px 10px 5px 0px; }
+.well { background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7); box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1); margin-bottom: 0px; }
+a:hover { text-decoration: none; }
+.list-group { margin-bottom: 0px; }
+.navbar { margin-bottom: 0px; }
+ol, ul { list-style: true; }
+#example tbody tr td { vertical-align: middle; }

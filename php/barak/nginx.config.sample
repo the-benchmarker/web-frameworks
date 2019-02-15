@@ -1,0 +1,18 @@
+server {
+
+	listen   80;
+	server_name  localhost;
+
+	access_log  /var/log/nginx/access.log;
+
+	index index.html index.htm index.php;
+	root /var/www/html;
+
+	location / {
+		autoindex off;
+
+		if (!-e $request_filename) {
+			rewrite ^/(.*)$ /index.php?$1;
+		}
+	}
+}

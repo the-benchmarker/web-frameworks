@@ -1,0 +1,20 @@
+{
+    "name": "barak-framework/barak",
+    "type": "project",
+    "description": "Barak MVC Framework",
+    "keywords": ["barak", "turkmen", "framework"],
+    "homepage": "https://github.com/barak-framework/barak",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gökhan DEMİR",
+            "email": "gdemir3327@gmail.com",
+            "homepage": "http://gdemir.github.io",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "phpmailer/phpmailer": "^5.2"
+    }
+}
