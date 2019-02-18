@@ -57,6 +57,7 @@ python:
     - starlette
     - responder
     - hug
+    - bocadillo
 
 go:
   depends_on:
@@ -283,6 +284,11 @@ hug:
   commands:
     - docker build -t hug .
   dir: python/hug
+
+bocadillo:
+  commands:
+    - docker build -t bocadillo .
+  dir: python/bocadillo
 
 iris:
   commands:

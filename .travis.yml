@@ -42,6 +42,7 @@ env:
     - FRAMEWORK=starlette
     - FRAMEWORK=responder
     - FRAMEWORK=hug
+    - FRAMEWORK=bocadillo
     - FRAMEWORK=jester
     - FRAMEWORK=act
     - FRAMEWORK=rails
