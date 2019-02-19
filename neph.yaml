@@ -58,6 +58,7 @@ python:
     - responder
     - hug
     - bocadillo
+    - fastapi
 
 go:
   depends_on:
@@ -289,6 +290,11 @@ bocadillo:
   commands:
     - docker build -t bocadillo .
   dir: python/bocadillo
+
+fastapi:
+  commands:
+    - docker build -t fastapi .
+  dir: python/fastapi
 
 iris:
   commands:
