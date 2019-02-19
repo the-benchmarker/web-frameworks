@@ -44,6 +44,7 @@ env:
     - FRAMEWORK=hug
     - FRAMEWORK=bocadillo
     - FRAMEWORK=fastapi
+    - FRAMEWORK=molten
     - FRAMEWORK=jester
     - FRAMEWORK=act
     - FRAMEWORK=rails
