@@ -6,14 +6,14 @@ app = FastAPI()
 
 @app.get("/")
 async def index():
-    return PlainTextResponse(content="", status_code=200)
+    return PlainTextResponse(content="")
 
 
 @app.get("/user/{id}")
 async def get_user(id: int):
-    return PlainTextResponse(content=f"{id}".encode(), status_code=200)
+    return PlainTextResponse(content=f"{id}".encode())
 
 
 @app.post("/user")
 async def create_user():
-    return PlainTextResponse(content="", status_code=200)
+    return PlainTextResponse(content="")
