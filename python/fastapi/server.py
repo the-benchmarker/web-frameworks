@@ -11,7 +11,7 @@ async def index():
 
 @app.get("/user/{id}")
 async def get_user(id: int):
-    return PlainTextResponse(content=id, status_code=200)
+    return PlainTextResponse(content=f"{id}".encode(), status_code=200)
 
 
 @app.post("/user")
