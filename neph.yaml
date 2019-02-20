@@ -59,6 +59,7 @@ python:
     - hug
     - bocadillo
     - fastapi
+    - molten
 
 go:
   depends_on:
@@ -295,6 +296,11 @@ fastapi:
   commands:
     - docker build -t fastapi .
   dir: python/fastapi
+
+molten:
+  commands:
+    - docker build -t molten .
+  dir: python/molten
 
 iris:
   commands:
