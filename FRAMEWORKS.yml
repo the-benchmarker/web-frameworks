@@ -135,6 +135,10 @@ python:
     language: "3.7"
     version: "0.11"
     website: bocadilloproject.github.io
+  fastapi:
+    language: "3.7"
+    version: "0.5"
+    website: fastapi.tiangolo.com
 php:
   slim:
     website: slimframework.com
