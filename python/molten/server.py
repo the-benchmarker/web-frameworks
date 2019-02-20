@@ -1,16 +1,16 @@
-from molten import App, Route
+from molten import App, Route, HTTP_200, Response
 
 
 def index() -> str:
-    return ""
+    return Response(HTTP_200, content="")
 
 
-def get_user(id: int) -> int:
-    return id
+def get_user(id: int) -> str:
+    return Response(HTTP_200, content=f"{id}")
 
 
 def create_user() -> str:
-    return ""
+    return Response(HTTP_200, content="")
 
 
 app = App(
