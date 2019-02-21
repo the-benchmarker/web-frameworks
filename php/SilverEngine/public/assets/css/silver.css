@@ -1,0 +1,145 @@
+header {
+    text-align: center;
+}
+header h1{
+    margin-top: 60px;
+}
+header h2{
+    margin-top: 10px;
+}
+.put-left{
+    float: left;
+}
+.put-right{
+    float: right;
+}
+.error-line{
+    margin: 8px auto;
+}
+.container {
+    margin: 0px 35em;
+}
+.col10{
+    float: left;
+    width: 80%;
+}
+.col11{
+    float: left;
+    width: 90%;
+}
+.col2{
+    float: left;
+    width: 20%;
+}
+.col1{
+    float: left;
+    width: 10%;
+}
+
+.error-msg {
+    background-color: #A30000;
+    color: #fff;
+    padding: 10px 30px;
+    width: 95%;
+    margin: 20px auto;
+}
+
+@media screen and (max-width: 1760px) {
+    .container {
+        margin: 0px 30em;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    .container {
+        margin: 0px 20em;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .container {
+        margin: 0px 10em;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .container {
+        margin: 0px 5em;
+    }
+}
+code {
+    color: #e05038;
+    border: 1px solid #ededed;
+    padding: 2px 4px; }
+
+.code__highlight {
+    font-style: normal;
+    font-family: monospace; }
+
+.code__highlight--operator {
+    font-weight: bold;
+    color: #FF00AF; }
+
+.code__highlight--annotation {
+    color: #FFC48C;
+    font-style: italic; }
+
+.code__highlight--keyword {
+    color: #BEFF00;
+    font-weight: bold; }
+
+.code__highlight--vari {
+    color: #BEFF00;
+    font-weight: bold; }
+
+.code__highlight--access-mod {
+    color: #FA2D59; }
+
+.code__highlight--comment {
+    color: #999988;
+    font-style: italic; }
+
+/* Comment */
+.code__highlight--var {
+    color: #ff0000; }
+
+.code__highlight--type {
+    color: #14BC44; }
+
+.code__highlight--method {
+    color: #36D826; }
+
+.code__highlight--condition {
+    color: #FF0053; }
+
+pre {
+    color: white;
+    background-color: #44332B;
+    counter-reset: line;
+    padding: 28px;
+    border: 1px solid #ddd;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    width: 95%;
+}
+
+pre code {
+    padding: 0;
+    font-family: monospace;
+    color: #E0E0E0;
+    border: none; }
+
+pre code span {
+    counter-increment: line; }
+
+pre code span:before {
+    content: counter(line);
+    -webkit-user-select: none;
+    margin-right: 28px;
+    color: #ababab; }
+
+pre code span:after {
+    content: "\A";
+    white-space: pre; }
+

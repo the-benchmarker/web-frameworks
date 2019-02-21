@@ -1,0 +1,25 @@
+<IfModule mod_rewrite.c>
+
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+    # redirect all request from silver to public
+    RewriteRule ^(.*)$ public/$1 [L]
+
+</IfModule>
+
+#in case of public_html you can do something like this
+
+#<IfModule mod_rewrite.c>
+
+#<IfModule mod_negotiation.c>
+#     Options -MultiViews -Indexes
+#  </IfModule>
+
+#     RewriteEngine On
+#     #redirect all request from public html to silver/public
+#     RewriteRule ^(.*)$ silver/public/$1 [L]
+
+#</IfModule>

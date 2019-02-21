@@ -1,0 +1,29 @@
+<?php
+
+namespace Silver\Database\Source;
+
+use Silver\Database\Source;
+use Silver\Database\Query as Q;
+
+class Query extends Source {
+    private $query;
+
+    protected function __construct(Q $query, $name = null) {
+        $this->setModel($model);
+        parent::__construct($model::tableName(), $name);
+    }
+
+    private function setModel($model) {
+        $this->model = $model;
+    }
+
+    public function primary() {
+        $m =  $this->model;
+        return $m::primary();
+    }
+
+    public function table() {
+        $m = $this->model;
+        return $m::tableName();
+    }
+}

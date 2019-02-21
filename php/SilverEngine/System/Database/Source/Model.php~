@@ -1,0 +1,48 @@
+<?php
+
+namespace Silver\Database\Source;
+
+use Silver\Database\Source;
+use Silver\Database\Parts\Name;
+
+class Model extends Source {
+    private $model;
+
+    protected function __construct($model, $name = null) {
+        parent::__construct($name ?: $this->shortClassName($model));
+        $this->model = $model;
+    }
+
+    public function primary() {
+        $m =  $this->model;
+        return $m::primary();
+    }
+
+    public function table() {
+        $m = $this->model;
+        return $m::tableName();
+    }
+
+    public function sourcePart() {
+        return Name::ensure($this->table());
+    }
+
+    public function references($ref, $alias, $args = []) {
+        $method = 'ref' . ucfirst($ref);
+        $m = $this->model;
+
+        if (method_exists($m, $method)) {
+            return $m::$method($alias, ...$args);
+        } else {
+            throw new \Exception("Missing reference $m::$method.");
+        }
+    }
+
+    private function shortClassName($name) {
+        $i = strrpos($name, '\\');
+        if ($i !== false) {
+            $name = substr($name, $i + 1);
+        }
+        return $name;
+    }
+}

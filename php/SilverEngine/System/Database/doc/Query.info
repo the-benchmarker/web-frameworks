@@ -1,0 +1,1164 @@
+This is Query.info, produced by makeinfo version 6.1 from Query.texi.
+
+
+File: Query.info,  Node: Top,  Next: About Query,  Up: (dir)
+
+Query class
+***********
+
+* Menu:
+
+* About Query::
+* Building quries::
+* Working with schema::
+* Executing queries::
+* Working with objects::
+* QueryObject::
+
+— The Detailed Node Listing —
+
+Building quries
+
+* Query methods::
+* Query parts::
+* Inserting data::
+* Updating data::
+
+Query methods
+
+* From::
+* Join::
+* Where and Having::
+* GroupBy::
+* Order::
+* Limit::
+* Union::
+
+Query parts
+
+* Raw::
+* Literal::
+* Value::
+* Fn::
+* Column::
+* Name::
+* JoinCondition::
+* Table::
+Working with schema
+
+* Droping table::
+* Creating table::
+* Alter table::
+
+Creating table
+
+* Column types::
+* Column modifiers::
+* Column references::
+* Table modifiers::
+Working with objects
+
+* Using objects::
+* Name conflicts::
+* Joining with objects::
+
+Joining with objects
+
+* Relation definitions::
+
+
+File: Query.info,  Node: About Query,  Next: Building quries,  Prev: Top,  Up: Top
+
+1 About Query
+*************
+
+Query is class which helps us to build SQL query and get result from
+database.
+
+   With using Query class we have next advantages:
+  1. All values are properly escaped.
+  2. Same query can be executed on different databases.
+  3. Easy use of transactions and sub-transactions (aka savepoints)
+  4. ...
+
+
+File: Query.info,  Node: Building quries,  Next: Working with schema,  Prev: About Query,  Up: Top
+
+2 Building quries
+*****************
+
+     Query::select('column')
+         ->from('table')
+         ->where('column2', '=', 'value')
+         ->orderBy('column3', 'asc')
+         ->limit(2);
+
+   This is an example query which, give us following result:
+
+     SELECT `column` FROM `table` WHERE `column2` = ? ORDER BY `column3` ASC LIMIT 2;
+     -- values: ['value']
+
+   First when we want to create query, we call one of next functions
+which give use specialized Query for our statement:
+‘::select()’
+     ‘System/Database/Query/Select.php’
+‘::delete()’
+     ‘System/Database/Query/Delete.php’
+‘::update()’
+     ‘System/Database/Query/Update.php’
+‘::insert()’
+     ‘System/Database/Query/Insert.php’
+‘::drop()’
+     ‘System/Database/Query/Drop.php’
+‘::create()’
+     ‘System/Database/Query/Create.php’
+‘::alter()’
+     ‘System/Database/Query/Alter.php’
+
+   When we get query, we methods of this query.  Because more queries
+uses same methods, they are stored separated and included as Traits.
+* Menu:
+
+* Query methods::
+* Query parts::
+* Inserting data::
+* Updating data::
+
+
+File: Query.info,  Node: Query methods,  Next: Query parts,  Up: Building quries
+
+2.1 Query methods
+=================
+
+Each provided method accept values which are known as Query parts.
+Query part type is written before variable name (only in this
+documentation).
+
+   What can we pass for Query part is described in *note Query parts:
+Query parts. chapter.
+* Menu:
+
+* From::
+* Join::
+* Where and Having::
+* GroupBy::
+* Order::
+* Limit::
+* Union::
+
+
+File: Query.info,  Node: From,  Next: Join,  Up: Query methods
+
+2.1.1 From
+----------
+
+‘from($table, $alias = null, Column $id1 = null, Column $id2 = null)’
+     From which table we select data.
+     $q->from('table');
+     $q->from('table', 't');
+     $q->from('table t');
+     $q->from('table2', 't2', 't1.id', 't2.id_table1');
+     $q->from('table2 t2', 't1.id', 't2.id_table1');
+     $q->from('table2', 't1.id', 'table2.id_table1');
+
+   We can pass subquery too:
+
+     $q->from(Query::select()->from('other'), 'alias_must_exists');
+     // or
+     $q->from(function() {
+         return Query::select()->from('tbl')->whereActive(true);
+     }, 'alias');
+
+
+File: Query.info,  Node: Join,  Next: Where and Having,  Prev: From,  Up: Query methods
+
+2.1.2 Join
+----------
+
+‘join(Table $table, JoinCondition $condition)’
+     Inner join table
+‘leftJoin(Table $table, JoinCondition $condition)’
+     Left join table
+‘rightJoin(Table $table, JoinCondition $condition)’
+     Right join table
+
+     $q->join('table', ['table.id', 'other_table.id']);
+
+
+File: Query.info,  Node: Where and Having,  Next: GroupBy,  Prev: Join,  Up: Query methods
+
+2.1.3 Where and Having
+----------------------
+
+   • where(Column $column, Raw $operator, Value $value, string $how =
+     ’and’, boolean $not = false)
+   • having(Column $column, Raw $operator, Value $value, string $how =
+     ’and’, boolean $not = false)
+
+     $q->where('column', '=', 'value');
+     $q->where('column', 'between', [10, 20], 'or', true); // or not between 10-20
+
+   We can skip operator and write value instead (but in this case, we
+cant modify $how and $not values)
+
+     $q->where('column', 'value'); // column = value
+
+   __call() function simplify where call for us.  We can concatenate
+more words for method name to get what we want: (Order is important!)
+‘or’
+     if we want connect this condition with OR (optional)
+‘not’
+     if we want negate this condition (optional)
+‘where / having’
+     one of them
+‘column name’
+     Column name in camelCase will be transformed into snake_case
+     (optional)
+
+   When we call this special method, we need to pass folowing arguments:
+   • column (if it is not passed yet)
+   • operator (required)
+   • value (required)
+
+     $q->whereId(1); // operator is skipped
+     $q->whereId('=', 1); // same thing
+     $q->whereAge('between', [10, 20]); // AND age between 10 and 20
+     $q->notWhereAge('between', [10, 20]); // AND NOT age between 10 and 20
+     $q->orNotWhereAge('between', [10, 20]); // OR NOT age between 10 and 20
+     $q->orWhere('specialColumn', 3); // AND specialColumn = 3
+
+  1. Operators
+
+     Default operators are:
+     ‘IN’
+          If value is array
+     ‘IS’
+          If value is null
+     ‘=’
+          For all other values
+
+     Special operators:
+     ‘BETWEEN’
+          it needs an array of two values for value
+
+     All other operators are transformed to upper case.  Operator is not
+     escaped or treated specially.  It is concatenated to SQL statement
+     like raw value.  We can write into whatever we want (spaces and
+     comment too... please don’t do any stupid)
+
+  2. Special use of where - parentheses
+
+     If we want determine operators priority, we can use where()
+     function to put conditions in parentheses.
+
+          // WHERE active = true AND age = 10 OR age = 11
+          $q->whereActive(true)
+              ->whereAge(10)
+              ->orWhereAge(11);
+
+          // WHERE active = true AND (age = 10 OR age = 11)
+          $q->whereActive(true)
+              ->where(function ($q) {
+          	$q->whereAge(10)
+          	    ->orWhereAge(11);
+              });
+
+          // High order function example
+          function find_best($sex) { return function($q) use ($sex) { /* ... */ } }
+          $q->where(find_best('female'));
+
+     In this example, all where conditions (not having) is putted into
+     parens.  In inner function we still can do whatever we want with
+     query (order by, having, limit, ...), if we really want this...
+
+
+File: Query.info,  Node: GroupBy,  Next: Order,  Prev: Where and Having,  Up: Query methods
+
+2.1.4 GroupBy
+-------------
+
+If we use having from previous chapter, we need first group some data.
+
+   • groupBy(Column $column)
+
+   This is it.  If we want group more columns, we can call groupBy()
+more times.
+
+
+File: Query.info,  Node: Order,  Next: Limit,  Prev: GroupBy,  Up: Query methods
+
+2.1.5 Order
+-----------
+
+   • orderBy(Name $column, $dir = ’asc’)
+
+     $q->orderBy('model')
+         ->orderBy('year', 'desc');
+
+     // ORDER BY model asc, year desc
+
+
+File: Query.info,  Node: Limit,  Next: Union,  Prev: Order,  Up: Query methods
+
+2.1.6 Limit
+-----------
+
+‘limit(int $count, $offset = null)’
+     Standard limit
+‘offset(int $offset)’
+     If limit is not specified yet it will be set to 1
+‘page(int $page, int $per_page = null)’
+     First argument is page number (starting with 1), second argument is
+     page size.
+
+     $q->limit(4); // LIMIT 4
+     $q->limit(4, 6); // LIMIT 4 OFFSET 5
+     $q->offset(3); // LIMIT 1 OFFSET 3
+     // ^ Actually limit should be 4, becouse we set it in second row
+
+     /* Page size = 10
+      *
+      * Page:
+      * 1. 0-9
+      * 2. 10-19
+      * 3. 20-29
+      */
+     $q->page(3, 10); // LIMIT 10 OFFSET 20
+
+
+File: Query.info,  Node: Union,  Prev: Limit,  Up: Query methods
+
+2.1.7 Union
+-----------
+
+   • union(Query $q)
+   • unionAll(Query $q)
+
+     $q->union(Query::select()->from('table')->limit(1));
+
+     // If we are more comfortable with callback, we can use it:
+     $q->union(function() {
+         return Query::select()
+     	->from('table')
+     	->limit(1);
+     });
+
+
+File: Query.info,  Node: Query parts,  Next: Inserting data,  Prev: Query methods,  Up: Building quries
+
+2.2 Query parts
+===============
+
+Query parts are stored in ‘System/Database/Parts/’.  We can construct
+them with $part = OutPart::ensure([’construct’, ’values’]); or via
+constructor $part = new OurPart(’construct’, ’values’);
+
+   If Part is defined before Query method parameter (in this doc), value
+will be passed through Part::ensure($value) function.  If value is
+already part (maybe Raw), ensure will not touch it, otherwise value will
+be constructed into declared Part.
+
+     Column::ensure('col'); /* is same as */ Column::ensure(['col']);
+
+     $q->where('col', '=', 24);
+
+     /*
+      * So, because where is declared as: where(Column $c, $op, Value $v)
+      * 'col' will be transformed with Column::ensure('col')
+      * and 24 with Value::ensure(24);
+      */
+
+     // If we want create Column like: new Column('table', 'col', 'alias');
+     $q->where(['table', 'col'], ...);
+
+     // becouse we can construct Column like: new Column('table.col alias'):
+     $q->where('table col');
+
+     // If we pass our own part into where, Column::ensure will skip it
+     $q->where(new Raw('COUNT(*)'), 5)
+
+   We can pass alias into where column too, but we don’t want to.
+* Menu:
+
+* Raw::
+* Literal::
+* Value::
+* Fn::
+* Column::
+* Name::
+* JoinCondition::
+* Table::
+
+
+File: Query.info,  Node: Raw,  Next: Literal,  Up: Query parts
+
+2.2.1 Raw
+---------
+
+Arguments: (string $raw_value)
+
+   In raw we pass raw sql.
+
+     $q->select(new Raw('COUNT(*) count'))->from('table');
+
+
+File: Query.info,  Node: Literal,  Next: Value,  Prev: Raw,  Up: Query parts
+
+2.2.2 Literal
+-------------
+
+Arguments: (mixed $value)
+
+   Literal ensure that passed value will be properly quoted.  Following
+methods are predefined:
+‘Literal::wild()’
+     new Raw(’*’)
+‘Literal::null()’
+     new Literal(null)
+‘Literal::true()’
+     new Literal(true)
+‘Literal::false()’
+     new Literal(false)
+
+   We can pass into literal any value, and it will appear in sql
+statement:
+
+     $q->select(Literal::wild())
+         ->where('active', Literal::true())
+         ->notWhereLastLogin(Literal::null())
+         ->where('string', new Literal('this is string'))
+         ->where('age', 'IN', new Literal([20, 21, 22])); // We must write
+     						     // IN operator,
+     						     // becouse
+     						     // Literal is not
+     						     // recognized as
+     						     // array
+     // SELECT * FROM ? WHERE active = true AND NOT WHERE last_login = null AND string = 'this is string' AND age IN [20, 21, 22]
+     // We should specify IS operator for NULL too!
+
+   If we doesn’t use Literal, Query will transform values into Value
+part, which uses placeholders.
+
+     $q->select(Literal::wild())
+         ->where('active', true)
+         ->notWhereLastLogin(null)
+         ->where('string', 'this is string')
+         ->where('age', [20, 21, 22]);
+     // SELECT * FROM ? WHERE active = ? AND NOT WHERE last_login IS ? AND string = ? AND age IN [?, ?, ?]
+
+
+File: Query.info,  Node: Value,  Next: Fn,  Prev: Literal,  Up: Query parts
+
+2.2.3 Value
+-----------
+
+Arguments: (mixed $value)
+
+   All values passed into Query are transformed into Value.  Value is
+stored into Query bindings and ’?’ placeholder is inserted into SQL
+statement.
+
+
+File: Query.info,  Node: Fn,  Next: Column,  Prev: Value,  Up: Query parts
+
+2.2.4 Fn
+--------
+
+Arguments: (string $name, ...$args)
+
+   Function call:
+‘Fn::count(Column $column = null)’
+     (default is Literal::wild())
+‘Fn::groupConcat(Column $column, string $sep = ',')’
+     GROUP_CONCAT function
+
+   Other function call can be constructed via special __call() method
+like:
+‘Fn::myOwnFunction(1,2,3)’
+     myOwnFunction(1,2,3);
+‘Fn::THIS_IS_FN(1,'string',new Value(24))’
+     THIS_IS_FN(1,’string’,?);
+
+
+File: Query.info,  Node: Column,  Next: Name,  Prev: Fn,  Up: Query parts
+
+2.2.5 Column
+------------
+
+Arguments: (string $table_or_column, string $column = null, string
+$alias = null)
+
+   Column is part which represent column name with table (optional) and
+alias (optional).
+
+   We can construct it in more ways:
+   • new Column(’table’, ’column’, ’alias’)
+   • new Column(’table’, ’column’)
+   • new Column(null, ’column’, ’alias’)
+   • new Column(’table.column alias’)
+   • new Column(’table.column’, null, ’alias’)
+
+   Becouse what we give into query, is passed through Column::ensure()
+function, we can define column in next ways:
+
+     $q->select('table.column alias', ['table', 'column'], ['t', 'c', 'als'], [null, 'col', 'alias'], 'col alias');
+
+
+File: Query.info,  Node: Name,  Next: JoinCondition,  Prev: Column,  Up: Query parts
+
+2.2.6 Name
+----------
+
+Arguments: (string $name)
+
+   Name is like Column, but it doesn’t have table and alias.  It is used
+for column and table names.
+
+
+File: Query.info,  Node: JoinCondition,  Next: Table,  Prev: Name,  Up: Query parts
+
+2.2.7 JoinCondition
+-------------------
+
+Arguments: (Name $col1, $operator = null, Name $col2)
+
+   Join condition can be ON (c1 = c2) or USING (c).
+
+     echo new JoinCondition('col1', '=', 'col2'); // ON `col` = `col2`
+     echo new JoinCondition('col1', 'col2'); // same thing
+     echo new JoinCondition('col'); // USING (`col`)
+
+   Column names are automatically escaped, becouse they are transformed
+into Name part.
+
+
+File: Query.info,  Node: Table,  Prev: JoinCondition,  Up: Query parts
+
+2.2.8 Table
+-----------
+
+Arguments: (Name or Query $table, Name $alias = null)
+
+   Table is used to specify source of data.  It is used in join method.
+
+     $q->join(new Table(Query::select()->from('tbl'), 'alias'));
+     $q->join(new Table('table', 'alias'));
+     $q->join(new Table('tbl', 'alias'));
+     $q->join(new Table('tbl'));
+
+     // Becouse join already make Table part, we can skip new Table:
+     $q->join([Query::select()->from('tbl'), 'alias']);
+     $q->join(['table', 'alias']);
+     $q->join(['tbl', 'alias']);
+     $q->join(['tbl']); /* same as */ $q->join('tbl');
+
+
+File: Query.info,  Node: Inserting data,  Next: Updating data,  Prev: Query parts,  Up: Building quries
+
+2.3 Inserting data
+==================
+
+  1. We can insert full row: $data1 = [1, 2, ’value’];
+  2. We can insert key=>value row with default data: $data2 = [’text’ =>
+     ’value’];
+
+     Query::insert('table', $data1);
+     Query::insert('table', $data2);
+     // Dont forget to execute query...
+
+     // We can insert even more data at once
+     Query::insert('table', [$data1, $data1, $data1]); // id conflict with maybe
+     Query::insert('table', [$data2, $data2, $data]);
+
+     // But all data in query must have same format (full-row or key-value)
+
+
+File: Query.info,  Node: Updating data,  Prev: Inserting data,  Up: Building quries
+
+2.4 Updating data
+=================
+
+     $q = Query::update('table', [
+         'col' => 'new value',
+         'col2' => 'new value',
+         'col3' => Fn::CONCAT('col4', 'col5')
+     ]);
+
+     // if we forget something
+     $q->set('ups', null);
+
+     // Add filter
+     $q->whereId(3);
+
+   For filters documentation check *note Where and Having: Where and
+Having. chapter.
+
+
+File: Query.info,  Node: Working with schema,  Next: Executing queries,  Prev: Building quries,  Up: Top
+
+3 Working with schema
+*********************
+
+For manipulating database schema, we have next queries:
+‘::drop()’
+     ‘System/Database/Query/Drop.php’
+‘::create()’
+     ‘System/Database/Query/Create.php’
+‘::alter()’
+     ‘System/Database/Query/Alter.php’
+* Menu:
+
+* Droping table::
+* Creating table::
+* Alter table::
+
+
+File: Query.info,  Node: Droping table,  Next: Creating table,  Up: Working with schema
+
+3.1 Droping table
+=================
+
+     Query::drop('table');
+     Query::drop('table')->ifExists();
+
+
+File: Query.info,  Node: Creating table,  Next: Alter table,  Prev: Droping table,  Up: Working with schema
+
+3.2 Creating table
+==================
+
+     $q = Query::create('table_name', function($q) {
+         $q->integer('id')->primary();
+         // ... other column definitions
+     });
+
+     $q->ifNotExists();
+     // other table properties
+* Menu:
+
+* Column types::
+* Column modifiers::
+* Column references::
+* Table modifiers::
+
+
+File: Query.info,  Node: Column types,  Next: Column modifiers,  Up: Creating table
+
+3.2.1 Column types
+------------------
+
+Query support next column types:
+     $q->boolean('true_false');
+     $q->enum('sex', 'male', 'female', 'alien');
+     $q->set('digits', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+     $q->smallInt('small');
+     $q->mediumInt('medium');
+     $q->integer('int');
+     $q->bigInt('big');
+     $q->decimal('decimal', $precision = 10, $scale = 5);
+     $q->vachar('varchar', 255);
+     $q->varchar('text');
+     $q->timestamp('timestamp');
+     $q->time('time');
+     $q->date('date');
+     $q->datetime('date_time');
+     $q->year('year');
+
+   Some of them are not supported on all databases.  For enum and set
+are used varchar on sqlite database.  (Check
+‘Database/Parts/Sqlite/ColumnDef.php’ implementation.)
+
+
+File: Query.info,  Node: Column modifiers,  Next: Column references,  Prev: Column types,  Up: Creating table
+
+3.2.2 Column modifiers
+----------------------
+
+Columns can have next modifiers:
+
+     $col = $q->integer('int_col');
+     $col->unsigned(); // unsigned value
+     $col->nullable(); // default is not null
+     $col->default(24); // default is null
+     $col->primary(); // primary key
+     $col->autoincrement();
+     $col->unique(); // unique index
+
+
+File: Query.info,  Node: Column references,  Next: Table modifiers,  Prev: Column modifiers,  Up: Creating table
+
+3.2.3 Column references
+-----------------------
+
+We can make reference to other column:
+
+     Query::create('table', function($q) {
+         $q->integer('id')->primary()->autoincrement();
+     });
+
+     Query::create('table2', function($q) {
+         $q->integer('id')->primary()->autoincrement();
+         $q->integer('id_table')->references('table.id');
+     });
+
+
+File: Query.info,  Node: Table modifiers,  Prev: Column references,  Up: Creating table
+
+3.2.4 Table modifiers
+---------------------
+
+Table can have modifiers too:
+
+     $table = Query::create('table', function($q) { /* ... */ });
+     $table->temporary(); // create table in memory
+     $table->ifNotExists(); // skip if already exists
+
+     $table->option('key', 'value'); // custom option KEY VALUE
+
+     // Some of options are predefined
+     $table->engine('MyIsam'); // ENGINE=MyIsam
+     $table->charset('utf-8'); // CHARSET SET 'utf-8'
+     $table->defaultCharset('utf-8'); // DEFAULT CHARSET SET 'utf-8'
+
+
+File: Query.info,  Node: Alter table,  Prev: Creating table,  Up: Working with schema
+
+3.3 Alter table
+===============
+
+Alter is buggy and untested, please report bugs.
+
+     Query::alter('table')->addColumn('new_column', 'varchar', 255);
+     Query::alter('table')->addColumn('new_int_col', 'integer')->nullable();
+
+     Query::alter('table')->modifyColumn('existing_column', 'text')->nullable(false);
+     Query::alter('table')->modifyColumn('existing_int_column', 'bigInt')->default(123);
+
+     Query::changeColumn('existing_column', 'new_name', 'varchar', 255)->nullable();
+
+
+File: Query.info,  Node: Executing queries,  Next: Working with objects,  Prev: Working with schema,  Up: Top
+
+4 Executing queries
+*******************
+
+If we want execute query without needed any data in result, we simply
+call:
+
+     $q->execute();
+
+   Otherwise we use method ->fetch() to get next result.  If we want all
+results in one call we use method ->fetchAll() which works exactly same
+way exept it returns all result in one array.
+
+   Fetch has first argument for specify which columns we want in result.
+If single column is passed single value is returned (scalar) if array is
+passed, array of values is returned.
+
+     $q->select('type', 'count')->from('table');
+
+     // Get first column
+     while ($type = $q->single()) {
+         echo "Type: $type\n";
+     }
+
+     // Get one (named) column
+     while ($res = $q->get('count')) {
+         echo "One column (count): $count\n";
+     }
+
+     // Get more columns
+     while ($res = $q->get(['type', 'count'])) {
+         echo "{$res['type']} = {$res['count']}\n";
+     }
+
+     // Get row as object
+     while ($res = $q->get()) {
+         echo "{$res->type} = {$res->count}\n";
+     }
+
+     $q->select('type', 'count')->from('table');
+
+     // Get first column
+     foreach ($q->singleAll() as $type) {
+         echo "Type: $type\n";
+     }
+
+     // Get one (named) column
+     foreach ($q->all('count') as $res) {
+         echo "One column (count): $count\n";
+     }
+
+     // Get more columns
+     foreach ($q->all(['type', 'count']) as $res) {
+         echo "{$res['type']} = {$res['count']}\n";
+     }
+
+     // Get row as object
+     foreach ($q->all() as $res) {
+         echo "{$res->type} = {$res->count}\n";
+     }
+
+
+     // Custom result transformation
+     $results = $q->all(['type', 'count'], function ($row) {
+         return $row['type'] . ' => ' . $row['count'];
+     });
+     echo implode("\n", $results);
+
+
+File: Query.info,  Node: Working with objects,  Next: QueryObject,  Prev: Executing queries,  Up: Top
+
+5 Working with objects
+**********************
+
+PHP PDO library has option to pack received data into an object.  So if
+we use this feature we can fetch data like this:
+
+     $class = $q->fetch(MyClass::class);
+     assert($class instanceof MyClass);
+
+   But, we want using object to represent one row in database.  For this
+purpose each class must have defined table name and primary key.
+* Menu:
+
+* Using objects::
+* Name conflicts::
+* Joining with objects::
+
+
+File: Query.info,  Node: Using objects,  Next: Name conflicts,  Up: Working with objects
+
+5.1 Using objects
+=================
+
+Table name is class name in snake_case and primary key is ’id’.  We can
+change that with implement methods which returns table name and primary
+key.
+
+     class MyTable {
+         public static function tableName() {
+     	return 'my_table_v2';
+         }
+
+         public static function primaryKey() {
+     	return 'id_my_table';
+         }
+     }
+
+   Even if class doesn’t have these two methods, we can accessing to its
+table name and primary.  But it must extends from QueryObject class.
+
+     class QueryObject {
+         public static function primaryKey() {
+     	return 'id';
+         }
+
+         public static function tableName() {
+     	return snake_case(static::class);
+         }
+     }
+
+   When we done this, we doesn’t need to remember table names any more:
+
+     Query::select()
+         ->from(User::class)
+         ->whereId(3)
+         ->fetch(User::class);
+
+   NOTE: id is still column ‘id‘.  If we want find user by primary key,
+we should write: ->where(user::primaryKey(), 3)
+
+   In background Name and Column part check if table is a class and
+replace it with Class::tableName().
+
+     $q = Query::select('Obj.id objid', 'name')
+        ->from(Obj::class)
+        ->join(Obj2::class, ['Obj2.id_obj', 'Obj.id']) // id is not necessary primary
+        ->where('Obj2.something', true)
+        ->orderBy('Obj2.sort')
+        ->fetch(['objid', 'name']);
+
+   There is only one problem.  Obj::class could have namespaces A. In
+this case, Query will not found Obj class, because it doesn’t exists in
+Query package.  So, when new object is declared (in from or join
+method), Query will create alias in one of his sub namespaces.  When
+column is referencing a class, Query will look in this namespace if it
+exists.
+
+
+File: Query.info,  Node: Name conflicts,  Next: Joining with objects,  Prev: Using objects,  Up: Working with objects
+
+5.2 Name conflicts
+==================
+
+Maybe you think, what if I use two classes with same name in different
+namespaces?
+
+     namespace General {
+         class User { } // tablename = users
+     }
+
+     namespace Deleted {
+         class User { } // tablename = deleted_users
+     }
+
+     Query::select()
+         ->from(General\User::class)
+         ->from(Deleted\User::class)
+         ->where('User.id', 3); // which one?
+
+   If you really want to have same object names, you can create
+class_alias(Existing::class, ’NewName’) and use alias.
+
+   There is no problem using objects with same names on different
+databases.  Query handle that properly.
+
+     $q1 = Query::select()
+         ->from(mysql\User::class)
+         ->where('User.id', 1); // referencing Query\Aliases\Mysql\User -> mysql\User
+
+     $q2 = Query::select()
+         ->from(sqlite\User::class)
+         ->where('User.id', 1); // referencing Query\Aliases\Sqlite\User -> sqlite\User
+
+     Query::withConnection('mysql', function() {
+         $q1->fetch();
+     });
+
+     Query::withConnection('sqlite', function() {
+         $q2->fetch();
+     });
+
+   Different connections will have different namespaces (eg:
+Query\<Connection>\<Alias>) for used object aliases.  But one connection
+must have unique names for objects.
+
+   This was a long chapter.
+
+
+File: Query.info,  Node: Joining with objects,  Prev: Name conflicts,  Up: Working with objects
+
+5.3 Joining with objects
+========================
+
+Joins from previous chapter works, but they are not good.  We still need
+to know relation between objects, their table names and their id
+columns.
+
+     Query::select()
+         ->from(User::class)
+         ->join(Group::class, ['group.id', 'user.group_id']);
+
+   If we want write this right, we should do it in that way:
+
+     Query::select()
+         ->from(User::class)
+         ->join(Group::class, [Group::class . '.' . Group::primaryKey(),
+     			  User::class . '.group_id']);
+
+   Uff... and we still need to know ‘group_id' column everywhere in
+code.
+* Menu:
+
+* Relation definitions::
+
+
+File: Query.info,  Node: Relation definitions,  Up: Joining with objects
+
+5.3.1 *TODO* Relation definitions
+---------------------------------
+
+Basic idea is to write join definition into model and then use it all
+over the code.
+
+     class User extends QueryObject {
+         protected class refGroup() {
+     	return Reference::toOne(Group::class, 'id_group');
+         }
+     }
+
+     class Group extends QueryObject {
+         protected class refUsers() {
+     	return Reference::toMany(User::class, 'id_group');
+         }
+     }
+
+   Now we can start joining:
+
+     Query::select('g.name')
+         ->from(User::class)
+         ->join('User.group g');
+     // and
+     Query::count()
+         ->from(Group::class, 'g')
+         ->join('Group.users')
+         ->where('g.name', 'Guest')
+         ->single();
+
+   Problems:
+   • Table can be aliased
+   • ...
+
+  1. Devel
+
+          class Model {
+              public function tableName() {
+          	return 'ime_tabele';
+              }
+              public function primary() {
+          	return 'ID_ime_tabele';
+              }
+          }
+
+          class Query {
+              private $components = [];   // Unused...
+              private $bindings = [];
+              private $sources = [
+          	'table or alias' => 'source info',
+          	'alias' => 'table_name',
+          	'table_name2' => 'table_name2',
+          	// 'g' => new Source('groups', 'g')
+              ];
+              private $select = [
+          	'name' => 'whatever(*)',
+          	'count' => new Column(),
+          	'xxx' => new Raw()
+              ];
+          }
+
+          abstract class Source {
+              private $name;
+
+              public function __construct($name) {
+          	$this->name = $name;
+              }
+
+              public function name() {
+          	return $this->name;
+              }
+
+              abstract public function primary();
+
+              public function debug() {
+          	echo "Table: `" . $this->name() . "` primary: `" . $this->primary() . "`\n";
+              }
+          }
+
+          class TableSource extends Source {
+              private $table;
+
+              public function __construct($table, $name = null) {
+          	parent::__construct($name ?: $table);
+          	$this->table = $table;
+              }
+
+              public function primary() {
+          	return 'id';
+              }
+          }
+
+          class ModelSource extends TableSource {
+              private $model;
+
+              public function __construct($model, $name = null) {
+          	$this->setModel($model);
+          	parent::__construct($model::tableName(), $name);
+              }
+
+              private function setModel($model) {
+          	// if (class_exists($model) and is_subclass_of($model, QueryObject::class)) {
+          	if (class_exists($model)) {
+          	    $this->model = $model;
+	          } else {
+          	    throw new Exception("Wrong class name '$model'"); // Should be QueryException
+	          }
+              }
+
+              public function primary() {
+          	$m =  $this->model;
+          	return $m::primary();
+              }
+          };
+
+          {
+              $s1 = new ModelSource(Model::class);
+              $s2 = new ModelSource(Model::class, 'alias');
+              $s3 = new TableSource('tabela', 'alias');
+              echo "\n";
+              $s1->debug();
+              $s2->debug();
+              $s3->debug();
+          }
+
+
+File: Query.info,  Node: QueryObject,  Prev: Working with objects,  Up: Top
+
+6 QueryObject
+*************
+
+If we want using objects in Query, they must extends QueryObject.  If we
+want different tablename or primary key for object, we can override
+tableName() or primaryKey() function.
+
+   In case we want totaly different rules to generate tablenames and
+primary keys, we can use our own QueryObject class which extends
+original QueryObject.
+
+     class QueryObject {
+         public static function tableName() {
+     	return camel_case(drop_namespace(QueryObject::class));
+         }
+
+         public static function primaryKey() {
+     	return 'id';
+         }
+     }
+
+
+
+Tag Table:
+Node: Top71
+Node: About Query916
+Node: Building quries1334
+Node: Query methods2566
+Node: From3016
+Node: Join3680
+Node: Where and Having4079
+Node: GroupBy7093
+Node: Order7403
+Node: Limit7662
+Node: Union8375
+Node: Query parts8752
+Node: Raw10149
+Node: Literal10356
+Node: Value11833
+Node: Fn12118
+Node: Column12645
+Node: Name13450
+Node: JoinCondition13692
+Node: Table14201
+Node: Inserting data14862
+Node: Updating data15537
+Node: Working with schema16002
+Node: Droping table16451
+Node: Creating table16646
+Node: Column types17084
+Node: Column modifiers17932
+Node: Column references18395
+Node: Table modifiers18877
+Node: Alter table19493
+Node: Executing queries20074
+Node: Working with objects21960
+Node: Using objects22526
+Node: Name conflicts24399
+Node: Joining with objects25846
+Node: Relation definitions26593
+Node: QueryObject30052
+
+End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:

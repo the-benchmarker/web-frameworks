@@ -1,0 +1,22 @@
+<?php
+
+namespace Silver\Database\Source;
+
+use Silver\Database\Source;
+
+class Table extends Source {
+    private $table;
+    
+    protected function __construct($table, $name = null) {
+        parent::__construct($name ?: $table);
+        $this->table = $table;
+    }
+
+    public function primary() {
+        return 'id';
+    }
+
+    public function table() {
+        return $table;
+    }
+}
