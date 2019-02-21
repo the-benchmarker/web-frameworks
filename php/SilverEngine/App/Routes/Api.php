@@ -14,8 +14,7 @@ namespace App\Routes;
 
 use Silver\Core\Route;
 
-Route::group(['prefix' => 'api'], function(){
-  Route::get('/', function(){
-    return 'Welcome to the api';
-  });
-});
+Route::get('/', 'Welcome@index');
+Route::get('/user/{id}', 'User@get');
+Route::post('/user', 'User@create');
+
