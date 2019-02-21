@@ -14,5 +14,5 @@ return [
     //this is core system route do not change or delete!
     'System/App/Routes',
 
-    'App/Routes/Api',
+    'App/Routes/Web',
 ];

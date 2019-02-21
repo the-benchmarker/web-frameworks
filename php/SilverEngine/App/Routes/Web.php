@@ -14,9 +14,6 @@ namespace App\Routes;
 
 use Silver\Core\Route;
 
-Route::get('/', 'Welcome@welcome', 'welcome', 'public');
-Route::get('/user/{id?}', 'Welcome@getId', 'getId', 'public');
-Route::post('/user', 'Welcome@post', 'post', 'public');
-//Route::get('/', 'Welcome@testMeWithTE', 'testMeWithTE', 'public');
-//Route::get('/user', 'Welcome@testPostWithTE', 'testPostWithTE', 'public');
-
+Route::get('/', 'Welcome@index');
+Route::get('/user/{id}', 'User@get');
+Route::post('/user', 'User@create');
