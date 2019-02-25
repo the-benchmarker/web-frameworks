@@ -1,6 +1,6 @@
 require "onyx-rest"
 
-router = Onyx::REST::Router.new do
+router = Onyx::HTTP::Router.new do
   get "/" { }
 
   get "/user/:id" do |env|
@@ -10,7 +10,7 @@ router = Onyx::REST::Router.new do
   post "/user" { }
 end
 
-server = Onyx::REST::Server.new(router)
+server = Onyx::HTTP::Server.new(router)
 
 (System.cpu_count - 1).times do |i|
   Process.fork do
