@@ -144,7 +144,7 @@ CPU Cores: 8
 | python (3.7) | [falcon](http://falconframework.org) (1.4) | 7.04 ms | 5.18 ms | 11.57 ms | 20.50 ms | 211.43 ms | 5657.33 | 
 | go (1.11) | [gorilla-mux](http://www.gorillatoolkit.org/pkg/mux) (1.7) | 6.38 ms | 5.26 ms | 10.76 ms | 20.74 ms | 106.91 ms | 3941.33 | 
 | node (11.10) | [koa](http://koajs.com) (2.7) | 7.10 ms | 5.39 ms | 9.89 ms | 19.46 ms | 293.68 ms | 8967.00 | 
-| node (11.10) | [fastify](http://fastify.io) (1.14) | 6.57 ms | 5.87 ms | 10.27 ms | 19.97 ms | 225.26 ms | 6388.00 | 
+| node (11.10) | [fastify](http://fastify.io) (2.0) | 6.57 ms | 5.87 ms | 10.27 ms | 19.97 ms | 225.26 ms | 6388.00 | 
 | node (11.10) | [muneem](http://github.com/node-muneem/muneem/) (2.4) | 8.46 ms | 6.04 ms | 13.88 ms | 33.12 ms | 401.84 ms | 14802.67 | 
 | python (3.7) | [bottle](http://bottlepy.org) (0.12) | 8.59 ms | 6.60 ms | 15.76 ms | 28.55 ms | 213.68 ms | 7949.00 | 
 | scala (2.12) | [akkahttp](http://akka.io) (10.1) | 187.93 ms | 6.83 ms | 29.66 ms | 4557.48 ms | 7920.58 ms | 782770.00 | 
@@ -220,7 +220,7 @@ CPU Cores: 8
 | rust (1.32) | [iron](http://ironframework.io) (0.6) | 181451.00 | 228.45 MB |
 | go (1.11) | [iris](http://iris-go.com) (11.1) | 179847.67 | 240.63 MB |
 | go (1.11) | [chi](http://github.com/go-chi/chi) (4.0) | 171764.67 | 230.16 MB |
-| node (11.10) | [fastify](http://fastify.io) (1.14) | 163773.00 | 421.96 MB |
+| node (11.10) | [fastify](http://fastify.io) (2.0) | 163773.00 | 421.96 MB |
 | go (1.11) | [echo](http://echo.labstack.com) (4.0) | 160354.67 | 281.57 MB |
 | go (1.11) | [beego](http://beego.me) (1.11) | 159726.67 | 215.06 MB |
 | go (1.11) | [gin](http://gin-gonic.github.io/gin) (1.3) | 159233.33 | 279.34 MB |
