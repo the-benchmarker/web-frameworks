@@ -1,4 +1,4 @@
-FROM gcc:8.2
+FROM gcc:8.3.0
 
 RUN wget -c https://kore.io/releases/kore-3.1.0.tar.gz && tar xvf kore-3.1.0.tar.gz
 RUN cd kore-3.1.0 && TASKS=1 NOTLS=1 make && make install
