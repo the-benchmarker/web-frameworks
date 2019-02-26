@@ -1,0 +1,311 @@
+version: 1
+update_configs:
+
+    #############################
+    ###### RUBY FRAMEWORKS ######
+    #############################
+
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/sinatra"
+
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/rack-routing"
+
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/hanami"
+    
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/agoo"
+
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/roda"
+    
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/flame"
+
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/rails"
+    
+    #########################
+    #### RUST FRAMEWORKS ####
+    #########################
+
+  - package_manager: "rust:cargo"
+    update_schedule: "live"
+    directory: "/rust/nickel"
+    
+  - package_manager: "rust:cargo"
+    update_schedule: "live"
+    directory: "/rust/iron"
+    
+  - package_manager: "rust:cargo"
+    update_schedule: "live"
+    directory: "/rust/rocket"
+    
+  - package_manager: "rust:cargo"
+    update_schedule: "live"
+    directory: "/rust/actix-web"
+    
+  - package_manager: "rust:cargo"
+    update_schedule: "live"
+    directory: "/rust/gotham"
+    
+    ###########################
+    #### PYTHON FRAMEWORKS ####
+    ###########################
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/japronto"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/flask"
+    
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/falcon"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/responder"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/cyclone"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/starlette"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/hug"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/django"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/sanic"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/bottle"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/bocadillo"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/fastapi"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/tornado"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/molten"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/aiohttp"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/vibora"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/quart"
+  
+    ############################
+    ###### PHP FRAMEWORKS ######
+    ############################
+
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/zend-framework"
+
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/zend-expressive"
+
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/slim"
+
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/symfony"
+
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/laravel"
+
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/lumen"
+
+    #############################
+    ######### JAVASCRIPT ########
+    ###### NODE FRAMEWORKS ######
+    #############################
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/foxify"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/turbo_polka"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/fastify"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/hapi"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/muneem"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/restify"
+    
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/polka"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/rayo"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/koa"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/restana"
+
+    ###############################
+    ####### JAVA FRAMEWORKS #######
+    ###############################
+
+  - package_manager: "java:maven"
+    directory: "/java/act"
+    update_schedule: "daily"
+
+    ###############################
+    ######## GO FRAMEWORKS ########
+    ###############################
+
+  - package_manager: "go:modules"
+    directory: "/go/gin"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/fasthttprouter"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/beego"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/gf"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/echo"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/iris"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/muxie"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/chi"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/gorilla-mux"
+    update_schedule: "daily"
+    
+  # Dockefiles
+  # This create PR for development environment
+  # One per language
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/node/rayo"
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/csharp/aspnetcore"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/elixir/phoenix"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/scala/http4s"
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/cpp/evhtp"
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/php/laravel"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/python/aiohttp"
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/c/kore"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/nim/jester"
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/java/act"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/ruby/cuba"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/swift/vapor"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/go/gorilla-mux"
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/rust/iron"
