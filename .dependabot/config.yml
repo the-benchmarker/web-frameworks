@@ -1,5 +1,10 @@
 version: 1
 update_configs:
+
+    #############################
+    ###### RUBY FRAMEWORKS ######
+    #############################
+
   - package_manager: "ruby:bundler"
     update_schedule: "live"
     directory: "/ruby/sinatra"
@@ -28,6 +33,10 @@ update_configs:
     update_schedule: "live"
     directory: "/ruby/rails"
     
+    #########################
+    #### RUST FRAMEWORKS ####
+    #########################
+
   - package_manager: "rust:cargo"
     update_schedule: "live"
     directory: "/rust/nickel"
@@ -48,6 +57,10 @@ update_configs:
     update_schedule: "live"
     directory: "/rust/gotham"
     
+    ###########################
+    #### PYTHON FRAMEWORKS ####
+    ###########################
+
   - package_manager: "python"
     update_schedule: "live"
     directory: "/python/japronto"
@@ -115,11 +128,11 @@ update_configs:
   - package_manager: "python"
     update_schedule: "live"
     directory: "/python/quart"
-
-  - package_manager: "php:composer"
-    update_schedule: "live"
-    directory: "/php/silverengine"
   
+    ############################
+    ###### PHP FRAMEWORKS ######
+    ############################
+
   - package_manager: "php:composer"
     update_schedule: "live"
     directory: "/php/zend-framework"
@@ -143,6 +156,11 @@ update_configs:
   - package_manager: "php:composer"
     update_schedule: "live"
     directory: "/php/lumen"
+
+    #############################
+    ######### JAVASCRIPT ########
+    ###### NODE FRAMEWORKS ######
+    #############################
 
   - package_manager: "javascript"
     update_schedule: "live"
@@ -183,3 +201,111 @@ update_configs:
   - package_manager: "javascript"
     update_schedule: "live"
     directory: "/node/restana"
+
+    ###############################
+    ####### JAVA FRAMEWORKS #######
+    ###############################
+
+  - package_manager: "java:maven"
+    directory: "/java/act"
+    update_schedule: "daily"
+
+    ###############################
+    ######## GO FRAMEWORKS ########
+    ###############################
+
+  - package_manager: "go:modules"
+    directory: "/go/gin"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/fasthttprouter"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/beego"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/gf"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/echo"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/iris"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/muxie"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/chi"
+    update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/gorilla-mux"
+    update_schedule: "daily"
+    
+  # Dockefiles
+  # This create PR for development environment
+  # One per language
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/node/rayo"
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/csharp/aspnetcore"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/elixir/phoenix"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/scala/http4s"
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/cpp/evhtp"
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/php/laravel"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/python/aiohttp"
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/c/kore"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/nim/jester"
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/java/act"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/ruby/cuba"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/swift/vapor"
+    
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/go/gorilla-mux"
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/rust/iron"
