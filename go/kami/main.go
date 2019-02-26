@@ -13,7 +13,7 @@ func Index(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUser(ctx context.Context, w http.ResponseWriter, r *http.Request) {
-	id := kami.Param(ctx, "name")
+	id := kami.Param(ctx, "id")
 	fmt.Fprintf(w, id)
 
 }
