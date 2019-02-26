@@ -1,0 +1,185 @@
+version: 1
+update_configs:
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/sinatra"
+
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/rack-routing"
+
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/hanami"
+    
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/agoo"
+
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/roda"
+    
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/flame"
+
+  - package_manager: "ruby:bundler"
+    update_schedule: "live"
+    directory: "/ruby/rails"
+    
+  - package_manager: "rust:cargo"
+    update_schedule: "live"
+    directory: "/rust/nickel"
+    
+  - package_manager: "rust:cargo"
+    update_schedule: "live"
+    directory: "/rust/iron"
+    
+  - package_manager: "rust:cargo"
+    update_schedule: "live"
+    directory: "/rust/rocket"
+    
+  - package_manager: "rust:cargo"
+    update_schedule: "live"
+    directory: "/rust/actix-web"
+    
+  - package_manager: "rust:cargo"
+    update_schedule: "live"
+    directory: "/rust/gotham"
+    
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/japronto"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/flask"
+    
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/falcon"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/responder"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/cyclone"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/starlette"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/hug"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/django"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/sanic"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/bottle"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/bocadillo"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/fastapi"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/tornado"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/molten"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/aiohttp"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/vibora"
+
+  - package_manager: "python"
+    update_schedule: "live"
+    directory: "/python/quart"
+
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/silverengine"
+  
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/zend-framework"
+
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/zend-expressive"
+
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/slim"
+
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/symfony"
+
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/laravel"
+
+  - package_manager: "php:composer"
+    update_schedule: "live"
+    directory: "/php/lumen"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/foxify"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/turbo_polka"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/fastify"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/hapi"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/muneem"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/restify"
+    
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/polka"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/rayo"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/koa"
+
+  - package_manager: "javascript"
+    update_schedule: "live"
+    directory: "/node/restana"
