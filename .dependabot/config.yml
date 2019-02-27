@@ -249,6 +249,15 @@ update_configs:
   - package_manager: "go:modules"
     directory: "/go/gorilla-mux"
     update_schedule: "daily"
+
+  - package_manager: "go:modules"
+    directory: "/go/kami"
+    update_schedule: "daily"
+    default_reviewers:
+      - guregu
+    default_labels:
+      - language:go
+
     
   # Dockefiles
   # This create PR for development environment
