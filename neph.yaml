@@ -72,6 +72,7 @@ go:
     - beego
     - muxie
     - chi
+    - kami
 
 swift:
   depends_on:
@@ -346,6 +347,11 @@ chi:
   commands:
     - docker build -t chi .
   dir: go/chi
+
+kami:
+  commands:
+    - docker build -t kami .
+  dir: go/kami
 
 vapor:
   commands:
