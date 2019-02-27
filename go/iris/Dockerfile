@@ -1,9 +1,8 @@
-FROM golang:1.11.5
+FROM golang:1.12.0
 
 WORKDIR /go/src/app
 COPY main.go go.mod ./
 
-ENV GO111MODULE=on
 RUN go build main.go
 
 EXPOSE 3000
