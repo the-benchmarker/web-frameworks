@@ -3,3 +3,8 @@
 
 phpcs:
   enabled: true
+
+# Specify eslint config file
+# @see https://intercom.help/hound/configuration/eslint
+eslint:
+  config_file: .eslintrc.json
