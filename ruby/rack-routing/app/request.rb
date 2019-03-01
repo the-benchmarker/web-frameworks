@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Request
   def initialize(env)
     @env = env

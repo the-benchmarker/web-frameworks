@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RouteHandler
   def initialize(env, params, url_params)
     @env = env

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class App
   class << self
     def call(env)
       process env
-    rescue Exception => e
+    rescue StandardError => e
       handle_error e
     end
 
@@ -11,9 +13,9 @@ class App
       request.response.finish
     end
 
-    def handle_error(e)
-      puts "Error processing request: #{e.message}"
-      puts e.backtrace[0..6]
+    def handle_error(error)
+      puts "Error processing request: #{error.message}"
+      puts error.backtrace[0..6]
 
       Rack::Response.new('Error', 500).finish
     end
