@@ -25,7 +25,9 @@ $aggregator = new ConfigAggregator([
     // Swoole config to overwrite some services (if installed)
     class_exists(\Zend\Expressive\Swoole\ConfigProvider::class)
         ? \Zend\Expressive\Swoole\ConfigProvider::class
-        : function(){ return[]; },
+        : function () {
+            return[];
+        },
     // Load application config in a pre-defined order in such a way that local settings
     // overwrite global settings. (Loaded as first to last):
     //   - `global.php`

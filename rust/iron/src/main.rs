@@ -10,7 +10,8 @@ fn index_handler(_: &mut Request) -> IronResult<Response> {
 }
 
 fn user_handler(req: &mut Request) -> IronResult<Response> {
-    let ref id = req.extensions
+    let ref id = req
+        .extensions
         .get::<Router>()
         .unwrap()
         .find("id")

@@ -9,25 +9,23 @@ import org.osgl.mvc.annotation.*;
 @ExpressController
 @ResponseContentType(H.MediaType.TXT)
 public class AppEntry {
+  @GetAction("/")
+  public String index(String id) {
+    return "";
+  }
 
-    @GetAction("/")
-    public String index(String id) {
-        return "";
-    }
+  @GetAction("/user/{id}")
+  public String user(String id) {
+    return id;
+  }
 
-    @GetAction("/user/{id}")
-    public String user(String id) {
-        return id;
-    }
+  @ResponseStatus(200)
+  @PostAction("/user")
+  public String create() {
+    return "";
+  }
 
-    @ResponseStatus(200)
-    @PostAction("/user")
-    public String create() {
-        return "";
-    }
-
-    public static void main(String[] args) throws Exception {
-        Act.start();
-    }
-
+  public static void main(String[] args) throws Exception {
+    Act.start();
+  }
 }

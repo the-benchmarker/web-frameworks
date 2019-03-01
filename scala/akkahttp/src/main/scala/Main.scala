@@ -3,7 +3,6 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 
-
 object Main {
 
   def main(args: Array[String]) {
@@ -22,7 +21,6 @@ object Main {
         path("user" / Remaining) { id =>
           complete(id)
         }
-
 
     Http().bindAndHandle(route, "0.0.0.0", 3000)
   }

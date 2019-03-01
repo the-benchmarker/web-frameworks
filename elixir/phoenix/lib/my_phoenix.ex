@@ -9,7 +9,7 @@ defmodule MyPhoenix do
     # Define workers and child supervisors to be supervised
     children = [
       # Start the endpoint when the application starts
-      supervisor(MyPhoenix.Endpoint, []),
+      supervisor(MyPhoenix.Endpoint, [])
       # Start your own worker by calling: MyPhoenix.Worker.start_link(arg1, arg2, arg3)
       # worker(MyPhoenix.Worker, [arg1, arg2, arg3]),
     ]

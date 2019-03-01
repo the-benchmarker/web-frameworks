@@ -1,8 +1,9 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
-#[macro_use] extern crate rocket;
+#[macro_use]
+extern crate rocket;
 
-use rocket::config::{Config, Environment,LoggingLevel};
+use rocket::config::{Config, Environment, LoggingLevel};
 
 #[get("/")]
 fn index_route() {}
@@ -23,7 +24,6 @@ fn main() {
         .finalize()
         .unwrap();
     let app = rocket::custom(config);
-    app
-        .mount("/", routes![index_route, user_route, user_register_route])
+    app.mount("/", routes![index_route, user_route, user_register_route])
         .launch();
 }

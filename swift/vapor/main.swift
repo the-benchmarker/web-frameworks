@@ -5,13 +5,13 @@ services.register(MiddlewareConfig())
 
 let router = EngineRouter.default()
 let empty = HTTPResponse()
-router.get("/") { req in
+router.get("/") { _ in
     return empty
 }
 router.get("user", String.parameter) { req in
     return try req.parameters.next(String.self)
 }
-router.post("user") { req in
+router.post("user") { _ in
     return empty
 }
 services.register(router, as: Router.self)
