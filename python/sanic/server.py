@@ -6,14 +6,14 @@ app = Sanic(log_config=None)
 
 @app.route("/")
 async def index(request):
-    return text('')
+    return text("")
 
 
-@app.route("/user/<id:int>", methods=['GET'])
+@app.route("/user/<id:int>", methods=["GET"])
 async def user_info(request, id):
     return text(str(id))
 
 
-@app.route("/user", methods=['POST'])
+@app.route("/user", methods=["POST"])
 async def user(request):
-    return text('')
+    return text("")
