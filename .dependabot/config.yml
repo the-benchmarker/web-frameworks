@@ -332,6 +332,8 @@ update_configs:
     update_schedule: "daily"
     default_labels:
       - language:go
+    default_reviewers:
+      - johngcn
 
   - package_manager: "go:modules"
     directory: "/go/echo"
