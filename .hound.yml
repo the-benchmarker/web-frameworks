@@ -1,0 +1,5 @@
+# PHP Code Sniffer is not activated by default
+# @see http://help.houndci.com/configuration/hound
+
+phpcs:
+  enabled: true
