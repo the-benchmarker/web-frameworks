@@ -209,44 +209,44 @@ nim:
 go:
   beego:
     website: beego.me
-    version: "1.11"
+    version: "1.12"
     language: "1.11"
   echo:
     website: echo.labstack.com
     version: "4.0"
-    language: "1.11"
+    language: "1.12"
   iris:
     website: iris-go.com
     version: "11.1"
-    language: "1.11"
+    language: "1.12"
   muxie:
     website: godoc.org/github.com/kataras/muxie
     version: "1.0"
-    language: "1.11"
+    language: "1.12"
   gf:
     website: goframe.org
     version: "1.5"
-    language: "1.11"
+    language: "1.12"
   gin:
     website: gin-gonic.github.io/gin
     version: "1.3"
-    language: "1.11"
+    language: "1.12"
   gorilla-mux:
     website: www.gorillatoolkit.org/pkg/mux
     version: "1.7"
-    language: "1.11"
+    language: "1.12"
   fasthttprouter:
     website: godoc.org/github.com/buaazp/fasthttprouter
     version: "0.1"
-    language: "1.11"
+    language: "1.12"
   chi:
     github: go-chi/chi
     version: "4.0"
-    language: "1.11"
+    language: "1.12"
   kami:
     github: "guregu/kami"
     version: "2.2"
-    language: "1.11"
+    language: "1.12"
 swift:
   kitura:
     website: kitura.io
