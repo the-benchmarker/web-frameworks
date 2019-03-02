@@ -1,17 +1,21 @@
-# PHP Code Sniffer is not activated by default
+# Enable PHP Code Sniffer for php
 # @see http://help.houndci.com/configuration/hound
-
 phpcs:
   enabled: true
 
-# Specify eslint config file
+# Enable eslint for javascript, and specify config files
 # @see https://intercom.help/hound/configuration/eslint
 eslint:
   enabled: true
   config_file: .eslintrc.json
 
-# Enable flake8
+# Enable flake8 for python
 # @see https://intercom.help/hound/configuration/flake8
 flake8:
   enabled: true
   config_file: .flake8
+
+# Enable credo for elixir
+# @see https://intercom.help/hound/configuration/credo
+credo:
+  enabled: true
