@@ -1,12 +1,12 @@
+# Avoid bots branches
+branches:
+  only:
+    - /[a-zA-Z_]*/
+    
 # Exit build if not necessary
 before_install:
-  # if we are on PR and the current framework has not been modified
-  - if [[ "${TRAVIS_PULL_REQUEST}" != "false" ]] ; then bash .ci/has_to_run.sh || travis_terminate 0 ; fi
-
-  # if we are on a bot branch and NOT on a PR
-  - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == pyup* ]] ; then travis_terminate 0 ; fi
-  - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == renovate/* ]] ; then travis_terminate 0 ; fi
-  - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == dependabot/* ]] ; then travis_terminate 0 ; fi
+  # run only if current implementation is modified
+  - .ci/has_to_run.sh || travis_terminate 0
 
   # Load docker cache
   - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
@@ -23,7 +23,7 @@ cache:
 before_cache:
   - >
     mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
-    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'  
+    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
 
 # This tool is written in crystal
 language: crystal
