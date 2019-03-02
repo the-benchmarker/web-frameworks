@@ -1,2 +1,2 @@
 tornado==6.0
-gunicorn==19.9.0
+-e git+https://github.com/waghanza/gunicorn.git@tornado6#egg=gunicorn
