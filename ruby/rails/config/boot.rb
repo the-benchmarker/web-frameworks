@@ -1,4 +1,4 @@
-# frozen_string_literal: trueRails.application.configure do
+# frozen_string_literal: true
 
 ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
 
