@@ -1,6 +1,5 @@
 from starlette.applications import Starlette
 from starlette.responses import PlainTextResponse
-import uvicorn
 
 app = Starlette()
 

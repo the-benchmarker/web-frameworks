@@ -1,8 +1,7 @@
+import falcon
 from meinheld import patch
 
 patch.patch_all()
-
-import falcon
 
 
 class EmptyResponse:

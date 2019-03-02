@@ -1,8 +1,7 @@
+from flask import Flask
 from meinheld import patch
 
 patch.patch_all()
-
-from flask import Flask
 
 app = Flask(__name__)
 

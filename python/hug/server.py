@@ -1,8 +1,8 @@
+import hug
 from meinheld import patch
 
 patch.patch_all()
 
-import hug
 
 hug.API(__name__).http.output_format = hug.output_format.text
 
