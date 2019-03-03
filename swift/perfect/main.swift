@@ -1,8 +1,6 @@
 import PerfectHTTP
 import PerfectHTTPServer
 
-let server = HTTPServer()
-
 var routes = Routes()
 
 routes.add(method: .get, uri: "/", handler: { _, response in
@@ -18,8 +16,8 @@ routes.add(method: .post, uri: "/user", handler: { _, response in
     response.completed()
 })
 
-server.addRoutes(routes)
-
-server.serverPort = 3000
-
-try! server.start()
+try! HTTPServer.launch(
+    name: "0.0.0.0",
+    port: 3000,
+    routes: routes
+)
