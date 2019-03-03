@@ -16,7 +16,7 @@ routes.add(method: .post, uri: "/user", handler: { _, response in
     response.completed()
 })
 
-try! HTTPServer.launch(
+try HTTPServer.launch(
     name: "0.0.0.0",
     port: 3000,
     routes: routes
