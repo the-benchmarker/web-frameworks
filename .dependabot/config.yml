@@ -29,6 +29,8 @@ update_configs:
     directory: "/ruby/agoo"
     default_labels:
       - language:ruby
+    default_reviewers:
+      - ohler55
 
   - package_manager: "ruby:bundler"
     update_schedule: "live"
