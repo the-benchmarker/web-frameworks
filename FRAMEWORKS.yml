@@ -250,15 +250,15 @@ go:
 swift:
   kitura:
     website: kitura.io
-    version: "2.5"
+    version: "2.6"
     language: "4.2"
   vapor:
     website: vapor.codes
-    version: "3.2"
+    version: "3.3"
     language: "4.2"
   perfect:
     website: perfect.org
-    version: "3.0"
+    version: "3.1"
     language: "4.2"
 rust:
   actix-web:
