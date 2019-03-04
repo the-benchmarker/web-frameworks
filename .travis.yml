@@ -6,7 +6,7 @@ branches:
 # Exit build if not necessary
 before_install:
   # run only if current implementation is modified
-  - .ci/has_to_run.sh || travis_terminate 0
+  - bash .ci/has_to_run.sh || travis_terminate 0
 
   # Load docker cache
   - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
