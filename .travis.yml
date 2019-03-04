@@ -2,6 +2,7 @@
 branches:
   only:
     - ^(?!.*\/).*$
+    - master
     
 # Exit build if not necessary
 before_install:
