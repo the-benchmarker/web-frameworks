@@ -161,6 +161,8 @@ update_configs:
     directory: "/python/fastapi"
     default_labels:
       - language:python
+    default_reviewers:
+      - tiangolo
 
   - package_manager: "python"
     update_schedule: "live"
