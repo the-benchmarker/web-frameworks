@@ -1,6 +1,6 @@
 FROM php:7.3.2-fpm
 
-RUN apt-get -qq update
+RUN apt-get -qy update
 RUN apt-get -y install git nginx zlib1g-dev libzip-dev
 RUN docker-php-ext-install zip opcache
 

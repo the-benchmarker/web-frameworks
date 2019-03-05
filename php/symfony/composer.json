@@ -1,8 +1,8 @@
 {
     "require": {
-        "sensio/framework-extra-bundle": "5.2.4",
-	"symfony/yaml": "4.2.3",
-	"symfony/console": "4.2.3"
+        "symfony/yaml": "4.2.4",
+        "symfony/console": "4.2.4",
+        "sensio/framework-extra-bundle": "5.2.4"
     },
     "config": {
         "preferred-install": {
