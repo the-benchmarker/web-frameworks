@@ -20,7 +20,7 @@ This project aims to be a load benchmarking suite, no more, no less
 
 ### Additional purposes :
 
-+ Helping decide beetween languages, depending on use case
++ Helping decide between languages, depending on use case
 + Learning languages, best practices, devops culture ...
 + Having fun :heart:
 
@@ -289,6 +289,6 @@ Any kind of idea is :heart:
 
 ## Contributors
 
-- [Taichiro Suzuki](https://github.com/tbrand) - Author, maintainer
+- [Taichiro Suzuki](https://github.com/tbrand) - Author | Maintainer
 - [OvermindDL1](https://github.com/OvermindDL1) - Maintainer
-- [Marwan Rabbâa](https://github.com/waghanza) - Mainainer
+- [Marwan Rabbâa](https://github.com/waghanza) - Maintainer
