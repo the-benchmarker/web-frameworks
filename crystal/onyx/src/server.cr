@@ -1,23 +1,27 @@
-require "onyx-rest"
+require "onyx/http"
 
-router = Onyx::HTTP::Router.new do
-  get "/" { }
+struct IDEndpoint
+  include Onyx::HTTP::Endpoint
 
-  get "/user/:id" do |env|
-    env.response.output << env.request.path_params["id"]
+  params do
+    path do
+      type id : Int32
+    end
   end
 
-  post "/user" { }
+  def call
+    context.response << params.path.id
+  end
 end
 
-server = Onyx::HTTP::Server.new(router)
+Onyx.get "/" { }
+Onyx.get "/user/:id", IDEndpoint
+Onyx.post "/user" { }
 
 (System.cpu_count - 1).times do |i|
   Process.fork do
-    server.bind_tcp("0.0.0.0", 3000, reuse_port: true)
-    server.listen
+    Onyx.listen("0.0.0.0", 3000, reuse_port: true)
   end
 end
 
-server.bind_tcp("0.0.0.0", 3000, reuse_port: true)
-server.listen
+Onyx.listen("0.0.0.0", 3000, reuse_port: true)
