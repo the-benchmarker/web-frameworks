@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY shard.yml ./
 COPY src src
 
-RUN shards build --release --no-debug
+RUN env BENCHMARK=true shards build --release --no-debug
 
 EXPOSE 3000
 CMD bin/server
