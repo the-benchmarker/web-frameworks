@@ -1,5 +1,7 @@
 const restana = require('restana');
-const service = restana();
+const service = restana({
+  disableResponseEvent: true
+});
 
 service.get('/', function (req, res) {
   res.send(200);
