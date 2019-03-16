@@ -103,7 +103,7 @@ CPU Cores: 8
 | Language (Runtime) | Framework (Middleware) | Average | 50th percentile | 90th percentile | 99th percentile | 99.9th percentile | Standard deviation |
 |---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|
 | rust (1.32) | [nickel](http://nickel-org.github.io) (0.11) | 0.08 ms | 0.07 ms | 0.12 ms | 0.15 ms | 5.58 ms | 68.33 | 
-| ruby (2.6) | [roda](http://roda.jeremyevans.net) (3.17) | 2.92 ms | 0.16 ms | 10.81 ms | 27.91 ms | 73.17 ms | 6105.67 | 
+| ruby (2.6) | [roda](http://roda.jeremyevans.net) (3.18) | 2.92 ms | 0.16 ms | 10.81 ms | 27.91 ms | 73.17 ms | 6105.67 | 
 | ruby (2.6) | [rack-routing](http://github.com/georgeu2000/rack-routing) (0.0) | 3.81 ms | 0.19 ms | 14.19 ms | 32.32 ms | 81.95 ms | 7375.33 | 
 | rust (1.32) | [iron](http://ironframework.io) (0.6) | 0.30 ms | 0.28 ms | 0.52 ms | 0.82 ms | 43.31 ms | 319.67 | 
 | php (7.3) | [symfony](http://symfony.com) (4.2) | 115.83 ms | 0.29 ms | 188.47 ms | 2692.79 ms | 6818.62 ms | 458379.00 | 
@@ -253,7 +253,7 @@ CPU Cores: 8
 | node (11.11) | [muneem](http://github.com/node-muneem/muneem/) (2.4) | 58660.00 | 87.67 MB |
 | node (11.11) | [koa](http://koajs.com) (2.7) | 55245.33 | 116.61 MB |
 | php (7.3) | [laravel](http://laravel.com) (5.8) | 54451.67 | 284.27 MB |
-| ruby (2.6) | [roda](http://roda.jeremyevans.net) (3.17) | 43934.33 | 41.90 MB |
+| ruby (2.6) | [roda](http://roda.jeremyevans.net) (3.18) | 43934.33 | 41.90 MB |
 | crystal (0.27) | [router.cr](http://github.com/tbrand/router.cr) (0.2) | 43614.67 | 40.89 MB |
 | swift (4.2) | [kitura](http://kitura.io) (2.6) | 43269.33 | 80.38 MB |
 | python (3.7) | [flask](http://flask.pocoo.org) (1.0) | 42400.00 | 104.24 MB |
