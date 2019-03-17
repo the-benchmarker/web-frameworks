@@ -1,6 +1,6 @@
-import bocadillo
+from bocadillo import App,view
 
-app = bocadillo.API()
+app = App()
 
 
 @app.route("/")
@@ -9,7 +9,7 @@ async def index(req, res):
 
 
 @app.route("/user")
-@bocadillo.view(methods=["post"])
+@view(methods=["post"])
 async def greet(req, res):
     res.text = ""
 
