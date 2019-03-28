@@ -129,8 +129,6 @@ CPU Cores: 8
 | go (1.12) | [fasthttprouter](http://godoc.org/github.com/buaazp/fasthttprouter) (0.1) | 3.67 ms | 3.08 ms | 5.78 ms | 11.57 ms | 107.75 ms | 3414.33 | 
 | cpp (11.0) | [evhtp](http://github.com/criticalstack/libevhtp) (1.2) | 3.13 ms | 3.14 ms | 5.25 ms | 7.30 ms | 96.47 ms | 2115.33 | 
 | ruby (2.6) | [agoo](http://github.com/ohler55/agoo) (2.8) | 5.60 ms | 3.19 ms | 7.89 ms | 77.81 ms | 126.47 ms | 11619.67 | 
-| go (1.12) | [muxie](http://godoc.org/github.com/kataras/muxie) (1.0) | 5.21 ms | 4.28 ms | 10.19 ms | 21.88 ms | 106.07 ms | 4411.67 | 
-| go (1.12) | [iris](http://iris-go.com) (11.1) | 5.17 ms | 4.31 ms | 9.85 ms | 21.23 ms | 158.07 ms | 4775.00 | 
 | go (1.12) | [beego](http://beego.me) (1.12) | 5.83 ms | 4.40 ms | 11.48 ms | 24.55 ms | 284.45 ms | 7871.33 | 
 | go (1.12) | [echo](http://echo.labstack.com) (4.0) | 5.85 ms | 4.44 ms | 12.14 ms | 25.02 ms | 165.19 ms | 5945.00 | 
 | node (11.12) | [restana](http://github.com/jkyberneees/ana) (2.10) | 4.78 ms | 4.48 ms | 7.48 ms | 14.53 ms | 206.79 ms | 5083.33 | 
@@ -215,8 +213,6 @@ CPU Cores: 8
 | go (1.12) | [fasthttprouter](http://godoc.org/github.com/buaazp/fasthttprouter) (0.1) | 257099.00 | 415.97 MB |
 | java (8) | [act](http://actframework.org) (1.8) | 229495.67 | 448.36 MB |
 | node (11.12) | [restana](http://github.com/jkyberneees/ana) (2.10) | 203376.00 | 304.23 MB |
-| go (1.12) | [muxie](http://godoc.org/github.com/kataras/muxie) (1.0) | 202382.67 | 270.12 MB |
-| go (1.12) | [iris](http://iris-go.com) (11.1) | 201471.67 | 269.53 MB |
 | go (1.12) | [beego](http://beego.me) (1.12) | 188828.00 | 254.39 MB |
 | go (1.12) | [echo](http://echo.labstack.com) (4.0) | 184766.33 | 323.99 MB |
 | go (1.12) | [kami](http://github.com/guregu/kami) (2.2) | 177940.00 | 236.03 MB |

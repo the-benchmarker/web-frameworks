@@ -63,14 +63,12 @@ python:
 
 go:
   depends_on:
-    - iris
     - echo
     - gorilla-mux
     - fasthttprouter
     - gf
     - gin
     - beego
-    - muxie
     - chi
     - kami
 
@@ -303,11 +301,6 @@ molten:
     - docker build -t molten .
   dir: python/molten
 
-iris:
-  commands:
-    - docker build -t iris .
-  dir: go/iris
-
 echo:
   commands:
     - docker build -t echo .
@@ -337,11 +330,6 @@ beego:
   commands:
     - docker build -t beego .
   dir: go/beego
-
-muxie:
-  commands:
-    - docker build -t muxie .
-  dir: go/muxie
 
 chi:
   commands:
