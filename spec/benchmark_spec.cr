@@ -23,6 +23,13 @@ describe "get on /user/0" do
   it "should return <0>" { r.body.should eq "0" }
 end
 
+describe "get on /user/a" do
+  name = ENV["FRAMEWORK"]
+  remote_ip = get_ip(name)
+  r = HTTP::Client.get "http://#{remote_ip}:3000/user/a"
+  it "should reply with a 404 status code" { r.status_code.should eq 404 }
+end
+
 describe "post on /user" do
   name = ENV["FRAMEWORK"]
   remote_ip = get_ip(name)

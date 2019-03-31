@@ -20,7 +20,7 @@ func showEmpty(w http.ResponseWriter, r *http.Request) {
 func main() {
 	router := violetear.New()
 
-	router.AddRegex(":id", `[0-9]+`)
+	router.AddRegex(":id", `^[0-9]+$`)
 
 	router.HandleFunc("/", showEmpty, "GET")
 	router.HandleFunc("/user/:id", showID, "GET")
