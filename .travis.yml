@@ -88,6 +88,7 @@ env:
     - FRAMEWORK=gorilla-mux
     - FRAMEWORK=chi
     - FRAMEWORK=kami
+    - FRAMEWORK=violetear
     - FRAMEWORK=muxie
     - FRAMEWORK=nickel
     - FRAMEWORK=actix-web
