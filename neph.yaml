@@ -73,6 +73,7 @@ go:
     - muxie
     - chi
     - kami
+    - violetear
 
 swift:
   depends_on:
@@ -353,6 +354,11 @@ kami:
     - docker build -t kami .
   dir: go/kami
 
+violetear:
+  commands:
+    - docker build -t violetear .
+  dir: go/violetear
+
 vapor:
   commands:
     - docker build -t vapor .
@@ -522,4 +528,3 @@ agoo-c:
   commands:
     - docker  build -t agoo-c .
   dir: c/agoo-c
-
