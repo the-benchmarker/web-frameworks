@@ -9,7 +9,7 @@ import (
 	"github.com/nbari/violetear"
 )
 
-func showID(w http.ResponseWriter, r *http.Request) {
+func showId(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, violetear.GetParam("id", r))
 }
 
@@ -20,10 +20,10 @@ func showEmpty(w http.ResponseWriter, r *http.Request) {
 func main() {
 	router := violetear.New()
 
-	router.AddRegex(":id", `^[0-9]+$`)
+	router.AddRegex(":id", `\d+`)
 
 	router.HandleFunc("/", showEmpty, "GET")
-	router.HandleFunc("/user/:id", showID, "GET")
+	router.HandleFunc("/user/:id", showId, "GET")
 	router.HandleFunc("/user", showEmpty, "POST")
 
 	srv := &http.Server{
@@ -34,5 +34,4 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 	log.Fatal(srv.ListenAndServe())
-
 }
