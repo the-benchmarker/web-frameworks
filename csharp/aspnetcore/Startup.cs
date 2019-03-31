@@ -20,7 +20,7 @@ namespace aspnetcore
                     return context.Response.WriteAsync("");
                 });
 
-                routes.MapGet("user/{id}", context => {
+                routes.MapGet("user/{id:int}", context => {
                     var id = context.GetRouteValue("id").ToString();
                     return context.Response.WriteAsync(id);
                 });
