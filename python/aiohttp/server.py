@@ -13,7 +13,7 @@ async def user_info(request):
     return web.Response(text="")
 
 
-@routes.get("/user/{id}")
+@routes.get("/user/{id:\d+}")
 async def user_id(request):
     return web.Response(text=request.match_info["id"])
 
