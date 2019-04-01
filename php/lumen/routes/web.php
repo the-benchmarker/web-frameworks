@@ -4,7 +4,7 @@ $router->get('/', [
     'uses' => 'ApplicationController@index',
 ]);
 
-$router->get('/user/{id}', [
+$router->get('/user/{id:[0-9]+}', [
     'uses' => 'UserController@show',
 ]);
 
