@@ -13,8 +13,8 @@ class HelloWorldService[F[_]: Effect] extends Http4sDsl[F] {
         Ok("")
       case POST -> Root / "user" =>
         Ok("")
-      case GET -> Root / "user" / name =>
-        Ok(name)
+      case GET -> Root / "user" / IntVar(id) =>
+        Ok(s"$id")
     }
   }
 }
