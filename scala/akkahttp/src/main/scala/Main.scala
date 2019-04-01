@@ -13,14 +13,14 @@ object Main {
       pathSingleSlash {
         complete("")
       } ~
-      path("user") {
-        post {
-          complete("")
+        path("user") {
+          post {
+            complete("")
+          }
+        } ~
+        path("user" / IntNumber) { id =>
+          complete(s"$id")
         }
-      } ~
-      path("user" / IntNumber) { id =>
-        complete(s"$id")
-      }
 
     Http().bindAndHandle(route, "0.0.0.0", 3000)
   }
