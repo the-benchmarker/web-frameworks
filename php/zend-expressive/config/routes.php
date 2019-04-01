@@ -21,6 +21,6 @@ use Zend\Expressive\MiddlewareFactory;
  */
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
     $app->route('/', \App\Handler\Home::class, ['GET']);
-    $app->route('/user/{id}', \App\Handler\UserId::class, ['GET']);
+    $app->route('/user/{id:[0-9]+}', \App\Handler\UserId::class, ['GET']);
     $app->route('/user', \App\Handler\User::class, ['POST']);
 };
