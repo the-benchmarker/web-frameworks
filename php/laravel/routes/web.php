@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('/user/{id}', function ($id) {
     return $id;
-});
+})->where('id', '[0-9]+');
 
 Route::post('/user', function () {
     return '';
