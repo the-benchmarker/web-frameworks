@@ -12,7 +12,7 @@ $app->get('/', function (Request $request, Response $response): Response {
     return $response->write('');
 });
 
-$app->get('/user/{id}', function (Request $request, Response $response, array $args): Response {
+$app->get('/user/{id:[0-9]+}', function (Request $request, Response $response, array $args): Response {
     return $response->write($args['id']);
 });
 
