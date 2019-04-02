@@ -6,7 +6,7 @@ app.get('/', function (req, res) {
   res.send('')
 })
 
-app.get('/user/:id', function (req, res) {
+app.get('/user/:id(\\d+)', function (req, res) {
   res.send(req.params.id)
 })
 
