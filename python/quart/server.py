@@ -8,7 +8,7 @@ async def index():
     return ''
 
 
-@app.route('/user/<id>')
+@app.route('/user/<int:id>')
 async def user_info(id):
     return id
 
