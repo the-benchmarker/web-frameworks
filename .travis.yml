@@ -82,7 +82,6 @@ env:
     - FRAMEWORK=gin
     - FRAMEWORK=fasthttprouter
     - FRAMEWORK=echo
-    - FRAMEWORK=iris
     - FRAMEWORK=beego
     - FRAMEWORK=gf
     - FRAMEWORK=gorilla-mux

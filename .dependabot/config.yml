@@ -346,12 +346,6 @@ update_configs:
       - language:go
 
   - package_manager: "go:modules"
-    directory: "/go/iris"
-    update_schedule: "daily"
-    default_labels:
-      - language:go
-
-  - package_manager: "go:modules"
     directory: "/go/muxie"
     update_schedule: "daily"
     default_labels:

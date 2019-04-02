@@ -136,7 +136,6 @@ CPU Cores: 8
 | go (1.12) | [chi](http://github.com/go-chi/chi) (4.0) | 12.26 ms | 9.65 ms | 23.06 ms | 52.83 ms | 163.46 ms | 10094.33 | 
 | node (11.12) | [restana](http://github.com/jkyberneees/ana) (2.10) | 13.97 ms | 9.76 ms | 17.99 ms | 112.26 ms | 624.99 ms | 29743.67 | 
 | go (1.12) | [gin](http://gin-gonic.com) (1.3) | 12.79 ms | 9.84 ms | 24.92 ms | 54.75 ms | 158.39 ms | 10426.00 | 
-| go (1.12) | [iris](http://iris-go.com) (11.1) | 11.94 ms | 9.86 ms | 19.90 ms | 47.99 ms | 177.55 ms | 9105.67 | 
 | go (1.12) | [echo](http://echo.labstack.com) (4.0) | 13.37 ms | 10.02 ms | 26.31 ms | 61.28 ms | 213.60 ms | 11850.00 | 
 | go (1.12) | [violetear](http://violetear.org) (5.0) | 12.55 ms | 10.04 ms | 21.64 ms | 51.65 ms | 225.05 ms | 11012.67 | 
 | go (1.12) | [gorilla-mux](http://www.gorillatoolkit.org/pkg/mux) (1.7) | 14.56 ms | 10.58 ms | 29.45 ms | 65.98 ms | 198.09 ms | 12851.67 | 
@@ -218,7 +217,6 @@ CPU Cores: 8
 | csharp (7.3) | [aspnetcore](http://docs.microsoft.com/en-us/aspnet/index) (2.2) | 109048.67 | 177.69 MB |
 | go (1.12) | [muxie](http://godoc.org/github.com/kataras/muxie) (1.0) | 89034.33 | 118.55 MB |
 | go (1.12) | [chi](http://github.com/go-chi/chi) (4.0) | 88829.67 | 119.31 MB |
-| go (1.12) | [iris](http://iris-go.com) (11.1) | 88207.67 | 118.53 MB |
 | node (11.12) | [restana](http://github.com/jkyberneees/ana) (2.10) | 87741.67 | 131.46 MB |
 | go (1.12) | [gin](http://gin-gonic.com) (1.3) | 85033.00 | 149.38 MB |
 | go (1.12) | [violetear](http://violetear.org) (5.0) | 84905.00 | 113.54 MB |

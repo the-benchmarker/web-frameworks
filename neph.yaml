@@ -63,7 +63,6 @@ python:
 
 go:
   depends_on:
-    - iris
     - echo
     - gorilla-mux
     - fasthttprouter
@@ -303,11 +302,6 @@ molten:
   commands:
     - docker build -t molten .
   dir: python/molten
-
-iris:
-  commands:
-    - docker build -t iris .
-  dir: go/iris
 
 echo:
   commands:
