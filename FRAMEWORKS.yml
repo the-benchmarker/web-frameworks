@@ -136,8 +136,8 @@ python:
     version: "0.13"
     website: bocadilloproject.github.io
   fastapi:
-    language: "3.7"
-    version: "0.9"
+    language: 3.7
+    version: 0.11
     website: fastapi.tiangolo.com
   molten:
     language: "3.7"
