@@ -1,4 +1,4 @@
-FROM swift:4.2
+FROM swift:5.0
 
 # install kitura deps
 # @see http://www.kitura.io/en/starter/settingup.html
