@@ -10,10 +10,10 @@ async def homepage(request):
     return PlainTextResponse('')
 
 
-@app.route('/user/{user_id}')
+@app.route('/user/{user_id:int}')
 async def user(request):
     user_id = request.path_params['user_id']
-    return PlainTextResponse(user_id)
+    return PlainTextResponse(str(user_id))
 
 
 @app.route('/user', methods=['POST'])
