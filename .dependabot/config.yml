@@ -377,7 +377,15 @@ update_configs:
     default_labels:
       - language:go
 
-    
+  - package_manager: "go:modules"
+    directory: "/go/violetear"
+    update_schedule: "daily"
+    default_labels:
+      - language:go
+
+  # Dockefiles
+  # This create PR for development environment
+
   # Dockefiles
   # This create PR for development environment
   # One per language
