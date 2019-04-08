@@ -10,7 +10,7 @@ async def index():
 
 @app.route('/user/<int:id>')
 async def user_info(id):
-    return id
+    return str(id)
 
 
 @app.route('/user', methods=['POST'])
