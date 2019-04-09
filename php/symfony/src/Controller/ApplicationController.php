@@ -17,7 +17,7 @@ class ApplicationController extends Controller
     }
 
     /**
-     * @Route("/user/{id<\d+>}", methods={"GET"})
+     * @Route("/user/{id<[0-9]+>}", methods={"GET"})
      */
     public function user($id)
     {

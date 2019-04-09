@@ -29,7 +29,7 @@ class UserHandler(cyclone.web.RequestHandler):
 if __name__ == "__main__":
     application = cyclone.web.Application([
         (r'/', MainHandler),
-        (r"/user/(\d+)", UserInfoHandler),
+        (r"/user/([0-9]+)", UserInfoHandler),
         (r"/user", UserHandler),
     ])
 

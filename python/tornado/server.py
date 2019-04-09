@@ -22,4 +22,4 @@ class UserInfoHandler(tornado.web.RequestHandler):
 
 app = tornado.web.Application(handlers=[(r'/', MainHandler),
                               (r"/user", UserHandler),
-                              (r"/user/(\d+)", UserInfoHandler)])
+                              (r"/user/([0-9]+)", UserInfoHandler)])
