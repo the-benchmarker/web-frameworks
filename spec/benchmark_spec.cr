@@ -27,7 +27,7 @@ describe "get on /user/a" do
   name = ENV["FRAMEWORK"]
   remote_ip = get_ip(name)
   r = HTTP::Client.get "http://#{remote_ip}:3000/user/a"
-  it "should reply with a 200 status code" { r.status_code.should be >= 400 }
+  it "should fails" { r.status_code.should be >= 400 }
 end
 
 describe "post on /user" do
