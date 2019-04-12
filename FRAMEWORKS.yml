@@ -9,7 +9,7 @@ ruby:
     language: "2.6"
   roda:
     website: roda.jeremyevans.net
-    version: "3.18"
+    version: 3.19
     language: "2.6"
   rack-routing:
     github: georgeu2000/rack-routing
@@ -137,7 +137,7 @@ python:
     website: bocadilloproject.github.io
   fastapi:
     language: 3.7
-    version: 0.12
+    version: 0.13
     website: fastapi.tiangolo.com
   molten:
     language: "3.7"
