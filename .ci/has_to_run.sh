@@ -31,12 +31,34 @@ _travis_terminate_unix() {
   exit "${1}"
 }
 
+if [[ -z "${TRAVIS_PULL_REQUEST_BRANCH}" ]] ; then
+  BRANCH_SLUG=$[TRAVIS_PULL_REQUEST_BRANCH}
+else
+  BRANCH_SLUG=${TRAVIS_REPO_SLUG}
+fi
+
+OWNER=`echo ${BRANCH_SLUG} | awk -F '/' '{print $1}'`
+
+echo "Repo slug => ${BRANCH_SLUG}"
+echo "Owner => ${OWNER}"
+
+grep -q "${OWNER}" MAINTAINERS.txt
+
+if [[ $? == 0 ]] && [[ -z "${TRAVIS_BRANCH##feature*}" ]] ; then
+  echo "feature branch edited by ${OWNER}, force run"
+  exit 0
+fi
+
+if [[ "${OWNER}" == "the-benchmarker" ]] && [[ -z "${TRAVIS_BRANCH##feature*}" ]] ; then
+  echo "feature branch from owner, force run"
+  exit 0
+fi
 
 # List of updated files
 git diff ${TRAVIS_COMMIT_RANGE} --name-only > /tmp/changed
 
 # If current framework was updated
-grep -q "$FRAMEWORK" /tmp/changed
+grep -q "${FRAMEWORK}" /tmp/changed
 
 if [[ $? != 0 ]]; then
   echo "$FRAMEWORK was not modified, exiting."
