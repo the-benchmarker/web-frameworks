@@ -5,7 +5,7 @@ class BenchmarkController < Athena::Routing::Controller
   def root_get : Nil
   end
 
-  @[Athena::Routing::Post(path: "/")]
+  @[Athena::Routing::Post(path: "/user")]
   def root_post(body : String?) : Nil
   end
 
