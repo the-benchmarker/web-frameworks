@@ -18,6 +18,7 @@ main:
 
 crystal:
   depends_on:
+    - athena
     - router.cr
     - amber
     - kemal
@@ -161,6 +162,11 @@ amber:
   commands:
     - docker build -t amber .
   dir: crystal/amber
+
+athena:
+  commands:
+    - docker build -t athena .
+  dir: crystal/athena
 
 spider-gazelle:
   commands:

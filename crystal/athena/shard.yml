@@ -1,0 +1,18 @@
+name: athena
+version: 0.1.0
+
+authors:
+  - Blacksmoke16 <blacksmoke16@eve.tools>
+
+targets:
+  server:
+    main: src/server.cr
+
+dependencies:
+  athena:
+    github: Blacksmoke16/athena
+    version: ~> 0.6.0
+
+crystal: 0.28.0
+
+license: MIT
