@@ -36,11 +36,10 @@ fi
 
 if [ ${LANGUAGE} == "cpp" ] ; then
   sudo apt-get -qy install clang-format npm
-  sudo ln -sfv /usr/bin/nodejs /usr/bin/node
   sudo npm -g install clang-format-check
   find ${DIRECTORY} -type f -name '*.cpp' > /tmp/list.txt
   while read line ; do
-    clang-format-check ${file}
+    nodejs clang-format-check ${file}
     retval=$?
     if [ $retval -ne 0 ]; then
       RETVAL=${retval}
@@ -63,11 +62,10 @@ fi
 
 if [ ${LANGUAGE} == "c" ] ; then
   sudo apt-get -qy install clang-format npm
-  sudo ln -sfv /usr/bin/nodejs /usr/bin/node
   sudo npm -g install clang-format-check
   find ${DIRECTORY} -type f -name '*.c' > /tmp/list.txt
   while read line ; do
-    clang-format-check ${file}
+    nodejs clang-format-check ${file}
     retval=$?
     if [ $retval -ne 0 ]; then
       RETVAL=${retval}
@@ -95,11 +93,10 @@ fi
 
 if [ ${LANGUAGE} == "java" ] ; then
   sudo apt-get -qy install clang-format npm
-  sudo ln -sfv /usr/bin/nodejs /usr/bin/node
   sudo npm -g install clang-format-check
   find ${DIRECTORY} -type f -name '*.java' > /tmp/list.txt
   while read line ; do
-    clang-format-check --style=google ${file}
+    nodejs clang-format-check --style=google ${file}
     retval=$?
     if [ $retval -ne 0 ]; then
       RETVAL=${retval}
@@ -110,11 +107,10 @@ fi
 
 if [ ${LANGUAGE} == "objc" ] ; then
   sudo apt-get -qy install clang-format npm
-  sudo ln -sfv /usr/bin/nodejs /usr/bin/node
   sudo npm -g install clang-format-check
   find ${DIRECTORY} -type f -name '*.m' > /tmp/list.txt
   while read line ; do
-    clang-format-check ${file}
+    nodejs clang-format-check ${file}
     retval=$?
     if [ $retval -ne 0 ]; then
       RETVAL=${retval}
