@@ -1,4 +1,5 @@
-#!/usr/bin/env sh
+RETVAL=0
+echo $PATH
 
 if [ ${LANGUAGE} == "csharp" ] ; then
   sudo apt-get -qy install astyle
@@ -34,7 +35,8 @@ if [ ${LANGUAGE} == "scala" ] ; then
 fi
 
 if [ ${LANGUAGE} == "cpp" ] ; then
-  sudo apt-get -qy install clang-format nodejs
+  sudo apt-get -qy install clang-format npm
+  sudo ln -sfv /usr/bin/nodejs /usr/bin/node
   sudo npm -g install clang-format-check
   find ${DIRECTORY} -type f -name '*.cpp' > /tmp/list.txt
   while read line ; do
@@ -60,7 +62,8 @@ if [ ${LANGUAGE} == "python" ] ; then
 fi
 
 if [ ${LANGUAGE} == "c" ] ; then
-  sudo apt-get -qy install clang-format nodejs
+  sudo apt-get -qy install clang-format npm
+  sudo ln -sfv /usr/bin/nodejs /usr/bin/node
   sudo npm -g install clang-format-check
   find ${DIRECTORY} -type f -name '*.c' > /tmp/list.txt
   while read line ; do
@@ -91,7 +94,8 @@ if [ ${LANGUAGE} == "nim" ] ; then
 fi
 
 if [ ${LANGUAGE} == "java" ] ; then
-  sudo apt-get -qy install clang-format nodejs
+  sudo apt-get -qy install clang-format npm
+  sudo ln -sfv /usr/bin/nodejs /usr/bin/node
   sudo npm -g install clang-format-check
   find ${DIRECTORY} -type f -name '*.java' > /tmp/list.txt
   while read line ; do
@@ -105,7 +109,8 @@ if [ ${LANGUAGE} == "java" ] ; then
 fi
 
 if [ ${LANGUAGE} == "objc" ] ; then
-  sudo apt-get -qy install clang-format
+  sudo apt-get -qy install clang-format npm
+  sudo ln -sfv /usr/bin/nodejs /usr/bin/node
   sudo npm -g install clang-format-check
   find ${DIRECTORY} -type f -name '*.m' > /tmp/list.txt
   while read line ; do
