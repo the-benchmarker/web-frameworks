@@ -44,6 +44,7 @@ nim:
 
 python:
   depends_on:
+    - masonite
     - flask
     - japronto
     - django
