@@ -1,3 +1,3 @@
 module main
 
-require github.com/gogf/gf v1.6.7
+require github.com/gogf/gf v1.6.9
