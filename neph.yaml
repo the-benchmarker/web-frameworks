@@ -15,6 +15,7 @@ main:
     - java
     - php
     - c
+    - kotlin
 
 crystal:
   depends_on:
@@ -137,6 +138,10 @@ c:
   depends_on:
     - kore
     - agoo-c
+
+kotlin:
+  depends_on:
+    - ktor
 
 router.cr:
   commands:
@@ -522,3 +527,8 @@ agoo-c:
   commands:
     - docker  build -t agoo-c .
   dir: c/agoo-c
+
+ktor:
+  commands:
+    - docker build -t ktor .
+  dir: kotlin/ktor

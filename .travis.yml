@@ -107,6 +107,7 @@ env:
     - FRAMEWORK=kore
     - FRAMEWORK=agoo-c
     - FRAMEWORK=muneem
+    - FRAMEWORK=ktor
 
 # Lint yaml files in a specific jobs
 jobs:
