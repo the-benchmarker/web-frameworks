@@ -1,8 +1,8 @@
 require "kemal"
 
 Kemal.config do |cfg|
-	cfg.serve_static = false
-	cfg.logging = false
+  cfg.serve_static = false
+  cfg.logging = false
 end
 
 get "/" do |env|
