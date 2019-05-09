@@ -171,40 +171,40 @@ php:
 crystal:
   kemal:
     website: kemalcr.com
-    version: "0.25"
-    language: "0.27"
+    version: 0.25
+    language: 0.28
   athena:
     github: blacksmoke16/athena
-    version: "0.6"
-    language: "0.28"
+    version: 0.6
+    language: 0.28
   router.cr:
     github: tbrand/router.cr
-    version: "0.2"
-    language: "0.27"
+    version: 0.2
+    language: 0.28
   amber:
     website: amberframework.org
-    version: "0.11"
-    language: "0.27"
+    version: 0.28
+    language: 0.28
   lucky:
     website: luckyframework.org
-    version: "0.11"
-    language: "0.27"
+    version: 0.14
+    language: 0.28
   spider-gazelle:
     website: spider-gazelle.net
-    version: "1.4"
-    language: "0.27"
+    version: 1.4
+    language: 0.28
   onyx:
     website: onyxframework.org
-    version: "0.3"
-    language: "0.27"
+    version: 0.4
+    language: 0.28
   orion:
     github: obsidian/orion
-    version: "1.6"
-    language: "0.27"
+    version: 1.7
+    language: 0.28
   raze:
     website: razecr.com
-    version: "0.3"
-    language: "0.27"
+    version: 0.3
+    language: 0.28
 nim:
   jester:
     github: dom96/jester
