@@ -1,5 +1,4 @@
 class ApplicationController < Amber::Controller::Base
-
   def index
   end
 
