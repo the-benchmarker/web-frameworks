@@ -1,4 +1,4 @@
-FROM crystallang/crystal:0.27.2
+FROM crystallang/crystal:0.28.0
 
 WORKDIR /usr/src/app
 
