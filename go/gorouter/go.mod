@@ -1,5 +1,5 @@
 module main
 
-require (
-	github.com/vardius/gorouter/v4 v4.0.0
-)
+go 1.12
+
+github.com/vardius/gorouter/v4 v4.0.0
