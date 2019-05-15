@@ -24,7 +24,7 @@ func main() {
     router := gorouter.New()
 
     router.GET("/", http.HandlerFunc(index))
-    router.GET("/user/{id}", http.HandlerFunc(userId))
+    router.GET("/user/{id:[0-9]+}", http.HandlerFunc(userId))
     router.POST("/user", http.HandlerFunc(user))
 
     http.ListenAndServe(":3000", router)
