@@ -11,4 +11,4 @@ RUN go build -a -o /go/bin/app ./
 
 FROM scratch
 COPY --from=buildenv /go/bin/app /go/bin/app
-ENTRYPOINT ["/go/bin/app"]
+CMD ["/go/bin/app"]
