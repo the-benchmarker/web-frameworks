@@ -90,6 +90,12 @@ update_configs:
 
   - package_manager: "python"
     update_schedule: "live"
+    directory: "/python/masonite"
+    default_labels:
+      - language:python
+
+  - package_manager: "python"
+    update_schedule: "live"
     directory: "/python/japronto"
     default_labels:
       - language:python
