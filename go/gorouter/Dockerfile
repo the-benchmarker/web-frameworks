@@ -1,12 +1,14 @@
-FROM golang:1.12.5
+FROM golang:1.12.5 AS buildenv
 
-WORKDIR /go/src/app
-COPY main.go go.mod ./
-
+ENV GO111MODULE=on
 ENV CGO_ENABLED=0
 
-RUN go get
-RUN go build .
+WORKDIR /go/src/app
+ADD . ./
 
-EXPOSE 3000
-CMD [ "./main" ]
+RUN go get
+RUN go build -a -o /go/bin/app ./
+
+FROM scratch
+COPY --from=buildenv /go/bin/app /go/bin/app
+ENTRYPOINT ["/go/bin/app"]
