@@ -86,6 +86,7 @@ env:
     - FRAMEWORK=beego
     - FRAMEWORK=gf
     - FRAMEWORK=gorilla-mux
+    - FRAMEWORK=gorouter
     - FRAMEWORK=chi
     - FRAMEWORK=kami
     - FRAMEWORK=violetear

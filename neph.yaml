@@ -67,6 +67,7 @@ go:
   depends_on:
     - echo
     - gorilla-mux
+    - gorouter
     - fasthttprouter
     - gf
     - gin
@@ -322,6 +323,11 @@ gorilla-mux:
   commands:
     - docker build -t gorilla-mux .
   dir: go/gorilla-mux
+
+gorouter:
+  commands:
+    - docker build -t gorouter .
+  dir: go/gorouter
 
 fasthttprouter:
   commands:

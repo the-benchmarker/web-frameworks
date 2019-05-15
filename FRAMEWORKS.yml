@@ -231,6 +231,10 @@ go:
     website: www.gorillatoolkit.org/pkg/mux
     version: "1.7"
     language: "1.12"
+  gorouter:
+    website: github.com/vardius/gorouter/wiki
+    version: "4.0.0"
+    language: "1.12"
   fasthttprouter:
     website: godoc.org/github.com/buaazp/fasthttprouter
     version: "0.1"
