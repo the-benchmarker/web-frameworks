@@ -15,10 +15,10 @@ should contain a simple aggregate of middleware classes.
 """
 
 HTTP_MIDDLEWARE = [
-    LoadUserMiddleware,
+    # LoadUserMiddleware,
     # CsrfMiddleware,
-    ResponseMiddleware,
-    MaintenanceModeMiddleware,
+    # ResponseMiddleware,
+    # MaintenanceModeMiddleware,
 ]
 
 """Route Middleware
@@ -28,6 +28,6 @@ of middleware (middleware stacks).
 """
 
 ROUTE_MIDDLEWARE = {
-    'auth': AuthenticationMiddleware,
-    'verified': VerifyEmailMiddleware,
+    # 'auth': AuthenticationMiddleware,
+    # 'verified': VerifyEmailMiddleware,
 }
