@@ -467,3 +467,9 @@ update_configs:
     directory: "/rust/iron"
     default_labels:
       - docker
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "/crystal/kemal"
+    default_labels:
+      - docker

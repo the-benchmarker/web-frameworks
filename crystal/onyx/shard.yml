@@ -11,11 +11,11 @@ targets:
 dependencies:
   onyx:
     github: onyxframework/onyx
-    tag: v0.3.1-rc.1
+    version: ~> 0.4.0
   onyx-http:
     github: onyxframework/http
-    version: ~> 0.7.0
+    version: ~> 0.8.0
 
-crystal: 0.27.0
+crystal: 0.28.0
 
 license: MIT
