@@ -31,48 +31,48 @@ node:
   express:
     website: expressjs.com
     version: "4.16"
-    language: 11.14
+    language: 12.2
   restana:
     github: jkyberneees/ana
     version: 2.13
-    language: 11.14
+    language: 12.2
   muneem:
     github: node-muneem/muneem/
     version: "2.4"
-    language: 11.14
+    language: 12.2
   fastify:
     website: fastify.io
     version: 2.3
-    language: 11.14
+    language: 12.2
   foxify:
     website: foxify.js.org
     version: "0.10"
-    language: 11.14
+    language: 12.2
   polka:
     github: lukeed/polka
     version: "0.5"
-    language: 11.14
+    language: 12.2
   rayo:
     website: rayo.js.org
     version: "1.2"
-    language: 11.14
+    language: 12.2
   koa:
     website: koajs.com
     version: "2.7"
-    language: 11.14
+    language: 12.2
   restify:
     website: restify.com
     version: "8.2"
-    language: 11.14
+    language: 12.2
   hapi:
     website: hapijs.com
     version: "18.1"
-    language: 11.14
+    language: 12.2
   turbo_polka:
     github: mafintosh/turbo-http
     version: "0.3"
     type: experimental
-    language: 11.14
+    language: 12.2
 python:
   masonite:
     language: "3.7"
@@ -108,7 +108,7 @@ python:
     language: "3.7"
   quart:
     website: pgjones.gitlab.io/quart
-    version: "0.8"
+    version: 0.9
     language: "3.7"
   cyclone:
     website: cyclone.io
@@ -133,7 +133,7 @@ python:
     website: python-responder.org
   hug:
     language: "3.7"
-    version: "2.4"
+    version: 2.5
     website: hug.rest
   bocadillo:
     language: "3.7"
@@ -141,7 +141,7 @@ python:
     website: bocadilloproject.github.io
   fastapi:
     language: 3.7
-    version: 0.16
+    version: 0.20
     website: fastapi.tiangolo.com
   molten:
     language: "3.7"
@@ -175,40 +175,40 @@ php:
 crystal:
   kemal:
     website: kemalcr.com
-    version: "0.25"
-    language: "0.27"
+    version: 0.25
+    language: 0.28
   athena:
     github: blacksmoke16/athena
-    version: "0.6"
-    language: "0.28"
+    version: 0.6
+    language: 0.28
   router.cr:
     github: tbrand/router.cr
-    version: "0.2"
-    language: "0.27"
+    version: 0.2
+    language: 0.28
   amber:
     website: amberframework.org
-    version: "0.11"
-    language: "0.27"
+    version: 0.28
+    language: 0.28
   lucky:
     website: luckyframework.org
-    version: "0.11"
-    language: "0.27"
+    version: 0.14
+    language: 0.28
   spider-gazelle:
     website: spider-gazelle.net
-    version: "1.4"
-    language: "0.27"
+    version: 1.4
+    language: 0.28
   onyx:
     website: onyxframework.org
-    version: "0.3"
-    language: "0.27"
+    version: 0.4
+    language: 0.28
   orion:
     github: obsidian/orion
-    version: "1.6"
-    language: "0.27"
+    version: 1.7
+    language: 0.28
   raze:
     website: razecr.com
-    version: "0.3"
-    language: "0.27"
+    version: 0.3
+    language: 0.28
 nim:
   jester:
     github: dom96/jester
@@ -327,3 +327,8 @@ c:
     website: github.com/ohler55/agoo-c
     version: "0.4"
     language: "11"
+kotlin:
+  ktor:
+    website: ktor.io
+    version: 1.1
+    language: 1.3
