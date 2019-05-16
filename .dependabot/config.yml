@@ -310,7 +310,7 @@ update_configs:
       - language:java
 
   - package_manager: "java:maven"
-    directory: "java/spring-boot"
+    directory: "/java/spring-boot"
     update_schedule: "daily"
     default_labels:
       - language:java
