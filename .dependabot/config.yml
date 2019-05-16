@@ -446,12 +446,6 @@ update_configs:
 
   - package_manager: "docker"
     update_schedule: "daily"
-    directory: "java/spring-boot"
-    defauld_labels:
-      - docker
-
-  - package_manager: "docker"
-    update_schedule: "daily"
     directory: "/ruby/cuba"
     default_labels:
       - docker
