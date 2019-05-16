@@ -61,6 +61,7 @@ env:
     - FRAMEWORK=molten
     - FRAMEWORK=jester
     - FRAMEWORK=act
+    - FRAMEWORK=spring-boot
     - FRAMEWORK=rails
     - FRAMEWORK=rack-routing
     - FRAMEWORK=sinatra

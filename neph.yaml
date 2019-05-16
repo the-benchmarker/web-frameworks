@@ -124,6 +124,7 @@ csharp:
 java:
   depends_on:
     - act
+    - spring-boot
 
 php:
   depends_on:
@@ -487,6 +488,11 @@ act:
   commands:
     - docker build -t act .
   dir: java/act
+
+spring-boot:
+  commands:
+    - socker build -t spring-boot .
+  dir: java/spring-boot
 
 slim:
   commands:

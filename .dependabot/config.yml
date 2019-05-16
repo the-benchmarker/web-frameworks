@@ -309,6 +309,12 @@ update_configs:
     default_labels:
       - language:java
 
+  - package_manager: "java:maven"
+    directory: "java/spring-boot"
+    update_schedule: "daily"
+    default_labels:
+      - language:java
+
     ###############################
     ######## GO FRAMEWORKS ########
     ###############################
@@ -437,7 +443,13 @@ update_configs:
     directory: "/java/act"
     default_labels:
       - docker
-    
+
+  - package_manager: "docker"
+    update_schedule: "daily"
+    directory: "java/spring-boot"
+    defauld_labels:
+      - docker
+
   - package_manager: "docker"
     update_schedule: "daily"
     directory: "/ruby/cuba"
