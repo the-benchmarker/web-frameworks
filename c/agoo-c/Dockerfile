@@ -1,8 +1,8 @@
-FROM gcc:8.3.0
+FROM gcc:9.1.0
 
 WORKDIR /usr/src/app
 
-RUN wget -c https://github.com/ohler55/agoo-c/tarball/v0.4.0 -O agoo.tar.gz
+RUN wget -c https://github.com/ohler55/agoo-c/tarball/v0.5.1 -O agoo.tar.gz
 RUN tar xzf agoo.tar.gz
 RUN mv ohler55* agoo-c
 WORKDIR /usr/src/app/agoo-c/src
