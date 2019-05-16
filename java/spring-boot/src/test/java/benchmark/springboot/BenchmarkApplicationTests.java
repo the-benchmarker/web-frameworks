@@ -29,10 +29,16 @@ public class BenchmarkApplicationTests {
   }
 
   @Test
-  public void testGetUserId() throws Exception {
+  public void testGetUserIdNotInt() throws Exception {
     String userId = "the_id_of_a_user";
-    mockMvc.perform(get("/user/{id}", userId)).andExpect(content().string(userId))
-        .andExpect(status().isOk());
+    mockMvc.perform(get("/user/{id}", userId)).andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void testGetUserId() throws Exception {
+    String userId = "1234";
+    mockMvc.perform(get("/user/{id}", userId)).andExpect(status().isOk())
+        .andExpect(content().string(userId));
   }
 
   @Test

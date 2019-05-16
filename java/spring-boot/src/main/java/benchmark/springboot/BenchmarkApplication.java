@@ -22,7 +22,7 @@ public class BenchmarkApplication {
     }
 
     @GetMapping("/user/{id}")
-    public String userId(@PathVariable String id) {
+    public Integer userId(@PathVariable Integer id) {
       return id;
     }
 
