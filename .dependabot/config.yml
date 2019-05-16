@@ -364,6 +364,12 @@ update_configs:
       - language:go
 
   - package_manager: "go:modules"
+    directory: "/go/gorouter"
+    update_schedule: "daily"
+    default_labels:
+      - language:go
+
+  - package_manager: "go:modules"
     directory: "/go/kami"
     update_schedule: "daily"
     default_reviewers:
