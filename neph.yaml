@@ -491,7 +491,7 @@ act:
 
 spring-boot:
   commands:
-    - socker build -t spring-boot .
+    - docker build -t spring-boot .
   dir: java/spring-boot
 
 slim:
