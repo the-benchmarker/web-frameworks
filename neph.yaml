@@ -63,6 +63,7 @@ python:
     - bocadillo
     - fastapi
     - molten
+    - masonite
 
 go:
   depends_on:
@@ -313,6 +314,11 @@ molten:
   commands:
     - docker build -t molten .
   dir: python/molten
+
+masonite:
+  commands:
+    - docker build -t masonite .
+  dir: python/masonite
 
 echo:
   commands:
