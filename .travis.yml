@@ -108,6 +108,7 @@ env:
     - FRAMEWORK=turbo_polka
     - FRAMEWORK=kore
     - FRAMEWORK=agoo-c
+    - FRAMEWORK=masonite
     - FRAMEWORK=muneem
     - FRAMEWORK=ktor
 

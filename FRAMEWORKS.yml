@@ -74,6 +74,10 @@ node:
     type: experimental
     language: 12.2
 python:
+  masonite:
+    language: "3.7"
+    version: "2.1"
+    website: masoniteproject.com
   sanic:
     github: huge-success/sanic
     version: "19.3"
