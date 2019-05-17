@@ -79,6 +79,7 @@ env:
     - FRAMEWORK=orion
     - FRAMEWORK=athena
     - FRAMEWORK=kitura
+    - FRAMEWORK=kitura-nio
     - FRAMEWORK=perfect
     - FRAMEWORK=vapor
     - FRAMEWORK=gin

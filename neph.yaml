@@ -83,6 +83,7 @@ swift:
     - vapor
     - perfect
     - kitura
+    - kitura-nio
 
 rust:
   depends_on:
@@ -386,6 +387,11 @@ kitura:
   commands:
     - docker build -t kitura .
   dir: swift/kitura
+
+kitura-nio:
+  commands:
+    - docker build -t kitura-nio .
+  dir: swift/kitura-nio
 
 actix-web:
   commands:
