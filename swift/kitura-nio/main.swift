@@ -7,10 +7,14 @@ router.get("/") { _, res, next in
     next()
 }
 
-router.get("/user/:id") {  req, res, next in
-  let id = req.parameters["id"] ?? ""
-  try res.send(id).end()
-  next()
+/**
+ In this case, the path /:id(\\d+) specifies that only digits should be matched.
+ This path will be matched for /123, but not / or /abc.
+ */
+router.get("/user/:id(\\d+)") { req, res, next in
+    let id = req.parameters["id"] ?? ""
+    try res.send(id).end()
+    next()
 }
 
 router.post("/user") { _, res, next in
