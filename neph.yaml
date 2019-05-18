@@ -138,6 +138,7 @@ php:
     - lumen
     - zend-expressive
     - zend-framework
+    - swoole
 
 c:
   depends_on:
@@ -542,6 +543,11 @@ zend-framework:
   commands:
     - docker build -t zend-framework .
   dir: php/zend-framework
+
+swoole:
+  commands:
+    - docker build -t swoole .
+  dir: php/swoole
 
 kore:
   commands:

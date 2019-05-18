@@ -1,4 +1,4 @@
-FROM twosee/swoole-coroutine:latest
+FROM ldjbenben/swoole:4.3-php7.3-cli-composer
 
 WORKDIR /usr/src/app
 
