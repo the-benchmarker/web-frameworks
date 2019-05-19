@@ -1,8 +1,11 @@
 {
     "require": {
+        "php": "~7.3",
+        "ext-swoole": "~4",
         "symfony/yaml": "4.2.8",
         "symfony/console": "4.2.8",
-        "sensio/framework-extra-bundle": "5.3.1"
+        "sensio/framework-extra-bundle": "5.3.1",
+        "k911/swoole-bundle": "0.5.2"
     },
     "config": {
         "preferred-install": {
