@@ -138,7 +138,7 @@ php:
     - lumen
     - zend-expressive
     - zend-framework
-    - swoole
+    - swoole_fast-route
 
 c:
   depends_on:
