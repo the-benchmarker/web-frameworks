@@ -132,7 +132,7 @@ CPU Cores: 8
 | ruby (2.6) | [rails](http://rubyonrails.org) (5.2) | 79.45 ms | 12.66 ms | 252.60 ms | 633.58 ms | 1537.61 ms | 136681.00 | 
 | go (1.12) | [beego](http://beego.me) (1.12) | 17.92 ms | 14.09 ms | 32.58 ms | 80.21 ms | 253.07 ms | 14980.67 | 
 | csharp (7.3) | [aspnetcore](http://docs.microsoft.com/en-us/aspnet/index) (2.2) | 17.43 ms | 14.18 ms | 23.37 ms | 77.40 ms | 758.17 ms | 29015.00 | 
-| go (1.12) | [gin](http://gin-gonic.com) (1.3) | 20.09 ms | 15.02 ms | 39.87 ms | 88.54 ms | 237.99 ms | 17171.33 | 
+| go (1.12) | [gin](http://gin-gonic.com) (1.4) | 20.09 ms | 15.02 ms | 39.87 ms | 88.54 ms | 237.99 ms | 17171.33 | 
 | go (1.12) | [echo](http://echo.labstack.com) (4.1) | 20.25 ms | 15.32 ms | 39.15 ms | 88.76 ms | 254.29 ms | 17219.00 | 
 | go (1.12) | [gorilla-mux](http://www.gorillatoolkit.org/pkg/mux) (1.7) | 21.48 ms | 15.36 ms | 44.70 ms | 98.79 ms | 320.04 ms | 19535.00 | 
 | go (1.12) | [gorouter](http://github.com/vardius/gorouter/wiki) (4.0) | 21.86 ms | 15.65 ms | 43.23 ms | 108.49 ms | 284.86 ms | 20649.00 | 
@@ -221,7 +221,7 @@ CPU Cores: 8
 | go (1.12) | [beego](http://beego.me) (1.12) | 61240.67 | 82.12 MB |
 | csharp (7.3) | [aspnetcore](http://docs.microsoft.com/en-us/aspnet/index) (2.2) | 59399.00 | 96.70 MB |
 | rust (1.34) | [iron](http://ironframework.io) (0.6) | 57578.67 | 72.52 MB |
-| go (1.12) | [gin](http://gin-gonic.com) (1.3) | 55097.00 | 96.76 MB |
+| go (1.12) | [gin](http://gin-gonic.com) (1.4) | 55097.00 | 96.76 MB |
 | node (12.2) | [restana](http://github.com/jkyberneees/ana) (2.13) | 54178.67 | 81.23 MB |
 | go (1.12) | [echo](http://echo.labstack.com) (4.1) | 53946.33 | 94.68 MB |
 | go (1.12) | [violetear](http://violetear.org) (7.0) | 53854.33 | 71.95 MB |
