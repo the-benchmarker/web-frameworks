@@ -32,5 +32,11 @@ struct Server
   include Router
 end
 
-server = Server.new
-server.run
+System.cpu_count.times do |i|
+  Process.fork do
+    server = Server.new
+    server.run
+  end
+end
+
+sleep

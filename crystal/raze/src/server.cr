@@ -15,4 +15,12 @@ end
 Raze.config.logging = false
 Raze.config.port = 3000
 Raze.config.env = "production"
-Raze.run
+Raze.config.reuse_port = true
+
+System.cpu_count.times do |i|
+  Process.fork do
+    Raze.run
+  end
+end
+
+sleep

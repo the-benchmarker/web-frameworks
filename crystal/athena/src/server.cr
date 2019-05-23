@@ -15,4 +15,10 @@ class BenchmarkController < Athena::Routing::Controller
   end
 end
 
-Athena::Routing.run(3000)
+System.cpu_count.times do |i|
+  Process.fork do
+    Athena::Routing.run(3000, reuse_port: true)
+  end
+end
+
+sleep

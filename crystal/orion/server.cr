@@ -18,4 +18,10 @@ end
 
 puts MyApplication.visualize
 
-MyApplication.listen(host: "0.0.0.0", port: 3000, reuse_port: true)
+System.cpu_count.times do |i|
+  Process.fork do
+    MyApplication.listen(host: "0.0.0.0", port: 3000, reuse_port: true)
+  end
+end
+
+sleep
