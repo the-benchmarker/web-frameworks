@@ -17,11 +17,11 @@ learn more more about Service Providers in our documentation
 PROVIDERS = [
     # Framework Providers
     AppProvider,
-    SessionProvider,
+    # SessionProvider,
     RouteProvider,
-    StatusCodeProvider,
-    WhitenoiseProvider,
-    ViewProvider,
+    # StatusCodeProvider,
+    # WhitenoiseProvider,
+    # ViewProvider,
 
     # Optional Framework Providers
     # SassProvider,
