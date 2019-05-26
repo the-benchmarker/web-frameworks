@@ -6,8 +6,6 @@ COPY requirements.txt wsgi.py ./
 COPY app app
 COPY bootstrap bootstrap
 COPY config config
-COPY databases databases
-COPY resources resources
 COPY routes routes
 
 RUN pip install --no-cache-dir -r requirements.txt
