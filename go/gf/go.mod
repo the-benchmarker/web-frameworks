@@ -2,4 +2,4 @@ module main
 
 go 1.12
 
-require github.com/gogf/gf v1.6.14
+require github.com/gogf/gf v1.6.15
