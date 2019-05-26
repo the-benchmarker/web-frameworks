@@ -63,7 +63,6 @@ python:
     - bocadillo
     - fastapi
     - molten
-    - masonite
 
 go:
   depends_on:
