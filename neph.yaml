@@ -104,6 +104,7 @@ node:
     - foxify
     - turbo_polka
     - restana
+    - 0http
     - muneem
 
 elixir:
@@ -426,6 +427,11 @@ restana:
   commands:
     - docker build -t restana .
   dir: node/restana
+
+0http:
+  commands:
+    - docker build -t 0http .
+  dir: node/0http
 
 fastify:
   commands:
