@@ -1,4 +1,4 @@
-FROM elixir:1.8.0
+FROM elixir:1.8.2
 
 RUN /usr/local/bin/mix local.hex --force && \
     /usr/local/bin/mix local.rebar --force && \
