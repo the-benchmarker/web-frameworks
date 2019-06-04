@@ -1,4 +1,11 @@
 require "../config/*"
 
 Amber.env = "production"
-Amber::Server.start
+
+System.cpu_count.times do |i|
+  Process.fork do
+    Amber::Server.start
+  end
+end
+
+sleep
