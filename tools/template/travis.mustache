@@ -1,0 +1,26 @@
+# Exit build if not necessary
+before_install:
+  # run only if current implementation is modified
+  - bash .ci/has_to_run.sh || travis_terminate 0
+
+# Use docker to containerize frameworks
+services: docker
+
+# This tool is written in crystal
+language: crystal
+
+# One build per framework
+env:
+  matrix:
+    {{#frameworks}}
+      - FRAMEWORK={{.}}
+    {{/frameworks}}
+
+script:
+  - shards build
+  - bin/neph -v
+  - bin/neph ${FRAMEWORK} --mode=CI --seq
+  - crystal spec
+
+notifications:
+  email: false
