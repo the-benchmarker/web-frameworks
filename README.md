@@ -52,6 +52,12 @@ shards install
 shards build
 ~~~
 
++ Make framework list
+
+~~~sh
+bin/make config
+~~~
+
 + Build containers
 
 > jobs are either languages (example : crystal) or frameworks (example : router.cr)
