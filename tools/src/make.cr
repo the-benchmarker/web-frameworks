@@ -1,5 +1,6 @@
 require "admiral"
 require "yaml"
+require "crustache"
 
 struct FrameworkConfig
   property name : String
@@ -30,7 +31,7 @@ class App < Admiral::Command
 
         website = config["framework"]["website"]?
         if website.nil?
-          website = "github/#{config["framework"]["github"]}"
+          website = "github.com/#{config["framework"]["github"]}"
         end
         version = config["framework"]["version"]
         langver = config["provider"]["default"]["language"]
@@ -66,7 +67,30 @@ class App < Admiral::Command
     end
   end
 
+  class TravisConfig < Admiral::Command
+    def run
+      frameworks = [] of String
+      config = YAML.parse(File.read("FRAMEWORKS.yml"))
+      config.as_h.each do |language|
+        language.each do |key|
+          if key.to_s.size >= 25
+            key.as_h.each do |framework|
+              framework.each do |info|
+                if info.to_s.size <= 25
+                  frameworks << info.to_s
+                end
+              end
+            end
+          end
+        end
+      end
+      template = Crustache.parse(File.read("tools/template/travis.mustache"))
+      File.write(".travis.yml", Crustache.render template, {"frameworks" => frameworks})
+    end
+  end
+
   register_sub_command config : Config, description "Create framework list"
+  register_sub_command ci_config : TravisConfig, description "Create configuration file for CI"
 
   def run
     puts "help"
