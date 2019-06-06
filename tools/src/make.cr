@@ -12,12 +12,10 @@ struct FrameworkConfig
   end
 end
 
-alias FrameworkConfigs = Array(FrameworkConfig)
-
 class App < Admiral::Command
   class Config < Admiral::Command
     def run
-      frameworks = {} of String => FrameworkConfigs
+      frameworks = {} of String => Array(FrameworkConfig)
       Dir.glob("*/*/config.yml").each do |file|
         directory = File.dirname(file)
         infos = directory.split("/")
@@ -78,7 +76,65 @@ class App < Admiral::Command
     end
   end
 
+  class NephConfig < Admiral::Command
+    def run
+      frameworks = {} of String => Array(String)
+      Dir.glob("*/*/config.yml").each do |file|
+        directory = File.dirname(file)
+        infos = directory.split("/")
+        framework = infos.pop
+        language = infos.pop
+
+        unless frameworks.has_key?(language)
+          frameworks[language] = [] of String
+        end
+
+        frameworks[language] << framework
+      end
+
+      selection = YAML.build do |yaml|
+        yaml.mapping do
+          yaml.scalar "main"
+          yaml.mapping do
+            yaml.scalar "depends_on"
+            yaml.sequence do
+              frameworks.each do |language, _|
+                yaml.scalar language
+              end
+            end
+          end
+          frameworks.each do |language, tools|
+            yaml.scalar language
+            yaml.mapping do
+              yaml.scalar "depends_on"
+              yaml.sequence do
+                tools.each do |tool|
+                  yaml.scalar tool
+                end
+              end
+            end
+          end
+          frameworks.each do |language, tools|
+            tools.each do |tool|
+              yaml.scalar tool
+              yaml.mapping do
+                yaml.scalar "commands"
+                yaml.sequence do
+                  yaml.scalar "docker build -t #{tool} ."
+                end
+                yaml.scalar "dir"
+                yaml.scalar "#{language}/#{tool}"
+              end
+            end
+          end
+        end
+      end
+      File.write("neph.yaml", selection)
+    end
+  end
+
   register_sub_command config : Config, description "Create framework list"
+  register_sub_command neph_config : NephConfig, description "Create neph build tool configuration file"
   register_sub_command ci_config : TravisConfig, description "Create configuration file for CI"
 
   def run
