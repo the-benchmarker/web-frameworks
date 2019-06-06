@@ -16,13 +16,13 @@ class App < Admiral::Command
   class Config < Admiral::Command
     def run
       frameworks = {} of String => Array(FrameworkConfig)
-      Dir.glob("*/*/config.yml").each do |file|
+      Dir.glob("*/*/config.yaml").each do |file|
         directory = File.dirname(file)
         infos = directory.split("/")
         framework = infos.pop
         language = infos.pop
         fwk_config = YAML.parse(File.read(file))
-        lng_config = YAML.parse(File.read(File.join(language, "config.yml")))
+        lng_config = YAML.parse(File.read(File.join(language, "config.yaml")))
         config = lng_config.as_h.merge(fwk_config.as_h)
 
         # Discover documentation URL for this framework
@@ -61,14 +61,14 @@ class App < Admiral::Command
           end
         end
       end
-      File.write("FRAMEWORKS.yml", selection)
+      File.write("FRAMEWORKS.yaml", selection)
     end
   end
 
   class TravisConfig < Admiral::Command
     def run
       frameworks = [] of String
-      Dir.glob("*/*/config.yml").each do |file|
+      Dir.glob("*/*/config.yaml").each do |file|
         frameworks << file.split("/")[-2]
       end
       template = Crustache.parse(File.read("tools/template/travis.mustache"))
@@ -79,7 +79,7 @@ class App < Admiral::Command
   class NephConfig < Admiral::Command
     def run
       frameworks = {} of String => Array(String)
-      Dir.glob("*/*/config.yml").each do |file|
+      Dir.glob("*/*/config.yaml").each do |file|
         directory = File.dirname(file)
         infos = directory.split("/")
         framework = infos.pop
