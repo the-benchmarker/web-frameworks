@@ -17,6 +17,7 @@ env:
     {{/frameworks}}
 
 script:
+  - shards install
   - shards build
   - bin/neph -v
   - bin/neph ${FRAMEWORK} --mode=CI --seq
