@@ -71,7 +71,7 @@ class App < Admiral::Command
       Dir.glob("*/*/config.yaml").each do |file|
         frameworks << file.split("/")[-2]
       end
-      template = Crustache.parse(File.read("tools/template/travis.mustache"))
+      template = Crustache.parse(File.read(".ci/template.mustache"))
       File.write(".travis.yml", Crustache.render template, {"frameworks" => frameworks})
     end
   end
