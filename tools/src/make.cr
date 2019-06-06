@@ -70,19 +70,8 @@ class App < Admiral::Command
   class TravisConfig < Admiral::Command
     def run
       frameworks = [] of String
-      config = YAML.parse(File.read("FRAMEWORKS.yml"))
-      config.as_h.each do |language|
-        language.each do |key|
-          if key.to_s.size >= 25
-            key.as_h.each do |framework|
-              framework.each do |info|
-                if info.to_s.size <= 25
-                  frameworks << info.to_s
-                end
-              end
-            end
-          end
-        end
+      Dir.glob("*/*/config.yml").each do |file|
+        frameworks << file.split("/")[-2]
       end
       template = Crustache.parse(File.read("tools/template/travis.mustache"))
       File.write(".travis.yml", Crustache.render template, {"frameworks" => frameworks})
