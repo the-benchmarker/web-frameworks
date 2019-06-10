@@ -62,7 +62,7 @@ record Ranked, res : Filter, target : Target
 def frameworks : Array(Target)
   targets = [] of Target
 
-  YAML.parse(File.read("FRAMEWORKS.yml")).as_h.each do |lang, data|
+  YAML.parse(File.read("FRAMEWORKS.yaml")).as_h.each do |lang, data|
     data.as_h.each do |framework, line|
       row = line.as_h
       next if row.has_key?("type") && row["type"].to_s == "experimental" && !Options.with_experimental
