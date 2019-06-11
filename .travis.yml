@@ -1,0 +1,106 @@
+# Exit build if not necessary
+before_install:
+  # run only if current implementation is modified
+  - bash .ci/has_to_run.sh || travis_terminate 0
+
+# Use docker to containerize frameworks
+services: docker
+
+# This tool is written in crystal
+language: crystal
+
+# One build per framework
+env:
+  matrix:
+      - FRAMEWORK=kore
+      - FRAMEWORK=agoo-c
+      - FRAMEWORK=cuba
+      - FRAMEWORK=rack-routing
+      - FRAMEWORK=sinatra
+      - FRAMEWORK=roda
+      - FRAMEWORK=agoo
+      - FRAMEWORK=flame
+      - FRAMEWORK=rails
+      - FRAMEWORK=hanami
+      - FRAMEWORK=evhtp
+      - FRAMEWORK=spring-boot
+      - FRAMEWORK=act
+      - FRAMEWORK=hapi
+      - FRAMEWORK=fastify
+      - FRAMEWORK=0http
+      - FRAMEWORK=muneem
+      - FRAMEWORK=rayo
+      - FRAMEWORK=koa
+      - FRAMEWORK=express
+      - FRAMEWORK=foxify
+      - FRAMEWORK=restify
+      - FRAMEWORK=turbo_polka
+      - FRAMEWORK=restana
+      - FRAMEWORK=polka
+      - FRAMEWORK=aspnetcore
+      - FRAMEWORK=raze
+      - FRAMEWORK=amber
+      - FRAMEWORK=lucky
+      - FRAMEWORK=spider-gazelle
+      - FRAMEWORK=router.cr
+      - FRAMEWORK=kemal
+      - FRAMEWORK=athena
+      - FRAMEWORK=orion
+      - FRAMEWORK=onyx
+      - FRAMEWORK=starlette
+      - FRAMEWORK=japronto
+      - FRAMEWORK=falcon
+      - FRAMEWORK=bottle
+      - FRAMEWORK=sanic
+      - FRAMEWORK=bocadillo
+      - FRAMEWORK=cyclone
+      - FRAMEWORK=responder
+      - FRAMEWORK=masonite
+      - FRAMEWORK=quart
+      - FRAMEWORK=fastapi
+      - FRAMEWORK=hug
+      - FRAMEWORK=molten
+      - FRAMEWORK=vibora
+      - FRAMEWORK=django
+      - FRAMEWORK=flask
+      - FRAMEWORK=tornado
+      - FRAMEWORK=aiohttp
+      - FRAMEWORK=nickel
+      - FRAMEWORK=actix-web
+      - FRAMEWORK=rocket
+      - FRAMEWORK=gotham
+      - FRAMEWORK=iron
+      - FRAMEWORK=http4s
+      - FRAMEWORK=akkahttp
+      - FRAMEWORK=slim
+      - FRAMEWORK=zend-expressive
+      - FRAMEWORK=lumen
+      - FRAMEWORK=laravel
+      - FRAMEWORK=zend-framework
+      - FRAMEWORK=symfony
+      - FRAMEWORK=vapor
+      - FRAMEWORK=kitura-nio
+      - FRAMEWORK=perfect
+      - FRAMEWORK=kitura
+      - FRAMEWORK=ktor
+      - FRAMEWORK=echo
+      - FRAMEWORK=gorouter
+      - FRAMEWORK=gf
+      - FRAMEWORK=beego
+      - FRAMEWORK=chi
+      - FRAMEWORK=gin
+      - FRAMEWORK=gorilla-mux
+      - FRAMEWORK=kami
+      - FRAMEWORK=violetear
+      - FRAMEWORK=fasthttprouter
+      - FRAMEWORK=jester
+
+script:
+  - shards install
+  - shards build
+  - bin/neph -v
+  - bin/neph ${FRAMEWORK} --mode=CI --seq
+  - crystal spec
+
+notifications:
+  email: false
