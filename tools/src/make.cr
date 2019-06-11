@@ -133,9 +133,71 @@ class App < Admiral::Command
     end
   end
 
+  class DependabotConfig < Admiral::Command
+    def run
+      mapping = YAML.parse(File.read(".dependabot/mapping.yaml"))
+      frameworks = {} of String => Array(String)
+      Dir.glob("*/*/config.yaml").each do |file|
+        directory = File.dirname(file)
+        infos = directory.split("/")
+        framework = infos.pop
+        language = infos.pop
+
+        unless frameworks.has_key?(language)
+          frameworks[language] = [] of String
+        end
+
+        frameworks[language] << framework
+      end
+      selection = YAML.build do |yaml|
+        yaml.mapping do
+          yaml.scalar "version"
+          yaml.scalar 1
+          yaml.scalar "update_configs"
+
+          yaml.sequence do
+            frameworks.each do |language, tools|
+              tools.each do |tool|
+                if mapping["languages"].as_h[language]?
+                  yaml.mapping do
+                    yaml.scalar "package_manager"
+                    yaml.scalar mapping["languages"][language]["label"]
+                    yaml.scalar "update_schedule"
+                    yaml.scalar mapping["languages"][language]["update_schedule"]
+                    yaml.scalar "directory"
+                    yaml.scalar "#{language}/#{tool}"
+                    yaml.scalar "default_labels"
+                    yaml.sequence do
+                      yaml.scalar "language:#{language}"
+                    end
+                  end
+                end
+              end
+              directory = "#{language}/#{frameworks[language].first}"
+              yaml.mapping do
+                yaml.scalar "package_manager"
+                yaml.scalar "docker"
+                yaml.scalar "update_schedule"
+                yaml.scalar "daily"
+                yaml.scalar "directory"
+                yaml.scalar directory
+                yaml.scalar "default_labels"
+                yaml.sequence do
+                  yaml.scalar "docker"
+                end
+              end
+            end
+          end
+        end
+      end
+      File.write(".dependabot/config.yml", selection)
+    end
+  end
+
   register_sub_command config : Config, description "Create framework list"
   register_sub_command neph_config : NephConfig, description "Create neph build tool configuration file"
   register_sub_command ci_config : TravisConfig, description "Create configuration file for CI"
+  register_sub_command deps_config : DependabotConfig, description "Create configuration file for deps update bot"
 
   def run
     puts "help"

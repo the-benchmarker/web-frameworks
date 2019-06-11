@@ -1,0 +1,36 @@
+tags:
+  update:
+    live_update: &live_update
+      update_schedule: "live"
+    daily_update: &daily_update
+      
+      
+languages:
+  ruby:
+    label: ruby:bundler
+    update_schedule: "live"
+  javascript:
+    label: javascript
+    update_schedule: "live"
+  python:
+    label: python
+    update_schedule: "live"
+  php:
+    label: php:composer
+    update_schedule: "live"
+  elixir:
+    label: elixir:hex
+    update_schedule: "live"
+  rust:
+    label: rust:cargo
+    update_schedule: "live"
+  java:
+    label: java:maven
+    update_schedule: "daily"
+  go:
+    label: go:modules
+    update_schedule: "daily"
+docker:
+  update_schedule: "daily"
+  default_labels:
+    - docker
