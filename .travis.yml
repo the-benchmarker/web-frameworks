@@ -1,130 +1,106 @@
-# Avoid bots branches
-branches:
-  only:
-    - /^(?!.*\/).*$/
-    
 # Exit build if not necessary
 before_install:
   # run only if current implementation is modified
   - bash .ci/has_to_run.sh || travis_terminate 0
 
-  # Load docker cache
-  - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
-
 # Use docker to containerize frameworks
 services: docker
-
-# Declare cache folders
-cache:
-  directories:
-    - $HOME/docker
-
-# Cache docker images (only tagged ones)
-before_cache:
-  - >
-    mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
-    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
 
 # This tool is written in crystal
 language: crystal
 
 # One build per framework
-# ! This list list has to be updated manually !
 env:
   matrix:
-    - FRAMEWORK=aspnetcore
-    - FRAMEWORK=akkahttp
-    - FRAMEWORK=http4s
-    - FRAMEWORK=evhtp
-    - FRAMEWORK=slim
-    - FRAMEWORK=symfony
-    - FRAMEWORK=laravel
-    - FRAMEWORK=lumen
-    - FRAMEWORK=zend-expressive
-    - FRAMEWORK=zend-framework
-    - FRAMEWORK=tornado
-    - FRAMEWORK=sanic
-    - FRAMEWORK=japronto
-    - FRAMEWORK=flask
-    - FRAMEWORK=vibora
-    - FRAMEWORK=django
-    - FRAMEWORK=bottle
-    - FRAMEWORK=aiohttp
-    - FRAMEWORK=quart
-    - FRAMEWORK=cyclone
-    - FRAMEWORK=falcon
-    - FRAMEWORK=starlette
-    - FRAMEWORK=responder
-    - FRAMEWORK=hug
-    - FRAMEWORK=bocadillo
-    - FRAMEWORK=fastapi
-    - FRAMEWORK=molten
-    - FRAMEWORK=jester
-    - FRAMEWORK=act
-    - FRAMEWORK=spring-boot
-    - FRAMEWORK=rails
-    - FRAMEWORK=rack-routing
-    - FRAMEWORK=sinatra
-    - FRAMEWORK=hanami
-    - FRAMEWORK=roda
-    - FRAMEWORK=agoo
-    - FRAMEWORK=flame
-    - FRAMEWORK=raze
-    - FRAMEWORK=kemal
-    - FRAMEWORK=spider-gazelle
-    - FRAMEWORK=lucky
-    - FRAMEWORK=amber
-    - FRAMEWORK=router.cr
-    - FRAMEWORK=onyx
-    - FRAMEWORK=orion
-    - FRAMEWORK=athena
-    - FRAMEWORK=kitura
-    - FRAMEWORK=kitura-nio
-    - FRAMEWORK=perfect
-    - FRAMEWORK=vapor
-    - FRAMEWORK=gin
-    - FRAMEWORK=fasthttprouter
-    - FRAMEWORK=echo
-    - FRAMEWORK=beego
-    - FRAMEWORK=gf
-    - FRAMEWORK=gorilla-mux
-    - FRAMEWORK=gorouter
-    - FRAMEWORK=chi
-    - FRAMEWORK=kami
-    - FRAMEWORK=violetear
-    - FRAMEWORK=nickel
-    - FRAMEWORK=actix-web
-    - FRAMEWORK=gotham
-    - FRAMEWORK=rocket
-    - FRAMEWORK=iron
-    - FRAMEWORK=restify
-    - FRAMEWORK=express
-    - FRAMEWORK=restana
-    - FRAMEWORK=0http
-    - FRAMEWORK=hapi
-    - FRAMEWORK=fastify
-    - FRAMEWORK=foxify
-    - FRAMEWORK=koa
-    - FRAMEWORK=polka
-    - FRAMEWORK=rayo
-    - FRAMEWORK=turbo_polka
-    - FRAMEWORK=kore
-    - FRAMEWORK=agoo-c
-    - FRAMEWORK=masonite
-    - FRAMEWORK=muneem
-    - FRAMEWORK=ktor
-
-# Lint yaml files in a specific jobs
-jobs:
-  include:
-    - stage: lint
-      script: bash .ci/lint.sh
-      env: FRAMEWORK=rails
+      - FRAMEWORK=kore
+      - FRAMEWORK=agoo-c
+      - FRAMEWORK=cuba
+      - FRAMEWORK=rack-routing
+      - FRAMEWORK=sinatra
+      - FRAMEWORK=roda
+      - FRAMEWORK=agoo
+      - FRAMEWORK=flame
+      - FRAMEWORK=rails
+      - FRAMEWORK=hanami
+      - FRAMEWORK=evhtp
+      - FRAMEWORK=spring-boot
+      - FRAMEWORK=act
+      - FRAMEWORK=hapi
+      - FRAMEWORK=fastify
+      - FRAMEWORK=0http
+      - FRAMEWORK=muneem
+      - FRAMEWORK=rayo
+      - FRAMEWORK=koa
+      - FRAMEWORK=express
+      - FRAMEWORK=foxify
+      - FRAMEWORK=restify
+      - FRAMEWORK=turbo_polka
+      - FRAMEWORK=restana
+      - FRAMEWORK=polka
+      - FRAMEWORK=aspnetcore
+      - FRAMEWORK=raze
+      - FRAMEWORK=amber
+      - FRAMEWORK=lucky
+      - FRAMEWORK=spider-gazelle
+      - FRAMEWORK=router.cr
+      - FRAMEWORK=kemal
+      - FRAMEWORK=athena
+      - FRAMEWORK=orion
+      - FRAMEWORK=onyx
+      - FRAMEWORK=starlette
+      - FRAMEWORK=japronto
+      - FRAMEWORK=falcon
+      - FRAMEWORK=bottle
+      - FRAMEWORK=sanic
+      - FRAMEWORK=bocadillo
+      - FRAMEWORK=cyclone
+      - FRAMEWORK=responder
+      - FRAMEWORK=masonite
+      - FRAMEWORK=quart
+      - FRAMEWORK=fastapi
+      - FRAMEWORK=hug
+      - FRAMEWORK=molten
+      - FRAMEWORK=vibora
+      - FRAMEWORK=django
+      - FRAMEWORK=flask
+      - FRAMEWORK=tornado
+      - FRAMEWORK=aiohttp
+      - FRAMEWORK=nickel
+      - FRAMEWORK=actix-web
+      - FRAMEWORK=rocket
+      - FRAMEWORK=gotham
+      - FRAMEWORK=iron
+      - FRAMEWORK=http4s
+      - FRAMEWORK=akkahttp
+      - FRAMEWORK=slim
+      - FRAMEWORK=zend-expressive
+      - FRAMEWORK=lumen
+      - FRAMEWORK=laravel
+      - FRAMEWORK=zend-framework
+      - FRAMEWORK=symfony
+      - FRAMEWORK=vapor
+      - FRAMEWORK=kitura-nio
+      - FRAMEWORK=perfect
+      - FRAMEWORK=kitura
+      - FRAMEWORK=ktor
+      - FRAMEWORK=echo
+      - FRAMEWORK=gorouter
+      - FRAMEWORK=gf
+      - FRAMEWORK=beego
+      - FRAMEWORK=chi
+      - FRAMEWORK=gin
+      - FRAMEWORK=gorilla-mux
+      - FRAMEWORK=kami
+      - FRAMEWORK=violetear
+      - FRAMEWORK=fasthttprouter
+      - FRAMEWORK=jester
 
 script:
+  - shards install
   - shards build
   - bin/neph -v
   - bin/neph ${FRAMEWORK} --mode=CI --seq
+  - bin/make neph_config
   - crystal spec
 
 notifications:

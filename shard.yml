@@ -13,6 +13,9 @@ dependencies:
   kiwi:
     github: crystal-community/kiwi
     version: 0.1.0
+  crustache:
+    github: MakeNowJust/crustache
+    version: 2.4.0
 
 targets:
   neph:
@@ -21,3 +24,5 @@ targets:
     main: tools/src/benchmarker.cr
   client:
     main: tools/src/client.cr
+  make:
+    main: tools/src/make.cr
