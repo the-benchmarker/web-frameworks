@@ -16,6 +16,9 @@ dependencies:
   crustache:
     github: MakeNowJust/crustache
     version: 2.4.0
+  admiral:
+    github: jwaldrip/admiral.cr
+    version: 1.8.0
 
 targets:
   neph:
