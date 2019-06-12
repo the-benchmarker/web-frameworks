@@ -19,9 +19,9 @@ env:
 script:
   - shards install
   - shards build
-  - bin/neph -v
-  - bin/neph ${FRAMEWORK} --mode=CI --seq
+  - bin/make config
   - bin/make neph_config
+  - bin/neph ${FRAMEWORK} --mode=CI --seq
   - crystal spec
 
 notifications:
