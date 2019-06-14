@@ -27,6 +27,7 @@ if [ ${LANGUAGE} == "elixir" ] ; then
 fi
 
 if [ ${LANGUAGE} == "scala" ] ; then
+  curl -Lo coursier https://git.io/coursier-cli && chmod +x coursier && sudo install coursier /usr/bin
   sudo coursier bootstrap org.scalameta:scalafmt-cli_2.12:2.0.0-RC5 \
     -r sonatype:snapshots \
     -o /usr/local/bin/scalafmt --standalone --main org.scalafmt.cli.Cli
