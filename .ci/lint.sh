@@ -55,7 +55,7 @@ if [ ${LANGUAGE} == "php" ] ; then
 fi
 
 if [ ${LANGUAGE} == "python" ] ; then
-  pip install black --user
+  pip install black
   black ${DIRECTORY} --check
   RETVAL=$?
 fi
