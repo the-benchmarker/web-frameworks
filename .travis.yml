@@ -1,107 +1,310 @@
-# Exit build if not necessary
-before_install:
-  # run only if current implementation is modified
-  - bash .ci/has_to_run.sh || travis_terminate 0
+# Avoid bots branches (or feature branches)
+branches:
+  only:
+    - /^(?!.*\/).*$/
 
-# Use docker to containerize frameworks
-services: docker
+# Use latest ubuntu (16.04) available
+dist: xenial
 
-# This tool is written in crystal
+# Update package list
+addons:
+  apt:
+    update: true
+
+
+# Use crystal by default
 language: crystal
-
-# One build per framework
-env:
-  matrix:
-      - FRAMEWORK=kore
-      - FRAMEWORK=agoo-c
-      - FRAMEWORK=cuba
-      - FRAMEWORK=rack-routing
-      - FRAMEWORK=sinatra
-      - FRAMEWORK=roda
-      - FRAMEWORK=agoo
-      - FRAMEWORK=flame
-      - FRAMEWORK=rails
-      - FRAMEWORK=hanami
-      - FRAMEWORK=evhtp
-      - FRAMEWORK=spring-boot
-      - FRAMEWORK=act
-      - FRAMEWORK=hapi
-      - FRAMEWORK=fastify
-      - FRAMEWORK=0http
-      - FRAMEWORK=muneem
-      - FRAMEWORK=rayo
-      - FRAMEWORK=koa
-      - FRAMEWORK=express
-      - FRAMEWORK=foxify
-      - FRAMEWORK=restify
-      - FRAMEWORK=turbo_polka
-      - FRAMEWORK=restana
-      - FRAMEWORK=polka
-      - FRAMEWORK=aspnetcore
-      - FRAMEWORK=raze
-      - FRAMEWORK=amber
-      - FRAMEWORK=lucky
-      - FRAMEWORK=spider-gazelle
-      - FRAMEWORK=router.cr
-      - FRAMEWORK=kemal
-      - FRAMEWORK=athena
-      - FRAMEWORK=orion
-      - FRAMEWORK=onyx
-      - FRAMEWORK=starlette
-      - FRAMEWORK=japronto
-      - FRAMEWORK=falcon
-      - FRAMEWORK=bottle
-      - FRAMEWORK=sanic
-      - FRAMEWORK=bocadillo
-      - FRAMEWORK=cyclone
-      - FRAMEWORK=responder
-      - FRAMEWORK=masonite
-      - FRAMEWORK=quart
-      - FRAMEWORK=fastapi
-      - FRAMEWORK=hug
-      - FRAMEWORK=molten
-      - FRAMEWORK=vibora
-      - FRAMEWORK=django
-      - FRAMEWORK=flask
-      - FRAMEWORK=tornado
-      - FRAMEWORK=aiohttp
-      - FRAMEWORK=nickel
-      - FRAMEWORK=actix-web
-      - FRAMEWORK=rocket
-      - FRAMEWORK=gotham
-      - FRAMEWORK=iron
-      - FRAMEWORK=http4s
-      - FRAMEWORK=akkahttp
-      - FRAMEWORK=slim
-      - FRAMEWORK=zend-expressive
-      - FRAMEWORK=lumen
-      - FRAMEWORK=laravel
-      - FRAMEWORK=zend-framework
-      - FRAMEWORK=symfony
-      - FRAMEWORK=vapor
-      - FRAMEWORK=kitura-nio
-      - FRAMEWORK=perfect
-      - FRAMEWORK=kitura
-      - FRAMEWORK=ktor
-      - FRAMEWORK=echo
-      - FRAMEWORK=gorouter
-      - FRAMEWORK=gf
-      - FRAMEWORK=beego
-      - FRAMEWORK=chi
-      - FRAMEWORK=gin
-      - FRAMEWORK=gorilla-mux
-      - FRAMEWORK=kami
-      - FRAMEWORK=violetear
-      - FRAMEWORK=fasthttprouter
-      - FRAMEWORK=jester
-
-script:
-  - shards install
-  - shards build
-  - bin/make config
-  - bin/make neph_config
-  - bin/neph ${FRAMEWORK} --mode=CI --seq
-  - crystal spec
+    
+jobs:
+  include:
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: c
+      env: LANGUAGE=c DIRECTORY=c
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: cpp
+      env: LANGUAGE=cpp DIRECTORY=cpp
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: crystal
+      env: LANGUAGE=crystal DIRECTORY=crystal
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: csharp
+      env: LANGUAGE=csharp DIRECTORY=csharp
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: elixir
+      env: LANGUAGE=elixir DIRECTORY=elixir
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: go
+      env: LANGUAGE=go DIRECTORY=go
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: java
+      env: LANGUAGE=java DIRECTORY=java
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: generic
+      env: LANGUAGE=nim DIRECTORY=nim
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: node_js
+      env: LANGUAGE=node DIRECTORY=node
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: objective-c
+      env: LANGUAGE=objc DIRECTORY=objc
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: php
+      env: LANGUAGE=php DIRECTORY=php
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: python
+      env: LANGUAGE=python DIRECTORY=python
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: ruby
+      env: LANGUAGE=ruby DIRECTORY=ruby
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: rust
+      env: LANGUAGE=rust DIRECTORY=rust
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: scala
+      env: LANGUAGE=scala DIRECTORY=scala
+    - stage: lint
+      script: bash .ci/lint.sh
+      language: swift
+      env: LANGUAGE=swift DIRECTORY=swift
+    - stage: test
+      services: docker
+      env: FRAMEWORK=aspnetcore
+    - stage: test
+      services: docker
+      env: FRAMEWORK=akkahttp
+    - stage: test
+      services: docker
+      env: FRAMEWORK=http4s
+    - stage: test
+      services: docker
+      env: FRAMEWORK=evhtp
+    - stage: test
+      services: docker      
+      env: FRAMEWORK=slim
+    - stage: test
+      services: docker
+      env: FRAMEWORK=symfony
+    - stage: test
+      services: docker
+      env: FRAMEWORK=laravel
+    - stage: test
+      services: docker
+      env: FRAMEWORK=lumen
+    - stage: test
+      services: docker
+      env: FRAMEWORK=zend-expressive
+    - stage: test
+      services: docker
+      env: FRAMEWORK=zend-framework
+    - stage: test
+      services: docker
+      env: FRAMEWORK=tornado
+    - stage: test
+      services: docker
+      env: FRAMEWORK=sanic
+    - stage: test
+      services: docker
+      env: FRAMEWORK=japronto
+    - stage: test
+      services: docker
+      env: FRAMEWORK=flask
+    - stage: test
+      services: docker
+      env: FRAMEWORK=vibora
+    - stage: test
+      services: docker
+      env: FRAMEWORK=django
+    - stage: test
+      services: docker
+      env: FRAMEWORK=bottle
+    - stage: test
+      services: docker
+      env: FRAMEWORK=aiohttp
+    - stage: test
+      services: docker
+      env: FRAMEWORK=quart
+    - stage: test
+      services: docker
+      env: FRAMEWORK=cyclone
+    - stage: test
+      services: docker
+      env: FRAMEWORK=falcon
+    - stage: test
+      services: docker
+      env: FRAMEWORK=starlette
+    - stage: test
+      services: docker
+      env: FRAMEWORK=responder
+    - stage: test
+      services: docker
+      env: FRAMEWORK=hug
+    - stage: test
+      services: docker
+      env: FRAMEWORK=bocadillo
+    - stage: test
+      services: docker
+      env: FRAMEWORK=fastapi
+    - stage: test
+      services: docker
+      env: FRAMEWORK=molten
+    - stage: test
+      services: docker
+      env: FRAMEWORK=jester
+    - stage: test
+      services: docker
+      env: FRAMEWORK=act
+    - stage: test
+      services: docker
+      env: FRAMEWORK=rails
+    - stage: test
+      services: docker
+      env: FRAMEWORK=rack-routing
+    - stage: test
+      services: docker
+      env: FRAMEWORK=sinatra
+    - stage: test
+      services: docker
+      env: FRAMEWORK=hanami
+    - stage: test
+      services: docker
+      env: FRAMEWORK=roda
+    - stage: test
+      services: docker
+      env: FRAMEWORK=agoo
+    - stage: test
+      services: docker
+      env: FRAMEWORK=flame
+    - stage: test
+      services: docker
+      env: FRAMEWORK=raze
+    - stage: test
+      services: docker
+      env: FRAMEWORK=kemal
+    - stage: test
+      services: docker
+      env: FRAMEWORK=spider-gazelle
+    - stage: test
+      services: docker
+      env: FRAMEWORK=lucky
+    - stage: test
+      services: docker
+      env: FRAMEWORK=amber
+    - stage: test
+      services: docker
+      env: FRAMEWORK=router.cr
+    - stage: test
+      services: docker
+      env: FRAMEWORK=onyx
+    - stage: test
+      services: docker
+      env: FRAMEWORK=orion
+    - stage: test
+      services: docker
+      env: FRAMEWORK=athena
+    - stage: test
+      services: docker
+      env: FRAMEWORK=kitura
+    - stage: test
+      services: docker
+      env: FRAMEWORK=perfect
+    - stage: test
+      services: docker
+      env: FRAMEWORK=vapor
+    - stage: test
+      services: docker
+      env: FRAMEWORK=gin
+    - stage: test
+      services: docker
+      env: FRAMEWORK=fasthttprouter
+    - stage: test
+      services: docker
+      env: FRAMEWORK=echo
+    - stage: test
+      services: docker
+      env: FRAMEWORK=beego
+    - stage: test
+      services: docker
+      env: FRAMEWORK=gf
+    - stage: test
+      services: docker
+      env: FRAMEWORK=gorilla-mux
+    - stage: test
+      script: bash .ci/test.sh
+      services: docker
+      env: FRAMEWORK=chi
+    - stage: test
+      script: bash .ci/test.sh
+      services: docker
+      env: FRAMEWORK=kami
+    - stage: test
+      services: docker
+      env: FRAMEWORK=nickel
+    - stage: test
+      services: docker
+      env: FRAMEWORK=actix-web
+    - stage: test
+      services: docker
+      env: FRAMEWORK=gotham
+    - stage: test
+      services: docker
+      env: FRAMEWORK=rocket
+    - stage: test
+      services: docker
+      env: FRAMEWORK=iron
+    - stage: test
+      services: docker
+      env: FRAMEWORK=restify
+    - stage: test
+      services: docker
+      env: FRAMEWORK=express
+    - stage: test
+      services: docker
+      env: FRAMEWORK=restana
+    - stage: test
+      services: docker
+      env: FRAMEWORK=hapi
+    - stage: test
+      services: docker
+      env: FRAMEWORK=fastify
+    - stage: test
+      services: docker
+      env: FRAMEWORK=foxify
+    - stage: test
+      services: docker
+      env: FRAMEWORK=koa
+    - stage: test
+      services: docker
+      env: FRAMEWORK=polka
+    - stage: test
+      services: docker
+      env: FRAMEWORK=rayo
+    - stage: test
+      services: docker
+      env: FRAMEWORK=turbo_polka
+    - stage: test
+      services: docker
+      env: FRAMEWORK=kore
+    - stage: test
+      services: docker
+      env: FRAMEWORK=agoo-c
+    - stage: test
+      services: docker
+      env: FRAMEWORK=muneem
 
 notifications:
   email: false

@@ -155,9 +155,9 @@ if [ ${LANGUAGE} == "rust" ] ; then
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "node" ] ; then
+if [ ${LANGUAGE} == "javascript" ] ; then
   npm -g install prettier
-  prettier --check "node/**/*.{js,json}"
+  prettier --check "${DIRECTORY}/**/*.{js,json}"
   RETVAL=$?
 fi
 
