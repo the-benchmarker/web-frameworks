@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'rack'
-require 'rspec'
-require 'rack/test'
+require "rack"
+require "rspec"
+require "rack/test"
 
-require './app/init'
+require "./app/init"
 
 RSpec.configure do |config|
   config.filter_run focus: true

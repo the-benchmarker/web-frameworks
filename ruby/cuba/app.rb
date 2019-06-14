@@ -10,7 +10,7 @@ Cuba.define do
     end
   end
   on post do
-    on "user" do |id|
+    on "user" do |_id|
       res.write ""
     end
   end

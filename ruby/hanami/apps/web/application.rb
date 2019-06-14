@@ -6,16 +6,16 @@ module Web
       root __dir__
 
       load_paths << [
-        'controllers'
+        "controllers"
       ]
 
-      routes 'config/routes'
+      routes "config/routes"
 
       # SECURITY
 
-      security.x_frame_options 'DENY'
-      security.x_content_type_options 'nosniff'
-      security.x_xss_protection '1; mode=block'
+      security.x_frame_options "DENY"
+      security.x_content_type_options "nosniff"
+      security.x_xss_protection "1; mode=block"
       security.content_security_policy %(
         form-action 'self';
         frame-ancestors 'self';

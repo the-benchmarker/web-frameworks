@@ -4,17 +4,17 @@ class Request
   def initialize(env)
     @env = env
     @request = Rack::Request.new(env)
-    @params  = params_for(env)
+    @params = params_for(env)
   end
 
   def params_for(env)
-    case env['REQUEST_METHOD'].to_sym
+    case env["REQUEST_METHOD"].to_sym
     when :GET
-      Rack::Utils.parse_nested_query(env['QUERY_STRING'])
+      Rack::Utils.parse_nested_query(env["QUERY_STRING"])
     when :POST, :PUT
       body = @request.body.read.to_s
 
-      body = '{}' if body == ''
+      body = "{}" if body == ""
 
       JSON.parse(body)
     end

@@ -1,3 +1,3 @@
-require './app/init'
+require "./app/init"
 
 run app

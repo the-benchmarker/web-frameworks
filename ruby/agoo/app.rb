@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'agoo'
+require "agoo"
 
-Agoo::Log.configure(dir: '',
+Agoo::Log.configure(dir: "",
                     console: true,
                     classic: true,
                     colorize: true,
@@ -17,8 +17,8 @@ Agoo::Log.configure(dir: '',
                     })
 
 worker_count = 4
-worker_count = ENV['AGOO_WORKER_COUNT'].to_i if ENV.key?('AGOO_WORKER_COUNT')
-Agoo::Server.init(3000, '.', thread_count: 0, worker_count: worker_count)
+worker_count = ENV["AGOO_WORKER_COUNT"].to_i if ENV.key?("AGOO_WORKER_COUNT")
+Agoo::Server.init(3000, ".", thread_count: 0, worker_count: worker_count)
 
 # Empty response.
 class Empty
@@ -34,7 +34,7 @@ end
 # Reflects the id as the returned value.
 class Reflect
   def self.call(req)
-    [200, {}, [req['PATH_INFO'][6..-1]]]
+    [200, {}, [req["PATH_INFO"][6..-1]]]
   end
 end
 
@@ -45,8 +45,8 @@ class Post
   end
 end
 
-Agoo::Server.handle(:GET, '/', Empty)
-Agoo::Server.handle(:GET, '/user/*', Reflect)
-Agoo::Server.handle(:POST, '/user', Post)
+Agoo::Server.handle(:GET, "/", Empty)
+Agoo::Server.handle(:GET, "/user/*", Reflect)
+Agoo::Server.handle(:POST, "/user", Post)
 
 Agoo::Server.start
