@@ -55,6 +55,7 @@ jobs:
       env: LANGUAGE=node DIRECTORY=node
     - stage: lint
       script: bash .ci/lint.sh
+      os: osx
       language: objective-c
       env: LANGUAGE=objc DIRECTORY=objc
     - stage: lint
@@ -79,7 +80,8 @@ jobs:
       env: LANGUAGE=scala DIRECTORY=scala
     - stage: lint
       script: bash .ci/lint.sh
-      language: swift
+      os: osx
+      language: objective-c
       env: LANGUAGE=swift DIRECTORY=swift
     - stage: test
       services: docker
