@@ -35,10 +35,6 @@ jobs:
       env: LANGUAGE=csharp DIRECTORY=csharp
     - stage: lint
       script: bash .ci/lint.sh
-      language: elixir
-      env: LANGUAGE=elixir DIRECTORY=elixir
-    - stage: lint
-      script: bash .ci/lint.sh
       language: go
       env: LANGUAGE=go DIRECTORY=go
     - stage: lint
