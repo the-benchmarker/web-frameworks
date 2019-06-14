@@ -68,9 +68,9 @@ jobs:
     
     
     {{#frameworks}}
-    - stage
+    - stage: test
       env: FRAMEWORK={{.}}
-      services: - docker
+      services: docker
     {{/frameworks}}
 
 notifications:

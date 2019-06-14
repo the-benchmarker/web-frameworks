@@ -5,7 +5,7 @@ int home(struct http_request *req);
 int user(struct http_request *req);
 int user_details(struct http_request *req);
 
-int home (struct http_request *req) {
+int home(struct http_request *req) {
   http_response(req, 200, NULL, 0);
   return (KORE_RESULT_OK);
 }

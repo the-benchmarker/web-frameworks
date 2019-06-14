@@ -1,4 +1,5 @@
 import logging
+
 """Database Settings."""
 
 from masonite import env
@@ -22,29 +23,29 @@ Supported Drivers: 'sqlite', 'mysql', 'postgres'
 """
 
 DATABASES = {
-    'default': env('DB_CONNECTION'),
-    'sqlite': {
-        'driver': 'sqlite',
-        'database': env('DB_DATABASE'),
-        'log_queries': env('DB_LOG'),
+    "default": env("DB_CONNECTION"),
+    "sqlite": {
+        "driver": "sqlite",
+        "database": env("DB_DATABASE"),
+        "log_queries": env("DB_LOG"),
     },
-    'mysql': {
-        'driver': 'mysql',
-        'host': env('DB_HOST'),
-        'database': env('DB_DATABASE'),
-        'port': env('DB_PORT'),
-        'user': env('DB_USERNAME'),
-        'password': env('DB_PASSWORD'),
-        'log_queries': env('DB_LOG'),
+    "mysql": {
+        "driver": "mysql",
+        "host": env("DB_HOST"),
+        "database": env("DB_DATABASE"),
+        "port": env("DB_PORT"),
+        "user": env("DB_USERNAME"),
+        "password": env("DB_PASSWORD"),
+        "log_queries": env("DB_LOG"),
     },
-    'postgres': {
-        'driver': 'postgres',
-        'host': env('DB_HOST'),
-        'database': env('DB_DATABASE'),
-        'port': env('DB_PORT'),
-        'user': env('DB_USERNAME'),
-        'password': env('DB_PASSWORD'),
-        'log_queries': env('DB_LOG'),
+    "postgres": {
+        "driver": "postgres",
+        "host": env("DB_HOST"),
+        "database": env("DB_DATABASE"),
+        "port": env("DB_PORT"),
+        "user": env("DB_USERNAME"),
+        "password": env("DB_PASSWORD"),
+        "log_queries": env("DB_LOG"),
     },
 }
 
@@ -52,11 +53,11 @@ DB = DatabaseManager(DATABASES)
 Model.set_connection_resolver(DB)
 
 
-logger = logging.getLogger('orator.connection.queries')
-logger.setLevel(logging.DEBUG )
+logger = logging.getLogger("orator.connection.queries")
+logger.setLevel(logging.DEBUG)
 
 formatter = logging.Formatter(
-    'It took %(elapsed_time)sms to execute the query %(query)s'
+    "It took %(elapsed_time)sms to execute the query %(query)s"
 )
 
 handler = logging.StreamHandler()

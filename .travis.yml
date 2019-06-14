@@ -67,252 +67,252 @@ jobs:
       env: LANGUAGE=swift DIRECTORY=swift
     
     
-    - stage
+    - stage: test
       env: FRAMEWORK=kore
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=agoo-c
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=cuba
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=rack-routing
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=sinatra
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=roda
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=agoo
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=flame
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=rails
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=hanami
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=evhtp
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=spring-boot
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=act
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=hapi
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=fastify
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=0http
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=muneem
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=rayo
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=koa
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=express
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=foxify
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=restify
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=turbo_polka
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=restana
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=polka
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=aspnetcore
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=raze
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=amber
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=lucky
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=spider-gazelle
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=router.cr
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=kemal
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=athena
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=orion
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=onyx
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=starlette
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=japronto
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=falcon
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=bottle
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=sanic
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=bocadillo
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=cyclone
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=responder
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=masonite
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=quart
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=fastapi
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=hug
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=molten
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=vibora
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=django
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=flask
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=tornado
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=aiohttp
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=nickel
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=actix-web
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=rocket
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=gotham
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=iron
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=http4s
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=akkahttp
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=slim
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=zend-expressive
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=lumen
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=laravel
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=zend-framework
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=symfony
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=vapor
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=kitura-nio
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=perfect
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=kitura
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=ktor
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=echo
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=gorouter
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=gf
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=beego
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=chi
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=gin
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=gorilla-mux
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=kami
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=violetear
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=fasthttprouter
-      services: - docker
-    - stage
+      services: docker
+    - stage: test
       env: FRAMEWORK=jester
-      services: - docker
+      services: docker
 
 notifications:
   email: false
