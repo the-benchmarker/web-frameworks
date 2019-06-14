@@ -1,31 +1,31 @@
 RETVAL=0
 
-if [ ${LANGUAGE} == "csharp" ] ; then
+if [[ ${LANGUAGE} == "csharp" ]] ; then
   sudo apt-get -qy install astyle
   find ${DIRECTORY} -type f -name '*.cs' > /tmp/list.txt
   while read line ; do
     astyle --mode=cs ${file}
     retval=$?
-    if [ $retval -ne 0 ]; then
+    if [[ $retval -ne 0 ]]; then
       RETVAL=${retval}
     fi
   done < /tmp/list.txt
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "elixir" ] ; then
+if [[ ${LANGUAGE} == "elixir" ]] ; then
   find ${DIRECTORY} -type f -name '*.exs' -or -name '*.ex' > /tmp/list.txt
   while read line ; do
     mix format ${file}
     retval=$?
-    if [ $retval -ne 0 ]; then
+    if [[ $retval -ne 0 ]]; then
       RETVAL=${retval}
     fi
   done < /tmp/list.txt
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "scala" ] ; then
+if [[ ${LANGUAGE} == "scala" ]] ; then
   curl -Lo coursier https://git.io/coursier-cli && chmod +x coursier && sudo install coursier /usr/bin
   sudo coursier bootstrap org.scalameta:scalafmt-cli_2.12:2.0.0-RC5 \
     -r sonatype:snapshots \
@@ -34,45 +34,45 @@ if [ ${LANGUAGE} == "scala" ] ; then
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "cpp" ] ; then
+if [[ ${LANGUAGE} == "cpp" ]] ; then
   find ${DIRECTORY} -type f -name '*.cpp' > /tmp/list.txt
   while read line ; do
     clang-format ${file}
     [[ -z `git ls-files --modified` ]]
     retval=$?
-    if [ $retval -ne 0 ]; then
+    if [[ $retval -ne 0 ]]; then
       RETVAL=${retval}
     fi
   done < /tmp/list.txt
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "php" ] ; then
+if [[ ${LANGUAGE} == "php" ]] ; then
   composer global require friendsofphp/php-cs-fixer
   php-cs-fixer fix php --rules=@PSR1,@PSR2
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "python" ] ; then
+if [[ ${LANGUAGE} == "python" ]] ; then
   pip install black
   black ${DIRECTORY} --check
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "c" ] ; then
+if [[ ${LANGUAGE} == "c" ]] ; then
   find ${DIRECTORY} -type f -name '*.c' > /tmp/list.txt
   while read line ; do
-    clang-format ${file}
-    [[ -z `git ls-files --modified` ]]
+    clang-format -style=chromium ${file}
+    [[ ! -n `git ls-files --modified` ]]
     retval=$?
-    if [ $retval -ne 0 ]; then
+    if [[ $retval -ne 0 ]]; then
       RETVAL=${retval}
     fi
   done < /tmp/list.txt
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "nim" ] ; then
+if [[ ${LANGUAGE} == "nim" ]] ; then
   sudo apt-get -qy install nim
   cd `mktemp -d`
   git clone https://github.com/nim-lang/Nim .
@@ -83,75 +83,75 @@ if [ ${LANGUAGE} == "nim" ] ; then
   while read line ; do
     nimpretty ${file}
     retval=$?
-    if [ $retval -ne 0 ]; then
+    if [[ $retval -ne 0 ]]; then
       RETVAL=${retval}
     fi
   done < /tmp/list.txt
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "java" ] ; then
+if [[ ${LANGUAGE} == "java" ]] ; then
   find ${DIRECTORY} -type f -name '*.java' > /tmp/list.txt
   while read line ; do
     clang-format --style=google ${file}
     [[ -z `git ls-files --modified` ]]
     retval=$?
-    if [ $retval -ne 0 ]; then
+    if [[ $retval -ne 0 ]]; then
       RETVAL=${retval}
     fi
   done < /tmp/list.txt
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "objc" ] ; then
+if [[ ${LANGUAGE} == "objc" ]] ; then
   find ${DIRECTORY} -type f -name '*.m' > /tmp/list.txt
   while read line ; do
     clang-format ${file}
     [[ -z `git ls-files --modified` ]]
     retval=$?
-    if [ $retval -ne 0 ]; then
+    if [[ $retval -ne 0 ]]; then
       RETVAL=${retval}
     fi
   done < /tmp/list.txt
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "ruby" ] ; then
+if [[ ${LANGUAGE} == "ruby" ]] ; then
   gem install rubocop
   rubocop ${DIRECTORY}
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "crystal" ] ; then
+if [[ ${LANGUAGE} == "crystal" ]] ; then
   crystal tool format --check ${DIRECTORY}
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "go" ] ; then
+if [[ ${LANGUAGE} == "go" ]] ; then
   go get golang.org/x/lint/golint
   golint -set_exit_status=true ${DIRECTORY}
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "swift" ] ; then
+if [[ ${LANGUAGE} == "swift" ]] ; then
   swiftlint lint ${DIRECTORY}
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "rust" ] ; then
+if [[ ${LANGUAGE} == "rust" ]] ; then
   rustup component add rustfmt --toolchain stable-x86_64-unknown-linux-gnu
   find ${DIRECTORY} -type f -name '*.rs' > /tmp/list.txt
   while read line ; do
     rustfmt --check ${file}
     retval=$?
-    if [ $retval -ne 0 ]; then
+    if [[ $retval -ne 0 ]]; then
       RETVAL=${retval}
     fi
   done < /tmp/list.txt
   RETVAL=$?
 fi
 
-if [ ${LANGUAGE} == "javascript" ] ; then
+if [[ ${LANGUAGE} == "javascript" ]] ; then
   npm -g install prettier
   prettier --check "${DIRECTORY}/**/*.{js,json}"
   RETVAL=$?
