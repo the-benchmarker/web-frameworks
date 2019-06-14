@@ -79,6 +79,7 @@ if [ ${LANGUAGE} == "nim" ] ; then
   cd `mktemp -d`
   git clone https://github.com/nim-lang/Nim .
   git checkout master
+  cd nimpretty
   nim c nimpretty.nim  
   find ${DIRECTORY} -type f -name '*.nim' -or -name '*.nimble'  > /tmp/list.txt
   while read line ; do
