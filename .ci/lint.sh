@@ -49,7 +49,7 @@ fi
 
 if [[ ${LANGUAGE} == "php" ]] ; then
   composer global require friendsofphp/php-cs-fixer
-  php-cs-fixer fix php --rules=@PSR1,@PSR2
+  ~/.config/composer/vendor/bin/php-cs-fixer fix php --rules=@PSR1,@PSR2
   RETVAL=$?
 fi
 
