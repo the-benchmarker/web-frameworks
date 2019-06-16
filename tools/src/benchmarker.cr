@@ -71,7 +71,7 @@ def frameworks : Array(Target)
       elsif row.has_key?("website")
         link = row["website"]
       end
-      target = Target.new(lang.as_s, framework.as_s, "http://#{link.to_s}", row["version"].to_s, row["language"].to_s)
+      target = Target.new(lang.as_s, framework.as_s, link.to_s, row["version"].to_s, row["language"].to_s)
       targets.push(target)
     end
   end
