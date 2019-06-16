@@ -1,5 +1,3 @@
-require "./initializers/**"
-
 require "amber"
 
 require "../src/controllers/application_controller"
