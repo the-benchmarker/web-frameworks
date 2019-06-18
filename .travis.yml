@@ -7,24 +7,50 @@ jobs:
     env: DIRECTORY=c LANGUAGE=c
   - stage: lint
     script: bash .ci/lint.sh
+<<<<<<< HEAD
     language: cpp
     env: DIRECTORY=cpp LANGUAGE=cpp
+=======
+    language: ruby
+    env: DIRECTORY=ruby LANGUAGE=ruby
+>>>>>>> feat(ci): Add rapidoid
+  - stage: lint
+    script: bash .ci/lint.sh
+    language: cpp
+    env: DIRECTORY=cpp LANGUAGE=cpp
+  - stage: lint
+    script: bash .ci/lint.sh
+<<<<<<< HEAD
+=======
+    language: java
+    env: DIRECTORY=java LANGUAGE=java
+  - stage: lint
+    script: bash .ci/lint.sh
+    language: node_js
+    node_js: 10
+    env: DIRECTORY=node LANGUAGE=node
+  - stage: lint
+    script: bash .ci/lint.sh
+>>>>>>> feat(ci): Add rapidoid
+    language: csharp
+    env: DIRECTORY=csharp LANGUAGE=csharp
   - stage: lint
     script: bash .ci/lint.sh
     language: crystal
     env: DIRECTORY=crystal LANGUAGE=crystal
   - stage: lint
     script: bash .ci/lint.sh
-    language: csharp
-    env: DIRECTORY=csharp LANGUAGE=csharp
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: go
-    env: DIRECTORY=go LANGUAGE=go
-  - stage: lint
-    script: bash .ci/lint.sh
+<<<<<<< HEAD
     language: java
     env: DIRECTORY=java LANGUAGE=java
+=======
+    language: python
+    env: DIRECTORY=python LANGUAGE=python
+  - stage: lint
+    script: bash .ci/lint.sh
+    language: rust
+    env: DIRECTORY=rust LANGUAGE=rust
+>>>>>>> feat(ci): Add rapidoid
   - stage: lint
     script: bash .ci/lint.sh
     language: java
@@ -35,11 +61,11 @@ jobs:
     env: DIRECTORY=nim LANGUAGE=nim
   - stage: lint
     script: bash .ci/lint.sh
-    language: node_js
-    node_js: 10
-    env: DIRECTORY=node LANGUAGE=node
+    language: php
+    env: DIRECTORY=php LANGUAGE=php
   - stage: lint
     script: bash .ci/lint.sh
+<<<<<<< HEAD
     language: php
     env: DIRECTORY=php LANGUAGE=php
   - stage: lint
@@ -50,12 +76,18 @@ jobs:
     script: bash .ci/lint.sh
     language: ruby
     env: DIRECTORY=ruby LANGUAGE=ruby
+=======
+    os: osx
+    language: swift
+    env: DIRECTORY=swift LANGUAGE=swift
+>>>>>>> feat(ci): Add rapidoid
   - stage: lint
     script: bash .ci/lint.sh
-    language: rust
-    env: DIRECTORY=rust LANGUAGE=rust
+    language: java
+    env: DIRECTORY=kotlin LANGUAGE=kotlin
   - stage: lint
     script: bash .ci/lint.sh
+<<<<<<< HEAD
     language: scala
     env: DIRECTORY=scala LANGUAGE=scala
   - stage: lint
@@ -67,186 +99,342 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=0http
+=======
+    language: go
+    env: DIRECTORY=go LANGUAGE=go
+  - stage: lint
+    script: bash .ci/lint.sh
+    language: minimal
+    env: DIRECTORY=nim LANGUAGE=nim
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=kore
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=act
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=actix-web
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=agoo
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
+=======
     env: FRAMEWORK=agoo-c
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=aiohttp
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=akkahttp
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=amber
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=aspnetcore
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=athena
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=beego
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=bocadillo
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=bottle
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=chi
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=actix-web
+=======
     env: FRAMEWORK=cuba
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=cyclone
+<<<<<<< HEAD
+    env: FRAMEWORK=agoo
+=======
+    env: FRAMEWORK=rack-routing
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=django
+<<<<<<< HEAD
+    env: FRAMEWORK=agoo-c
+=======
+    env: FRAMEWORK=sinatra
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=echo
+<<<<<<< HEAD
+    env: FRAMEWORK=aiohttp
+=======
+    env: FRAMEWORK=roda
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=evhtp
+<<<<<<< HEAD
+    env: FRAMEWORK=akkahttp
+=======
+    env: FRAMEWORK=agoo
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=express
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=falcon
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=fastapi
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=fasthttprouter
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=fastify
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=amber
+=======
     env: FRAMEWORK=flame
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=flask
+<<<<<<< HEAD
+    env: FRAMEWORK=aspnetcore
+=======
+    env: FRAMEWORK=rails
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=foxify
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=gf
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=gin
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=gorilla-mux
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=gorouter
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=gotham
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=athena
+=======
     env: FRAMEWORK=hanami
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=beego
+=======
+    env: FRAMEWORK=evhtp
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=bocadillo
+=======
+    env: FRAMEWORK=spring-boot
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=bottle
+=======
+    env: FRAMEWORK=rapidoid
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=chi
+=======
+    env: FRAMEWORK=act
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=cuba
+=======
     env: FRAMEWORK=hapi
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=cyclone
+=======
+    env: FRAMEWORK=fastify
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=django
+=======
+    env: FRAMEWORK=0http
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=echo
+=======
+    env: FRAMEWORK=muneem
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=evhtp
+=======
+    env: FRAMEWORK=rayo
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=express
+=======
+    env: FRAMEWORK=koa
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=falcon
+=======
+    env: FRAMEWORK=express
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=fastapi
+=======
+    env: FRAMEWORK=foxify
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=fasthttprouter
+=======
+    env: FRAMEWORK=restify
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=fastify
+=======
+    env: FRAMEWORK=turbo_polka
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=flame
+=======
+    env: FRAMEWORK=restana
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=flask
+=======
+    env: FRAMEWORK=polka
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=foxify
+=======
+    env: FRAMEWORK=aspnetcore
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=gf
+=======
+    env: FRAMEWORK=raze
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=gin
+=======
+    env: FRAMEWORK=amber
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=gorilla-mux
+=======
+    env: FRAMEWORK=lucky
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=gorouter
+=======
+    env: FRAMEWORK=spider-gazelle
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=gotham
+=======
+    env: FRAMEWORK=router.cr
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=hanami
+=======
+    env: FRAMEWORK=kemal
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=hapi
+=======
+    env: FRAMEWORK=athena
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=http4s
+=======
+    env: FRAMEWORK=orion
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=hug
+=======
+    env: FRAMEWORK=onyx
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=iron
+=======
+    env: FRAMEWORK=starlette
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
@@ -256,137 +444,164 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=jester
+=======
+    env: FRAMEWORK=falcon
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=kami
+=======
+    env: FRAMEWORK=bottle
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=kemal
+=======
+    env: FRAMEWORK=sanic
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=kitura
+=======
+    env: FRAMEWORK=bocadillo
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=kitura-nio
+=======
+    env: FRAMEWORK=cyclone
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=koa
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=kore
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=ktor
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=laravel
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=lucky
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=lumen
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=masonite
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=molten
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=muneem
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=nickel
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=onyx
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=orion
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=perfect
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=polka
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=quart
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=rack-routing
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=rails
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=rayo
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=raze
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
+=======
     env: FRAMEWORK=responder
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=restana
+<<<<<<< HEAD
+    env: FRAMEWORK=kore
+=======
+    env: FRAMEWORK=masonite
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=restify
+<<<<<<< HEAD
+    env: FRAMEWORK=ktor
+=======
+    env: FRAMEWORK=quart
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=laravel
+=======
+    env: FRAMEWORK=fastapi
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=lucky
+=======
+    env: FRAMEWORK=hug
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=lumen
+=======
+    env: FRAMEWORK=molten
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=masonite
+=======
+    env: FRAMEWORK=vibora
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=molten
+=======
+    env: FRAMEWORK=django
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=muneem
+=======
+    env: FRAMEWORK=flask
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=nickel
+=======
+    env: FRAMEWORK=tornado
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=onyx
+=======
+    env: FRAMEWORK=aiohttp
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=orion
+=======
+    env: FRAMEWORK=nickel
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=perfect
+=======
+    env: FRAMEWORK=actix-web
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
@@ -396,42 +611,83 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=roda
+<<<<<<< HEAD
+    env: FRAMEWORK=quart
+=======
+    env: FRAMEWORK=gotham
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=router.cr
+<<<<<<< HEAD
+    env: FRAMEWORK=rack-routing
+=======
+    env: FRAMEWORK=iron
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=sanic
+<<<<<<< HEAD
+    env: FRAMEWORK=rails
+=======
+    env: FRAMEWORK=http4s
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=sinatra
+<<<<<<< HEAD
+    env: FRAMEWORK=rayo
+=======
+    env: FRAMEWORK=akkahttp
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=raze
+=======
     env: FRAMEWORK=slim
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=spider-gazelle
+<<<<<<< HEAD
+    env: FRAMEWORK=responder
+=======
+    env: FRAMEWORK=zend-expressive
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=spring-boot
+<<<<<<< HEAD
+    env: FRAMEWORK=restana
+=======
+    env: FRAMEWORK=lumen
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=starlette
+<<<<<<< HEAD
+    env: FRAMEWORK=restify
+=======
+    env: FRAMEWORK=laravel
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=rocket
+=======
+    env: FRAMEWORK=zend-framework
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
@@ -441,37 +697,142 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=tornado
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=turbo_polka
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=router.cr
+=======
     env: FRAMEWORK=vapor
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=sanic
+=======
+    env: FRAMEWORK=kitura-nio
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=sinatra
+=======
+    env: FRAMEWORK=perfect
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=slim
+=======
+    env: FRAMEWORK=kitura
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=spider-gazelle
+=======
+    env: FRAMEWORK=ktor
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=spring-boot
+=======
+    env: FRAMEWORK=echo
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=starlette
+=======
+    env: FRAMEWORK=gorouter
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=symfony
+=======
+    env: FRAMEWORK=gf
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=tornado
+=======
+    env: FRAMEWORK=beego
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=turbo_polka
+=======
+    env: FRAMEWORK=chi
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
+    env: FRAMEWORK=vapor
+=======
+    env: FRAMEWORK=gin
+>>>>>>> feat(ci): Add rapidoid
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=vibora
+=======
+    env: FRAMEWORK=gorilla-mux
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=violetear
+=======
+    env: FRAMEWORK=kami
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=zend-expressive
+=======
+    env: FRAMEWORK=violetear
+>>>>>>> feat(ci): Add rapidoid
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+<<<<<<< HEAD
     env: FRAMEWORK=zend-framework
+=======
+    env: FRAMEWORK=fasthttprouter
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=jester
+>>>>>>> feat(ci): Add rapidoid
     services: docker
 notifications:
   email: false
