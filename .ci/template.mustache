@@ -1,74 +1,16 @@
-# Use crystal by default
-language: crystal
-
 jobs:
   include:
+    {{#languages}}
     - stage: lint
-      script: bash .ci/lint.sh
-      language: c
-      env: LANGUAGE=c DIRECTORY=c
-    - stage: lint
-      script: bash .ci/lint.sh
-      language: cpp
-      env: LANGUAGE=cpp DIRECTORY=cpp
-    - stage: lint
-      script: bash .ci/lint.sh
-      language: crystal
-      env: LANGUAGE=crystal DIRECTORY=crystal
-    - stage: lint
-      script: bash .ci/lint.sh
-      language: csharp
-      env: LANGUAGE=csharp DIRECTORY=csharp
-    - stage: lint
-      script: bash .ci/lint.sh
-      language: go
-      env: LANGUAGE=go DIRECTORY=go
-    - stage: lint
-      script: bash .ci/lint.sh
-      language: java
-      env: LANGUAGE=java DIRECTORY=java
-    - stage: lint
-      script: bash .ci/lint.sh
       language: generic
-      env: LANGUAGE=nim DIRECTORY=nim
-    - stage: lint
       script: bash .ci/lint.sh
-      language: node_js
-      env: LANGUAGE=node DIRECTORY=node
-    - stage: lint
-      script: bash .ci/lint.sh
-      os: osx
-      language: objective-c
-      env: LANGUAGE=objc DIRECTORY=objc
-    - stage: lint
-      script: bash .ci/lint.sh
-      language: php
-      env: LANGUAGE=php DIRECTORY=php
-    - stage: lint
-      script: bash .ci/lint.sh
-      language: python
-      env: LANGUAGE=python DIRECTORY=python
-    - stage: lint
-      script: bash .ci/lint.sh
-      language: ruby
-      env: LANGUAGE=ruby DIRECTORY=ruby
-    - stage: lint
-      script: bash .ci/lint.sh
-      language: rust
-      env: LANGUAGE=rust DIRECTORY=rust
-    - stage: lint
-      script: bash .ci/lint.sh
-      language: scala
-      env: LANGUAGE=scala DIRECTORY=scala
-    - stage: lint
-      script: bash .ci/lint.sh
-      os: osx
-      language: objective-c
-      env: LANGUAGE=swift DIRECTORY=swift
+      env: LANGUAGE={{.}} DIRECTORY={{.}}
+    {{/languages}}
     
     
     {{#frameworks}}
     - stage: test
+      language: crystal
       env: FRAMEWORK={{.}}
       services: docker
     {{/frameworks}}

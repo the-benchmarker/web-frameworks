@@ -119,6 +119,7 @@ fi
 
 if [[ ${LANGUAGE} == "ruby" ]] ; then
   gem install rubocop
+  echo "Linting directory ${DIRECTORY} from `pwd`"
   rubocop ${DIRECTORY}
   RETVAL=$?
 fi

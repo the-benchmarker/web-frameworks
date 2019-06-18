@@ -68,11 +68,14 @@ class App < Admiral::Command
   class TravisConfig < Admiral::Command
     def run
       frameworks = [] of String
+      languages = [] of String
       Dir.glob("*/*/config.yaml").each do |file|
         frameworks << file.split("/")[-2]
+        language = file.split("/")[-3]
+        languages << language unless languages.index(language)
       end
       template = Crustache.parse(File.read(".ci/template.mustache"))
-      File.write(".travis.yml", Crustache.render template, {"frameworks" => frameworks})
+      File.write(".travis.yml", Crustache.render template, {"frameworks" => frameworks, "languages" => languages})
     end
   end
 
