@@ -7,4 +7,7 @@ RUN mvn compile assembly:single -q
 FROM openjdk:11-jre-slim
 WORKDIR /rapidoid
 COPY --from=maven /rapidoid/target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar app.jar
+
+EXPOSE 3000
+
 CMD ["java", "-server", "-XX:+UseNUMA", "-XX:+UseParallelGC", "-XX:+AggressiveOpts", "-cp", "app.jar", "benchmark.rapidoid.Main", "profiles=production"]
