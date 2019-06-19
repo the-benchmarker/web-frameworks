@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 guard :rspec, cmd: "rspec spec", all_on_start: true do
   watch(%r{^app/(.+)\.rb$})             { "spec" }
   watch(%r{^spec/(.+)_spec\.rb$})       { "spec" }

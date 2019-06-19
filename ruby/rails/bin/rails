@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 begin
   load File.expand_path("spring", __dir__)
 rescue LoadError => e
