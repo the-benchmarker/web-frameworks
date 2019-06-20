@@ -94,8 +94,7 @@ fi
 if [[ ${LANGUAGE} == "java" ]] ; then
   find ${DIRECTORY} -type f -name '*.java' > /tmp/list.txt
   while read file ; do
-    echo "Using clang-format version  : `clang-format -version`"
-    clang-format -verbose -style=google ${file}
+    clang-format -verbose -style=google -i ${file}
     [[ ! -n `git ls-files --modified` ]]
     retval=$?
     if [[ $retval -ne 0 ]]; then
