@@ -1,6 +1,5 @@
 require "admiral"
 require "yaml"
-require "crustache"
 
 struct FrameworkConfig
   property name : String
@@ -69,13 +68,61 @@ class App < Admiral::Command
     def run
       frameworks = [] of String
       languages = [] of String
+      mapping = YAML.parse(File.read(".ci/mapping.yml"))
       Dir.glob("*/*/config.yaml").each do |file|
         frameworks << file.split("/")[-2]
-        language = file.split("/")[-3]
-        languages << language unless languages.index(language)
+        languages << file.split("/")[-3]
       end
-      template = Crustache.parse(File.read(".ci/template.mustache"))
-      File.write(".travis.yml", Crustache.render template, {"frameworks" => frameworks, "languages" => languages})
+      selection = YAML.build do |yaml|
+        yaml.mapping do
+          yaml.scalar "jobs"
+          yaml.mapping do
+            yaml.scalar "include"
+            yaml.sequence do
+              languages.uniq.each do |language|
+                begin
+                  ci_config = mapping[language]
+                  yaml.mapping do
+                    yaml.scalar "stage"
+                    yaml.scalar "lint"
+                    yaml.scalar "script"
+                    yaml.scalar "bash .ci/lint.sh"
+                    yaml.scalar "language"
+                    yaml.scalar ci_config["language"]
+                    yaml.scalar "env"
+                    yaml.scalar ci_config["env"]
+                  end
+                rescue KeyError
+                  STDERR.puts "Missing travis config for #{language}"
+                end
+              end
+              frameworks.each do |framework|
+                begin
+                  yaml.mapping do
+                    yaml.scalar "stage"
+                    yaml.scalar "test"
+                    yaml.scalar "language"
+                    yaml.scalar "crystal"
+                    yaml.scalar "env"
+                    yaml.scalar "FRAMEWORK=#{framework}"
+                    yaml.scalar "services"
+                    yaml.scalar "docker"
+                  end
+                end
+              end
+            end
+          end
+          yaml.scalar "notifications"
+          yaml.mapping do
+            yaml.scalar "email"
+            yaml.scalar false
+          end
+          yaml.scalar "before_install"
+          yaml.scalar "bash .ci/has_to_run.sh || travis_terminate 0"
+        end
+      end
+
+      File.write(".travis.yml", selection)
     end
   end
 

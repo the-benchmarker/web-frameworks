@@ -1,0 +1,43 @@
+python:
+  language: python
+  env: DIRECTORY=python
+crystal:
+  language: crystal
+  env: DIRECTORY=crystal
+php:
+  language: php
+  env: DIRECTORY=php
+swift:
+  os: osx
+  language: objective-c
+  env: DIRECTORY=swift
+csharp:
+  language: csharp
+  env: DIRECTORY=csharp
+go:
+  language: go
+  env: DIRECTORY=go
+cpp:
+  language: cpp
+  env: DIRECTORY=cpp
+scala:
+  language: scala
+  env: DIRECTORY=scala
+node:
+  language: node_js
+  env: DIRECTORY=node
+ruby:
+  language: ruby
+  env: DIRECTORY=ruby
+rust:
+  language: rust
+  env: DIRECTORY=rust
+c:
+  language: c
+  env: DIRECTORY=c
+nim:
+  language: minimal
+  env: DIRECTORY=nim
+java:
+  language: java
+  env: DIRECTORY=java
