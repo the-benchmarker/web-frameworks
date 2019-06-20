@@ -143,6 +143,7 @@ if [[ ${LANGUAGE} == "swift" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "rust" ]] ; then
+  rustup component add rustfmt --toolchain stable-x86_64-unknown-linux-gnu
   find ${DIRECTORY} -type f -name '*.rs' > /tmp/list.txt
   while read file ; do
     rustfmt --verbose --check ${file}
