@@ -94,7 +94,7 @@ fi
 if [[ ${LANGUAGE} == "java" ]] ; then
   find ${DIRECTORY} -type f -name '*.java' > /tmp/list.txt
   while read file ; do
-    clang-format --verbose --style=google ${file}
+    clang-format -verbose -style=google ${file}
     [[ ! -n `git ls-files --modified` ]]
     retval=$?
     if [[ $retval -ne 0 ]]; then
@@ -107,7 +107,7 @@ fi
 if [[ ${LANGUAGE} == "objc" ]] ; then
   find ${DIRECTORY} -type f -name '*.m' > /tmp/list.txt
   while read file ; do
-    clang-format --verbose -i ${file}
+    clang-format -verbose -i ${file}
     [[ ! -n `git ls-files --modified` ]]
     retval=$?
     if [[ $retval -ne 0 ]]; then
