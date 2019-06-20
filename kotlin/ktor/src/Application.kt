@@ -12,7 +12,6 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @Location("/user/{id}")
 data class UserId(val id: Int)
 
-
 @Suppress("unused") // Referenced in application.conf
 fun Application.module() {
     install(Locations)
@@ -28,4 +27,3 @@ fun Application.module() {
         }
     }
 }
-
