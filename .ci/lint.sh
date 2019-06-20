@@ -130,7 +130,7 @@ if [[ ${LANGUAGE} == "crystal" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "go" ]] ; then
-  echo "Checking crystal sources in ${DIRECTORY}"
+  echo "Checking go sources in ${DIRECTORY}"
   go get golang.org/x/lint/golint
   golint -set_exit_status=true ${DIRECTORY}
   RETVAL=$?
