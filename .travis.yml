@@ -15,6 +15,7 @@ jobs:
     env: DIRECTORY=php
   - stage: lint
     script: bash .ci/lint.sh
+    os: osx
     language: objective-c
     env: DIRECTORY=swift
   - stage: lint

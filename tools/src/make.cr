@@ -87,6 +87,10 @@ class App < Admiral::Command
                     yaml.scalar "lint"
                     yaml.scalar "script"
                     yaml.scalar "bash .ci/lint.sh"
+                    if ci_config.as_h.has_key?("os")
+                      yaml.scalar "os"
+                      yaml.scalar ci_config["os"]
+                    end
                     yaml.scalar "language"
                     yaml.scalar ci_config["language"]
                     yaml.scalar "env"
