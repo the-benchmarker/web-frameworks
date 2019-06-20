@@ -94,7 +94,7 @@ class App < Admiral::Command
                     yaml.scalar "language"
                     yaml.scalar ci_config["language"]
                     yaml.scalar "env"
-                    yaml.scalar ci_config["env"]
+                    yaml.scalar "DIRECTORY=#{language} LANGUAGE=#{language}"
                   end
                 rescue KeyError
                   STDERR.puts "Missing travis config for #{language}"
