@@ -161,4 +161,13 @@ if [[ ${LANGUAGE} == "javascript" ]] ; then
   RETVAL=$?
 fi
 
+if [[ ${LANGUAGE} == "kotlin" ]] ; then
+  curl -sS https://keybase.io/pinterestandroid/pgp_keys.asc | sudo gpg --import
+  curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.33.0/ktlint.asc
+  gpg --verify ktlint.asc
+  curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.33.0/ktlint && chmod +x ktlint && sudo install ktlint /usr/bin
+  ktlint -v "kotlin/**/*.kt"
+  RETVAL=$?
+fi
+
 exit ${RETVAL}
