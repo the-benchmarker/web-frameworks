@@ -52,6 +52,10 @@ jobs:
     env: DIRECTORY=swift LANGUAGE=swift
   - stage: lint
     script: bash .ci/lint.sh
+    language: java
+    env: DIRECTORY=kotlin LANGUAGE=kotlin
+  - stage: lint
+    script: bash .ci/lint.sh
     language: go
     env: DIRECTORY=go LANGUAGE=go
   - stage: lint
