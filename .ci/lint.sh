@@ -137,8 +137,6 @@ if [[ ${LANGUAGE} == "go" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "swift" ]] ; then
-  brew update
-  brew install swiftlint
   swiftlint lint ${DIRECTORY}
   RETVAL=$?
 fi
