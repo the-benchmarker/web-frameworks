@@ -94,7 +94,7 @@ fi
 if [[ ${LANGUAGE} == "java" ]] ; then
   find ${DIRECTORY} -type f -name '*.java' > /tmp/list.txt
   while read file ; do
-    clang-format --style=google ${file}
+    clang-format --verbose --style=google ${file}
     [[ ! -n `git ls-files --modified` ]]
     retval=$?
     if [[ $retval -ne 0 ]]; then
@@ -107,7 +107,7 @@ fi
 if [[ ${LANGUAGE} == "objc" ]] ; then
   find ${DIRECTORY} -type f -name '*.m' > /tmp/list.txt
   while read file ; do
-    clang-format -i ${file}
+    clang-format --verbose -i ${file}
     [[ ! -n `git ls-files --modified` ]]
     retval=$?
     if [[ $retval -ne 0 ]]; then
@@ -119,22 +119,18 @@ fi
 
 if [[ ${LANGUAGE} == "ruby" ]] ; then
   gem install rubocop
-  echo "Linting directory ${DIRECTORY} from `pwd`"
   rubocop ${DIRECTORY}
   RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "crystal" ]] ; then
-  curl -sSL https://dist.crystal-lang.org/apt/setup.sh | sudo bash
-  curl -sL "https://keybase.io/crystal/pgp_keys.asc" | sudo apt-key add -
-  echo "deb https://dist.crystal-lang.org/apt crystal main" | sudo tee /etc/apt/sources.list.d/crystal.list
-  sudo apt-get update
-  sudo apt install crystal
+  echo "Checking crystal sources in ${DIRECTORY}"
   crystal tool format --check ${DIRECTORY}
   RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "go" ]] ; then
+  echo "Checking crystal sources in ${DIRECTORY}"
   go get golang.org/x/lint/golint
   golint -set_exit_status=true ${DIRECTORY}
   RETVAL=$?
@@ -146,10 +142,9 @@ if [[ ${LANGUAGE} == "swift" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "rust" ]] ; then
-  rustup component add rustfmt --toolchain stable-x86_64-unknown-linux-gnu
   find ${DIRECTORY} -type f -name '*.rs' > /tmp/list.txt
   while read file ; do
-    rustfmt --check ${file}
+    rustfmt --verbose --check ${file}
     retval=$?
     if [[ $retval -ne 0 ]]; then
       RETVAL=${retval}
