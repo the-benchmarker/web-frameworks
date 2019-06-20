@@ -37,7 +37,7 @@ fi
 if [[ ${LANGUAGE} == "cpp" ]] ; then
   find ${DIRECTORY} -type f -name '*.cpp' > /tmp/list.txt
   while read file ; do
-    clang-format -i ${file}
+    clang-format -verbose -i ${file}
     [[ ! -n `git ls-files --modified` ]]
     retval=$?
     if [[ $retval -ne 0 ]]; then
