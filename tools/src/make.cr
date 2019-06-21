@@ -93,6 +93,10 @@ class App < Admiral::Command
                     end
                     yaml.scalar "language"
                     yaml.scalar ci_config["language"]
+                    if language == "node"
+                      yaml.scalar "node_js"
+                      yaml.scalar 10
+                    end
                     yaml.scalar "env"
                     yaml.scalar "DIRECTORY=#{language} LANGUAGE=#{language}"
                   end
