@@ -137,6 +137,7 @@ if [[ ${LANGUAGE} == "go" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "swift" ]] ; then
+  echo "Using swiftlint : `swiftlint version`"
   swiftlint lint ${DIRECTORY}
   RETVAL=$?
 fi
