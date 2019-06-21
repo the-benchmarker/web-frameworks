@@ -109,6 +109,8 @@ class App < Admiral::Command
                   yaml.mapping do
                     yaml.scalar "stage"
                     yaml.scalar "test"
+                    yaml.scalar "script"
+                    yaml.scalar "bash .ci/test.sh"
                     yaml.scalar "language"
                     yaml.scalar "crystal"
                     yaml.scalar "env"
