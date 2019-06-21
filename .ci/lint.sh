@@ -139,7 +139,7 @@ fi
 
 if [[ ${LANGUAGE} == "swift" ]] ; then
   echo "Using swiftlint : `swiftlint version`"
-  swiftlint lint --strict --enable-all-rules --path ${DIRECTORY}
+  swiftlint lint --strict --path ${DIRECTORY}
   RETVAL=$?
 fi
 
