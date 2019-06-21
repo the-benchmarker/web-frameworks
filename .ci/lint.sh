@@ -138,11 +138,6 @@ if [[ ${LANGUAGE} == "go" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "swift" ]] ; then
-  cd `mktemp -d`
-  git clone https://github.com/realm/SwiftLint.git .
-  swift build --configuration release --static-swift-stdlib
-  sudo install .build/release/swiftlint /usr/bin/swiftlint
-  cd -
   echo "Using swiftlint : `swiftlint version`"
   swiftlint lint --strict --enable-all-rules --path ${DIRECTORY}
   RETVAL=$?
