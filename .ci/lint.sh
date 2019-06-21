@@ -3,7 +3,7 @@
 set -eu
 
 if [[ ${LANGUAGE} == "csharp" ]] ; then
-  sudo apt-get -qy install astyle
+  sudo apt -y install astyle
   find ${DIRECTORY} -type f -name '*.cs' > /tmp/list.txt
   while read file ; do
     astyle --mode=cs ${file}
@@ -53,8 +53,8 @@ if [[ ${LANGUAGE} == "c" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "nim" ]] ; then
-  sudo apt -qq update
-  sudo apt -qy install nim
+  sudo apt -y update
+  sudo apt -y install nim
   cd `mktemp -d`
   git clone https://github.com/nim-lang/Nim .
   git checkout master
@@ -91,7 +91,7 @@ if [[ ${LANGUAGE} == "crystal" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "go" ]] ; then
-  go get golang.org/x/lint/golint
+  sudo apt install golint
   golint -set_exit_status=true ${DIRECTORY}
 fi
 
