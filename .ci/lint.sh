@@ -48,7 +48,7 @@ fi
 if [[ ${LANGUAGE} == "c" ]] ; then
   find ${DIRECTORY} -type f -name '*.c' > /tmp/list.txt
   while read file ; do
-    clang-format -v -i ${file}
+    clang-format -verbose -i ${file}
   done < /tmp/list.txt
 fi
 
