@@ -1,14 +1,12 @@
-RETVAL=0
+#!/bin/bash
+
+set -eu
 
 if [[ ${LANGUAGE} == "csharp" ]] ; then
   sudo apt-get -qy install astyle
   find ${DIRECTORY} -type f -name '*.cs' > /tmp/list.txt
   while read file ; do
     astyle --mode=cs ${file}
-    retval=$?
-    if [[ $retval -ne 0 ]]; then
-      RETVAL=${retval}
-    fi
   done < /tmp/list.txt
   RETVAL=$?
 fi
@@ -17,10 +15,6 @@ if [[ ${LANGUAGE} == "elixir" ]] ; then
   find ${DIRECTORY} -type f -name '*.exs' -or -name '*.ex' > /tmp/list.txt
   while read file ; do
     mix format ${file}
-    retval=$?
-    if [[ $retval -ne 0 ]]; then
-      RETVAL=${retval}
-    fi
   done < /tmp/list.txt
   RETVAL=$?
 fi
@@ -31,18 +25,12 @@ if [[ ${LANGUAGE} == "scala" ]] ; then
     -r sonatype:snapshots \
     -o /usr/local/bin/scalafmt --standalone --main org.scalafmt.cli.Cli
   scalafmt ${DIRECTORY} --test
-  RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "cpp" ]] ; then
   find ${DIRECTORY} -type f -name '*.cpp' > /tmp/list.txt
   while read file ; do
     clang-format -verbose -i ${file}
-    [[ ! -n `git ls-files --modified` ]]
-    retval=$?
-    if [[ $retval -ne 0 ]]; then
-      RETVAL=${retval}
-    fi
   done < /tmp/list.txt
   RETVAL=$?
 fi
@@ -50,27 +38,18 @@ fi
 if [[ ${LANGUAGE} == "php" ]] ; then
   composer global require friendsofphp/php-cs-fixer
   ~/.config/composer/vendor/bin/php-cs-fixer fix --verbose php --rules=@PSR1,@PSR2 --using-cache=no
-  RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "python" ]] ; then
   pip install black
   black ${DIRECTORY} --check
-  RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "c" ]] ; then
   find ${DIRECTORY} -type f -name '*.c' > /tmp/list.txt
   while read file ; do
-    echo "Linting ${file}"
-    clang-format -i ${file}
-    [[ ! -n `git ls-files --modified` ]]
-    retval=$?
-    if [[ $retval -ne 0 ]]; then
-      RETVAL=${retval}
-    fi
+    clang-format -v -i ${file}
   done < /tmp/list.txt
-  RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "nim" ]] ; then
@@ -85,63 +64,39 @@ if [[ ${LANGUAGE} == "nim" ]] ; then
   find ${DIRECTORY} -type f -name '*.nim' -or -name '*.nimble'  > /tmp/list.txt
   while read file ; do
     nimpretty ${file}
-    retval=$?
-    if [[ $retval -ne 0 ]]; then
-      RETVAL=${retval}
-    fi
   done < /tmp/list.txt
-  RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "java" ]] ; then
   find ${DIRECTORY} -type f -name '*.java' > /tmp/list.txt
   while read file ; do
     clang-format -verbose -style=google -i ${file}
-    [[ ! -n `git ls-files --modified` ]]
-    retval=$?
-    if [[ $retval -ne 0 ]]; then
-      RETVAL=${retval}
-    fi
   done < /tmp/list.txt
-  RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "objc" ]] ; then
   find ${DIRECTORY} -type f -name '*.m' > /tmp/list.txt
   while read file ; do
     clang-format -verbose -i ${file}
-    [[ ! -n `git ls-files --modified` ]]
-    retval=$?
-    if [[ $retval -ne 0 ]]; then
-      RETVAL=${retval}
-    fi
   done < /tmp/list.txt
-  RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "ruby" ]] ; then
   gem install rubocop
-  rubocop ${DIRECTORY}
-  RETVAL=$?
+  rubocop -dE ${DIRECTORY}
 fi
 
 if [[ ${LANGUAGE} == "crystal" ]] ; then
-  echo "Checking crystal sources in ${DIRECTORY}"
   crystal tool format --check ${DIRECTORY}
-  RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "go" ]] ; then
-  echo "Checking go sources in ${DIRECTORY}"
   go get golang.org/x/lint/golint
   golint -set_exit_status=true ${DIRECTORY}
-  RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "swift" ]] ; then
-  echo "Using swiftlint : `swiftlint version`"
   swiftlint lint --strict --path ${DIRECTORY}
-  RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "rust" ]] ; then
@@ -149,18 +104,12 @@ if [[ ${LANGUAGE} == "rust" ]] ; then
   find ${DIRECTORY} -type f -name '*.rs' > /tmp/list.txt
   while read file ; do
     rustfmt --verbose --check ${file}
-    retval=$?
-    if [[ $retval -ne 0 ]]; then
-      RETVAL=${retval}
-    fi
   done < /tmp/list.txt
-  RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "node" ]] ; then
   npm -g install prettier
   prettier --check "${DIRECTORY}/**/*.{js,json}"
-  RETVAL=$?
 fi
 
 if [[ ${LANGUAGE} == "kotlin" ]] ; then
@@ -171,12 +120,5 @@ if [[ ${LANGUAGE} == "kotlin" ]] ; then
   find ${DIRECTORY} -type f -name '*.kt' > /tmp/list.txt
   while read file ; do
     ktlint --debug --verbose ${file}
-    retval=$?
-    if [[ $retval -ne 0 ]]; then
-      RETVAL=${retval}
-    fi
   done < /tmp/list.txt
-  RETVAL=$?
 fi
-
-exit ${RETVAL}
