@@ -79,7 +79,8 @@ if [[ ${LANGUAGE} == "nim" ]] ; then
   git clone https://github.com/nim-lang/Nim .
   git checkout master
   cd nimpretty
-  nim c nimpretty.nim  
+  nim c nimpretty.nim
+  echo "Using nimpretty version : `nimpretty -v`"
   find ${DIRECTORY} -type f -name '*.nim' -or -name '*.nimble'  > /tmp/list.txt
   while read file ; do
     nimpretty ${file}
@@ -137,8 +138,13 @@ if [[ ${LANGUAGE} == "go" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "swift" ]] ; then
+  cd `mktemp -d`
+  git clone https://github.com/realm/SwiftLint.git .
+  swift build --configuration release --static-swift-stdlib
+  sudo install .build/release/swiftlint /usr/bin/swiftlint
+  cd -
   echo "Using swiftlint : `swiftlint version`"
-  swiftlint lint ${DIRECTORY}
+  swiftlint lint --strict --enable-all-rules --path ${DIRECTORY}
   RETVAL=$?
 fi
 
