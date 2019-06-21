@@ -115,8 +115,6 @@ fi
 if [[ ${LANGUAGE} == "kotlin" ]] ; then
   curl -sS https://keybase.io/pinterestandroid/pgp_keys.asc | sudo gpg --import
   curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.33.0/ktlint && chmod +x ktlint && sudo install ktlint /usr/bin
-  echo "Using ktlin version : `ktlint --version`"
-  find kotlin/ -type f -name '*.kt' -exec  {} \; ${DIRECTORY}
   find ${DIRECTORY} -type f -name '*.kt' > /tmp/list.txt
   while read file ; do
     ktlint --debug --verbose ${file}
