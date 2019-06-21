@@ -41,6 +41,7 @@ jobs:
   - stage: lint
     script: bash .ci/lint.sh
     language: node_js
+    node_js: 10
     env: DIRECTORY=node LANGUAGE=node
   - stage: lint
     script: bash .ci/lint.sh
