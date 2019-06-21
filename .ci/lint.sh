@@ -54,14 +54,9 @@ if [[ ${LANGUAGE} == "c" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "nim" ]] ; then
-  sudo apt -y update
-  sudo apt -y install nim
-  cd `mktemp -d`
-  git clone https://github.com/nim-lang/Nim .
-  git checkout master
-  cd nimpretty
-  nim c nimpretty.nim
-  echo "Using nimpretty version : `nimpretty -v`"
+  cd `mktemp -d` && curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh && sh init.sh -y && cd -
+  export PATH=$HOME/.nimble/bin:$PATH
+  echo "Using nimpretty version : `~/.nimble/bin/nimpretty -v`"
   find ${DIRECTORY} -type f -name '*.nim' -or -name '*.nimble'  > /tmp/list.txt
   while read file ; do
     nimpretty ${file}
