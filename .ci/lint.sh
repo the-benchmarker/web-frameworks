@@ -74,7 +74,8 @@ if [[ ${LANGUAGE} == "c" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "nim" ]] ; then
-  sudo apt-get -qy install nim
+  sudo apt -qq update
+  sudo apt -qy install nim
   cd `mktemp -d`
   git clone https://github.com/nim-lang/Nim .
   git checkout master
