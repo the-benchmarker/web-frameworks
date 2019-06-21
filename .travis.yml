@@ -476,4 +476,4 @@ jobs:
 notifications:
   email: false
 before_install: bash .ci/has_to_run.sh || travis_terminate 0
-dist: xenial
+dist: bionic

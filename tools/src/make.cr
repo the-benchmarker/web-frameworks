@@ -130,7 +130,7 @@ class App < Admiral::Command
           yaml.scalar "before_install"
           yaml.scalar "bash .ci/has_to_run.sh || travis_terminate 0"
           yaml.scalar "dist"
-          yaml.scalar "xenial"
+          yaml.scalar "bionic"
         end
       end
 
