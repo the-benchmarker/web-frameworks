@@ -3,6 +3,7 @@
 set -eu
 
 if [[ ${LANGUAGE} == "csharp" ]] ; then
+  sudo apt -y update
   sudo apt -y install astyle
   find ${DIRECTORY} -type f -name '*.cs' > /tmp/list.txt
   while read file ; do
@@ -91,7 +92,8 @@ if [[ ${LANGUAGE} == "crystal" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "go" ]] ; then
-  sudo apt install golint
+  sudo apt -y update
+  sudo apt -y install golint
   golint -set_exit_status=true ${DIRECTORY}
 fi
 
