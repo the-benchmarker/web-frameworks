@@ -106,7 +106,7 @@ fi
 
 if [[ ${LANGUAGE} == "node" ]] ; then
   npm -g install standard
-  standard --verbose "${DIRECTORY}/**/*.{js,json}"
+  standard --verbose "${DIRECTORY}/**/*.js"
 fi
 
 if [[ ${LANGUAGE} == "kotlin" ]] ; then
