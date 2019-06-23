@@ -105,8 +105,8 @@ if [[ ${LANGUAGE} == "rust" ]] ; then
 fi
 
 if [[ ${LANGUAGE} == "node" ]] ; then
-  npm -g install prettier
-  prettier --check "${DIRECTORY}/**/*.{js,json}"
+  npm -g install standard
+  standard --verbose "${DIRECTORY}/**/*.{js,json}"
 fi
 
 if [[ ${LANGUAGE} == "kotlin" ]] ; then
