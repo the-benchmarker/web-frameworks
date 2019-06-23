@@ -11,11 +11,11 @@
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
-port ENV.fetch("PORT") { 3000 }
+port ENV.fetch('PORT') { 3000 }
 
 # Specifies the `environment` that Puma will run in.
 #
-environment ENV.fetch("RAILS_ENV") { "production" }
+environment ENV.fetch('RAILS_ENV') { 'production' }
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
@@ -24,7 +24,7 @@ environment ENV.fetch("RAILS_ENV") { "production" }
 # processes).
 #
 # workers ENV.fetch("WEB_CONCURRENCY") { 2 }
-require "etc"
+require 'etc'
 workers Etc.nprocessors
 
 # Use the `preload_app!` method when specifying a `workers` number.
