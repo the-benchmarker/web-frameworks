@@ -9,7 +9,4 @@ request is made depending on the provider. Take some time to can
 learn more more about Service Providers in our documentation
 """
 
-PROVIDERS = [
-    AppProvider,
-    RouteProvider,
-]
+PROVIDERS = [AppProvider, RouteProvider]

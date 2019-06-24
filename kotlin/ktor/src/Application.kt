@@ -1,17 +1,18 @@
 package ktor.benchmark
 
+/* ktlint-disable no-wildcard-imports */
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.request.*
 import io.ktor.routing.*
 import io.ktor.http.*
 import io.ktor.locations.*
+/* ktlint-enable no-wildcard-imports */
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Location("/user/{id}")
 data class UserId(val id: Int)
-
 
 @Suppress("unused") // Referenced in application.conf
 fun Application.module() {
@@ -28,4 +29,3 @@ fun Application.module() {
         }
     }
 }
-

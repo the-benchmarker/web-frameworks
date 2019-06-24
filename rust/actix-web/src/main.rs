@@ -16,9 +16,10 @@ fn main() {
                     HttpResponse::build_from(req).body(id)
                 })
             })
-    }).bind("0.0.0.0:3000")
-        .unwrap()
-        .start();
+    })
+    .bind("0.0.0.0:3000")
+    .unwrap()
+    .start();
 
     println!("Started http server: 0.0.0.0:3000");
     let _ = sys.run();

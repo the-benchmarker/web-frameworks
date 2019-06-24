@@ -5,16 +5,16 @@ using Microsoft.Extensions.Logging;
 
 namespace aspnetcore
 {
-    public class Program
+public class Program
+{
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
-
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .ConfigureLogging(config => config.ClearProviders())
-                .UseStartup<Startup>();
+        CreateWebHostBuilder(args).Build().Run();
     }
+
+    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+    WebHost.CreateDefaultBuilder(args)
+    .ConfigureLogging(config => config.ClearProviders())
+    .UseStartup<Startup>();
+}
 }

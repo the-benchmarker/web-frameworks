@@ -10,4 +10,4 @@ let package = Package(
     targets: [
         .target(name: "server", dependencies: ["PerfectHTTPServer"], path: ".")
     ]
-)   
+)

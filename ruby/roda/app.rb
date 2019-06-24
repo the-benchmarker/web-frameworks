@@ -1,17 +1,17 @@
-require "roda"
+# frozen_string_literal: true
+
+require 'roda'
 
 class App < Roda
   route do |r|
-    r.get "user", Integer do |id|
-      id.to_s
-    end
+    r.get 'user', Integer, &:to_s
 
-    r.post("user") do
-      ""
+    r.post('user') do
+      ''
     end
 
     r.root do
-      ""
+      ''
     end
   end
 end

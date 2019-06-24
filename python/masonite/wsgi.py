@@ -12,13 +12,13 @@ and the application configuration file before they boot.
 
 container = App()
 
-container.bind('WSGI', app)
-container.bind('Application', application)
-container.bind('Container', container)
+container.bind("WSGI", app)
+container.bind("Application", application)
+container.bind("Container", container)
 
-container.bind('ProvidersConfig', providers)
-container.bind('Providers', [])
-container.bind('WSGIProviders', [])
+container.bind("ProvidersConfig", providers)
+container.bind("Providers", [])
+container.bind("WSGIProviders", [])
 
 """Bind all service providers
 Let's register everything into the Service Container. Once everything is
@@ -28,15 +28,15 @@ only run once when the server is started. Providers will be ran
 once if the wsgi attribute on a provider is False.
 """
 
-for provider in container.make('ProvidersConfig').PROVIDERS:
+for provider in container.make("ProvidersConfig").PROVIDERS:
     located_provider = provider()
     located_provider.load_app(container).register()
     if located_provider.wsgi:
-        container.make('WSGIProviders').append(located_provider)
+        container.make("WSGIProviders").append(located_provider)
     else:
-        container.make('Providers').append(located_provider)
+        container.make("Providers").append(located_provider)
 
-for provider in container.make('Providers'):
+for provider in container.make("Providers"):
     container.resolve(provider.boot)
 
 """Get the application from the container
@@ -46,4 +46,4 @@ from the container and pass it to the application variable. This
 will allow WSGI servers to pick it up from the command line
 """
 
-application = container.make('WSGI')
+application = container.make("WSGI")

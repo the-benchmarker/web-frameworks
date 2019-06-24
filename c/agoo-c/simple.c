@@ -21,8 +21,7 @@ static void empty_handler(agooReq req) {
 
 static int user_off = 6;
 
-static void
-user_handler(agooReq req) {
+static void user_handler(agooReq req) {
   agooText t = agoo_respond(200, req->path.start + user_off,
                             req->path.len - user_off, NULL);
 

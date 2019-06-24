@@ -1,7 +1,6 @@
 require "orion"
 
 router MyApplication do
-
   get "/", ->(context : Context) do
     context.response.print ""
   end
@@ -13,7 +12,6 @@ router MyApplication do
   post "/user", ->(context : Context) do
     context.response.print ""
   end
-
 end
 
 puts MyApplication.visualize

@@ -12,8 +12,8 @@ router.get("/") { _, res, next in
  This path will be matched for /123, but not / or /abc.
  */
 router.get("/user/:id(\\d+)") { req, res, next in
-    let id = req.parameters["id"] ?? ""
-    try res.send(id).end()
+    let userId = req.parameters["id"] ?? ""
+    try res.send(userId).end()
     next()
 }
 

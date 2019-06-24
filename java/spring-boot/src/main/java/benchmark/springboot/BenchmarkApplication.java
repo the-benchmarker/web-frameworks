@@ -9,17 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 public class BenchmarkApplication {
-
   public static void main(String[] args) {
     SpringApplication.run(BenchmarkApplication.class, args);
   }
 
   @RestController
   public class BenchmarkController {
-
     @GetMapping("/")
-    public void root() {
-    }
+    public void root() {}
 
     @GetMapping("/user/{id}")
     public Integer userId(@PathVariable Integer id) {
@@ -27,8 +24,6 @@ public class BenchmarkApplication {
     }
 
     @PostMapping("/user")
-    public void user() {
-    }
+    public void user() {}
   }
-
 }

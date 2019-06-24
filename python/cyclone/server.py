@@ -27,12 +27,14 @@ class UserHandler(cyclone.web.RequestHandler):
 
 
 if __name__ == "__main__":
-    application = cyclone.web.Application([
-        (r'/', MainHandler),
-        (r"/user/(\d+)", UserInfoHandler),
-        (r"/user", UserHandler),
-    ])
+    application = cyclone.web.Application(
+        [
+            (r"/", MainHandler),
+            (r"/user/(\d+)", UserInfoHandler),
+            (r"/user", UserHandler),
+        ]
+    )
 
     log.startLogging(sys.stdout)
-    reactor.listenTCP(port=3000, interface='0.0.0.0', factory=application)
+    reactor.listenTCP(port=3000, interface="0.0.0.0", factory=application)
     reactor.run()

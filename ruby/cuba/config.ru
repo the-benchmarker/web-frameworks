@@ -1,3 +1,5 @@
-require_relative "app"
+# frozen_string_literal: true
+
+require_relative 'app'
 
 run Cuba
