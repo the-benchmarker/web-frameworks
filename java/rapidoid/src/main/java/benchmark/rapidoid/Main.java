@@ -6,8 +6,6 @@ import org.rapidoid.setup.App;
 import org.rapidoid.setup.On;
 
 public class Main {
-
-
   public static void main(String[] args) {
     App.run(args);
 
@@ -22,9 +20,10 @@ public class Main {
 
   private static void setupSimpleHandlers() {
     On.get("/").managed(false).contentType(MediaType.TEXT_PLAIN).serve("");
-    On.get("/user/{id}").managed(false).contentType(MediaType.TEXT_PLAIN)
+    On.get("/user/{id}")
+        .managed(false)
+        .contentType(MediaType.TEXT_PLAIN)
         .serve(id -> Integer.parseInt(id.param("id")));
     On.post("/user").managed(false).contentType(MediaType.TEXT_PLAIN).serve("");
   }
-
 }
