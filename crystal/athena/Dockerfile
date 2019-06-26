@@ -8,4 +8,6 @@ COPY athena.yml ./
 
 RUN shards build --release --no-debug
 
+ENV ATHENA_ENV test
+
 CMD bin/server
