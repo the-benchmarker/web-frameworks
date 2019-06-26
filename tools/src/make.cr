@@ -79,7 +79,7 @@ class App < Admiral::Command
           yaml.mapping do
             yaml.scalar "include"
             yaml.sequence do
-              languages.uniq.each do |language|
+              languages.uniq.sort.each do |language|
                 begin
                   ci_config = mapping[language]
                   yaml.mapping do
@@ -104,7 +104,7 @@ class App < Admiral::Command
                   STDERR.puts "Missing travis config for #{language}"
                 end
               end
-              frameworks.each do |framework|
+              frameworks.sort.each do |framework|
                 begin
                   yaml.mapping do
                     yaml.scalar "stage"
