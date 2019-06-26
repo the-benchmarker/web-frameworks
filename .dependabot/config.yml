@@ -63,6 +63,11 @@ update_configs:
   - language:java
 - package_manager: java:maven
   update_schedule: daily
+  directory: java/rapidoid
+  default_labels:
+  - language:java
+- package_manager: java:maven
+  update_schedule: daily
   directory: java/act
   default_labels:
   - language:java
