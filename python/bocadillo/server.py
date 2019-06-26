@@ -1,4 +1,4 @@
-from bocadillo import App, configure, view
+from bocadillo import App, configure
 
 app = App()
 configure(app)
@@ -9,8 +9,7 @@ async def index(req, res):
     res.text = ""
 
 
-@app.route("/user")
-@view(methods=["post"])
+@app.route("/user", methods=["post"])
 async def create_user(req, res):
     res.text = ""
 
