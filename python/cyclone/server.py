@@ -1,6 +1,8 @@
 import cyclone.web
 from twisted.application import internet
 from twisted.application import service
+from twisted.internet import reactor
+
 
 class MainHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
@@ -23,15 +25,8 @@ class UserHandler(cyclone.web.RequestHandler):
         self.finish()
 
 
-if __name__ == "__main__":
-    application = cyclone.web.Application(
-        [
-            (r"/", MainHandler),
-            (r"/user/(\d+)", UserInfoHandler),
-            (r"/user", UserHandler),
-        ]
-    )
-
-    log.startLogging(sys.stdout)
-    reactor.listenTCP(port=3000, interface="0.0.0.0", factory=application)
-    reactor.run()
+application = cyclone.web.Application(
+    [(r"/", MainHandler), (r"/user/(\d+)", UserInfoHandler), (r"/user", UserHandler)]
+)
+reactor.listenTCP(port=3000, interface="0.0.0.0", factory=application)
+reactor.run()
