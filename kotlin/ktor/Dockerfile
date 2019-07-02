@@ -1,4 +1,4 @@
-FROM gradle:5.4-jdk8
+FROM gradle:5.5-jdk8
 
 WORKDIR /usr/src/app
 
