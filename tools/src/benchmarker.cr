@@ -254,7 +254,7 @@ puts_markdown "|---------------------------|---------------------------|--------
 ranks_by_latency.each do |framework|
   raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
   result = Result.from_json(raw)
-  puts_markdown "| %s (%s) | [%s](%s) (%s) | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.langver, framework.target.name, framework.target.link, framework.target.version, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
+  puts_markdown "| `%s` (`%s`) | [%s](%s) (**%s**) | %.2f ms | **%.2f** ms | %.2f ms | %.2f ms | %.2f ms | **%.2f** | " % [framework.target.lang, framework.target.langver, framework.target.name, framework.target.link, framework.target.version, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
 end
 
 puts_markdown "", m_lines, true
@@ -282,7 +282,7 @@ puts_markdown "|---------------------------|---------------------------|--------
 ranks_by_requests.each do |framework|
   raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
   result = Result.from_json(raw)
-  puts_markdown "| %s (%s) | [%s](%s) (%s) | %.2f | %.2f MB |" % [framework.target.lang, framework.target.langver, framework.target.name, framework.target.link, framework.target.version, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
+  puts_markdown "| `%s` (`%s`) | [%s](%s) (**%s**) | %.2f | **%.2f** MB |" % [framework.target.lang, framework.target.langver, framework.target.name, framework.target.link, framework.target.version, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
 end
 
 if record
