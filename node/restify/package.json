@@ -1,5 +1,11 @@
 {
   "dependencies": {
-    "restify": "8.3.3"
-  }
+    "restify": "8.3.3",
+    "snyk": "^1.189.0"
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
