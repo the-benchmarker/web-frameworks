@@ -6,7 +6,8 @@ end
 
 class User::Show < ApiAction
   get "/user/:id" do
-    render_text id.to_s
+    raise Lucky::RouteNotFoundError.new(context) unless /\d+/.match(id)
+    render_text id
   end
 end
 
