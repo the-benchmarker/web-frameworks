@@ -1,26 +1,22 @@
-extern crate actix;
 extern crate actix_web;
 
-use actix_web::*;
+use actix_web::{web, App, HttpServer, Responder};
 
-fn main() {
-    let sys = actix::System::new("test");
+fn empty() -> impl Responder {
+    println!("")
+}
 
-    server::new(|| {
+fn show(id: web::Path<u32>) -> impl Responder {
+    format!("{}", id)
+}
+
+fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
         App::new()
-            .resource("/", |r| r.f(|r| HttpResponse::build_from(r)))
-            .resource("/user", |r| r.f(|r| HttpResponse::build_from(r)))
-            .resource("/user/{id}", |r| {
-                r.f(|req| {
-                    let id = Binary::from_slice(req.match_info()["id"].as_ref());
-                    HttpResponse::build_from(req).body(id)
-                })
-            })
+            .service(web::resource("/").to(empty))
+            .service(web::resource("/user/{id}").to(show))
+            .service(web::resource("/user").to(empty))
     })
-    .bind("0.0.0.0:3000")
-    .unwrap()
-    .start();
-
-    println!("Started http server: 0.0.0.0:3000");
-    let _ = sys.run();
+    .bind("0.0.0.0:3000")?
+    .run()
 }
