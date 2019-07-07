@@ -11,7 +11,9 @@ get "/" do |env|
 end
 
 get "/user/:id" do |env|
-  env.params.url["id"]
+  id = env.params.url["id"]
+  raise Kemal::Exceptions::RouteNotFound.new(env) unless /\d+/.match(id)
+  id
 end
 
 post "/user" do |env|
