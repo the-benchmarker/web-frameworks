@@ -10,7 +10,7 @@ func main() {
 		ctx.WriteString("")
 	})
 
-	beego.Get("/user/:id", func(ctx *context.Context) {
+	beego.Get("/user/:id([\\d]+)", func(ctx *context.Context) {
 		ctx.WriteString(ctx.Input.Param(":id"))
 	})
 
