@@ -7,7 +7,7 @@ Cuba.define do
     on root do
       res.write ''
     end
-    on 'user/:id' do |id|
+    on 'user/:id(\d+)' do |id|
       res.write id
     end
   end
