@@ -8,7 +8,7 @@ router
   .get('/', (ctx, next) => {
     ctx.body = ''
   })
-  .get('/user/:id', (ctx, next) => {
+  .get('/user/:id(\\d+)', (ctx, next) => {
     ctx.body = ctx.params.id
   })
   .post('/user', (ctx, next) => {
