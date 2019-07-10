@@ -15,7 +15,7 @@ const opts = {
   }
 }
 
-app.get('/user/:id', opts, function (request, reply) {
+app.get('/user/:id(\\d+)', opts, function (request, reply) {
   reply.send(request.params.id)
 })
 
