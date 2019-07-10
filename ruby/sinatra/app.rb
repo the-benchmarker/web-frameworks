@@ -6,7 +6,7 @@ get '/' do
   # do nothing
 end
 
-get '/user/:id' do |id|
+get %r{/user/([\d]+)} do |id|
   body id.to_s
 end
 
