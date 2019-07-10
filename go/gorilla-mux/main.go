@@ -14,7 +14,7 @@ func main() {
 			w.Write([]byte(""))
 		}
 	})
-	r.HandleFunc("/user/{id}", func(w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/user/{id:\\d}", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "GET" {
 			vars := mux.Vars(r)
 			w.Write([]byte(vars["id"]))
