@@ -5,7 +5,7 @@ router.on('GET', '/', (req, res) => {
   res.end()
 })
 
-router.on('GET', '/user/:id', (req, res, params) => {
+router.on('GET', '/user/:id(\\d+)', (req, res, params) => {
   res.end(params.id)
 })
 
