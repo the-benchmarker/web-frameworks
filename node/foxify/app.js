@@ -10,7 +10,7 @@ app
 
 app
   .get('/', (req, res) => res.send(''))
-  .get('/user/:id', (req, res) => res.send(req.params.id))
+  .get('/user/:id(\\d+)', (req, res) => res.send(req.params.id))
   .post('/user', (req, res) => res.send(''))
 
 app.start()
