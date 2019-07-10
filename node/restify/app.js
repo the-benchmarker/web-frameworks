@@ -11,7 +11,7 @@ server.get('/', function (req, res, next) {
   return next()
 })
 
-server.get('/user/:id', function (req, res, next) {
+server.get('/user/:id(\\d+)', function (req, res, next) {
   res.end(req.params.id)
   return next()
 })
