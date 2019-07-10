@@ -12,7 +12,7 @@ def index():
     return ""
 
 
-@hug.get("/user/{id}")
+@hug.get("/user/{id:int}")
 def user_info(id):
     return str(id)
 
