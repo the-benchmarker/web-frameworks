@@ -4,7 +4,7 @@ app.get('/', function (req, res) {
   res.end(200)
 })
 
-app.get('/user/:id', function (req, res) {
+app.get('/user/:id(\\d+)', function (req, res) {
   res.write(req.params.id)
   res.end()
 })
