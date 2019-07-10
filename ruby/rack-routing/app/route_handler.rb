@@ -12,7 +12,9 @@ class RouteHandler
   end
 
   def get_user
-    Rack::Response.new(@url_params[:id], 200)
+    id = @url_params[:id]
+    halt 404 unless id.match(/\A\d+\z/)
+    Rack::Response.new(id, 200)
   end
 
   def post_user
