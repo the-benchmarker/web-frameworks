@@ -14,7 +14,7 @@ public class AppEntry {
     return "";
   }
 
-  @GetAction("/user/{id}")
+  @GetAction("/user/{<\d>{id}")
   public String user(String id) {
     return id;
   }
