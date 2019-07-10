@@ -13,7 +13,7 @@ func main() {
 		w.Write([]byte(""))
 	})
 
-	r.Get("/user/{id}", func(w http.ResponseWriter, r *http.Request) {
+	r.Get("/user/{id:([\\d]+)}", func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
 		w.Write([]byte(id))
 	})
