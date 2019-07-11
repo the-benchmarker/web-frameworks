@@ -1,6 +1,7 @@
 'use strict'
 
 const Hapi = require('hapi')
+const Joi = require('@hapi/joi')
 
 // Create a server with a host and port
 const server = Hapi.server({
@@ -22,6 +23,13 @@ server.route({
   path: '/user/{id}',
   handler: function (req, handler) {
     return req.params.id
+  },
+  options: {
+    validate: {
+      params: {
+        id: Joi.number()
+      }
+    }
   }
 })
 
