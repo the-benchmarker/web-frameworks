@@ -34,7 +34,12 @@ end
 # Reflects the id as the returned value.
 class Reflect
   def self.call(req)
-    [200, {}, [req['PATH_INFO'][6..-1]]]
+    id = req['PATH_INFO'][6..-1]
+    if id == id.to_i.to_s
+      [200, {}, [id]]
+    else
+      [400, {}, []]
+    end
   end
 end
 
