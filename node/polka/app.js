@@ -5,7 +5,7 @@ polka()
     res.end('')
   })
   .get('/user/:id', (req, res) => {
-    let id = req.params.id
+    const id = req.params.id
     if (parseInt(id, 10) * 0 !== 0) {
       res.statusCode = 404
       res.end()
