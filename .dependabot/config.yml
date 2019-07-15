@@ -78,67 +78,67 @@ update_configs:
   - docker
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/hapi
+  directory: node/hapi
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/fastify
+  directory: node/fastify
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/0http
+  directory: node/0http
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/muneem
+  directory: node/muneem
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/polkadot
+  directory: node/polkadot
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/rayo
+  directory: node/rayo
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/koa
+  directory: node/koa
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/express
+  directory: node/express
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/foxify
+  directory: node/foxify
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/restify
+  directory: node/restify
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/turbo_polka
+  directory: node/turbo_polka
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/restana
+  directory: node/restana
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/polka
+  directory: node/polka
   default_labels:
   - language:javascript
 - package_manager: docker

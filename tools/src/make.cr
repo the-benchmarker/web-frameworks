@@ -228,7 +228,11 @@ class App < Admiral::Command
                     yaml.scalar "update_schedule"
                     yaml.scalar mapping["languages"][language]["update_schedule"]
                     yaml.scalar "directory"
-                    yaml.scalar "#{language}/#{tool}"
+                    if language == "javascript"
+                      yaml.scalar "node/#{tool}"
+                    else
+                      yaml.scalar "#{language}/#{tool}"
+                    end
                     yaml.scalar "default_labels"
                     yaml.sequence do
                       yaml.scalar "language:#{language}"
