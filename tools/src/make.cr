@@ -220,6 +220,7 @@ class App < Admiral::Command
           yaml.sequence do
             frameworks.each do |language, tools|
               tools.each do |tool|
+                language = "javascript" if language == "node" # FIXME
                 if mapping["languages"].as_h[language]?
                   yaml.mapping do
                     yaml.scalar "package_manager"
@@ -235,6 +236,7 @@ class App < Admiral::Command
                   end
                 end
               end
+              language = "node" if language == "javascript" # FIXME
               directory = "#{language}/#{frameworks[language].first}"
               yaml.mapping do
                 yaml.scalar "package_manager"
