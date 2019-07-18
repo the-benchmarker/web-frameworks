@@ -9,7 +9,7 @@ server.GET["/"] = { _ in
 
 server.GET["/user/:id"] = { request in
     let userId = request.params[":id"] ?? ""
-    return HttpResponse.ok(.text("\(userId)"));
+    return HttpResponse.ok(.text("\(userId)"))
 }
 
 server.POST["/user"] = { _ in
