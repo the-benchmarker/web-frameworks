@@ -2,20 +2,23 @@ import Swifter
 import Dispatch
 
 let server = HttpServer()
-server["/"] = scopes {
-  html {
-    body {
-      center {
-        img { src = "https://swift.org/assets/images/swift.svg" }
-      }
-    }
-  }
+
+server.GET["/"] = { _ in
+    return HttpResponse.ok(.text(""))
 }
-server["/files/:path"] = directoryBrowser("/")
+
+server.GET["/user/:id"] = { request in
+    let userId = request.params[":id"] ?? ""
+    return HttpResponse.ok(.text("\(userId)"));
+}
+
+server.POST["/user"] = { _ in
+    return HttpResponse.ok(.text(""))
+}
 
 let semaphore = DispatchSemaphore(value: 0)
 do {
-  try server.start(9080, forceIPv4: true)
+  try server.start(3000, forceIPv4: true)
   print("Server has started ( port = \(try server.port()) ). Try to connect now...")
   semaphore.wait()
 } catch {
