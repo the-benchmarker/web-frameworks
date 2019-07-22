@@ -1,4 +1,4 @@
-FROM swift:5.0.1
+FROM swift:5.0.2
 
 WORKDIR /usr/src/app
 

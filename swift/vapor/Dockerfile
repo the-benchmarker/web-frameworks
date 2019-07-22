@@ -1,4 +1,4 @@
-FROM swift:5.0.1
+FROM swift:5.0.2
 
 RUN apt-get -qq update
 RUN apt-get -qy install libssl-dev zlib1g-dev
