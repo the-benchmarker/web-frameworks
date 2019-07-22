@@ -24,7 +24,7 @@ class ValidatorController
      *
      * @return array
      */
-    function validateAll(Request $request): array
+    public function validateAll(Request $request): array
     {
         return $request->getParsedBody();
     }
@@ -39,7 +39,7 @@ class ValidatorController
      *
      * @return array
      */
-    function validateType(Request $request): array
+    public function validateType(Request $request): array
     {
         return $request->getParsedBody();
     }
@@ -54,7 +54,7 @@ class ValidatorController
      *
      * @return array
      */
-    function validatePassword(Request $request): array
+    public function validatePassword(Request $request): array
     {
         return $request->getParsedBody();
     }
@@ -69,7 +69,7 @@ class ValidatorController
      *
      * @return array
      */
-    function validateCustomer(Request $request): array
+    public function validateCustomer(Request $request): array
     {
         return $request->getParsedBody();
     }

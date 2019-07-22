@@ -8,9 +8,8 @@ use Swoft\Db\Annotation\Mapping\Entity;
 use Swoft\Db\Annotation\Mapping\Id;
 use Swoft\Db\Eloquent\Model;
 
-
 /**
- * 
+ *
  * Class User
  *
  * @since 2.0
@@ -20,7 +19,7 @@ use Swoft\Db\Eloquent\Model;
 class User extends Model
 {
     /**
-     * 
+     *
      * @Id()
      * @Column()
      * @var int|null
@@ -28,7 +27,7 @@ class User extends Model
     private $id;
 
     /**
-     * 
+     *
      *
      * @Column()
      * @var string
@@ -36,7 +35,7 @@ class User extends Model
     private $name;
 
     /**
-     * 
+     *
      *
      * @Column()
      * @var int
@@ -44,7 +43,7 @@ class User extends Model
     private $age;
 
     /**
-     * 
+     *
      *
      * @Column(hidden=true)
      * @var string
@@ -52,7 +51,7 @@ class User extends Model
     private $password;
 
     /**
-     * 
+     *
      *
      * @Column(name="user_desc", prop="userDesc")
      * @var string
@@ -60,7 +59,7 @@ class User extends Model
     private $userDesc;
 
     /**
-     * 
+     *
      *
      * @Column()
      * @var int|null
@@ -68,7 +67,7 @@ class User extends Model
     private $add;
 
     /**
-     * 
+     *
      *
      * @Column()
      * @var int|null
@@ -76,7 +75,7 @@ class User extends Model
     private $hahh;
 
     /**
-     * 
+     *
      *
      * @Column(name="test_json", prop="testJson")
      * @var array|null
@@ -227,5 +226,4 @@ class User extends Model
     {
         return $this->testJson;
     }
-
 }

@@ -3,8 +3,6 @@
 
 namespace App\Model\Dao;
 
-
 class UserDao
 {
-
 }

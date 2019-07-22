@@ -3,8 +3,6 @@
 
 namespace App\Http\Middleware;
 
-
 class ControllerMiddleware
 {
-
 }

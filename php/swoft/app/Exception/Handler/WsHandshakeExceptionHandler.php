@@ -32,7 +32,10 @@ class WsHandshakeExceptionHandler extends AbstractHandshakeErrorHandler
         // Debug is false
         if (!APP_DEBUG) {
             return $response->withStatus(500)->withContent(sprintf(
-                '%s At %s line %d', $e->getMessage(), $e->getFile(), $e->getLine()
+                '%s At %s line %d',
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
             ));
         }
 

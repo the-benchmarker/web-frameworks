@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 use Swoft\SwoftComponent;
 
 /**

@@ -3,7 +3,6 @@
 
 namespace App\Process;
 
-
 use App\Model\Entity\User;
 use Swoft\Db\Exception\DbException;
 use Swoft\Log\Helper\CLog;

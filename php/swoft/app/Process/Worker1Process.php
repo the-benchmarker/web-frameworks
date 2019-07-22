@@ -3,7 +3,6 @@
 
 namespace App\Process;
 
-
 use Swoft\Log\Helper\CLog;
 use Swoft\Process\Annotation\Mapping\Process;
 use Swoft\Process\Contract\ProcessInterface;

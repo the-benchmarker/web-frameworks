@@ -8,7 +8,6 @@ use Swoft\Db\Annotation\Mapping\Entity;
 use Swoft\Db\Annotation\Mapping\Id;
 use Swoft\Db\Eloquent\Model;
 
-
 /**
  *
  * Class Count
@@ -152,5 +151,4 @@ class Count extends Model
     {
         return $this->updateTime;
     }
-
 }

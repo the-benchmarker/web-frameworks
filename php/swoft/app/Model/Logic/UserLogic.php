@@ -3,8 +3,6 @@
 
 namespace App\Model\Logic;
 
-
 class UserLogic
 {
-
 }

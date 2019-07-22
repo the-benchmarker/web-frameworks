@@ -12,7 +12,6 @@ use Swoft\Rpc\Server\Exception\Handler\RpcErrorHandler;
 use Swoft\Rpc\Server\Response;
 use Throwable;
 
-
 /**
  * Class RpcExceptionHandler
  *

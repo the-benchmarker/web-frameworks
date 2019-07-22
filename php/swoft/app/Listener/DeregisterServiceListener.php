@@ -3,7 +3,6 @@
 
 namespace App\Listener;
 
-
 use ReflectionException;
 use Swoft\Bean\Annotation\Mapping\Inject;
 use Swoft\Bean\Exception\ContainerException;

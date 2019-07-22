@@ -10,5 +10,4 @@ namespace App\Aspect;
  */
 class AnnotationAspect
 {
-
 }

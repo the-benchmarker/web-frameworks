@@ -3,7 +3,6 @@
 
 namespace App\Common;
 
-
 use Swoft\Bean\Annotation\Mapping\Bean;
 use Swoft\Db\Connection\Connection;
 use Swoft\Db\Contract\DbSelectorInterface;
@@ -29,7 +28,7 @@ class DbSelector implements DbSelectorInterface
             $selectIndex = '';
         }
 
-        if($createDbName == 'test2'){
+        if ($createDbName == 'test2') {
             $createDbName = 'test';
         }
 

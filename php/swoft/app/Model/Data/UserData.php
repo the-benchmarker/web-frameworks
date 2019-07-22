@@ -3,8 +3,6 @@
 
 namespace App\Model\Data;
 
-
 class UserData
 {
-
 }

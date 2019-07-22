@@ -3,12 +3,10 @@
 
 namespace App\Model\Entity;
 
-
 use Swoft\Db\Annotation\Mapping\Column;
 use Swoft\Db\Annotation\Mapping\Entity;
 use Swoft\Db\Annotation\Mapping\Id;
 use Swoft\Db\Eloquent\Model;
-
 
 /**
  * Class User

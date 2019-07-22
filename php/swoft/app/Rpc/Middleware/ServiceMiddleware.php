@@ -3,7 +3,6 @@
 
 namespace App\Rpc\Middleware;
 
-
 use Swoft\Bean\Annotation\Mapping\Bean;
 use Swoft\Rpc\Server\Contract\MiddlewareInterface;
 use Swoft\Rpc\Server\Contract\RequestHandlerInterface;

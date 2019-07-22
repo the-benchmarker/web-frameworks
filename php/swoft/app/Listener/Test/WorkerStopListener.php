@@ -3,7 +3,6 @@
 
 namespace App\Listener\Test;
 
-
 use Swoft\Event\Annotation\Mapping\Listener;
 use Swoft\Event\EventHandlerInterface;
 use Swoft\Event\EventInterface;

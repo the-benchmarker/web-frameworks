@@ -3,7 +3,6 @@
 
 namespace App\Migration;
 
-
 use ReflectionException;
 use Swoft\Bean\Exception\ContainerException;
 use Swoft\Db\Exception\DbException;

@@ -3,7 +3,6 @@
 
 namespace App\Listener;
 
-
 use Swoft\Bean\Annotation\Mapping\Inject;
 use Swoft\Co;
 use Swoft\Consul\Agent;
@@ -61,6 +60,5 @@ class RegisterServiceListener implements EventHandlerInterface
         // Register
 //        $this->agent->registerService($service);
 //        CLog::info('Swoft http register service success by consul!');
-
     }
 }
