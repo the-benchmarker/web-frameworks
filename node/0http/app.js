@@ -17,4 +17,4 @@ router.on('POST', '/user', (req, res) => {
   res.end()
 })
 
-server.listen(3000, socket => {})
+server.start(3000, socket => {})
