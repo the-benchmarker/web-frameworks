@@ -1,0 +1,60 @@
+{
+  "name": "swoft/swoft",
+  "type": "project",
+  "keywords": [
+    "php",
+    "swoole",
+    "swoft"
+  ],
+  "description": "Modern High performance AOP and Coroutine PHP Framework",
+  "license": "Apache-2.0",
+  "require": {
+    "php": ">7.1",
+    "ext-pdo": "*",
+    "ext-redis": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "swoft/db": "~2.0.0",
+    "swoft/i18n": "~2.0.0",
+    "swoft/view": "~2.0.0",
+    "swoft/task": "~2.0.0",
+    "swoft/redis": "~2.0.0",
+    "swoft/framework": "~2.0.0",
+    "swoft/http-server": "~2.0.0",
+    "swoft/rpc-client": "~2.0.0",
+    "swoft/rpc-server": "~2.0.0",
+    "swoft/websocket-server": "~2.0.0",
+    "swoft/tcp-server": "~2.0.0",
+    "swoft/process": "~2.0.0",
+    "swoft/apollo": "~2.0.0",
+    "swoft/consul": "~2.0.0",
+    "swoft/limiter": "~2.0.0",
+    "swoft/breaker": "~2.0.0",
+    "swoft/devtool": "~2.0.0"
+  },
+  "require-dev": {
+    "swoft/swoole-ide-helper": "dev-master",
+    "phpunit/phpunit": "^7.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    },
+    "files": [
+      "app/Helper/Functions.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AppTest\\Testing\\": "test/testing",
+      "AppTest\\Unit\\": "test/unit"
+    }
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ],
+    "test": "./vendor/bin/phpunit -c phpunit.xml",
+    "cs-fix": "./vendor/bin/php-cs-fixer fix $1"
+  }
+}
