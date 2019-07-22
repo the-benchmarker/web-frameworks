@@ -1,5 +1,9 @@
 const cero = require('0http')
-const { router, server } = cero()
+const low = require('0http/lib/server/low')
+
+const { router, server } = cero({
+  server: low()
+})
 
 router.on('GET', '/', (req, res) => {
   res.end()
@@ -13,4 +17,4 @@ router.on('POST', '/user', (req, res) => {
   res.end()
 })
 
-server.listen(3000)
+server.listen(3000, socket => {})
