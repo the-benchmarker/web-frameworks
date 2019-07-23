@@ -24,5 +24,4 @@ RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/loca
 RUN composer install --no-dev --prefer-dist --classmap-authoritative
 RUN composer dumpautoload -o
 
-RUN php sbin/hyperf.php di:init-proxy
 CMD php sbin/hyperf.php start
