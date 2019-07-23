@@ -5,47 +5,65 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=0http
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=act
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=actix-web
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=agoo
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=agoo-c
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=aiohttp
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=air
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=akkahttp
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=amber
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -55,17 +73,23 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=aspnetcore
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=athena
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=atreugo
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -75,22 +99,30 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=beego
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=blacksheep
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=bocadillo
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=bottle
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -100,7 +132,9 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=chi
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -110,12 +144,16 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=coast
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=cuba
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -125,107 +163,149 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=dancer2
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=django
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=drogon
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=echo
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=evhtp
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=express
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=falcon
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=fastapi
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=fasthttprouter
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=fastify
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=flame
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=flask
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=foxify
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=gf
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=gin
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=gorilla-mux
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=goroute
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=gorouter
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=gorouter-fasthttp
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=gotham
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=gramework
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -235,17 +315,23 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=hanami
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=hapi
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=http4s
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -255,32 +341,51 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=hug
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=hyperf
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=imi
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=iotjs-express
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=iron
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=japronto
-    services: docker
+    services:
+    - docker
+    - redis
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=javalin
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -290,82 +395,114 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=jester
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=kami
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=kemal
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=kitura
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=kitura-nio
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=koa
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=kore
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=ktor
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=laravel
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=lucky
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=lumen
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=masonite
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=moleculer
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=molten
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=muneem
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=nickel
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -375,17 +512,23 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=onyx
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=orion
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=perfect
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -395,97 +538,135 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=polka
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=polkadot
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=quart
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=rack-routing
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=rails
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=rapidoid
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=rayo
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=raze
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=responder
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=restana
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=restify
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=roda
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=router.cr
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=rte
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=sanic
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=sifrr
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=sinatra
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=slim
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=spider-gazelle
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -495,12 +676,16 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=spring-boot
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=starlette
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -510,57 +695,79 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=swifter
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=swoft
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=symfony
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=syro
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=tornado
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=toro
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=turbo_polka
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=vapor
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=violetear
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=zend-expressive
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=zend-framework
-    services: docker
+    services:
+    - docker
+    - redis
 notifications:
   email: false
 before_install: bash .ci/has_to_run.sh || travis_terminate 0

@@ -17,7 +17,3 @@ require _APP_PATH_ . '/Config/rpc.php';
 
 // 解析路由
 \One\Http\Router::loadRouter();
-
-
-
-

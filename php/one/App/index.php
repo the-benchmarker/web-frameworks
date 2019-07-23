@@ -26,4 +26,3 @@ try {
     }
     echo \One\Exceptions\Handler::render(new \One\Exceptions\HttpException($res, $msg, $e->getCode()));
 }
-
