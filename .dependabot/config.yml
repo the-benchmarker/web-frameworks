@@ -343,6 +343,11 @@ update_configs:
   - docker
 - package_manager: docker
   update_schedule: daily
+  directory: php/hyperf
+  default_labels:
+  - docker
+- package_manager: docker
+  update_schedule: daily
   directory: swift/vapor
   default_labels:
   - docker
