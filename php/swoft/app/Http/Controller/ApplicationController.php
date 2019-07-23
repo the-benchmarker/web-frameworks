@@ -22,9 +22,9 @@ class ApplicationController
      * @RequestMapping("/", method=RequestMethod::GET)
      * @throws Throwable
      */
-    public function index(): string
+    public function index(): Response
     {
-        return 'hello';
+        return Context::mustGet()->getResponse()->withContent('hi');
     }
 
     /**
