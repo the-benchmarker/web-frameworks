@@ -15,12 +15,14 @@ RUN docker-php-ext-enable swoole
 WORKDIR /usr/src/app
 
 COPY app app
+COPY sbin sbin
 COPY config config
 COPY composer.json composer.json
+COPY swoole.ini /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
 
 RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev --prefer-dist --classmap-authoritative
 RUN composer dumpautoload -o
 
-RUN php bin/hyperf.php di:init-proxy
-CMD php bin/hyperf.php start
+RUN php sbin/hyperf.php di:init-proxy
+CMD php sbin/hyperf.php start
