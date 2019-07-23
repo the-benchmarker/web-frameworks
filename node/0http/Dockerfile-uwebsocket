@@ -1,0 +1,9 @@
+FROM node:12.6.0
+
+WORKDIR /usr/src/app
+
+COPY uwebsocket/app.js uwebsocket/package.json ./
+
+RUN npm install
+
+CMD ["node", "app.js"]
