@@ -11,12 +11,11 @@ return [
     'httpServer'     => [
         'class'   => HttpServer::class,
         'port'    => 3000,
-        'on'      => [//            SwooleEvent::TASK   => bean(SyncTaskListener::class),
-        ],
+        'on'      => [],
         /* @see HttpServer::$setting */
         'setting' => [
-            'worker_num' => 2,
-            'log_file'   => alias('@runtime/swoole.log'),
+            'worker_num' => 4,
+            // 'log_file'   => alias('@runtime/swoole.log'),
         ]
     ],
     'httpDispatcher' => [
