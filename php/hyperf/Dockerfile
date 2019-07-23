@@ -1,57 +1,26 @@
-# Default Dockerfile
-#
-# @link     https://www.hyperf.io
-# @document https://doc.hyperf.io
-# @contact  group@hyperf.io
-# @license  https://github.com/hyperf-cloud/hyperf/blob/master/LICENSE
+FROM php:7.3.7-fpm
 
-FROM hyperf/hyperf:7.2-alpine-cli
-LABEL maintainer="Hyperf Developers <group@hyperf.io>" version="1.0" license="MIT"
+RUN apt -y update
+RUN apt -y install git
 
-##
-# ---------- env settings ----------
-##
-# --build-arg timezone=Asia/Shanghai
-ARG timezone
+RUN apt -y install libzip-dev
+RUN docker-php-ext-install zip
 
-ENV TIMEZONE=${timezone:-"Asia/Shanghai"} \
-    COMPOSER_VERSION=1.8.6 \
-    APP_ENV=prod
+RUN pecl install redis
+RUN docker-php-ext-enable redis
 
-# update
-RUN set -ex \
-    # install composer
-    && cd /tmp \
-    && wget https://github.com/composer/composer/releases/download/${COMPOSER_VERSION}/composer.phar \
-    && chmod u+x composer.phar \
-    && mv composer.phar /usr/local/bin/composer \
-    # show php version and extensions
-    && php -v \
-    && php -m \
-    #  ---------- some config ----------
-    && cd /etc/php7 \
-    # - config PHP
-    && { \
-        echo "upload_max_filesize=100M"; \
-        echo "post_max_size=108M"; \
-        echo "memory_limit=1024M"; \
-        echo "date.timezone=${TIMEZONE}"; \
-    } | tee conf.d/99-overrides.ini \
-    # - config timezone
-    && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
-    && echo "${TIMEZONE}" > /etc/timezone \
-    # ---------- clear works ----------
-    && rm -rf /var/cache/apk/* /tmp/* /usr/share/man \
-    && echo -e "\033[42;37m Build Completed :).\033[0m\n"
+RUN pecl install swoole-4.4.1
+RUN docker-php-ext-enable swoole
 
-COPY . /opt/www
+WORKDIR /usr/src/app
 
-WORKDIR /opt/www
+COPY app app
+COPY config config
+COPY composer.json composer.json
 
-RUN composer install --no-dev \
-    && composer dump-autoload -o \
-    && ls && ls /opt && ls /opt/www
+RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install --no-dev --prefer-dist --classmap-authoritative
+RUN composer dumpautoload -o
 
-EXPOSE 9501
-
-ENTRYPOINT ["php", "/opt/www/bin/hyperf.php", "start"]
+RUN php bin/hyperf.php di:init-proxy
+CMD php bin/hyperf.php start
