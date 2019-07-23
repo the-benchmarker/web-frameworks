@@ -50,8 +50,8 @@ WORKDIR /opt/www
 
 RUN composer install --no-dev \
     && composer dump-autoload -o \
-    && php bin/hyperf.php di:init-proxy
+    && ls && ls /opt && ls /opt/www
 
 EXPOSE 9501
 
-ENTRYPOINT ["php", "bin/hyperf.php", "start"]
+ENTRYPOINT ["php", "/opt/www/bin/hyperf.php", "start"]
