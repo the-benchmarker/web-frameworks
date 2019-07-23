@@ -6,12 +6,10 @@ use ReflectionException;
 use Swoft;
 use Swoft\Bean\Exception\ContainerException;
 use Swoft\Context\Context;
-use Swoft\Http\Message\ContentType;
 use Swoft\Http\Message\Response;
 use Swoft\Http\Server\Annotation\Mapping\Controller;
 use Swoft\Http\Server\Annotation\Mapping\RequestMapping;
 use Swoft\Http\Server\Annotation\Mapping\RequestMethod;
-use Swoft\View\Renderer;
 use Throwable;
 
 /**
@@ -24,9 +22,9 @@ class ApplicationController
      * @RequestMapping("/", method=RequestMethod::GET)
      * @throws Throwable
      */
-    public function index(): Response
+    public function index(): string
     {
-        return Context::mustGet()->getResponse()->withContent("");
+        return 'hello';
     }
 
     /**
