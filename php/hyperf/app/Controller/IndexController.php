@@ -16,20 +16,14 @@ class IndexController extends Controller
 {
     public function index()
     {
-        return [
-            'message' => "",
-        ];
+        return "";
     }
-    public function get($id)
+    public function get(int $id)
     {
-        return [
-            'message' => $id,
-        ];
+        return (string) $id;
     }
     public function create()
     {
-        return [
-            'message' => "",
-        ];
+        return "";
     }
 }
