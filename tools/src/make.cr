@@ -168,7 +168,7 @@ class App < Admiral::Command
                 yaml.scalar "commands"
                 yaml.sequence do
                   yaml.scalar "docker build --no-cache --rm -t #{tool} ."
-                  yaml.scalar "../../bin/client -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
+                  yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
                   yaml.scalar "docker ps -aq | xargs -r docker rm -f"
                   yaml.scalar "(docker images -aq | xargs -r docker rmi -f) || echo OK"
                   yaml.scalar "docker system prune --volumes -af"

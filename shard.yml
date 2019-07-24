@@ -21,6 +21,8 @@ dependencies:
     version: ~> 1.8.0
 
 targets:
+  db:
+    main: tools/src/db.cr
   neph:
     main: lib/neph/src/bin/neph_bin.cr
   benchmarker:

@@ -1,19 +1,42 @@
 require "admiral"
-require "redis"
+require "sqlite3"
 
 PIPELINES = {
   "GET":  File.expand_path("../../" + "pipeline.lua", __FILE__),
   "POST": File.expand_path("../../" + "pipeline_post.lua", __FILE__),
 }
 
+def insert(db, framework_id, metric, value)
+  row = db.exec "insert or ignore into metric_keys values (null, ?, ?)", metric, framework_id
+  metric_id = row.last_insert_id
+  if metric_id == 0
+    metric_id = db.scalar "select id from metric_keys where label = ? and framework_id = ?", metric, framework_id
+  end
+  db.exec "insert into metric_values values (null, ?, ?)", metric_id, value
+end
+
 class Client < Admiral::Command
   define_flag threads : Int32, description: "# of threads", default: 16, long: "threads", short: "t"
   define_flag connections : Int32, description: "# of opened connections", default: 1000, long: "connections", short: "c"
   define_flag duration : Int32, description: "Time to test, in seconds", default: 15, long: "duration", short: "d"
-  define_flag framework : String, description: "Framework used", required: true, long: "host", short: "f"
+  define_flag language : String, description: "Language used", required: true, long: "language", short: "l"
+  define_flag framework : String, description: "Framework used", required: true, long: "framework", short: "f"
   define_flag routes : Array(String), long: "routes", short: "r", default: ["GET:/"]
 
   def run
+    db = DB.open "sqlite3://../../data.db"
+    row = db.exec "insert or ignore into languages values (null, ?)", flags.language
+    language_id = row.last_insert_id
+    if language_id == 0
+      language_id = db.scalar "select id from languages where label = ?", flags.language
+    end
+
+    row = db.exec "insert or ignore into frameworks values (null, ?, ?)", language_id, flags.framework
+    framework_id = row.last_insert_id
+    if language_id == 0
+      framework_id = db.scalar "select id from languages where language_id = ? and label = ?", language_id, flags.framework
+    end
+
     cid = `docker run -td #{flags.framework}`.strip
     sleep 20 # due to external program usage
     ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
@@ -30,28 +53,28 @@ class Client < Admiral::Command
 
       result = io.to_s.split(",")
 
-      redis = Redis.new
+      insert(db, framework_id, "request:duration", result[0])
+      insert(db, framework_id, "request:total", result[1])
+      insert(db, framework_id, "request:per_second", result[2])
+      insert(db, framework_id, "request:bytes", result[3])
 
-      redis.set("request:duration", result[0].to_f)
-      redis.set("request:total", result[1].to_f)
-      redis.set("request:per_second", result[2].to_f)
-      redis.set("request:bytes", result[3].to_f)
+      insert(db, framework_id, "error:socket", result[4])
+      insert(db, framework_id, "error:read", result[5])
+      insert(db, framework_id, "error:write", result[6])
+      insert(db, framework_id, "error:http", result[7])
+      insert(db, framework_id, "error:timeout", result[8])
 
-      redis.set("error:socket", result[4].to_f)
-      redis.set("error:read", result[5].to_f)
-      redis.set("error:write", result[6].to_f)
-      redis.set("error:http", result[7].to_f)
-      redis.set("error:timeout", result[8].to_f)
+      insert(db, framework_id, "latency:minimum", result[9])
+      insert(db, framework_id, "latency:maximum", result[10])
+      insert(db, framework_id, "latency:average", result[11])
+      insert(db, framework_id, "latency:deviation", result[12])
 
-      redis.set("latency:minimum", result[9].to_f)
-      redis.set("latency:maximum", result[10].to_f)
-      redis.set("latency:average", result[11].to_f)
-      redis.set("latency:deviation", result[12].to_f)
+      insert(db, framework_id, "percentile:fifty", result[13])
+      insert(db, framework_id, "percentile:ninety", result[14])
+      insert(db, framework_id, "percentile:ninety_nine", result[15])
+      insert(db, framework_id, "percentile:ninety_nine_ninety", result[16])
 
-      redis.set("percentile:fifty", result[13].to_f)
-      redis.set("percentile:ninety", result[14].to_f)
-      redis.set("percentile:ninety_nine", result[15].to_f)
-      redis.set("percentile:ninety_nine_ninety", result[16].to_f)
+      db.close
     end
   end
 end
