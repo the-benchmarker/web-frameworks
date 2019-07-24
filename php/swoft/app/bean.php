@@ -14,7 +14,7 @@ return [
         'on'      => [],
         /* @see HttpServer::$setting */
         'setting' => [
-            'worker_num' => 4,
+            'worker_num' => filter_var ( shell_exec ( 'nproc' ), FILTER_VALIDATE_INT ),
             // 'log_file'   => alias('@runtime/swoole.log'),
         ]
     ],
