@@ -1,13 +1,13 @@
-const nanoexpress = require("nanoexpress");
+const nanoexpress = require('nanoexpress')
 
 nanoexpress()
-  .get("/", (req, res) => {
-    res.end("");
+  .get('/', (req, res) => {
+    res.end('')
   })
-  .get("/user/:id", (req, res) => {
-    res.send(req.params.id);
+  .get('/user/:id', (req, res) => {
+    res.send(req.params.id)
   })
-  .post("/user", (req, res) => {
-    res.end("");
+  .post('/user', (req, res) => {
+    res.end('')
   })
-  .listen(3000);
+  .listen(3000)
