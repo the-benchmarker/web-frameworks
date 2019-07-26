@@ -24,7 +24,7 @@ class ApplicationController
      */
     public function index(): Response
     {
-        return Context::mustGet()->getResponse()->withContent('hi');
+        return Context::mustGet()->getResponse()->withContent("");
     }
 
     /**
