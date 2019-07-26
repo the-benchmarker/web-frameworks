@@ -398,6 +398,12 @@ update_configs:
   - language:javascript
 - package_manager: docker
   update_schedule: daily
+  directory: node/nanoexpress
+  default_labels:
+  - docker
+  - language:javascript
+- package_manager: docker
+  update_schedule: daily
   directory: node/restana
   default_labels:
   - docker
