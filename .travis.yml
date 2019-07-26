@@ -321,6 +321,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=moleculer
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=molten
     services: docker
   - stage: test

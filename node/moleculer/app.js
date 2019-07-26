@@ -27,14 +27,14 @@ broker.createService({
   name: "user",
 
   actions: {
-    get(ctx) {
+    get() {
       return;
     },
-    post(ctx) {
+    post() {
       return;
     },
     getID(ctx) {
-      return ctx.params.id;
+      return Number(ctx.params.id);
     }
   }
 });
