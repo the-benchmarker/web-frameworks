@@ -6,7 +6,6 @@ WORKDIR /usr/src/app
 
 COPY app.js package.json ./
 
-RUN apk update && apk add --no-cache git
 RUN npm install
 RUN ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
 
