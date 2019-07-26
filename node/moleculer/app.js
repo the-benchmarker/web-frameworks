@@ -1,7 +1,9 @@
 const { ServiceBroker } = require('moleculer')
 const HTTPServer = require('moleculer-web')
 
-const broker = new ServiceBroker()
+const broker = new ServiceBroker({
+  logger: false
+})
 
 broker.createService({
   name: 'api',
