@@ -38,7 +38,7 @@ fi
 
 if [[ ${LANGUAGE} == "php" ]] ; then
   composer global require friendsofphp/php-cs-fixer
-  ~/.config/composer/vendor/bin/php-cs-fixer fix --verbose php --rules=@PSR1,@PSR2 --using-cache=no
+  ~/.config/composer/vendor/bin/php-cs-fixer fix php --verbose --rules=@PSR1,@PSR2 --using-cache=no --dry-run
 fi
 
 if [[ ${LANGUAGE} == "python" ]] ; then
