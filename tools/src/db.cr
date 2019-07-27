@@ -36,10 +36,8 @@ class App < Admiral::Command
           end
         end
       end
-      #  p "| %s | %s | %s | %s | %s | %s | %s | %s |" % ["Language (Runtime)", "Framework (Middleware)", "Average", "50th percentile", "90th percentile", "99th percentile", "99.9th percentile", "Standard deviation"]
-      #  p "|---------------------------|---------------------------|----------------:|----------------:|----------------:|----------------:|----------------:|----------------:|"
       results.each do |_, row|
-        p "| %s | %s | %s | **%.2f** ms | %s | %s | %s | %s |" % [
+        p "| %s | %s | %s | **%.2f** ms | %s | %s | %s | %s | %s | %s |" % [
           row["language"],
           row["framework"],
           row["latency:average"],
@@ -48,8 +46,9 @@ class App < Admiral::Command
           row["percentile:ninety_nine"],
           row["percentile:ninety_nine_ninety"],
           row["latency:deviation"],
+          row["request:per_second"],
+          row["request:bytes"].to_f / row["request:duration"].to_f
         ]
-        # ["language", "framework", "error:http", "error:read", "error:socket", "error:timeout", "error:write", , , "latency:maximum", "latency:minimum", , , , , "request:bytes", "request:duration", "request:per_second", "request:total"
       end
     end
   end

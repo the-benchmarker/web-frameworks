@@ -52,7 +52,13 @@ shards install
 shards build
 ~~~
 
-+ Make framework list
++ Initialize `sqlite` database
+
+~~~sh
+bin/db init
+~~~
+
++ Make configuration
 
 ~~~sh
 bin/make config
@@ -66,12 +72,10 @@ bin/make config
 bin/neph [job1] [job2] [job3] ...
 ~~~
 
-+ Start the benchmark ....
-
-> tools is a list of language / framework to challenge (example : ruby kemal amber go python)
++ Export all results readme
 
 ~~~sh
-bin/benchmarker [tools]
+bin/db to_readme
 ~~~
 
 ## Results
