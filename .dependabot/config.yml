@@ -323,6 +323,11 @@ update_configs:
   - language:php
 - package_manager: php:composer
   update_schedule: live
+  directory: php/hyperf
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
   directory: php/laravel
   default_labels:
   - language:php
@@ -339,11 +344,6 @@ update_configs:
 - package_manager: docker
   update_schedule: daily
   directory: php/swoft
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: php/hyperf
   default_labels:
   - docker
 - package_manager: docker
