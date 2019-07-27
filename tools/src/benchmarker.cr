@@ -134,7 +134,7 @@ end
 def benchmark(host, threads, connections, duration, target, store) : Filter
   latency = 0.0
   requests = 0.0
-  raw = `#{CLIENT} --url http://#{host}:3000 --init`
+  raw = `#{CLIENT} --url http://localhost:3000 --init`
   result = Result.from_json(raw)
   parser = JSON::PullParser.new(raw)
   results = Hash(String, Hash(String, Float64)).new(parser)
