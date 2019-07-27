@@ -11,7 +11,10 @@ RUN docker-php-ext-enable swoole
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY app app
+COPY bin bin
+COPY composer.json composer.json
+COPY config config
 
 RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev --prefer-dist --classmap-authoritative
