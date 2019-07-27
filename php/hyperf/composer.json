@@ -1,19 +1,5 @@
 {
-    "name": "hyperf/hyperf-skeleton",
-    "type": "project",
-    "keywords": [
-        "php",
-        "swoole",
-        "framework",
-        "hyperf",
-        "microservice",
-        "middleware"
-    ],
-    "description": "A coroutine framework that focuses on hyperspeed and flexible, specifically use for build microservices and middlewares.",
-    "license": "Apache-2.0",
     "require": {
-        "php": ">=7.2",
-        "ext-swoole": ">=4.2",
         "hyperf/command": "~1.0.0",
         "hyperf/config": "~1.0.0",
         "hyperf/contract": "~1.0.0",
@@ -28,7 +14,6 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/"
-        },
-        "files": []
+        }
     }
 }
