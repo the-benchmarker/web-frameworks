@@ -1,6 +1,6 @@
-const { App } = require('@sifrr/server');
+const { App } = require('@sifrr/server')
 
-const app = new App();
+const app = new App()
 
 app
   .get('/', res => {
