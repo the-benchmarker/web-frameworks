@@ -341,7 +341,7 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=sifrr-server
+    env: FRAMEWORK=sifrr
     services: docker
   - stage: test
     script: bash .ci/test.sh
