@@ -19,10 +19,19 @@ class App < Admiral::Command
   class ReadmeWriter < Admiral::Command
     def run
       results = {} of String => Hash(String, String | Float64)
+      order_by_requests = <<-EOS
+SELECT f.id, l.label AS language, f.label AS framework, k.label AS key, sum(v.value/3) AS value, k.label='percentile:fifty' AS filter 
+  FROM frameworks AS f 
+  JOIN languages AS l on l.id = f.language_id 
+  JOIN metric_keys as k on k.framework_id = f.id
+  JOIN metric_values as v on v.metric_id = k.id 
+    GROUP BY 1,2,3,4
+    ORDER BY 6 desc, 5
+EOS
       DB.open "sqlite3://data.db" do |db|
-        db.query "select f.label||'-'||l.label,l.label, f.label, m.label, sum(m.value/3) from frameworks as f join languages as l on l.id = f.language_id join metrics as m on m.framework_id = f.id group by 2,3,4" do |row|
+        db.query order_by_requests do |row|
           row.each do
-            key = row.read(String)
+            key = row.read(Int).to_s
             language = row.read(String)
             framework = row.read(String)
             metric = row.read(String)
@@ -37,14 +46,14 @@ class App < Admiral::Command
         end
       end
       results.each do |_, row|
-        p "| %s | %s | %s | **%.2f** ms | %s | %s | %s | %s | %s | %s |" % [
+        p "| %s | %s | %s | **%.2f** ms | %.2f ms | %.2f ms  | %.2f ms  | %s | %s | %s Mb |" % [
           row["language"],
           row["framework"],
           row["latency:average"],
           row["percentile:fifty"].to_f/1000,
-          row["percentile:ninety"],
-          row["percentile:ninety_nine"],
-          row["percentile:ninety_nine_ninety"],
+          row["percentile:ninety"].to_f/1000,
+          row["percentile:ninety_nine"].to_f/1000,
+          row["percentile:ninety_nine_ninety"].to_f/1000,
           row["latency:deviation"],
           row["request:per_second"],
           row["request:bytes"].to_f / row["request:duration"].to_f
