@@ -1,8 +1,9 @@
 {
     "require": {
-        "symfony/yaml": "4.3.2",
-        "symfony/console": "4.3.2",
-        "sensio/framework-extra-bundle": "5.4.1"
+        "symfony/framework-bundle": "4.3.3",
+        "symfony/console": "4.3.3",
+	"symfony/yaml": "4.3.3",
+	"doctrine/annotations": "1.6.1"
     },
     "config": {
         "preferred-install": {
