@@ -98,6 +98,11 @@ update_configs:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
+  directory: node/uwebsockets.js
+  default_labels:
+  - language:javascript
+- package_manager: javascript
+  update_schedule: live
   directory: node/0http
   default_labels:
   - language:javascript
