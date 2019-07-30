@@ -23,5 +23,5 @@ RUN make install
 WORKDIR $IROOT/build
 RUN cmake -DCMAKE_BUILD_TYPE=release ..
 RUN make
-CMD ./drogon_benchmark config.json
+CMD ./drogon_benchmark ../config.json
 
