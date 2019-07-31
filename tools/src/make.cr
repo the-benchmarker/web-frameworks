@@ -14,29 +14,18 @@ end
 class App < Admiral::Command
   class Config < Admiral::Command
     def run
-      frameworks = {} of String => Array(FrameworkConfig)
+      frameworks = {} of String => Array(String)
       Dir.glob("*/*/config.yaml").each do |file|
         directory = File.dirname(file)
         infos = directory.split("/")
         framework = infos.pop
         language = infos.pop
-        fwk_config = YAML.parse(File.read(file))
-        lng_config = YAML.parse(File.read(File.join(language, "config.yaml")))
-        config = lng_config.as_h.merge(fwk_config.as_h)
-
-        # Discover documentation URL for this framework
-
-        website = config["framework"]["website"]?
-        if website.nil?
-          website = "github.com/#{config["framework"]["github"]}"
-        end
-        version = config["framework"]["version"]
-        langver = config["provider"]["default"]["language"]
 
         unless frameworks.has_key?(language)
-          frameworks[language] = [] of FrameworkConfig
+          frameworks[language] = [] of String
         end
 
+<<<<<<< HEAD
         if m = version.to_s.match /^(\d+)\.(\d+)$/
           version = "#{m[1]}.#{m[2]}"
         end
@@ -45,13 +34,26 @@ class App < Admiral::Command
         end
 
         frameworks[language] << FrameworkConfig.new(framework, website.to_s, version.to_s, langver.to_s)
+=======
+        frameworks[language] << framework
+>>>>>>> refactor: Remove unused code
       end
 
       selection = YAML.build do |yaml|
         yaml.mapping do
-          frameworks.each do |language, configs|
+          yaml.scalar "main"
+          yaml.mapping do
+            yaml.scalar "depends_on"
+            yaml.sequence do
+              frameworks.each do |language, _|
+                yaml.scalar language
+              end
+            end
+          end
+          frameworks.each do |language, tools|
             yaml.scalar language
             yaml.mapping do
+<<<<<<< HEAD
               configs.each do |config|
                 yaml.scalar config.name
                 yaml.mapping do
@@ -61,13 +63,36 @@ class App < Admiral::Command
                   yaml.scalar " #{config.version}"
                   yaml.scalar "language"
                   yaml.scalar " #{config.langver.to_s}"
+=======
+              yaml.scalar "depends_on"
+              yaml.sequence do
+                tools.each do |tool|
+                  yaml.scalar tool
+>>>>>>> refactor: Remove unused code
                 end
+              end
+            end
+          end
+          frameworks.each do |language, tools|
+            tools.each do |tool|
+              yaml.scalar tool
+              yaml.mapping do
+                yaml.scalar "commands"
+                yaml.sequence do
+                  yaml.scalar "docker build --no-cache --rm -t #{tool} ."
+                  yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
+                  yaml.scalar "docker ps -aq | xargs -r docker rm -f"
+                  yaml.scalar "(docker images -aq | xargs -r docker rmi -f) || echo OK"
+                  yaml.scalar "docker system prune --volumes -af"
+                end
+                yaml.scalar "dir"
+                yaml.scalar "#{language}/#{tool}"
               end
             end
           end
         end
       end
-      File.write("FRAMEWORKS.yaml", selection)
+      File.write("neph.yaml", selection)
     end
   end
 
@@ -120,67 +145,6 @@ class App < Admiral::Command
       end
 
       File.write(".travis.yml", selection)
-    end
-  end
-
-  class NephConfig < Admiral::Command
-    def run
-      frameworks = {} of String => Array(String)
-      Dir.glob("*/*/config.yaml").each do |file|
-        directory = File.dirname(file)
-        infos = directory.split("/")
-        framework = infos.pop
-        language = infos.pop
-
-        unless frameworks.has_key?(language)
-          frameworks[language] = [] of String
-        end
-
-        frameworks[language] << framework
-      end
-
-      selection = YAML.build do |yaml|
-        yaml.mapping do
-          yaml.scalar "main"
-          yaml.mapping do
-            yaml.scalar "depends_on"
-            yaml.sequence do
-              frameworks.each do |language, _|
-                yaml.scalar language
-              end
-            end
-          end
-          frameworks.each do |language, tools|
-            yaml.scalar language
-            yaml.mapping do
-              yaml.scalar "depends_on"
-              yaml.sequence do
-                tools.each do |tool|
-                  yaml.scalar tool
-                end
-              end
-            end
-          end
-          frameworks.each do |language, tools|
-            tools.each do |tool|
-              yaml.scalar tool
-              yaml.mapping do
-                yaml.scalar "commands"
-                yaml.sequence do
-                  yaml.scalar "docker build --no-cache --rm -t #{tool} ."
-                  yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
-                  yaml.scalar "docker ps -aq | xargs -r docker rm -f"
-                  yaml.scalar "(docker images -aq | xargs -r docker rmi -f) || echo OK"
-                  yaml.scalar "docker system prune --volumes -af"
-                end
-                yaml.scalar "dir"
-                yaml.scalar "#{language}/#{tool}"
-              end
-            end
-          end
-        end
-      end
-      File.write("neph.yaml", selection)
     end
   end
 
@@ -258,7 +222,6 @@ class App < Admiral::Command
   end
 
   register_sub_command config : Config, description "Create framework list"
-  register_sub_command neph_config : NephConfig, description "Create neph build tool configuration file"
   register_sub_command ci_config : TravisConfig, description "Create configuration file for CI"
   register_sub_command deps_config : DependabotConfig, description "Create configuration file for deps update bot"
 
