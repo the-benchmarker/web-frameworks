@@ -1,8 +1,6 @@
 require "admiral"
 require "sqlite3"
-
-# Language (Runtime) 	Framework (Middleware) 	Average 	50th percentile 	90th percentile 	99th percentile 	99.9th percentile 	Standard deviation
-# Requests / s 	Throughput
+require "crustache"
 
 class App < Admiral::Command
   class InitializeDatabase < Admiral::Command
@@ -45,20 +43,28 @@ EOS
           end
         end
       end
+      lines = [
+        "| Language | Framework | Average | 50th percentile | 90th percentile | 99th percentile | 99.9th percentile | Standard deviation | Requests / s | Throughput |",
+        "|----|----|---------|-------------|---------|----------|----------|------|------|-------|"
+      ]
       results.each do |_, row|
-        p "| %s | %s | %s | **%.2f** ms | %.2f ms | %.2f ms  | %.2f ms  | %s | %s | %s Mb |" % [
+        lines << "| %s | %s | %.2f ms | **%.2f** ms | %.2f ms | %.2f ms  | %.2f ms  | %.2f | %.2f | %.2f Mb |" % [
           row["language"],
           row["framework"],
-          row["latency:average"],
+          row["latency:average"].to_f/1000,
           row["percentile:fifty"].to_f/1000,
           row["percentile:ninety"].to_f/1000,
           row["percentile:ninety_nine"].to_f/1000,
           row["percentile:ninety_nine_ninety"].to_f/1000,
-          row["latency:deviation"],
-          row["request:per_second"],
+          row["latency:deviation"].to_f,
+          row["request:per_second"].to_f,
           row["request:bytes"].to_f / row["request:duration"].to_f
         ]
       end
+
+      path = File.expand_path("../../../README.mustache.md", __FILE__)
+      template = Crustache.parse(File.read(path))
+      puts Crustache.render template, {"results" => lines}
     end
   end
 
