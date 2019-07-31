@@ -9,4 +9,4 @@ COPY requirements.txt server.py ./
 
 EXPOSE 3000
 
-CMD python -O server.py
+CMD gunicorn --log-level warning --bind 0.0.0.0:3000 --reuse-port --workers $(nproc) --worker-class uvicorn.workers.UvicornWorker server:app
