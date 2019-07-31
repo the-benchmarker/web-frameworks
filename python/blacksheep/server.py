@@ -1,14 +1,9 @@
-from blacksheep.server import Application, ServerOptions
+from blacksheep.server import Application
 import multiprocessing
 from blacksheep.server.responses import text
 
 
-app = Application(
-    ServerOptions(
-        host="0.0.0.0", port=3000, processes_count=multiprocessing.cpu_count()
-    ),
-    debug=False,
-)
+app = Application()
 
 
 @app.router.get("/")
