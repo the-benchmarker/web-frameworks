@@ -1,7 +1,7 @@
 {
   "require": {
-    "swoft/framework": "~2.0.0",
-    "swoft/http-server": "~2.0.0"
+    "swoft/framework": "2.0.*",
+    "swoft/http-server": "2.0.*"
   },
   "autoload": {
     "psr-4": {
