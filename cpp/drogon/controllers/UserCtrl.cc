@@ -6,11 +6,15 @@ void UserCtrl::getUser(const HttpRequestPtr &req,
 {
     auto resp = HttpResponse::newHttpResponse();
     resp->setBody(std::move(id));
+    resp->setContentTypeCodeAndCustomString(CT_TEXT_PLAIN,
+                                            "Content-Type: text/plain\r\n");
     callback(resp);
 }
 void UserCtrl::addUser(const HttpRequestPtr &req,
                        std::function<void(const HttpResponsePtr &)> &&callback)
 {
     auto resp = HttpResponse::newHttpResponse();
+    resp->setContentTypeCodeAndCustomString(CT_TEXT_PLAIN,
+                                            "Content-Type: text/plain\r\n");
     callback(resp);
 }

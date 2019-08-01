@@ -5,20 +5,15 @@ RUN apt -qq update && \
 
 ENV IROOT=/install
 ENV DROGON_ROOT=$IROOT/drogon
-ENV TEST_PATH=/drogon_benchmark/build
 WORKDIR $IROOT
 
 COPY ./ ./
 
 # compilation
 
-RUN git clone --branch v1.0.0-beta4 https://github.com/an-tao/drogon
+RUN git clone --branch v1.0.0-beta5 https://github.com/an-tao/drogon
 WORKDIR $DROGON_ROOT
 RUN git submodule update --init
-WORKDIR $DROGON_ROOT/build
-RUN cmake -DCMAKE_BUILD_TYPE=release -DBUILD_ORM=OFF ..
-RUN make
-RUN make install
 
 WORKDIR $IROOT/build
 RUN cmake -DCMAKE_BUILD_TYPE=release ..

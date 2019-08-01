@@ -1,37 +1,27 @@
 cmake_minimum_required (VERSION 3.2)
-PROJECT(drogon_benchmark)
+project(drogon_benchmark)
 
-LINK_DIRECTORIES(/usr/local/lib)
-LINK_LIBRARIES(drogon trantor pthread dl)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-SET(CMAKE_CXX_STANDARD 17)
-SET(CMAKE_CXX_STANDARD_REQUIRED ON)
-SET(CMAKE_CXX_EXTENSIONS OFF)
+set(BUILD_ORM FALSE CACHE INTERNAL "")
+set(BUILD_CTL FALSE CACHE INTERNAL "")
+set(BUILD_EXAMPLES FALSE CACHE INTERNAL "")
 
-SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules/)
+list(APPEND CMAKE_MODULE_PATH 
+    "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")
 
-#jsoncpp
-FIND_PACKAGE (Jsoncpp REQUIRED)
-INCLUDE_DIRECTORIES(${JSONCPP_INCLUDE_DIRS})
-LINK_LIBRARIES(${JSONCPP_LIBRARIES})
+find_package(Drogon)
 
-#uuid
-FIND_PACKAGE (UUID REQUIRED)
-LINK_LIBRARIES(${UUID_LIBRARIES})
+add_subdirectory(drogon)
 
-#OpenSSL
-FIND_PACKAGE (OpenSSL)
-IF(OpenSSL_FOUND)
-    LINK_LIBRARIES(${OPENSSL_LIBRARIES})
-ENDIF()
+set(sources main.cc 
+	        controllers/BenchmarkCtrl.cc
+  	        controllers/UserCtrl.cc)
 
-#zlib
-FIND_PACKAGE(ZLIB REQUIRED)
-LINK_LIBRARIES(${ZLIB_LIBRARIES})
-
-SET(sources main.cc 
-	    controllers/BenchmarkCtrl.cc
-  	    controllers/UserCtrl.cc)
-
-INCLUDE_DIRECTORIES(/usr/local/include)
-ADD_EXECUTABLE(drogon_benchmark ${sources})
+add_executable(${PROJECT_NAME} ${sources})
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE 
+        Drogon::Drogon  
+        )
