@@ -1,4 +1,3 @@
-from masonite.view import View
 from masonite.request import Request
 
 
