@@ -37,9 +37,8 @@ class Client < Admiral::Command
       framework_id = db.scalar "select id from languages where language_id = ? and label = ?", language_id, flags.framework
     end
 
-    cid = `docker run -td #{flags.framework}`.strip
     sleep 20 # due to external program usage
-    ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
+    ip = File.read("ip.txt").strip
     flags.routes.each do |route|
       method, uri = route.split(":")
       url = "http://#{ip}:3000#{uri}"

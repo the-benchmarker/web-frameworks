@@ -80,6 +80,7 @@ class App < Admiral::Command
                 yaml.scalar "commands"
                 yaml.sequence do
                   yaml.scalar "docker build --no-cache --rm -t #{tool} ."
+                  yaml.scalar "docker run -td #{tool} | xargs docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' | tee ip.txt"
                   yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
                   yaml.scalar "docker ps -aq | xargs -r docker rm -f"
                   yaml.scalar "(docker images -aq | xargs -r docker rmi -f) || echo OK"
