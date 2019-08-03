@@ -1,13 +1,13 @@
 const nanoexpress = require('nanoexpress')
 
 nanoexpress()
-  .get('/', { isRaw: true }, (req, res) => {
+  .get('/', { isRaw: true, direct: true }, (res) => {
     res.end('')
   })
-  .get('/user/:id', { isRaw: true }, (req, res) => {
+  .get('/user/:id', { isRaw: true, direct: true }, (res, req) => {
     res.end(req.getParameter(0))
   })
-  .post('/user', { isRaw: true }, (req, res) => {
+  .post('/user', { isRaw: true, direct: true }, (res) => {
     res.end('')
   })
   .listen(3000)
