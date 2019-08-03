@@ -1,4 +1,4 @@
-FROM php:7.3.7-fpm
+FROM php:7.3.8-fpm
 
 RUN apt -y update
 RUN apt -y install git
