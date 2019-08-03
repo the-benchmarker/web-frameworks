@@ -1,23 +1,26 @@
 <?php
 
-use Slim\App;
-use Slim\Http\Request;
-use Slim\Http\Response;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Factory\AppFactory;
 
-require_once __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-$app = new App(['settings' => ['routerCacheFile' => __DIR__.'/../var/routes.cache.php']]);
+$app = AppFactory::create();
 
 $app->get('/', function (Request $request, Response $response): Response {
-    return $response->write('');
+    $response->getBody()->write("");
+    return $response;
 });
 
 $app->get('/user/{id}', function (Request $request, Response $response, array $args): Response {
-    return $response->write($args['id']);
+    $response->getBody()->write($args["id"]);
+    return $response;
 });
 
 $app->post('/user', function (Request $request, Response $response): Response {
-    return $response->write('');
+    $response->getBody()->write("");
+    return $response;
 });
 
 $app->run();
