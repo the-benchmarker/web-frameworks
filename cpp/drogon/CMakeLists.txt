@@ -9,19 +9,14 @@ set(BUILD_ORM FALSE CACHE INTERNAL "")
 set(BUILD_CTL FALSE CACHE INTERNAL "")
 set(BUILD_EXAMPLES FALSE CACHE INTERNAL "")
 
-list(APPEND CMAKE_MODULE_PATH 
-    "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")
-
-find_package(Drogon)
-
 add_subdirectory(drogon)
+set(Drogon_DIR ${PROJECT_BINARY_DIR}/drogon)
+FIND_PACKAGE(Drogon CONFIG REQUIRED NO_DEFAULT_PATH)
+include_directories(${DROGON_INCLUDE_DIRS})
+link_libraries(${DROGON_LIBRARIES})
 
 set(sources main.cc 
-	        controllers/BenchmarkCtrl.cc
-  	        controllers/UserCtrl.cc)
+            controllers/BenchmarkCtrl.cc
+            controllers/UserCtrl.cc)
 
 add_executable(${PROJECT_NAME} ${sources})
-target_link_libraries(${PROJECT_NAME}
-    PRIVATE 
-        Drogon::Drogon  
-        )
