@@ -1,10 +1,15 @@
-FROM golang:1.12.7
+FROM golang:1.12.8 AS buildenv
+
+ENV CGO_ENABLED=0
+ENV GOOS=linux
+ENV GOARCH=amd64
 
 WORKDIR /go/src/app
-COPY main.go go.mod ./
+ADD main.go go.mod ./
 
-ENV GO111MODULE=on
-RUN go build .
+RUN go get
+RUN go build -a -ldflags '-extldflags "-static"' -o /go/bin/app ./
 
-EXPOSE 3000
-CMD [ "./main" ]
+FROM scratch
+COPY --from=buildenv /go/bin/app /go/bin/app
+CMD ["/go/bin/app"]
