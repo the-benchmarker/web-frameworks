@@ -1,4 +1,4 @@
-FROM gcc:9.1.0
+FROM gcc:9.2.0
 
 RUN apt -qq update && \
     apt -qy install cmake libjsoncpp-dev uuid-dev libssl-dev zlib1g-dev
