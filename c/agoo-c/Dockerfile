@@ -1,4 +1,4 @@
-FROM gcc:9.1.0
+FROM gcc:9.2.0
 
 WORKDIR /usr/src/app
 
