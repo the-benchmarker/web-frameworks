@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/savsgio/atreugo/v8"
-	"strconv"
 )
 
 func main() {
@@ -18,11 +17,7 @@ func main() {
 	})
 	server.Path("GET", "/user/:id", func(ctx *atreugo.RequestCtx) error {
 		id := ctx.UserValue("id")
-		s, err := fmt.Printf("%s", id)
-		if err != nil {
-			panic(err)
-		}
-		return ctx.TextResponse(strconv.Itoa(s))
+		return ctx.TextResponse(fmt.Sprintf("%s", id))
 	})
 	server.Path("POST", "/user", func(ctx *atreugo.RequestCtx) error {
 		return ctx.TextResponse("")
