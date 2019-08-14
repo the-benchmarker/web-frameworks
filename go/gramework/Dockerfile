@@ -11,4 +11,5 @@ RUN go build -a -o /go/bin/app ./
 
 FROM scratch
 COPY --from=buildenv /go/bin/app /go/bin/app
+ENV ENV=production
 CMD ["/go/bin/app"]
