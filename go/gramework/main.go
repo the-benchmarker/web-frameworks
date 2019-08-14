@@ -1,28 +1,20 @@
 package main
 
 import (
-	"github.com/gramework/gramework"
 	"fmt"
+	"github.com/gramework/gramework"
 )
 
 func main() {
 	app := gramework.New()
 
-	app.GET("/", func(ctx *gramework.Context) error {
-		_, err := ctx.WriteString("")
-		return err
+	app.GET("/", "")
+
+	app.GET("/user/:id", func(ctx *gramework.Context) {
+		ctx.SetBodyString(ctx.RouteArg("id"))
 	})
 
-	app.GET("/user/:id", func(ctx *gramework.Context) error {
-                id := ctx.UserValue("id")
-		_, err := ctx.WriteString(fmt.Sprintf("%s", id))
-		return err
-        })
-
-	app.POST("/user", func(ctx *gramework.Context) error {
-		_, err := ctx.WriteString("")
-		return err;
-	})
+	app.POST("/user", "")
 
 	app.ListenAndServe("0.0.0.0:3000")
 }
