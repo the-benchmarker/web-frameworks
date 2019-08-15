@@ -1,17 +1,15 @@
-FROM golang:1.12 AS builder
+FROM golang:1.12.8 AS buildenv
+
+ENV GO111MODULE=on
+ENV CGO_ENABLED=0
 
 WORKDIR /go/src/app
-COPY main.go go.mod ./
+ADD . ./
 
-ENV GO111MODULE=on CGO_ENABLED=0
-RUN go build .
+RUN go get
+RUN go build -a -o /go/bin/app ./
 
 FROM scratch
-
-COPY --from=builder /go/src/app/main /main
-
+COPY --from=buildenv /go/bin/app /go/bin/app
 ENV SERVER_ADDRESS ":3000"
-
-EXPOSE 3000
-
-CMD [ "/main" ]
+CMD ["/go/bin/app"]
