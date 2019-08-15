@@ -15,5 +15,5 @@ func main() {
 
 	app.POST("/user", "")
 
-	app.ListenAndServe("0.0.0.0:3000")
+	app.ListenAndServe()
 }
