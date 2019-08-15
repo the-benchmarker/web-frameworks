@@ -236,6 +236,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=gramework
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=hanami
     services: docker
   - stage: test
@@ -351,11 +356,6 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=sifrr
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
     env: FRAMEWORK=nickel
     services: docker
   - stage: test
@@ -447,6 +447,11 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=sanic
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=sifrr
     services: docker
   - stage: test
     script: bash .ci/test.sh
