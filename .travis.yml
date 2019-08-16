@@ -121,6 +121,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=atreugo
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=beego
     services: docker
   - stage: test
