@@ -363,6 +363,11 @@ update_configs:
   - docker
 - package_manager: go:modules
   update_schedule: daily
+  directory: go/air
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
   directory: go/echo
   default_labels:
   - language:go
