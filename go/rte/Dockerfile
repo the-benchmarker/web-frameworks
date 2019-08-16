@@ -12,5 +12,5 @@ RUN go build -a -ldflags '-extldflags "-static"' -o /go/bin/app ./
 
 FROM alpine:3.10
 COPY --from=buildenv /go/bin/app /go/bin/app
-ENV SERVER_ADDRESS ":3000"
+ENV SERVER_COPYRESS ":3000"
 CMD ["/go/bin/app"]
