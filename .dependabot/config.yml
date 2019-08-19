@@ -373,6 +373,11 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
+  directory: go/goroute
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
   directory: go/gorouter
   default_labels:
   - language:go
@@ -424,6 +429,11 @@ update_configs:
 - package_manager: docker
   update_schedule: daily
   directory: go/echo
+  default_labels:
+  - docker
+- package_manager: docker
+  update_schedule: daily
+  directory: go/goroute
   default_labels:
   - docker
 - package_manager: docker
