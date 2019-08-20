@@ -1,15 +1,17 @@
 FROM golang:1.12.8 AS buildenv
 
+ENV GO111MODULE=on
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV GOARCH=amd64
+ENV GOPROXY=https://proxy.golang.org
 
-WORKDIR /app
-ADD main.go go.mod go.sum ./
+WORKDIR /go/src/app
+ADD main.go go.mod ./
 
-RUN GOPROXY=https://proxy.golang.org go mod download
-RUN go build -a -ldflags '-extldflags "-static"' -o /app/do ./
+RUN go get
+RUN go build -a -ldflags '-extldflags "-static"' -o /go/bin/app ./
 
 FROM scratch
-COPY --from=buildenv /app/do /app/do
-CMD ["/app/do"]
+COPY --from=buildenv /go/bin/app /go/bin/app
+CMD ["/go/bin/app"]
