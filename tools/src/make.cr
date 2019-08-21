@@ -79,31 +79,6 @@ class App < Admiral::Command
           yaml.mapping do
             yaml.scalar "include"
             yaml.sequence do
-              languages.uniq.sort.each do |language|
-                begin
-                  ci_config = mapping[language]
-                  yaml.mapping do
-                    yaml.scalar "stage"
-                    yaml.scalar "lint"
-                    yaml.scalar "script"
-                    yaml.scalar "bash .ci/lint.sh"
-                    if ci_config.as_h.has_key?("os")
-                      yaml.scalar "os"
-                      yaml.scalar ci_config["os"]
-                    end
-                    yaml.scalar "language"
-                    yaml.scalar ci_config["language"]
-                    if language == "node"
-                      yaml.scalar "node_js"
-                      yaml.scalar 10
-                    end
-                    yaml.scalar "env"
-                    yaml.scalar "DIRECTORY=#{language} LANGUAGE=#{language}"
-                  end
-                rescue KeyError
-                  STDERR.puts "Missing travis config for #{language}"
-                end
-              end
               frameworks.sort.each do |framework|
                 begin
                   yaml.mapping do
