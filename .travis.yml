@@ -1,68 +1,6 @@
 ---
 jobs:
   include:
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: c
-    env: DIRECTORY=c LANGUAGE=c
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: cpp
-    env: DIRECTORY=cpp LANGUAGE=cpp
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: crystal
-    env: DIRECTORY=crystal LANGUAGE=crystal
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: csharp
-    env: DIRECTORY=csharp LANGUAGE=csharp
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: go
-    env: DIRECTORY=go LANGUAGE=go
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: java
-    env: DIRECTORY=java LANGUAGE=java
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: java
-    env: DIRECTORY=kotlin LANGUAGE=kotlin
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: minimal
-    env: DIRECTORY=nim LANGUAGE=nim
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: node_js
-    node_js: 10
-    env: DIRECTORY=node LANGUAGE=node
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: php
-    env: DIRECTORY=php LANGUAGE=php
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: python
-    env: DIRECTORY=python LANGUAGE=python
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: ruby
-    env: DIRECTORY=ruby LANGUAGE=ruby
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: rust
-    env: DIRECTORY=rust LANGUAGE=rust
-  - stage: lint
-    script: bash .ci/lint.sh
-    language: scala
-    env: DIRECTORY=scala LANGUAGE=scala
-  - stage: lint
-    script: bash .ci/lint.sh
-    os: osx
-    language: swift
-    env: DIRECTORY=swift LANGUAGE=swift
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -176,11 +114,6 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=goroute
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
     env: FRAMEWORK=evhtp
     services: docker
   - stage: test
@@ -241,7 +174,7 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=rte
+    env: FRAMEWORK=goroute
     services: docker
   - stage: test
     script: bash .ci/test.sh
@@ -462,6 +395,11 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=router.cr
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=rte
     services: docker
   - stage: test
     script: bash .ci/test.sh
