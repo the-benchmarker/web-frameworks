@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Kilian Koeltzsch <me@kilian.io>"]
 
 [dependencies]
-rocket = "=0.4.2"
+rocket = "~0.4"
 
 [profile.release]
 codegen-units = 1
