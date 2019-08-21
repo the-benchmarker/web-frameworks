@@ -426,11 +426,6 @@ update_configs:
   directory: go/fasthttprouter
   default_labels:
   - language:go
-- package_manager: go:modules
-  update_schedule: daily
-  directory: go/goroute
-  default_labels:
-  - language:go
 - package_manager: docker
   update_schedule: daily
   directory: go/echo
