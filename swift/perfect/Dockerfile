@@ -1,4 +1,4 @@
-FROM swift:5.0.2
+FROM swift:5.0
 
 # install perfect deps
 # @see https://www.perfect.org/docs/gettingStarted.html

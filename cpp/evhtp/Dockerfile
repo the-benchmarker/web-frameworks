@@ -1,4 +1,4 @@
-FROM gcc:9.2.0
+FROM gcc:9.2
 
 WORKDIR /usr/src/app
 COPY . .
