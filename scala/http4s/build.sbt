@@ -1,4 +1,4 @@
-val Http4sVersion = "0.18"
+val Http4sVersion = "[0.18,0.19)"
 
 lazy val root = (project in file("."))
   .settings(
