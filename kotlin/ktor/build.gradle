@@ -27,15 +27,17 @@ sourceSets {
 
 repositories {
     mavenLocal()
+    google()
     jcenter()
-    maven { url 'https://kotlin.bintray.com/ktor' }
+    maven { url 'https://dl.bintray.com/kotlin/ktor' }
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile "io.ktor:ktor-server-netty:$ktor_version"
-    compile "io.ktor:ktor-server-core:$ktor_version"
-    compile "io.ktor:ktor-locations:$ktor_version"
+    compile "io.ktor:ktor-server-netty:1.2.+"
+    compile "io.ktor:ktor-server-core:1.2.+"
+    compile "io.ktor:ktor-locations:1.2.+"
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }
 
