@@ -35,9 +35,9 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile "io.ktor:ktor-server-netty:1.2.+"
-    compile "io.ktor:ktor-server-core:1.2.+"
-    compile "io.ktor:ktor-locations:1.2.+"
+    compile "io.ktor:ktor-server-netty:$ktor_version"
+    compile "io.ktor:ktor-server-core:$ktr_version"
+    compile "io.ktor:ktor-locations:$ktor_version"
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }
 
