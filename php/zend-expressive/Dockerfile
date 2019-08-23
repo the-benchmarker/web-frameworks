@@ -1,4 +1,4 @@
-FROM php:7.3
+FROM php:7.3-fpm
 
 RUN apt-get -qy update
 RUN apt-get -y install git nginx zlib1g-dev libzip-dev
