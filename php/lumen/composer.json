@@ -1,6 +1,6 @@
 {
     "require": {
-        "laravel/lumen-framework": "5.8",
+        "laravel/lumen-framework": "5.8.*",
         "vlucas/phpdotenv": "*"
     },
     "autoload": {
