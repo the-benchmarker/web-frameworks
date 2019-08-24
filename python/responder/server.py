@@ -10,7 +10,7 @@ async def index(req, resp):
 
 @app.route("/user/{id:int}")
 async def user_info(req, resp, *, id):
-    resp.text = id
+    resp.text = str(id)
 
 
 @app.route("/user")
