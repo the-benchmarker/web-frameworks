@@ -1,9 +1,9 @@
 {
     "require": {
-        "fideloper/proxy": "4.2.0",
-        "laravel/framework": "5.8.32",
-        "laravel/tinker": "1.0.9",
-        "nunomaduro/collision": "3.0.1"
+        "fideloper/proxy": "*",
+        "laravel/framework": "5.8.*",
+        "laravel/tinker": "*",
+        "nunomaduro/collision": "*"
     },
     "autoload": {
         "psr-4": {

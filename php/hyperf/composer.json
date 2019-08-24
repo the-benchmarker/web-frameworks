@@ -1,15 +1,15 @@
 {
     "require": {
-        "hyperf/command": "~1.0.0",
-        "hyperf/config": "~1.0.0",
-        "hyperf/contract": "~1.0.0",
-        "hyperf/di": "~1.0.0",
-        "hyperf/dispatcher": "~1.0.0",
-        "hyperf/event": "~1.0.0",
-        "hyperf/exception-handler": "~1.0.0",
-        "hyperf/framework": "~1.0.0",
-        "hyperf/http-server": "~1.0.0",
-        "hyperf/utils": "~1.0.0"
+        "hyperf/command": "*",
+        "hyperf/config": "*",
+        "hyperf/contract": "*",
+        "hyperf/di": "*",
+        "hyperf/dispatcher": "*",
+        "hyperf/event": "*",
+        "hyperf/exception-handler": "*",
+        "hyperf/framework": "1.0.*",
+        "hyperf/http-server": "*",
+        "hyperf/utils": "*"
     },
     "autoload": {
         "psr-4": {

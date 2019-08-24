@@ -1,13 +1,13 @@
 {
   "require": {
-    "zendframework/zend-component-installer": "2.1.1",
-    "zendframework/zend-config-aggregator": "1.1.1",
-    "zendframework/zend-diactoros": "2.1.3",
-    "zendframework/zend-expressive": "3.2.1",
-    "zendframework/zend-expressive-helpers": "5.3.0",
-    "zendframework/zend-stdlib": "3.2.1",
-    "zendframework/zend-servicemanager": "3.4.0",
-    "zendframework/zend-expressive-fastroute": "3.0.3"
+    "zendframework/zend-component-installer": "*",
+    "zendframework/zend-config-aggregator": "*",
+    "zendframework/zend-diactoros": "*",
+    "zendframework/zend-expressive": "3.2.*",
+    "zendframework/zend-expressive-helpers": "*",
+    "zendframework/zend-stdlib": "*",
+    "zendframework/zend-servicemanager": "*",
+    "zendframework/zend-expressive-fastroute": "*"
   },
   "autoload": {
     "psr-4": {

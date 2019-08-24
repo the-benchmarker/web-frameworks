@@ -1,7 +1,7 @@
 {
     "require": {
-        "laravel/lumen-framework": "5.8.12",
-        "vlucas/phpdotenv": "3.4.0"
+        "laravel/lumen-framework": "5.8.*",
+        "vlucas/phpdotenv": "*"
     },
     "autoload": {
         "psr-4": {
