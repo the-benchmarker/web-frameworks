@@ -5,12 +5,12 @@ import tornado.web
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write("")
+        pass
 
 
 class UserHandler(tornado.web.RequestHandler):
     def post(self):
-        self.write("")
+        pass
 
 
 class UserInfoHandler(tornado.web.RequestHandler):
