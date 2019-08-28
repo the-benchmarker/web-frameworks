@@ -89,12 +89,12 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=cuba
+    env: FRAMEWORK=coast
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=cyclone
+    env: FRAMEWORK=cuba
     services: docker
   - stage: test
     script: bash .ci/test.sh
