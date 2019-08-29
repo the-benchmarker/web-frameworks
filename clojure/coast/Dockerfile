@@ -1,11 +1,11 @@
 FROM clojure:tools-deps
 
-WORKDIR /usr/src/app
+WORKDIR /coast
 
-COPY . /usr/src/app
+COPY . /coast
 
-RUN COAST_ENV=prod clj -Auberjar
+ENV COAST_ENV=prod
 
-EXPOSE 1337
+RUN clj -Auberjar
 
-CMD COAST_ENV=prod java -jar coast.jar 1337
+CMD java -jar coast.jar 3000
