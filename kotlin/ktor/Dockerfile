@@ -1,4 +1,4 @@
-FROM gradle:5.5-jdk8
+FROM gradle:5.6-jdk8
 
 WORKDIR /usr/src/app
 
@@ -14,9 +14,6 @@ RUN chown -R gradle /usr/src/app
 USER gradle
 
 RUN gradle build
-RUN mv /usr/src/app/build/libs/my-application.jar .
 
-EXPOSE 3000
-
-CMD ["java", "-server", "-XX:+UseNUMA", "-XX:+UseParallelGC", "-XX:+AggressiveOpts", "-XX:+AlwaysPreTouch", "-jar", "my-application.jar"]
+CMD ["java", "-server", "-XX:+UseNUMA", "-XX:+UseParallelGC", "-XX:+AggressiveOpts", "-XX:+AlwaysPreTouch", "-jar", "/usr/src/app/build/libs/my-application-0.0.1.jar"]
 
