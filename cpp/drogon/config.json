@@ -14,5 +14,10 @@
         "idle_connection_timeout": 0,
         "enable_server_header": false,
         "enable_date_header": false
-    }
+    },
+    "plugins": [{
+        "name": "SyncPlugin",
+        "dependencies": [],
+        "config": {}
+    }]
 }
