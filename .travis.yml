@@ -68,7 +68,9 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=asgineer
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -94,7 +96,9 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=basicphp
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -144,13 +148,6 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=coast
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=drogon
     services:
     - docker
     - redis
@@ -343,7 +340,9 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=httpbeast
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -393,11 +392,6 @@ jobs:
     services:
     - docker
     - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=javalin
-    services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -461,11 +455,6 @@ jobs:
     services:
     - docker
     - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=nanoexpress
-    services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -702,7 +691,9 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=suave
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal

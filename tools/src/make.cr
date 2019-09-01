@@ -1,11 +1,12 @@
 require "admiral"
 require "yaml"
+require "crustache"
 
 struct FrameworkConfig
   property name : String
   property website : String
-  property version : String
-  property langver : String
+  property version : Float32
+  property langver : Float32 | String
 
   def initialize(@name, @website, @version, @langver)
   end
@@ -25,18 +26,7 @@ class App < Admiral::Command
           frameworks[language] = [] of String
         end
 
-<<<<<<< HEAD
-        if m = version.to_s.match /^(\d+)\.(\d+)$/
-          version = "#{m[1]}.#{m[2]}"
-        end
-        if m = langver.to_s.match /^(\d+)\.(\d+)$/
-          langver = "#{m[1]}.#{m[2]}"
-        end
-
-        frameworks[language] << FrameworkConfig.new(framework, website.to_s, version.to_s, langver.to_s)
-=======
         frameworks[language] << framework
->>>>>>> refactor: Remove unused code
       end
 
       selection = YAML.build do |yaml|
@@ -53,38 +43,43 @@ class App < Admiral::Command
           frameworks.each do |language, tools|
             yaml.scalar language
             yaml.mapping do
-<<<<<<< HEAD
-              configs.each do |config|
-                yaml.scalar config.name
-                yaml.mapping do
-                  yaml.scalar "website"
-                  yaml.scalar "https://#{config.website}"
-                  yaml.scalar "version"
-                  yaml.scalar " #{config.version}"
-                  yaml.scalar "language"
-                  yaml.scalar " #{config.langver.to_s}"
-=======
               yaml.scalar "depends_on"
               yaml.sequence do
                 tools.each do |tool|
                   yaml.scalar tool
->>>>>>> refactor: Remove unused code
                 end
               end
             end
           end
           frameworks.each do |language, tools|
+            lang_config = YAML.parse(File.read("#{language}/config.yaml"))
+            dockerfile = Crustache.parse(File.read("#{language}/Dockerfile"))
             tools.each do |tool|
+              framework_config = YAML.parse(File.read("#{language}/#{tool}/config.yaml"))
+              environment = [] of String
+              if framework_config.as_h.has_key?("environment")
+                framework_config["environment"].as_h.each do |k,v|
+                  environment << "#{k} #{v}"
+              end
+              end
+              if framework_config.as_h.has_key?("arguments")
+                arguments = framework_config["arguments"].to_s
+              end
+              if framework_config.as_h.has_key?("files")
+                params = {"files" => framework_config.as_h["files"].as_a, "environment" => environment}
+              else
+                params = {"files" => [] of String, "environment" => environment}
+              end
+              File.write("#{language}/#{tool}/Dockerfile", Crustache.render(dockerfile, params))
               yaml.scalar tool
               yaml.mapping do
                 yaml.scalar "commands"
                 yaml.sequence do
-                  yaml.scalar "docker build --no-cache --rm -t #{tool} ."
-                  yaml.scalar "docker run -td #{tool} | xargs docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' | tee ip.txt"
+                  yaml.scalar "docker build -t #{tool} ."
+                  yaml.scalar "docker run -td #{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
+                  yaml.scalar "sleep 10"
                   yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
-                  yaml.scalar "docker ps -aq | xargs -r docker rm -f"
-                  yaml.scalar "(docker images -aq | xargs -r docker rmi -f) || echo OK"
-                  yaml.scalar "docker system prune --volumes -af"
+                  yaml.scalar "docker ps -a -q  --filter ancestor=#{tool} | xargs -i docker container rm -f {}"
                 end
                 yaml.scalar "dir"
                 yaml.scalar "#{language}/#{tool}"
