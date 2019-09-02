@@ -94,11 +94,6 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=cyclone
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
     env: FRAMEWORK=django
     services: docker
   - stage: test
@@ -180,6 +175,7 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=gorouter
+    services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -469,11 +465,6 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=vapor
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=vibora
     services: docker
   - stage: test
     script: bash .ci/test.sh
