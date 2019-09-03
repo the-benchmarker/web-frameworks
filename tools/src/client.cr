@@ -22,6 +22,7 @@ class Client < Admiral::Command
   define_flag language : String, description: "Language used", required: true, long: "language", short: "l"
   define_flag framework : String, description: "Framework used", required: true, long: "framework", short: "f"
   define_flag routes : Array(String), long: "routes", short: "r", default: ["GET:/"]
+  define_flag address : String, long: "address", short: "a", required: true
 
   def run
     db = DB.open "sqlite3://../../data.db"
@@ -37,11 +38,20 @@ class Client < Admiral::Command
       framework_id = db.scalar "select id from languages where language_id = ? and label = ?", language_id, flags.framework
     end
 
+<<<<<<< HEAD
     sleep 20 # due to external program usage
     ip = File.read("ip.txt").strip
+=======
+<<<<<<< HEAD
+    cid = `docker run -td #{flags.framework}`.strip
+    sleep 20 # due to external program usage
+    ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
+=======
+>>>>>>> feat: Clarify results
+>>>>>>> feat: Clarify results
     flags.routes.each do |route|
       method, uri = route.split(":")
-      url = "http://#{ip}:3000#{uri}"
+      url = "#{flags.address}#{uri}"
 
       pipeline = PIPELINES[method]
 
@@ -69,9 +79,10 @@ class Client < Admiral::Command
       insert(db, framework_id, "latency:deviation", result[12])
 
       insert(db, framework_id, "percentile:fifty", result[13])
-      insert(db, framework_id, "percentile:ninety", result[14])
-      insert(db, framework_id, "percentile:ninety_nine", result[15])
-      insert(db, framework_id, "percentile:ninety_nine_ninety", result[16])
+      insert(db, framework_id, "percentile:seventy_five", result[14])
+      insert(db, framework_id, "percentile:ninety", result[15])
+      insert(db, framework_id, "percentile:ninety_nine", result[16])
+      insert(db, framework_id, "percentile:ninety_nine_ninety", result[17])
 
       db.close
     end
