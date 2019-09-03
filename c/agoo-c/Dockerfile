@@ -1,20 +1,20 @@
 FROM gcc:9.2
 
-WORKDIR /usr/src/app
-
-RUN wget -c https://github.com/ohler55/agoo-c/tarball/v0.7.0 -O agoo.tar.gz
-RUN tar xzf agoo.tar.gz
-RUN mv ohler55* agoo-c
-WORKDIR /usr/src/app/agoo-c/src
-RUN make
+ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /usr/src/app
 
-COPY Makefile simple.c ./
+RUN apt-get -qq update && \
+    apt-get -qy install cmake 
 
-# build simple app
-RUN make
+COPY . ./
 
-EXPOSE 3000
 
-CMD ./simple
+
+FROM debian
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get -qq update
+
+COPY --from=0 /usr/src/app/simple /usr/bin/simple
+
