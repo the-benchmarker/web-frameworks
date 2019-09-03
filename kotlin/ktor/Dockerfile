@@ -15,5 +15,5 @@ USER gradle
 
 RUN gradle build
 
-CMD ["java", "-server", "-XX:+UseNUMA", "-XX:+UseParallelGC", "-XX:+AggressiveOpts", "-XX:+AlwaysPreTouch", "-jar", "/usr/src/app/build/libs/my-application-0.0.1.jar"]
+CMD ["java", "-server", "-XX:+UseNUMA", "-XX:+UseParallelGC", "-XX:+AggressiveOpts", "-XX:+AlwaysPreTouch", "-jar", "/usr/src/app/build/libs/my-application.jar"]
 
