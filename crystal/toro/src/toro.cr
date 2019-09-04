@@ -20,7 +20,13 @@ class App < Toro::Router
   end
 end
 
-App.run 3000 do |server|
-  server.bind_tcp("0.0.0.0", 3000, true)
-  server.listen
+System.cpu_count.times do |i|
+  Process.fork do
+    App.run 3000 do |server|
+      server.bind_tcp("0.0.0.0", 3000, true)
+      server.listen
+    end
+  end
 end
+
+sleep
