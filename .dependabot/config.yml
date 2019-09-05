@@ -428,11 +428,6 @@ update_configs:
   - language:rust
 - package_manager: rust:cargo
   update_schedule: live
-  directory: rust/rocket
-  default_labels:
-  - language:rust
-- package_manager: rust:cargo
-  update_schedule: live
   directory: rust/gotham
   default_labels:
   - language:rust
