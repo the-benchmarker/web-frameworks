@@ -1,6 +1,5 @@
-FROM golang:1.12 AS buildenv
+FROM golang:1.13 AS buildenv
 
-ENV GO111MODULE=on
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV GOARCH=amd64
