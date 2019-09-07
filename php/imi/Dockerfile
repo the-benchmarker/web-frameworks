@@ -17,7 +17,6 @@ COPY config config
 COPY composer.json composer.json
 COPY Main.php Main.php
 
-RUN mkdir .runtime
 RUN chmod -R ug+rwx storage /usr/src/app/.runtime
 
 RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
