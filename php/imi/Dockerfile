@@ -11,6 +11,7 @@ RUN docker-php-ext-enable swoole
 
 WORKDIR /usr/src
 
+COPY .runtime .runtime
 COPY ApiServer ApiServer
 COPY config config
 COPY composer.json composer.json
