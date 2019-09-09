@@ -99,6 +99,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=dancer2
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=django
     services: docker
   - stage: test
@@ -184,6 +189,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=gorouter-fasthttp
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=gotham
     services: docker
   - stage: test
@@ -215,6 +225,11 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=hyperf
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=imi
     services: docker
   - stage: test
     script: bash .ci/test.sh
@@ -384,11 +399,6 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=rocket
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
     env: FRAMEWORK=roda
     services: docker
   - stage: test
@@ -454,6 +464,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=syro
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=tornado
     services: docker
   - stage: test
@@ -465,11 +480,6 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=vapor
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=vibora
     services: docker
   - stage: test
     script: bash .ci/test.sh

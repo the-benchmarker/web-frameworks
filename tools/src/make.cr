@@ -4,8 +4,8 @@ require "yaml"
 struct FrameworkConfig
   property name : String
   property website : String
-  property version : Float32
-  property langver : Float32 | String
+  property version : String
+  property langver : String
 
   def initialize(@name, @website, @version, @langver)
   end
@@ -37,7 +37,14 @@ class App < Admiral::Command
           frameworks[language] = [] of FrameworkConfig
         end
 
-        frameworks[language] << FrameworkConfig.new(framework, website.to_s, version.to_s.to_f32, langver.to_s)
+        if m = version.to_s.match /^(\d+)\.(\d+)$/
+          version = "#{m[1]}.#{m[2]}"
+        end
+        if m = langver.to_s.match /^(\d+)\.(\d+)$/
+          langver = "#{m[1]}.#{m[2]}"
+        end
+
+        frameworks[language] << FrameworkConfig.new(framework, website.to_s, version.to_s, langver.to_s)
       end
 
       selection = YAML.build do |yaml|
@@ -51,9 +58,9 @@ class App < Admiral::Command
                   yaml.scalar "website"
                   yaml.scalar "https://#{config.website}"
                   yaml.scalar "version"
-                  yaml.scalar config.version
+                  yaml.scalar " #{config.version}"
                   yaml.scalar "language"
-                  yaml.scalar config.langver
+                  yaml.scalar " #{config.langver.to_s}"
                 end
               end
             end
