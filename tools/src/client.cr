@@ -22,7 +22,6 @@ class Client < Admiral::Command
   define_flag language : String, description: "Language used", required: true, long: "language", short: "l"
   define_flag framework : String, description: "Framework used", required: true, long: "framework", short: "f"
   define_flag routes : Array(String), long: "routes", short: "r", default: ["GET:/"]
-  define_flag address : String, long: "address", short: "a", required: true
 
   def run
     db = DB.open "sqlite3://../../data.db"
@@ -38,20 +37,13 @@ class Client < Admiral::Command
       framework_id = db.scalar "select id from languages where language_id = ? and label = ?", language_id, flags.framework
     end
 
-<<<<<<< HEAD
     sleep 20 # due to external program usage
-    ip = File.read("ip.txt").strip
-=======
-<<<<<<< HEAD
-    cid = `docker run -td #{flags.framework}`.strip
-    sleep 20 # due to external program usage
-    ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
-=======
->>>>>>> feat: Clarify results
->>>>>>> feat: Clarify results
+
+    address = File.read("ip.txt").strip
+
     flags.routes.each do |route|
       method, uri = route.split(":")
-      url = "#{flags.address}#{uri}"
+      url = "http://#{address}:3000#{uri}"
 
       pipeline = PIPELINES[method]
 

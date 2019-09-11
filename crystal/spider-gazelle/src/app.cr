@@ -2,10 +2,9 @@ require "option_parser"
 require "./config"
 
 # Server defaults
-port = 3000
-host = "127.0.0.1"
-cluster = false
-process_count = 1
+port = (ENV["SG_SERVER_PORT"]? || 3000).to_i
+host = ENV["SG_SERVER_HOST"]? || "0.0.0.0"
+process_count = (ENV["SG_PROCESS_COUNT"]? || 1).to_i
 
 # Command line options
 OptionParser.parse(ARGV.dup) do |parser|
@@ -15,7 +14,6 @@ OptionParser.parse(ARGV.dup) do |parser|
   parser.on("-p PORT", "--port=PORT", "Specifies the server port") { |p| port = p.to_i }
 
   parser.on("-w COUNT", "--workers=COUNT", "Specifies the number of processes to handle requests") do |w|
-    cluster = true
     process_count = w.to_i
   end
 
@@ -40,14 +38,19 @@ puts "Launching #{APP_NAME} v#{VERSION}"
 server = ActionController::Server.new(port, host)
 
 # Start clustering
-server.cluster(process_count, "-w", "--workers") if cluster
+#  process_count < 1 == `System.cpu_count` but this is not always accurate
+server.cluster(process_count, "-w", "--workers") if process_count != 1
 
-# Detect ctr-c to shutdown gracefully
-Signal::INT.trap do |signal|
+terminate = Proc(Signal, Nil).new do |signal|
   puts " > terminating gracefully"
   spawn { server.close }
   signal.ignore
 end
+
+# Detect ctr-c to shutdown gracefully
+Signal::INT.trap &terminate
+# Docker containers use the term signal
+Signal::TERM.trap &terminate
 
 # Start the server
 server.run do
