@@ -16,9 +16,9 @@ dependencies:
   admiral:
     github: jwaldrip/admiral.cr
     version: ~> 1.8.0
-  sqlite3:
-    github: crystal-lang/crystal-sqlite3
-    version: ~> 0.14.0
+  pg:
+    github: will/crystal-pg
+    version: ~> 0.19.0
 
 targets:
   db:

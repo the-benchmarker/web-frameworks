@@ -1,5 +1,5 @@
 require "admiral"
-require "sqlite3"
+require "pg"
 
 PIPELINES = {
   "GET":  File.expand_path("../../" + "pipeline.lua", __FILE__),
@@ -7,12 +7,21 @@ PIPELINES = {
 }
 
 def insert(db, framework_id, metric, value)
-  row = db.exec "insert or ignore into metric_keys values (null, ?, ?)", metric, framework_id
-  metric_id = row.last_insert_id
-  if metric_id == 0
-    metric_id = db.scalar "select id from metric_keys where label = ? and framework_id = ?", metric, framework_id
+  DB.open("postgresql://postgres@localhost/benchmark") do |db|
+    row = db.exec "insert into keys (label) values ($1) on conflict do nothing", [metric]
+    metric_id = row.last_insert_id
+    # FIXME add method table to link metric
+    if metric_id == 0
+      metric_id = db.query_one("select id from keys where label = '#{metric}' limit 1", &.read(Int))
+    end
+    # FIXME returning not working
+    row = db.exec "insert into values (key_id, value) values ($1,$2) returning id", [metric_id, value]
+    value_id = row.last_insert_id
+    if value_id == 0
+      value_id = db.query_one("select id from values where key_id = #{metric_id} and value = #{value} order by id desc limit 1", &.read(Int))
+    end
+    db.exec "insert into metrics (value_id, framework_id) values ($1,$2)", [value_id, framework_id]
   end
-  db.exec "insert into metric_values values (null, ?, ?)", metric_id, value
 end
 
 class Client < Admiral::Command
@@ -24,21 +33,20 @@ class Client < Admiral::Command
   define_flag routes : Array(String), long: "routes", short: "r", default: ["GET:/"]
 
   def run
-    db = DB.open "sqlite3://../../data.db"
-    row = db.exec "insert or ignore into languages values (null, ?)", flags.language
+    db = DB.open("postgresql://postgres@localhost/benchmark")
+    row = db.exec "insert into languages (label) values ($1) on conflict do nothing", [flags.language]
     language_id = row.last_insert_id
     if language_id == 0
-      language_id = db.scalar "select id from languages where label = ?", flags.language
+      language_id = db.query_one("select id from languages where label = '#{flags.language}'", &.read(Int))
     end
 
-    row = db.exec "insert or ignore into frameworks values (null, ?, ?)", language_id, flags.framework
+    row = db.exec "insert into frameworks (language_id, label) values ($1, $2) on conflict do nothing", [language_id, flags.framework]
     framework_id = row.last_insert_id
-    if language_id == 0
-      framework_id = db.scalar "select id from languages where language_id = ? and label = ?", language_id, flags.framework
+    if framework_id == 0
+      framework_id = db.query_one("select id from frameworks where language_id = #{language_id} and label = '#{flags.framework}'", &.read(Int))
     end
 
     sleep 20 # due to external program usage
-
     address = File.read("ip.txt").strip
 
     # Warm-up
@@ -57,27 +65,26 @@ class Client < Admiral::Command
 
       result = io.to_s.split(",")
 
-      insert(db, framework_id, "request:duration", result[0])
-      insert(db, framework_id, "request:total", result[1])
-      insert(db, framework_id, "request:per_second", result[2])
-      insert(db, framework_id, "request:bytes", result[3])
+      insert(db, framework_id, "request_duration", result[0])
+      insert(db, framework_id, "request_total", result[1])
+      insert(db, framework_id, "request_per_second", result[2])
+      insert(db, framework_id, "request_bytes", result[3])
 
-      insert(db, framework_id, "error:socket", result[4])
-      insert(db, framework_id, "error:read", result[5])
-      insert(db, framework_id, "error:write", result[6])
-      insert(db, framework_id, "error:http", result[7])
-      insert(db, framework_id, "error:timeout", result[8])
+      insert(db, framework_id, "error_socket", result[4])
+      insert(db, framework_id, "error_read", result[5])
+      insert(db, framework_id, "error_write", result[6])
+      insert(db, framework_id, "error_http", result[7])
+      insert(db, framework_id, "error_timeout", result[8])
 
-      insert(db, framework_id, "latency:minimum", result[9])
-      insert(db, framework_id, "latency:maximum", result[10])
-      insert(db, framework_id, "latency:average", result[11])
-      insert(db, framework_id, "latency:deviation", result[12])
+      insert(db, framework_id, "latency_minimum", result[9])
+      insert(db, framework_id, "latency_maximum", result[10])
+      insert(db, framework_id, "latency_average", result[11])
+      insert(db, framework_id, "latency_deviation", result[12])
 
-      insert(db, framework_id, "percentile:fifty", result[13])
-      insert(db, framework_id, "percentile:seventy_five", result[14])
-      insert(db, framework_id, "percentile:ninety", result[15])
-      insert(db, framework_id, "percentile:ninety_nine", result[16])
-      insert(db, framework_id, "percentile:ninety_nine_ninety", result[17])
+      insert(db, framework_id, "percentile_fifty", result[13])
+      insert(db, framework_id, "percentile_ninety", result[14])
+      insert(db, framework_id, "percentile_ninety_nine", result[15])
+      insert(db, framework_id, "percentile_ninety_nine_ninety", result[16])
 
       db.close
     end
