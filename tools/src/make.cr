@@ -58,9 +58,9 @@ class App < Admiral::Command
               framework_config = YAML.parse(File.read("#{language}/#{tool}/config.yaml"))
               environment = [] of String
               if framework_config.as_h.has_key?("environment")
-                framework_config["environment"].as_h.each do |k,v|
+                framework_config["environment"].as_h.each do |k, v|
                   environment << "#{k} #{v}"
-              end
+                end
               end
               if framework_config.as_h.has_key?("arguments")
                 arguments = framework_config["arguments"].to_s
@@ -77,7 +77,6 @@ class App < Admiral::Command
                 yaml.sequence do
                   yaml.scalar "docker build -t #{tool} ."
                   yaml.scalar "docker run -td #{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
-                  yaml.scalar "sleep 10"
                   yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
                   yaml.scalar "docker ps -a -q  --filter ancestor=#{tool} | xargs -i docker container rm -f {}"
                 end
