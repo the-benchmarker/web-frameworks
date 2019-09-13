@@ -91,7 +91,7 @@ define('URL_PARSE', 'PATH_INFO');
 |--------------------------------------------------------------------------
 */
 
-define('HOME_PAGE', 'UserController@index');
+define('HOME_PAGE', 'AppController@index');
 
 /*
 |--------------------------------------------------------------------------
