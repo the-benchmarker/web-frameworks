@@ -117,7 +117,7 @@ function route_class($http_method, $path, $class_method)
 			list($class, $method) = explode('@', $class_method);
 
 			$object = new $class();
-			return $object->$method();
+			print $object->$method();
 
 		}
 
