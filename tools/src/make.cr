@@ -16,6 +16,8 @@ end
 
 class App < Admiral::Command
   class Config < Admiral::Command
+    define_flag sieger_options : String, description: "sieger options", default: "", long: "options", short: "o"
+
     def run
       frameworks = {} of String => Array(String)
       Dir.glob("*/*/config.yaml").each do |file|
@@ -60,6 +62,7 @@ class App < Admiral::Command
             tools.each do |tool|
               params = {} of String => DockerVariable
               framework_config = YAML.parse(File.read("#{language}/#{tool}/config.yaml"))
+              
               if framework_config.as_h.has_key?("environment")
                 environment = [] of String
                 framework_config["environment"].as_h.each do |k, v|
@@ -69,6 +72,12 @@ class App < Admiral::Command
               end
               if framework_config.as_h.has_key?("arguments")
                 params["arguments"] = framework_config["arguments"].to_s
+              end
+              if framework_config.as_h.has_key?("options")
+                params["options"] = framework_config["options"].to_s
+              end
+              if framework_config.as_h.has_key?("commannd")
+                params["commannd"] = framework_config["commannd"].to_s
               end
               if framework_config.as_h.has_key?("files")
                 files = [] of String
@@ -87,7 +96,7 @@ class App < Admiral::Command
                 yaml.sequence do
                   yaml.scalar "docker build -t #{tool} ."
                   yaml.scalar "docker run -td #{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
-                  yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
+                  yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user #{flags.sieger_options}"
                   yaml.scalar "docker ps -a -q  --filter ancestor=#{tool} | xargs -i docker container rm -f {}"
                 end
                 yaml.scalar "dir"
