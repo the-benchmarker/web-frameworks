@@ -76,8 +76,8 @@ class App < Admiral::Command
               if framework_config.as_h.has_key?("options")
                 params["options"] = framework_config["options"].to_s
               end
-              if framework_config.as_h.has_key?("commannd")
-                params["commannd"] = framework_config["commannd"].to_s
+              if framework_config.as_h.has_key?("command")
+                params["command"] = framework_config["command"].to_s
               end
               if framework_config.as_h.has_key?("files")
                 files = [] of String
