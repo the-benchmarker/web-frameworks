@@ -50,8 +50,8 @@ if ( ! isset($_SERVER[URL_PARSE]) && ! isset($json_rpc['method']) ) {
 */
 
 route_class('GET', '/users', 'UserController@list');
-route_class('GET', '/users/(:num)', 'UserController@view');
-route_class('POST', '/users', 'UserController@add');
+route_class('GET', '/user/(:num)', 'UserController@view');
+route_class('POST', '/user', 'UserController@add');
 
 /*
 |--------------------------------------------------------------------------
