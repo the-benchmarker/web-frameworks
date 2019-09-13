@@ -3,10 +3,18 @@
 class UserController
 {
 
-	public function index()
+	public function view()
 	{
 
-		return '';
+		echo url_value(2);
 
 	}
+
+	public function add()
+	{
+
+		echo '';
+
+	}
+
 }
