@@ -8,11 +8,4 @@ COPY project project
 
 RUN sbt assembly
 
-<<<<<<< HEAD
 CMD java -jar target/scala-2.12/*assembly*.jar
-=======
-# FROM alpine
-# COPY --from=0 
-
-CMD {{command}}
->>>>>>> fix(scala): Homogenize builds
