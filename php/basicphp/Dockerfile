@@ -12,8 +12,6 @@ COPY functions.php functions.php
 COPY public public
 COPY controllers controllers
 
-RUN mkdir /usr/src/app/var
-RUN chmod 777 -R /usr/src/app/var
 RUN sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i 's/\(listen =\).*/\1 \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i 's/\;\(listen\.owner.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
