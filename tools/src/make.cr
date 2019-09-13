@@ -56,6 +56,7 @@ class App < Admiral::Command
           frameworks.each do |language, tools|
             lang_config = YAML.parse(File.read("#{language}/config.yaml"))
             dockerfile = Crustache.parse(File.read("#{language}/Dockerfile"))
+            params = {} of String => DockerVariable
             tools.each do |tool|
               params = {} of String => DockerVariable
               framework_config = YAML.parse(File.read("#{language}/#{tool}/config.yaml"))
