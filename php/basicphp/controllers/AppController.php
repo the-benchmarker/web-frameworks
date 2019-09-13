@@ -2,17 +2,11 @@
 
 class AppController
 {
-	public function view()
+
+	public function index()
 	{
 
-		return url_value(2);
-
-	}
-
-	public function add()
-	{
-
-		return '';
+		echo '';
 
 	}
 
