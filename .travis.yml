@@ -64,6 +64,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=basicphp
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=beego
     services: docker
   - stage: test
@@ -245,6 +250,11 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=japronto
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=javalin
     services: docker
   - stage: test
     script: bash .ci/test.sh
