@@ -12,6 +12,8 @@ COPY functions.php functions.php
 COPY public public
 COPY controllers controllers
 
+RUN mkdir /usr/src/app/var
+RUN chmod 777 -R /usr/src/app/var
 RUN sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i 's/\(listen =\).*/\1 \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i 's/\;\(listen\.owner.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
@@ -23,15 +25,16 @@ RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 
 RUN echo 'server {\n\
     listen 0.0.0.0:3000;\n\
+
     root /usr/src/app/public;\n\
     set $front_controller /index.php;\n\
-    location ~ ^(.+\.php)(.*)$ {\n\
+
+    location / {\n\
         fastcgi_pass unix:/var/run/php-fpm.sock;\n\
+        
         include fastcgi_params;\n\
-        fastcgi_split_path_info       ^(.+\.php)(.*)$;\n\
         fastcgi_param SCRIPT_FILENAME $document_root$front_controller;\n\
         fastcgi_param SCRIPT_NAME $front_controller;\n\
-        fastcgi_param PATH_INFO       $fastcgi_path_info;\n\
     }\n\
 }\n'\
 >> /etc/nginx/conf.d/www.conf
