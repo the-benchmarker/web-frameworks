@@ -113,11 +113,17 @@ function route_class($http_method, $path, $class_method)
 		$pattern = str_ireplace( '(:any)', '[^\/]+', $pattern );
 
 		if (URL_PARSE == 'REQUEST_URI') {
-			$sub = explode('/', BASE_URL);
-			$sub_1 = $sub[3];
-			$sub_2 = $sub[4];
 
-			if (preg_match('/^\/' . $sub_1 . '\/' . $sub_2.$pattern . '+$/i', $_SERVER[URL_PARSE]))  {
+			$sub = explode('/', BASE_URL);
+			
+			// Support for upto five (5) subdirectories - index.php from DocumentRoot
+			if (! empty($sub[3])) { $sub_1 = '\/' . $sub[3]; } else { $sub_1 = ''; }
+			if (! empty($sub[4])) { $sub_2 = '\/' . $sub[4]; } else { $sub_2 = ''; }
+			if (! empty($sub[5])) { $sub_3 = '\/' . $sub[5]; } else { $sub_3 = ''; }
+			if (! empty($sub[6])) { $sub_4 = '\/' . $sub[6]; } else { $sub_4 = ''; }
+			if (! empty($sub[7])) { $sub_5 = '\/' . $sub[7]; } else { $sub_5 = ''; }
+
+			if (preg_match('/^' . $sub_1.$sub_2.$sub_3.$sub_4.$sub_5 . $pattern . '+$/i', $_SERVER[URL_PARSE]))  {
 
 				list($class, $method) = explode('@', $class_method);
 
