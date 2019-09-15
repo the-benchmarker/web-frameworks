@@ -69,6 +69,7 @@ switch (ENVIRONMENT) {
 |
 | Define 'BASE_URL' as the domain with '/' at the end, such as
 | 'http://example.com/' or 'https://example.com/'.
+| Include subdirectory if index.php is not in DocumentRoot folder.
 |
 */
 
@@ -76,14 +77,22 @@ define('BASE_URL', 'http://localhost/');
 
 /*
 |--------------------------------------------------------------------------
-| Set URL Parse Method
+| Set URL_PARSE Method as either 'REQUEST_URI' or 'PATH_INFO'.
+| When using Nginx server, 'REQUEST_URI' is recommended.
+| SUB_DIR as the number of subfolders index.php is located from domain.
 |--------------------------------------------------------------------------
 |
-| Sets the $_SERVER[''] global variable to parse the URL
+| Sets the $_SERVER[''] global variable to parse the URL.
 |
 */
 
-define('URL_PARSE', 'PATH_INFO');
+define('URL_PARSE', 'REQUEST_URI');
+
+if (URL_PARSE == 'PATH_INFO') {
+    define('SUB_DIR', 0);
+} elseif (URL_PARSE == 'REQUEST_URI') {
+    define('SUB_DIR', substr_count(BASE_URL, '/')-3);
+}
 
 /*
 |--------------------------------------------------------------------------

@@ -27,7 +27,7 @@ if (isset($_SERVER[URL_PARSE]) && preg_match('/[^a-zA-Z0-9_\/?&=-]/i', $_SERVER[
 |--------------------------------------------------------------------------
 */
 
-if ( ! isset($_SERVER[URL_PARSE]) && ! isset($json_rpc['method']) ) {
+if ( empty(url_value(1)) && ! isset($json_rpc['method']) ) {
 
 	list($class, $method) = explode('@', HOME_PAGE);
 	$object = new $class();
