@@ -2,6 +2,8 @@ require "admiral"
 require "yaml"
 require "crustache"
 
+alias DockerVariable = String | Array(String)
+
 struct FrameworkConfig
   property name : String
   property website : String
@@ -55,20 +57,27 @@ class App < Admiral::Command
             lang_config = YAML.parse(File.read("#{language}/config.yaml"))
             dockerfile = Crustache.parse(File.read("#{language}/Dockerfile"))
             tools.each do |tool|
+              params = {} of String => DockerVariable
               framework_config = YAML.parse(File.read("#{language}/#{tool}/config.yaml"))
-              environment = [] of String
               if framework_config.as_h.has_key?("environment")
+                environment = [] of String
                 framework_config["environment"].as_h.each do |k, v|
                   environment << "#{k} #{v}"
                 end
+                params["environment"] = environment
               end
               if framework_config.as_h.has_key?("arguments")
-                arguments = framework_config["arguments"].to_s
+                params["arguments"] = framework_config["arguments"].to_s
               end
               if framework_config.as_h.has_key?("files")
-                params = {"files" => framework_config.as_h["files"].as_a, "environment" => environment}
-              else
-                params = {"files" => [] of String, "environment" => environment}
+                files = [] of String
+                framework_config.as_h["files"].as_a.each do |file|
+                  files << file.to_s
+                end
+                params["files"] = files
+              end
+              if framework_config.as_h.has_key?("command")
+                params["command"] = framework_config.as_h["command"].to_s
               end
               File.write("#{language}/#{tool}/Dockerfile", Crustache.render(dockerfile, params))
               yaml.scalar tool
