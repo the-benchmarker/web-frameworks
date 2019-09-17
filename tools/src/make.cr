@@ -202,8 +202,16 @@ class App < Admiral::Command
           yaml.sequence do
             frameworks.each do |language, tools|
               tools.each do |tool|
+
+                # Exist if not exist for @dependabot
+                next unless mapping["languages"].as_h[language]?
+
+                # Exist if no manifest file
+                manifest = mapping["languages"][language]["manifest"].to_s                
+                next unless File.exists?("#{language}/#{tool}/#{manifest}")
+                
                 language = "javascript" if language == "node" # FIXME
-                if mapping["languages"].as_h[language]?
+                
                   yaml.mapping do
                     yaml.scalar "package_manager"
                     yaml.scalar mapping["languages"][language]["label"]
@@ -219,7 +227,6 @@ class App < Admiral::Command
                     yaml.sequence do
                       yaml.scalar "language:#{language}"
                     end
-                  end
                 end
               end
               language = "node" if language == "javascript" # FIXME
