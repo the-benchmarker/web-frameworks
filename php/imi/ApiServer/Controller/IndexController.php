@@ -45,5 +45,4 @@ class IndexController extends HttpController
     {
         return $this->response->write('');
     }
-
 }

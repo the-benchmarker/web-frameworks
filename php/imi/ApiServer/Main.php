@@ -9,5 +9,4 @@ class Main extends BaseMain
     {
         // 可以做一些初始化操作
     }
-
 }
