@@ -9,13 +9,11 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Bootloader\DebugBootloader;
 use App\Bootloader\RoutesBootloader;
 use Spiral\Bootloader;
 use Spiral\DotEnv\Bootloader as DotEnv;
 use Spiral\Framework\Kernel;
 use Spiral\Nyholm\Bootloader as Nyholm;
-use Spiral\Stempler\Bootloader as Stempler;
 
 class App extends Kernel
 {
@@ -27,9 +25,7 @@ class App extends Kernel
         // Environment configuration
         DotEnv\DotenvBootloader::class,
 
-        // Core Services
-        Bootloader\DebugBootloader::class,
-        Bootloader\SnapshotsBootloader::class,
+        // HTTP Bootloader
         Bootloader\Http\HttpBootloader::class,
 
         // HTTP extensions

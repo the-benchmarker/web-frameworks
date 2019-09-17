@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Nyholm\Psr7\Response;
 use Spiral\Core\Container\SingletonInterface;
 
 class BenchmarkController implements SingletonInterface
