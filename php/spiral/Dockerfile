@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 COPY composer.json composer.json
 COPY app app
 COPY app.php app.php
+COPY .rr.yaml .rr.yaml
 
 # install composer
 RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
