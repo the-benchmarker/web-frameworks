@@ -30,9 +30,7 @@ class App extends Kernel
         // Core Services
         Bootloader\DebugBootloader::class,
         Bootloader\SnapshotsBootloader::class,
-
         Bootloader\Http\HttpBootloader::class,
-        DebugBootloader::class,
 
         // HTTP extensions
         Nyholm\NyholmBootloader::class,
