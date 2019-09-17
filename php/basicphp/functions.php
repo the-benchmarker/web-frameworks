@@ -4,7 +4,7 @@
 |--------------------------------------------------------------------------
 | BasicPHP Functions Library
 |--------------------------------------------------------------------------
-| 
+|
 | These are core functions necessary to run the nano-framework:
 |
 | 1. url_value() - retrieves the URL path substring separated by '/'
@@ -151,12 +151,13 @@ function route_class($http_method, $path, $class_method)
 function view($view, $data=NULL)
 {
 
-	// Convert array keys to variables
-	if (isset($data)) { extract($data); }
+    // Convert array keys to variables
+    if (isset($data)) {
+        extract($data);
+    }
 
-	// Render Page View
-	require_once '../views/' . $view . '.php';
-
+    // Render Page View
+    require_once '../views/' . $view . '.php';
 }
 
 /**
@@ -171,6 +172,10 @@ function view($view, $data=NULL)
 
 function pdo_conn($database, $servername, $dbname, $username, $password)
 {
+    $conn = new PDO("$database:host=$servername;dbname=$dbname", $username, $password, array(
+        PDO::ATTR_PERSISTENT => true
+    ));
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	$conn = new PDO("$database:host=$servername;dbname=$dbname", $username, $password, array(
 		PDO::ATTR_PERSISTENT => TRUE
@@ -191,16 +196,15 @@ function pdo_conn($database, $servername, $dbname, $username, $password)
 function api_response($data, $message=NULL)
 {
 
-	// Define content type as JSON data through the header
-	header("Content-Type: application/json; charset=utf-8");
+    // Define content type as JSON data through the header
+    header("Content-Type: application/json; charset=utf-8");
 
-	// Data and message as arrays to send with response
-	$response['data'] = $data;
-	$response['message'] = $message;
+    // Data and message as arrays to send with response
+    $response['data'] = $data;
+    $response['message'] = $message;
 
-	// Encode $response array to JSON
-	echo json_encode($response);
-
+    // Encode $response array to JSON
+    echo json_encode($response);
 }
 
 /**
@@ -256,9 +260,7 @@ function api_call($http_method, $url, $data=NULL, $username=NULL, $password=NULL
 
 function esc($string)
 {
-
-	return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
-
+    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
 }
 
 /**
@@ -268,20 +270,14 @@ function esc($string)
 
 function csrf_token()
 {
+    if (isset($_SESSION)) {
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        return $_SESSION['csrf-token'];
+    } else {
+        $error_message = 'Please initialize Sessions.';
+        $page_title = 'Sessions Error';
 
-	if (isset($_SESSION)) {
-
-		$_SESSION['csrf-token'] = bin2hex(random_bytes(32));
-		return $_SESSION['csrf-token'];
-
-	} else {
-
-		$error_message = 'Please initialize Sessions.';
-		$page_title = 'Sessions Error';
-
-		$data = compact('error_message', 'page_title');
-		view('error', $data);
-
-	}
-
+        $data = compact('error_message', 'page_title');
+        view('error', $data);
+    }
 }

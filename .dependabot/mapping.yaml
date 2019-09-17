@@ -2,27 +2,35 @@ languages:
   ruby:
     label: ruby:bundler
     update_schedule: "live"
+    manifest: Gemfile
   javascript:
     label: javascript
     update_schedule: "live"
+    manifest: package.json
   python:
     label: python
     update_schedule: "live"
+    manifest: requirements.txt
   php:
     label: php:composer
     update_schedule: "live"
+    manifest: composer.json
   elixir:
     label: elixir:hex
     update_schedule: "live"
+    manifest: mix.exs
   rust:
     label: rust:cargo
     update_schedule: "live"
+    manifest: Cargo.toml
   java:
     label: java:maven
     update_schedule: "daily"
+    manifest: pom.xml
   go:
     label: go:modules
     update_schedule: "daily"
+    manifest: go.mod
 docker:
   update_schedule: "daily"
   default_labels:

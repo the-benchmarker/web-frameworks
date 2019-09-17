@@ -26,17 +26,11 @@ $class_folders[] = 'controllers';
 define('AUTOLOAD_CLASSES', $class_folders);
 
 spl_autoload_register(function ($class_name) {
-
-	foreach (AUTOLOAD_CLASSES as $folder) {
-
-		if (file_exists('../' . $folder . '/' . $class_name . '.php') && is_readable('../' . $folder . '/' . $class_name . '.php')) {
-
-			require_once '../' . $folder . '/' . $class_name . '.php';
-
-		}
-
-	}
-
+    foreach (AUTOLOAD_CLASSES as $folder) {
+        if (file_exists('../' . $folder . '/' . $class_name . '.php') && is_readable('../' . $folder . '/' . $class_name . '.php')) {
+            require_once '../' . $folder . '/' . $class_name . '.php';
+        }
+    }
 });
 
 /*
