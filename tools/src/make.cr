@@ -202,31 +202,30 @@ class App < Admiral::Command
           yaml.sequence do
             frameworks.each do |language, tools|
               tools.each do |tool|
-
                 # Exist if not exist for @dependabot
                 next unless mapping["languages"].as_h[language]?
 
                 # Exist if no manifest file
-                manifest = mapping["languages"][language]["manifest"].to_s                
+                manifest = mapping["languages"][language]["manifest"].to_s
                 next unless File.exists?("#{language}/#{tool}/#{manifest}")
-                
+
                 language = "javascript" if language == "node" # FIXME
-                
-                  yaml.mapping do
-                    yaml.scalar "package_manager"
-                    yaml.scalar mapping["languages"][language]["label"]
-                    yaml.scalar "update_schedule"
-                    yaml.scalar mapping["languages"][language]["update_schedule"]
-                    yaml.scalar "directory"
-                    if language == "javascript"
-                      yaml.scalar "node/#{tool}"
-                    else
-                      yaml.scalar "#{language}/#{tool}"
-                    end
-                    yaml.scalar "default_labels"
-                    yaml.sequence do
-                      yaml.scalar "language:#{language}"
-                    end
+
+                yaml.mapping do
+                  yaml.scalar "package_manager"
+                  yaml.scalar mapping["languages"][language]["label"]
+                  yaml.scalar "update_schedule"
+                  yaml.scalar mapping["languages"][language]["update_schedule"]
+                  yaml.scalar "directory"
+                  if language == "javascript"
+                    yaml.scalar "node/#{tool}"
+                  else
+                    yaml.scalar "#{language}/#{tool}"
+                  end
+                  yaml.scalar "default_labels"
+                  yaml.sequence do
+                    yaml.scalar "language:#{language}"
+                  end
                 end
               end
               language = "node" if language == "javascript" # FIXME
