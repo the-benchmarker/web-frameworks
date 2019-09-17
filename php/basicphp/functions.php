@@ -4,7 +4,7 @@
 |--------------------------------------------------------------------------
 | BasicPHP Functions Library
 |--------------------------------------------------------------------------
-| 
+|
 | These are core functions necessary to run the nano-framework:
 |
 | 1. url_value() - retrieves the URL path substring separated by '/'
@@ -29,11 +29,15 @@
 
 function url_value($order)
 {
+    if (isset($_SERVER[URL_PARSE])) {
+        $url = explode('/', $_SERVER[URL_PARSE]);
+    }
 
-    if (isset($_SERVER[URL_PARSE])) { $url = explode('/', $_SERVER[URL_PARSE]); }
-
-    if ( isset($url[$order+SUB_DIR]) || ! empty($url[$order+SUB_DIR]) ) { return $url[$order+SUB_DIR]; } else { return false; }
-
+    if (isset($url[$order+SUB_DIR]) || ! empty($url[$order+SUB_DIR])) {
+        return $url[$order+SUB_DIR];
+    } else {
+        return false;
+    }
 }
 
 /**
@@ -43,31 +47,33 @@ function url_value($order)
 function route_rpc()
 {
 
-	// Check if HTTP request method is 'POST', if there is POSTed data, and the POSTed data is in JSON format.
-	if ($_SERVER['REQUEST_METHOD'] == 'POST' && file_get_contents('php://input') !== false && json_decode( file_get_contents('php://input'), true ) !== null) {
-
-		$json_rpc = json_decode( file_get_contents('php://input'), true );
-	
-		// Requires the 'jsonrpc', 'method' and 'id' members of the request object
-		if (isset($json_rpc['jsonrpc']) && isset($json_rpc['method']) && isset($json_rpc['id'])) {
-	
-			if (strstr($json_rpc['method'], '.') == false) exit(json_encode(['jsonrpc' => '2.0', 'error' => ['code' => 32600, 'message' => "The JSON-RPC 'method' member should have the format 'class.method'."], 'id' => $json_rpc['id']]));
-	
-			list($class, $method) = explode('.', $json_rpc['method']);
-			$class = ucfirst($class) . CONTROLLER_SUFFIX;
-			$method = lcfirst($method);
-	
-			if (class_exists($class)) {
-				$object = new $class();
-				if ( method_exists($object, $method) ) {
-					$object->$method();
-					exit();
-				} else { exit(json_encode(['jsonrpc' => '2.0', 'error' => ['code' => 32601, 'message' => "Method not found."], 'id' => $json_rpc['id']])); }
-			} else { exit(json_encode(['jsonrpc' => '2.0', 'error' => ['code' => 32601, 'message' => "Class not found."], 'id' => $json_rpc['id']])); }
-		}
-	
-	}
-
+    // Check if HTTP request method is 'POST', if there is POSTed data, and the POSTed data is in JSON format.
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && file_get_contents('php://input') !== false && json_decode(file_get_contents('php://input'), true) !== null) {
+        $json_rpc = json_decode(file_get_contents('php://input'), true);
+    
+        // Requires the 'jsonrpc', 'method' and 'id' members of the request object
+        if (isset($json_rpc['jsonrpc']) && isset($json_rpc['method']) && isset($json_rpc['id'])) {
+            if (strstr($json_rpc['method'], '.') == false) {
+                exit(json_encode(['jsonrpc' => '2.0', 'error' => ['code' => 32600, 'message' => "The JSON-RPC 'method' member should have the format 'class.method'."], 'id' => $json_rpc['id']]));
+            }
+    
+            list($class, $method) = explode('.', $json_rpc['method']);
+            $class = ucfirst($class) . CONTROLLER_SUFFIX;
+            $method = lcfirst($method);
+    
+            if (class_exists($class)) {
+                $object = new $class();
+                if (method_exists($object, $method)) {
+                    $object->$method();
+                    exit();
+                } else {
+                    exit(json_encode(['jsonrpc' => '2.0', 'error' => ['code' => 32601, 'message' => "Method not found."], 'id' => $json_rpc['id']]));
+                }
+            } else {
+                exit(json_encode(['jsonrpc' => '2.0', 'error' => ['code' => 32601, 'message' => "Class not found."], 'id' => $json_rpc['id']]));
+            }
+        }
+    }
 }
 
 /**
@@ -76,20 +82,24 @@ function route_rpc()
 
 function route_auto()
 {
+    if (url_value(1) !== false) {
+        $class = ucfirst(url_value(1)) . CONTROLLER_SUFFIX;
+    }
+    if (url_value(2) !== false) {
+        $method = lcfirst(url_value(2));
+    } else {
+        $method = METHOD_DEFAULT;
+    }
 
-	if (url_value(1) !== false) { $class = ucfirst(url_value(1)) . CONTROLLER_SUFFIX; }
-	if (url_value(2) !== false) { $method = lcfirst(url_value(2)); } else { $method = METHOD_DEFAULT; }
-
-	if (class_exists($class)) {
-		$object = new $class();
-		if ( method_exists($object, $method) ) {
-			$object->$method();
-		} else {
-			header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
-			exit();
-		}
-	}
-
+    if (class_exists($class)) {
+        $object = new $class();
+        if (method_exists($object, $method)) {
+            $object->$method();
+        } else {
+            header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
+            exit();
+        }
+    }
 }
 
 /**
@@ -104,46 +114,57 @@ function route_auto()
 
 function route_class($http_method, $path, $class_method)
 {
+    if ($_SERVER['REQUEST_METHOD'] == $http_method) {
 
-	if ($_SERVER['REQUEST_METHOD'] == $http_method) {
+        // Convert '/' and wilcards (:num) and (:any) to RegEx
+        $pattern = str_ireplace('/', '\/', $path);
+        $pattern = str_ireplace('(:num)', '[0-9]+', $pattern);
+        $pattern = str_ireplace('(:any)', '[^\/]+', $pattern);
 
-		// Convert '/' and wilcards (:num) and (:any) to RegEx
-		$pattern = str_ireplace( '/', '\/', $path );
-		$pattern = str_ireplace( '(:num)', '[0-9]+', $pattern );
-		$pattern = str_ireplace( '(:any)', '[^\/]+', $pattern );
+        if (URL_PARSE == 'REQUEST_URI') {
+            $sub = explode('/', BASE_URL);
+            
+            // Support for upto five (5) subdirectories - index.php from DocumentRoot
+            if (! empty($sub[3])) {
+                $sub_1 = '\/' . $sub[3];
+            } else {
+                $sub_1 = '';
+            }
+            if (! empty($sub[4])) {
+                $sub_2 = '\/' . $sub[4];
+            } else {
+                $sub_2 = '';
+            }
+            if (! empty($sub[5])) {
+                $sub_3 = '\/' . $sub[5];
+            } else {
+                $sub_3 = '';
+            }
+            if (! empty($sub[6])) {
+                $sub_4 = '\/' . $sub[6];
+            } else {
+                $sub_4 = '';
+            }
+            if (! empty($sub[7])) {
+                $sub_5 = '\/' . $sub[7];
+            } else {
+                $sub_5 = '';
+            }
 
-		if (URL_PARSE == 'REQUEST_URI') {
+            if (preg_match('/^' . $sub_1.$sub_2.$sub_3.$sub_4.$sub_5 . $pattern . '+$/i', $_SERVER[URL_PARSE])) {
+                list($class, $method) = explode('@', $class_method);
 
-			$sub = explode('/', BASE_URL);
-			
-			// Support for upto five (5) subdirectories - index.php from DocumentRoot
-			if (! empty($sub[3])) { $sub_1 = '\/' . $sub[3]; } else { $sub_1 = ''; }
-			if (! empty($sub[4])) { $sub_2 = '\/' . $sub[4]; } else { $sub_2 = ''; }
-			if (! empty($sub[5])) { $sub_3 = '\/' . $sub[5]; } else { $sub_3 = ''; }
-			if (! empty($sub[6])) { $sub_4 = '\/' . $sub[6]; } else { $sub_4 = ''; }
-			if (! empty($sub[7])) { $sub_5 = '\/' . $sub[7]; } else { $sub_5 = ''; }
-
-			if (preg_match('/^' . $sub_1.$sub_2.$sub_3.$sub_4.$sub_5 . $pattern . '+$/i', $_SERVER[URL_PARSE]))  {
-
-				list($class, $method) = explode('@', $class_method);
-
-				$object = new $class();
-				$object->$method();
-
-			}
-
-		} elseif (URL_PARSE == 'PATH_INFO') {
-
-			if (preg_match('/^' . $pattern . '+$/i', $_SERVER[URL_PARSE]))  {
-				list($class, $method) = explode('@', $class_method);
-				$object = new $class();
-				$object->$method();
-			}
-
-		}
-
-	}
-
+                $object = new $class();
+                $object->$method();
+            }
+        } elseif (URL_PARSE == 'PATH_INFO') {
+            if (preg_match('/^' . $pattern . '+$/i', $_SERVER[URL_PARSE])) {
+                list($class, $method) = explode('@', $class_method);
+                $object = new $class();
+                $object->$method();
+            }
+        }
+    }
 }
 
 /**
@@ -156,12 +177,13 @@ function route_class($http_method, $path, $class_method)
 function view($view, $data=null)
 {
 
-	// Convert array keys to variables
-	if (isset($data)) { extract($data); }
+    // Convert array keys to variables
+    if (isset($data)) {
+        extract($data);
+    }
 
-	// Render Page View
-	require_once '../views/' . $view . '.php';
-
+    // Render Page View
+    require_once '../views/' . $view . '.php';
 }
 
 /**
@@ -176,14 +198,12 @@ function view($view, $data=null)
 
 function pdo_conn($database, $servername, $dbname, $username, $password)
 {
+    $conn = new PDO("$database:host=$servername;dbname=$dbname", $username, $password, array(
+        PDO::ATTR_PERSISTENT => true
+    ));
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-	$conn = new PDO("$database:host=$servername;dbname=$dbname", $username, $password, array(
-		PDO::ATTR_PERSISTENT => true
-	));
-	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-	return $conn;
-
+    return $conn;
 }
 
 /**
@@ -196,16 +216,15 @@ function pdo_conn($database, $servername, $dbname, $username, $password)
 function api_response($data, $message=null)
 {
 
-	// Define content type as JSON data through the header
-	header("Content-Type: application/json; charset=utf-8");
+    // Define content type as JSON data through the header
+    header("Content-Type: application/json; charset=utf-8");
 
-	// Data and message as arrays to send with response
-	$response['data'] = $data;
-	$response['message'] = $message;
+    // Data and message as arrays to send with response
+    $response['data'] = $data;
+    $response['message'] = $message;
 
-	// Encode $response array to JSON
-	echo json_encode($response);
-
+    // Encode $response array to JSON
+    echo json_encode($response);
 }
 
 /**
@@ -221,35 +240,37 @@ function api_response($data, $message=null)
 function api_call($http_method, $url, $data=null, $username=null, $password=null)
 {
 
-	// Initialize cURL
-	$ch = curl_init();
+    // Initialize cURL
+    $ch = curl_init();
 
-	// Convert $data array parameter to JSON
-	$data_json = json_encode($data);
+    // Convert $data array parameter to JSON
+    $data_json = json_encode($data);
 
-	// Set cURL options
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http_method);
-	// curl_setopt($ch, CURLOPT_POST, 1);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
-	curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-	    'Content-Type: application/json',                                                                                
-	    'Content-Length: ' . strlen($data_json))                                                                       
-	);
+    // Set cURL options
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http_method);
+    // curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
+    curl_setopt(
+        $ch,
+        CURLOPT_HTTPHEADER,
+        array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($data_json))
+    );
 
-	// Execute cURL
-	$result = curl_exec($ch);
+    // Execute cURL
+    $result = curl_exec($ch);
 
-	// Close cURL connection
-	curl_close ($ch);
+    // Close cURL connection
+    curl_close($ch);
 
-	// Convert JSON response from external server to an array
-	$data_output = json_decode($result, true);
+    // Convert JSON response from external server to an array
+    $data_output = json_decode($result, true);
 
-	return $data_output;
-
+    return $data_output;
 }
 
 /**
@@ -261,9 +282,7 @@ function api_call($http_method, $url, $data=null, $username=null, $password=null
 
 function esc($string)
 {
-
-	return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
-
+    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
 }
 
 /**
@@ -273,20 +292,14 @@ function esc($string)
 
 function csrf_token()
 {
+    if (isset($_SESSION)) {
+        $_SESSION['csrf-token'] = bin2hex(random_bytes(32));
+        return $_SESSION['csrf-token'];
+    } else {
+        $error_message = 'Please initialize Sessions.';
+        $page_title = 'Sessions Error';
 
-	if (isset($_SESSION)) {
-
-		$_SESSION['csrf-token'] = bin2hex(random_bytes(32));
-		return $_SESSION['csrf-token'];
-
-	} else {
-
-		$error_message = 'Please initialize Sessions.';
-		$page_title = 'Sessions Error';
-
-		$data = compact('error_message', 'page_title');
-		view('error', $data);
-
-	}
-
+        $data = compact('error_message', 'page_title');
+        view('error', $data);
+    }
 }

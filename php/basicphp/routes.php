@@ -14,11 +14,9 @@
 |--------------------------------------------------------------------------
 */
 
-if (isset($_SERVER[URL_PARSE]) && preg_match('/[^a-zA-Z0-9_\/?&=-]/i', $_SERVER[URL_PARSE]) ) {
-
+if (isset($_SERVER[URL_PARSE]) && preg_match('/[^a-zA-Z0-9_\/?&=-]/i', $_SERVER[URL_PARSE])) {
     header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
     exit();
-
 }
 
 /*
@@ -27,12 +25,10 @@ if (isset($_SERVER[URL_PARSE]) && preg_match('/[^a-zA-Z0-9_\/?&=-]/i', $_SERVER[
 |--------------------------------------------------------------------------
 */
 
-if ( empty(url_value(1)) && ! isset($json_rpc['method']) ) {
-
-	list($class, $method) = explode('@', HOME_PAGE);
-	$object = new $class();
-	return $object->$method();
-
+if (empty(url_value(1)) && ! isset($json_rpc['method'])) {
+    list($class, $method) = explode('@', HOME_PAGE);
+    $object = new $class();
+    return $object->$method();
 }
 
 /*
@@ -63,9 +59,7 @@ route_class('POST', '/user', 'UserController@add');
 |
 */
 
-if ( count(get_included_files()) == 4 ) {
-
-	header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
-	exit();
-
+if (count(get_included_files()) == 4) {
+    header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
+    exit();
 }
