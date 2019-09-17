@@ -3,7 +3,6 @@ FROM golang:1.13 AS buildenv
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV GOARCH=amd64
-ENV GOPROXY=https://proxy.golang.org
 
 WORKDIR /go/src/app
 ADD main.go go.mod ./
