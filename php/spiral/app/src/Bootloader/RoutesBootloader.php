@@ -24,7 +24,11 @@ class RoutesBootloader extends Bootloader
     {
         $router->addRoute(
             'benchmark',
-            new Route('/<action>', new Controller(BenchmarkController::class))
+            new Route(
+                '/<action>[/<id>]',
+                new Controller(BenchmarkController::class),
+                ['action' => 'index']
+            )
         );
     }
 }

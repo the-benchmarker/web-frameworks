@@ -12,16 +12,15 @@ namespace App\Controller;
 use Nyholm\Psr7\Response;
 use Spiral\Core\Container\SingletonInterface;
 
-final class BenchmarkController implements SingletonInterface
+class BenchmarkController implements SingletonInterface
 {
+    public function index()
+    {
+        return '';
+    }
 
-    /** @var Response */
-    private $plain;
-
-    public function __construct() {
-
-        $this->plain = new Response(200, ['Content-Type' => 'text/plain']);
-        $this->plain->getBody()->write('');
-        return $this->plain;
+    public function user($id = null)
+    {
+        return (string)$id;
     }
 }
