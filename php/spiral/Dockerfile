@@ -28,4 +28,4 @@ RUN vendor/bin/spiral get
 RUN php app.php configure
 
 # run roadrunner
-CMD php app.php up > /dev/null 2>&1 && ./spiral serve -o "http.workers.pool.numWorkers = 64"
+CMD php app.php up > /dev/null 2>&1 && ./spiral serve
