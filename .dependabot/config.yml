@@ -3,82 +3,87 @@ version: 1
 update_configs:
 - package_manager: docker
   update_schedule: daily
-  directory: swift/perfect
+  directory: perl/dancer2
   default_labels:
   - docker
 - package_manager: docker
   update_schedule: daily
-  directory: c/kore
+  directory: fsharp/suave
   default_labels:
   - docker
-- package_manager: ruby:bundler
-  update_schedule: live
-  directory: ruby/roda
-  default_labels:
-  - language:ruby
-- package_manager: ruby:bundler
-  update_schedule: live
-  directory: ruby/syro
-  default_labels:
-  - language:ruby
-- package_manager: ruby:bundler
-  update_schedule: live
-  directory: ruby/cuba
-  default_labels:
-  - language:ruby
-- package_manager: ruby:bundler
-  update_schedule: live
-  directory: ruby/sinatra
-  default_labels:
-  - language:ruby
-- package_manager: ruby:bundler
-  update_schedule: live
-  directory: ruby/agoo
-  default_labels:
-  - language:ruby
-- package_manager: ruby:bundler
-  update_schedule: live
-  directory: ruby/rack-routing
-  default_labels:
-  - language:ruby
-- package_manager: ruby:bundler
-  update_schedule: live
-  directory: ruby/hanami
-  default_labels:
-  - language:ruby
-- package_manager: ruby:bundler
-  update_schedule: live
-  directory: ruby/rails
-  default_labels:
-  - language:ruby
-- package_manager: ruby:bundler
-  update_schedule: live
-  directory: ruby/flame
-  default_labels:
-  - language:ruby
 - package_manager: docker
   update_schedule: daily
-  directory: ruby/roda
+  directory: nim/jester
   default_labels:
   - docker
-- package_manager: javascript
-  update_schedule: live
-  directory: node/iotjs-express
+- package_manager: docker
+  update_schedule: daily
+  directory: clojure/coast
   default_labels:
-  - language:javascript
+  - docker
+- package_manager: java:maven
+  update_schedule: daily
+  directory: java/act
+  default_labels:
+  - language:java
+- package_manager: java:maven
+  update_schedule: daily
+  directory: java/javalin
+  default_labels:
+  - language:java
+- package_manager: java:maven
+  update_schedule: daily
+  directory: java/rapidoid
+  default_labels:
+  - language:java
+- package_manager: java:maven
+  update_schedule: daily
+  directory: java/spring-boot
+  default_labels:
+  - language:java
+- package_manager: docker
+  update_schedule: daily
+  directory: java/act
+  default_labels:
+  - docker
+- package_manager: docker
+  update_schedule: daily
+  directory: swift/kitura
+  default_labels:
+  - docker
+- package_manager: rust:cargo
+  update_schedule: live
+  directory: rust/gotham
+  default_labels:
+  - language:rust
+- package_manager: rust:cargo
+  update_schedule: live
+  directory: rust/nickel
+  default_labels:
+  - language:rust
+- package_manager: rust:cargo
+  update_schedule: live
+  directory: rust/actix-web
+  default_labels:
+  - language:rust
+- package_manager: rust:cargo
+  update_schedule: live
+  directory: rust/iron
+  default_labels:
+  - language:rust
+- package_manager: docker
+  update_schedule: daily
+  directory: rust/gotham
+  default_labels:
+  - docker
+- package_manager: docker
+  update_schedule: daily
+  directory: csharp/aspnetcore
+  default_labels:
+  - docker
 - package_manager: javascript
   update_schedule: live
   directory: node/turbo_polka
-  default_labels:
-  - language:javascript
-- package_manager: javascript
-  update_schedule: live
-  directory: node/express
-  default_labels:
-  - language:javascript
-- package_manager: javascript
-  update_schedule: live
-  directory: node/koa
   default_labels:
   - language:javascript
 - package_manager: javascript
@@ -88,22 +93,7 @@ update_configs:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: node/polka
-  default_labels:
-  - language:javascript
-- package_manager: javascript
-  update_schedule: live
-  directory: node/fastify
-  default_labels:
-  - language:javascript
-- package_manager: javascript
-  update_schedule: live
-  directory: node/rayo
-  default_labels:
-  - language:javascript
-- package_manager: javascript
-  update_schedule: live
-  directory: node/sifrr
+  directory: node/moleculer
   default_labels:
   - language:javascript
 - package_manager: javascript
@@ -113,12 +103,32 @@ update_configs:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: node/polkadot
+  directory: node/rayo
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
   directory: node/hapi
+  default_labels:
+  - language:javascript
+- package_manager: javascript
+  update_schedule: live
+  directory: node/express
+  default_labels:
+  - language:javascript
+- package_manager: javascript
+  update_schedule: live
+  directory: node/polkadot
+  default_labels:
+  - language:javascript
+- package_manager: javascript
+  update_schedule: live
+  directory: node/koa
+  default_labels:
+  - language:javascript
+- package_manager: javascript
+  update_schedule: live
+  directory: node/iotjs-express
   default_labels:
   - language:javascript
 - package_manager: javascript
@@ -133,97 +143,77 @@ update_configs:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: node/moleculer
+  directory: node/muneem
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: node/muneem
+  directory: node/sifrr
+  default_labels:
+  - language:javascript
+- package_manager: javascript
+  update_schedule: live
+  directory: node/fastify
+  default_labels:
+  - language:javascript
+- package_manager: javascript
+  update_schedule: live
+  directory: node/polka
   default_labels:
   - language:javascript
 - package_manager: docker
   update_schedule: daily
-  directory: node/iotjs-express
-  default_labels:
-  - docker
-- package_manager: php:composer
-  update_schedule: live
-  directory: php/hyperf
-  default_labels:
-  - language:php
-- package_manager: php:composer
-  update_schedule: live
-  directory: php/lumen
-  default_labels:
-  - language:php
-- package_manager: php:composer
-  update_schedule: live
-  directory: php/zend-framework
-  default_labels:
-  - language:php
-- package_manager: php:composer
-  update_schedule: live
-  directory: php/symfony
-  default_labels:
-  - language:php
-- package_manager: php:composer
-  update_schedule: live
-  directory: php/imi
-  default_labels:
-  - language:php
-- package_manager: php:composer
-  update_schedule: live
-  directory: php/slim
-  default_labels:
-  - language:php
-- package_manager: php:composer
-  update_schedule: live
-  directory: php/zend-expressive
-  default_labels:
-  - language:php
-- package_manager: php:composer
-  update_schedule: live
-  directory: php/swoft
-  default_labels:
-  - language:php
-- package_manager: php:composer
-  update_schedule: live
-  directory: php/laravel
-  default_labels:
-  - language:php
-- package_manager: docker
-  update_schedule: daily
-  directory: php/hyperf
-  default_labels:
-  - docker
-- package_manager: java:maven
-  update_schedule: daily
-  directory: java/spring-boot
-  default_labels:
-  - language:java
-- package_manager: java:maven
-  update_schedule: daily
-  directory: java/rapidoid
-  default_labels:
-  - language:java
-- package_manager: java:maven
-  update_schedule: daily
-  directory: java/act
-  default_labels:
-  - language:java
-- package_manager: docker
-  update_schedule: daily
-  directory: java/spring-boot
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: kotlin/ktor
+  directory: node/turbo_polka
   default_labels:
   - docker
 - package_manager: python
   update_schedule: live
+  directory: python/masonite
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/starlette
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/japronto
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/blacksheep
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
   directory: python/quart
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/flask
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/bocadillo
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/django
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/tornado
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/bottle
   default_labels:
   - language:python
 - package_manager: python
@@ -238,57 +228,7 @@ update_configs:
   - language:python
 - package_manager: python
   update_schedule: live
-  directory: python/django
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
-  directory: python/fastapi
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
-  directory: python/blacksheep
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
-  directory: python/bottle
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
-  directory: python/tornado
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
-  directory: python/starlette
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
-  directory: python/flask
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
-  directory: python/japronto
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
-  directory: python/bocadillo
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
-  directory: python/hug
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
-  directory: python/aiohttp
+  directory: python/sanic
   default_labels:
   - language:python
 - package_manager: python
@@ -298,29 +238,154 @@ update_configs:
   - language:python
 - package_manager: python
   update_schedule: live
-  directory: python/masonite
+  directory: python/fastapi
   default_labels:
   - language:python
 - package_manager: python
   update_schedule: live
-  directory: python/sanic
+  directory: python/aiohttp
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/hug
   default_labels:
   - language:python
 - package_manager: docker
   update_schedule: daily
-  directory: python/quart
+  directory: python/masonite
   default_labels:
   - docker
-- package_manager: go:modules
+- package_manager: docker
   update_schedule: daily
-  directory: go/beego
+  directory: crystal/orion
   default_labels:
-  - language:go
-- package_manager: go:modules
+  - docker
+- package_manager: docker
   update_schedule: daily
-  directory: go/gorouter-fasthttp
+  directory: cpp/evhtp
   default_labels:
-  - language:go
+  - docker
+- package_manager: ruby:bundler
+  update_schedule: live
+  directory: ruby/roda
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
+  directory: ruby/rails
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
+  directory: ruby/cuba
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
+  directory: ruby/sinatra
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
+  directory: ruby/flame
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
+  directory: ruby/hanami
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
+  directory: ruby/rack-routing
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
+  directory: ruby/syro
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
+  directory: ruby/agoo
+  default_labels:
+  - language:ruby
+- package_manager: docker
+  update_schedule: daily
+  directory: ruby/roda
+  default_labels:
+  - docker
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/laravel
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/swoft
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/imi
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/zend-expressive
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/zend-framework
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/lumen
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/slim
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/basicphp
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/hyperf
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/symfony
+  default_labels:
+  - language:php
+- package_manager: docker
+  update_schedule: daily
+  directory: php/laravel
+  default_labels:
+  - docker
+- package_manager: docker
+  update_schedule: daily
+  directory: c/kore
+  default_labels:
+  - docker
+- package_manager: docker
+  update_schedule: daily
+  directory: scala/http4s
+  default_labels:
+  - docker
+- package_manager: docker
+  update_schedule: daily
+  directory: kotlin/ktor
+  default_labels:
+  - docker
 - package_manager: go:modules
   update_schedule: daily
   directory: go/fasthttprouter
@@ -328,37 +393,7 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
-  directory: go/gorouter
-  default_labels:
-  - language:go
-- package_manager: go:modules
-  update_schedule: daily
-  directory: go/chi
-  default_labels:
-  - language:go
-- package_manager: go:modules
-  update_schedule: daily
-  directory: go/gramework
-  default_labels:
-  - language:go
-- package_manager: go:modules
-  update_schedule: daily
-  directory: go/kami
-  default_labels:
-  - language:go
-- package_manager: go:modules
-  update_schedule: daily
-  directory: go/air
-  default_labels:
-  - language:go
-- package_manager: go:modules
-  update_schedule: daily
-  directory: go/violetear
-  default_labels:
-  - language:go
-- package_manager: go:modules
-  update_schedule: daily
-  directory: go/gf
+  directory: go/beego
   default_labels:
   - language:go
 - package_manager: go:modules
@@ -368,17 +403,57 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
+  directory: go/rte
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
   directory: go/gorilla-mux
   default_labels:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
-  directory: go/atreugo
+  directory: go/gorouter-fasthttp
   default_labels:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
-  directory: go/rte
+  directory: go/air
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
+  directory: go/chi
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
+  directory: go/violetear
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
+  directory: go/gin
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
+  directory: go/kami
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
+  directory: go/gorouter
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
+  directory: go/gf
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
+  directory: go/gramework
   default_labels:
   - language:go
 - package_manager: go:modules
@@ -388,71 +463,11 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
-  directory: go/gin
+  directory: go/atreugo
   default_labels:
   - language:go
 - package_manager: docker
   update_schedule: daily
-  directory: go/beego
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: cpp/evhtp
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: clojure/coast
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: scala/akkahttp
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: nim/jester
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: perl/dancer2
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: crystal/spider-gazelle
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: csharp/aspnetcore
-  default_labels:
-  - docker
-- package_manager: rust:cargo
-  update_schedule: live
-  directory: rust/actix-web
-  default_labels:
-  - language:rust
-- package_manager: rust:cargo
-  update_schedule: live
-  directory: rust/iron
-  default_labels:
-  - language:rust
-- package_manager: rust:cargo
-  update_schedule: live
-  directory: rust/gotham
-  default_labels:
-  - language:rust
-- package_manager: rust:cargo
-  update_schedule: live
-  directory: rust/nickel
-  default_labels:
-  - language:rust
-- package_manager: docker
-  update_schedule: daily
-  directory: rust/actix-web
+  directory: go/fasthttprouter
   default_labels:
   - docker
