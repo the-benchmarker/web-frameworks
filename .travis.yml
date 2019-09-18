@@ -49,6 +49,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=asgineer
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=aspnetcore
     services: docker
   - stage: test
@@ -220,6 +225,11 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=http4s
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=httpbeast
     services: docker
   - stage: test
     script: bash .ci/test.sh

@@ -2,12 +2,8 @@
 
 class AppController
 {
-
-	public function index()
-	{
-
-		echo '';
-
-	}
-
+    public function index()
+    {
+        echo '';
+    }
 }

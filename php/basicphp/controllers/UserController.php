@@ -2,19 +2,13 @@
 
 class UserController
 {
+    public function view()
+    {
+        echo url_value(2);
+    }
 
-	public function view()
-	{
-
-		echo url_value(2);
-
-	}
-
-	public function add()
-	{
-
-		echo '';
-
-	}
-
+    public function add()
+    {
+        echo '';
+    }
 }

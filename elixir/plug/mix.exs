@@ -2,12 +2,14 @@ defmodule MyPlug.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :my_plug,
-     version: "0.1.0",
-     elixir: "~> 1.7.1",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps()]
+    [
+      app: :my_plug,
+      version: "0.1.0",
+      elixir: "~> 1.7.1",
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      deps: deps()
+    ]
   end
 
   # Configuration for the OTP application
@@ -15,8 +17,7 @@ defmodule MyPlug.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger],
-     mod: {MyPlug.Application, []}]
+    [extra_applications: [:logger], mod: {MyPlug.Application, []}]
   end
 
   # Dependencies can be Hex packages:
@@ -29,8 +30,6 @@ defmodule MyPlug.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:cowboy, "~> 2.4.0"},
-     {:plug, "~> 1.7.1"},
-     {:distillery, "~> 2.0.0-rc.6"}]
+    [{:cowboy, "~> 2.4.0"}, {:plug, "~> 1.7.1"}, {:distillery, "~> 2.0.0-rc.6"}]
   end
 end
