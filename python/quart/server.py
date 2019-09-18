@@ -3,16 +3,16 @@ from quart import Quart
 app = Quart(__name__)
 
 
-@app.route('/')
+@app.route("/")
 async def index():
-    return ''
+    return ""
 
 
-@app.route('/user/<id>')
+@app.route("/user/<id>")
 async def user_info(id):
     return id
 
 
-@app.route('/user', methods=['POST'])
+@app.route("/user", methods=["POST"])
 async def user():
-    return ''
+    return ""

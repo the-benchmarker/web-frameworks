@@ -1,3 +1,4 @@
 module main
 
-require gitee.com/johng/gf v1.4.6
+
+require github.com/gogf/gf v1.8.3

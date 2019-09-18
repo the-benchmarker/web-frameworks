@@ -1,7 +1,7 @@
-FROM gcc:8.2
+FROM gcc:9.2
 
-RUN wget -c https://kore.io/releases/kore-3.1.0.tar.gz && tar xvf kore-3.1.0.tar.gz
-RUN cd kore-3.1.0 && TASKS=1 NOTLS=1 make && make install
+RUN wget -c https://kore.io/releases/kore-3.2.2.tar.gz && tar xvf kore-3.2.2.tar.gz
+RUN cd kore-3.2.2 && TASKS=1 NOTLS=1 make && make install
 
 WORKDIR /usr/src/app
 

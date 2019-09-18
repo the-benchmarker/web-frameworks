@@ -11,14 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return '';
-});
-
-Route::get('/user/{id}', function ($id) {
-    return $id;
-});
-
-Route::post('/user', function () {
-    return '';
-});
+Route::get('/', 'ApplicationController@index');
+Route::get('/user/{id}', 'UserController@show');
+Route::post('/user', 'UserController@create');

@@ -1,12 +1,10 @@
-FROM swift:4.2
+FROM swift:5.0
 
-# install kitura deps
-# @see http://www.kitura.io/en/starter/settingup.html
-RUN apt-get -qq update
-RUN apt-get -qy install clang libicu-dev libcurl4-openssl-dev libssl-dev
 WORKDIR /usr/src/app
 
 COPY Package.swift main.swift ./
+
+RUN apt-get update && apt-get install -y libssl-dev libcurl4-openssl-dev
 
 RUN swift build -c release
 

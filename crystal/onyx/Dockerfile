@@ -1,9 +1,11 @@
-FROM crystallang/crystal:0.27.0
+FROM crystallang/crystal:0.30.1
 
 WORKDIR /usr/src/app
 
 COPY shard.yml ./
 COPY src src
+
+ENV BENCHMARK true
 
 RUN shards build --release --no-debug
 

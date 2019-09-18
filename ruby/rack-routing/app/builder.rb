@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 def app
-  Rack::Builder.new{
+  Rack::Builder.new do
     run App
-  }.to_app
+  end.to_app
 end

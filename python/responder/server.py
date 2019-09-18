@@ -5,18 +5,15 @@ app = responder.API()
 
 @app.route("/")
 async def index(req, resp):
-    resp.headers['Content-Type'] = 'text/plain'
-    resp.text = ''
+    resp.text = ""
 
 
-@app.route('/user/{id}')
+@app.route("/user/{id:int}")
 async def user_info(req, resp, *, id):
-    resp.headers['Content-Type'] = 'text/plain'
-    resp.text = id
+    resp.text = str(id)
 
 
-@app.route('/user')
+@app.route("/user")
 async def user(req, resp):
-    if req.method == 'post':
-        resp.headers['Content-Type'] = 'text/plain'
-        resp.text = ''
+    if req.method == "post":
+        resp.text = ""

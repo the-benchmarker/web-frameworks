@@ -62,7 +62,7 @@ record Ranked, res : Filter, target : Target
 def frameworks : Array(Target)
   targets = [] of Target
 
-  YAML.parse(File.read("FRAMEWORKS.yml")).as_h.each do |lang, data|
+  YAML.parse(File.read("FRAMEWORKS.yaml")).as_h.each do |lang, data|
     data.as_h.each do |framework, line|
       row = line.as_h
       next if row.has_key?("type") && row["type"].to_s == "experimental" && !Options.with_experimental
@@ -71,7 +71,7 @@ def frameworks : Array(Target)
       elsif row.has_key?("website")
         link = row["website"]
       end
-      target = Target.new(lang.as_s, framework.as_s, "http://#{link.to_s}", row["version"].to_s, row["language"].to_s)
+      target = Target.new(lang.as_s, framework.as_s, link.to_s, row["version"].to_s.strip, row["language"].to_s.strip)
       targets.push(target)
     end
   end
@@ -254,7 +254,7 @@ puts_markdown "|---------------------------|---------------------------|--------
 ranks_by_latency.each do |framework|
   raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
   result = Result.from_json(raw)
-  puts_markdown "| %s (%s) | [%s](%s) (%s) | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f ms | %.2f | " % [framework.target.lang, framework.target.langver, framework.target.name, framework.target.link, framework.target.version, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
+  puts_markdown "| `%s` (`%s`) | [%s](%s) (**%s**) | %.2f ms | **%.2f** ms | %.2f ms | %.2f ms | %.2f ms | **%.2f** | " % [framework.target.lang, framework.target.langver, framework.target.name, framework.target.link, framework.target.version, (result.latency.average/1000), (result.percentile.fifty/1000), (result.percentile.ninety/1000), (result.percentile.ninety_nine/1000), (result.percentile.ninety_nine_ninety/1000), (result.latency.deviation)], m_lines, true
 end
 
 puts_markdown "", m_lines, true
@@ -282,7 +282,7 @@ puts_markdown "|---------------------------|---------------------------|--------
 ranks_by_requests.each do |framework|
   raw = store.get("#{framework.target.lang}:#{framework.target.name}").as(String)
   result = Result.from_json(raw)
-  puts_markdown "| %s (%s) | [%s](%s) (%s) | %.2f | %.2f MB |" % [framework.target.lang, framework.target.langver, framework.target.name, framework.target.link, framework.target.version, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
+  puts_markdown "| `%s` (`%s`) | [%s](%s) (**%s**) | %.2f | **%.2f** MB |" % [framework.target.lang, framework.target.langver, framework.target.name, framework.target.link, framework.target.version, result.request.per_second, (result.request.bytes/1000000)], m_lines, true
 end
 
 if record

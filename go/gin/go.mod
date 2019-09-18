@@ -1,3 +1,4 @@
 module main
 
-require github.com/gin-gonic/gin v1.3.0
+
+require github.com/gin-gonic/gin v1.4.0

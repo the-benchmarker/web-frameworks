@@ -21,7 +21,7 @@ static void empty_handler(agooReq req) {
 
 static int user_off = 6;
 
-user_handler(agooReq req) {
+static void user_handler(agooReq req) {
   agooText t = agoo_respond(200, req->path.start + user_off,
                             req->path.len - user_off, NULL);
 
@@ -32,6 +32,11 @@ int main(int argc, char **argv) {
   struct _agooErr err = AGOO_ERR_INIT;
   int port = 3000;
 
+  // Adjust this to increase or decrease the number of IO threads. 1.0 seems
+  // to work pretty well on a 4 core (8 processor) machine. It is the ratio of
+  // thread to processors.
+  agoo_io_loop_ratio = 1.0;
+
   if (AGOO_ERR_OK != agoo_init(&err, "simple")) {
     printf("Failed to initialize Agoo. %s\n", err.msg);
     return err.code;
@@ -41,7 +46,7 @@ int main(int argc, char **argv) {
   // adjusted automatically.
   agoo_server.thread_cnt = 1;
 
-  agoo_pages_set_root(".");
+  agoo_pages_set_root(&err, ".");
 
   if (AGOO_ERR_OK != agoo_bind_to_port(&err, port)) {
     printf("Failed to bind to port %d. %s\n", port, err.msg);

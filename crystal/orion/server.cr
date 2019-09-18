@@ -1,7 +1,6 @@
 require "orion"
 
 router MyApplication do
-
   get "/", ->(context : Context) do
     context.response.print ""
   end
@@ -13,9 +12,14 @@ router MyApplication do
   post "/user", ->(context : Context) do
     context.response.print ""
   end
-
 end
 
 puts MyApplication.visualize
 
-MyApplication.listen(host: "0.0.0.0", port: 3000, reuse_port: true)
+System.cpu_count.times do |i|
+  Process.fork do
+    MyApplication.listen(host: "0.0.0.0", port: 3000, reuse_port: true)
+  end
+end
+
+sleep

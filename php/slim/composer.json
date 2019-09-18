@@ -1,5 +1,6 @@
 {
     "require": {
-        "slim/slim": "3.12.0"
+        "slim/slim": "4.2.*",
+        "slim/psr7": "*"
     }
 }
