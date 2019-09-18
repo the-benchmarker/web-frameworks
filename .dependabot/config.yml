@@ -3,7 +3,7 @@ version: 1
 update_configs:
 - package_manager: docker
   update_schedule: daily
-  directory: nim/jester
+  directory: nim/httpbeast
   default_labels:
   - docker
 - package_manager: docker
