@@ -386,3 +386,8 @@ update_configs:
   directory: swift/perfect
   default_labels:
   - docker
+- package_manager: docker
+  update_schedule: daily
+  directory: fsharp/suave
+  default_labels:
+  - docker
