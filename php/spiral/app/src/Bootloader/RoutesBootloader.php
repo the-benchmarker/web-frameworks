@@ -13,7 +13,7 @@ use App\Controller\BenchmarkController;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Router\Route;
 use Spiral\Router\RouterInterface;
-use Spiral\Router\Target\Controller;
+use Spiral\Router\Target\Action;
 
 class RoutesBootloader extends Bootloader
 {
@@ -23,12 +23,13 @@ class RoutesBootloader extends Bootloader
     public function boot(RouterInterface $router)
     {
         $router->addRoute(
+            'index',
+            (new Route('/', new Action(BenchmarkController::class, 'index')))->withVerbs('GET')
+        );
+
+        $router->addRoute(
             'benchmark',
-            new Route(
-                '/<action>[/<id>]',
-                new Controller(BenchmarkController::class),
-                ['action' => 'index']
-            )
+            new Route('/user[/<id>]', new Action(BenchmarkController::class, 'user'))
         );
     }
 }

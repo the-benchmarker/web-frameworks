@@ -11,7 +11,6 @@ namespace App;
 
 use App\Bootloader\RoutesBootloader;
 use Spiral\Bootloader;
-use Spiral\DotEnv\Bootloader as DotEnv;
 use Spiral\Framework\Kernel;
 use Spiral\Nyholm\Bootloader as Nyholm;
 
@@ -22,16 +21,10 @@ class App extends Kernel
      * within system container on application start.
      */
     protected const LOAD = [
-        // Environment configuration
-        DotEnv\DotenvBootloader::class,
-
-        // HTTP Bootloader
-        Bootloader\Http\HttpBootloader::class,
-
-        // HTTP extensions
+        // HTTP
         Nyholm\NyholmBootloader::class,
+        Bootloader\Http\HttpBootloader::class,
         Bootloader\Http\RouterBootloader::class,
-        Bootloader\Http\ErrorHandlerBootloader::class,
 
         // Framework commands
         Bootloader\CommandBootloader::class
