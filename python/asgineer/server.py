@@ -14,6 +14,7 @@ async def app(request):
     else:
         return 404, {}, f"404 not found {request.path}"
 
+
 async def output_second_param(path):
     params = path.split("/")
     return params[2]
