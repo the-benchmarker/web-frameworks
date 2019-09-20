@@ -2,8 +2,8 @@ Bundler.require :default
 
 module Bench
   class BaseAPI < Grape::API
-    get '' do
-      ''
+    get do
+      body false
     end
   end
 
@@ -12,7 +12,7 @@ module Bench
       params[:id]
     end
     post '/user' do
-      ''
+      body false
     end
   end
 
