@@ -249,11 +249,6 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=one
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
     env: FRAMEWORK=iotjs-express
     services: docker
   - stage: test
@@ -350,6 +345,11 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=nickel
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=one
     services: docker
   - stage: test
     script: bash .ci/test.sh
