@@ -3,6 +3,8 @@ FROM php:7.3-fpm
 RUN apt -y update
 RUN apt -y install git
 
+RUN docker-php-ext-install pdo pdo_mysql
+
 RUN pecl install swoole-4.4.5
 RUN docker-php-ext-enable swoole
 
