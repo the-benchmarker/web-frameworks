@@ -13,7 +13,7 @@ class IndexController extends Controller
 
     public function get($id = '')
     {
-        return (string)$id;
+        return $id;
     }
 
     public function create()
