@@ -19,10 +19,6 @@ class HomeController
   def index
     ''
   end
-
-  def author
-    'Boaz Segev'
-  end
 end
 
 # Routes
