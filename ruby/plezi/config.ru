@@ -2,12 +2,13 @@
 
 require 'plezi'
 
-#Controllers
+# Controllers
 class UserController
   # HTTP
   def index
-    ""
+    ''
   end
+
   def show
     params[:id].to_s
   end
@@ -16,10 +17,11 @@ end
 class HomeController
   # HTTP
   def index
-    ""
+    ''
   end
+
   def author
-    "Boaz Segev"
+    'Boaz Segev'
   end
 end
 
