@@ -3,9 +3,6 @@ FROM nimlang/nim:1.0.0
 RUN apt -y update && \
     apt -y install musl-tools
 
-RUN apt -y update && \
-    apt -y install musl-tools
-
 WORKDIR /usr/src/app
 
 COPY server.nim server.nimble ./

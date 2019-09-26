@@ -62,7 +62,7 @@ class App < Admiral::Command
             tools.each do |tool|
               params = {} of String => DockerVariable
               framework_config = YAML.parse(File.read("#{language}/#{tool}/config.yaml"))
-              
+
               if framework_config.as_h.has_key?("environment")
                 environment = [] of String
                 framework_config["environment"].as_h.each do |k, v|
