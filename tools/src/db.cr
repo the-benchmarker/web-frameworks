@@ -17,8 +17,8 @@ class App < Admiral::Command
   class ReadmeWriter < Admiral::Command
     def run
       results = {} of String => Hash(String, String | Float64)
-      order_by_requests = <<-EOS
-SELECT f.id, l.label AS language, f.label AS framework, k.label AS key, sum(v.value/3) AS value, k.label='percentile:fifty' AS filter 
+      order_by_latency = <<-EOS
+SELECT f.id, l.label AS language, f.label AS framework, k.label AS key, sum(v.value/3) AS value, k.label='latency:average' AS filter 
   FROM frameworks AS f 
   JOIN languages AS l on l.id = f.language_id 
   JOIN metric_keys as k on k.framework_id = f.id
@@ -27,7 +27,7 @@ SELECT f.id, l.label AS language, f.label AS framework, k.label AS key, sum(v.va
     ORDER BY 6 desc, 5
 EOS
       DB.open "sqlite3://data.db" do |db|
-        db.query order_by_requests do |row|
+        db.query order_by_latency do |row|
           row.each do
             key = row.read(Int).to_s
             language = row.read(String)
@@ -48,7 +48,7 @@ EOS
         "|----|----|---------|-------------|---------|----------|----------|--------|----|",
       ]
       results.each do |_, row|
-        lines << "| %s | %s | %.2f ms | **%.2f** ms | %.2f ms | %.2f ms | %.2f | %.2f | %.2f Mb |" % [
+        lines << "| %s | %s | **%.2f** ms | %.2f ms | %.2f ms | %.2f ms | %.2f | %.2f | %.2f Mb |" % [
           row["language"],
           row["framework"],
           row["latency:average"].to_f/1000,
