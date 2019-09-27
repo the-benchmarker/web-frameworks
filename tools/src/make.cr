@@ -70,6 +70,20 @@ class App < Admiral::Command
                 end
                 params["environment"] = environment
               end
+              if framework_config.as_h.has_key?("deps")
+                deps = [] of String
+                framework_config["deps"].as_a.each do |dep|
+                  deps << dep.to_s
+                end
+                params["deps"] = deps
+              end
+              if framework_config.as_h.has_key?("php_ext")
+                deps = [] of String
+                framework_config["php_ext"].as_a.each do |ext|
+                  deps << ext.to_s
+                end
+                params["php_ext"] = deps
+              end
               if framework_config.as_h.has_key?("arguments")
                 params["arguments"] = framework_config["arguments"].to_s
               end
@@ -79,15 +93,22 @@ class App < Admiral::Command
               if framework_config.as_h.has_key?("command")
                 params["command"] = framework_config["command"].to_s
               end
+              if framework_config.as_h.has_key?("before_command")
+                before_command = [] of String
+                framework_config["before_command"].as_a.each do |cmd|
+                  before_command << cmd.to_s
+                end
+                params["before_command"] = before_command
+              end
+              if framework_config.as_h.has_key?("standalone")
+                params["standalone"] = framework_config["standalone"].to_s
+              end
               if framework_config.as_h.has_key?("files")
                 files = [] of String
                 framework_config.as_h["files"].as_a.each do |file|
                   files << file.to_s
                 end
                 params["files"] = files
-              end
-              if framework_config.as_h.has_key?("command")
-                params["command"] = framework_config.as_h["command"].to_s
               end
               File.write("#{language}/#{tool}/Dockerfile", Crustache.render(dockerfile, params))
               yaml.scalar tool

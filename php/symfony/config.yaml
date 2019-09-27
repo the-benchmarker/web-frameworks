@@ -2,3 +2,6 @@ framework:
   website: symfony.com
   version: 4.3
   
+
+deps:
+  - nginx
