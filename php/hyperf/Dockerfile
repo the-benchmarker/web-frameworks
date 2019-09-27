@@ -9,7 +9,7 @@ RUN docker-php-ext-install zip
 RUN pecl install redis
 RUN docker-php-ext-enable redis
 
-RUN pecl install swoole-4.4.1
+RUN pecl install swoole-4.4.7
 RUN docker-php-ext-enable swoole
 
 WORKDIR /usr/src/app
