@@ -6,7 +6,7 @@ RUN apt -y install git
 RUN pecl install redis
 RUN docker-php-ext-enable redis
 
-RUN pecl install swoole-4.4.5
+RUN pecl install swoole-4.4.7
 RUN docker-php-ext-enable swoole
 
 WORKDIR /usr/src
@@ -23,4 +23,4 @@ RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/loca
 RUN composer install --no-dev --prefer-dist --classmap-authoritative
 RUN composer dumpautoload -o
 
-CMD php vendor/bin/imi server/start
+CMD php vendor/bin/imi server/start -name main
