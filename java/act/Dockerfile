@@ -1,4 +1,4 @@
-FROM maven:3.6-jdk-8 as maven
+FROM maven:3.6-jdk-14 as maven
 WORKDIR /act
 COPY pom.xml pom.xml
 COPY src src
