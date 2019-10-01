@@ -3,7 +3,11 @@ require "./spec_helper"
 def get_ip(name)
   cid = `docker run -td #{name}`.strip
   sleep 20 # due to external program usage
-  ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
+  if name == "genie"
+    ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid} && sleep 60`.strip
+  else
+    ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
+  end
   ip
 end
 
