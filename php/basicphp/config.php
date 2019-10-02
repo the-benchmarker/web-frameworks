@@ -64,20 +64,26 @@ switch (ENVIRONMENT) {
 
 /*
 |--------------------------------------------------------------------------
-| Set BASE_URL
+| Enforce SSL/HTTPS
 |--------------------------------------------------------------------------
-|
-| Define 'BASE_URL' as the domain with '/' at the end, such as
-| 'http://example.com/' or 'https://example.com/'.
-| Include subdirectory if index.php is not in DocumentRoot folder.
-|
 */
 
-define('BASE_URL', 'http://localhost/');
+define('ENFORCE_SSL', FALSE);
 
 /*
 |--------------------------------------------------------------------------
-| Set URL_PARSE Method as either 'REQUEST_URI' or 'PATH_INFO'.
+| Set BASE_URL
+|--------------------------------------------------------------------------
+*/
+
+if (ENFORCE_SSL == FALSE) { $http_protocol = 'http://'; } else { $http_protocol = 'https://'; }
+if (! empty(dirname($_SERVER['SCRIPT_NAME']))) { $subfolder = dirname($_SERVER['SCRIPT_NAME']); } else { $subfolder = ''; }
+
+define('BASE_URL', $http_protocol . $_SERVER['SERVER_NAME'] . $subfolder . '/');
+
+/*
+|--------------------------------------------------------------------------
+| Set URL_PARSE Method as 'REQUEST_URI', 'REDIRECT_URL' or 'PATH_INFO'.
 | When using Nginx server, 'REQUEST_URI' is recommended.
 | SUB_DIR as the number of subfolders index.php is located from domain.
 |--------------------------------------------------------------------------
@@ -90,13 +96,13 @@ define('URL_PARSE', 'REQUEST_URI');
 
 if (URL_PARSE == 'PATH_INFO') {
     define('SUB_DIR', 0);
-} elseif (URL_PARSE == 'REQUEST_URI') {
-    define('SUB_DIR', substr_count(BASE_URL, '/')-3);
+} elseif (URL_PARSE == 'REQUEST_URI' || 'REDIRECT_URL') {
+    define('SUB_DIR', substr_count($_SERVER['SCRIPT_NAME'], '/')-1);
 }
 
 /*
 |--------------------------------------------------------------------------
-| Set Homepage
+| Set Homepage Controller@method
 |--------------------------------------------------------------------------
 */
 
@@ -119,6 +125,7 @@ define('CONTROLLER_SUFFIX', 'Controller');
 |--------------------------------------------------------------------------
 |
 | If the second URL string is empty, set this method as the default method.
+|
 */
 
 define('METHOD_DEFAULT', 'index');

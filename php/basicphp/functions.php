@@ -30,9 +30,9 @@
 function url_value($order)
 {
 
-    if (isset($_SERVER[URL_PARSE])) { $url = explode('/', $_SERVER[URL_PARSE]); }
+    if (isset($_SERVER['REDIRECT_URL'])) { $url = explode('/', $_SERVER['REDIRECT_URL']); }
 
-    if ( isset($url[$order+SUB_DIR]) || ! empty($url[$order+SUB_DIR]) ) { return $url[$order+SUB_DIR]; } else { return false; }
+    if ( isset($url[$order+SUB_DIR]) || ! empty($url[$order+SUB_DIR]) ) { return $url[$order+SUB_DIR]; } else { return FALSE; }
 
 }
 
@@ -44,14 +44,14 @@ function route_rpc()
 {
 
 	// Check if HTTP request method is 'POST', if there is POSTed data, and the POSTed data is in JSON format.
-	if ($_SERVER['REQUEST_METHOD'] == 'POST' && file_get_contents('php://input') !== false && json_decode( file_get_contents('php://input'), true ) !== null) {
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && file_get_contents('php://input') !== FALSE && json_decode( file_get_contents('php://input'), TRUE ) !== NULL) {
 
-		$json_rpc = json_decode( file_get_contents('php://input'), true );
+		$json_rpc = json_decode( file_get_contents('php://input'), TRUE );
 	
 		// Requires the 'jsonrpc', 'method' and 'id' members of the request object
 		if (isset($json_rpc['jsonrpc']) && isset($json_rpc['method']) && isset($json_rpc['id'])) {
 	
-			if (strstr($json_rpc['method'], '.') == false) exit(json_encode(['jsonrpc' => '2.0', 'error' => ['code' => 32600, 'message' => "The JSON-RPC 'method' member should have the format 'class.method'."], 'id' => $json_rpc['id']]));
+			if (strstr($json_rpc['method'], '.') == FALSE) exit(json_encode(['jsonrpc' => '2.0', 'error' => ['code' => 32600, 'message' => "The JSON-RPC 'method' member should have the format 'class.method'."], 'id' => $json_rpc['id']]));
 	
 			list($class, $method) = explode('.', $json_rpc['method']);
 			$class = ucfirst($class) . CONTROLLER_SUFFIX;
@@ -77,8 +77,8 @@ function route_rpc()
 function route_auto()
 {
 
-	if (url_value(1) !== false) { $class = ucfirst(url_value(1)) . CONTROLLER_SUFFIX; }
-	if (url_value(2) !== false) { $method = lcfirst(url_value(2)); } else { $method = METHOD_DEFAULT; }
+	if (url_value(1) !== FALSE) { $class = ucfirst(url_value(1)) . CONTROLLER_SUFFIX; }
+	if (url_value(2) !== FALSE) { $method = lcfirst(url_value(2)); } else { $method = METHOD_DEFAULT; }
 
 	if (class_exists($class)) {
 		$object = new $class();
@@ -97,7 +97,7 @@ function route_auto()
  *
  * @param string $http_method - HTTP method (e.g. GET, POST, PUT, DELETE)
  * @param string $string - URL path in the format '/url/string'
- *                       - Wildcard convention from Codeigniter 3
+ *                       - Wildcard convention from Codeigniter
  *                       - (:num) for number and (:any) for string
  * @param string $class_method - ClassController@method format
  */
@@ -112,18 +112,13 @@ function route_class($http_method, $path, $class_method)
 		$pattern = str_ireplace( '(:num)', '[0-9]+', $pattern );
 		$pattern = str_ireplace( '(:any)', '[^\/]+', $pattern );
 
-		if (URL_PARSE == 'REQUEST_URI') {
+		if (URL_PARSE == 'REQUEST_URI' || 'REDIRECT_URL') {
+				
+			// Check for subfolders from DocumentRoot and include in endpoint
+			$sub = explode('/', dirname($_SERVER['SCRIPT_NAME']));
+			if (! empty($sub[1])) { $subfolder = implode('\/', $sub); } else { $subfolder = ''; }
 
-			$sub = explode('/', BASE_URL);
-			
-			// Support for upto five (5) subdirectories - index.php from DocumentRoot
-			if (! empty($sub[3])) { $sub_1 = '\/' . $sub[3]; } else { $sub_1 = ''; }
-			if (! empty($sub[4])) { $sub_2 = '\/' . $sub[4]; } else { $sub_2 = ''; }
-			if (! empty($sub[5])) { $sub_3 = '\/' . $sub[5]; } else { $sub_3 = ''; }
-			if (! empty($sub[6])) { $sub_4 = '\/' . $sub[6]; } else { $sub_4 = ''; }
-			if (! empty($sub[7])) { $sub_5 = '\/' . $sub[7]; } else { $sub_5 = ''; }
-
-			if (preg_match('/^' . $sub_1.$sub_2.$sub_3.$sub_4.$sub_5 . $pattern . '+$/i', $_SERVER[URL_PARSE]))  {
+			if (preg_match('/^' . $subfolder . $pattern . '+$/i', $_SERVER['REDIRECT_URL']))  {
 
 				list($class, $method) = explode('@', $class_method);
 
@@ -153,7 +148,7 @@ function route_class($http_method, $path, $class_method)
  * @param array $data - Data as an array to pass to the View
  */
 
-function view($view, $data=null)
+function view($view, $data=NULL)
 {
 
 	// Convert array keys to variables
@@ -178,7 +173,7 @@ function pdo_conn($database, $servername, $dbname, $username, $password)
 {
 
 	$conn = new PDO("$database:host=$servername;dbname=$dbname", $username, $password, array(
-		PDO::ATTR_PERSISTENT => true
+		PDO::ATTR_PERSISTENT => TRUE
 	));
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -193,7 +188,7 @@ function pdo_conn($database, $servername, $dbname, $username, $password)
  * @param string $message - Message to send with response
  */
 
-function api_response($data, $message=null)
+function api_response($data, $message=NULL)
 {
 
 	// Define content type as JSON data through the header
@@ -218,7 +213,7 @@ function api_response($data, $message=null)
  * @param string $password - Password
  */
 
-function api_call($http_method, $url, $data=null, $username=null, $password=null)
+function api_call($http_method, $url, $data=NULL, $username=NULL, $password=NULL)
 {
 
 	// Initialize cURL
@@ -232,7 +227,7 @@ function api_call($http_method, $url, $data=null, $username=null, $password=null
 	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http_method);
 	// curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 	curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
 	    'Content-Type: application/json',                                                                                
@@ -246,7 +241,7 @@ function api_call($http_method, $url, $data=null, $username=null, $password=null
 	curl_close ($ch);
 
 	// Convert JSON response from external server to an array
-	$data_output = json_decode($result, true);
+	$data_output = json_decode($result, TRUE);
 
 	return $data_output;
 
