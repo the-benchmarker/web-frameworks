@@ -49,6 +49,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=asgineer
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=aspnetcore
     services: docker
   - stage: test
@@ -90,6 +95,11 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=chi
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=clastic
     services: docker
   - stage: test
     script: bash .ci/test.sh
@@ -209,6 +219,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=grape
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=hanami
     services: docker
   - stage: test
@@ -220,6 +235,11 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=http4s
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=httpbeast
     services: docker
   - stage: test
     script: bash .ci/test.sh
@@ -339,6 +359,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=one
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=onyx
     services: docker
   - stage: test
@@ -350,6 +375,11 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=perfect
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=plezi
     services: docker
   - stage: test
     script: bash .ci/test.sh
@@ -449,12 +479,22 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=spiral
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=spring-boot
     services: docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=starlette
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
+    env: FRAMEWORK=suave
     services: docker
   - stage: test
     script: bash .ci/test.sh

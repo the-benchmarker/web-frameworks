@@ -26,17 +26,11 @@ $class_folders[] = 'controllers';
 define('AUTOLOAD_CLASSES', $class_folders);
 
 spl_autoload_register(function ($class_name) {
-
-	foreach (AUTOLOAD_CLASSES as $folder) {
-
-		if (file_exists('../' . $folder . '/' . $class_name . '.php') && is_readable('../' . $folder . '/' . $class_name . '.php')) {
-
-			require_once '../' . $folder . '/' . $class_name . '.php';
-
-		}
-
-	}
-
+    foreach (AUTOLOAD_CLASSES as $folder) {
+        if (file_exists('../' . $folder . '/' . $class_name . '.php') && is_readable('../' . $folder . '/' . $class_name . '.php')) {
+            require_once '../' . $folder . '/' . $class_name . '.php';
+        }
+    }
 });
 
 /*
@@ -64,6 +58,7 @@ switch (ENVIRONMENT) {
 
 /*
 |--------------------------------------------------------------------------
+<<<<<<< HEAD
 | Enforce SSL/HTTPS
 |--------------------------------------------------------------------------
 */
@@ -84,6 +79,22 @@ define('BASE_URL', $http_protocol . $_SERVER['SERVER_NAME'] . $subfolder . '/');
 /*
 |--------------------------------------------------------------------------
 | Set URL_PARSE Method as 'REQUEST_URI', 'REDIRECT_URL' or 'PATH_INFO'.
+=======
+| Set BASE_URL
+|--------------------------------------------------------------------------
+|
+| Define 'BASE_URL' as the domain with '/' at the end, such as
+| 'http://example.com/' or 'https://example.com/'.
+| Include subdirectory if index.php is not in DocumentRoot folder.
+|
+*/
+
+define('BASE_URL', 'http://localhost/');
+
+/*
+|--------------------------------------------------------------------------
+| Set URL_PARSE Method as either 'REQUEST_URI' or 'PATH_INFO'.
+>>>>>>> [PHP] Adds BasicPHP nano-framework (#1776)
 | When using Nginx server, 'REQUEST_URI' is recommended.
 | SUB_DIR as the number of subfolders index.php is located from domain.
 |--------------------------------------------------------------------------

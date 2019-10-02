@@ -21,7 +21,7 @@ func userID(ctx *fasthttp.RequestCtx) {
 
 func main() {
 	router := gorouter.NewFastHTTPRouter()
-	
+
 	router.GET("/", index)
 	router.GET("/user/{id:[0-9]+}", userID)
 	router.POST("/user", user)

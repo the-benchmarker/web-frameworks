@@ -7,7 +7,7 @@ App = Syro.new do
     res.write ''
   end
 
-  on "user" do
+  on 'user' do
     on :id do
       get do
         res.write inbox[:id]
