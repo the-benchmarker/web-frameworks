@@ -2,16 +2,16 @@ import HTTPServer
 import SwiftGlibc
 
 let app = BasicRouter { route in
-    route.get("/") { request in
+    route.get("/") { _ in
         return Response(body: "")
     }
 
-    route.get("/user/:id") { request in
+    route.get("/user/:id") { _ in
 
         return Response(body: id)
     }
 
-    route.post("/user") { request in
+    route.post("/user") { _ in
 
         return Response(body "")
     }
