@@ -114,6 +114,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=cyclone
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=dancer2
     services: docker
   - stage: test
@@ -339,6 +344,11 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
+    env: FRAMEWORK=merly
+    services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: crystal
     env: FRAMEWORK=moleculer
     services: docker
   - stage: test
@@ -550,11 +560,6 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=zend-framework
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: julia
-    env: FRAMEWORK=merly
     services: docker
 notifications:
   email: false
