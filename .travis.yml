@@ -444,11 +444,6 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=rocket
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
     env: FRAMEWORK=roda
     services: docker
   - stage: test
