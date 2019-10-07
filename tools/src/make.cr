@@ -16,6 +16,7 @@ end
 
 class App < Admiral::Command
   class Config < Admiral::Command
+    define_flag without_sieger : Bool, description: "run sieger", default: false, long: "--without-sieger"
     define_flag sieger_options : String, description: "sieger options", default: "", long: "options", short: "o"
 
     def run
@@ -138,8 +139,10 @@ class App < Admiral::Command
                 yaml.sequence do
                   yaml.scalar "docker build -t #{tool} ."
                   yaml.scalar "docker run -td #{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
-                  yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user #{flags.sieger_options}"
-                  yaml.scalar "docker ps -a -q  --filter ancestor=#{tool} | xargs -i docker container rm -f {}"
+                  unless flags.without_sieger
+                    yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user #{flags.sieger_options}"
+                    yaml.scalar "docker ps -a -q  --filter ancestor=#{tool} | xargs -i docker container rm -f {}"
+                  end
                 end
                 yaml.scalar "dir"
                 yaml.scalar "#{language}/#{tool}"
