@@ -103,6 +103,9 @@ class App < Admiral::Command
               if framework_config.as_h.has_key?("standalone")
                 params["standalone"] = framework_config["standalone"].to_s
               end
+              if framework_config.as_h.has_key?("mvn_build")
+                params["mvn_build"] = framework_config["mvn_build"].to_s
+              end
               if framework_config.as_h.has_key?("files")
                 files = [] of String
                 framework_config.as_h["files"].as_a.each do |file|
