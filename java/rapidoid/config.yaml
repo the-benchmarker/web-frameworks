@@ -2,10 +2,11 @@ framework:
   website: rapidoid.org
   version: 5.5
 
+build:
+  - mvn compile assembly:single -q
+
 files: 
   - target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar
-
-mvn_build: mvn compile assembly:single -q
 
 command: >
   java -server

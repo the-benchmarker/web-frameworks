@@ -77,6 +77,13 @@ class App < Admiral::Command
                 end
                 params["deps"] = deps
               end
+              if framework_config.as_h.has_key?("bin_deps")
+                deps = [] of String
+                framework_config["bin_deps"].as_a.each do |dep|
+                  deps << dep.to_s
+                end
+                params["bin_deps"] = deps
+              end
               if framework_config.as_h.has_key?("php_ext")
                 deps = [] of String
                 framework_config["php_ext"].as_a.each do |ext|
@@ -103,8 +110,19 @@ class App < Admiral::Command
               if framework_config.as_h.has_key?("standalone")
                 params["standalone"] = framework_config["standalone"].to_s
               end
-              if framework_config.as_h.has_key?("mvn_build")
-                params["mvn_build"] = framework_config["mvn_build"].to_s
+              if framework_config.as_h.has_key?("build")
+                build = [] of String
+                framework_config["build"].as_a.each do |cmd|
+                  build << cmd.to_s
+                end
+                params["build"] = build
+              end
+              if framework_config.as_h.has_key?("clone")
+                clone = [] of String
+                framework_config["clone"].as_a.each do |cmd|
+                  clone << cmd.to_s
+                end
+                params["clone"] = clone
               end
               if framework_config.as_h.has_key?("files")
                 files = [] of String
