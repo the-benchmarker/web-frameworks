@@ -1,14 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"github.com/savsgio/atreugo/v8"
+	"github.com/savsgio/atreugo/v9"
 )
 
 func main() {
 	config := &atreugo.Config{
-		Host: "0.0.0.0",
-		Port: 3000,
+		Addr: "0.0.0.0:3000",
 	}
 	server := atreugo.New(config)
 
@@ -16,8 +14,8 @@ func main() {
 		return ctx.TextResponse("")
 	})
 	server.Path("GET", "/user/:id", func(ctx *atreugo.RequestCtx) error {
-		id := ctx.UserValue("id")
-		return ctx.TextResponse(fmt.Sprintf("%s", id))
+		id := ctx.UserValue("id").(string)
+		return ctx.TextResponse(id)
 	})
 	server.Path("POST", "/user", func(ctx *atreugo.RequestCtx) error {
 		return ctx.TextResponse("")
