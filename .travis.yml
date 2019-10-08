@@ -131,7 +131,9 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=camping
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -143,7 +145,9 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=clastic
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -162,7 +166,9 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=cyclone
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -314,7 +320,9 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=grape
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -430,11 +438,6 @@ jobs:
   - stage: test
     script: bash .ci/test.sh
     language: crystal
-    env: FRAMEWORK=nanoexpress
-    services: docker
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
     env: FRAMEWORK=koa
     services:
     - docker
@@ -513,7 +516,9 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=one
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -539,7 +544,9 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=plezi
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -677,7 +684,9 @@ jobs:
     script: bash .ci/test.sh
     language: crystal
     env: FRAMEWORK=spiral
-    services: docker
+    services:
+    - docker
+    - redis
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -778,5 +787,4 @@ jobs:
     - redis
 notifications:
   email: false
-before_install: bash .ci/has_to_run.sh || travis_terminate 0
 dist: bionic

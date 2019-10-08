@@ -1,8 +1,3 @@
-# Exit build if not necessary
-before_install:
-  # run only if current implementation is modified
-  - bash .ci/has_to_run.sh || travis_terminate 0
-
 # Use docker to containerize frameworks
 services: docker
 
