@@ -11,7 +11,7 @@ COPY ./ ./
 
 # compilation
 
-RUN git clone --branch v1.0.0-beta7 https://github.com/an-tao/drogon
+RUN git clone --branch v1.0.0-beta8 https://github.com/an-tao/drogon
 WORKDIR $DROGON_ROOT
 RUN git submodule update --init
 
