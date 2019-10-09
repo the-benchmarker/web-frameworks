@@ -9,7 +9,3 @@ logger =
 Lucky.configure do |settings|
   settings.logger = logger
 end
-
-Avram::Repo.configure do |settings|
-  settings.logger = logger
-end
