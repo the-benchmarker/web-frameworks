@@ -19,6 +19,10 @@ RUN composer install --no-dev --prefer-dist --classmap-authoritative
 RUN composer dumpautoload -o
 {{/standalone}}
 
+{{#environment}}
+ENV {{{.}}}
+{{/environment}}
+
 {{#before_command}}
   RUN {{{.}}}
 {{/before_command}}
