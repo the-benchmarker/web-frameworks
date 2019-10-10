@@ -16,8 +16,9 @@ end
 
 class App < Admiral::Command
   class Config < Admiral::Command
-    define_flag without_sieger : Bool, description: "run sieger", default: false, long: "--without-sieger"
-    define_flag sieger_options : String, description: "sieger options", default: "", long: "options", short: "o"
+    define_flag without_sieger : Bool, description: "run sieger", default: false, long: "without-sieger"
+    define_flag sieger_options : String, description: "sieger options", default: "", long: "sieger-options"
+    define_flag docker_options : String, description: "extra argument to docker cli", default: "", long: "docker-options"
 
     def run
       frameworks = {} of String => Array(String)
@@ -137,8 +138,9 @@ class App < Admiral::Command
               yaml.mapping do
                 yaml.scalar "commands"
                 yaml.sequence do
-                  yaml.scalar "docker build -t #{tool} ."
+                  yaml.scalar "docker build -t #{tool} . #{flags.docker_options}"
                   yaml.scalar "docker run -td #{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
+
                   unless flags.without_sieger
                     yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user #{flags.sieger_options}"
                     yaml.scalar "docker ps -a -q  --filter ancestor=#{tool} | xargs -i docker container rm -f {}"
@@ -176,7 +178,7 @@ class App < Admiral::Command
                     yaml.scalar "stage"
                     yaml.scalar "test"
                     yaml.scalar "script"
-                    yaml.scalar "travis_retry bash .ci/test.sh"
+                    yaml.scalar "bash .ci/test.sh"
                     yaml.scalar "language"
                     yaml.scalar "crystal"
                     yaml.scalar "env"
@@ -185,6 +187,13 @@ class App < Admiral::Command
                     yaml.sequence do
                       yaml.scalar "docker"
                       yaml.scalar "redis"
+                    end
+                    yaml.scalar "cache"
+                    yaml.mapping do
+                      yaml.scalar "directories"
+                      yaml.sequence do
+                        yaml.scalar "/home/travis/docker"
+                      end
                     end
                   end
                 end
