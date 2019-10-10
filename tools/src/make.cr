@@ -159,6 +159,18 @@ class App < Admiral::Command
 
   class TravisConfig < Admiral::Command
     def run
+      docker_load_command = <<-EOS
+      if [[ -d $HOME/docker ]]; then 
+        ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"
+      fi
+      EOS
+
+      docker_save_command = <<-EOS
+      mkdir -p $HOME/docker && 
+        docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}' | 
+          xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
+      EOS
+
       frameworks = [] of String
       languages = [] of String
       mapping = YAML.parse(File.read(".ci/mapping.yml"))
@@ -168,6 +180,14 @@ class App < Admiral::Command
       end
       selection = YAML.build do |yaml|
         yaml.mapping do
+          yaml.scalar "before_cache"
+          yaml.sequence do
+            yaml.scalar docker_save_command
+          end
+          yaml.scalar "before_install"
+          yaml.sequence do
+            yaml.scalar docker_load_command
+          end
           yaml.scalar "jobs"
           yaml.mapping do
             yaml.scalar "include"

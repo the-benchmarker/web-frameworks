@@ -1,4 +1,11 @@
 ---
+before_cache:
+- "mkdir -p $HOME/docker && \n  docker images -a --filter='dangling=false' --format
+  '{{.Repository}}:{{.Tag}} {{.ID}}' | \n    xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz
+  || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'"
+before_install:
+- "if [[ -d $HOME/docker ]]; then \n  ls $HOME/docker/*.tar.gz | xargs -I {file} sh
+  -c \"zcat {file} | docker load\"\nfi"
 jobs:
   include:
   - stage: test
