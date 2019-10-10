@@ -8,4 +8,4 @@ COPY project project
 
 RUN sbt assembly
 
-CMD java -jar target/scala-2.12/*assembly*.jar
+CMD {{command}}
