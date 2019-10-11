@@ -3,6 +3,10 @@ before_cache:
 - bash .ci/save.sh
 before_install:
 - bash .ci/load.sh
+cache:
+  bundler: true
+  directories:
+  - $HOME/docker
 jobs:
   include:
   - stage: test
@@ -12,9 +16,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -22,9 +23,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -32,9 +30,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -42,9 +37,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -52,9 +44,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -62,9 +51,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -72,9 +58,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -82,9 +65,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -92,9 +72,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -102,9 +79,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -112,9 +86,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -122,9 +93,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -132,9 +100,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -142,9 +107,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -152,9 +114,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -162,9 +121,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -172,9 +128,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -182,9 +135,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -192,9 +142,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -202,9 +149,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -212,9 +156,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -222,9 +163,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -232,9 +170,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -242,9 +177,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -252,9 +184,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -262,9 +191,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -272,9 +198,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -282,9 +205,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -292,9 +212,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -302,9 +219,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -312,9 +226,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -322,9 +233,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -332,9 +240,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -342,9 +247,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -352,9 +254,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -362,9 +261,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -372,9 +268,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -382,9 +275,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -392,9 +282,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -402,9 +289,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -412,9 +296,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -422,9 +303,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -432,9 +310,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -442,9 +317,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -452,9 +324,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -462,9 +331,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -472,9 +338,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -482,9 +345,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -492,9 +352,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -502,9 +359,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -512,9 +366,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -522,9 +373,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -532,9 +380,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -542,9 +387,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -552,9 +394,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -562,9 +401,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -572,9 +408,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -582,9 +415,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -592,9 +422,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -602,9 +429,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -612,9 +436,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -622,9 +443,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -632,9 +450,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -642,9 +457,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -652,9 +464,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -662,9 +471,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -672,9 +478,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -682,9 +485,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -692,9 +492,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -702,9 +499,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -712,9 +506,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -722,9 +513,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -732,9 +520,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -742,9 +527,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -752,9 +534,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -762,9 +541,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -772,9 +548,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -782,9 +555,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -792,9 +562,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -802,9 +569,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -812,9 +576,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -822,9 +583,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -832,9 +590,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -842,9 +597,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -852,9 +604,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -862,9 +611,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -872,9 +618,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -882,9 +625,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -892,9 +632,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -902,9 +639,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -912,9 +646,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -922,9 +653,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -932,9 +660,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -942,9 +667,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -952,9 +674,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -962,9 +681,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -972,9 +688,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -982,9 +695,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -992,9 +702,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1002,9 +709,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1012,9 +716,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1022,9 +723,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1032,9 +730,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1042,9 +737,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1052,9 +744,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1062,9 +751,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1072,9 +758,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1082,9 +765,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1092,9 +772,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1102,9 +779,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1112,9 +786,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
   - stage: test
     script: bash .ci/test.sh
     language: crystal
@@ -1122,9 +793,6 @@ jobs:
     services:
     - docker
     - redis
-    cache:
-      directories:
-      - /home/travis/docker
 notifications:
   email: false
 dist: bionic

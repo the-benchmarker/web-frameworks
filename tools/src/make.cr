@@ -159,7 +159,6 @@ class App < Admiral::Command
 
   class TravisConfig < Admiral::Command
     def run
-
       frameworks = [] of String
       languages = [] of String
       Dir.glob("*/*/config.yaml").each do |file|
@@ -176,6 +175,15 @@ class App < Admiral::Command
           yaml.sequence do
             yaml.scalar "bash .ci/load.sh"
           end
+          yaml.scalar "cache"
+                    yaml.mapping do
+                      yaml.scalar "bundler"
+                      yaml.scalar "true"
+                      yaml.scalar "directories"
+                      yaml.sequence do
+                        yaml.scalar "$HOME/docker"
+                      end
+                    end
           yaml.scalar "jobs"
           yaml.mapping do
             yaml.scalar "include"
@@ -196,13 +204,7 @@ class App < Admiral::Command
                       yaml.scalar "docker"
                       yaml.scalar "redis"
                     end
-                    yaml.scalar "cache"
-                    yaml.mapping do
-                      yaml.scalar "directories"
-                      yaml.sequence do
-                        yaml.scalar "/home/travis/docker"
-                      end
-                    end
+                    
                   end
                 end
               end
