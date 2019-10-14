@@ -105,7 +105,7 @@ class Data
         }
         if (is_array($wr)) {
             $r = array_shift($wr);
-        } else if (is_string($wr)) {
+        } elseif (is_string($wr)) {
             $r  = $wr{0};
             $wr = substr($wr, 1);
         } else {
@@ -135,7 +135,7 @@ class Data
         }
         if (is_array($wr)) {
             return count($wr);
-        } else if (is_string($wr)) {
+        } elseif (is_string($wr)) {
             return strlen($wr);
         } else {
             return 0;
@@ -349,5 +349,4 @@ class Data
     {
         return $this->get("{$fd_key}-{$id_key}.{$fd}");
     }
-
 }

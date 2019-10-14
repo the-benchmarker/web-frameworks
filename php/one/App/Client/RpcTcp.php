@@ -73,7 +73,7 @@ class RpcTcp
         if ($data === self::RPC_REMOTE_OBJ) {
             $this->_need_close = 1;
             return $this;
-        } else if (is_array($data) && isset($data['err'], $data['msg'])) {
+        } elseif (is_array($data) && isset($data['err'], $data['msg'])) {
             throw new \Exception($data['msg'], $data['err']);
         } else {
             return $data;

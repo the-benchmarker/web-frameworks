@@ -75,7 +75,7 @@ class Actor
         $arr = explode('.', $actor_id);
         if ($arr[0] == self::$conf['self_key'] && $arr[1] == self::$server->worker_id) { // 同机器 同进程
             return self::dispatch($actor_id, $method, $args);
-        } else if ($arr[0] == self::$conf['self_key']) { // 同机器 其他进程
+        } elseif ($arr[0] == self::$conf['self_key']) { // 同机器 其他进程
             return self::$server->sendMessage([$actor_id, $method, $args], $arr[1]);
         } else { // 其他机器
             return self::$client->setConnect($arr[0])->setStaticMethod()->router($actor_id, $method, $args);

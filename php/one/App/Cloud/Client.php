@@ -8,7 +8,6 @@
 
 namespace App\Cloud;
 
-
 use App\Client\RpcTcp;
 use One\Facades\Log;
 use One\Swoole\Client\Tcp;

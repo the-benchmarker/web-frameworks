@@ -16,6 +16,7 @@ wrk.headers["Content-Type"] = "application/x-www-form-urlencoded"
 -- average latency
 -- standard deviation
 -- percentile : 50
+-- percentile : 75
 -- percentile : 90
 -- percentile : 99
 -- percentile : 99.999
@@ -37,6 +38,7 @@ done = function(summary, latency, requests)
     latency.mean,
     latency.stdev,
     latency:percentile(50),
+    latency:percentile(75),
     latency:percentile(90),
     latency:percentile(99),
     latency:percentile(99.999)
