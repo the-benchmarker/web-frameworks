@@ -160,67 +160,12 @@ class App < Admiral::Command
   class TravisConfig < Admiral::Command
     def run
       frameworks = [] of String
-      languages = [] of String
       Dir.glob("*/*/config.yaml").each do |file|
-        frameworks << file.split("/")[-2]
-        languages << file.split("/")[-3]
+        info = file.split("/")
+        frameworks << info[info.size - 2]
       end
-      selection = YAML.build do |yaml|
-        yaml.mapping do
-          yaml.scalar "before_cache"
-          yaml.sequence do
-            yaml.scalar "bash .ci/save.sh"
-          end
-          yaml.scalar "before_install"
-          yaml.sequence do
-            yaml.scalar "bash .ci/load.sh"
-          end
-          yaml.scalar "cache"
-                    yaml.mapping do
-                      yaml.scalar "bundler"
-                      yaml.scalar "true"
-                      yaml.scalar "directories"
-                      yaml.sequence do
-                        yaml.scalar "$HOME/docker"
-                      end
-                    end
-          yaml.scalar "jobs"
-          yaml.mapping do
-            yaml.scalar "include"
-            yaml.sequence do
-              frameworks.sort.each do |framework|
-                begin
-                  yaml.mapping do
-                    yaml.scalar "stage"
-                    yaml.scalar "test"
-                    yaml.scalar "script"
-                    yaml.scalar "bash .ci/test.sh"
-                    yaml.scalar "language"
-                    yaml.scalar "crystal"
-                    yaml.scalar "env"
-                    yaml.scalar "FRAMEWORK=#{framework}"
-                    yaml.scalar "services"
-                    yaml.sequence do
-                      yaml.scalar "docker"
-                      yaml.scalar "redis"
-                    end
-                    
-                  end
-                end
-              end
-            end
-          end
-          yaml.scalar "notifications"
-          yaml.mapping do
-            yaml.scalar "email"
-            yaml.scalar false
-          end
-          yaml.scalar "dist"
-          yaml.scalar "bionic"
-        end
-      end
-
-      File.write(".travis.yml", selection)
+      config = Crustache.parse(File.read(".ci/template.mustache"))
+      File.write(".travis.yml", Crustache.render(config, {"frameworks" => frameworks}))
     end
   end
 

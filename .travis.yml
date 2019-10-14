@@ -1,798 +1,134 @@
----
-before_cache:
-- bash .ci/save.sh
-before_install:
-- bash .ci/load.sh
-cache:
-  bundler: true
-  directories:
-  - $HOME/docker
-jobs:
-  include:
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=0http
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=act
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=actix-web
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=agoo
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=agoo-c
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=aiohttp
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=air
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=akkahttp
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=amber
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=asgineer
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=aspnetcore
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=athena
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=atreugo
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=basicphp
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=beego
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=blacksheep
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=bocadillo
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=bottle
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=camping
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=chi
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=clastic
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=coast
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=cuba
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=cyclone
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=dancer2
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=django
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=drogon
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=echo
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=evhtp
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=express
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=falcon
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=fastapi
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=fasthttprouter
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=fastify
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=flame
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=flask
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=foxify
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=gf
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=gin
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=gorilla-mux
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=goroute
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=gorouter
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=gorouter-fasthttp
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=gotham
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=gramework
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=grape
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=hanami
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=hapi
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=http4s
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=httpbeast
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=hug
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=hyperf
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=imi
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=iotjs-express
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=iron
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=japronto
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=javalin
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=jester
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=kami
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=kemal
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=kitura
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=kitura-nio
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=koa
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=kore
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=ktor
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=laravel
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=lucky
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=lumen
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=masonite
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=moleculer
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=molten
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=muneem
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=nickel
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=one
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=onyx
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=orion
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=perfect
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=plezi
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=polka
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=polkadot
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=quart
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=rack-routing
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=rails
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=rapidoid
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=rayo
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=raze
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=responder
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=restana
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=restify
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=roda
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=router.cr
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=rte
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=sanic
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=sifrr
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=sinatra
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=slim
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=spider-gazelle
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=spiral
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=spring-boot
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=starlette
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=suave
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=swifter
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=swoft
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=symfony
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=syro
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=tornado
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=toro
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=turbo_polka
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=vapor
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=violetear
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=zend-expressive
-    services:
-    - docker
-    - redis
-  - stage: test
-    script: bash .ci/test.sh
-    language: crystal
-    env: FRAMEWORK=zend-framework
-    services:
-    - docker
-    - redis
+# Use latest ubuntu LTS (18.04)
+dist: bionic
+
+services:
+  - docker # Use docker to containerize frameworks
+  - redis # Use redis to store data
+
+# This tool is written in crystal
+language: crystal
+
+env:
+  matrix:
+    - FRAMEWORK=httpbeast
+    - FRAMEWORK=jester
+    - FRAMEWORK=restana
+    - FRAMEWORK=express
+    - FRAMEWORK=muneem
+    - FRAMEWORK=iotjs-express
+    - FRAMEWORK=polka
+    - FRAMEWORK=fastify
+    - FRAMEWORK=turbo_polka
+    - FRAMEWORK=foxify
+    - FRAMEWORK=0http
+    - FRAMEWORK=polkadot
+    - FRAMEWORK=rayo
+    - FRAMEWORK=koa
+    - FRAMEWORK=moleculer
+    - FRAMEWORK=hapi
+    - FRAMEWORK=restify
+    - FRAMEWORK=sifrr
+    - FRAMEWORK=kore
+    - FRAMEWORK=agoo-c
+    - FRAMEWORK=coast
+    - FRAMEWORK=nickel
+    - FRAMEWORK=iron
+    - FRAMEWORK=actix-web
+    - FRAMEWORK=gotham
+    - FRAMEWORK=evhtp
+    - FRAMEWORK=drogon
+    - FRAMEWORK=kemal
+    - FRAMEWORK=spider-gazelle
+    - FRAMEWORK=router.cr
+    - FRAMEWORK=amber
+    - FRAMEWORK=athena
+    - FRAMEWORK=raze
+    - FRAMEWORK=onyx
+    - FRAMEWORK=lucky
+    - FRAMEWORK=orion
+    - FRAMEWORK=toro
+    - FRAMEWORK=rails
+    - FRAMEWORK=grape
+    - FRAMEWORK=flame
+    - FRAMEWORK=agoo
+    - FRAMEWORK=roda
+    - FRAMEWORK=rack-routing
+    - FRAMEWORK=syro
+    - FRAMEWORK=sinatra
+    - FRAMEWORK=camping
+    - FRAMEWORK=plezi
+    - FRAMEWORK=hanami
+    - FRAMEWORK=cuba
+    - FRAMEWORK=akkahttp
+    - FRAMEWORK=http4s
+    - FRAMEWORK=gramework
+    - FRAMEWORK=fasthttprouter
+    - FRAMEWORK=gin
+    - FRAMEWORK=echo
+    - FRAMEWORK=chi
+    - FRAMEWORK=air
+    - FRAMEWORK=gorouter
+    - FRAMEWORK=kami
+    - FRAMEWORK=goroute
+    - FRAMEWORK=atreugo
+    - FRAMEWORK=gorilla-mux
+    - FRAMEWORK=violetear
+    - FRAMEWORK=rte
+    - FRAMEWORK=gorouter-fasthttp
+    - FRAMEWORK=gf
+    - FRAMEWORK=beego
+    - FRAMEWORK=aspnetcore
+    - FRAMEWORK=imi
+    - FRAMEWORK=swoft
+    - FRAMEWORK=laravel
+    - FRAMEWORK=lumen
+    - FRAMEWORK=slim
+    - FRAMEWORK=hyperf
+    - FRAMEWORK=zend-framework
+    - FRAMEWORK=zend-expressive
+    - FRAMEWORK=one
+    - FRAMEWORK=basicphp
+    - FRAMEWORK=symfony
+    - FRAMEWORK=spiral
+    - FRAMEWORK=responder
+    - FRAMEWORK=asgineer
+    - FRAMEWORK=quart
+    - FRAMEWORK=hug
+    - FRAMEWORK=blacksheep
+    - FRAMEWORK=japronto
+    - FRAMEWORK=starlette
+    - FRAMEWORK=clastic
+    - FRAMEWORK=aiohttp
+    - FRAMEWORK=falcon
+    - FRAMEWORK=molten
+    - FRAMEWORK=flask
+    - FRAMEWORK=fastapi
+    - FRAMEWORK=django
+    - FRAMEWORK=bocadillo
+    - FRAMEWORK=sanic
+    - FRAMEWORK=bottle
+    - FRAMEWORK=masonite
+    - FRAMEWORK=tornado
+    - FRAMEWORK=cyclone
+    - FRAMEWORK=ktor
+    - FRAMEWORK=rapidoid
+    - FRAMEWORK=act
+    - FRAMEWORK=spring-boot
+    - FRAMEWORK=javalin
+    - FRAMEWORK=dancer2
+    - FRAMEWORK=suave
+    - FRAMEWORK=perfect
+    - FRAMEWORK=vapor
+    - FRAMEWORK=swifter
+    - FRAMEWORK=kitura-nio
+    - FRAMEWORK=kitura
+
+script:
+  - shards install
+  - shards build
+  - bin/make config --without-sieger
+  - bin/neph ${FRAMEWORK}
+  - crystal spec
+
 notifications:
   email: false
-dist: bionic
