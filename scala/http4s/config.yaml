@@ -1,4 +1,5 @@
 framework:
   website: http4s.org
   version: 0.18
-  
+
+command: java -jar /usr/src/app/target/scala-2.12/http4s-assembly-0.0.1-SNAPSHOT.jar

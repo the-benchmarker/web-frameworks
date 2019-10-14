@@ -1,4 +1,4 @@
-## Developer content
+# Developer content
 
 .DS_Store
 *.swp
@@ -24,3 +24,5 @@ vendor/
 
 # Temporary files
 FRAMEWORKS.yaml
+*/*/Dockerfile
+*/*/ip.txt

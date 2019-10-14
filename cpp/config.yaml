@@ -1,3 +1,9 @@
 provider:
   default:
     language: 11
+
+build: 
+  - cmake -H. -B_builds -DCMAKE_BUILD_TYPE=Release
+  - cmake --build _builds --config Release
+
+command: _builds/server_cpp_evhtp

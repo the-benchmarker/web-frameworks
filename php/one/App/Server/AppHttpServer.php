@@ -8,7 +8,6 @@
 
 namespace App\Server;
 
-
 use App\GlobalData\Client;
 use One\Http\Router;
 use One\Swoole\Server\HttpServer;
