@@ -202,7 +202,7 @@ bin/db to_readme
 | python (3.7)| klein (19.6) | **516.85** ms | 488.09 ms | 558.39 ms | 452764.33 | 1454.00 | 0.21 Mb |
 | python (3.7)| nameko (2.12) | **572.78** ms | 498.18 ms | 541.16 ms | 648399.67 | 1344.33 | 0.19 Mb |
 
-## How to contribute ?
+## Can I contribute ?
 
 In any way you want ...
 

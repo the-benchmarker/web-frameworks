@@ -18,6 +18,7 @@ COPY . ./
   RUN mvn clean package -q
 {{/build}}
 
+<<<<<<< HEAD
 FROM openjdk:8-alpine
 
 {{#bin_deps}}
@@ -31,6 +32,13 @@ WORKDIR /usr/src/app
 COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
 {{/files}}
 
+=======
+FROM openjdk:8-jre-slim
+WORKDIR /usr/src/app
+{{#files}}
+COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+{{/files}}
+>>>>>>> Run into lightweight containers (#1578)
 {{#before_command}}
   RUN {{{.}}}
 {{/before_command}}
