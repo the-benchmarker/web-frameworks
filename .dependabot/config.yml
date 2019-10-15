@@ -1,26 +1,6 @@
 ---
 version: 1
 update_configs:
-- package_manager: docker
-  update_schedule: daily
-  directory: nim/httpbeast
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: node/restana
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: c/kore
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: clojure/coast
-  default_labels:
-  - docker
 - package_manager: rust:cargo
   update_schedule: live
   directory: rust/nickel
@@ -41,21 +21,6 @@ update_configs:
   directory: rust/gotham
   default_labels:
   - language:rust
-- package_manager: docker
-  update_schedule: daily
-  directory: rust/nickel
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: cpp/evhtp
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: crystal/kemal
-  default_labels:
-  - docker
 - package_manager: ruby:bundler
   update_schedule: live
   directory: ruby/rails
@@ -116,16 +81,6 @@ update_configs:
   directory: ruby/cuba
   default_labels:
   - language:ruby
-- package_manager: docker
-  update_schedule: daily
-  directory: ruby/rails
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: scala/akkahttp
-  default_labels:
-  - docker
 - package_manager: go:modules
   update_schedule: daily
   directory: go/gramework
@@ -206,16 +161,6 @@ update_configs:
   directory: go/beego
   default_labels:
   - language:go
-- package_manager: docker
-  update_schedule: daily
-  directory: go/gramework
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: csharp/aspnetcore
-  default_labels:
-  - docker
 - package_manager: php:composer
   update_schedule: live
   directory: php/imi
@@ -271,11 +216,6 @@ update_configs:
   directory: php/spiral
   default_labels:
   - language:php
-- package_manager: docker
-  update_schedule: daily
-  directory: php/imi
-  default_labels:
-  - docker
 - package_manager: python
   update_schedule: live
   directory: python/responder
@@ -376,16 +316,6 @@ update_configs:
   directory: python/cyclone
   default_labels:
   - language:python
-- package_manager: docker
-  update_schedule: daily
-  directory: python/responder
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: kotlin/ktor
-  default_labels:
-  - docker
 - package_manager: java:maven
   update_schedule: daily
   directory: java/rapidoid
@@ -406,23 +336,3 @@ update_configs:
   directory: java/javalin
   default_labels:
   - language:java
-- package_manager: docker
-  update_schedule: daily
-  directory: java/rapidoid
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: perl/dancer2
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: fsharp/suave
-  default_labels:
-  - docker
-- package_manager: docker
-  update_schedule: daily
-  directory: swift/perfect
-  default_labels:
-  - docker
