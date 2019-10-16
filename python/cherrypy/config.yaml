@@ -1,0 +1,11 @@
+framework:
+  github: cherrypy/cherrypy
+  version: 18.3.0
+
+command: >
+  gunicorn  \
+    --log-level warning  \
+    --bind 0.0.0.0:3000  \
+    --reuse-port  \
+    --workers $(nproc)  \
+      server:app
