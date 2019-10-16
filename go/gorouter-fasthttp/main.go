@@ -5,6 +5,7 @@ import (
 
 	"github.com/valyala/fasthttp"
 	"github.com/vardius/gorouter/v4"
+	"github.com/vardius/gorouter/v4/context"
 )
 
 func index(ctx *fasthttp.RequestCtx) {
@@ -16,7 +17,8 @@ func user(ctx *fasthttp.RequestCtx) {
 }
 
 func userID(ctx *fasthttp.RequestCtx) {
-	fmt.Fprint(ctx, ctx.UserValue("id"))
+	params := ctx.UserValue("params").(context.Params)
+	fmt.Fprintf(ctx, "%s", params.Value("id"))
 }
 
 func main() {
