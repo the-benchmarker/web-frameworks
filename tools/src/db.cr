@@ -1,6 +1,7 @@
 require "admiral"
 require "sqlite3"
 require "crustache"
+require "yaml"
 
 class App < Admiral::Command
   class InitializeDatabase < Admiral::Command
@@ -38,22 +39,27 @@ EOS
               results[key] = {} of String => String | Float64
               results[key]["language"] = language
               results[key]["framework"] = framework
+config = YAML.parse(File.read("#{language}/config.yaml"))
+results[key]["language_version"] = config["provider"]["default"]["language"].to_s
+config = YAML.parse(File.read("#{language}/#{framework}/config.yaml"))
+results[key]["framework_version"] = config["framework"]["version"].to_s
             end
             results[key][metric] = value
           end
         end
       end
       lines = [
-        "| Language | Framework | Average | 50th percentile | 75th percentile | 90th percentile | Standard deviation | Requests / s | Throughput |",
-        "|----|----|---------|-------------|---------|----------|----------|--------|----|",
+        "| Language | Framework | Average | 50th percentile | 90th percentile | Standard deviation | Requests / s | Throughput |",
+        "|----|----|--------:|------------:|--------:|---------:|-------:|----|",
       ]
       results.each do |_, row|
-        lines << "| %s | %s | **%.2f** ms | %.2f ms | %.2f ms | %.2f ms | %.2f | %.2f | %.2f Mb |" % [
+        lines << "| %s (%s)| %s (%s) | **%.2f** ms | %.2f ms | %.2f ms | %.2f | %.2f | %.2f Mb |" % [
           row["language"],
+          row["language_version"],
           row["framework"],
+          row["framework_version"],
           row["latency:average"].to_f/1000,
           row["percentile:fifty"].to_f/1000,
-          row["percentile:seventy_five"].to_f/1000,
           row["percentile:ninety"].to_f/1000,
           row["latency:deviation"].to_f,
           row["request:per_second"].to_f,

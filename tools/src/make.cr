@@ -221,19 +221,6 @@ class App < Admiral::Command
                 end
               end
               language = "node" if language == "javascript" # FIXME
-              directory = "#{language}/#{frameworks[language].first}"
-              yaml.mapping do
-                yaml.scalar "package_manager"
-                yaml.scalar "docker"
-                yaml.scalar "update_schedule"
-                yaml.scalar "daily"
-                yaml.scalar "directory"
-                yaml.scalar directory
-                yaml.scalar "default_labels"
-                yaml.sequence do
-                  yaml.scalar "docker"
-                end
-              end
             end
           end
         end
