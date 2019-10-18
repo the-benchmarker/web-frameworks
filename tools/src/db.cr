@@ -8,16 +8,17 @@ class App < Admiral::Command
     def run
       results = {} of String => Hash(String, String | Float64 | Float32)
       order_by_requests = <<-EOS
-SELECT f.id, l.label, f.label, k.label, v.value
+SELECT f.id, l.label, f.label, k.label, sum(v.value)/3
   FROM values AS v 
   JOIN metrics AS m ON m.value_id = v.id 
   JOIN keys AS k ON v.key_id = k.id 
   JOIN frameworks AS f ON f.id = m.framework_id 
   JOIN languages AS l ON l.id = f.language_id
-      ORDER BY k.label=$1 desc, v.value
+    GROUP BY 1, 2, 3, 4
+      ORDER BY k.label=$1 desc, 5
 EOS
       DB.open("postgresql://postgres@localhost/benchmark") do |db|
-        db.query order_by_requests, "percentile_fifty" do |row|
+        db.query order_by_requests, "latency_average" do |row|
           row.each do
             key = row.read(Int).to_s
             language = row.read(String)
@@ -28,7 +29,7 @@ EOS
               results[key] = {} of String => (String | Float64 | Float32)
               results[key]["language"] = language
               config = YAML.parse(File.read("#{language}/config.yaml"))
-              results[key]["framework_version"] = config["provider"]["default"]["langauge"].to_s
+              results[key]["language_version"] = config["provider"]["default"]["language"].to_s
               results[key]["framework"] = framework
               config = YAML.parse(File.read("#{language}/config.yaml"))
               results[key]["language_version"] = config["provider"]["default"]["language"].to_s
@@ -54,6 +55,7 @@ EOS
         lines << "| %s | %s (%s)| [%s](%s) (%s) | %s | | |" % [
           c,
           row["language"],
+          row["language_version"],
           row["framework"],
           row["framework_website"],
           row["framework_version"],

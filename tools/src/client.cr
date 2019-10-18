@@ -34,7 +34,9 @@ class Client < Admiral::Command
 
   def run
     db = DB.open("postgresql://postgres@localhost/benchmark")
+
     row = db.exec "insert into languages (label) values ($1) on conflict do nothing", [flags.language]
+
     language_id = row.last_insert_id
     if language_id == 0
       language_id = db.query_one("select id from languages where label = '#{flags.language}'", &.read(Int))
