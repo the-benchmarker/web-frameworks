@@ -1,6 +1,6 @@
 'use strict'
 
-const Hapi = require('hapi')
+const Hapi = require('@hapi/hapi')
 
 // Create a server with a host and port
 const server = Hapi.server({
