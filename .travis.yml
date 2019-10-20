@@ -121,6 +121,7 @@ env:
     - FRAMEWORK=masonite
     - FRAMEWORK=tornado
     - FRAMEWORK=cyclone
+    - FRAMEWORK=nameko
     - FRAMEWORK=ktor
     - FRAMEWORK=rapidoid
     - FRAMEWORK=act

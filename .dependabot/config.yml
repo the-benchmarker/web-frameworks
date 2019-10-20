@@ -316,6 +316,11 @@ update_configs:
   directory: python/cyclone
   default_labels:
   - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/nameko
+  default_labels:
+  - language:python
 - package_manager: java:maven
   update_schedule: daily
   directory: java/rapidoid
