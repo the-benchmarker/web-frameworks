@@ -1,0 +1,14 @@
+framework:
+  website: micronaut.io
+  version: 1.2.4
+
+build:
+  - mvn assembly
+
+files:
+  - build/libs/micronaut-0.1-all.jar
+
+command: >
+  java -server
+  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts 
+  -cp build/libs/micronaut-0.1-all.jar profiles=production
