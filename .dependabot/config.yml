@@ -103,6 +103,11 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
+  directory: go/webgo
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
   directory: go/chi
   default_labels:
   - language:go
@@ -216,6 +221,11 @@ update_configs:
   directory: php/spiral
   default_labels:
   - language:php
+- package_manager: python
+  update_schedule: live
+  directory: python/cherrypy
+  default_labels:
+  - language:python
 - package_manager: python
   update_schedule: live
   directory: python/responder

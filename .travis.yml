@@ -76,6 +76,7 @@ env:
     - FRAMEWORK=fasthttprouter
     - FRAMEWORK=gin
     - FRAMEWORK=echo
+    - FRAMEWORK=webgo
     - FRAMEWORK=chi
     - FRAMEWORK=air
     - FRAMEWORK=gorouter
@@ -101,6 +102,7 @@ env:
     - FRAMEWORK=basicphp
     - FRAMEWORK=symfony
     - FRAMEWORK=spiral
+    - FRAMEWORK=cherrypy
     - FRAMEWORK=responder
     - FRAMEWORK=asgineer
     - FRAMEWORK=quart
