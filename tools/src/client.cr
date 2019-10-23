@@ -47,7 +47,11 @@ class Client < Admiral::Command
 
       pipeline = PIPELINES[method]
 
-      command = "wrk -H 'Connection: keep-alive' --latency -d #{flags.duration}s -s #{pipeline} -c #{flags.connections} --timeout 8 -t #{flags.threads} #{url}"
+      if flags.language == "julia"
+        command = "sleep 60 && wrk -H 'Connection: keep-alive' --latency -d #{flags.duration}s -s #{pipeline} -c #{flags.connections} --timeout 8 -t #{flags.threads} #{url}"
+      else
+        command = "wrk -H 'Connection: keep-alive' --latency -d #{flags.duration}s -s #{pipeline} -c #{flags.connections} --timeout 8 -t #{flags.threads} #{url}"
+      end
 
       io = IO::Memory.new
       Process.run(command, shell: true, error: io)
