@@ -35,7 +35,7 @@ func getRoutes() []*webgo.Route {
 		},
 		&webgo.Route{
 			Name:          "api",                     // A label for the API/URI, this is not used anywhere.
-			Method:        http.MethodGet,            // request type
+			Method:        http.MethodPost,           // request type
 			Pattern:       "/user",                   // Pattern for the route
 			Handlers:      []http.HandlerFunc{empty}, // route handler
 			TrailingSlash: true,
