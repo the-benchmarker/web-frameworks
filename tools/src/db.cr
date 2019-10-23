@@ -41,6 +41,11 @@ EOS
               end
               results[key]["framework_website"] = website
               results[key]["framework_version"] = config["framework"]["version"].to_s
+              begin
+                results[key]["framework_website"] = "https://github.com/#{config["framework"]["github"].to_s}"
+              rescue
+                results[key]["framework_website"] = "https://#{config["framework"]["website"].to_s}"
+              end
             end
             results[key][metric] = value
           end
