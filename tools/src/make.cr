@@ -62,78 +62,80 @@ class App < Admiral::Command
             dockerfile = Crustache.parse(File.read("#{language}/Dockerfile"))
             params = {} of String => DockerVariable
             tools.each do |tool|
-              params = {} of String => DockerVariable
-              framework_config = YAML.parse(File.read("#{language}/#{tool}/config.yaml"))
+              unless File.exists?("#{language}/#{tool}/Dockerfile")
+                params = {} of String => DockerVariable
+                framework_config = YAML.parse(File.read("#{language}/#{tool}/config.yaml"))
 
-              if framework_config.as_h.has_key?("environment")
-                environment = [] of String
-                framework_config["environment"].as_h.each do |k, v|
-                  environment << "#{k} #{v}"
+                if framework_config.as_h.has_key?("environment")
+                  environment = [] of String
+                  framework_config["environment"].as_h.each do |k, v|
+                    environment << "#{k} #{v}"
+                  end
+                  params["environment"] = environment
                 end
-                params["environment"] = environment
-              end
-              if framework_config.as_h.has_key?("deps")
-                deps = [] of String
-                framework_config["deps"].as_a.each do |dep|
-                  deps << dep.to_s
+                if framework_config.as_h.has_key?("deps")
+                  deps = [] of String
+                  framework_config["deps"].as_a.each do |dep|
+                    deps << dep.to_s
+                  end
+                  params["deps"] = deps
                 end
-                params["deps"] = deps
-              end
-              if framework_config.as_h.has_key?("bin_deps")
-                deps = [] of String
-                framework_config["bin_deps"].as_a.each do |dep|
-                  deps << dep.to_s
+                if framework_config.as_h.has_key?("bin_deps")
+                  deps = [] of String
+                  framework_config["bin_deps"].as_a.each do |dep|
+                    deps << dep.to_s
+                  end
+                  params["bin_deps"] = deps
                 end
-                params["bin_deps"] = deps
-              end
-              if framework_config.as_h.has_key?("php_ext")
-                deps = [] of String
-                framework_config["php_ext"].as_a.each do |ext|
-                  deps << ext.to_s
+                if framework_config.as_h.has_key?("php_ext")
+                  deps = [] of String
+                  framework_config["php_ext"].as_a.each do |ext|
+                    deps << ext.to_s
+                  end
+                  params["php_ext"] = deps
                 end
-                params["php_ext"] = deps
-              end
-              if framework_config.as_h.has_key?("arguments")
-                params["arguments"] = framework_config["arguments"].to_s
-              end
-              if framework_config.as_h.has_key?("options")
-                params["options"] = framework_config["options"].to_s
-              end
-              if framework_config.as_h.has_key?("command")
-                params["command"] = framework_config["command"].to_s
-              end
-              if framework_config.as_h.has_key?("before_command")
-                before_command = [] of String
-                framework_config["before_command"].as_a.each do |cmd|
-                  before_command << cmd.to_s
+                if framework_config.as_h.has_key?("arguments")
+                  params["arguments"] = framework_config["arguments"].to_s
                 end
-                params["before_command"] = before_command
-              end
-              if framework_config.as_h.has_key?("standalone")
-                params["standalone"] = framework_config["standalone"].to_s
-              end
-              if framework_config.as_h.has_key?("build")
-                build = [] of String
-                framework_config["build"].as_a.each do |cmd|
-                  build << cmd.to_s
+                if framework_config.as_h.has_key?("options")
+                  params["options"] = framework_config["options"].to_s
                 end
-                params["build"] = build
-              end
-              if framework_config.as_h.has_key?("clone")
-                clone = [] of String
-                framework_config["clone"].as_a.each do |cmd|
-                  clone << cmd.to_s
+                if framework_config.as_h.has_key?("command")
+                  params["command"] = framework_config["command"].to_s
                 end
-                params["clone"] = clone
-              end
-              if framework_config.as_h.has_key?("files")
-                files = [] of String
-                framework_config.as_h["files"].as_a.each do |file|
-                  files << file.to_s
+                if framework_config.as_h.has_key?("before_command")
+                  before_command = [] of String
+                  framework_config["before_command"].as_a.each do |cmd|
+                    before_command << cmd.to_s
+                  end
+                  params["before_command"] = before_command
                 end
-                params["files"] = files
+                if framework_config.as_h.has_key?("standalone")
+                  params["standalone"] = framework_config["standalone"].to_s
+                end
+                if framework_config.as_h.has_key?("build")
+                  build = [] of String
+                  framework_config["build"].as_a.each do |cmd|
+                    build << cmd.to_s
+                  end
+                  params["build"] = build
+                end
+                if framework_config.as_h.has_key?("clone")
+                  clone = [] of String
+                  framework_config["clone"].as_a.each do |cmd|
+                    clone << cmd.to_s
+                  end
+                  params["clone"] = clone
+                end
+                if framework_config.as_h.has_key?("files")
+                  files = [] of String
+                  framework_config.as_h["files"].as_a.each do |file|
+                    files << file.to_s
+                  end
+                  params["files"] = files
+                end
+                File.write("#{language}/#{tool}/Dockerfile", Crustache.render(dockerfile, params))
               end
-              File.write("#{language}/#{tool}/Dockerfile", Crustache.render(dockerfile, params))
               yaml.scalar tool
               yaml.mapping do
                 yaml.scalar "commands"
