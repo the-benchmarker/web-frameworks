@@ -115,6 +115,7 @@ class App < Admiral::Command
               end
               if framework_config.as_h.has_key?("arguments")
                 params["arguments"] = framework_config["arguments"].to_s
+              end
               if framework_config.as_h.has_key?("fixes")
                 deps = [] of String
                 framework_config["fixes"].as_a.each do |dep|
