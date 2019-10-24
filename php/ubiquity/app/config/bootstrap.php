@@ -20,14 +20,7 @@ function _prod($devtools,$config){
 	
 	CacheManager::start($config);
 	CacheManager::clearCache($config);
-	
-	Router::get('_default',function(){ echo '';});
-	
-	Router::get('/user/{id}', function($id){echo $id;});
-	
-	Router::post('/user',function(){echo '';});
-	
-	Router::addCallableRoute('{page}',function($page){\http_response_code(404);});
+	include ROOT.DS.'config'.DS.'routesApp.php';
 	CacheManager::storeDynamicRoutes(false);
 	$devtools->run('composer','optimize');
 	echo Console::showInfo("Dynamic routes created!");
