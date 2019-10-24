@@ -5,9 +5,9 @@ app = Klein()
 def index(request):
     return ""
 
-@app.route("/user/<id>", methods=["GET"])
-def user_info(request):
-  return request.args.get('id')
+@app.route("/user/<int:id>", methods=["GET"])
+def user_info(request, id):
+  return str(id)
 
 
 @app.route("/user", methods=["POST"])
