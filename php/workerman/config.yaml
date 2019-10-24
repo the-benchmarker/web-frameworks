@@ -5,4 +5,4 @@ framework:
 php_mod:
   - pcntl
 
-command: php start.php start -d
+command: php start.php start
