@@ -5,9 +5,10 @@ Ubiquity is a full-stack framework.
 
 For the purpose of this test, it is used as a micro-framework:
  - Don't look for a controller, there isn't one!
- - Dynamic routes are declared in the `app/config/Bootstrap.php` file, and stored in cache when the script is executed before production:
+ - Dynamic routes are declared in the `app/config/routesApp.php` file, and stored in cache when the script is executed before production:
 
  ```Ubiquity bootstrap dev```
+
  - In production, only the cache will therefore be used to produce the dynamic responses.
 ## Urls
  - **GET** `/`
