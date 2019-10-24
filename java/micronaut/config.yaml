@@ -2,13 +2,15 @@ framework:
   website: micronaut.io
   version: 1.2.4
 
+image: gradle
+
 build:
-  - mvn assembly
+  - gradle build
 
 files:
-  - build/libs/micronaut-0.1-all.jar
+  - build/distributions/micronaut-0.1.tar
 
-command: >
-  java -server
-  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts 
-  -cp build/libs/micronaut-0.1-all.jar profiles=production
+before_command:
+  - tar -xvf build/distributions/micronaut-0.1.tar
+
+command: micronaut-0.1/bin/micronaut
