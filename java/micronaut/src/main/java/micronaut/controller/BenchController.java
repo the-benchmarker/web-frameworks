@@ -20,7 +20,7 @@ public class BenchController {
         return id; 
     }
 
-    @Post("/")
+    @Post("/user")
     public String post(){
         return "";
     }
