@@ -5,3 +5,30 @@ framework:
 provider:
   default:
     language: 14/17
+
+deps:
+  - libjsoncpp-dev
+  - uuid-dev
+  - libssl-dev
+  - zlib1g-dev
+
+bin_deps:
+  - libjsoncpp1 
+  - uuid
+  - libssl1.1
+  - zlib1g
+
+clone:
+  - git clone --branch v1.0.0-beta7 https://github.com/an-tao/drogon
+  - cd /usr/src/app/drogon && git submodule update --init
+
+build:
+  - mkdir /usr/src/app/build
+  - cd /usr/src/app/build && cmake -DCMAKE_BUILD_TYPE=release ..
+  - cd /usr/src/app/build && make
+
+files:
+  - build/drogon_benchmark 
+  - config.json
+
+command: /usr/bin/build/drogon_benchmark /usr/bin/config.json

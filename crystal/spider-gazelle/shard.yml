@@ -9,5 +9,5 @@ dependencies:
     version: ~> 1.6.0
 
 targets:
-  app:
+  server:
     main: src/app.cr

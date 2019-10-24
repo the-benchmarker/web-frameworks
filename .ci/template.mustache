@@ -1,27 +1,34 @@
-# Exit build if not necessary
-before_install:
-  # run only if current implementation is modified
-  - bash .ci/has_to_run.sh || travis_terminate 0
+# Use latest ubuntu LTS (18.04)
+dist: bionic
 
-# Use docker to containerize frameworks
-services: docker
+services:
+  - docker # Use docker to containerize frameworks
+  - redis # Use redis to store data
 
 # This tool is written in crystal
 language: crystal
 
-# One build per framework
+cache:
+  directories:
+  - docker_images
+
+before_install:
+  - docker load -i docker_images/images.tar || true
+
+before_cache:
+  - docker save -o docker_images/images.tar $(docker images -a -q)
+
 env:
   matrix:
     {{#frameworks}}
-      - FRAMEWORK={{.}}
+    - FRAMEWORK={{.}}
     {{/frameworks}}
 
 script:
   - shards install
   - shards build
-  - bin/make config
-  - bin/make neph_config
-  - bin/neph ${FRAMEWORK} --mode=CI --seq
+  - bin/make config --without-sieger
+  - bin/neph ${FRAMEWORK}
   - crystal spec
 
 notifications:

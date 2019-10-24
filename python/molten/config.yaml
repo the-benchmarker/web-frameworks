@@ -2,3 +2,11 @@ framework:
   website: moltenframework.com
   version: 0.27
   
+command: >
+  gunicorn  \
+    --log-level warning  \
+    --bind 0.0.0.0:3000  \
+    --reuse-port  \
+    --workers $(nproc)  \
+    --worker-class meinheld.gmeinheld.MeinheldWorker  \
+      server:app

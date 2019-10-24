@@ -1,10 +1,20 @@
 class Errors::Show < Lucky::ErrorAction
+  default_format :html
+
   def handle_error(error : JSON::ParseException)
     if json?
       json({error: "There was a problem parsing the JSON. Please check that it is formed correctly"}, status: 400)
     else
       head status: 400
     end
+  end
+
+  def default_render(error : Exception)
+    render_text("", status: 500)
+  end
+
+  def report(error : Exception)
+    nil
   end
 
   def handle_error(error : Exception)

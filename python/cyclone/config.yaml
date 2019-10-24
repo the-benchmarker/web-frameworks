@@ -1,0 +1,5 @@
+framework:
+  website: cyclone.io
+  version: 1.3
+
+command: twistd --python=server.py --nodaemon
