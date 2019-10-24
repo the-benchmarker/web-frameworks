@@ -24,13 +24,9 @@ You will need the following things properly installed on your computer.
 * [Composer](https://getcomposer.org)
 * [Ubiquity devtools](https://ubiquity.kobject.net/)
 
-## Installation
+## Installation / Bootstraping
 
 * `cd ubiquity`
-* `composer install`
-
-## Bootstraping
-
 * `Ubiquity bootstrap prod`
 
 ## Running / Development
