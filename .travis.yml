@@ -90,6 +90,7 @@ env:
     - FRAMEWORK=symfony
     - FRAMEWORK=zend-expressive
     - FRAMEWORK=zend-framework
+    - FRAMEWORK=workerman
     - FRAMEWORK=aiohttp
     - FRAMEWORK=asgineer
     - FRAMEWORK=blacksheep
