@@ -6,6 +6,10 @@ RUN docker-php-ext-install zip opcache
 
 WORKDIR /usr/src/app
 
+{{#php_mod}}
+  RUN docker-php-ext-install {{{.}}}
+{{/php_mod}}
+
 {{#php_ext}}
   RUN pecl install {{{.}}}
   RUN docker-php-ext-enable {{{.}}}
