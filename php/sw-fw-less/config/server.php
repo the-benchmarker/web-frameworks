@@ -2,7 +2,7 @@
 
 $serverConfig = [
     'host' => env('SERVER_HOST', '0.0.0.0'),
-    'port' => envInt('SERVER_PORT', 9501),
+    'port' => envInt('SERVER_PORT', 3000),
     'worker_num' => envInt('SERVER_WORKER_NUM', swoole_cpu_num() * 2),
     'daemonize' => envBool('SERVER_DAEMONIZE', false),
     'backlog' => envInt('SERVER_BACKLOG', 128),
