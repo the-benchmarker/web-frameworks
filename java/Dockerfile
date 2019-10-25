@@ -1,10 +1,6 @@
-{{#image}}
-  FROM {{{.}}}
-{{/image}}
+FROM openjdk:8-alpine
 
-{{^image}}
-  FROM maven:3-jdk-8
-{{/image}}
+RUN apk add maven
 
 WORKDIR /usr/src/app
 
@@ -18,9 +14,13 @@ COPY . ./
   RUN mvn clean package -q
 {{/build}}
 
-FROM openjdk:8
+FROM openjdk:8-alpine
 
 WORKDIR /usr/src/app
+
+{{#deps}}
+  RUN apk add {{{.}}}
+{{/deps}}
 
 {{#files}}
 COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
