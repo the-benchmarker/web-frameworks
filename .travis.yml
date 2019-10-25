@@ -135,6 +135,7 @@ env:
     - FRAMEWORK=perfect
     - FRAMEWORK=swifter
     - FRAMEWORK=vapor
+    - FRAMEWORK=sw-fw-less
 
 script:
   - shards install
