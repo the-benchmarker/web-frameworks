@@ -72,6 +72,9 @@ class App < Admiral::Command
                 end
                 params["environment"] = environment
               end
+              if framework_config.as_h.has_key?("image")
+                params["image"] = framework_config.as_h["image"].to_s
+              end
               if framework_config.as_h.has_key?("deps")
                 deps = [] of String
                 framework_config["deps"].as_a.each do |dep|
