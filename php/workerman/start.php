@@ -2,7 +2,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Workerman\Worker;
-$worker = new Worker('http://0.0.0.0:8080');
+$worker = new Worker('http://0.0.0.0:3000');
 $worker->count = shell_exec('nproc') ? shell_exec('nproc') : 32;
 $worker->onMessage = function($connection, $data)
 {

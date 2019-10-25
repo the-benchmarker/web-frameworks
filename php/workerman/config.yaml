@@ -2,4 +2,7 @@ framework:
   github: workerman/workerman
   version: 3.5
 
-command: php start.php start -d
+php_mod:
+  - pcntl
+
+command: php start.php start
