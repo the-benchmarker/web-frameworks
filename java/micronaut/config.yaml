@@ -1,8 +1,11 @@
 framework:
   website: micronaut.io
-  version: 1.2.5
+  version: 1.2
 
 image: gradle
+
+deps:
+  - gradle
 
 build:
   - gradle build
