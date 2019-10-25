@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
+ini_set('pcre.jit', 0);
 
 use Workerman\Worker;
 $worker = new Worker('http://0.0.0.0:3000');
