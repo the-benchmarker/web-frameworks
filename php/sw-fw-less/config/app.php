@@ -17,7 +17,7 @@ return [
 
     //Throttle
     'throttle' => [
-        'metric' => function(\SwFwLess\components\http\Request $request){
+        'metric' => function (\SwFwLess\components\http\Request $request) {
             return $request->getRoute();
         },
         'period' => envInt('THROTTLE_PERIOD', 60),
