@@ -2,10 +2,7 @@ framework:
   website: micronaut.io
   version: 1.2
 
-image: gradle
-
-deps:
-  - gradle
+image: gradle:jdk8
 
 build:
   - gradle build
