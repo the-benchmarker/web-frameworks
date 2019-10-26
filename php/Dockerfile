@@ -2,9 +2,10 @@ FROM php:7.3-fpm
 
 RUN apt-get -qq update
 RUN apt-get -qy install git zlib1g-dev libzip-dev nginx {{#deps}} {{{.}}} {{/deps}}
-RUN docker-php-ext-install zip opcache
+RUN docker-php-ext-install zip opcache {{#php_mod}} {{{.}}} {{/php_mod}}
 
 WORKDIR /usr/src/app
+
 
 {{#php_ext}}
   RUN pecl install {{{.}}}
@@ -47,6 +48,7 @@ ENV {{{.}}}
       location / {\n\
           fastcgi_pass unix:/var/run/php-fpm.sock;\n\
           fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
+          try_files $uri $uri/ /index.php;\n\
           include fastcgi_params;\n\
       }\n\
   }\n'\

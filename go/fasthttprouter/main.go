@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/buaazp/fasthttprouter"
 	"github.com/valyala/fasthttp"
 )
@@ -10,13 +8,13 @@ import (
 func main() {
 	router := fasthttprouter.New()
 	router.GET("/", func(ctx *fasthttp.RequestCtx) {
-		fmt.Fprint(ctx, "")
+		ctx.SetBodyString("")
 	})
 	router.GET("/user/:id", func(ctx *fasthttp.RequestCtx) {
-		fmt.Fprintf(ctx, "%s", ctx.UserValue("id"))
+		ctx.SetBodyString(ctx.UserValue("id").(string))
 	})
 	router.POST("/user", func(ctx *fasthttp.RequestCtx) {
-		fmt.Fprintf(ctx, "")
+		ctx.SetBodyString("")
 	})
 
 	fasthttp.ListenAndServe(":3000", router.Handler)
