@@ -1,6 +1,7 @@
 <?php
 namespace ImiApp\ApiServer\Controller;
 
+use Imi\RequestContext;
 use Imi\Controller\HttpController;
 use Imi\Server\View\Annotation\View;
 use Imi\Server\Route\Annotation\Route;
@@ -21,7 +22,7 @@ class IndexController extends HttpController
      */
     public function index()
     {
-        return $this->response->write('');
+        return RequestContext::get('response')->write('');
     }
 
     /**
@@ -32,7 +33,7 @@ class IndexController extends HttpController
      */
     public function get($id)
     {
-        return $this->response->write($id);
+        return RequestContext::get('response')->write($id);
     }
 
     /**
@@ -43,6 +44,6 @@ class IndexController extends HttpController
      */
     public function create()
     {
-        return $this->response->write('');
+        return RequestContext::get('response')->write('');
     }
 }
