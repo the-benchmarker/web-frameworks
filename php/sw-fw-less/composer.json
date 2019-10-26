@@ -1,0 +1,13 @@
+{
+    "require": {
+        "php": ">=7.1",
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "ext-swoole": ">=4.4.0",
+        "luoxiaojun/sw-fw-less": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {"App\\": "app/"}
+    },
+    "minimum-stability": "dev"
+}
