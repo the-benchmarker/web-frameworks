@@ -100,6 +100,7 @@ env:
     - FRAMEWORK=zend-framework
     - FRAMEWORK=zend-expressive
     - FRAMEWORK=one
+    - FRAMEWORK=sw-fw-less
     - FRAMEWORK=basicphp
     - FRAMEWORK=symfony
     - FRAMEWORK=spiral
