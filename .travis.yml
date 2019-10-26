@@ -81,6 +81,7 @@ env:
     - FRAMEWORK=air
     - FRAMEWORK=gorouter
     - FRAMEWORK=kami
+    - FRAMEWORK=fasthttp
     - FRAMEWORK=goroute
     - FRAMEWORK=atreugo
     - FRAMEWORK=gorilla-mux
