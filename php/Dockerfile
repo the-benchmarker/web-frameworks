@@ -2,9 +2,10 @@ FROM php:7.3-fpm
 
 RUN apt-get -qq update
 RUN apt-get -qy install git zlib1g-dev libzip-dev nginx {{#deps}} {{{.}}} {{/deps}}
-RUN docker-php-ext-install zip opcache
+RUN docker-php-ext-install zip opcache {{#php_mod}} {{{.}}} {{/php_mod}}
 
 WORKDIR /usr/src/app
+
 
 {{#php_ext}}
   RUN pecl install {{{.}}}
