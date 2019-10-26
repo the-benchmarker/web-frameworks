@@ -33,6 +33,11 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
+  directory: go/fasthttp
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
   directory: go/gf
   default_labels:
   - language:go

@@ -43,6 +43,7 @@ env:
     - FRAMEWORK=chi
     - FRAMEWORK=echo
     - FRAMEWORK=fasthttprouter
+    - FRAMEWORK=fasthttp
     - FRAMEWORK=gf
     - FRAMEWORK=gin
     - FRAMEWORK=gorilla-mux
