@@ -1,7 +1,15 @@
 framework:
-  website: http://github.com/luoxiaojun1992/sw-fw-less
+  github: luoxiaojun1992/sw-fw-less
   version: 1.0
   
+php_mod:
+  - sodium
+  - bcmath
+  - sockets
+
+deps:
+  - libsodium-dev
+
 php_ext:
   - swoole
 
