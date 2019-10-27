@@ -1,2 +1,4 @@
 sanic>=19.9.0,<20.0.0
 gunicorn
+uvloop==0.14.0rc1
+
