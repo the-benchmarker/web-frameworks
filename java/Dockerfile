@@ -1,16 +1,14 @@
-FROM openjdk:8-alpine
+{{#image}}
+  FROM {{{.}}}
+{{/image}}
+
+{{^image}}
+  FROM maven:3-jdk-8
+{{/image}}
 
 WORKDIR /usr/src/app
 
 COPY . ./
-
-{{#deps}}
-  RUN apk add {{{.}}}
-{{/deps}}
-
-{{^deps}}
-  RUN apk add maven
-{{/deps}}
 
 {{#build}}
   RUN {{{.}}}
