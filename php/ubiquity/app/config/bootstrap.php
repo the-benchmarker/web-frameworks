@@ -1,8 +1,6 @@
 <?php
 use Ubiquity\devtools\cmd\ConsoleFormatter as Console;
-use Ubiquity\controllers\Startup;
 use Ubiquity\cache\CacheManager;
-use Ubiquity\controllers\Router;
 
 //Comments
 
@@ -16,14 +14,12 @@ function _dev($devtools,$config){
 function _prod($devtools,$config){
 	echo Console::showInfo("Production mode for benchmark");
 	
-	$devtools->run('composer','update');
-	
 	CacheManager::start($config);
 	CacheManager::clearCache($config);
 	include ROOT.DS.'config'.DS.'routesApp.php';
 	CacheManager::storeDynamicRoutes(false);
 	$devtools->run('composer','optimize');
-	echo Console::showInfo("Dynamic routes created!");
+	echo Console::showMessage('Dynamic routes created!','success');
 }
 
 //Executed before all modes
