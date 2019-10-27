@@ -123,6 +123,13 @@ class App < Admiral::Command
                 end
                 params["fixes"] = deps
               end
+              if framework_config.as_h.has_key?("nginx_conf")
+                deps = [] of String
+                framework_config["nginx_conf"].as_a.each do |dep|
+                  deps << dep.to_s
+                end
+                params["nginx_conf"] = deps
+              end
               if framework_config.as_h.has_key?("php_ext")
                 deps = [] of String
                 framework_config["php_ext"].as_a.each do |ext|
@@ -139,6 +146,12 @@ class App < Admiral::Command
               end
               if framework_config.as_h.has_key?("arguments")
                 params["arguments"] = framework_config["arguments"].to_s
+              end
+              if framework_config.as_h.has_key?("docroot")
+                params["docroot"] = framework_config["docroot"].to_s
+              end
+              if framework_config.as_h.has_key?("slasheddocroot")
+                params["slasheddocroot"] = framework_config["slasheddocroot"].to_s
               end
               if framework_config.as_h.has_key?("options")
                 params["options"] = framework_config["options"].to_s
