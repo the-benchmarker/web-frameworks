@@ -1,3 +1,4 @@
 fastapi>=0.44.0,<0.45.0
 gunicorn
 uvicorn
+uvloop==0.14.0rc1

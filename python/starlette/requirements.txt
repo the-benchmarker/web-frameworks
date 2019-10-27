@@ -1,3 +1,4 @@
 starlette>=0.13.0,<0.14.0
 gunicorn
 uvicorn
+uvloop==0.14.0rc1

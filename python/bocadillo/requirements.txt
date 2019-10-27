@@ -1,3 +1,4 @@
 bocadillo==0.18.*
 gunicorn
 uvicorn
+uvloop==0.14.0rc1

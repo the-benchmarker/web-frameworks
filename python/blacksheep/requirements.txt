@@ -1,3 +1,4 @@
 blacksheep>=0.2.0,<0.3.0
 gunicorn
 uvicorn
+uvloop==0.14.0rc1 
