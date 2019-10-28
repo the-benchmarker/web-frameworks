@@ -14,14 +14,5 @@
 		}
 	},
 	"minimum-stability": "dev",
-	"prefer-stable": true,
-	"config": {
-		"preferred-install": "dist"
-	},
-	"repositories": {
-		"packagist": {
-			"type": "composer",
-			"url": "https://packagist.phpcomposer.com"
-		}
-	}
+	"prefer-stable": true
 }

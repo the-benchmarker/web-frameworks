@@ -6,7 +6,7 @@ use Ubiquity\cache\CacheManager;
 
 //For development mode initialization
 function _dev($devtools,$config){
-		echo Console::showInfo("Development mode");
+	echo Console::showInfo("Development mode");
 }
 
 //For Production mode initialization
