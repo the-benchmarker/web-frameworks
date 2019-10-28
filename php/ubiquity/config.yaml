@@ -5,7 +5,6 @@ framework:
 before_command:
   - composer update
   - chmod +x vendor/bin/Ubiquity
-  - mkdir .ubiquity
   - mkdir app/cache -p
   - ./vendor/bin/Ubiquity bootstrap prod
 

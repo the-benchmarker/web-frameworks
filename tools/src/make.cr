@@ -149,7 +149,7 @@ class App < Admiral::Command
               end
               if framework_config.as_h.has_key?("docroot")
                 params["docroot"] = framework_config["docroot"].to_s
-                params["slasheddocroot"] = params["docroot"].gsub(/['"\\\x0]/,'\\\\\0')
+                params["slasheddocroot"] = params["docroot"].as(String).gsub("/","\\/")
               end
               if framework_config.as_h.has_key?("options")
                 params["options"] = framework_config["options"].to_s
