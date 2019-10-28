@@ -18,8 +18,8 @@ function _prod($devtools,$config){
 	CacheManager::clearCache($config);
 	include ROOT.DS.'config'.DS.'routesApp.php';
 	CacheManager::storeDynamicRoutes(false);
-	$devtools->run('composer','optimize');
 	echo Console::showMessage('Dynamic routes created!','success');
+	$devtools->run('composer','optimize');
 }
 
 //Executed before all modes
