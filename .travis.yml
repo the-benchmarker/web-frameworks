@@ -119,6 +119,7 @@ env:
     - FRAMEWORK=flask
     - FRAMEWORK=fastapi
     - FRAMEWORK=django
+    - FRAMEWORK=klein
     - FRAMEWORK=bocadillo
     - FRAMEWORK=sanic
     - FRAMEWORK=bottle
