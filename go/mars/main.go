@@ -27,6 +27,7 @@ func main() {
 
 	mars.HttpAddr = ":3000"
 	mars.RoutesFile = "routes.conf"
+	mars.DisableCSRF = true
 	mars.SetupRouter()
 
 	mars.Run()
