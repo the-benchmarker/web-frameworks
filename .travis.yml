@@ -45,6 +45,7 @@ env:
     - FRAMEWORK=iron
     - FRAMEWORK=actix-web
     - FRAMEWORK=gotham
+    - FRAMEWORK=merly
     - FRAMEWORK=evhtp
     - FRAMEWORK=drogon
     - FRAMEWORK=kemal
@@ -77,6 +78,7 @@ env:
     - FRAMEWORK=echo
     - FRAMEWORK=webgo
     - FRAMEWORK=chi
+    - FRAMEWORK=mars
     - FRAMEWORK=air
     - FRAMEWORK=gorouter
     - FRAMEWORK=kami
@@ -139,7 +141,6 @@ env:
     - FRAMEWORK=swifter
     - FRAMEWORK=kitura-nio
     - FRAMEWORK=kitura
-    - FRAMEWORK=mars
 
 script:
   - shards install

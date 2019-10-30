@@ -113,6 +113,11 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
+  directory: go/mars
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
   directory: go/air
   default_labels:
   - language:go
@@ -171,12 +176,7 @@ update_configs:
   directory: go/beego
   default_labels:
   - language:go
-- package_manager: go:modules
-  update_schedule: daily
-  directory: go/mars
-  default_labels:
-  - language:go
--- package_manager: php:composer
+- package_manager: php:composer
   update_schedule: live
   directory: php/imi
   default_labels:
@@ -351,6 +351,11 @@ update_configs:
   directory: python/nameko
   default_labels:
   - language:python
+- package_manager: java:gradle
+  update_schedule: daily
+  directory: java/micronaut
+  default_labels:
+  - language:java
 - package_manager: java:maven
   update_schedule: daily
   directory: java/rapidoid
