@@ -10,4 +10,4 @@ server = Merly.app()
   res.body = ""
 end
 
-server.start(config=Dict("host" => "0.0.0.0","port" => 3000))
+server.start(config=Dict("host" => "0.0.0.0","port" => 3000),verbose=true)
