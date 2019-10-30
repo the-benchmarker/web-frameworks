@@ -139,6 +139,7 @@ env:
     - FRAMEWORK=swifter
     - FRAMEWORK=kitura-nio
     - FRAMEWORK=kitura
+    - FRAMEWORK=mars
 
 script:
   - shards install

@@ -171,7 +171,12 @@ update_configs:
   directory: go/beego
   default_labels:
   - language:go
-- package_manager: php:composer
+- package_manager: go:modules
+  update_schedule: daily
+  directory: go/mars
+  default_labels:
+  - language:go
+-- package_manager: php:composer
   update_schedule: live
   directory: php/imi
   default_labels:
