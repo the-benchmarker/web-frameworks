@@ -551,6 +551,11 @@ jobs:
     language: crystal
     env: FRAMEWORK=zend-framework
     services: docker
+  - stage: test
+    script: bash .ci/test.sh
+    language: julia
+    env: FRAMEWORK=merly
+    services: docker
 notifications:
   email: false
 before_install: bash .ci/has_to_run.sh || travis_terminate 0
