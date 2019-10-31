@@ -2,8 +2,8 @@ FROM julia:1.3
 
 WORKDIR /usr/src/app
 
-RUN julia -e 'using Pkg;Pkg.add("Merly")'
+COPY server.jl deps.jl ./
 
-COPY server.jl ./
+RUN julia deps.jl
 
 CMD julia server.jl
