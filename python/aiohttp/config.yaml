@@ -1,3 +1,12 @@
 framework:
   website: aiohttp.readthedocs.io
-  version: 3.6  
+  version: 3.6
+
+command: >
+  gunicorn  \
+    --log-level warning  \
+    --bind 0.0.0.0:3000  \
+    --reuse-port  \
+    --workers $(nproc)  \
+    --worker-class aiohttp.GunicornUVLoopWebWorker \
+      server:app

@@ -1,4 +1,9 @@
 framework:
   github: spiral/framework
-  version: 2.1
-  
+  version: 2.2
+
+before_command:
+  - vendor/bin/spiral get
+  - php app.php configure
+
+command: ./spiral serve

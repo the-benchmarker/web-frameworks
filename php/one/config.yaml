@@ -1,4 +1,9 @@
 framework:
   github: lizhichao/one
   version: 1.8
+
+php_ext:
+  - swoole
+
+command: php App/swoole.php
   

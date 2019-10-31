@@ -1,3 +1,5 @@
 framework:
   github: boazsegev/plezi
   version: 0.16
+
+command: bundle exec iodine -w $(nproc) -p 3000 -t 1

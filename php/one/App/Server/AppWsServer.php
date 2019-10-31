@@ -13,7 +13,7 @@ use One\Swoole\Server\WsServer;
 
 class AppWsServer extends WsServer
 {
-// 分布式
+    // 分布式
 //    protected $cloud_server = null;
 //
 //    public function __construct(\swoole_server $server, array $conf)

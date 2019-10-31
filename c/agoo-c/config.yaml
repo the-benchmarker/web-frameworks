@@ -1,8 +1,21 @@
 framework:
   github: ohler55/agoo-c
-  version: 0.5
+  version: 0.7
 
 provider:
   default:
     language: 11
   
+clone:
+  - wget -c https://github.com/ohler55/agoo-c/tarball/v0.7.0 -O agoo.tar.gz
+  - tar xzf agoo.tar.gz
+  - mv ohler55* agoo-c
+  - cd /usr/src/app/agoo-c/src && make
+
+build:
+  - make
+
+files:
+  - simple
+
+command: /usr/bin/simple

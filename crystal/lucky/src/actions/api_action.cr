@@ -1,3 +1,5 @@
 abstract class ApiAction < Lucky::Action
-  # Add pipes and methods that are for all API requests
+
+  accepted_formats [:html, :json], default: :html
+  
 end

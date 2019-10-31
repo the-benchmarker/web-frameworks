@@ -1,4 +1,14 @@
 framework:
   website: javalin.io
-  version: 3.4
+  version: 3.5
+
+build: 
+  - mvn compile assembly:single -q
   
+files:
+  - target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+
+command: >
+  java -server 
+  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts 
+  -cp target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar benchmark.javalin.Bench profiles=production

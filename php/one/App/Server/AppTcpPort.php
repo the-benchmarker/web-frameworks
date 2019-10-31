@@ -23,6 +23,6 @@ class AppTcpPort extends Tcp
      */
     public function onReceive(\swoole_server $server, $fd, $reactor_id, $data)
     {
-        $this->tcpRouter($server,$fd,$reactor_id,$data);
+        $this->tcpRouter($server, $fd, $reactor_id, $data);
     }
 }
