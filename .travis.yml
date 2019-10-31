@@ -91,6 +91,7 @@ env:
     - FRAMEWORK=hamlet
     - FRAMEWORK=workerman
     - FRAMEWORK=cherrypy
+    - FRAMEWORK=apidaora
     - FRAMEWORK=responder
     - FRAMEWORK=asgineer
     - FRAMEWORK=quart

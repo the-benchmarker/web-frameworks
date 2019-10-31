@@ -278,6 +278,11 @@ update_configs:
   - language:python
 - package_manager: python
   update_schedule: live
+  directory: python/apidaora
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
   directory: python/responder
   default_labels:
   - language:python
