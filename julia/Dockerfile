@@ -2,7 +2,7 @@ FROM julia:1.3
 
 WORKDIR /usr/src/app
 
-COPY server.jl deps.jl ./
+COPY merly/server.jl merly/Manifest.toml merly/Project.toml merly/deps.jl /usr/src/app/
 
 RUN julia deps.jl
 

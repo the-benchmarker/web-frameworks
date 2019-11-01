@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate(pwd())
+
 using Merly
 
 server = Merly.app()
