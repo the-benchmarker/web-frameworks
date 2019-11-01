@@ -2,5 +2,8 @@ framework:
   github: roblillack/mars
   version: 1.0
 
+before_command:
+  - go generate main.go
+
 files:
   - routes.conf

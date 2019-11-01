@@ -7,7 +7,12 @@ ENV GOARCH=amd64
 WORKDIR /go/src/app
 COPY . ./
 
+{{#before_command}}
+  RUN {{{.}}}
+{{/before_command}}
+
 RUN go get
+
 RUN go build -a -ldflags '-extldflags "-static"' -o /go/bin/app ./
 
 FROM alpine
