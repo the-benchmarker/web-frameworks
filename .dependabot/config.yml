@@ -48,6 +48,26 @@ update_configs:
   - language:ruby
 - package_manager: ruby:bundler
   update_schedule: live
+  directory: ruby/grape
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
+  directory: ruby/flame
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
+  directory: ruby/agoo
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
+  directory: ruby/roda
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
   directory: ruby/rack-routing
   default_labels:
   - language:ruby
@@ -98,7 +118,7 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
-  directory: go/echo
+  directory: go/webgo
   default_labels:
   - language:go
 - package_manager: go:modules
@@ -109,6 +129,11 @@ update_configs:
 - package_manager: go:modules
   update_schedule: daily
   directory: go/chi
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
+  directory: go/mars
   default_labels:
   - language:go
 - package_manager: go:modules
@@ -148,7 +173,7 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
-  directory: go/violetear
+  directory: go/gorouter-fasthttp
   default_labels:
   - language:go
 - package_manager: go:modules
@@ -346,6 +371,11 @@ update_configs:
   directory: python/nameko
   default_labels:
   - language:python
+- package_manager: java:gradle
+  update_schedule: daily
+  directory: java/micronaut
+  default_labels:
+  - language:java
 - package_manager: java:maven
   update_schedule: daily
   directory: java/rapidoid
