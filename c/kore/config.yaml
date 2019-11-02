@@ -13,8 +13,12 @@ clone:
 build:
   - cd hello && kodev build
 
+build_deps:
+  - bsd-compat-headers
+  - libressl-dev
+
 bin_deps:
-  - libssl1.1 
+  - libressl
 
 files:
   - ../../local/bin/kore
