@@ -1,11 +1,27 @@
-FROM clojure:tools-deps
+FROM clojure:openjdk-14-tools-deps-1.10.1.478-alpine
 
-WORKDIR /coast
+WORKDIR /usr/src/app
 
-COPY . /coast
+COPY . ./
 
-ENV COAST_ENV=prod
+{{#build_deps}}
+  RUN apk add {{{.}}}
+{{/build_deps}}
 
 RUN clojure -Auberjar
 
-CMD java -jar coast.jar 3000
+FROM openjdk:alpine
+
+WORKDIR /opt/bin
+
+{{#environment}}
+ENV {{{.}}}
+{{/environment}}
+
+{{#files}}
+COPY --from=0 /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
+{{/files}}
+
+{{#command}}
+  CMD {{{.}}}
+{{/command}}
