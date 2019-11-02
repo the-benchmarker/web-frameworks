@@ -1,0 +1,98 @@
+main:
+  depends_on:
+    - java
+    - nim
+    - c
+    - rust
+    - ruby
+    - objc
+    - node
+    - scala
+    - cpp
+    - go
+    - csharp
+    - elixir
+    - swift
+    - php
+    - crystal
+    - python
+    
+java:
+  commands:
+    - find -type f -name '*.java' -exec clang-format -style=google -i {} \;
+  dir: java
+  
+nim:
+  commands:
+    - find -type f -name '*.nim' -exec nimpretty {} \;
+  dir: nim
+
+c:
+  commands:
+    - find -type f -name '.c' -exec clang-format -i {} \;
+  dir: c
+
+rust:
+  commands:
+    - find -type f -name '*.rs' -exec rustfmt {} \;
+  dir: rust
+
+ruby:
+  commands:
+    - rubocop -a
+  dir: ruby
+
+objc:
+  commands:
+    - find -type f -name '*.m' -exec clang-format -i {} \;
+  dir: objc
+
+node:
+  commands:
+    - prettier --write '**/*.js'
+  dir: node
+  
+scala:
+  commands:
+    - find -type f -name '*.scala' -exec scalafmt {} \;
+  dir: scala
+
+cpp:
+  commands:
+    - find -type f -name '*.cpp' -exec clang-format -i [} \;
+  dir: cpp
+  
+go:
+  commands:
+    - find -type f -name '*.go' -exec gofmt -w {} \;
+  dir: go
+  
+csharp:
+  commands:
+    - find -type f -name '*.cs' -exec astyle --mode=cs {} \;
+  dir: csharp
+
+elixir:
+  commands:
+    - find -type f -name '*.ex' -exec mix format {} \;
+  dir: elixir
+
+swift:
+  commands:
+    - find -type f -name '*.swift' -exec swiflint {} \;
+  dir: swift
+
+php:
+  commands:
+    - ~/.config/composer/vendor/bin/php-cs-fixer fix --verbose --rules=@PSR1,@PSR2 --using-cache=no .
+  dir: php
+
+crystal:
+  commands:
+    - crystal tool format .
+  dir: crystal
+
+python:
+  commands:
+    - black
+  dir: python
