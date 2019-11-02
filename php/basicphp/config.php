@@ -26,17 +26,11 @@ $class_folders[] = 'controllers';
 define('AUTOLOAD_CLASSES', $class_folders);
 
 spl_autoload_register(function ($class_name) {
-
-	foreach (AUTOLOAD_CLASSES as $folder) {
-
-		if (file_exists('../' . $folder . '/' . $class_name . '.php') && is_readable('../' . $folder . '/' . $class_name . '.php')) {
-
-			require_once '../' . $folder . '/' . $class_name . '.php';
-
-		}
-
-	}
-
+    foreach (AUTOLOAD_CLASSES as $folder) {
+        if (file_exists('../' . $folder . '/' . $class_name . '.php') && is_readable('../' . $folder . '/' . $class_name . '.php')) {
+            require_once '../' . $folder . '/' . $class_name . '.php';
+        }
+    }
 });
 
 /*
@@ -68,7 +62,7 @@ switch (ENVIRONMENT) {
 |--------------------------------------------------------------------------
 */
 
-define('ENFORCE_SSL', FALSE);
+define('ENFORCE_SSL', false);
 
 /*
 |--------------------------------------------------------------------------
@@ -93,8 +87,16 @@ define('POST_BLACKLISTED', '\<\>\{\}\[\]\_\;\*\=\+\"\&\#\%\\$');
 |--------------------------------------------------------------------------
 */
 
-if (ENFORCE_SSL == FALSE) { $http_protocol = 'http://'; } else { $http_protocol = 'https://'; }
-if (! empty(dirname($_SERVER['SCRIPT_NAME']))) { $subfolder = dirname($_SERVER['SCRIPT_NAME']); } else { $subfolder = ''; }
+if (ENFORCE_SSL == false) {
+    $http_protocol = 'http://';
+} else {
+    $http_protocol = 'https://';
+}
+if (! empty(dirname($_SERVER['SCRIPT_NAME']))) {
+    $subfolder = dirname($_SERVER['SCRIPT_NAME']);
+} else {
+    $subfolder = '';
+}
 
 define('BASE_URL', $http_protocol . $_SERVER['SERVER_NAME'] . $subfolder . '/');
 

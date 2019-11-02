@@ -19,7 +19,7 @@
  */
 
 // Register the start time/memory as a float value
-$time_start = microtime(TRUE);
+$time_start = microtime(true);
 $memory_start = memory_get_usage();
 
 // Bootstrap configuration
