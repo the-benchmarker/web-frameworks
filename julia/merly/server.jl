@@ -10,7 +10,7 @@ server = Merly.app()
 @page "/user/:id>" "{{id}}"
 
 @route POST "/user" begin
-  res.body = ""
+    res.body = ""
 end
 
-server.start(config=Dict("host" => "0.0.0.0","port" => 3000),verbose=true)
+server.start(config = Dict("host" => "0.0.0.0", "port" => 3000), verbose = true)
