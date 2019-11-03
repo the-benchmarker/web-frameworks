@@ -210,37 +210,29 @@ class App < Admiral::Command
                 # Exist if not exist for @dependabot
                 next unless mapping["languages"].as_h[language]?
 
-                language = "javascript" if language == "node" # FIXME
-
                 # Exist if no manifest file
                 manifest = String.new
                 mapping["languages"][language].as_h.keys.each do |key|
-                file = key.to_s
-                 if File.exists?("#{language}/#{tool}/#{file}")
-                   manifest = file
+                  file = key.to_s
+                  if File.exists?("#{language}/#{tool}/#{file}")
+                    manifest = file
                   end
                 end
                 next if manifest.chars.size == 0
-                
+
                 yaml.mapping do
                   yaml.scalar "package_manager"
                   yaml.scalar mapping["languages"][language][manifest]["label"]
                   yaml.scalar "update_schedule"
                   yaml.scalar mapping["languages"][language][manifest]["update_schedule"]
                   yaml.scalar "directory"
-                  if language == "javascript"
-                    yaml.scalar "node/#{tool}"
-                  else
-                    yaml.scalar "#{language}/#{tool}"
-                  end
+                  yaml.scalar "#{language}/#{tool}"
                   yaml.scalar "default_labels"
                   yaml.sequence do
                     yaml.scalar "language:#{language}"
                   end
                 end
               end
-
-              language = "node" if language == "javascript" # FIXME
             end
           end
         end
