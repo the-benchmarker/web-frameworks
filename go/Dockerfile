@@ -5,14 +5,9 @@ ENV GOOS=linux
 ENV GOARCH=amd64
 
 WORKDIR /go/src/app
-COPY . ./
-
-{{#before_command}}
-  RUN {{{.}}}
-{{/before_command}}
+ADD main.go go.mod ./
 
 RUN go get
-
 RUN go build -a -ldflags '-extldflags "-static"' -o /go/bin/app ./
 
 FROM alpine
@@ -20,9 +15,4 @@ FROM alpine
 ENV {{{.}}}
 {{/environment}}
 COPY --from=0 /go/bin/app /go/bin/app
-{{#files}}
-COPY --from=0 /go/src/app/{{.}} /go/{{{.}}}
-{{/files}}
-
-WORKDIR /go
 CMD /go/bin/app
