@@ -19,7 +19,7 @@ bin_deps:
   - zlib1g
 
 clone:
-  - git clone --branch v1.0.0-beta9 https://github.com/an-tao/drogon
+  - git clone --branch v1.0.0-beta10 https://github.com/an-tao/drogon
   - cd /usr/src/app/drogon && git submodule update --init
 
 build:
