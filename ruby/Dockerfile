@@ -1,8 +1,10 @@
-FROM ruby:2.6
+FROM ruby:2.6-alpine
 
 WORKDIR /usr/src/app
 
 COPY . ./
+
+RUN apk add build-base
 
 RUN bundle install --without development test
 
