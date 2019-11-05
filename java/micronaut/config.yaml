@@ -9,8 +9,7 @@ build:
 
 patch:
   - USER root
-  - RUN mkdir -p build/classes/java/main
-  - RUN chown -R gradle build
+  - RUN chown -R gradle /usr/src/app
   - USER gradle
 
 files:

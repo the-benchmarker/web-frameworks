@@ -37,7 +37,6 @@ COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
 {{/files}}
 
 
-FROM openjdk:8-jre-slim
 WORKDIR /usr/src/app
 {{#files}}
 COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
