@@ -14,9 +14,7 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-alpine
 
 WORKDIR /usr/src/app
 
-{{#files}}
-COPY --from=0 /usr/src/app/out/{{{.}}} {{{.}}}
-{{/files}}
+COPY --from=0 out out
 
 ENV ASPNETCORE_URLS http://*:3000
 ENV COMPlus_TieredCompilation 1
