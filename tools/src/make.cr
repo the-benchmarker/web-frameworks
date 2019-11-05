@@ -117,8 +117,12 @@ class App < Admiral::Command
                 end
                 params["php_mod"] = deps
               end
-              if framework_config.as_h.has_key?("arguments")
-                params["arguments"] = framework_config["arguments"].to_s
+              if framework_config.as_h.has_key?("fixes")
+                deps = [] of String
+                framework_config["fixes"].as_a.each do |ext|
+                  deps << ext.to_s
+                end
+                params["fixes"] = deps
               end
               if framework_config.as_h.has_key?("arguments")
                 params["arguments"] = framework_config["arguments"].to_s
