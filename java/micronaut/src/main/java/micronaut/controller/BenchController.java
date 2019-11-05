@@ -1,21 +1,22 @@
-package example.micronaut;
+package micronaut.controller;
 
+import io.micronaut.core.annotation.NonBlocking;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Produces;
 
-@Controller("/") 
+@Controller
+@NonBlocking
 public class BenchController {
-    @Get("/") 
-    @Produces(MediaType.TEXT_PLAIN) 
+
+    @Get(produces = MediaType.TEXT_PLAIN)
     public String index() {
         return ""; 
     }
 
-    @Get("/user/{id}") 
-    @Produces(MediaType.TEXT_PLAIN) 
+    @Get(uri = "/user/{id}", produces = MediaType.TEXT_PLAIN)
     public String index(String id) {
         return id; 
     }
