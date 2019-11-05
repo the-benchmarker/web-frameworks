@@ -6,17 +6,17 @@ provider:
   default:
     language: 14/17
 
-deps:
-  - libjsoncpp-dev
-  - uuid-dev
-  - libssl-dev
-  - zlib1g-dev
+build_deps:
+  - jsoncpp-dev
+  - util-linux-dev
+  - libressl-dev
+  - zlib-dev
 
 bin_deps:
-  - libjsoncpp1 
-  - uuid
-  - libssl1.1
-  - zlib1g
+  - jsoncpp 
+  - libuuid
+  - libressl
+  - zlib
 
 clone:
   - git clone --branch v1.0.0-beta11 https://github.com/an-tao/drogon
