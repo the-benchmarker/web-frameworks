@@ -1,4 +1,11 @@
 framework:
   website: docs.microsoft.com/en-us/aspnet/index
-  version: 2.2
+  version: 3.0
   
+files:
+  - aspnetcore
+  - aspnetcore.deps.json
+  - aspnetcore.dll
+  - aspnetcore.pdb
+  - aspnetcore.runtimeconfig.json
+  - web.config

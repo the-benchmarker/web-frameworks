@@ -1,5 +1,6 @@
-FROM microsoft/dotnet:2.2-sdk AS build
-WORKDIR /app
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine
+
+WORKDIR /usr/src/app
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
@@ -9,11 +10,15 @@ RUN dotnet restore
 COPY . .
 RUN dotnet publish -c release -o out
 
-FROM microsoft/dotnet:2.2-aspnetcore-runtime AS runtime
-WORKDIR /app
-COPY --from=build /app/out ./
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-alpine
+
+WORKDIR /usr/src/app
+
+{{#files}}
+COPY --from=0 /usr/src/app/out/{{{.}}} {{{.}}}
+{{/files}}
 
 ENV ASPNETCORE_URLS http://*:3000
 ENV COMPlus_TieredCompilation 1
 
-ENTRYPOINT ["dotnet", "aspnetcore.dll"]
+CMD dotnet aspnetcore.dll
