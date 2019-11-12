@@ -1,4 +1,4 @@
-FROM node:13.1
+FROM node:12.13
 
 RUN npm -g install pm2
 
