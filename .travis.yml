@@ -112,6 +112,8 @@ env:
     - FRAMEWORK=suave
     - FRAMEWORK=restana
     - FRAMEWORK=express
+    - FRAMEWORK=nanoexpress
+    - FRAMEWORK=nanoexpress-pro
     - FRAMEWORK=muneem
     - FRAMEWORK=iotjs-express
     - FRAMEWORK=polka
