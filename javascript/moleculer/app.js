@@ -1,44 +1,40 @@
-const { ServiceBroker } = require('moleculer')
-const HTTPServer = require('moleculer-web')
+const { ServiceBroker } = require("moleculer");
+const HTTPServer = require("moleculer-web");
 
 const broker = new ServiceBroker({
-  logger: false
-})
+	logger: false
+});
 
 broker.createService({
-  name: 'api',
+	name: "api",
 
-  mixins: [HTTPServer],
+	mixins: [HTTPServer],
 
-  settings: {
-    port: 3000,
+	settings: {
+		port: 3000,
 
-    routes: [
-      {
-        aliases: {
-          'GET /': 'user.get',
-          'POST /user': 'user.post',
-          'GET /user/:id': 'user.getID'
-        }
-      }
-    ]
-  }
-})
+		routes: [
+			{
+				aliases: {
+					"GET /": "user.get",
+					"POST /user": "user.post",
+					"GET /user/:id": "user.getID"
+				}
+			}
+		]
+	}
+});
 
 broker.createService({
-  name: 'user',
+	name: "user",
 
-  actions: {
-    get () {
+	actions: {
+		get() {},
+		post() {},
+		getID(ctx) {
+			return Number(ctx.params.id);
+		}
+	}
+});
 
-    },
-    post () {
-
-    },
-    getID (ctx) {
-      return Number(ctx.params.id)
-    }
-  }
-})
-
-broker.start()
+broker.start();
