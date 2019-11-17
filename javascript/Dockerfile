@@ -14,6 +14,10 @@ COPY app.js package.json ./
   RUN apk add {{{.}}}
 {{/bin_deps}}
 
+{{#fixes}}
+  RUN {{{.}}}
+{{/fixes}}
+
 RUN npm install
 
 ENV NODE_ENV production
