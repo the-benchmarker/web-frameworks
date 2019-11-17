@@ -14,8 +14,8 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-alpine
 
 WORKDIR /usr/src/app
 
-COPY --from=0 out out
+COPY --from=0 /usr/src/app/out out
 
 ENV COMPlus_TieredCompilation 1
 
-CMD dotnet suaveapp.dll
+CMD dotnet /usr/src/app/out/suaveapp.dll
