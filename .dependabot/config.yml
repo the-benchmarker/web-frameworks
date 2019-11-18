@@ -268,11 +268,6 @@ update_configs:
   - language:python
 - package_manager: python
   update_schedule: live
-  directory: python/japronto
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
   directory: python/starlette
   default_labels:
   - language:python
@@ -403,17 +398,17 @@ update_configs:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/nanoexpress
-  default_labels:
-  - language:javascript
-- package_manager: javascript
-  update_schedule: live
   directory: javascript/nanoexpress-pro
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
   directory: javascript/fastify
+  default_labels:
+  - language:javascript
+- package_manager: javascript
+  update_schedule: live
+  directory: javascript/nanoexpress
   default_labels:
   - language:javascript
 - package_manager: javascript
