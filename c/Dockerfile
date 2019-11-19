@@ -1,11 +1,12 @@
-FROM gcc:9.2
+FROM alpine 
 
-ENV DEBIAN_FRONTEND=noninteractive
+RUN apk add build-base
+
+{{#build_deps}}
+   RUN apk add {{{.}}}
+{{/build_deps}}
 
 WORKDIR /usr/src/app
-
-RUN apt-get -qq update && \
-    apt-get -qy install cmake {{#deps}} {{{.}}} {{/deps}}
 
 COPY . ./
 
@@ -17,12 +18,10 @@ COPY . ./
    RUN {{{.}}}
 {{/build}}
 
-FROM debian
+FROM alpine
 
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get -qq update
 {{#bin_deps}}
-   RUN apt-get -qy install {{{.}}}
+   RUN apk add {{{.}}}
 {{/bin_deps}}
 
 {{#files}}

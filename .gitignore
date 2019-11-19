@@ -3,21 +3,10 @@
 .DS_Store
 *.swp
 
-# Lock files
-*.lock
-
-# Crystal
-lib/
-.shards/
-bin/
-
 .neph
 
 # git temporary files
 *.orig
-
-# PHP
-vendor/
 
 # GoLand IDE
 .idea

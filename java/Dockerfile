@@ -3,12 +3,16 @@
 {{/image}}
 
 {{^image}}
-  FROM maven:3-jdk-8
+  FROM maven:3-jdk-8-alpine
 {{/image}}
 
 WORKDIR /usr/src/app
 
 COPY . ./
+
+{{#patch}}
+  {{{.}}}
+{{/patch}}
 
 {{#build}}
   RUN {{{.}}}
@@ -33,7 +37,6 @@ COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
 {{/files}}
 
 
-FROM openjdk:8-jre-slim
 WORKDIR /usr/src/app
 {{#files}}
 COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}

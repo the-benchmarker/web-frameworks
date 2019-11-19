@@ -1,11 +1,19 @@
-FROM bigtruedata/sbt:0.13.15-2.12.3
+FROM hseeberger/scala-sbt:8u222_1.3.3_2.13.1
 
 WORKDIR /usr/src/app
 
-COPY build.sbt ./
-COPY src src
-COPY project project
+COPY . ./
 
 RUN sbt assembly
 
-CMD {{command}}
+FROM openjdk:13-alpine
+
+WORKDIR /usr/src/app
+
+{{#files}}
+COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+{{/files}}
+
+{{#command}}
+  CMD {{{.}}}
+{{/command}}

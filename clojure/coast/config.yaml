@@ -1,3 +1,14 @@
 framework:
   website: coastonclojure.com
   version: 1.0
+
+environment:
+  COAST_ENV: prod
+
+build_deps:
+  - bash
+  
+files:
+  - coast.jar
+
+command: java -jar coast.jar 3000

@@ -3,9 +3,10 @@ framework:
   version: 18.3
 
 command: >
-  uwsgi \
-    --socket 0.0.0.0:3000 \
-    --async 10 \
-    --protocol=http \
-    --wsgi-file server.py \
-    --callable app
+  gunicorn  \
+    --log-level warning  \
+    --bind 0.0.0.0:3000  \
+    --reuse-port  \
+    --workers $(nproc)  \
+    --worker-class meinheld.gmeinheld.MeinheldWorker \
+      server:app

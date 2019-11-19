@@ -14,7 +14,6 @@ object HelloWorldServer extends StreamApp[IO] {
 }
 
 object ServerStream {
-
   def helloWorldService[F[_]: Effect] = new HelloWorldService[F].service
 
   def stream[F[_]: Effect](implicit ec: ExecutionContext) =

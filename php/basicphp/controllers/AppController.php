@@ -7,20 +7,18 @@
 
 class AppController
 {
+    public function index()
+    {
+        echo '';
+    }
 
-	public function index()
-	{
-		echo '';
-	}
+    public function viewUser()
+    {
+        echo url_value(2);
+    }
 
-	public function viewUser()
-	{
-		echo url_value(2);
-	}
-
-	public function addUser()
-	{
-		echo '';
-	}
-
+    public function addUser()
+    {
+        echo '';
+    }
 }

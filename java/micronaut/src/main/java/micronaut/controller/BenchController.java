@@ -21,8 +21,8 @@ public class BenchController {
         return id; 
     }
 
-    @Post("/user")
-    public String post(){
-        return "";
-    }
+  @Post("/user")
+  public String post() {
+    return "";
+  }
 }

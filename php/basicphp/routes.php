@@ -15,17 +15,13 @@ force_ssl();
 */
 
 if (! empty(URI_WHITELISTED)) {
+    $regex_array = str_replace('w', 'alphanumeric', URI_WHITELISTED);
+    $regex_array = explode('\\', $regex_array);
 
-	$regex_array = str_replace('w', 'alphanumeric', URI_WHITELISTED);
-	$regex_array = explode('\\', $regex_array);
-
-	if (isset($_SERVER['REQUEST_URI']) && preg_match('/[^' . URI_WHITELISTED . ']/i', $_SERVER['REQUEST_URI'])) {
-
-		header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
-		exit('<h1>The URI should only contain alphanumeric and GET request characters:</h1><h3><ul>' . implode('<li>', $regex_array) . '</ul></h3>');
-		
-	}
-
+    if (isset($_SERVER['REQUEST_URI']) && preg_match('/[^' . URI_WHITELISTED . ']/i', $_SERVER['REQUEST_URI'])) {
+        header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
+        exit('<h1>The URI should only contain alphanumeric and GET request characters:</h1><h3><ul>' . implode('<li>', $regex_array) . '</ul></h3>');
+    }
 }
 
 /*
@@ -36,16 +32,12 @@ if (! empty(URI_WHITELISTED)) {
 */
 
 if (! empty(POST_BLACKLISTED)) {
+    $regex_array = explode('\\', POST_BLACKLISTED);
 
-	$regex_array = explode('\\', POST_BLACKLISTED);
-
-	if (isset($_POST) && preg_match('/[' . POST_BLACKLISTED . '\\\]/i', implode('/', $_POST)) ) {
-
-		header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
-		exit('<h1>Submitted data should NOT contain the following characters:</h1><h3><ul>' . implode('<li>', $regex_array) . '<li>\</ul></h3>');
-		
-	}
-
+    if (isset($_POST) && preg_match('/[' . POST_BLACKLISTED . '\\\]/i', implode('/', $_POST))) {
+        header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
+        exit('<h1>Submitted data should NOT contain the following characters:</h1><h3><ul>' . implode('<li>', $regex_array) . '<li>\</ul></h3>');
+    }
 }
 
 /*
@@ -62,12 +54,10 @@ route_rpc();
 |--------------------------------------------------------------------------
 */
 
-if ( empty(url_value(1)) && ! isset($json_rpc['method']) ) {
-
-	list($class, $method) = explode('@', HOME_PAGE);
-	$object = new $class();
-	return $object->$method();
-
+if (empty(url_value(1)) && ! isset($json_rpc['method'])) {
+    list($class, $method) = explode('@', HOME_PAGE);
+    $object = new $class();
+    return $object->$method();
 }
 
 /*
@@ -98,9 +88,7 @@ route_class('POST', '/user', 'AppController@addUser');
 |
 */
 
-if ( count(get_included_files()) == 4 ) {
-
-	header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
-	exit();
-
+if (count(get_included_files()) == 4) {
+    header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
+    exit();
 }

@@ -82,6 +82,20 @@ class App < Admiral::Command
                 end
                 params["deps"] = deps
               end
+              if framework_config.as_h.has_key?("patch")
+                deps = [] of String
+                framework_config["patch"].as_a.each do |dep|
+                  deps << dep.to_s
+                end
+                params["patch"] = deps
+              end
+              if framework_config.as_h.has_key?("build_deps")
+                deps = [] of String
+                framework_config["build_deps"].as_a.each do |dep|
+                  deps << dep.to_s
+                end
+                params["build_deps"] = deps
+              end
               if framework_config.as_h.has_key?("bin_deps")
                 deps = [] of String
                 framework_config["bin_deps"].as_a.each do |dep|
@@ -103,8 +117,12 @@ class App < Admiral::Command
                 end
                 params["php_mod"] = deps
               end
-              if framework_config.as_h.has_key?("arguments")
-                params["arguments"] = framework_config["arguments"].to_s
+              if framework_config.as_h.has_key?("fixes")
+                deps = [] of String
+                framework_config["fixes"].as_a.each do |ext|
+                  deps << ext.to_s
+                end
+                params["fixes"] = deps
               end
               if framework_config.as_h.has_key?("arguments")
                 params["arguments"] = framework_config["arguments"].to_s

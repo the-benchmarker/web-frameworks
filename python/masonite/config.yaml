@@ -2,6 +2,18 @@ framework:
   website: masoniteproject.com
   version: 2.2
  
+build_deps:
+  - libffi-dev
+
+# cryptography could not be install on alpine
+# @see https://github.com/pyca/cryptography/issues/4264#issuecomment-392781146
+fixes:
+  - apk del libressl-dev
+  - apk add openssl-dev
+  - pip install cryptography==2.2.2
+  - apk del openssl-dev
+  - apk add libressl-dev
+
 command: >
   gunicorn  \
     --log-level warning  \

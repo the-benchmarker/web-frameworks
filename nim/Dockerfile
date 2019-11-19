@@ -1,7 +1,4 @@
-FROM nimlang/nim:1.0.0
-
-RUN apt -y update && \
-    apt -y install musl-tools
+FROM nimlang/nim:1.0.2-alpine
 
 WORKDIR /usr/src/app
 
@@ -13,8 +10,6 @@ RUN nimble c \
     --gc:markAndSweep \
     --listFullPaths:off \
     --excessiveStackTrace:off \
-    --gcc.exe:musl-gcc \
-    --gcc.linkerexe:musl-gcc \
     --passL:-static \
     --passL:"-s" \
     --passC:"-fno-ident" \
