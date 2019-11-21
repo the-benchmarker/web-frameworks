@@ -368,6 +368,11 @@ update_configs:
   - language:java
 - package_manager: java:maven
   update_schedule: daily
+  directory: java/spring-framework
+  default_labels:
+  - language:java
+- package_manager: java:maven
+  update_schedule: daily
   directory: java/javalin
   default_labels:
   - language:java
