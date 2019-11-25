@@ -14,4 +14,4 @@ files:
 command: >
   java 
   -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts 
-  -jar /usr/share/java/jetty-runner.jar --port 3030 target/benchmark-0.0.1-SNAPSHOT.war
+  -jar /usr/share/java/jetty-runner.jar --port 3000 target/benchmark-0.0.1-SNAPSHOT.war
