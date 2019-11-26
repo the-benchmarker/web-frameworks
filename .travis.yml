@@ -49,6 +49,7 @@ env:
     - FRAMEWORK=gramework
     - FRAMEWORK=fasthttprouter
     - FRAMEWORK=gin
+    - FRAMEWORK=aero
     - FRAMEWORK=echo
     - FRAMEWORK=webgo
     - FRAMEWORK=chi
