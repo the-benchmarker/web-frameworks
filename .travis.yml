@@ -107,6 +107,7 @@ env:
     - FRAMEWORK=rapidoid
     - FRAMEWORK=act
     - FRAMEWORK=spring-boot
+    - FRAMEWORK=spring-framework
     - FRAMEWORK=javalin
     - FRAMEWORK=dancer2
     - FRAMEWORK=suave
