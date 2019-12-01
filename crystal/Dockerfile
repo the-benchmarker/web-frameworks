@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY . ./
 
 RUN shards install
-RUN shards build --production --release --no-debug --static
+RUN shards build --production --release --no-debug --static {{#build_opts}} {{{.}}} {{/build_opts}}
 
 FROM alpine
 
