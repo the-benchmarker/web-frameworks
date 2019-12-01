@@ -75,6 +75,9 @@ class App < Admiral::Command
               if framework_config.as_h.has_key?("image")
                 params["image"] = framework_config.as_h["image"].to_s
               end
+              if framework_config.as_h.has_key?("build_opts")
+                params["build_opts"] = framework_config.as_h["build_opts"].to_s
+              end
               if framework_config.as_h.has_key?("deps")
                 deps = [] of String
                 framework_config["deps"].as_a.each do |dep|

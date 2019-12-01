@@ -1,3 +1,5 @@
 framework:
   website: onyxframework.org
   version: 0.5
+
+build_opts: '--link-flags "-lxml2 -llzma"'
