@@ -76,6 +76,7 @@ env:
     - FRAMEWORK=zend-framework
     - FRAMEWORK=zend-expressive
     - FRAMEWORK=one
+    - FRAMEWORK=one-fpm
     - FRAMEWORK=sw-fw-less
     - FRAMEWORK=basicphp
     - FRAMEWORK=symfony
