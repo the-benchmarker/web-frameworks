@@ -106,6 +106,13 @@ class App < Admiral::Command
                 end
                 params["bin_deps"] = deps
               end
+              if framework_config.as_h.has_key?("fixes")
+                deps = [] of String
+                framework_config["fixes"].as_a.each do |dep|
+                  deps << dep.to_s
+                end
+                params["fixes"] = deps
+              end
               if framework_config.as_h.has_key?("php_ext")
                 deps = [] of String
                 framework_config["php_ext"].as_a.each do |ext|

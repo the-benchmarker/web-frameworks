@@ -1,4 +1,4 @@
-FROM python:3.7-alpine
+FROM python:3.8-alpine
 
 RUN apk add build-base python3-dev
 
@@ -14,6 +14,6 @@ COPY . ./
   RUN {{{.}}}
 {{/fixes}}
 
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt
 
 CMD {{command}}

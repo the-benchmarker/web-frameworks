@@ -103,6 +103,11 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
+  directory: go/aero
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
   directory: go/webgo
   default_labels:
   - language:go
@@ -358,17 +363,17 @@ update_configs:
   - language:java
 - package_manager: java:maven
   update_schedule: daily
+  directory: java/spring-framework
+  default_labels:
+  - language:java
+- package_manager: java:maven
+  update_schedule: daily
   directory: java/act
   default_labels:
   - language:java
 - package_manager: java:maven
   update_schedule: daily
   directory: java/spring-boot
-  default_labels:
-  - language:java
-- package_manager: java:maven
-  update_schedule: daily
-  directory: java/spring-framework
   default_labels:
   - language:java
 - package_manager: java:maven
