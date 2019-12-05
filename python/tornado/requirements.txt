@@ -1,2 +1,2 @@
 tornado>=6.0.0,<6.1.0
--e git+https://github.com/benoitc/gunicorn.git@master#egg=gunicorn
+gunicorn
