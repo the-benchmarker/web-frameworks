@@ -1,7 +1,6 @@
-FROM php:7.3-fpm
+FROM php:7.3-fpm-alpine
 
-RUN apt-get -qq update
-RUN apt-get -qy install git zlib1g-dev libzip-dev nginx {{#deps}} {{{.}}} {{/deps}}
+RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc {{#deps}} {{{.}}} {{/deps}}
 RUN docker-php-ext-install zip opcache {{#php_mod}} {{{.}}} {{/php_mod}}
 
 WORKDIR /usr/src/app
@@ -49,8 +48,9 @@ ENV {{{.}}}
   
   RUN rm -fr /etc/nginx/sites-enabled/default
   RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
+  RUN mkdir /run/nginx
   
-  RUN echo 'server {\n\
+  RUN echo -e 'server {\n\
       {{#docroot}}
         root {{{.}}};\n\
       {{/docroot}}
@@ -72,7 +72,7 @@ ENV {{{.}}}
   }\n'\
   >> /etc/nginx/conf.d/www.conf
   
-  RUN echo 'opcache.enable=1\n\
+  RUN echo -e 'opcache.enable=1\n\
   opcache.memory_consumption=512\n\
   opcache.interned_strings_buffer=64\n\
   opcache.max_accelerated_files=32531\n\
@@ -81,7 +81,6 @@ ENV {{{.}}}
   opcache.fast_shutdown=0\n'\
   >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
   
-  RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-  
-  CMD /usr/local/sbin/php-fpm --daemonize; service nginx start
+  CMD /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
+
 {{/command}}
