@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BenchmarkController {
   @GetMapping("/")
-  public void root() {
-  }
+  public void root() {}
 
   @GetMapping("/user/{id}")
   public Integer userId(@PathVariable Integer id) {
@@ -17,6 +16,5 @@ public class BenchmarkController {
   }
 
   @PostMapping("/user")
-  public void user() {
-  }
+  public void user() {}
 }

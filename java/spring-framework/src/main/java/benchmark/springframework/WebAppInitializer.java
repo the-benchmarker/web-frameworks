@@ -3,7 +3,6 @@ package benchmark.springframework;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
   @Override
   protected Class<?>[] getRootConfigClasses() {
     return new Class[] {WebConfiguration.class};
@@ -18,5 +17,4 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
   protected String[] getServletMappings() {
     return new String[] {"/"};
   }
-
 }
