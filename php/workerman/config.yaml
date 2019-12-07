@@ -1,0 +1,9 @@
+framework:
+  github: workerman/workerman
+  version: 3.5
+
+php_mod:
+  - pcntl
+  - posix
+
+command: php start.php start
