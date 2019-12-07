@@ -10,16 +10,15 @@ import io.micronaut.http.annotation.Produces;
 @Controller
 @NonBlocking
 public class BenchController {
+  @Get(produces = MediaType.TEXT_PLAIN)
+  public String index() {
+    return "";
+  }
 
-    @Get(produces = MediaType.TEXT_PLAIN)
-    public String index() {
-        return ""; 
-    }
-
-    @Get(uri = "/user/{id}", produces = MediaType.TEXT_PLAIN)
-    public String index(String id) {
-        return id; 
-    }
+  @Get(uri = "/user/{id}", produces = MediaType.TEXT_PLAIN)
+  public String index(String id) {
+    return id;
+  }
 
   @Post("/user")
   public String post() {

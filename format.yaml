@@ -6,7 +6,7 @@ main:
     - rust
     - ruby
     - objc
-    - node
+    - javascript
     - scala
     - cpp
     - go
@@ -47,10 +47,10 @@ objc:
     - find -type f -name '*.m' -exec clang-format -i {} \;
   dir: objc
 
-node:
+javascript:
   commands:
     - prettier --write '**/*.js'
-  dir: node
+  dir: javascript
   
 scala:
   commands:
