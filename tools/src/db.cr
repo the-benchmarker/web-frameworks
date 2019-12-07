@@ -39,10 +39,10 @@ EOS
               results[key] = {} of String => String | Float64
               results[key]["language"] = language
               results[key]["framework"] = framework
-config = YAML.parse(File.read("#{language}/config.yaml"))
-results[key]["language_version"] = config["provider"]["default"]["language"].to_s
-config = YAML.parse(File.read("#{language}/#{framework}/config.yaml"))
-results[key]["framework_version"] = config["framework"]["version"].to_s
+              config = YAML.parse(File.read("#{language}/config.yaml"))
+              results[key]["language_version"] = config["provider"]["default"]["language"].to_s
+              config = YAML.parse(File.read("#{language}/#{framework}/config.yaml"))
+              results[key]["framework_version"] = config["framework"]["version"].to_s
             end
             results[key][metric] = value
           end

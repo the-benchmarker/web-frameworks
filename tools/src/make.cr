@@ -72,12 +72,32 @@ class App < Admiral::Command
                 end
                 params["environment"] = environment
               end
+              if framework_config.as_h.has_key?("image")
+                params["image"] = framework_config.as_h["image"].to_s
+              end
+              if framework_config.as_h.has_key?("build_opts")
+                params["build_opts"] = framework_config.as_h["build_opts"].to_s
+              end
               if framework_config.as_h.has_key?("deps")
                 deps = [] of String
                 framework_config["deps"].as_a.each do |dep|
                   deps << dep.to_s
                 end
                 params["deps"] = deps
+              end
+              if framework_config.as_h.has_key?("patch")
+                deps = [] of String
+                framework_config["patch"].as_a.each do |dep|
+                  deps << dep.to_s
+                end
+                params["patch"] = deps
+              end
+              if framework_config.as_h.has_key?("build_deps")
+                deps = [] of String
+                framework_config["build_deps"].as_a.each do |dep|
+                  deps << dep.to_s
+                end
+                params["build_deps"] = deps
               end
               if framework_config.as_h.has_key?("bin_deps")
                 deps = [] of String
@@ -95,6 +115,12 @@ class App < Admiral::Command
               end
               if framework_config.as_h.has_key?("arguments")
                 params["arguments"] = framework_config["arguments"].to_s
+              if framework_config.as_h.has_key?("fixes")
+                deps = [] of String
+                framework_config["fixes"].as_a.each do |dep|
+                  deps << dep.to_s
+                end
+                params["fixes"] = deps
               end
               if framework_config.as_h.has_key?("php_ext")
                 deps = [] of String
@@ -102,6 +128,13 @@ class App < Admiral::Command
                   deps << ext.to_s
                 end
                 params["php_ext"] = deps
+              end
+              if framework_config.as_h.has_key?("fixes")
+                deps = [] of String
+                framework_config["fixes"].as_a.each do |ext|
+                  deps << ext.to_s
+                end
+                params["fixes"] = deps
               end
               if framework_config.as_h.has_key?("arguments")
                 params["arguments"] = framework_config["arguments"].to_s
@@ -208,29 +241,28 @@ class App < Admiral::Command
                 next unless mapping["languages"].as_h[language]?
 
                 # Exist if no manifest file
-                manifest = mapping["languages"][language]["manifest"].to_s
-                next unless File.exists?("#{language}/#{tool}/#{manifest}")
-
-                language = "javascript" if language == "node" # FIXME
+                manifest = String.new
+                mapping["languages"][language].as_h.keys.each do |key|
+                  file = key.to_s
+                  if File.exists?("#{language}/#{tool}/#{file}")
+                    manifest = file
+                  end
+                end
+                next if manifest.chars.size == 0
 
                 yaml.mapping do
                   yaml.scalar "package_manager"
-                  yaml.scalar mapping["languages"][language]["label"]
+                  yaml.scalar mapping["languages"][language][manifest]["label"]
                   yaml.scalar "update_schedule"
-                  yaml.scalar mapping["languages"][language]["update_schedule"]
+                  yaml.scalar mapping["languages"][language][manifest]["update_schedule"]
                   yaml.scalar "directory"
-                  if language == "javascript"
-                    yaml.scalar "node/#{tool}"
-                  else
-                    yaml.scalar "#{language}/#{tool}"
-                  end
+                  yaml.scalar "#{language}/#{tool}"
                   yaml.scalar "default_labels"
                   yaml.sequence do
                     yaml.scalar "language:#{language}"
                   end
                 end
               end
-              language = "node" if language == "javascript" # FIXME
             end
           end
         end

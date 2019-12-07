@@ -4,7 +4,7 @@ require "./config"
 # Server defaults
 port = (ENV["SG_SERVER_PORT"]? || 3000).to_i
 host = ENV["SG_SERVER_HOST"]? || "0.0.0.0"
-process_count = (ENV["SG_PROCESS_COUNT"]? || 1).to_i
+process_count = (ENV["SG_PROCESS_COUNT"]? || System.cpu_count).to_i
 
 # Command line options
 OptionParser.parse(ARGV.dup) do |parser|
@@ -39,7 +39,7 @@ server = ActionController::Server.new(port, host)
 
 # Start clustering
 #  process_count < 1 == `System.cpu_count` but this is not always accurate
-server.cluster(process_count, "-w", "--workers") if process_count != 1
+server.cluster(process_count) if process_count != 1
 
 terminate = Proc(Signal, Nil).new do |signal|
   puts " > terminating gracefully"

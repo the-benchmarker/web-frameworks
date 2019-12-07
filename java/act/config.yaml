@@ -2,10 +2,13 @@ framework:
   website: actframework.org
   version: 1.8
 
+bin_deps:
+  - bash
+
 files:
   - target/dist/*.tar.gz
 
 before_command: 
   - tar -xvzf target/dist/*.tar.gz
 
-command: ./run
+command: bash ./run

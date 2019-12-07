@@ -1,13 +1,18 @@
-FROM golang:1.13
+FROM golang:1.13-alpine
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV GOARCH=amd64
 
 WORKDIR /go/src/app
-ADD main.go go.mod ./
+COPY . ./
+
+{{#before_command}}
+  RUN {{{.}}}
+{{/before_command}}
 
 RUN go get
+
 RUN go build -a -ldflags '-extldflags "-static"' -o /go/bin/app ./
 
 FROM alpine
@@ -15,4 +20,7 @@ FROM alpine
 ENV {{{.}}}
 {{/environment}}
 COPY --from=0 /go/bin/app /go/bin/app
-CMD /go/bin/app
+{{#files}}
+COPY --from=0 /go/src/app/{{{.}}} /go/bin/{{{.}}}
+{{/files}}
+CMD cd /go/bin && ./app

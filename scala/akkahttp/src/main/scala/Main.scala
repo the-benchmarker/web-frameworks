@@ -4,7 +4,6 @@ import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 
 object Main {
-
   def main(args: Array[String]) {
     implicit val system = ActorSystem("AkkaHttp")
     implicit val materializer = ActorMaterializer()
@@ -24,5 +23,4 @@ object Main {
 
     Http().bindAndHandle(route, "0.0.0.0", 3000)
   }
-
 }

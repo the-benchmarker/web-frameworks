@@ -1,22 +1,47 @@
-FROM maven:3.6-jdk-8 as maven
+{{#image}}
+  FROM {{{.}}}
+{{/image}}
+
+{{^image}}
+  FROM maven:3-jdk-8-alpine
+{{/image}}
+
 WORKDIR /usr/src/app
 
-COPY src src
-COPY pom.xml pom.xml
+COPY . ./
+
+{{#patch}}
+  {{{.}}}
+{{/patch}}
 
 {{#build}}
-  RUN mvn compile assembly:single -q
+  RUN {{{.}}}
 {{/build}}
 
 {{^build}}
   RUN mvn clean package -q
 {{/build}}
 
-FROM openjdk:8-jre-slim
+
+FROM openjdk:8-alpine
+
+{{#bin_deps}}
+  RUN apk add {{{.}}}
+{{/bin_deps}}
+
+WORKDIR /usr/src/app
+
+
+{{#files}}
+COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+{{/files}}
+
+
 WORKDIR /usr/src/app
 {{#files}}
 COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
 {{/files}}
+
 {{#before_command}}
   RUN {{{.}}}
 {{/before_command}}

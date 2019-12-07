@@ -15,8 +15,9 @@
 | 6. pdo_conn() - PHP Data Objects (PDO) database connection
 | 7. api_response() - handles API response
 | 8. api_call() - handles API call
-| 9. esc() - uses htmlspecialchars() to prevent XSS
-| 10. csrf_token() - uses sessions to create per request CSRF token
+| 9. force_ssl() - force application to use SSL
+| 10. esc() - uses htmlspecialchars() to prevent XSS
+| 11. csrf_token() - uses sessions to create per request CSRF token
 |
 */
 
@@ -29,8 +30,9 @@
 
 function url_value($order)
 {
-    if (isset($_SERVER[URL_PARSE])) {
-        $url = explode('/', $_SERVER[URL_PARSE]);
+    if (isset($_SERVER['REQUEST_URI'])) {
+        $url_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $url = explode('/', $url_path);
     }
 
     if (isset($url[$order+SUB_DIR]) || ! empty($url[$order+SUB_DIR])) {
@@ -107,7 +109,7 @@ function route_auto()
  *
  * @param string $http_method - HTTP method (e.g. GET, POST, PUT, DELETE)
  * @param string $string - URL path in the format '/url/string'
- *                       - Wildcard convention from Codeigniter 3
+ *                       - Wildcard convention from Codeigniter
  *                       - (:num) for number and (:any) for string
  * @param string $class_method - ClassController@method format
  */
@@ -120,49 +122,21 @@ function route_class($http_method, $path, $class_method)
         $pattern = str_ireplace('/', '\/', $path);
         $pattern = str_ireplace('(:num)', '[0-9]+', $pattern);
         $pattern = str_ireplace('(:any)', '[^\/]+', $pattern);
+                
+        // Check for subfolders from DocumentRoot and include in endpoint
+        $sub = explode('/', dirname($_SERVER['SCRIPT_NAME']));
+        if (! empty($sub[1])) {
+            $subfolder = implode('\/', $sub);
+        } else {
+            $subfolder = '';
+        }
 
-        if (URL_PARSE == 'REQUEST_URI') {
-            $sub = explode('/', BASE_URL);
-            
-            // Support for upto five (5) subdirectories - index.php from DocumentRoot
-            if (! empty($sub[3])) {
-                $sub_1 = '\/' . $sub[3];
-            } else {
-                $sub_1 = '';
-            }
-            if (! empty($sub[4])) {
-                $sub_2 = '\/' . $sub[4];
-            } else {
-                $sub_2 = '';
-            }
-            if (! empty($sub[5])) {
-                $sub_3 = '\/' . $sub[5];
-            } else {
-                $sub_3 = '';
-            }
-            if (! empty($sub[6])) {
-                $sub_4 = '\/' . $sub[6];
-            } else {
-                $sub_4 = '';
-            }
-            if (! empty($sub[7])) {
-                $sub_5 = '\/' . $sub[7];
-            } else {
-                $sub_5 = '';
-            }
+        $url_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        if (preg_match('/^' . $subfolder . $pattern . '+$/i', $url_path)) {
+            list($class, $method) = explode('@', $class_method);
 
-            if (preg_match('/^' . $sub_1.$sub_2.$sub_3.$sub_4.$sub_5 . $pattern . '+$/i', $_SERVER[URL_PARSE])) {
-                list($class, $method) = explode('@', $class_method);
-
-                $object = new $class();
-                $object->$method();
-            }
-        } elseif (URL_PARSE == 'PATH_INFO') {
-            if (preg_match('/^' . $pattern . '+$/i', $_SERVER[URL_PARSE])) {
-                list($class, $method) = explode('@', $class_method);
-                $object = new $class();
-                $object->$method();
-            }
+            $object = new $class();
+            $object->$method();
         }
     }
 }
@@ -271,6 +245,18 @@ function api_call($http_method, $url, $data=null, $username=null, $password=null
     $data_output = json_decode($result, true);
 
     return $data_output;
+}
+
+/**
+ * Force application to use SSL
+ */
+
+function force_ssl()
+{
+    if (ENFORCE_SSL == true && (! isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on')) {
+        header('Location: https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
+        exit();
+    }
 }
 
 /**

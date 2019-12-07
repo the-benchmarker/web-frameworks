@@ -36,7 +36,8 @@ int main(int argc, char **argv) {
   // to work pretty well on a 4 core (8 processor) machine. It is the ratio of
   // thread to processors.
   agoo_io_loop_ratio = 1.0;
-
+  agoo_poll_wait = 0.01;
+  
   if (AGOO_ERR_OK != agoo_init(&err, "simple")) {
     printf("Failed to initialize Agoo. %s\n", err.msg);
     return err.code;

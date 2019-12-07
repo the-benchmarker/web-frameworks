@@ -1,0 +1,17 @@
+framework:
+  website: spring.io/projects/spring-framework
+  version: 5.2
+
+build:
+  - mvn clean package -q
+
+bin_deps:
+  - jetty-runner
+
+files: 
+  - target/benchmark-0.0.1-SNAPSHOT.war
+
+command: >
+  java 
+  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts 
+  -jar /usr/share/java/jetty-runner.jar --port 3000 target/benchmark-0.0.1-SNAPSHOT.war

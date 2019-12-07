@@ -2,22 +2,51 @@
 
 /*
 |--------------------------------------------------------------------------
+| Enforce SSL/HTTPS
+|--------------------------------------------------------------------------
+*/
+
+force_ssl();
+
+/*
+|--------------------------------------------------------------------------
+| Allow only URI_WHITELISTED characters on the Request URI.
+|--------------------------------------------------------------------------
+*/
+
+if (! empty(URI_WHITELISTED)) {
+    $regex_array = str_replace('w', 'alphanumeric', URI_WHITELISTED);
+    $regex_array = explode('\\', $regex_array);
+
+    if (isset($_SERVER['REQUEST_URI']) && preg_match('/[^' . URI_WHITELISTED . ']/i', $_SERVER['REQUEST_URI'])) {
+        header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
+        exit('<h1>The URI should only contain alphanumeric and GET request characters:</h1><h3><ul>' . implode('<li>', $regex_array) . '</ul></h3>');
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Deny POST_BLACKLISTED characters in $_POST global variable array.
+| Backslash (\) is blacklisted by default.
+|--------------------------------------------------------------------------
+*/
+
+if (! empty(POST_BLACKLISTED)) {
+    $regex_array = explode('\\', POST_BLACKLISTED);
+
+    if (isset($_POST) && preg_match('/[' . POST_BLACKLISTED . '\\\]/i', implode('/', $_POST))) {
+        header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
+        exit('<h1>Submitted data should NOT contain the following characters:</h1><h3><ul>' . implode('<li>', $regex_array) . '<li>\</ul></h3>');
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
 | JSON-RPC v2.0 Compatibility Layer with 'method' member as 'class.method'
 |--------------------------------------------------------------------------
 */
 
-// route_rpc();
-
-/*
-|--------------------------------------------------------------------------
-| Allow only alphanumeric and GET request characters on the request URI
-|--------------------------------------------------------------------------
-*/
-
-if (isset($_SERVER[URL_PARSE]) && preg_match('/[^a-zA-Z0-9_\/?&=-]/i', $_SERVER[URL_PARSE])) {
-    header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
-    exit();
-}
+route_rpc();
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +66,7 @@ if (empty(url_value(1)) && ! isset($json_rpc['method'])) {
 |--------------------------------------------------------------------------
 */
 
-// route_auto();
+route_auto();
 
 /*
 |--------------------------------------------------------------------------
@@ -46,8 +75,8 @@ if (empty(url_value(1)) && ! isset($json_rpc['method'])) {
 */
 
 route_class('GET', '/', 'AppController@index');
-route_class('GET', '/user/(:num)', 'UserController@view');
-route_class('POST', '/user', 'UserController@add');
+route_class('GET', '/user/(:num)', 'AppController@viewUser');
+route_class('POST', '/user', 'AppController@addUser');
 
 /*
 |--------------------------------------------------------------------------

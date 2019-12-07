@@ -1,5 +1,0 @@
-framework:
-  github: squeaky-pl/japronto
-  version: 0.1
-  
-command: python server.py $(nproc)

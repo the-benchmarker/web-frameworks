@@ -8,64 +8,67 @@ services:
 # This tool is written in crystal
 language: crystal
 
-cache:
-  directories:
-  - docker_images
-
-before_install:
-  - docker load -i docker_images/images.tar || true
-
-before_cache:
-  - docker save -o docker_images/images.tar $(docker images -a -q)
-
 env:
   matrix:
-    - FRAMEWORK=rails
-    - FRAMEWORK=cuba
-    - FRAMEWORK=grape
-    - FRAMEWORK=flame
-    - FRAMEWORK=plezi
-    - FRAMEWORK=hanami
-    - FRAMEWORK=rack-routing
-    - FRAMEWORK=agoo
-    - FRAMEWORK=roda
-    - FRAMEWORK=camping
-    - FRAMEWORK=sinatra
-    - FRAMEWORK=syro
-    - FRAMEWORK=agoo-c
+    - FRAMEWORK=httpbeast
+    - FRAMEWORK=jester
     - FRAMEWORK=kore
-    - FRAMEWORK=koa
-    - FRAMEWORK=fastify
-    - FRAMEWORK=rayo
-    - FRAMEWORK=polkadot
-    - FRAMEWORK=restify
-    - FRAMEWORK=iotjs-express
-    - FRAMEWORK=turbo_polka
-    - FRAMEWORK=muneem
-    - FRAMEWORK=hapi
-    - FRAMEWORK=express
-    - FRAMEWORK=restana
-    - FRAMEWORK=sifrr
-    - FRAMEWORK=0http
-    - FRAMEWORK=foxify
-    - FRAMEWORK=polka
-    - FRAMEWORK=moleculer
-    - FRAMEWORK=aspnetcore
-    - FRAMEWORK=kitura
-    - FRAMEWORK=kitura-nio
-    - FRAMEWORK=swifter
-    - FRAMEWORK=vapor
-    - FRAMEWORK=perfect
+    - FRAMEWORK=agoo-c
+    - FRAMEWORK=coast
+    - FRAMEWORK=nickel
+    - FRAMEWORK=iron
+    - FRAMEWORK=actix-web
+    - FRAMEWORK=gotham
+    - FRAMEWORK=merly
     - FRAMEWORK=evhtp
     - FRAMEWORK=drogon
-    - FRAMEWORK=http4s
+    - FRAMEWORK=kemal
+    - FRAMEWORK=spider-gazelle
+    - FRAMEWORK=router.cr
+    - FRAMEWORK=amber
+    - FRAMEWORK=athena
+    - FRAMEWORK=raze
+    - FRAMEWORK=onyx
+    - FRAMEWORK=lucky
+    - FRAMEWORK=orion
+    - FRAMEWORK=toro
+    - FRAMEWORK=rails
+    - FRAMEWORK=grape
+    - FRAMEWORK=flame
+    - FRAMEWORK=agoo
+    - FRAMEWORK=roda
+    - FRAMEWORK=rack-routing
+    - FRAMEWORK=syro
+    - FRAMEWORK=sinatra
+    - FRAMEWORK=camping
+    - FRAMEWORK=plezi
+    - FRAMEWORK=hanami
+    - FRAMEWORK=cuba
     - FRAMEWORK=akkahttp
-    - FRAMEWORK=hyperf
-    - FRAMEWORK=zend-expressive
-    - FRAMEWORK=laravel
-    - FRAMEWORK=slim
-    - FRAMEWORK=symfony
-    - FRAMEWORK=lumen
+    - FRAMEWORK=http4s
+    - FRAMEWORK=gramework
+    - FRAMEWORK=fasthttprouter
+    - FRAMEWORK=gin
+    - FRAMEWORK=aero
+    - FRAMEWORK=echo
+    - FRAMEWORK=webgo
+    - FRAMEWORK=chi
+    - FRAMEWORK=mars
+    - FRAMEWORK=air
+    - FRAMEWORK=gorouter
+    - FRAMEWORK=kami
+    - FRAMEWORK=fasthttp
+    - FRAMEWORK=goroute
+    - FRAMEWORK=atreugo
+    - FRAMEWORK=gorilla-mux
+    - FRAMEWORK=violetear
+    - FRAMEWORK=rte
+    - FRAMEWORK=gorouter-fasthttp
+    - FRAMEWORK=gf
+    - FRAMEWORK=beego
+    - FRAMEWORK=aspnetcore
+    - FRAMEWORK=imi
+    - FRAMEWORK=swoft
     - FRAMEWORK=one
     - FRAMEWORK=basicphp
     - FRAMEWORK=imi
