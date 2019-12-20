@@ -20,6 +20,7 @@ return [
         'type'      =>  Imi\Server\Type::HTTP,
         'host'      =>  '0.0.0.0',
         'port'      =>  3000,
+        'mode'      =>  SWOOLE_BASE,
         'configs'   =>  [
             'worker_num'        => swoole_cpu_num(),
             'open_tcp_nodelay'  => true,
