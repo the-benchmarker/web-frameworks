@@ -1,12 +1,12 @@
 {
-    "require": {
-        "fideloper/proxy": "*",
-        "laravel/framework": "~6.9.0",
-        "laravel/tinker": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/"
-        }
+  "require": {
+    "fideloper/proxy": "*",
+    "laravel/framework": "~6.9.0",
+    "laravel/tinker": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
     }
+  }
 }

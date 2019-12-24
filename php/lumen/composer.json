@@ -1,11 +1,11 @@
 {
-    "require": {
-        "laravel/lumen-framework": "~6.2.0",
-        "vlucas/phpdotenv": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/"
-        }
+  "require": {
+    "laravel/lumen-framework": "~6.2.0",
+    "vlucas/phpdotenv": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
     }
+  }
 }
