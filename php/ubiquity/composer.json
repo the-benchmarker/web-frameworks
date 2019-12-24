@@ -5,8 +5,8 @@
 		"phpmv/ubiquity-devtools": "~1.2.10"
 	},
 	"require-dev": {
-		"mindplay/annotations": "^1.3",
-		"phpmv/ubiquity-dev": "^0.0.4"
+		"mindplay/annotations": "*",
+		"phpmv/ubiquity-dev": "*"
 	},
 	"autoload" : {
 		"psr-4" : {
