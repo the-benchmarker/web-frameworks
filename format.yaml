@@ -16,6 +16,7 @@ main:
     - php
     - crystal
     - python
+    - config
     
 java:
   commands:
@@ -96,3 +97,8 @@ python:
   commands:
     - black
   dir: python
+
+config:
+  commands:
+    - prettier "**/**/*.json" --write
+  dir: .
