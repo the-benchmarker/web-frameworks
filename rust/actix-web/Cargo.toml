@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Nikolay Kim <fafhrd91@gmail.com>"]
 
 [dependencies]
-actix-web = "~1.0"
+actix-web = "~2.0"
 
 [profile.release]
 lto = true
