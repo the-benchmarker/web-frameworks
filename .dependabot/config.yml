@@ -458,17 +458,7 @@ update_configs:
   - language:python
 - package_manager: python
   update_schedule: live
-  directory: python/morepath
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
   directory: python/blacksheep
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
-  directory: python/spyne
   default_labels:
   - language:python
 - package_manager: python

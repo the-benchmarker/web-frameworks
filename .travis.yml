@@ -130,7 +130,6 @@ env:
     - FRAMEWORK=aiohttp
     - FRAMEWORK=asgineer
     - FRAMEWORK=blacksheep
-    - FRAMEWORK=spyne
     - FRAMEWORK=cyclone
     - FRAMEWORK=fastapi
     - FRAMEWORK=flask
