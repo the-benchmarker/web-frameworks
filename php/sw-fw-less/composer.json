@@ -1,23 +1,25 @@
 {
-    "require": {
-        "php": ">=7.1",
-        "ext-json": "*",
-        "ext-swoole": ">=4.4.0",
-        "luoxiaojun/sw-fw-less": "dev-master"
-    },
-    "suggest": {
-        "ext-pdo": "*",
-        "ext-redis": "*"
-    },
-    "license": "apache-2.0",
-    "authors": [
-        {
-            "name": "luoxiaojun",
-            "email": "luoxiaojun1992@sina.cn"
-        }
-    ],
-    "autoload": {
-        "psr-4": {"App\\": "app/"}
-    },
-    "minimum-stability": "dev"
+  "require": {
+    "php": "^7.1",
+    "ext-json": "*",
+    "ext-swoole": "^4.4.0",
+    "luoxiaojun/sw-fw-less": "dev-master"
+  },
+  "suggest": {
+    "ext-pdo": "*",
+    "ext-redis": "*"
+  },
+  "license": "apache-2.0",
+  "authors": [
+    {
+      "name": "luoxiaojun",
+      "email": "luoxiaojun1992@sina.cn"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "minimum-stability": "dev"
 }

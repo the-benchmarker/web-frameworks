@@ -1,23 +1,25 @@
 {
-    "listeners": [
-        {
-            "address": "0.0.0.0",
-            "port": 3000,
-            "https": false
-        }
-    ],
-    "app": {
-        "threads_num": 0,
-        "log": {
-            "log_level": "WARN"
-        },
-        "idle_connection_timeout": 0,
-        "enable_server_header": false,
-        "enable_date_header": false
+  "listeners": [
+    {
+      "address": "0.0.0.0",
+      "port": 3000,
+      "https": false
+    }
+  ],
+  "app": {
+    "threads_num": 0,
+    "log": {
+      "log_level": "WARN"
     },
-    "plugins": [{
-        "name": "SyncPlugin",
-        "dependencies": [],
-        "config": {}
-    }]
+    "idle_connection_timeout": 0,
+    "enable_server_header": false,
+    "enable_date_header": false
+  },
+  "plugins": [
+    {
+      "name": "SyncPlugin",
+      "dependencies": [],
+      "config": {}
+    }
+  ]
 }

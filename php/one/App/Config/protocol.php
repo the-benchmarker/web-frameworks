@@ -12,14 +12,11 @@ return [
         'server_type' => \One\Swoole\OneServer::SWOOLE_HTTP_SERVER,
         'port'        => 3000,
         'action'      => \App\Server\AppHttpServer::class,
-        'mode'        => SWOOLE_PROCESS,
+        'mode'        => SWOOLE_BASE,
         'sock_type'   => SWOOLE_SOCK_TCP,
         'ip'          => '0.0.0.0',
         'set'         => [
-            'worker_num'       => swoole_cpu_num() * 2,
-            'open_tcp_nodelay' => true,
-            'tcp_fastopen'     => true,
-            'max_coroutine'    => 100000
+            'worker_num'       => swoole_cpu_num(),
         ],
     ]
 ];

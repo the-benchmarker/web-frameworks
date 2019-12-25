@@ -1,16 +1,16 @@
 {
-	"require" : {
-		"php" : "^7.1",
-		"phpmv/ubiquity" : "~2.3.2",
-		"phpmv/ubiquity-devtools": "~1.2.10"
-	},
-	"require-dev": {
-		"mindplay/annotations": "^1.3",
-		"phpmv/ubiquity-dev": "^0.0.4"
-	},
-	"autoload" : {
-		"psr-4" : {
-			"" : "app/"
-		}
-	}
+  "require": {
+    "php": "^7.1",
+    "phpmv/ubiquity": "~2.3.2",
+    "phpmv/ubiquity-devtools": "~1.2.10"
+  },
+  "require-dev": {
+    "mindplay/annotations": "*",
+    "phpmv/ubiquity-dev": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "": "app/"
+    }
+  }
 }
