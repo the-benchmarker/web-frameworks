@@ -95,6 +95,7 @@ crystal:
 
 python:
   commands:
+    - find -type f -name '*.py' -exec autopep8 -i {} \;
     - black
   dir: python
 
