@@ -129,7 +129,6 @@ env:
     - FRAMEWORK=cherrypy
     - FRAMEWORK=aiohttp
     - FRAMEWORK=asgineer
-    - FRAMEWORK=morepath
     - FRAMEWORK=blacksheep
     - FRAMEWORK=spyne
     - FRAMEWORK=cyclone
