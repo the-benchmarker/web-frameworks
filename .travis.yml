@@ -60,6 +60,7 @@ env:
     - FRAMEWORK=hyperf
     - FRAMEWORK=one
     - FRAMEWORK=phalcon
+    - FRAMEWORK=hamlet
     - FRAMEWORK=zend-framework
     - FRAMEWORK=swoft
     - FRAMEWORK=one-fpm
