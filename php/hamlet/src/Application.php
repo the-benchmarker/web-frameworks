@@ -2,12 +2,16 @@
 
 namespace Application;
 
-use Application\Resources\{ApplicationResource, UserResource, UserIDResource};
+use Application\Resources\ApplicationResource;
+use Application\Resources\UserResource;
+use Application\Resources\UserIDResource;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Hamlet\Http\Applications\AbstractApplication;
 use Hamlet\Http\Requests\Request;
-use Hamlet\Http\Resources\{HttpResource, NotFoundResource};
-use Hamlet\Http\Responses\{Response, ServerErrorResponse};
+use Hamlet\Http\Resources\HttpResource;
+use Hamlet\Http\Resources\NotFoundResource;
+use Hamlet\Http\Responses\Response;
+use Hamlet\Http\Responses\ServerErrorResponse;
 use Psr\Cache\CacheItemPoolInterface;
 
 class Application extends AbstractApplication
@@ -31,8 +35,7 @@ class Application extends AbstractApplication
         if ($request->getMethod() === 'GET') {
             if ($path === '/') {
                 return new ApplicationResource;
-            }
-            elseif (count($parts) === 3 && $parts[1] === 'user') {
+            } elseif (count($parts) === 3 && $parts[1] === 'user') {
                 return new UserIDResource($parts[2]);
             }
         }
