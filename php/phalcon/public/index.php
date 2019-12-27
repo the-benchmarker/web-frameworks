@@ -1,14 +1,44 @@
 <?php
 
-use Application\Application as ApplicationApplication;
+use Phalcon\Mvc\Micro;
 
-error_reporting(E_ALL);
-$rootPath = dirname(__DIR__);
+$app = new Micro();
 
-try {
-    require_once $rootPath . '/vendor/autoload.php';
-    echo (new ApplicationApplication($rootPath))->run();
-} catch (Exception $e) {
-    echo $e->getMessage(), '<br>';
-    echo nl2br(htmlentities($e->getTraceAsString()));
-}
+$app->get(
+    '/',
+    function () use ($app) {
+        $response = $app->response;
+        $response->setStatusCode(200, "OK");
+        $response->setContent("");
+
+        return $response;
+    }
+);
+
+$app->get(
+    '/user/{id}',
+    function ($id) use ($app) {
+        $response = $app->response;
+        $response->setStatusCode(200, "OK");
+        $response->setContent($id);
+
+        return $response;
+    }
+);
+
+$app->post(
+    '/user',
+    function () use ($app) {
+        $response = $app->response;
+        $response->setStatusCode(200, "OK");
+        $response->setContent("");
+
+        return $response;
+    }
+);
+
+
+$app->handle(
+    $_SERVER["REQUEST_URI"]
+);
+
