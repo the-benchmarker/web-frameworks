@@ -59,6 +59,7 @@ env:
     - FRAMEWORK=symfony
     - FRAMEWORK=hyperf
     - FRAMEWORK=one
+    - FRAMEWORK=phalcon
     - FRAMEWORK=zend-framework
     - FRAMEWORK=swoft
     - FRAMEWORK=one-fpm
