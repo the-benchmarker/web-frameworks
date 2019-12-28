@@ -19,13 +19,13 @@ class App < Admiral::Command
     def run
       results = {} of String => Hash(String, String | Float64)
       order_by_latency = <<-EOS
-SELECT f.id, l.label AS language, f.label AS framework, k.label AS key, sum(v.value/3) AS value, k.label='latency:average' AS filter 
+SELECT f.id, l.label, f.label, k.label, sum(v.value/3), k.label='request:per_second'
   FROM frameworks AS f 
   JOIN languages AS l on l.id = f.language_id 
   JOIN metric_keys as k on k.framework_id = f.id
   JOIN metric_values as v on v.metric_id = k.id 
     GROUP BY 1,2,3,4
-    ORDER BY 6 desc, 5
+    ORDER BY 6 desc, 5 desc
 EOS
       DB.open "sqlite3://data.db" do |db|
         db.query order_by_latency do |row|
