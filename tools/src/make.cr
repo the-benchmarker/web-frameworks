@@ -85,6 +85,14 @@ class App < Admiral::Command
                 end
                 params["deps"] = deps
               end
+              
+              if framework_config.as_h.has_key?("before_build")
+                deps = [] of String
+                framework_config["before_build"].as_a.each do |dep|
+                  deps << dep.to_s
+                end
+                params["before_build"] = deps
+              end
               if framework_config.as_h.has_key?("patch")
                 deps = [] of String
                 framework_config["patch"].as_a.each do |dep|

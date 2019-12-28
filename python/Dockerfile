@@ -1,6 +1,6 @@
 FROM python:3.8-alpine
 
-RUN apk add build-base python3-dev
+RUN apk add build-base
 
 WORKDIR /usr/src/app
 

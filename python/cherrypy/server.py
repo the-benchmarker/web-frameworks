@@ -2,13 +2,13 @@
 import cherrypy
 
 
-IS_STANDALONE = __name__ == '__main__'
+IS_STANDALONE = __name__ == "__main__"
 
 
 class WebRoot:
     @cherrypy.expose
     def index(self):
-        return ''
+        return ""
 
 
 @cherrypy.expose
@@ -17,19 +17,17 @@ class UserAPI:
         return user_id
 
     def POST(self):
-        return ''
+        return ""
 
 
 WebRoot.user = UserAPI()
 
 
 global_config = {
-    'environment': 'production' if IS_STANDALONE else 'embedded',
+    "environment": "production" if IS_STANDALONE else "embedded",
 }
 config = {
-    '/user': {
-        'request.dispatch': cherrypy.dispatch.MethodDispatcher(),
-    },
+    "/user": {"request.dispatch": cherrypy.dispatch.MethodDispatcher(), },
 }
 
 
@@ -41,7 +39,7 @@ if not IS_STANDALONE:
     cherrypy.server.unsubscribe()
     cherrypy.engine.start()
 
-app = cherrypy.tree.mount(WebRoot(), '', config)
+app = cherrypy.tree.mount(WebRoot(), "", config)
 
 
 # standalone self-test

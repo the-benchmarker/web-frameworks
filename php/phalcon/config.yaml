@@ -1,0 +1,26 @@
+framework:
+  website: phalcon.io
+  version: 4.0
+
+php_ext:
+  - psr
+
+build_deps:
+  - bash
+
+before_build:
+  - curl -sS -o /tmp/phalcon.tar.gz https://codeload.github.com/phalcon/cphalcon/tar.gz/v4.0.0
+  - cd /tmp/ && tar xzf phalcon.tar.gz && cd cphalcon-4.0.0/build && bash install
+  - cp /tmp/cphalcon-4.0.0/.ci/phalcon.ini /usr/local/etc/php/conf.d/docker-php-ext-phalcon.ini
+
+nginx_conf:
+  - |
+    location /{\n\
+        rewrite ^/(.*)$ /index.php?_url=$1 last;\n\
+    }\n\
+  - |
+    location = /index.php {\n\
+      fastcgi_pass unix:/var/run/php-fpm.sock;\n\
+      fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
+      include fastcgi_params;\n\
+    }\n\
