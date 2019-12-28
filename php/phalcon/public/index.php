@@ -41,4 +41,3 @@ $app->post(
 $app->handle(
     $_SERVER["REQUEST_URI"]
 );
-
