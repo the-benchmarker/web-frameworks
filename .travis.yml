@@ -60,6 +60,7 @@ env:
     - FRAMEWORK=hyperf
     - FRAMEWORK=one
     - FRAMEWORK=phalcon
+    - FRAMEWORK=hamlet
     - FRAMEWORK=zend-framework
     - FRAMEWORK=swoft
     - FRAMEWORK=one-fpm
@@ -145,7 +146,7 @@ script:
   - shards install
   - shards build
   - bin/make config --without-sieger
-  - bin/neph ${FRAMEWORK}
+  - bin/neph ${FRAMEWORK} --mode=CI
   - crystal spec
 
 notifications:
