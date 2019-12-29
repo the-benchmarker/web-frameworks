@@ -3,15 +3,13 @@
 namespace Application;
 
 use Application\Resources\ApplicationResource;
-use Application\Resources\UserResource;
 use Application\Resources\UserIDResource;
+use Application\Resources\UserResource;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Hamlet\Http\Applications\AbstractApplication;
 use Hamlet\Http\Requests\Request;
 use Hamlet\Http\Resources\HttpResource;
 use Hamlet\Http\Resources\NotFoundResource;
-use Hamlet\Http\Responses\Response;
-use Hamlet\Http\Responses\ServerErrorResponse;
 use Psr\Cache\CacheItemPoolInterface;
 
 class Application extends AbstractApplication
@@ -26,18 +24,12 @@ class Application extends AbstractApplication
 
     public function findResource(Request $request): HttpResource
     {
-        $path = $request->getPath();
-        $parts = \explode(DIRECTORY_SEPARATOR, $path);
-
-        if ($path === '/user' && $request->getMethod() === 'POST') {
+        if ($request->getPath() == '/user') {
             return new UserResource;
-        }
-        if ($request->getMethod() === 'GET') {
-            if ($path === '/') {
-                return new ApplicationResource;
-            } elseif (count($parts) === 3 && $parts[1] === 'user') {
-                return new UserIDResource($parts[2]);
-            }
+        } elseif ($request->getPath() == '/') {
+            return new ApplicationResource;
+        } elseif ($parts = $request->pathMatchesPattern('/user/{id}')) {
+            return new UserIDResource($parts['id']);
         }
         return new NotFoundResource;
     }
