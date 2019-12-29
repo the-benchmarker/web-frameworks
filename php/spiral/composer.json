@@ -1,15 +1,15 @@
 {
-  "require": {
-    "spiral/framework": "~2.4.1",
-    "spiral/nyholm-bridge": "*",
-    "spiral/http": "*",
-    "spiral/router": "*",
-    "spiral/console": "*",
-    "spiral/roadrunner": "^1.4"
-  },
-  "autoload": {
-    "psr-4": {
-      "App\\": "app/src/"
-    }
-  }
+	"require": {
+		"spiral/framework": "~2.4.1",
+		"spiral/nyholm-bridge": "*",
+		"spiral/http": "*",
+		"spiral/router": "*",
+		"spiral/console": "*",
+		"spiral/roadrunner": "^1.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"App\\": "app/src/"
+		}
+	}
 }
