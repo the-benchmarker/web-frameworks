@@ -1,7 +1,7 @@
 {
   "autoload": {
     "psr-4": {
-      "Application\\": "src/"
+      "Application\\": "src/Application/"
     }
   },
   "minimum-stability": "dev",
