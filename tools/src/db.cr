@@ -42,6 +42,12 @@ EOS
               config = YAML.parse(File.read("#{language}/config.yaml"))
               results[key]["language_version"] = config["provider"]["default"]["language"].to_s
               config = YAML.parse(File.read("#{language}/#{framework}/config.yaml"))
+              if config["framework"].as_h.has_key?("github")
+                website = "https://github.com/#{config["framework"]["github"].to_s}"
+              else
+                website = "https://#{config["framework"]["website"].to_s}"
+              end
+              results[key]["framework_website"] = website
               results[key]["framework_version"] = config["framework"]["version"].to_s
             end
             results[key][metric] = value
@@ -52,17 +58,18 @@ EOS
         "|    | Language | Framework | Speed (`req/s`) | Horizontal scale (parallelism) | Vertical scale (concurrency) |",
         "|----|----------|-----------|----------------:|-------------|-------------|",
       ]
-      c=1
+      c = 1
       results.each do |_, row|
-        lines << "| %s | %s (%s)| %s (%s) | %s | | |" % [
+        lines << "| %s | %s (%s)| [%s](%s) (%s) | %s | | |" % [
           c,
           row["language"],
           row["language_version"],
           row["framework"],
+          row["framework_website"],
           row["framework_version"],
           row["request:per_second"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
         ]
-        c+=1
+        c += 1
       end
 
       path = File.expand_path("../../../README.mustache.md", __FILE__)
