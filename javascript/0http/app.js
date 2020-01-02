@@ -5,8 +5,8 @@ router.on("GET", "/", (req, res) => {
   res.end();
 });
 
-router.on("GET", "/user/:id", (req, res, params) => {
-  res.end(params.id);
+router.on("GET", "/user/:id", (req, res) => {
+  res.end(req.params.id);
 });
 
 router.on("POST", "/user", (req, res) => {
