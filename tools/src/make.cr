@@ -282,6 +282,21 @@ class App < Admiral::Command
                     yaml.scalar "language:#{language}"
                   end
                 end
+
+                if ["nim","rust","julia","csharp","fsharp","kotlin","perl","swift"].includes?(language)
+                  yaml.mapping do
+                    yaml.scalar "package_manager"
+                    yaml.scalar "docker"
+                    yaml.scalar "update_schedule"
+                    yaml.scalar "daily"
+                    yaml.scalar "directory"
+                    yaml.scalar "#{language}"
+                    yaml.scalar "default_labels"
+                    yaml.sequence do
+                      yaml.scalar "language:#{language}"
+                    end
+                  end
+                end
               end
             end
           end
