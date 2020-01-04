@@ -19,13 +19,13 @@ class App < Admiral::Command
     def run
       results = {} of String => Hash(String, String | Float64)
       order_by_latency = <<-EOS
-SELECT f.id, l.label AS language, f.label AS framework, k.label AS key, sum(v.value/3) AS value, k.label='latency:average' AS filter 
+SELECT f.id, l.label AS language, f.label AS framework, k.label AS key, sum(v.value/3) AS value, k.label='request:per_second' AS filter 
   FROM frameworks AS f 
   JOIN languages AS l on l.id = f.language_id 
   JOIN metric_keys as k on k.framework_id = f.id
   JOIN metric_values as v on v.metric_id = k.id 
     GROUP BY 1,2,3,4
-    ORDER BY 6 desc, 5
+    ORDER BY 6 desc, 5 desc
 EOS
       DB.open "sqlite3://data.db" do |db|
         db.query order_by_latency do |row|
@@ -42,6 +42,12 @@ EOS
               config = YAML.parse(File.read("#{language}/config.yaml"))
               results[key]["language_version"] = config["provider"]["default"]["language"].to_s
               config = YAML.parse(File.read("#{language}/#{framework}/config.yaml"))
+              if config["framework"].as_h.has_key?("github")
+                website = "https://github.com/#{config["framework"]["github"].to_s}"
+              else
+                website = "https://#{config["framework"]["website"].to_s}"
+              end
+              results[key]["framework_website"] = website
               results[key]["framework_version"] = config["framework"]["version"].to_s
             end
             results[key][metric] = value
@@ -49,22 +55,21 @@ EOS
         end
       end
       lines = [
-        "| Language | Framework | Average | 50th percentile | 90th percentile | Standard deviation | Requests / s | Throughput |",
-        "|----|----|--------:|------------:|--------:|---------:|-------:|----|",
+        "|    | Language | Framework | Speed (`req/s`) | Horizontal scale (parallelism) | Vertical scale (concurrency) |",
+        "|----|----------|-----------|----------------:|-------------|-------------|",
       ]
+      c = 1
       results.each do |_, row|
-        lines << "| %s (%s)| %s (%s) | **%.2f** ms | %.2f ms | %.2f ms | %.2f | %.2f | %.2f Mb |" % [
+        lines << "| %s | %s (%s)| [%s](%s) (%s) | %s | | |" % [
+          c,
           row["language"],
           row["language_version"],
           row["framework"],
+          row["framework_website"],
           row["framework_version"],
-          row["latency:average"].to_f/1000,
-          row["percentile:fifty"].to_f/1000,
-          row["percentile:ninety"].to_f/1000,
-          row["latency:deviation"].to_f,
-          row["request:per_second"].to_f,
-          row["request:bytes"].to_f / row["request:duration"].to_f,
+          row["request:per_second"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
         ]
+        c += 1
       end
 
       path = File.expand_path("../../../README.mustache.md", __FILE__)

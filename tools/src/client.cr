@@ -41,6 +41,9 @@ class Client < Admiral::Command
 
     address = File.read("ip.txt").strip
 
+    # Warm-up
+    Process.new("wrk", ["-H", "Connection: keep-alive", "-d", "5s", "-c", "8", "--timeout", "8", "-t", flags.threads.to_s, "http://#{address}:3000"])
+
     flags.routes.each do |route|
       method, uri = route.split(":")
       url = "http://#{address}:3000#{uri}"

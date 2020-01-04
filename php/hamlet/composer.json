@@ -1,12 +1,12 @@
 {
-  "autoload": {
-    "psr-4": {
-      "Application\\": "src/Application/"
-    }
-  },
-  "minimum-stability": "dev",
-  "require": {
-    "cache/array-adapter": "^1.1@dev",
-    "hamlet-framework/http": "dev-master"
-  }
+	"autoload": {
+		"psr-4": {
+			"Application\\": "src/Application/"
+		}
+	},
+	"minimum-stability": "dev",
+	"require": {
+		"cache/array-adapter": "^1.1@dev",
+		"hamlet-framework/http": "dev-master"
+	}
 }
