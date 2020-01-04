@@ -6,14 +6,29 @@ update_configs:
   directory: rust/nickel
   default_labels:
   - language:rust
+- package_manager: docker
+  update_schedule: daily
+  directory: rust
+  default_labels:
+  - language:rust
 - package_manager: rust:cargo
   update_schedule: live
   directory: rust/iron
   default_labels:
   - language:rust
+- package_manager: docker
+  update_schedule: daily
+  directory: rust
+  default_labels:
+  - language:rust
 - package_manager: rust:cargo
   update_schedule: live
   directory: rust/gotham
+  default_labels:
+  - language:rust
+- package_manager: docker
+  update_schedule: daily
+  directory: rust
   default_labels:
   - language:rust
 - package_manager: ruby:bundler
