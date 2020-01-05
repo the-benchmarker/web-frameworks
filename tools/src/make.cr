@@ -206,7 +206,6 @@ class App < Admiral::Command
 
                   unless flags.without_sieger
                     yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user #{flags.sieger_options}"
-                    yaml.scalar "docker ps -a -q  --filter ancestor=#{tool} | xargs -i docker container rm -f {}"
                   end
                 end
                 yaml.scalar "dir"
