@@ -85,7 +85,7 @@ class App < Admiral::Command
                 end
                 params["deps"] = deps
               end
-              
+
               if framework_config.as_h.has_key?("before_build")
                 deps = [] of String
                 framework_config["before_build"].as_a.each do |dep|
@@ -157,7 +157,7 @@ class App < Admiral::Command
               end
               if framework_config.as_h.has_key?("docroot")
                 params["docroot"] = framework_config["docroot"].to_s
-                params["slasheddocroot"] = params["docroot"].to_s.gsub("/","\\/")
+                params["slasheddocroot"] = params["docroot"].to_s.gsub("/", "\\/")
               end
               if framework_config.as_h.has_key?("options")
                 params["options"] = framework_config["options"].to_s
@@ -201,12 +201,19 @@ class App < Admiral::Command
               yaml.mapping do
                 yaml.scalar "commands"
                 yaml.sequence do
+                  # Build container
                   yaml.scalar "docker build -t #{tool} . #{flags.docker_options}"
+
+                  # Run container, and store IP
                   yaml.scalar "docker run -td #{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
 
+                  # Lannch sieging
                   unless flags.without_sieger
                     yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user #{flags.sieger_options}"
                   end
+
+                  # Stop the container
+                  yaml.scalar "docker ps -a -q  --filter ancestor=#{tool}  | xargs -r docker stop"
                 end
                 yaml.scalar "dir"
                 yaml.scalar "#{language}/#{tool}"
@@ -282,7 +289,7 @@ class App < Admiral::Command
                   end
                 end
 
-                if ["nim","rust","julia","csharp","fsharp","kotlin","perl","swift"].includes?(language)
+                if ["nim", "rust", "julia", "csharp", "fsharp", "kotlin", "perl", "swift"].includes?(language)
                   yaml.mapping do
                     yaml.scalar "package_manager"
                     yaml.scalar "docker"
