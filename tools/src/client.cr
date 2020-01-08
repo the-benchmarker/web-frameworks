@@ -8,19 +8,15 @@ PIPELINES = {
 
 def insert(db, framework_id, metric, value)
   DB.open("postgresql://postgres@localhost/benchmark") do |db|
-    row = db.exec "insert into keys (label) values ($1) on conflict do nothing", [metric]
-    metric_id = row.last_insert_id
-    # FIXME add method table to link metric
-    if metric_id == 0
-      metric_id = db.query_one("select id from keys where label = '#{metric}' limit 1", &.read(Int))
-    end
-    # FIXME returning not working
-    row = db.exec "insert into values (key_id, value) values ($1,$2) returning id", [metric_id, value]
-    value_id = row.last_insert_id
-    if value_id == 0
-      value_id = db.query_one("select id from values where key_id = #{metric_id} and value = #{value} order by id desc limit 1", &.read(Int))
-    end
-    db.exec "insert into metrics (value_id, framework_id) values ($1,$2)", [value_id, framework_id]
+    row = db.query("INSERT INTO keys (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id", metric)
+    row.move_next
+    metric_id = row.read(Int)
+
+    row = db.query("INSERT INTO values (key_id, value) VALUES ($1, $2) ON CONFLICT DO NOTHING RETURNING id", metric_id, value)
+    row.move_next
+    value_id = row.read(Int)
+
+    db.exec("INSERT INTO metrics (value_id, framework_id) VALUES ($1, $2)", value_id, framework_id)
   end
 end
 
@@ -33,22 +29,18 @@ class Client < Admiral::Command
   define_flag routes : Array(String), long: "routes", short: "r", default: ["GET:/"]
 
   def run
-    db = DB.open("postgresql://postgres@localhost/benchmark")
+    db = DB.open("postgres://postgres@localhost/benchmark")
 
-    row = db.exec "insert into languages (label) values ($1) on conflict do nothing", [flags.language]
+    row = db.query("INSERT INTO languages (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id", flags.language)
+    row.move_next
+    language_id = row.read(Int)
 
-    language_id = row.last_insert_id
-    if language_id == 0
-      language_id = db.query_one("select id from languages where label = '#{flags.language}'", &.read(Int))
-    end
-
-    row = db.exec "insert into frameworks (language_id, label) values ($1, $2) on conflict do nothing", [language_id, flags.framework]
-    framework_id = row.last_insert_id
-    if framework_id == 0
-      framework_id = db.query_one("select id from frameworks where language_id = #{language_id} and label = '#{flags.framework}'", &.read(Int))
-    end
+    row = db.query("INSERT INTO frameworks (language_id, label) VALUES ($1, $2) ON CONFLICT (language_id, label) DO UPDATE SET label = $2 RETURNING id", language_id, flags.framework)
+    row.move_next
+    framework_id = row.read(Int)
 
     sleep 20 # due to external program usage
+
     address = File.read("ip.txt").strip
 
     # Warm-up
@@ -87,9 +79,9 @@ class Client < Admiral::Command
       insert(db, framework_id, "percentile_ninety", result[14])
       insert(db, framework_id, "percentile_ninety_nine", result[15])
       insert(db, framework_id, "percentile_ninety_nine_ninety", result[16])
-
-      db.close
     end
+
+    db.close
   end
 end
 

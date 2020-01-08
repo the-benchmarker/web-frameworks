@@ -8,22 +8,22 @@ class App < Admiral::Command
     def run
       results = {} of String => Hash(String, String | Float64 | Float32)
       order_by_requests = <<-EOS
-SELECT f.id, l.label, f.label, k.label, sum(v.value)/3
-  FROM values AS v 
-  JOIN metrics AS m ON m.value_id = v.id 
-  JOIN keys AS k ON v.key_id = k.id 
-  JOIN frameworks AS f ON f.id = m.framework_id 
-  JOIN languages AS l ON l.id = f.language_id
-    GROUP BY 1, 2, 3, 4
-      ORDER BY k.label=$1 desc, 5
+SELECT f.id as framework, l.label, f.label, k.label, sum(v.value/3)::float
+  FROM values AS v
+    JOIN metrics AS m ON m.value_id = v.id 
+    JOIN frameworks AS f ON f.id = m.framework_id 
+    JOIN keys AS k ON v.key_id = k.id 
+    JOIN languages AS l on l.id = f.language_id 
+      GROUP BY 1,2,3,4
+        ORDER BY k.label=$1 desc, 5 desc
 EOS
       DB.open("postgresql://postgres@localhost/benchmark") do |db|
-        db.query order_by_requests, "latency_average" do |row|
+        db.query order_by_requests, "request_per_second" do |row|
           row.each do
             key = row.read(Int).to_s
             language = row.read(String)
             framework = row.read(String)
-            metric = row.read(String).to_s
+            metric = row.read(String)
             value = row.read(Float)
             unless results.has_key?(key)
               results[key] = {} of String => (String | Float64 | Float32)
@@ -64,7 +64,7 @@ EOS
           row["framework"],
           row["framework_website"],
           row["framework_version"],
-          row["request:per_second"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row["request_per_second"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
         ]
         c += 1
       end
