@@ -1,34 +1,24 @@
-require "admiral"
-require "sqlite3"
-require "crustache"
 require "yaml"
+require "admiral"
+require "pg"
+require "crustache"
 
 class App < Admiral::Command
-  class InitializeDatabase < Admiral::Command
-    def run
-      DB.open "sqlite3://./data.db" do |db|
-        db.exec "create table languages (id INTEGER PRIMARY KEY AUTOINCREMENT, label text UNIQUE)"
-        db.exec "create table frameworks (id INTEGER PRIMARY KEY AUTOINCREMENT, language_id INTEGER, label text, FOREIGN KEY(language_id) REFERENCES languages(id))"
-        db.exec "create table metric_keys (id INTEGER PRIMARY KEY AUTOINCREMENT, label text, framework_id INTEGER, FOREIGN KEY(framework_id) REFERENCES frameworks(id))"
-        db.exec "create table metric_values (id INTEGER PRIMARY KEY AUTOINCREMENT, metric_id INTEGER, value FLOAT, FOREIGN KEY(metric_id) REFERENCES metrics(id))"
-      end
-    end
-  end
-
   class ReadmeWriter < Admiral::Command
     def run
-      results = {} of String => Hash(String, String | Float64)
-      order_by_latency = <<-EOS
-SELECT f.id, l.label AS language, f.label AS framework, k.label AS key, sum(v.value/3) AS value, k.label='request:per_second' AS filter 
-  FROM frameworks AS f 
-  JOIN languages AS l on l.id = f.language_id 
-  JOIN metric_keys as k on k.framework_id = f.id
-  JOIN metric_values as v on v.metric_id = k.id 
-    GROUP BY 1,2,3,4
-    ORDER BY 6 desc, 5 desc
+      results = {} of String => Hash(String, String | Float64 | Float32)
+      order_by_requests = <<-EOS
+SELECT f.id as framework, l.label, f.label, k.label, sum(v.value/3)::float
+  FROM values AS v
+    JOIN metrics AS m ON m.value_id = v.id 
+    JOIN frameworks AS f ON f.id = m.framework_id 
+    JOIN keys AS k ON v.key_id = k.id 
+    JOIN languages AS l on l.id = f.language_id 
+      GROUP BY 1,2,3,4
+        ORDER BY k.label=$1 desc, 5 desc
 EOS
-      DB.open "sqlite3://data.db" do |db|
-        db.query order_by_latency do |row|
+      DB.open(ENV["DATABASE_URL"]) do |db|
+        db.query order_by_requests, "request_per_second" do |row|
           row.each do
             key = row.read(Int).to_s
             language = row.read(String)
@@ -36,8 +26,10 @@ EOS
             metric = row.read(String)
             value = row.read(Float)
             unless results.has_key?(key)
-              results[key] = {} of String => String | Float64
+              results[key] = {} of String => (String | Float64 | Float32)
               results[key]["language"] = language
+              config = YAML.parse(File.read("#{language}/config.yaml"))
+              results[key]["language_version"] = config["provider"]["default"]["language"].to_s
               results[key]["framework"] = framework
               config = YAML.parse(File.read("#{language}/config.yaml"))
               results[key]["language_version"] = config["provider"]["default"]["language"].to_s
@@ -49,6 +41,11 @@ EOS
               end
               results[key]["framework_website"] = website
               results[key]["framework_version"] = config["framework"]["version"].to_s
+              begin
+                results[key]["framework_website"] = "https://github.com/#{config["framework"]["github"].to_s}"
+              rescue
+                results[key]["framework_website"] = "https://#{config["framework"]["website"].to_s}"
+              end
             end
             results[key][metric] = value
           end
@@ -67,7 +64,7 @@ EOS
           row["framework"],
           row["framework_website"],
           row["framework_version"],
-          row["request:per_second"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row["request_per_second"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
         ]
         c += 1
       end
@@ -78,7 +75,6 @@ EOS
     end
   end
 
-  register_sub_command init : InitializeDatabase, description "Create database"
   register_sub_command to_readme : ReadmeWriter, description "Update readme with results"
 
   def run

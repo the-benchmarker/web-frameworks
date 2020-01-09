@@ -29,6 +29,7 @@ This project aims to be a load benchmarking suite, no more, no less
 + [Crystal](https://crystal-lang.org) as `built-in` tools are made in this language
 + [Docker](https://www.docker.com) as **frameworks** are `isolated` into _containers_
 + [wrk](https://github.com/wg/wrk) as benchmarking tool, `>= 4.1.0`
++ [postgresql](https://www.postgresql.org) to store data, `>= 10`
 
 :information_source: you need `wrk` **stable**
 
@@ -52,10 +53,12 @@ shards install
 shards build
 ~~~
 
-+ Initialize `sqlite` database
++ Create and initialize the database
 
 ~~~sh
-bin/db init
+createdb -U postgres benchmark
+psql -U postgres -d benchmark < .ci/dump.sql
+export DATABASE_URL="postgresql://postgres@localhost/benchmark"
 ~~~
 
 + Make configuration

@@ -1,18 +1,23 @@
 require "admiral"
-require "sqlite3"
+require "pg"
 
 PIPELINES = {
   "GET":  File.expand_path("../../" + "pipeline.lua", __FILE__),
   "POST": File.expand_path("../../" + "pipeline_post.lua", __FILE__),
 }
 
-def insert(db, framework_id, metric, value)
-  row = db.exec "insert or ignore into metric_keys values (null, ?, ?)", metric, framework_id
-  metric_id = row.last_insert_id
-  if metric_id == 0
-    metric_id = db.scalar "select id from metric_keys where label = ? and framework_id = ?", metric, framework_id
+def insert(framework_id, metric, value)
+  DB.open(ENV["DATABASE_URL"]) do |db|
+    row = db.query("INSERT INTO keys (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id", metric)
+    row.move_next
+    metric_id = row.read(Int)
+
+    row = db.query("INSERT INTO values (key_id, value) VALUES ($1, $2) ON CONFLICT DO NOTHING RETURNING id", metric_id, value)
+    row.move_next
+    value_id = row.read(Int)
+
+    db.exec("INSERT INTO metrics (value_id, framework_id) VALUES ($1, $2)", value_id, framework_id)
   end
-  db.exec "insert into metric_values values (null, ?, ?)", metric_id, value
 end
 
 class Client < Admiral::Command
@@ -24,18 +29,15 @@ class Client < Admiral::Command
   define_flag routes : Array(String), long: "routes", short: "r", default: ["GET:/"]
 
   def run
-    db = DB.open "sqlite3://../../data.db"
-    row = db.exec "insert or ignore into languages values (null, ?)", flags.language
-    language_id = row.last_insert_id
-    if language_id == 0
-      language_id = db.scalar "select id from languages where label = ?", flags.language
-    end
+    db = DB.open(ENV["DATABASE_URL"])
 
-    row = db.exec "insert or ignore into frameworks values (null, ?, ?)", language_id, flags.framework
-    framework_id = row.last_insert_id
-    if language_id == 0
-      framework_id = db.scalar "select id from languages where language_id = ? and label = ?", language_id, flags.framework
-    end
+    row = db.query("INSERT INTO languages (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id", flags.language)
+    row.move_next
+    language_id = row.read(Int)
+
+    row = db.query("INSERT INTO frameworks (language_id, label) VALUES ($1, $2) ON CONFLICT (language_id, label) DO UPDATE SET label = $2 RETURNING id", language_id, flags.framework)
+    row.move_next
+    framework_id = row.read(Int)
 
     sleep 20 # due to external program usage
 
@@ -57,30 +59,29 @@ class Client < Admiral::Command
 
       result = io.to_s.split(",")
 
-      insert(db, framework_id, "request:duration", result[0])
-      insert(db, framework_id, "request:total", result[1])
-      insert(db, framework_id, "request:per_second", result[2])
-      insert(db, framework_id, "request:bytes", result[3])
+      insert(framework_id, "request_duration", result[0])
+      insert(framework_id, "request_total", result[1])
+      insert(framework_id, "request_per_second", result[2])
+      insert(framework_id, "request_bytes", result[3])
 
-      insert(db, framework_id, "error:socket", result[4])
-      insert(db, framework_id, "error:read", result[5])
-      insert(db, framework_id, "error:write", result[6])
-      insert(db, framework_id, "error:http", result[7])
-      insert(db, framework_id, "error:timeout", result[8])
+      insert(framework_id, "error_socket", result[4])
+      insert(framework_id, "error_read", result[5])
+      insert(framework_id, "error_write", result[6])
+      insert(framework_id, "error_http", result[7])
+      insert(framework_id, "error_timeout", result[8])
 
-      insert(db, framework_id, "latency:minimum", result[9])
-      insert(db, framework_id, "latency:maximum", result[10])
-      insert(db, framework_id, "latency:average", result[11])
-      insert(db, framework_id, "latency:deviation", result[12])
+      insert(framework_id, "latency_minimum", result[9])
+      insert(framework_id, "latency_maximum", result[10])
+      insert(framework_id, "latency_average", result[11])
+      insert(framework_id, "latency_deviation", result[12])
 
-      insert(db, framework_id, "percentile:fifty", result[13])
-      insert(db, framework_id, "percentile:seventy_five", result[14])
-      insert(db, framework_id, "percentile:ninety", result[15])
-      insert(db, framework_id, "percentile:ninety_nine", result[16])
-      insert(db, framework_id, "percentile:ninety_nine_ninety", result[17])
-
-      db.close
+      insert(framework_id, "percentile_fifty", result[13])
+      insert(framework_id, "percentile_ninety", result[14])
+      insert(framework_id, "percentile_ninety_nine", result[15])
+      insert(framework_id, "percentile_ninety_nine_ninety", result[16])
     end
+
+    db.close
   end
 end
 
