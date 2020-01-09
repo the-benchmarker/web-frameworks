@@ -98,6 +98,11 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
+  directory: go/fiber
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
   directory: go/fasthttprouter
   default_labels:
   - language:go
