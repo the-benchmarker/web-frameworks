@@ -3,7 +3,7 @@ dist: bionic
 
 services:
   - docker # Use docker to containerize frameworks
-  - redis # Use redis to store data
+  - postgresql # Use postgresql to store data
 
 # This tool is written in crystal
 language: crystal
@@ -13,6 +13,11 @@ env:
     {{#frameworks}}
     - FRAMEWORK={{.}}
     {{/frameworks}}
+    - DATABASE_URL="postgresql://postgres@localhost/benchmark"
+
+before_script:
+  - psql -c 'CREATE DATABASE benchmark;' -U postgres;
+  - pg_restore --schema-only -O postgresql://postgres@localhost/benchmark .ci/dump.sql
 
 script:
   - shards install

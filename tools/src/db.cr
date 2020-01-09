@@ -17,7 +17,7 @@ SELECT f.id as framework, l.label, f.label, k.label, sum(v.value/3)::float
       GROUP BY 1,2,3,4
         ORDER BY k.label=$1 desc, 5 desc
 EOS
-      DB.open("postgresql://postgres@localhost/benchmark") do |db|
+      DB.open(ENV["DATABASE_URL"]) do |db|
         db.query order_by_requests, "request_per_second" do |row|
           row.each do
             key = row.read(Int).to_s

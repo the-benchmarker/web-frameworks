@@ -6,8 +6,8 @@ PIPELINES = {
   "POST": File.expand_path("../../" + "pipeline_post.lua", __FILE__),
 }
 
-def insert(db, framework_id, metric, value)
-  DB.open("postgresql://postgres@localhost/benchmark") do |db|
+def insert(framework_id, metric, value)
+  DB.open(ENV["DATABASE_URL"]) do |db|
     row = db.query("INSERT INTO keys (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id", metric)
     row.move_next
     metric_id = row.read(Int)
@@ -29,7 +29,7 @@ class Client < Admiral::Command
   define_flag routes : Array(String), long: "routes", short: "r", default: ["GET:/"]
 
   def run
-    db = DB.open("postgres://postgres@localhost/benchmark")
+    db = DB.open(ENV["DATABASE_URL"])
 
     row = db.query("INSERT INTO languages (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id", flags.language)
     row.move_next
@@ -59,26 +59,26 @@ class Client < Admiral::Command
 
       result = io.to_s.split(",")
 
-      insert(db, framework_id, "request_duration", result[0])
-      insert(db, framework_id, "request_total", result[1])
-      insert(db, framework_id, "request_per_second", result[2])
-      insert(db, framework_id, "request_bytes", result[3])
+      insert(framework_id, "request_duration", result[0])
+      insert(framework_id, "request_total", result[1])
+      insert(framework_id, "request_per_second", result[2])
+      insert(framework_id, "request_bytes", result[3])
 
-      insert(db, framework_id, "error_socket", result[4])
-      insert(db, framework_id, "error_read", result[5])
-      insert(db, framework_id, "error_write", result[6])
-      insert(db, framework_id, "error_http", result[7])
-      insert(db, framework_id, "error_timeout", result[8])
+      insert(framework_id, "error_socket", result[4])
+      insert(framework_id, "error_read", result[5])
+      insert(framework_id, "error_write", result[6])
+      insert(framework_id, "error_http", result[7])
+      insert(framework_id, "error_timeout", result[8])
 
-      insert(db, framework_id, "latency_minimum", result[9])
-      insert(db, framework_id, "latency_maximum", result[10])
-      insert(db, framework_id, "latency_average", result[11])
-      insert(db, framework_id, "latency_deviation", result[12])
+      insert(framework_id, "latency_minimum", result[9])
+      insert(framework_id, "latency_maximum", result[10])
+      insert(framework_id, "latency_average", result[11])
+      insert(framework_id, "latency_deviation", result[12])
 
-      insert(db, framework_id, "percentile_fifty", result[13])
-      insert(db, framework_id, "percentile_ninety", result[14])
-      insert(db, framework_id, "percentile_ninety_nine", result[15])
-      insert(db, framework_id, "percentile_ninety_nine_ninety", result[16])
+      insert(framework_id, "percentile_fifty", result[13])
+      insert(framework_id, "percentile_ninety", result[14])
+      insert(framework_id, "percentile_ninety_nine", result[15])
+      insert(framework_id, "percentile_ninety_nine_ninety", result[16])
     end
 
     db.close
