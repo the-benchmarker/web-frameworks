@@ -9,11 +9,11 @@ func main() {
 	app.Get("/", func(c *fiber.Ctx) {
 		c.Send("")
 	})
-	app.Get("/", func(c *fiber.Ctx) {
-		c.Send("")
-	})
-	app.Post("/user/:id", func(c *fiber.Ctx) {
+	app.Get("/user/:id", func(c *fiber.Ctx) {
 		c.Send(c.Params("id"))
+	})
+	app.Post("/", func(c *fiber.Ctx) {
+		c.Send("")
 	})
 	app.Listen(3000)
 }
