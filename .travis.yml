@@ -10,6 +10,7 @@ language: crystal
 
 env:
   matrix:
+    - FRAMEWORK=fiber
     - FRAMEWORK=httpbeast
     - FRAMEWORK=jester
     - FRAMEWORK=kore

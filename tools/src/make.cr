@@ -213,7 +213,7 @@ class App < Admiral::Command
                   end
 
                   # Stop the container
-                  yaml.scalar "docker ps -a -q  --filter ancestor=#{tool}  | xargs -r docker stop"
+                  yaml.scalar "docker ps -a -q  --filter ancestor=#{tool}  | xargs -r docker rm -f"
                 end
                 yaml.scalar "dir"
                 yaml.scalar "#{language}/#{tool}"
