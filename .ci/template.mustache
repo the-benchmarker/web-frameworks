@@ -17,7 +17,7 @@ env:
 
 before_script:
   - psql -c 'CREATE DATABASE benchmark;' -U postgres;
-  - pg_restore --schema-only -O postgresql://postgres@localhost/benchmark .ci/dump.sql
+  - psql -U postgres -d benchmark < .ci/dump.sql
 
 script:
   - shards install
