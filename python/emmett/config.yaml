@@ -1,0 +1,9 @@
+framework:
+  website: github.com/emmett-framework/emmett
+  version: "2.0.0a1"
+
+command: >
+  emmett \
+    -a server.py \
+    serve \
+    --port 3000
