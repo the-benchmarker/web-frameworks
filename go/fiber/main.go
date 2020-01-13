@@ -7,13 +7,13 @@ import (
 func main() {
 	app := fiber.New()
 	app.Get("/", func(c *fiber.Ctx) {
-		c.Send("")
+
 	})
 	app.Get("/user/:id", func(c *fiber.Ctx) {
-		c.Send(c.Params("id"))
+		c.SendString(c.Params("id"))
 	})
-	app.Post("/", func(c *fiber.Ctx) {
-		c.Send("")
+	app.Post("/user", func(c *fiber.Ctx) {
+
 	})
 	app.Listen(3000)
 }
