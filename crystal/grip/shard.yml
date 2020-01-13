@@ -1,0 +1,15 @@
+name: grip
+version: 0.1.0
+
+authors:
+  - grkek <giorgi.kavrelishvili@pm.me>
+
+targets:
+  server:
+    main: src/server.cr
+
+dependencies:
+  grip:
+    github: grkek/grip
+
+license: MIT
