@@ -308,6 +308,11 @@ update_configs:
   - language:python
 - package_manager: python
   update_schedule: live
+  directory: python/emmett
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
   directory: python/hug
   default_labels:
   - language:python
