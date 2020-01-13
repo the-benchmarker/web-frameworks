@@ -26,6 +26,7 @@ env:
     - FRAMEWORK=router.cr
     - FRAMEWORK=amber
     - FRAMEWORK=athena
+    - FRAMEWORK=grip
     - FRAMEWORK=raze
     - FRAMEWORK=onyx
     - FRAMEWORK=lucky
