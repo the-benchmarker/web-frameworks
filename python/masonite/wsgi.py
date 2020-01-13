@@ -10,7 +10,7 @@ Some Service providers need important bindings like the WSGI application
 and the application configuration file before they boot.
 """
 
-container = App()
+container = App(remember=True)
 
 container.bind("WSGI", app)
 container.bind("Container", container)
