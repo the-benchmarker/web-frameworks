@@ -9,11 +9,12 @@ services:
 language: crystal
 
 env:
-  matrix:
+  global:
+    - DATABASE_URL="postgresql://postgres@localhost/benchmark"
+  jobs:
     {{#frameworks}}
     - FRAMEWORK={{.}}
     {{/frameworks}}
-    - DATABASE_URL="postgresql://postgres@localhost/benchmark"
 
 before_script:
   - psql -c 'CREATE DATABASE benchmark;' -U postgres;
