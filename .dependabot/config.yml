@@ -463,11 +463,6 @@ update_configs:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
-  directory: javascript/nanoexpress-pro
-  default_labels:
-  - language:javascript
-- package_manager: javascript
-  update_schedule: live
   directory: javascript/fastify
   default_labels:
   - language:javascript
