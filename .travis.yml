@@ -19,9 +19,11 @@ env:
     - FRAMEWORK=evhtp
     - FRAMEWORK=amber
     - FRAMEWORK=athena
-    - FRAMEWORK=kemal
-    - FRAMEWORK=lucky
+    - FRAMEWORK=grip
+    - FRAMEWORK=raze
     - FRAMEWORK=onyx
+    - FRAMEWORK=lucky
+    - FRAMEWORK=kemal
     - FRAMEWORK=orion
     - FRAMEWORK=raze
     - FRAMEWORK=router.cr
