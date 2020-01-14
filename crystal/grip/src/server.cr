@@ -9,6 +9,7 @@ class Index < Grip::HttpConsumer
     route "/", ["GET"]
 
     def get(env)
+        headers(env, "Content-Type", "text/html")
         {:ok, nil}
     end
 end
@@ -17,6 +18,7 @@ class Users < Grip::HttpConsumer
     route "/user/:id", ["GET"]
 
     def get(env)
+        headers(env, "Content-Type", "text/html")
         {:ok, url?(env)["id"]}
     end
 end
@@ -25,6 +27,7 @@ class User < Grip::HttpConsumer
     route "/user", ["POST"]
 
     def post(env)
+        headers(env, "Content-Type", "text/html")
         {:ok, nil}
     end
 end
