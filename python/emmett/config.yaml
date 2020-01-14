@@ -1,0 +1,22 @@
+framework:
+  website: github.com/emmett-framework/emmett
+  version: "2.0.0a1"
+
+build_deps:
+  - libffi-dev
+
+# cryptography could not be install on alpine
+# @see https://github.com/pyca/cryptography/issues/4264#issuecomment-392781146
+fixes:
+  - apk del libressl-dev
+  - apk add openssl-dev
+  - pip install cryptography==2.2.2
+  - apk del openssl-dev
+  - apk add libressl-dev
+
+
+command: >
+  emmett \
+    -a server.py \
+    serve \
+    --port 3000
