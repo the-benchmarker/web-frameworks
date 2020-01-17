@@ -16,7 +16,10 @@ fixes:
 
 
 command: >
-  emmett \
-    -a server.py \
-    serve \
-    --port 3000
+  gunicorn  \
+    --log-level warning  \
+    --bind 0.0.0.0:3000  \
+    --reuse-port  \
+    --workers $(nproc)  \
+    --worker-class emmett.asgi.workers.EmmettWorker  \
+      server:app
