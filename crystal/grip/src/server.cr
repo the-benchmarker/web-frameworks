@@ -6,30 +6,30 @@ Grip.config do |cfg|
 end
 
 class Index < Grip::HttpConsumer
-    route "/", ["GET"]
+  route "/", ["GET"]
 
-    def get(env)
-        headers(env, "Content-Type", "text/html")
-        {:ok, nil}
-    end
+  def get(env)
+    headers(env, {"Content-Type" => "text/html"})
+    {"status" => 200, "content" => nil}
+  end
 end
 
 class Users < Grip::HttpConsumer
-    route "/user/:id", ["GET"]
+  route "/user/:id", ["GET"]
 
-    def get(env)
-        headers(env, "Content-Type", "text/html")
-        {:ok, url?(env)["id"]}
-    end
+  def get(env)
+    headers(env, {"Content-Type" => "text/html"})
+    {"status" => 200, "content" => url(env)["id"]}
+  end
 end
 
 class User < Grip::HttpConsumer
-    route "/user", ["POST"]
+  route "/user", ["POST"]
 
-    def post(env)
-        headers(env, "Content-Type", "text/html")
-        {:ok, nil}
-    end
+  def post(env)
+    headers(env, {"Content-Type" => "text/html"})
+    {"status" => 200, "content" => nil}
+  end
 end
 
 Grip.config.add_router Grip::HttpRouteHandler::INSTANCE
