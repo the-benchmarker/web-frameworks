@@ -32,7 +32,6 @@ class User < Grip::HttpConsumer
   end
 end
 
-Grip.config.add_router Grip::HttpRouteHandler::INSTANCE
 add_handlers [Index, Users, User]
 
 System.cpu_count.times do |i|
