@@ -1,7 +1,7 @@
 from sanic import Sanic
 from sanic.response import text
 
-app = Sanic(debug=False, access_log=False)
+app = Sanic(log_config=None)
 
 
 @app.route("/")
