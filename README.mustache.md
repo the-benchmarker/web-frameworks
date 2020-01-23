@@ -83,6 +83,8 @@ bin/db to_readme
 
 ## Results
 
+:information_source: Updated on **{{date}}** :information_source:
+
 {{#results}}
 {{.}}
 {{/results}}
