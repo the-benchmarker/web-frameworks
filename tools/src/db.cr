@@ -71,7 +71,7 @@ EOS
 
       path = File.expand_path("../../../README.mustache.md", __FILE__)
       template = Crustache.parse(File.read(path))
-      puts Crustache.render template, {"results" => lines}
+      puts Crustache.render template, {"results" => lines, "date": Time.now }
     end
   end
 
