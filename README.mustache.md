@@ -83,7 +83,12 @@ bin/db to_readme
 
 ## Results
 
-:information_source: Updated on **{{date}}** :information_source:
+:information_source:  Updated on **{{date}}** :information_source:
+
+> Benchmarking with [wrk](https://github.com/wg/wrk)
+   + Threads : 128
+   + Connections : 128
+   + Duration : 10 (seconds)
 
 {{#results}}
 {{.}}
