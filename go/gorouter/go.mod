@@ -1,3 +1,3 @@
 module main
 
-require github.com/vardius/gorouter/v4 v4.3.0
+require github.com/vardius/gorouter/v4 v4.4.0
