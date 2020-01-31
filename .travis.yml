@@ -107,7 +107,6 @@ env:
     - FRAMEWORK=fastapi
     - FRAMEWORK=django
     - FRAMEWORK=klein
-    - FRAMEWORK=bocadillo
     - FRAMEWORK=sanic
     - FRAMEWORK=bottle
     - FRAMEWORK=masonite
