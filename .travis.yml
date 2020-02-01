@@ -14,7 +14,6 @@ env:
   jobs:
     - FRAMEWORK=httpbeast
     - FRAMEWORK=jester
-    - FRAMEWORK=phoon
     - FRAMEWORK=kore
     - FRAMEWORK=agoo-c
     - FRAMEWORK=coast
@@ -154,7 +153,7 @@ script:
   - shards install
   - shards build
   - bin/make config --without-sieger
-  - bin/neph ${FRAMEWORK} --mode=CI
+  - travis_wait 15 bin/neph ${FRAMEWORK} --mode=CI
   - crystal spec
 
 notifications:
