@@ -9,16 +9,16 @@ import (
 )
 
 func index(ctx *fasthttp.RequestCtx) {
-	fmt.Fprint(ctx, "")
+	ctx.SetBodyString("")
 }
 
 func user(ctx *fasthttp.RequestCtx) {
-	fmt.Fprint(ctx, "")
+	ctx.SetBodyString("")
 }
 
 func userID(ctx *fasthttp.RequestCtx) {
 	params := ctx.UserValue("params").(context.Params)
-	fmt.Fprintf(ctx, "%s", params.Value("id"))
+	ctx.SetBodyString(params.Value("id"))
 }
 
 func main() {
