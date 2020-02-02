@@ -1,0 +1,25 @@
+framework:
+  github: dutradda/apidaora
+  version: 0.12
+
+build_deps:
+  - curl
+
+# install maturin to build orjson
+# @see https://github.com/ijl/orjson/issues/8#issuecomment-570335365
+fixes:
+  - curl https://sh.rustup.rs > init.sh
+  - sh init.sh -y
+  - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
+
+environment:
+  RUSTFLAGS: -C target-feature=-crt-static
+
+command: >
+  gunicorn  \
+    --log-level warning  \
+    --bind 0.0.0.0:3000  \
+    --reuse-port  \
+    --workers $(nproc)  \
+    --worker-class uvicorn.workers.UvicornWorker  \
+      server:app

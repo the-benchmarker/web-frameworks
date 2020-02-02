@@ -14,6 +14,10 @@ COPY . ./
   RUN {{{.}}}
 {{/fixes}}
 
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
+
 RUN pip install -r requirements.txt
 
 CMD {{command}}
