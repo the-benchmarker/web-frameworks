@@ -1,4 +1,4 @@
-FROM gradle:jdk8-alpine
+FROM gradle:6.1-jdk8
 
 WORKDIR /usr/src/app
 
