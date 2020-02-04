@@ -14,6 +14,7 @@ WORKDIR /usr/src/app
 COPY . ./
 
 ENV MIX_ENV prod
+ENV ERL_COMPILER_OPTIONS="[native,{hipe, [o3]}]"
 
 # Download dependencies
 RUN mix deps.get --only prod

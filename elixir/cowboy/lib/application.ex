@@ -1,6 +1,9 @@
 defmodule Server.Application do
   use Application
 
+  @compile :native
+  @compile {:hipe, [:o3]}
+
   def start(_type, _args) do
     children = [
       cowboy_child_spec()
