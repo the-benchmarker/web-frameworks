@@ -22,7 +22,7 @@ defmodule Server.MixProject do
 
   defp deps do
     [
-      {:ranch, "~> 2.0.0-rc.2"}
+      {:cowboy, "~> 2.7"}
     ]
   end
 end
