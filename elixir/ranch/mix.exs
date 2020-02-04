@@ -9,7 +9,6 @@ defmodule Server.MixProject do
 
       # Elixir config
       elixir: "~> 1.10",
-      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -23,9 +22,7 @@ defmodule Server.MixProject do
 
   defp deps do
     [
-      {:phoenix, "~> 1.4"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:ranch, "~> 2.0.0-rc.2"}
     ]
   end
 end

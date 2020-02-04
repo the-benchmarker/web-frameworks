@@ -1,0 +1,5 @@
+framework:
+  website: https://erlang.org/doc/man/gen_tcp.html
+  version: 1.0
+
+command: mix run --no-halt
