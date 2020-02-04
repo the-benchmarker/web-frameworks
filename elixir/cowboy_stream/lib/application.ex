@@ -22,7 +22,9 @@ defmodule Server.Application do
             max_connections: 16_384,
             num_acceptors: 100
           },
-          %{env: %{dispatch: :cowboy_router.compile([{:_, Server.routes()}])}}
+          %{
+            stream_handlers: [Server]
+          }
         ]
       },
       restart: :permanent,

@@ -14,7 +14,7 @@ defmodule Server.MixProject do
 
       # Release
       releases: [
-        default: [
+        server: [
           include_executables_for: [:unix]
         ]
       ]
