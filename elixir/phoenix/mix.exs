@@ -11,7 +11,14 @@ defmodule Server.MixProject do
       elixir: "~> 1.10",
       compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+
+      # Releases
+      releases: [
+        default: [
+          include_executables_for: [:unix]
+        ]
+      ]
     ]
   end
 

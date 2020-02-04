@@ -10,7 +10,14 @@ defmodule Server.MixProject do
       # Elixir config
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+
+      # Release
+      releases: [
+        default: [
+          include_executables_for: [:unix]
+        ]
+      ]
     ]
   end
 
