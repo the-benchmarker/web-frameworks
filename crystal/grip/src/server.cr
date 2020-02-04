@@ -1,40 +1,36 @@
 require "grip"
 
+class IndexHttpConsumer < Grip::HttpConsumer
+  def get(req)
+    headers("Content-Type", "text/html")
+    req.response.print(nil)
+  end
+end
+
+class UsersHttpConsumer < Grip::HttpConsumer
+  def get(req)
+    headers("Content-Type", "text/html")
+    req.response.print(url["id"])
+  end
+end
+
+class UserHttpConsumer < Grip::HttpConsumer
+  def post(req)
+    headers("Content-Type", "text/html")
+    req.response.print(nil)
+  end
+end
+
+get "/", IndexHttpConsumer
+get "/user/:id", UsersHttpConsumer
+post "/user", UserHttpConsumer
+
 Grip.config do |cfg|
   cfg.env = "production"
   cfg.logging = false
 end
 
-class Index < Grip::HttpConsumer
-  route "/", ["GET"]
-
-  def get(env)
-    headers(env, {"Content-Type" => "text/html"})
-    {"status" => 200, "content" => nil}
-  end
-end
-
-class Users < Grip::HttpConsumer
-  route "/user/:id", ["GET"]
-
-  def get(env)
-    headers(env, {"Content-Type" => "text/html"})
-    {"status" => 200, "content" => url(env)["id"]}
-  end
-end
-
-class User < Grip::HttpConsumer
-  route "/user", ["POST"]
-
-  def post(env)
-    headers(env, {"Content-Type" => "text/html"})
-    {"status" => 200, "content" => nil}
-  end
-end
-
-add_handlers [Index, Users, User]
-
-System.cpu_count.times do |i|
+System.cpu_count.times do |_|
   Process.fork do
     Grip.run do |config|
       server = config.server.not_nil!
