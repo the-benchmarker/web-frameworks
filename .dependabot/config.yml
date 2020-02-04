@@ -8,12 +8,7 @@ update_configs:
   - language:elixir
 - package_manager: elixir:hex
   update_schedule: live
-  directory: elixir/gen_tcp
-  default_labels:
-  - language:elixir
-- package_manager: elixir:hex
-  update_schedule: live
-  directory: elixir/ranch
+  directory: elixir/cowboy
   default_labels:
   - language:elixir
 - package_manager: go:modules
