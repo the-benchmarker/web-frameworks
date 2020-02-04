@@ -8,6 +8,11 @@ update_configs:
   - language:elixir
 - package_manager: elixir:hex
   update_schedule: live
+  directory: elixir/plug
+  default_labels:
+  - language:elixir
+- package_manager: elixir:hex
+  update_schedule: live
   directory: elixir/cowboy
   default_labels:
   - language:elixir
