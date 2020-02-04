@@ -30,8 +30,7 @@ env:
     - FRAMEWORK=toro
     - FRAMEWORK=aspnetcore
     - FRAMEWORK=phoenix
-    - FRAMEWORK=gen_tcp
-    - FRAMEWORK=ranch
+    - FRAMEWORK=cowboy
     - FRAMEWORK=suave
     - FRAMEWORK=aero
     - FRAMEWORK=air
