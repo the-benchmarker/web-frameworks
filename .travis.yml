@@ -32,6 +32,7 @@ env:
     - FRAMEWORK=phoenix
     - FRAMEWORK=plug
     - FRAMEWORK=cowboy
+    - FRAMEWORK=cowboy_stream
     - FRAMEWORK=suave
     - FRAMEWORK=aero
     - FRAMEWORK=air

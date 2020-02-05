@@ -16,6 +16,11 @@ update_configs:
   directory: elixir/cowboy
   default_labels:
   - language:elixir
+- package_manager: elixir:hex
+  update_schedule: live
+  directory: elixir/cowboy_stream
+  default_labels:
+  - language:elixir
 - package_manager: go:modules
   update_schedule: daily
   directory: go/aero
