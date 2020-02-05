@@ -6,7 +6,6 @@ use yii\web\Controller;
 
 class UserController extends Controller
 {
-    public $layout = false;
     public $enableCsrfValidation = false;
 
     public function actionIndex()
