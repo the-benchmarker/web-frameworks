@@ -13,8 +13,8 @@ WORKDIR /usr/src/app
 # Copy source code
 COPY . ./
 
-ENV MIX_ENV prod
-ENV ERL_COMPILER_OPTIONS="[native,{hipe, [o3]}]"
+ENV MIX_ENV="prod"
+ENV ERL_COMPILER_OPTIONS="[native, {hipe, [verbose, o3]}]"
 
 # Download dependencies
 RUN mix deps.get --only prod

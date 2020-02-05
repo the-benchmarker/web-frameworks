@@ -2,7 +2,7 @@ defmodule Server.Router do
   use Phoenix.Router
 
   @compile :native
-  @compile {:hipe, [:o3]}
+  @compile {:hipe, [:verbose, :o3]}
 
   get("/", Server.Controller, :index)
 

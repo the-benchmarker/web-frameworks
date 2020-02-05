@@ -3,7 +3,7 @@ defmodule Server do
 
   @compile {:inline, response: 0, response: 1}
   @compile :native
-  @compile {:hipe, [:o3]}
+  @compile {:hipe, [:verbose, :o3]}
 
   def init(_stream_id, %{method: "GET", path: "/"}, _opts) do
     {response(), []}

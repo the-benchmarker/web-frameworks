@@ -2,7 +2,7 @@ defmodule Server do
   use Plug.Router
 
   @compile :native
-  @compile {:hipe, [:o3]}
+  @compile {:hipe, [:verbose, :o3]}
 
   plug(:match)
   plug(:dispatch)

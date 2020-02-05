@@ -1,7 +1,7 @@
 defmodule Server do
   @compile {:inline, response: 1, response: 2}
   @compile :native
-  @compile {:hipe, [:o3]}
+  @compile {:hipe, [:verbose, :o3]}
 
   def init(%{method: "GET", path: "/"} = request, state) do
     {:ok, response(request), state}

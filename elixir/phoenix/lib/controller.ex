@@ -2,7 +2,7 @@ defmodule Server.Controller do
   use Phoenix.Controller, namespace: Server
 
   @compile :native
-  @compile {:hipe, [:o3]}
+  @compile {:hipe, [:verbose, :o3]}
 
   def index(conn, _params) do
     text(conn, "")
