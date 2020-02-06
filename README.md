@@ -96,7 +96,7 @@ bin/db to_readme
 | 2 | javascript (13.7)| [sifrr](https://sifrr.github.io/sifrr/#/./packages/server/sifrr-server/) (0.0) | 160 286 | | |
 | 3 | javascript (13.7)| [nanoexpress](https://nanoexpress.js.org) (1.1) | 159 339 | | |
 | 4 | java (8)| [rapidoid](https://rapidoid.org) (5.5) | 144 307 | | |
-| 5 | go (1.13)| [fiber](https://gofiber.github.io/fiber) (1.3) | 142 380 | | |
+| 5 | go (1.13)| [fiber](https://fiber.wiki) (1.3) | 142 380 | | |
 | 6 | crystal (0.31)| [router.cr](https://github.com/tbrand/router.cr) (0.2) | 142 274 | | |
 | 7 | crystal (0.31)| [toro](https://github.com/soveran/toro) (0.4) | 141 510 | | |
 | 8 | crystal (0.31)| [spider-gazelle](https://spider-gazelle.net) (2.3) | 138 260 | | |
@@ -166,7 +166,7 @@ bin/db to_readme
 | 72 | scala (2.12)| [http4s](https://http4s.org) (0.18) | 46 347 | | |
 | 73 | rust (1.41)| [nickel](https://nickel-org.github.io) (0.11) | 46 252 | | |
 | 74 | python (3.8)| [hug](https://hug.rest) (2.6) | 46 076 | | |
-| 75 | python (3.8)| [starlette](https://starlette.io) (0.13) | 45 384 | | |
+| 75 | python (3.8)| [starlette](https://www.starlette.io/) (0.13) | 45 384 | | |
 | 76 | rust (1.41)| [gotham](https://gotham.rs) (0.4) | 44 439 | | |
 | 77 | cpp (11)| [evhtp](https://criticalstack.com) (1.2) | 43 817 | | |
 | 78 | php (7.4)| [imi](https://imiphp.com) (1.0) | 42 404 | | |
