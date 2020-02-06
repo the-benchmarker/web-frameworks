@@ -38,7 +38,7 @@ class Client < Admiral::Command
     row.move_next
     framework_id = row.read(Int)
 
-    sleep 20 # due to external program usage
+    sleep 25 # due to external program usage
 
     address = File.read("ip.txt").strip
 

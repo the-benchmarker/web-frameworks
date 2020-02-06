@@ -9,11 +9,10 @@ defmodule Server.MixProject do
 
       # Elixir config
       elixir: "~> 1.10",
-      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
 
-      # Releases
+      # Release
       releases: [
         server: [
           include_executables_for: [:unix]
@@ -30,9 +29,7 @@ defmodule Server.MixProject do
 
   defp deps do
     [
-      {:phoenix, "~> 1.4"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:cowboy, "~> 2.7"}
     ]
   end
 end

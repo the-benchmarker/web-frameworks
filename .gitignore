@@ -4,6 +4,8 @@
 *.swp
 
 .neph
+neph.yaml
+shard.lock
 
 # git temporary files
 *.orig
@@ -15,3 +17,6 @@
 FRAMEWORKS.yaml
 */*/Dockerfile
 */*/ip.txt
+
+/lib
+/bin
