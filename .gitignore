@@ -4,6 +4,10 @@
 *.swp
 
 .neph
+neph.yaml
+lib/
+bin/
+shard.lock
 
 # git temporary files
 *.orig

@@ -71,11 +71,21 @@ EOS
 
       path = File.expand_path("../../../README.mustache.md", __FILE__)
       template = Crustache.parse(File.read(path))
-      puts Crustache.render template, {"results" => lines, "date": Time.now.to_s("%Y-%m-%d") }
+      puts Crustache.render template, {"results" => lines, "date": Time.now.to_s("%Y-%m-%d")}
+    end
+  end
+
+  class ClearResults < Admiral::Command
+    def run
+      DB.open(ENV["DATABASE_URL"]) do |db|
+        db.exec "DELETE FROM metrics;"
+        db.exec "DELETE FROM values;"
+      end
     end
   end
 
   register_sub_command to_readme : ReadmeWriter, description "Update readme with results"
+  register_sub_command clear : ClearResults, description "Clears the data from past runs"
 
   def run
     puts "help"
