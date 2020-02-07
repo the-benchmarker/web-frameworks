@@ -2,7 +2,7 @@ framework:
   website: micronaut.io
   version: 1.2
 
-image: gradle:jdk8-alpine
+image: gradle:6.1-jdk8
 
 build:
   - gradle build --project-cache-dir ~/.gradle

@@ -5,8 +5,6 @@
 
 .neph
 neph.yaml
-lib/
-bin/
 shard.lock
 
 # git temporary files
@@ -19,3 +17,6 @@ shard.lock
 FRAMEWORKS.yaml
 */*/Dockerfile
 */*/ip.txt
+
+/lib
+/bin

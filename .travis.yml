@@ -18,6 +18,10 @@ env:
     - FRAMEWORK=kore
     - FRAMEWORK=agoo-c
     - FRAMEWORK=coast
+    - FRAMEWORK=cowboy_stream
+    - FRAMEWORK=phoenix
+    - FRAMEWORK=cowboy
+    - FRAMEWORK=plug
     - FRAMEWORK=nickel
     - FRAMEWORK=iron
     - FRAMEWORK=gotham
@@ -89,8 +93,10 @@ env:
     - FRAMEWORK=symfony
     - FRAMEWORK=spiral
     - FRAMEWORK=hamlet
+    - FRAMEWORK=yii
     - FRAMEWORK=workerman
     - FRAMEWORK=cherrypy
+    - FRAMEWORK=apidaora
     - FRAMEWORK=responder
     - FRAMEWORK=asgineer
     - FRAMEWORK=quart
@@ -153,7 +159,7 @@ script:
   - shards install
   - shards build
   - bin/make config --without-sieger
-  - bin/neph ${FRAMEWORK} --mode=CI
+  - travis_wait 25 bin/neph ${FRAMEWORK} --mode=CI
   - crystal spec
 
 notifications:

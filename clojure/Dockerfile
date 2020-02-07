@@ -10,7 +10,7 @@ COPY . ./
 
 RUN clojure -Auberjar
 
-FROM openjdk:alpine
+FROM openjdk:14-alpine
 
 WORKDIR /opt/bin
 

@@ -1,6 +1,26 @@
 ---
 version: 1
 update_configs:
+- package_manager: elixir:hex
+  update_schedule: live
+  directory: elixir/cowboy_stream
+  default_labels:
+  - language:elixir
+- package_manager: elixir:hex
+  update_schedule: live
+  directory: elixir/phoenix
+  default_labels:
+  - language:elixir
+- package_manager: elixir:hex
+  update_schedule: live
+  directory: elixir/cowboy
+  default_labels:
+  - language:elixir
+- package_manager: elixir:hex
+  update_schedule: live
+  directory: elixir/plug
+  default_labels:
+  - language:elixir
 - package_manager: rust:cargo
   update_schedule: live
   directory: rust/nickel
@@ -268,12 +288,22 @@ update_configs:
   - language:php
 - package_manager: php:composer
   update_schedule: live
+  directory: php/yii
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
   directory: php/workerman
   default_labels:
   - language:php
 - package_manager: python
   update_schedule: live
   directory: python/cherrypy
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/apidaora
   default_labels:
   - language:python
 - package_manager: python
