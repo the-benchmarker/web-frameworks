@@ -72,12 +72,26 @@ class App < Admiral::Command
                 end
                 params["environment"] = environment
               end
+
               if framework_config.as_h.has_key?("image")
                 params["image"] = framework_config.as_h["image"].to_s
               end
+
               if framework_config.as_h.has_key?("build_opts")
                 params["build_opts"] = framework_config.as_h["build_opts"].to_s
               end
+
+              if env_vars = framework_config.as_h["env_vars"]?
+                vars = [] of String
+                env_vars.as_h.each do |name, value|
+                  value = value == "{{cpu_count}}" ? `nproc --all` : value
+
+                  vars << "ENV #{name.as_s.upcase} #{value}"
+                end
+
+                params["env_vars"] = vars
+              end
+
               if framework_config.as_h.has_key?("deps")
                 deps = [] of String
                 framework_config["deps"].as_a.each do |dep|
@@ -93,6 +107,7 @@ class App < Admiral::Command
                 end
                 params["before_build"] = deps
               end
+
               if framework_config.as_h.has_key?("patch")
                 deps = [] of String
                 framework_config["patch"].as_a.each do |dep|
@@ -100,6 +115,7 @@ class App < Admiral::Command
                 end
                 params["patch"] = deps
               end
+
               if framework_config.as_h.has_key?("build_deps")
                 deps = [] of String
                 framework_config["build_deps"].as_a.each do |dep|
@@ -107,6 +123,7 @@ class App < Admiral::Command
                 end
                 params["build_deps"] = deps
               end
+
               if framework_config.as_h.has_key?("bin_deps")
                 deps = [] of String
                 framework_config["bin_deps"].as_a.each do |dep|
@@ -114,6 +131,7 @@ class App < Admiral::Command
                 end
                 params["bin_deps"] = deps
               end
+
               if framework_config.as_h.has_key?("php_mod")
                 deps = [] of String
                 framework_config["php_mod"].as_a.each do |ext|
@@ -121,9 +139,11 @@ class App < Admiral::Command
                 end
                 params["php_mod"] = deps
               end
+
               if framework_config.as_h.has_key?("arguments")
                 params["arguments"] = framework_config["arguments"].to_s
               end
+
               if framework_config.as_h.has_key?("fixes")
                 deps = [] of String
                 framework_config["fixes"].as_a.each do |dep|
@@ -131,6 +151,7 @@ class App < Admiral::Command
                 end
                 params["fixes"] = deps
               end
+
               if framework_config.as_h.has_key?("nginx_conf")
                 deps = [] of String
                 framework_config["nginx_conf"].as_a.each do |dep|
@@ -138,6 +159,7 @@ class App < Admiral::Command
                 end
                 params["nginx_conf"] = deps
               end
+
               if framework_config.as_h.has_key?("php_ext")
                 deps = [] of String
                 framework_config["php_ext"].as_a.each do |ext|
@@ -145,6 +167,7 @@ class App < Admiral::Command
                 end
                 params["php_ext"] = deps
               end
+
               if framework_config.as_h.has_key?("fixes")
                 deps = [] of String
                 framework_config["fixes"].as_a.each do |ext|
@@ -152,19 +175,24 @@ class App < Admiral::Command
                 end
                 params["fixes"] = deps
               end
+
               if framework_config.as_h.has_key?("arguments")
                 params["arguments"] = framework_config["arguments"].to_s
               end
+
               if framework_config.as_h.has_key?("docroot")
                 params["docroot"] = framework_config["docroot"].to_s
                 params["slasheddocroot"] = params["docroot"].to_s.gsub("/", "\\/")
               end
+
               if framework_config.as_h.has_key?("options")
                 params["options"] = framework_config["options"].to_s
               end
+
               if framework_config.as_h.has_key?("command")
                 params["command"] = framework_config["command"].to_s
               end
+
               if framework_config.as_h.has_key?("before_command")
                 before_command = [] of String
                 framework_config["before_command"].as_a.each do |cmd|
@@ -172,9 +200,11 @@ class App < Admiral::Command
                 end
                 params["before_command"] = before_command
               end
+
               if framework_config.as_h.has_key?("standalone")
                 params["standalone"] = framework_config["standalone"].to_s
               end
+
               if framework_config.as_h.has_key?("build")
                 build = [] of String
                 framework_config["build"].as_a.each do |cmd|
@@ -182,6 +212,7 @@ class App < Admiral::Command
                 end
                 params["build"] = build
               end
+
               if framework_config.as_h.has_key?("clone")
                 clone = [] of String
                 framework_config["clone"].as_a.each do |cmd|
@@ -189,6 +220,7 @@ class App < Admiral::Command
                 end
                 params["clone"] = clone
               end
+
               if framework_config.as_h.has_key?("files")
                 files = [] of String
                 framework_config.as_h["files"].as_a.each do |file|
@@ -196,6 +228,7 @@ class App < Admiral::Command
                 end
                 params["files"] = files
               end
+
               File.write("#{language}/#{tool}/Dockerfile", Crustache.render(dockerfile, params))
               yaml.scalar tool
               yaml.mapping do

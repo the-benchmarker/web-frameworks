@@ -83,7 +83,7 @@ bin/db to_readme
 
 ## Results
 
-:information_source:  Updated on **2020-02-06** :information_source:
+:information_source:  Updated on **2020-02-07** :information_source:
 
 > Benchmarking with [wrk](https://github.com/wg/wrk)
    + Threads : 128
@@ -92,143 +92,14 @@ bin/db to_readme
 
 |    | Language | Framework | Speed (`req/s`) | Horizontal scale (parallelism) | Vertical scale (concurrency) |
 |----|----------|-----------|----------------:|-------------|-------------|
-| 1 | nim (1.0)| [httpbeast](https://github.com/dom96/httpbeast) (0.2) | 163 954 | | |
-| 2 | javascript (13.7)| [sifrr](https://sifrr.github.io/sifrr/#/./packages/server/sifrr-server/) (0.0) | 160 286 | | |
-| 3 | javascript (13.7)| [nanoexpress](https://nanoexpress.js.org) (1.1) | 159 339 | | |
-| 4 | java (8)| [rapidoid](https://rapidoid.org) (5.5) | 144 307 | | |
-| 5 | go (1.13)| [fiber](https://gofiber.github.io/fiber) (1.3) | 142 380 | | |
-| 6 | crystal (0.31)| [router.cr](https://github.com/tbrand/router.cr) (0.2) | 142 274 | | |
-| 7 | crystal (0.31)| [toro](https://github.com/soveran/toro) (0.4) | 141 510 | | |
-| 8 | crystal (0.31)| [spider-gazelle](https://spider-gazelle.net) (2.3) | 138 260 | | |
-| 9 | crystal (0.31)| [raze](https://razecr.com) (0.3) | 137 109 | | |
-| 10 | c (11)| [agoo-c](https://github.com/ohler55/agoo-c) (0.7) | 136 090 | | |
-| 11 | go (1.13)| [fasthttp](https://godoc.org/github.com/valyala/fasthttp) (1.9) | 135 443 | | |
-| 12 | go (1.13)| [fasthttprouter](https://godoc.org/github.com/buaazp/fasthttprouter) (0.1) | 131 251 | | |
-| 13 | nim (1.0)| [jester](https://github.com/dom96/jester) (0.4) | 131 078 | | |
-| 14 | go (1.13)| [atreugo](https://github.com/savsgio/atreugo/tree/master/docs) (10.3) | 131 054 | | |
-| 15 | go (1.13)| [router](https://github.com/fasthttp/router) (0.6) | 130 993 | | |
-| 16 | crystal (0.31)| [kemal](https://kemalcr.com) (0.26) | 130 916 | | |
-| 17 | crystal (0.31)| [grip](https://github.com/grkek/grip) (0.27) | 130 535 | | |
-| 18 | go (1.13)| [gorouter-fasthttp](https://github.com/vardius/gorouter/wiki) (4.4) | 129 670 | | |
-| 19 | crystal (0.31)| [amber](https://amberframework.org) (0.3) | 125 806 | | |
-| 20 | crystal (0.31)| [orion](https://github.com/obsidian/orion) (2.1) | 122 655 | | |
-| 21 | php (7.4)| [workerman](https://github.com/walkor/Workerman) (3.5) | 121 879 | | |
-| 22 | ruby (2.6)| [agoo](https://github.com/ohler55/agoo) (2.12) | 105 580 | | |
-| 23 | java (8)| [act](https://actframework.org) (1.8) | 101 065 | | |
-| 24 | go (1.13)| [rte](https://github.com/jwilner/rte) (0.0) | 96 435 | | |
-| 25 | csharp (8.0)| [aspnetcore](https://docs.microsoft.com/en-us/aspnet/index) (3.1) | 91 867 | | |
-| 26 | go (1.13)| [gorouter](https://github.com/vardius/gorouter/wiki) (4.4) | 91 732 | | |
-| 27 | go (1.13)| [chi](https://github.com/go-chi/chi) (4.0) | 91 054 | | |
-| 28 | go (1.13)| [aero](https://github.com/aerogo/aero) (1.3) | 89 437 | | |
-| 29 | go (1.13)| [kami](https://github.com/guregu/kami) (2.2) | 89 337 | | |
-| 30 | go (1.13)| [violetear](https://violetear.org) (7.0) | 87 400 | | |
-| 31 | go (1.13)| [goroute](https://goroute.github.io) (0.0) | 87 044 | | |
-| 32 | go (1.13)| [echo](https://echo.labstack.com) (4.1) | 86 018 | | |
-| 33 | javascript (13.7)| [polkadot](https://github.com/lukeed/polkadot) (1.0) | 85 629 | | |
-| 34 | go (1.13)| [gorilla-mux](https://www.gorillatoolkit.org/pkg/mux) (1.7) | 85 608 | | |
-| 35 | go (1.13)| [beego](https://beego.me) (1.12) | 84 401 | | |
-| 36 | go (1.13)| [gin](https://gin-gonic.com) (1.5) | 83 035 | | |
-| 37 | go (1.13)| [webgo](https://github.com/bnkamalesh/webgo) (3.0) | 82 415 | | |
-| 38 | cpp (11)| [drogon](https://github.com/an-tao/drogon) (1.0) | 82 262 | | |
-| 39 | javascript (13.7)| [0http](https://github.com/jkyberneees/0http) (2.2) | 81 694 | | |
-| 40 | javascript (13.7)| [restana](https://github.com/jkyberneees/ana) (4.0) | 77 323 | | |
-| 41 | javascript (13.7)| [polka](https://github.com/lukeed/polka) (0.5) | 75 140 | | |
-| 42 | go (1.13)| [air](https://github.com/aofei/air) (0.14) | 74 062 | | |
-| 43 | swift (5.1)| [perfect](https://perfect.org) (3.1) | 73 553 | | |
-| 44 | javascript (13.7)| [rayo](https://rayo.js.org) (1.3) | 73 059 | | |
-| 45 | go (1.13)| [gf](https://goframe.org) (1.11) | 70 389 | | |
-| 46 | python (3.8)| [falcon](https://falconframework.org) (2.0) | 69 512 | | |
-| 47 | javascript (13.7)| [muneem](https://github.com/node-muneem/muneem) (2.4) | 64 557 | | |
-| 48 | elixir (1.1)| [cowboy_stream](https://https://ninenines.eu/docs/en/cowboy/2.7/guide/streams/) (2.7) | 62 871 | | |
-| 49 | javascript (13.7)| [fastify](https://fastify.io) (2.11) | 61 642 | | |
-| 50 | scala (2.12)| [akkahttp](https://akka.io) (10.1) | 61 567 | | |
-| 51 | javascript (13.7)| [foxify](https://foxify.js.org) (0.1) | 59 782 | | |
-| 52 | python (3.8)| [apidaora](https://github.com/dutradda/apidaora) (0.12) | 59 648 | | |
-| 53 | php (7.4)| [one](https://github.com/lizhichao/one) (1.9) | 58 785 | | |
-| 54 | kotlin (1.3)| [ktor](https://ktor.io) (1.2) | 57 998 | | |
-| 55 | go (1.13)| [mars](https://github.com/roblillack/mars) (1.0) | 56 674 | | |
-| 56 | c (11)| [kore](https://kore.io) (3.3) | 55 814 | | |
-| 57 | java (8)| [javalin](https://javalin.io) (3.5) | 55 070 | | |
-| 58 | python (3.8)| [bottle](https://bottlepy.org) (0.12) | 54 656 | | |
-| 59 | javascript (13.7)| [iotjs-express](https://github.com/SamsungInternet/iotjs-express) (0.0) | 54 321 | | |
-| 60 | python (3.8)| [asgineer](https://asgineer.readthedocs.io) (0.7) | 54 295 | | |
-| 61 | javascript (13.7)| [koa](https://koajs.com) (2.11) | 54 045 | | |
-| 62 | java (8)| [spring-boot](https://spring.io/projects/spring-boot) (2.1) | 50 542 | | |
-| 63 | python (3.8)| [blacksheep](https://github.com/RobertoPrevato/BlackSheep) (0.2) | 50 480 | | |
-| 64 | clojure (1.1)| [coast](https://coastonclojure.com) (1.0) | 50 314 | | |
-| 65 | swift (5.1)| [kitura-nio](https://kitura.io) (2.8) | 48 014 | | |
-| 66 | swift (5.1)| [vapor](https://vapor.codes) (3.3) | 47 921 | | |
-| 67 | java (8)| [micronaut](https://micronaut.io) (1.2) | 47 825 | | |
-| 68 | javascript (13.7)| [express](https://expressjs.com) (4.17) | 47 691 | | |
-| 69 | swift (5.1)| [kitura](https://kitura.io) (2.8) | 46 818 | | |
-| 70 | php (7.4)| [hyperf](https://www.hyperf.io) (1.0) | 46 776 | | |
-| 71 | python (3.8)| [pyramid](https://trypyramid.com) (1.1) | 46 458 | | |
-| 72 | scala (2.12)| [http4s](https://http4s.org) (0.18) | 46 347 | | |
-| 73 | rust (1.41)| [nickel](https://nickel-org.github.io) (0.11) | 46 252 | | |
-| 74 | python (3.8)| [hug](https://hug.rest) (2.6) | 46 076 | | |
-| 75 | python (3.8)| [starlette](https://starlette.io) (0.13) | 45 384 | | |
-| 76 | rust (1.41)| [gotham](https://gotham.rs) (0.4) | 44 439 | | |
-| 77 | cpp (11)| [evhtp](https://criticalstack.com) (1.2) | 43 817 | | |
-| 78 | php (7.4)| [imi](https://imiphp.com) (1.0) | 42 404 | | |
-| 79 | elixir (1.1)| [cowboy](https://https://ninenines.eu/docs/en/cowboy/2.7/guide/) (2.7) | 41 590 | | |
-| 80 | php (7.4)| [sw-fw-less](https://github.com/luoxiaojun1992/sw-fw-less) (preview) | 41 525 | | |
-| 81 | ruby (2.6)| [syro](https://github.com/soveran/syro) (3.1) | 41 336 | | |
-| 82 | ruby (2.6)| [roda](https://roda.jeremyevans.net) (3.28) | 40 109 | | |
-| 83 | javascript (13.7)| [hapi](https://hapijs.com) (19.1) | 38 232 | | |
-| 84 | elixir (1.1)| [plug](https://hexdocs.pm/plug) (1.8) | 37 290 | | |
-| 85 | ruby (2.6)| [cuba](https://cuba.is) (3.9) | 36 669 | | |
-| 86 | javascript (13.7)| [restify](https://restify.com) (8.5) | 36 291 | | |
-| 87 | php (7.4)| [swoft](https://swoft.org) (2.0) | 35 653 | | |
-| 88 | elixir (1.1)| [phoenix](https://phoenixframework.org) (1.4) | 32 409 | | |
-| 89 | python (3.8)| [responder](https://python-responder.org) (2.0) | 30 614 | | |
-| 90 | python (3.8)| [fastapi](https://fastapi.tiangolo.com) (0.48) | 30 157 | | |
-| 91 | ruby (2.6)| [rack-routing](https://github.com/georgeu2000/rack-routing) (0.0) | 30 002 | | |
-| 92 | javascript (13.7)| [moleculer](https://moleculer.services) (0.13) | 28 676 | | |
-| 93 | crystal (0.31)| [lucky](https://luckyframework.org) (0.18) | 27 442 | | |
-| 94 | fsharp (4.7)| [suave](https://suave.io) (2.5) | 27 300 | | |
-| 95 | python (3.8)| [aiohttp](https://aiohttp.readthedocs.io) (3.6) | 26 937 | | |
-| 96 | python (3.8)| [molten](https://moltenframework.com) (0.27) | 26 539 | | |
-| 97 | crystal (0.31)| [athena](https://github.com/blacksmoke16/athena) (0.7) | 26 028 | | |
-| 98 | python (3.8)| [clastic](https://github.com/mahmoud/clastic) (19.9) | 25 622 | | |
-| 99 | python (3.8)| [flask](https://flask.pocoo.org) (1.1) | 24 108 | | |
-| 100 | ruby (2.6)| [flame](https://github.com/AlexWayfer/flame) (4.18) | 23 454 | | |
-| 101 | javascript (13.7)| [turbo_polka](https://github.com/mafintosh/turbo-http) (0.3) | 22 502 | | |
-| 102 | java (8)| [spring-framework](https://spring.io/projects/spring-framework) (5.2) | 22 464 | | |
-| 103 | python (3.8)| [sanic](https://github.com/huge-success/sanic) (19.12) | 21 537 | | |
-| 104 | python (3.8)| [masonite](https://masoniteproject.com) (2.3) | 21 254 | | |
-| 105 | ruby (2.6)| [camping](https://github.com/camping/camping) (2.1) | 20 994 | | |
-| 106 | ruby (2.6)| [plezi](https://github.com/boazsegev/plezi) (0.16) | 20 454 | | |
-| 107 | python (3.8)| [emmett](https://github.com/emmett-framework/emmett) (2.0.0a1) | 20 450 | | |
-| 108 | rust (1.41)| [iron](https://ironframework.io) (0.6) | 18 834 | | |
-| 109 | ruby (2.6)| [hanami](https://hanamirb.org) (1.3) | 18 832 | | |
-| 110 | php (7.4)| [spiral](https://github.com/spiral/framework) (2.4) | 17 300 | | |
-| 111 | ruby (2.6)| [sinatra](https://sinatrarb.com) (2.0) | 16 991 | | |
-| 112 | ruby (2.6)| [grape](https://ruby-grape.org) (1.3) | 14 244 | | |
-| 113 | python (3.8)| [quart](https://pgjones.gitlab.io/quart) (0.10) | 13 560 | | |
-| 114 | swift (5.1)| [swifter](https://github.com/httpswift/swifter) (1.4) | 11 306 | | |
-| 115 | python (3.8)| [django](https://djangoproject.com) (3.0) | 10 464 | | |
-| 116 | python (3.8)| [tornado](https://tornadoweb.org) (6.0) | 10 422 | | |
-| 117 | go (1.13)| [gramework](https://github.com/gramework/gramework) (1.7) | 10 190 | | |
-| 118 | python (3.8)| [cherrypy](https://github.com/cherrypy/cherrypy) (18.5) | 9 335 | | |
-| 119 | php (7.4)| [ubiquity](https://ubiquity.kobject.net) (2.3) | 9 041 | | |
-| 120 | php (7.4)| [one-fpm](https://github.com/lizhichao/one) (1.9) | 7 611 | | |
-| 121 | php (7.4)| [phalcon](https://phalcon.io) (4.0) | 7 485 | | |
-| 122 | php (7.4)| [hamlet](https://github.com/vasily-kartashov/hamlet-core) (3.2) | 7 420 | | |
-| 123 | julia (1.3)| [merly](https://github.com/codeneomatrix/Merly.jl) (0.2) | 4 870 | | |
-| 124 | crystal (0.31)| [onyx](https://onyxframework.org) (0.5) | 4 848 | | |
-| 125 | php (7.4)| [slim](https://slimframework.com) (4.4) | 4 509 | | |
-| 126 | php (7.4)| [lumen](https://lumen.laravel.com) (6.3) | 4 362 | | |
-| 127 | php (7.4)| [yii](https://yiiframework.com) (2.0) | 4 323 | | |
-| 128 | ruby (2.6)| [rails](https://rubyonrails.org) (6.0) | 3 977 | | |
-| 129 | php (7.4)| [zend-expressive](https://zendframework.github.io/zend-expressive) (3.2) | 3 630 | | |
-| 130 | php (7.4)| [symfony](https://symfony.com) (4.3) | 3 433 | | |
-| 131 | perl (5.3)| [dancer2](https://perldancer.org) (2.0) | 3 380 | | |
-| 132 | python (3.8)| [cyclone](https://cyclone.io) (1.3) | 2 371 | | |
-| 133 | php (7.4)| [zend-framework](https://framework.zend.com) (3.1) | 1 850 | | |
-| 134 | python (3.8)| [klein](https://github.com/twisted/klein) (19.6) | 1 618 | | |
-| 135 | python (3.8)| [nameko](https://github.com/nameko/nameko) (2.12) | 1 569 | | |
-| 136 | php (7.4)| [basicphp](https://github.com/ray-ang/basicphp) (0.9) | 1 396 | | |
-| 137 | php (7.4)| [laravel](https://laravel.com) (6.14) | 415 | | |
+| 1 | javascript (13.7)| [sifrr](https://sifrr.github.io/sifrr/#/./packages/server/sifrr-server/) (0.0) | 168 101 | | |
+| 2 | swift (5.1)| [perfect](https://perfect.org) (3.1) | 69 309 | | |
+| 3 | swift (5.1)| [vapor](https://vapor.codes) (3.3) | 49 214 | | |
+| 4 | swift (5.1)| [kitura-nio](https://kitura.io) (2.8) | 49 089 | | |
+| 5 | swift (5.1)| [kitura](https://kitura.io) (2.8) | 47 231 | | |
+| 6 | javascript (13.7)| [hapi](https://hapijs.com) (19.1) | 40 429 | | |
+| 7 | javascript (13.7)| [restify](https://restify.com) (8.5) | 37 979 | | |
+| 8 | swift (5.1)| [swifter](https://github.com/httpswift/swifter) (1.4) | 11 445 | | |
 
 ## How to contribute ?
 
