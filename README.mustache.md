@@ -85,10 +85,11 @@ bin/db to_readme
 
 :information_source:  Updated on **{{date}}** :information_source:
 
-> Benchmarking with [wrk](https://github.com/wg/wrk)
-   + Threads : 128
-   + Connections : 128
-   + Duration : 10 (seconds)
+> Benchmarking with [wrk](https://github.com/ioquatix/wrk)
+   + Threads : 8
+   + Timeout : 8
+   + Connections : 64
+   + Duration : 5s (seconds)
 
 {{#results}}
 {{.}}
