@@ -5,19 +5,22 @@
 | BasicPHP Functions Library
 |--------------------------------------------------------------------------
 |
-| These are core functions necessary to run the nano-framework:
-|
-| 1. url_value() - retrieves the URL path substring separated by '/'
-| 2. route_rpc() - JSON-RPC v2.0 compatibility layer
-| 3. route_auto() - automatic routing of URL path to Class and method
-| 4. route_class() - routes URL path request to Controllers
-| 5. view() - passes data and renders the View
-| 6. pdo_conn() - PHP Data Objects (PDO) database connection
-| 7. api_response() - handles API response
-| 8. api_call() - handles API call
-| 9. force_ssl() - force application to use SSL
-| 10. esc() - uses htmlspecialchars() to prevent XSS
-| 11. csrf_token() - uses sessions to create per request CSRF token
+| url_path()         - retrieves the URL path substring separated by '/'
+| homepage()         - render hompage
+| error404()         - Handle Error 404 - Page Not Found - Invalid URI
+| route_rpc()        - JSON-RPC v2.0 compatibility layer
+| route_auto()       - automatic routing of URL path to Class and method
+| route_class()      - routes URL path request to Controllers
+| view()             - passes data and renders the View
+| pdo_conn()         - PHP Data Objects (PDO) database connection
+| api_response()     - handles API response
+| api_call()         - handles API call
+| firewall()         - web application firewall
+| force_ssl()       - force application to use SSL
+| esc()             - uses htmlspecialchars() to prevent XSS
+| csrf_token()      - uses sessions to create per request CSRF token
+| encrypt()         - encrypt data using AES-CBC-HMAC
+| decrypt()         - decrypt data using AES-CBC-HMAC
 |
 */
 
@@ -25,10 +28,10 @@
  * Get URL path string value after the BASE_URL.
  *
  * @param integer $order - URL substring position from the BASE_URL
- *                       - url_value(1) as first string after BASE_URL
+ *                       - url_path(1) as first string after BASE_URL
  */
 
-function url_value($order)
+function url_path($order)
 {
     if (isset($_SERVER['REQUEST_URI'])) {
         $url_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -43,11 +46,38 @@ function url_value($order)
 }
 
 /**
+ * Render Homepage
+ */
+
+function homepage()
+{
+    if (empty(url_path(1))) {
+        list($class, $method) = explode('@', HOME_PAGE);
+        $object = new $class();
+        return $object->$method();
+    }
+}
+
+/**
+ * Handle Error 404 - Page Not Found - Invalid URI
+ * A valid page has $valid_page set to TRUE.
+ */
+
+function error404()
+{
+    if (! isset($valid_page) || $valid_page !== true) {
+        header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
+        exit();
+    }
+}
+
+/**
  * JSON-RPC v2.0 Compatibility Layer with 'method' member as 'class.method'
  */
 
 function route_rpc()
 {
+    $valid_page = true; // Set page as valid
 
     // Check if HTTP request method is 'POST', if there is POSTed data, and the POSTed data is in JSON format.
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && file_get_contents('php://input') !== false && json_decode(file_get_contents('php://input'), true) !== null) {
@@ -66,7 +96,7 @@ function route_rpc()
             if (class_exists($class)) {
                 $object = new $class();
                 if (method_exists($object, $method)) {
-                    $object->$method();
+                    return $object->$method();
                     exit();
                 } else {
                     exit(json_encode(['jsonrpc' => '2.0', 'error' => ['code' => 32601, 'message' => "Method not found."], 'id' => $json_rpc['id']]));
@@ -79,16 +109,18 @@ function route_rpc()
 }
 
 /**
- * Automatic routing of url_value(1) and (2) as Class and method
+ * Automatic routing of url_path(1) and (2) as Class and method
  */
 
 function route_auto()
 {
-    if (url_value(1) !== false) {
-        $class = ucfirst(url_value(1)) . CONTROLLER_SUFFIX;
+    $valid_page = true; // Set page as valid
+
+    if (url_path(1) !== false) {
+        $class = ucfirst(url_path(1)) . CONTROLLER_SUFFIX;
     }
-    if (url_value(2) !== false) {
-        $method = lcfirst(url_value(2));
+    if (url_path(2) !== false) {
+        $method = lcfirst(url_path(2));
     } else {
         $method = METHOD_DEFAULT;
     }
@@ -96,7 +128,7 @@ function route_auto()
     if (class_exists($class)) {
         $object = new $class();
         if (method_exists($object, $method)) {
-            $object->$method();
+            return $object->$method();
         } else {
             header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
             exit();
@@ -116,6 +148,8 @@ function route_auto()
 
 function route_class($http_method, $path, $class_method)
 {
+    $valid_page = true; // Set page as valid
+
     if ($_SERVER['REQUEST_METHOD'] == $http_method) {
 
         // Convert '/' and wilcards (:num) and (:any) to RegEx
@@ -136,7 +170,7 @@ function route_class($http_method, $path, $class_method)
             list($class, $method) = explode('@', $class_method);
 
             $object = new $class();
-            $object->$method();
+            return $object->$method();
         }
     }
 }
@@ -157,7 +191,7 @@ function view($view, $data=null)
     }
 
     // Render Page View
-    require_once '../views/' . $view . '.php';
+    return require_once '../views/' . $view . '.php';
 }
 
 /**
@@ -248,6 +282,50 @@ function api_call($http_method, $url, $data=null, $username=null, $password=null
 }
 
 /**
+ * Web Application Firewall
+ */
+
+function firewall()
+{
+    if (FIREWALL_ON == true) {
+
+        // Allow only access from whitelisted IP addresses
+        if (! in_array($_SERVER['REMOTE_ADDR'], ALLOWED_IP_ADDR)) {
+            header($_SERVER["SERVER_PROTOCOL"]." 403 Forbidden");
+            exit('<p>You are not allowed to access the application using your IP address.</p>');
+        }
+
+        // Allow only URI_WHITELISTED characters on the Request URI.
+        if (! empty(URI_WHITELISTED)) {
+            $regex_array = str_replace('w', 'alphanumeric', URI_WHITELISTED);
+            $regex_array = explode('\\', $regex_array);
+
+            if (isset($_SERVER['REQUEST_URI']) && preg_match('/[^' . URI_WHITELISTED . ']/i', $_SERVER['REQUEST_URI'])) {
+                header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
+                exit('<p>The URI should only contain alphanumeric and GET request characters:</p><p><ul>' . implode('<li>', $regex_array) . '</ul></p>');
+            }
+        }
+
+        // Deny POST_BLACKLISTED characters in $_POST and post body. '\' is blacklisted by default.
+        if (! empty(POST_BLACKLISTED)) {
+            $regex_array = explode('\\', POST_BLACKLISTED);
+
+            if (isset($_POST) && preg_match('/[' . POST_BLACKLISTED . '\\\]/i', implode('/', $_POST))) {
+                header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
+                exit('<p>Submitted data should NOT contain the following characters:</p><p><ul>' . implode('<li>', $regex_array) . '<li>\</ul></p>');
+            }
+
+            $post_data = file_get_contents('php://input');
+
+            if (isset($post_data) && preg_match('/[' . POST_BLACKLISTED . '\\\]/i', $post_data)) {
+                header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
+                exit('<p>Submitted data should NOT contain the following characters:</p><p><ul>' . implode('<li>', $regex_array) . '<li>\</ul></p>');
+            }
+        }
+    }
+}
+
+/**
  * Force application to use SSL
  */
 
@@ -287,5 +365,124 @@ function csrf_token()
 
         $data = compact('error_message', 'page_title');
         view('error', $data);
+    }
+}
+
+/**
+ * Encrypt data using AES-CBC-HMAC
+ *
+ * @param string $plaintext - Plaintext to be encrypted
+ */
+
+function encrypt($plaintext)
+{
+    function encrypt_v1($plaintext)
+    {
+
+        // Version
+        $version = 'enc-v1';
+        
+        // Cipher method to AES with 256-bit key
+        $cipher = strtolower(CIPHER_METHOD);
+        // Salt for encryption key
+        $salt_key = random_bytes(16);
+        // Derive encryption key
+        $key = hash_pbkdf2('sha256', PASS_PHRASE, $salt_key, 10000);
+        // Initialization vector
+        $iv = random_bytes(16);
+
+        if ($cipher == 'aes-256-gcm') {
+            $ciphertext = openssl_encrypt($plaintext, $cipher, $key, $options=0, $iv, $tag);
+            return $version . '::' . base64_encode($ciphertext) . '::' . base64_encode($iv) . '::' . base64_encode($tag) . '::' . base64_encode($salt_key);
+        } else {
+
+            // Salt for HMAC key
+            $salt_hmac = random_bytes(16);
+            // Derive HMAC key
+            $key_hmac = hash_pbkdf2('sha256', PASS_PHRASE, $salt_hmac, 10000);
+
+            $ciphertext = openssl_encrypt($plaintext, $cipher, $key, $options=0, $iv);
+            $hash = hash_hmac('sha256', $ciphertext, $key_hmac);
+            return $version . '::' . base64_encode($ciphertext) . '::' . base64_encode($hash) . '::' . base64_encode($iv) . '::' . base64_encode($salt_key) . '::' . base64_encode($salt_hmac);
+        }
+    }
+
+    /** Version-based Encryption */
+    // Default encryption function
+    return encrypt_v1($plaintext);
+}
+
+/**
+ * Decrypt data using AES-CBC-HMAC
+ *
+ * @param string $encypted - base64_encoded ciphertext, hash,
+ *                         - iv, salt_key, and salt_hmac
+ */
+
+function decrypt($encrypted)
+{
+    function decrypt_v1($encrypted)
+    {
+
+        // Return empty if $encrypted is not set or empty.
+        if (! isset($encrypted) || empty($encrypted)) {
+            return '';
+        }
+
+        // Cipher method to AES with 256-bit key
+        $cipher = strtolower(CIPHER_METHOD);
+
+        if ($cipher == 'aes-256-gcm') {
+            list($version, $ciphertext, $iv, $tag, $salt_key) = explode('::', $encrypted);
+            $ciphertext = base64_decode($ciphertext);
+            $iv = base64_decode($iv);
+            $tag = base64_decode($tag);
+            $salt_key = base64_decode($salt_key);
+
+            // Derive encryption key
+            $key = hash_pbkdf2('sha256', PASS_PHRASE, $salt_key, 10000);
+
+            $plaintext = openssl_decrypt($ciphertext, $cipher, $key, $options=0, $iv, $tag);
+
+            // GCM authentication
+            if ($plaintext !== false) {
+                return $plaintext;
+            } else {
+                exit('<strong>Warning: </strong>Please verify authenticity of ciphertext.');
+            }
+        } else {
+            list($version, $ciphertext, $hash, $iv, $salt_key, $salt_hmac) = explode('::', $encrypted);
+            $ciphertext = base64_decode($ciphertext);
+            $hash = base64_decode($hash);
+            $iv = base64_decode($iv);
+            $salt_key = base64_decode($salt_key);
+            $salt_hmac = base64_decode($salt_hmac);
+
+            // Derive encryption key
+            $key = hash_pbkdf2('sha256', PASS_PHRASE, $salt_key, 10000);
+            // Derive HMAC key
+            $key_hmac = hash_pbkdf2('sha256', PASS_PHRASE, $salt_hmac, 10000);
+
+            $digest = hash_hmac('sha256', $ciphertext, $key_hmac);
+
+            // HMAC authentication
+            if (hash_equals($hash, $digest)) {
+                return openssl_decrypt($ciphertext, $cipher, $key, $options=0, $iv);
+            } else {
+                exit('<strong>Warning: </strong>Please verify authenticity of ciphertext.');
+            }
+        }
+    }
+
+    $version = explode('::', $encrypted)[0];
+
+    /** Version-based Decryption */
+    // Return $encrypted if no encryption detected.
+    switch ($version) {
+        case 'enc-v1':
+            return decrypt_v1($encrypted);
+            break;
+        default:
+            return $encrypted;
     }
 }
