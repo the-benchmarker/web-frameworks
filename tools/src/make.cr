@@ -242,7 +242,7 @@ class App < Admiral::Command
                   # Launch sieging
                   unless flags.without_sieger
                     cpu = System.cpu_count
-                    [2,3,4].each do |i|
+                    [2, 3, 4].each do |i|
                       yaml.scalar "../../bin/client -l #{language} -f #{tool} -c #{cpu**i} -r GET:/ -r GET:/user/0 -r POST:/user"
                     end
                   end
