@@ -72,7 +72,10 @@ class App < Admiral::Command
         "|----|----------|-----------|----------------:|------------:|------------:|",
       ]
       c = 1
-      frameworks.each do |_, row|
+      sorted = frameworks.values.sort do |rank0, rank1|
+        rank1["concurrency_64"].to_f <=> rank0["concurrency_64"].to_f
+      end
+      sorted.each do |row|
         lines << "| %s | %s (%s)| [%s](%s) (%s) | %s | %s | %s |" % [
           c,
           row["language"],
