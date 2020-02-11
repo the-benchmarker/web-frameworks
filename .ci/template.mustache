@@ -29,10 +29,7 @@ script:
 
 deploy:
   provider: script
-  script: 
-    - docker login -u $DOCKER_USERNAME -p ${DOCKER_PASSWORD}
-    - docker tag ${FRAMEWORK} ${DOCKER_USERNAME}/${FRAMEWORK}
-    - docker push ${DOCKER_USERNAME}/${FRAMEWORK}
+  script: docker login -u $DOCKER_USERNAME -p ${DOCKER_PASSWORD} && docker tag ${FRAMEWORK} ${DOCKER_USERNAME}/${FRAMEWORK} && docker push ${DOCKER_USERNAME}/${FRAMEWORK}
 
 notifications:
   email: false
