@@ -32,6 +32,9 @@ script:
   - bin/neph ${FRAMEWORK} --mode=CI
 
   - crystal spec
+
+# Push on docker registry if tests are OK
+after_success:
   - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
   - docker tag ${FRAMEWORK} ${DOCKER_USERNAME}/${FRAMEWORK}
   - docker push ${DOCKER_USERNAME}/${FRAMEWORK}
