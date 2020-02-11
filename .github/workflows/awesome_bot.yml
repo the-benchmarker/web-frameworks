@@ -1,0 +1,24 @@
+name: awesome_bot
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  schedule:
+    - cron:  '0 3 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Setup ruby
+      uses: actions/setup-ruby@v1
+
+    - name: Run awesome_bot
+      run: |
+        gem install awesome_bot
+        awesome_bot README.md --allow-dupe --allow-redirect --skip-save-results
