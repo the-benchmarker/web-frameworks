@@ -162,7 +162,7 @@ script:
   - bin/make config --without-sieger --keep
   - travis_wait 25 bin/neph ${FRAMEWORK} --mode=CI
   - crystal spec
-  - echo ${DOCKER_PASSWORD} | docker login -u benchmarkers --password-stdin
+  - docker login -u benchmarkers -p ${DOCKER_PASSWORD}
   - docker tag apidaora benchmarkers/${FRAMEWORK}
   - docker push benchmarkers/${FRAMEWORK}
 

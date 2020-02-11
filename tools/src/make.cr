@@ -18,6 +18,7 @@ class App < Admiral::Command
   class Config < Admiral::Command
     define_flag without_sieger : Bool, description: "run sieger", default: false, long: "without-sieger"
     define_flag docker_options : String, description: "extra argument to docker cli", default: "", long: "docker-options"
+    define_flag keep : Bool, description: "keep container after build (default : false)", default: false, long: "keep"
 
     def run
       frameworks = {} of String => Array(String)
@@ -247,8 +248,10 @@ class App < Admiral::Command
                      end
                   end
 
-                  # Stop the container
-                  yaml.scalar "docker ps -a -q  --filter ancestor=#{tool}  | xargs -r docker rm -f"
+                  # Drop the container
+                  unless flags.keep
+                    yaml.scalar "docker ps -a -q  --filter ancestor=#{tool}  | xargs -r docker rm -f"
+                  end
                 end
                 yaml.scalar "dir"
                 yaml.scalar "#{language}/#{tool}"
