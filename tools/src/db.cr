@@ -68,15 +68,15 @@ class App < Admiral::Command
       end
 
       lines = [
-        "|    | Language | Framework | Concurrency 64 (`req/s`) | Concurrency 512 (`req/s`) | Concurrency 4096 (`req/s`) |",
-        "|----|----------|-----------|----------------:|------------:|------------:|",
+        "|    | Language | Framework | Speed (64) | Speed (256) | Speed (512) | Speed (1024) |  Speed (2048) |",
+        "|----|----------|-----------|-----------:|------------:|------------:|-------------:|--------------:|",
       ]
       c = 1
       sorted = frameworks.values.sort do |rank0, rank1|
         rank1["concurrency_64"].to_f <=> rank0["concurrency_64"].to_f
       end
       sorted.each do |row|
-        lines << "| %s | %s (%s)| [%s](%s) (%s) | %s | %s | %s |" % [
+        lines << "| %s | %s (%s)| [%s](%s) (%s) | %s | %s | %s | %s | %s |" % [
           c,
           row["language"],
           row["language_version"],
@@ -84,8 +84,10 @@ class App < Admiral::Command
           row["framework_website"],
           row["framework_version"],
           row["concurrency_64"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row["concurrency_256"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
           row["concurrency_512"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
-          row["concurrency_4096"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row["concurrency_1024"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row["concurrency_2048"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
         ]
         c += 1
       end
