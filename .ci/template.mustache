@@ -28,7 +28,7 @@ script:
   - bin/make config --without-sieger --keep
   - travis_wait 25 bin/neph ${FRAMEWORK} --mode=CI
   - crystal spec
-  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker tag ${FRAMEWORK} $DOCKER_USERNAME/${FRAMEWORK}
   - docker push $DOCKER_USERNAME/${FRAMEWORK}
 
