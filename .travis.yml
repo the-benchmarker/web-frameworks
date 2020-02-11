@@ -165,7 +165,7 @@ script:
 
   # Create logs directory for neph
   - mkdir -p .neph/${FRAMEWORK}
-  - bin/neph ${FRAMEWORK} --mode=CI
+  - travis_wait 15 bin/neph ${FRAMEWORK} --mode=CI
 
   - crystal spec
 
