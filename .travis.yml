@@ -162,9 +162,13 @@ script:
   - bin/make config --without-sieger --keep
   - travis_wait 25 bin/neph ${FRAMEWORK} --mode=CI
   - crystal spec
-  - docker login --username=benchmarkers --password="${DOCKER_PASSWORD}"
-  - docker tag ${FRAMEWORK} benchmarkers/${FRAMEWORK}
-  - docker push benchmarkers/${FRAMEWORK}
+
+deploy:
+  provider: script
+  script: 
+    - docker login -u $DOCKER_USERNAME -p ${DOCKER_PASSWORD}
+    - docker tag ${FRAMEWORK} ${DOCKER_USERNAME}/${FRAMEWORK}
+    - docker push ${DOCKER_USERNAME}/${FRAMEWORK}
 
 notifications:
   email: false
