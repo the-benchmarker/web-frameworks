@@ -26,7 +26,11 @@ script:
   - shards install
   - shards build
   - bin/make config --without-sieger --keep
+
+  # Create logs directory for neph
+  - mkdir -p .neph/${FRAMEWORK}
   - bin/neph ${FRAMEWORK} --mode=CI
+
   - crystal spec
   - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
   - docker tag ${FRAMEWORK} ${DOCKER_USERNAME}/${FRAMEWORK}
