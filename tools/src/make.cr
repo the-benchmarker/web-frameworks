@@ -231,16 +231,16 @@ class App < Admiral::Command
 
               File.write("#{language}/#{tool}/Dockerfile", Crustache.render(dockerfile, params))
 
-              yaml.scalar "#{language}/#{tool}"
+              yaml.scalar "#{language}.#{tool}"
 
               yaml.mapping do
                 yaml.scalar "commands"
                 yaml.sequence do
                   # Build container
-                  yaml.scalar "docker build -t #{language}/#{tool} . #{flags.docker_options}"
+                  yaml.scalar "docker build -t #{language}.#{tool} . #{flags.docker_options}"
 
                   # Run container, and store IP
-                  yaml.scalar "docker run -td #{language}/#{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
+                  yaml.scalar "docker run -td #{language}.#{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
 
                   # Launch sieging
                   unless flags.without_sieger
@@ -252,7 +252,7 @@ class App < Admiral::Command
 
                   # Drop the container
                   unless flags.keep
-                    yaml.scalar "docker ps -a -q  --filter ancestor=#{language}/#{tool}  | xargs -r docker rm -f"
+                    yaml.scalar "docker ps -a -q  --filter ancestor=#{language}.#{tool}  | xargs -r docker rm -f"
                   end
                 end
                 yaml.scalar "dir"
@@ -274,7 +274,7 @@ class App < Admiral::Command
         infos = directory.split("/")
         framework = infos.pop
         language = infos.pop
-        frameworks << "#{language}/#{framework}"
+        frameworks << "#{language}.#{framework}"
       end
       config = Crustache.parse(File.read(".ci/template.mustache"))
       File.write(".travis.yml", Crustache.render(config, {"frameworks" => frameworks}))
