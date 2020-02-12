@@ -52,7 +52,7 @@ class App < Admiral::Command
               yaml.scalar "depends_on"
               yaml.sequence do
                 tools.each do |tool|
-                  yaml.scalar tool
+                  yaml.scalar "#{language}.#{tool}"
                 end
               end
             end
