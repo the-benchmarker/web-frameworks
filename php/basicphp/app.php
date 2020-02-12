@@ -44,4 +44,4 @@ route_class('POST', '/user', 'AppController@addUser');
 |--------------------------------------------------------------------------
 */
 
-error404(); // Handle Error 404
+// error404(); // Handle Error 404

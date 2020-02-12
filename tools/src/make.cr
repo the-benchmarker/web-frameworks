@@ -17,7 +17,6 @@ end
 class App < Admiral::Command
   class Config < Admiral::Command
     define_flag without_sieger : Bool, description: "run sieger", default: false, long: "without-sieger"
-    define_flag sieger_options : String, description: "sieger options", default: "", long: "sieger-options"
     define_flag docker_options : String, description: "extra argument to docker cli", default: "", long: "docker-options"
 
     def run
@@ -240,9 +239,12 @@ class App < Admiral::Command
                   # Run container, and store IP
                   yaml.scalar "docker run -td #{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
 
-                  # Lannch sieging
+                  # Launch sieging
                   unless flags.without_sieger
-                    yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user #{flags.sieger_options}"
+                     factor = System.cpu_count**2
+                     [1, 4, 8, 16, 32].each do |i|
+                       yaml.scalar "../../bin/client -l #{language} -f #{tool} -c #{factor*i} -r GET:/ -r GET:/user/0 -r POST:/user"
+                     end
                   end
 
                   # Stop the container

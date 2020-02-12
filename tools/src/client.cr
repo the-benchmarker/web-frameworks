@@ -5,7 +5,7 @@ PIPELINES = {
   "GET": File.expand_path("../../" + "pipeline.lua", __FILE__),
 }
 
-def insert(framework_id, metric, value)
+def insert(framework_id, metric, value, concurrency_level_id)
   DB.open(ENV["DATABASE_URL"]) do |db|
     row = db.query("INSERT INTO keys (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id", metric)
     row.move_next
@@ -15,13 +15,13 @@ def insert(framework_id, metric, value)
     row.move_next
     value_id = row.read(Int)
 
-    db.exec("INSERT INTO metrics (value_id, framework_id) VALUES ($1, $2)", value_id, framework_id)
+    db.exec("INSERT INTO metrics (value_id, framework_id, concurrency_id) VALUES ($1, $2, $3)", value_id, framework_id, concurrency_level_id)
   end
 end
 
 class Client < Admiral::Command
   define_flag threads : Int32, description: "# of threads", default: 8, long: "threads", short: "t"
-  define_flag connections : Int32, description: "# of opened connections", default: 500, long: "connections", short: "c"
+  define_flag connections : Int32, description: "# of opened connections", required: true, short: "c"
   define_flag duration : Int32, description: "Time to test, in seconds", default: 5, long: "duration", short: "d"
   define_flag language : String, description: "Language used", required: true, long: "language", short: "l"
   define_flag framework : String, description: "Framework used", required: true, long: "framework", short: "f"
@@ -29,6 +29,10 @@ class Client < Admiral::Command
 
   def run
     db = DB.open(ENV["DATABASE_URL"])
+
+    row = db.query("INSERT INTO concurrencies (level) VALUES ($1) ON CONFLICT (level) DO UPDATE SET level = $1 RETURNING id", flags.connections)
+    row.move_next
+    concurrency_level_id = row.read(Int)
 
     row = db.query("INSERT INTO languages (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id", flags.language)
     row.move_next
@@ -74,7 +78,7 @@ class Client < Admiral::Command
 
       # insert(framework_id, "request_duration", result[0])
       # insert(framework_id, "request_total", result[1])
-      insert(framework_id, "request_per_second", requests_per_seconds)
+      insert(framework_id, "request_per_second", requests_per_seconds, concurrency_level_id)
       # insert(framework_id, "request_bytes", result[3])
 
       # insert(framework_id, "error_socket", result[4])

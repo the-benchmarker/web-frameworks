@@ -3,75 +3,98 @@ require "admiral"
 require "pg"
 require "crustache"
 
+alias Data = Hash(String, String)
+
+class Merger
+  alias ConfigHash = Hash(YAML::Any, YAML::Any)
+
+  def initialize(params : ConfigHash)
+    @params = params
+  end
+
+  def merge(other = {} of String => String)
+    @params.try do |params|
+      other = params.merge(other)
+    end
+    return other
+  end
+end
+
 class App < Admiral::Command
   class ReadmeWriter < Admiral::Command
     def run
-      results = {} of String => Hash(String, String | Float64 | Float32)
-      order_by_requests = <<-EOS
-SELECT f.id as framework, l.label, f.label, k.label, sum(v.value/3)::float
-  FROM values AS v
-    JOIN metrics AS m ON m.value_id = v.id 
-    JOIN frameworks AS f ON f.id = m.framework_id 
-    JOIN keys AS k ON v.key_id = k.id 
-    JOIN languages AS l on l.id = f.language_id 
-      GROUP BY 1,2,3,4
-        ORDER BY k.label=$1 desc, 5 desc
-EOS
+      frameworks = {} of Int32 => Data
       DB.open(ENV["DATABASE_URL"]) do |db|
-        db.query order_by_requests, "request_per_second" do |row|
+        db.query("SELECT f.id as framework, l.label, f.label FROM frameworks AS f JOIN languages AS l ON l.id = f.language_id") do |row|
           row.each do
-            key = row.read(Int).to_s
+            id = row.read(Int).to_i32
             language = row.read(String)
             framework = row.read(String)
-            metric = row.read(String)
-            value = row.read(Float)
-            unless results.has_key?(key)
-              results[key] = {} of String => (String | Float64 | Float32)
-              results[key]["language"] = language
-              config = YAML.parse(File.read("#{language}/config.yaml"))
-              results[key]["language_version"] = config["provider"]["default"]["language"].to_s
-              results[key]["framework"] = framework
-              config = YAML.parse(File.read("#{language}/config.yaml"))
-              results[key]["language_version"] = config["provider"]["default"]["language"].to_s
-              config = YAML.parse(File.read("#{language}/#{framework}/config.yaml"))
-              if config["framework"].as_h.has_key?("github")
-                website = "https://github.com/#{config["framework"]["github"].to_s}"
-              else
-                website = "https://#{config["framework"]["website"].to_s}"
-              end
-              results[key]["framework_website"] = website
-              results[key]["framework_version"] = config["framework"]["version"].to_s
-              begin
-                results[key]["framework_website"] = "https://github.com/#{config["framework"]["github"].to_s}"
-              rescue
-                results[key]["framework_website"] = "https://#{config["framework"]["website"].to_s}"
-              end
+            language_config = YAML.parse(File.read("#{language}/config.yaml"))
+            merger = Merger.new(language_config.as_h)
+            framework_config = YAML.parse(File.read("#{language}/#{framework}/config.yaml"))
+            config = merger.merge(framework_config.as_h)
+
+            if config["framework"].as_h.has_key?("github")
+              website = "https://github.com/#{config["framework"]["github"].to_s}"
+            else
+              website = "https://#{config["framework"]["website"].to_s}"
             end
-            results[key][metric] = value
+
+            frameworks[id] = {
+              "language" => language, "language_version" => config["provider"]["default"]["language"].to_s,
+              "framework" => framework, "framework_version" => config["framework"]["version"].to_s, "framework_website" => website,
+            }
+          end
+        end
+
+        query = <<-EOS
+  SELECT f.id as framework, c.level::integer, avg(v.value)
+  FROM values AS v
+    JOIN metrics AS m ON m.value_id = v.id
+    JOIN frameworks AS f ON f.id = m.framework_id
+    JOIN concurrencies AS c ON c.id = m.concurrency_id
+      GROUP BY 1,2
+  EOS
+
+        db.query query do |row|
+          row.each do
+            id = row.read(Int).to_i32
+            level = row.read(Int)
+            value = row.read(Float)
+            frameworks[id]["concurrency_#{level}"] = value.to_s
           end
         end
       end
+
       lines = [
-        "|    | Language | Framework | Speed (`req/s`) | Horizontal scale (parallelism) | Vertical scale (concurrency) |",
-        "|----|----------|-----------|----------------:|-------------|-------------|",
+        "|    | Language | Framework | Speed (64) | Speed (256) | Speed (512) | Speed (1024) |  Speed (2048) |",
+        "|----|----------|-----------|-----------:|------------:|------------:|-------------:|--------------:|",
       ]
       c = 1
-      results.each do |_, row|
-        lines << "| %s | %s (%s)| [%s](%s) (%s) | %s | | |" % [
+      sorted = frameworks.values.sort do |rank0, rank1|
+        rank1["concurrency_64"].to_f <=> rank0["concurrency_64"].to_f
+      end
+      sorted.each do |row|
+        lines << "| %s | %s (%s)| [%s](%s) (%s) | %s | %s | %s | %s | %s |" % [
           c,
           row["language"],
           row["language_version"],
           row["framework"],
           row["framework_website"],
           row["framework_version"],
-          row["request_per_second"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row["concurrency_64"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row["concurrency_256"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row["concurrency_512"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row["concurrency_1024"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row["concurrency_2048"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
         ]
         c += 1
       end
 
       path = File.expand_path("../../../README.mustache.md", __FILE__)
       template = Crustache.parse(File.read(path))
-      puts Crustache.render template, {"results" => lines, "date": Time.now.to_s("%Y-%m-%d")}
+      STDOUT.print Crustache.render template, {"results" => lines, "date": Time.now.to_s("%Y-%m-%d")}
     end
   end
 
