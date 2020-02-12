@@ -8,7 +8,7 @@ RUN rustup target add x86_64-unknown-linux-musl
 
 COPY . ./
 
-ENV RUSTFLAGS "-C target-cpu=native" 
+ENV RUSTFLAGS "-C target-cpu=native -C linker=musl-gcc"
 RUN cargo build --target x86_64-unknown-linux-musl --release
 
 FROM alpine
