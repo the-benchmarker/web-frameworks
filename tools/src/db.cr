@@ -94,7 +94,7 @@ class App < Admiral::Command
 
       path = File.expand_path("../../../README.mustache.md", __FILE__)
       template = Crustache.parse(File.read(path))
-      STDOUT.print Crustache.render template, {"results" => lines, "date": Time.now.to_s("%Y-%m-%d")}
+      STDOUT.print Crustache.render template, {"results" => lines, "date": Time.local.to_s("%Y-%m-%d")}
     end
   end
 
