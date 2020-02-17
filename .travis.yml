@@ -74,6 +74,7 @@ env:
     - FRAMEWORK=gorouter-fasthttp
     - FRAMEWORK=fiber
     - FRAMEWORK=gf
+    - FRAMEWORK=httprouter
     - FRAMEWORK=beego
     - FRAMEWORK=aspnetcore
     - FRAMEWORK=imi
