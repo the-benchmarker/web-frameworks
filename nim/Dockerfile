@@ -15,8 +15,6 @@ RUN nimble c \
     --passC:"-fno-ident" \
     --passC:"-flto" \
     --passC:"-ffast-math" \
-    --passC:"-march=native" \
-    --passC:"-mtune=native" \
     --passC:"-fsingle-precision-constant" \
     -d:release \
     --threads:on \
