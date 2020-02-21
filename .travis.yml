@@ -50,6 +50,7 @@ env:
     - FRAMEWORK=camping
     - FRAMEWORK=plezi
     - FRAMEWORK=hanami
+    - FRAMEWORK=hanami-api
     - FRAMEWORK=cuba
     - FRAMEWORK=akkahttp
     - FRAMEWORK=http4s
