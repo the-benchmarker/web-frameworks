@@ -6,7 +6,8 @@ COPY . ./
 
 RUN apk add build-base
 
-RUN bundle install --without development test
+RUN bundle config set without 'development test'
+RUN bundle install
 
 {{#environment}}
 ENV {{{.}}}
