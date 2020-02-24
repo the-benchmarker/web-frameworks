@@ -5,12 +5,17 @@ import (
 )
 
 func main() {
-	app := fiber.New()
-	app.Prefork = true
-	app.Get("/", func(c *fiber.Ctx) {})
+	app := fiber.New(&fiber.Settings{
+		Prefork:       true,
+		CaseSensitive: true,
+		StrictRouting: true,
+	})
 	app.Get("/user/:id", func(c *fiber.Ctx) {
 		c.SendString(c.Params("id"))
 	})
-	app.Post("/user", func(c *fiber.Ctx) {})
+	app.Use(func(c *fiber.Ctx) {
+		// GET /
+		// POST /user
+	})
 	app.Listen(3000)
 }
