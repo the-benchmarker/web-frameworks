@@ -93,6 +93,11 @@ update_configs:
   - language:ruby
 - package_manager: ruby:bundler
   update_schedule: live
+  directory: ruby/hanami-api
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
   directory: ruby/cuba
   default_labels:
   - language:ruby
