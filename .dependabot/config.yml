@@ -83,11 +83,6 @@ update_configs:
   - language:ruby
 - package_manager: ruby:bundler
   update_schedule: live
-  directory: ruby/plezi
-  default_labels:
-  - language:ruby
-- package_manager: ruby:bundler
-  update_schedule: live
   directory: ruby/hanami
   default_labels:
   - language:ruby

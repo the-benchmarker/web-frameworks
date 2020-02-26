@@ -47,7 +47,6 @@ env:
     - FRAMEWORK=syro
     - FRAMEWORK=sinatra
     - FRAMEWORK=camping
-    - FRAMEWORK=plezi
     - FRAMEWORK=hanami
     - FRAMEWORK=hanami-api
     - FRAMEWORK=cuba
