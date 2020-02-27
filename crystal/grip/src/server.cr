@@ -5,33 +5,36 @@ Grip.config do |cfg|
   cfg.logging = false
 end
 
-
 class IndexHttpConsumer < Grip::HttpConsumer
-  def get(req)
+  def get(context)
     html(
+      context,
       nil
     )
   end
 end
 
 class UsersHttpConsumer < Grip::HttpConsumer
-  def get(req)
+  def get(context)
+    params = url(context)
     html(
-      url["id"]
+      context,
+      params["id"]
     )
   end
 end
 
 class UserHttpConsumer < Grip::HttpConsumer
-  def post(req)
+  def post(context)
     html(
+      context,
       nil
     )
   end
 end
 
 class Api < Grip::Application
-  scope do
+  def initialize
     get "/", IndexHttpConsumer
     get "/user/:id", UsersHttpConsumer
     post "/user", UserHttpConsumer
