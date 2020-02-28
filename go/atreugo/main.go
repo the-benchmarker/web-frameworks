@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	config := &atreugo.Config{
+	config := atreugo.Config{
 		Addr: "0.0.0.0:3000",
 	}
 	server := atreugo.New(config)
