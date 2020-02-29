@@ -1,4 +1,4 @@
-FROM google/dart
+FROM google/dart:2.7
 
 WORKDIR /app
 
@@ -12,6 +12,4 @@ RUN pub get --offline --no-precompile
 
 WORKDIR /app
 
-EXPOSE 8888
-
-ENTRYPOINT ["dart", "bin/main.dart"]
+CMD dart main.dart
