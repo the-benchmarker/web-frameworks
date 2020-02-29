@@ -10,10 +10,12 @@ language: crystal
 
 env:
   global:
-    - DATABASE_URL="postgresql://postgres@localhost/benchmark"
+    - DOCKER_USERNAME=benchmarkers
+    - DOCKER_PASSWORD=uJJ4IM92xQUj1oTccl9nQjCBI3Eko3PK
+    - DATABASE_URL=postgresql://postgres@localhost/benchmark
   jobs:
     {{#frameworks}}
-    - FRAMEWORK={{.}}
+      - FRAMEWORK={{.}}
     {{/frameworks}}
 
 before_script:
@@ -23,9 +25,19 @@ before_script:
 script:
   - shards install
   - shards build
-  - bin/make config --without-sieger
-  - travis_wait 25 bin/neph ${FRAMEWORK} --mode=CI
+  - bin/make config --without-sieger --keep
+
+  # Create logs directory for neph
+  - mkdir -p .neph/${FRAMEWORK}
+  - travis_wait 15 bin/neph ${FRAMEWORK} --mode=CI
+
   - crystal spec
+
+# Push on docker registry if tests are OK
+after_success:
+  - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+  - docker tag ${FRAMEWORK} ${DOCKER_USERNAME}/${FRAMEWORK}
+  - docker push ${DOCKER_USERNAME}/${FRAMEWORK}
 
 notifications:
   email: false

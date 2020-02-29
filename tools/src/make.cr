@@ -18,6 +18,7 @@ class App < Admiral::Command
   class Config < Admiral::Command
     define_flag without_sieger : Bool, description: "run sieger", default: false, long: "without-sieger"
     define_flag docker_options : String, description: "extra argument to docker cli", default: "", long: "docker-options"
+    define_flag keep : Bool, description: "keep container after build (default : false)", default: false, long: "keep"
 
     def run
       frameworks = {} of String => Array(String)
@@ -51,7 +52,7 @@ class App < Admiral::Command
               yaml.scalar "depends_on"
               yaml.sequence do
                 tools.each do |tool|
-                  yaml.scalar tool
+                  yaml.scalar "#{language}.#{tool}"
                 end
               end
             end
@@ -229,15 +230,17 @@ class App < Admiral::Command
               end
 
               File.write("#{language}/#{tool}/Dockerfile", Crustache.render(dockerfile, params))
-              yaml.scalar tool
+
+              yaml.scalar "#{language}.#{tool}"
+
               yaml.mapping do
                 yaml.scalar "commands"
                 yaml.sequence do
                   # Build container
-                  yaml.scalar "docker build -t #{tool} . #{flags.docker_options}"
+                  yaml.scalar "docker build -t #{language}.#{tool} . #{flags.docker_options}"
 
                   # Run container, and store IP
-                  yaml.scalar "docker run -td #{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
+                  yaml.scalar "docker run -td #{language}.#{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
 
                   # Launch sieging
                   unless flags.without_sieger
@@ -247,8 +250,10 @@ class App < Admiral::Command
                      end
                   end
 
-                  # Stop the container
-                  yaml.scalar "docker ps -a -q  --filter ancestor=#{tool}  | xargs -r docker rm -f"
+                  # Drop the container
+                  unless flags.keep
+                    yaml.scalar "docker ps -a -q  --filter ancestor=#{language}.#{tool}  | xargs -r docker rm -f"
+                  end
                 end
                 yaml.scalar "dir"
                 yaml.scalar "#{language}/#{tool}"
@@ -265,8 +270,11 @@ class App < Admiral::Command
     def run
       frameworks = [] of String
       Dir.glob("*/*/config.yaml").each do |file|
-        info = file.split("/")
-        frameworks << info[info.size - 2]
+        directory = File.dirname(file)
+        infos = directory.split("/")
+        framework = infos.pop
+        language = infos.pop
+        frameworks << "#{language}.#{framework}"
       end
       config = Crustache.parse(File.read(".ci/template.mustache"))
       File.write(".travis.yml", Crustache.render(config, {"frameworks" => frameworks}))
