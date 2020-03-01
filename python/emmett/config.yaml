@@ -4,6 +4,7 @@ framework:
 
 build_deps:
   - libffi-dev
+  - git
 
 # cryptography could not be install on alpine
 # @see https://github.com/pyca/cryptography/issues/4264#issuecomment-392781146
