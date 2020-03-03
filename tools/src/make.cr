@@ -244,10 +244,14 @@ class App < Admiral::Command
 
                   # Launch sieging
                   unless flags.without_sieger
-                     factor = System.cpu_count**2
-                     [1, 4, 8, 16, 32].each do |i|
-                       yaml.scalar "../../bin/client -l #{language} -f #{tool} -c #{factor*i} -r GET:/ -r GET:/user/0 -r POST:/user"
-                     end
+                    factor = System.cpu_count**2
+                    concurrencies = [] of Int32
+                    command = "../../bin/client --language #{language} --framework #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
+                    [1, 4, 8, 16, 32].each do |i|
+                      command += " -c #{factor*i} "
+                    end
+
+                    yaml.scalar command
                   end
 
                   # Drop the container
