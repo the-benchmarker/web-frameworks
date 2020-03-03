@@ -11,7 +11,8 @@ server = HTTP::Server.new([
 
 System.cpu_count.times do |i|
   Process.fork do
-    server.bind_tcp host, port, reuse_port: true
-    server.listen
+    server.listen host, port, reuse_port: true
   end
 end
+
+sleep
