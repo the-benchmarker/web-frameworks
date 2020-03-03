@@ -9,7 +9,9 @@ server = HTTP::Server.new([
   Lucky::RouteHandler.new,
 ])
 
-puts "Listening on http://#{host}:#{port}"
-server.bind_tcp(host, port, true)
-
-server.listen
+System.cpu_count.times do |i|
+  Process.fork do
+    server.bind_tcp host, port, reuse_port: true
+    server.listen
+  end
+end
