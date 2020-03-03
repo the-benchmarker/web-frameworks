@@ -2,6 +2,9 @@ framework:
   website: nanoexpress/pro
   version: 1.10
 
+environment:
+  EXPERIMENTAL_FASTCALL: 1
+
 build_deps:
   - git
 
