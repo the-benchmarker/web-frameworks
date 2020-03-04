@@ -1,5 +1,6 @@
 framework:
   website: luckyframework.org
-  env:
-    LUCKY_ENV: production
   version: 0.18
+
+environment:
+  LUCKY_ENV: production

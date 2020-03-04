@@ -5,5 +5,5 @@ framework:
 files:
   - athena.yml
 
-env_vars:
-  athena_env: production
+environment:
+  ATHENA_ENV: production

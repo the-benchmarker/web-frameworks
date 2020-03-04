@@ -11,13 +11,13 @@ FROM alpine
 
 COPY --from=0 /usr/src/app/bin/server /usr/bin/app
 
-{{#env_vars}}
-{{.}}
-{{/env_vars}}
-
 {{#files}}
-COPY --from=0 /usr/src/app/{{.}} /usr/bin/{{{.}}}
+  COPY --from=0 /usr/src/app/{{.}} /usr/bin/{{{.}}}
 {{/files}}
+
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
 
 WORKDIR /usr/bin
 CMD ./app

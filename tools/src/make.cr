@@ -81,17 +81,6 @@ class App < Admiral::Command
                 params["build_opts"] = framework_config.as_h["build_opts"].to_s
               end
 
-              if env_vars = framework_config.as_h["env_vars"]?
-                vars = [] of String
-                env_vars.as_h.each do |name, value|
-                  value = value == "{{cpu_count}}" ? `nproc --all` : value
-
-                  vars << "ENV #{name.as_s.upcase} #{value}"
-                end
-
-                params["env_vars"] = vars
-              end
-
               if framework_config.as_h.has_key?("deps")
                 deps = [] of String
                 framework_config["deps"].as_a.each do |dep|
