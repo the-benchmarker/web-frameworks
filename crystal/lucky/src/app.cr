@@ -1,5 +1,4 @@
 require "lucky"
 require "./actions/**"
-require "./components/**"
 require "../config/env"
 require "../config/**"
