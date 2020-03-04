@@ -1,0 +1,12 @@
+framework:
+  github: nanoexpress/pro
+  version: 1.10
+
+environment:
+  EXPERIMENTAL_FASTCALL: 1
+
+build_deps:
+  - git
+
+fixes:
+  - ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
