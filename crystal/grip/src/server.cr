@@ -2,10 +2,9 @@ require "grip"
 
 Grip.config do |cfg|
   cfg.env = "production"
-  cfg.logging = false
 end
 
-class IndexHttpConsumer < Grip::HttpConsumer
+class Index < Grip::Controller::Http
   def get(context)
     html(
       context,
@@ -14,7 +13,7 @@ class IndexHttpConsumer < Grip::HttpConsumer
   end
 end
 
-class UsersHttpConsumer < Grip::HttpConsumer
+class Users < Grip::Controller::Http
   def get(context)
     params = url(context)
     html(
@@ -24,7 +23,7 @@ class UsersHttpConsumer < Grip::HttpConsumer
   end
 end
 
-class UserHttpConsumer < Grip::HttpConsumer
+class User < Grip::Controller::Http
   def post(context)
     html(
       context,
@@ -33,19 +32,19 @@ class UserHttpConsumer < Grip::HttpConsumer
   end
 end
 
-class Api < Grip::Application
+class App < Grip::Application
   def initialize
-    get "/", IndexHttpConsumer
-    get "/user/:id", UsersHttpConsumer
-    post "/user", UserHttpConsumer
+    get "/", Index
+    get "/user/:id", Users
+    post "/user", User
   end
 end
 
-api = Api.new
+app = App.new
 
 System.cpu_count.times do |_|
   Process.fork do
-    api.run do |config|
+    app.run do |config|
       server = config.server.not_nil!
       server.bind_tcp "0.0.0.0", 3000, reuse_port: true
     end
