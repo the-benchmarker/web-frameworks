@@ -10,8 +10,6 @@ language: crystal
 
 env:
   global:
-    - DOCKER_USERNAME=benchmarkers
-    - DOCKER_PASSWORD=uJJ4IM92xQUj1oTccl9nQjCBI3Eko3PK
     - DATABASE_URL=postgresql://postgres@localhost/benchmark
   jobs:
       - FRAMEWORK=nim.httpbeast
