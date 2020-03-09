@@ -10,17 +10,24 @@ class AqueductDartChannel extends ApplicationChannel {
   Controller get entryPoint {
     final router = Router();
 
-    router.route("/").linkFunction((request) => Response.ok(""));
+    router.route("/").linkFunction((request) => 
+      Response.ok("")
+        ..contentType = new ContentType("text", "plain")
+    );
 
     router.route("/user/:id").linkFunction(
-        (Request request) => Response.ok(request.path.variables['id']));
+        (Request request) =>
+          Response.ok(request.path.variables['id'])
+            ..contentType = new ContentType("text", "plain")
+      );
         
         
     router.route("/user").linkFunction(
         (Request request) {
-if(request.method != 'POST') return Response.notFound();
- return Response.ok("");
-});
+        if(request.method != 'POST') return Response.notFound();
+        return Response.ok("")
+          ..contentType = new ContentType("text", "plain");
+        });
 
     return router;
   }

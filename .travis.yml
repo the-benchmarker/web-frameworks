@@ -33,7 +33,6 @@ env:
       - FRAMEWORK=crystal.amber
       - FRAMEWORK=crystal.athena
       - FRAMEWORK=crystal.grip
-      - FRAMEWORK=crystal.raze
       - FRAMEWORK=crystal.onyx
       - FRAMEWORK=crystal.lucky
       - FRAMEWORK=crystal.orion
@@ -76,6 +75,7 @@ env:
       - FRAMEWORK=go.httprouter
       - FRAMEWORK=go.beego
       - FRAMEWORK=csharp.aspnetcore
+      - FRAMEWORK=dart.aqueduct
       - FRAMEWORK=php.imi
       - FRAMEWORK=php.swoft
       - FRAMEWORK=php.laravel
@@ -133,6 +133,7 @@ env:
       - FRAMEWORK=javascript.muneem
       - FRAMEWORK=javascript.iotjs-express
       - FRAMEWORK=javascript.polka
+      - FRAMEWORK=javascript.nanoexpress-pro
       - FRAMEWORK=javascript.fastify
       - FRAMEWORK=javascript.nanoexpress
       - FRAMEWORK=javascript.turbo_polka
