@@ -86,8 +86,8 @@ class App < Admiral::Command
           row["concurrency_64"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
           row["concurrency_256"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
           row["concurrency_512"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
-          row["concurrency_1024"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
-          row["concurrency_2048"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row["concurrency_1024"]?.try &.to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row["concurrency_2048"]?.try &.to_f.trunc.format(delimiter: ' ', decimal_places: 0),
         ]
         c += 1
       end
