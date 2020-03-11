@@ -7,8 +7,9 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_DB=benchmark
+      - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      - .ci/dump.sql:/usr/src/db/dump.sql
+      - .ci/dump.sql:/srv/dump.sql
       - pg-data:/var/lib/postgresql/data
 
 volumes:
