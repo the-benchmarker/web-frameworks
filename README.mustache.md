@@ -124,7 +124,7 @@ bin/db to_readme
 > Benchmarking with [wrk](https://github.com/ioquatix/wrk)
    + Threads : 8
    + Timeout : 8
-   + Duration : 5s (seconds)
+   + Duration : 15s (seconds)
 
 :information_source: Sorted by max `req/s` on concurrency **64** :information_source:
 
