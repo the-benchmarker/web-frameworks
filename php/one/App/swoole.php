@@ -7,6 +7,11 @@ define('_APP_PATH_', __DIR__);
 
 define('_APP_PATH_VIEW_', __DIR__ . '/View');
 
+function uuid()
+{
+    return '1';
+}
+
 //define('_DEBUG_',true);
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -19,3 +24,6 @@ require __DIR__ . '/config.php';
 //\Swoole\Runtime::enableCoroutine();
 
 \One\Swoole\OneServer::runAll();
+
+
+
