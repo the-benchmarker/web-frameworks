@@ -14,7 +14,7 @@ class AppController
 
     public function viewUser()
     {
-        echo url_value(2);
+        echo url_path(2);
     }
 
     public function addUser()

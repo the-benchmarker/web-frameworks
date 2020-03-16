@@ -17,8 +17,8 @@ end
 class App < Admiral::Command
   class Config < Admiral::Command
     define_flag without_sieger : Bool, description: "run sieger", default: false, long: "without-sieger"
-    define_flag sieger_options : String, description: "sieger options", default: "", long: "sieger-options"
     define_flag docker_options : String, description: "extra argument to docker cli", default: "", long: "docker-options"
+    define_flag keep : Bool, description: "keep container after build (default : false)", default: false, long: "keep"
 
     def run
       frameworks = {} of String => Array(String)
@@ -52,7 +52,7 @@ class App < Admiral::Command
               yaml.scalar "depends_on"
               yaml.sequence do
                 tools.each do |tool|
-                  yaml.scalar tool
+                  yaml.scalar "#{language}.#{tool}"
                 end
               end
             end
@@ -72,12 +72,15 @@ class App < Admiral::Command
                 end
                 params["environment"] = environment
               end
+
               if framework_config.as_h.has_key?("image")
                 params["image"] = framework_config.as_h["image"].to_s
               end
+
               if framework_config.as_h.has_key?("build_opts")
                 params["build_opts"] = framework_config.as_h["build_opts"].to_s
               end
+
               if framework_config.as_h.has_key?("deps")
                 deps = [] of String
                 framework_config["deps"].as_a.each do |dep|
@@ -85,6 +88,15 @@ class App < Admiral::Command
                 end
                 params["deps"] = deps
               end
+
+              if framework_config.as_h.has_key?("before_build")
+                deps = [] of String
+                framework_config["before_build"].as_a.each do |dep|
+                  deps << dep.to_s
+                end
+                params["before_build"] = deps
+              end
+
               if framework_config.as_h.has_key?("patch")
                 deps = [] of String
                 framework_config["patch"].as_a.each do |dep|
@@ -92,6 +104,7 @@ class App < Admiral::Command
                 end
                 params["patch"] = deps
               end
+
               if framework_config.as_h.has_key?("build_deps")
                 deps = [] of String
                 framework_config["build_deps"].as_a.each do |dep|
@@ -99,6 +112,7 @@ class App < Admiral::Command
                 end
                 params["build_deps"] = deps
               end
+
               if framework_config.as_h.has_key?("bin_deps")
                 deps = [] of String
                 framework_config["bin_deps"].as_a.each do |dep|
@@ -106,6 +120,7 @@ class App < Admiral::Command
                 end
                 params["bin_deps"] = deps
               end
+
               if framework_config.as_h.has_key?("php_mod")
                 deps = [] of String
                 framework_config["php_mod"].as_a.each do |ext|
@@ -113,9 +128,11 @@ class App < Admiral::Command
                 end
                 params["php_mod"] = deps
               end
+
               if framework_config.as_h.has_key?("arguments")
                 params["arguments"] = framework_config["arguments"].to_s
               end
+
               if framework_config.as_h.has_key?("fixes")
                 deps = [] of String
                 framework_config["fixes"].as_a.each do |dep|
@@ -123,6 +140,7 @@ class App < Admiral::Command
                 end
                 params["fixes"] = deps
               end
+
               if framework_config.as_h.has_key?("nginx_conf")
                 deps = [] of String
                 framework_config["nginx_conf"].as_a.each do |dep|
@@ -130,6 +148,7 @@ class App < Admiral::Command
                 end
                 params["nginx_conf"] = deps
               end
+
               if framework_config.as_h.has_key?("php_ext")
                 deps = [] of String
                 framework_config["php_ext"].as_a.each do |ext|
@@ -137,6 +156,7 @@ class App < Admiral::Command
                 end
                 params["php_ext"] = deps
               end
+
               if framework_config.as_h.has_key?("fixes")
                 deps = [] of String
                 framework_config["fixes"].as_a.each do |ext|
@@ -144,19 +164,24 @@ class App < Admiral::Command
                 end
                 params["fixes"] = deps
               end
+
               if framework_config.as_h.has_key?("arguments")
                 params["arguments"] = framework_config["arguments"].to_s
               end
+
               if framework_config.as_h.has_key?("docroot")
                 params["docroot"] = framework_config["docroot"].to_s
-                params["slasheddocroot"] = params["docroot"].to_s.gsub("/","\\/")
+                params["slasheddocroot"] = params["docroot"].to_s.gsub("/", "\\/")
               end
+
               if framework_config.as_h.has_key?("options")
                 params["options"] = framework_config["options"].to_s
               end
+
               if framework_config.as_h.has_key?("command")
                 params["command"] = framework_config["command"].to_s
               end
+
               if framework_config.as_h.has_key?("before_command")
                 before_command = [] of String
                 framework_config["before_command"].as_a.each do |cmd|
@@ -164,9 +189,11 @@ class App < Admiral::Command
                 end
                 params["before_command"] = before_command
               end
+
               if framework_config.as_h.has_key?("standalone")
                 params["standalone"] = framework_config["standalone"].to_s
               end
+
               if framework_config.as_h.has_key?("build")
                 build = [] of String
                 framework_config["build"].as_a.each do |cmd|
@@ -174,6 +201,7 @@ class App < Admiral::Command
                 end
                 params["build"] = build
               end
+
               if framework_config.as_h.has_key?("clone")
                 clone = [] of String
                 framework_config["clone"].as_a.each do |cmd|
@@ -181,6 +209,7 @@ class App < Admiral::Command
                 end
                 params["clone"] = clone
               end
+
               if framework_config.as_h.has_key?("files")
                 files = [] of String
                 framework_config.as_h["files"].as_a.each do |file|
@@ -188,17 +217,35 @@ class App < Admiral::Command
                 end
                 params["files"] = files
               end
+
               File.write("#{language}/#{tool}/Dockerfile", Crustache.render(dockerfile, params))
-              yaml.scalar tool
+
+              yaml.scalar "#{language}.#{tool}"
+
               yaml.mapping do
                 yaml.scalar "commands"
                 yaml.sequence do
-                  yaml.scalar "docker build -t #{tool} . #{flags.docker_options}"
-                  yaml.scalar "docker run -td #{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
+                  # Build container
+                  yaml.scalar "docker build -t #{language}.#{tool} . #{flags.docker_options}"
 
+                  # Run container, and store IP
+                  yaml.scalar "docker run -td #{language}.#{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
+
+                  # Launch sieging
                   unless flags.without_sieger
-                    yaml.scalar "../../bin/client -l #{language} -f #{tool} -r GET:/ -r GET:/user/0 -r POST:/user #{flags.sieger_options}"
-                    yaml.scalar "docker ps -a -q  --filter ancestor=#{tool} | xargs -i docker container rm -f {}"
+                    factor = System.cpu_count**2
+                    concurrencies = [] of Int32
+                    command = "../../bin/client --language #{language} --framework #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
+                    [1, 4, 8, 16, 32].each do |i|
+                      command += " -c #{factor*i} "
+                    end
+
+                    yaml.scalar command
+                  end
+
+                  # Drop the container
+                  unless flags.keep
+                    yaml.scalar "docker ps -a -q  --filter ancestor=#{language}.#{tool}  | xargs -r docker rm -f"
                   end
                 end
                 yaml.scalar "dir"
@@ -216,8 +263,11 @@ class App < Admiral::Command
     def run
       frameworks = [] of String
       Dir.glob("*/*/config.yaml").each do |file|
-        info = file.split("/")
-        frameworks << info[info.size - 2]
+        directory = File.dirname(file)
+        infos = directory.split("/")
+        framework = infos.pop
+        language = infos.pop
+        frameworks << "#{language}.#{framework}"
       end
       config = Crustache.parse(File.read(".ci/template.mustache"))
       File.write(".travis.yml", Crustache.render(config, {"frameworks" => frameworks}))

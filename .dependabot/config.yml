@@ -1,6 +1,26 @@
 ---
 version: 1
 update_configs:
+- package_manager: elixir:hex
+  update_schedule: live
+  directory: elixir/cowboy_stream
+  default_labels:
+  - language:elixir
+- package_manager: elixir:hex
+  update_schedule: live
+  directory: elixir/phoenix
+  default_labels:
+  - language:elixir
+- package_manager: elixir:hex
+  update_schedule: live
+  directory: elixir/cowboy
+  default_labels:
+  - language:elixir
+- package_manager: elixir:hex
+  update_schedule: live
+  directory: elixir/plug
+  default_labels:
+  - language:elixir
 - package_manager: rust:cargo
   update_schedule: live
   directory: rust/nickel
@@ -9,11 +29,6 @@ update_configs:
 - package_manager: rust:cargo
   update_schedule: live
   directory: rust/iron
-  default_labels:
-  - language:rust
-- package_manager: rust:cargo
-  update_schedule: live
-  directory: rust/actix-web
   default_labels:
   - language:rust
 - package_manager: rust:cargo
@@ -68,12 +83,12 @@ update_configs:
   - language:ruby
 - package_manager: ruby:bundler
   update_schedule: live
-  directory: ruby/plezi
+  directory: ruby/hanami
   default_labels:
   - language:ruby
 - package_manager: ruby:bundler
   update_schedule: live
-  directory: ruby/hanami
+  directory: ruby/hanami-api
   default_labels:
   - language:ruby
 - package_manager: ruby:bundler
@@ -89,6 +104,11 @@ update_configs:
 - package_manager: go:modules
   update_schedule: daily
   directory: go/fasthttprouter
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
+  directory: go/router
   default_labels:
   - language:go
 - package_manager: go:modules
@@ -173,7 +193,17 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
+  directory: go/fiber
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
   directory: go/gf
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
+  directory: go/httprouter
   default_labels:
   - language:go
 - package_manager: go:modules
@@ -223,6 +253,11 @@ update_configs:
   - language:php
 - package_manager: php:composer
   update_schedule: live
+  directory: php/phalcon
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
   directory: php/zend-expressive
   default_labels:
   - language:php
@@ -253,12 +288,27 @@ update_configs:
   - language:php
 - package_manager: php:composer
   update_schedule: live
+  directory: php/hamlet
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/yii
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
   directory: php/workerman
   default_labels:
   - language:php
 - package_manager: python
   update_schedule: live
   directory: python/cherrypy
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/apidaora
   default_labels:
   - language:python
 - package_manager: python
@@ -278,7 +328,17 @@ update_configs:
   - language:python
 - package_manager: python
   update_schedule: live
+  directory: python/emmett
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
   directory: python/hug
+  default_labels:
+  - language:python
+- package_manager: python
+  update_schedule: live
+  directory: python/pyramid
   default_labels:
   - language:python
 - package_manager: python
@@ -329,11 +389,6 @@ update_configs:
 - package_manager: python
   update_schedule: live
   directory: python/klein
-  default_labels:
-  - language:python
-- package_manager: python
-  update_schedule: live
-  directory: python/bocadillo
   default_labels:
   - language:python
 - package_manager: python
@@ -419,11 +474,6 @@ update_configs:
 - package_manager: javascript
   update_schedule: live
   directory: javascript/polka
-  default_labels:
-  - language:javascript
-- package_manager: javascript
-  update_schedule: live
-  directory: javascript/nanoexpress-pro
   default_labels:
   - language:javascript
 - package_manager: javascript

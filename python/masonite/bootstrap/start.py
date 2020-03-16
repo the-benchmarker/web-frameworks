@@ -56,4 +56,4 @@ def app(environ, start_response):
     it to the WSGI server.
     """
 
-    return iter([bytes(container.make("Response"), "utf-8")])
+    return iter([container.make("Response")])

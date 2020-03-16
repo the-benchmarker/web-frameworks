@@ -16,6 +16,7 @@ main:
     - php
     - crystal
     - python
+    - config
     
 java:
   commands:
@@ -94,5 +95,11 @@ crystal:
 
 python:
   commands:
+    - find -type f -name '*.py' -exec autopep8 -i {} \;
     - black
   dir: python
+
+config:
+  commands:
+    - prettier "**/**/*.json" --write
+  dir: .

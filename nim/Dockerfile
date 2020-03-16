@@ -1,4 +1,4 @@
-FROM nimlang/nim:1.0.2-alpine
+FROM nimlang/nim:1.0.6-alpine
 
 WORKDIR /usr/src/app
 
@@ -15,8 +15,6 @@ RUN nimble c \
     --passC:"-fno-ident" \
     --passC:"-flto" \
     --passC:"-ffast-math" \
-    --passC:"-march=native" \
-    --passC:"-mtune=native" \
     --passC:"-fsingle-precision-constant" \
     -d:release \
     --threads:on \

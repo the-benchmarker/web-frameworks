@@ -3,23 +3,39 @@ dist: bionic
 
 services:
   - docker # Use docker to containerize frameworks
-  - redis # Use redis to store data
+  - postgresql # Use postgresql to store data
 
 # This tool is written in crystal
 language: crystal
 
 env:
-  matrix:
+  global:
+    - DATABASE_URL=postgresql://postgres@localhost/benchmark
+  jobs:
     {{#frameworks}}
-    - FRAMEWORK={{.}}
+      - FRAMEWORK={{.}}
     {{/frameworks}}
+
+before_script:
+  - psql -c 'CREATE DATABASE benchmark;' -U postgres;
+  - psql -U postgres -d benchmark < .ci/dump.sql
 
 script:
   - shards install
   - shards build
-  - bin/make config --without-sieger
-  - bin/neph ${FRAMEWORK}
+  - bin/make config --without-sieger --keep
+
+  # Create logs directory for neph
+  - mkdir -p .neph/${FRAMEWORK}
+  - travis_wait 15 bin/neph ${FRAMEWORK} --mode=CI
+
   - crystal spec
+
+# Push on docker registry if tests are OK
+after_success:
+  - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+  - docker tag ${FRAMEWORK} ${DOCKER_USERNAME}/${FRAMEWORK}
+  - docker push ${DOCKER_USERNAME}/${FRAMEWORK}
 
 notifications:
   email: false

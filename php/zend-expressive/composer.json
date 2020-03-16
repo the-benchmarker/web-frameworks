@@ -3,7 +3,7 @@
     "zendframework/zend-component-installer": "*",
     "zendframework/zend-config-aggregator": "*",
     "zendframework/zend-diactoros": "*",
-    "zendframework/zend-expressive": "3.2.*",
+    "zendframework/zend-expressive": "~3.2.0",
     "zendframework/zend-expressive-helpers": "*",
     "zendframework/zend-stdlib": "*",
     "zendframework/zend-servicemanager": "*",
@@ -11,7 +11,7 @@
   },
   "autoload": {
     "psr-4": {
-        "App\\": "src/App/src/"
+      "App\\": "src/App/src/"
     }
   }
 }

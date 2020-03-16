@@ -1,15 +1,15 @@
-require "athena/routing"
+require "athena"
 
-class BenchmarkController < Athena::Routing::Controller
-  @[Athena::Routing::Get(path: "/")]
+class BenchmarkController < ART::Controller
+  @[ART::Get("/")]
   def root_get : Nil
   end
 
-  @[Athena::Routing::Post(path: "/user")]
-  def root_post(body : String?) : Nil
+  @[ART::Post("/user")]
+  def root_post : Nil
   end
 
-  @[Athena::Routing::Get(path: "/user/:id", constraints: {id: /\d+/})]
+  @[ART::Get("/user/:id", constraints: {id: /\d+/})]
   def user(id : Int32) : Int32
     id
   end
@@ -17,7 +17,7 @@ end
 
 System.cpu_count.times do |i|
   Process.fork do
-    Athena::Routing.run(3000, reuse_port: true)
+    ART.run reuse_port: true
   end
 end
 

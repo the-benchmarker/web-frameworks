@@ -1,83 +1,113 @@
 require "admiral"
-require "sqlite3"
+require "pg"
 
 PIPELINES = {
-  "GET":  File.expand_path("../../" + "pipeline.lua", __FILE__),
-  "POST": File.expand_path("../../" + "pipeline_post.lua", __FILE__),
+  "GET": File.expand_path("../../" + "pipeline.lua", __FILE__),
 }
 
-def insert(db, framework_id, metric, value)
-  row = db.exec "insert or ignore into metric_keys values (null, ?, ?)", metric, framework_id
-  metric_id = row.last_insert_id
-  if metric_id == 0
-    metric_id = db.scalar "select id from metric_keys where label = ? and framework_id = ?", metric, framework_id
+def insert(framework_id, metric, value, concurrency_level_id)
+  DB.open(ENV["DATABASE_URL"]) do |db|
+    row = db.query("INSERT INTO keys (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id", metric)
+    row.move_next
+    metric_id = row.read(Int)
+
+    row = db.query("INSERT INTO values (key_id, value) VALUES ($1, $2) RETURNING id", metric_id, value)
+    row.move_next
+    value_id = row.read(Int)
+
+    db.exec("INSERT INTO metrics (value_id, framework_id, concurrency_id) VALUES ($1, $2, $3)", value_id, framework_id, concurrency_level_id)
   end
-  db.exec "insert into metric_values values (null, ?, ?)", metric_id, value
 end
 
 class Client < Admiral::Command
-  define_flag threads : Int32, description: "# of threads", default: 16, long: "threads", short: "t"
-  define_flag connections : Int32, description: "# of opened connections", default: 1000, long: "connections", short: "c"
+  define_flag threads : Int32, description: "# of threads", default: 8, long: "threads", short: "t"
   define_flag duration : Int32, description: "Time to test, in seconds", default: 15, long: "duration", short: "d"
   define_flag language : String, description: "Language used", required: true, long: "language", short: "l"
   define_flag framework : String, description: "Framework used", required: true, long: "framework", short: "f"
+  define_flag concurrencies : Array(Int32), description: "Concurrency level", required: true, long: "concurrency", short: "c"
   define_flag routes : Array(String), long: "routes", short: "r", default: ["GET:/"]
 
   def run
-    db = DB.open "sqlite3://../../data.db"
-    row = db.exec "insert or ignore into languages values (null, ?)", flags.language
-    language_id = row.last_insert_id
-    if language_id == 0
-      language_id = db.scalar "select id from languages where label = ?", flags.language
-    end
+    db = DB.open(ENV["DATABASE_URL"])
 
-    row = db.exec "insert or ignore into frameworks values (null, ?, ?)", language_id, flags.framework
-    framework_id = row.last_insert_id
-    if language_id == 0
-      framework_id = db.scalar "select id from languages where language_id = ? and label = ?", language_id, flags.framework
-    end
+    row = db.query("INSERT INTO languages (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id", flags.language)
+    row.move_next
+    language_id = row.read(Int)
 
-    sleep 20 # due to external program usage
+    row = db.query("INSERT INTO frameworks (language_id, label) VALUES ($1, $2) ON CONFLICT (language_id, label) DO UPDATE SET label = $2 RETURNING id", language_id, flags.framework)
+    row.move_next
+    framework_id = row.read(Int)
+
+    sleep 25 # due to external program usage
 
     address = File.read("ip.txt").strip
+
+    # Run a 5-second primer at 8 client-concurrency to verify that the server is in fact running. These results are not captured.
+
+    process = Process.new("wrk", ["-H", "Connection: keep-alive", "-d", "5s", "-c", "8", "--timeout", "8", "-t", flags.threads.to_s, "http://#{address}:3000"])
+    process.wait
+
+    # Run a 15-second warmup at 256 client-concurrency to allow lazy-initialization to execute and just-in-time compilation to run. These results are not captured.
+
+    process = Process.new("wrk", ["-H", "Connection: keep-alive", "-d", "#{flags.duration}s", "-c", "256", "--timeout", "8", "-t", flags.threads.to_s, "http://#{address}:3000"])
+    process.wait
 
     flags.routes.each do |route|
       method, uri = route.split(":")
       url = "http://#{address}:3000#{uri}"
 
-      pipeline = PIPELINES[method]
+      flags.concurrencies.each do |concurrency|
+        row = db.query("INSERT INTO concurrencies (level) VALUES ($1) ON CONFLICT (level) DO UPDATE SET level = $1 RETURNING id", concurrency)
+        row.move_next
+        concurrency_level_id = row.read(Int)
 
-      command = "wrk -H 'Connection: keep-alive' --latency -d #{flags.duration}s -s #{pipeline} -c #{flags.connections} --timeout 8 -t #{flags.threads} #{url}"
+        options = {} of String => String | Int32
+        options["duration"] = "#{flags.duration}s"
+        options["connections"] = concurrency
+        options["timeout"] = 8
+        options["threads"] = flags.threads
+        if method == "POST"
+          options["script"] = File.expand_path("../../" + "pipeline_post.lua", __FILE__)
+        end
+        params = [] of String
+        params << "--latency"
+        options.each do |key, value|
+          params << "--#{key}"
+          params << value.to_s
+        end
+        params << url
 
-      io = IO::Memory.new
-      Process.run(command, shell: true, error: io)
+        stdout = IO::Memory.new
+        process = Process.new("wrk", params, output: stdout)
+        status = process.wait
+        output = stdout.to_s
+        lines = output.split("\n")
+        requests_per_seconds = lines.grep(/Requests/).first.split(":").pop.strip.to_f
 
-      result = io.to_s.split(",")
+        # insert(framework_id, "request_duration", result[0])
+        # insert(framework_id, "request_total", result[1])
+        insert(framework_id, "request_per_second", requests_per_seconds, concurrency_level_id)
+        # insert(framework_id, "request_bytes", result[3])
 
-      insert(db, framework_id, "request:duration", result[0])
-      insert(db, framework_id, "request:total", result[1])
-      insert(db, framework_id, "request:per_second", result[2])
-      insert(db, framework_id, "request:bytes", result[3])
+        # insert(framework_id, "error_socket", result[4])
+        # insert(framework_id, "error_read", result[5])
+        # insert(framework_id, "error_write", result[6])
+        # insert(framework_id, "error_http", result[7])
+        # insert(framework_id, "error_timeout", result[8])
 
-      insert(db, framework_id, "error:socket", result[4])
-      insert(db, framework_id, "error:read", result[5])
-      insert(db, framework_id, "error:write", result[6])
-      insert(db, framework_id, "error:http", result[7])
-      insert(db, framework_id, "error:timeout", result[8])
+        # insert(framework_id, "latency_minimum", result[9])
+        # insert(framework_id, "latency_maximum", result[10])
+        # insert(framework_id, "latency_average", result[11])
+        # insert(framework_id, "latency_deviation", result[12])
 
-      insert(db, framework_id, "latency:minimum", result[9])
-      insert(db, framework_id, "latency:maximum", result[10])
-      insert(db, framework_id, "latency:average", result[11])
-      insert(db, framework_id, "latency:deviation", result[12])
-
-      insert(db, framework_id, "percentile:fifty", result[13])
-      insert(db, framework_id, "percentile:seventy_five", result[14])
-      insert(db, framework_id, "percentile:ninety", result[15])
-      insert(db, framework_id, "percentile:ninety_nine", result[16])
-      insert(db, framework_id, "percentile:ninety_nine_ninety", result[17])
-
-      db.close
+        # insert(framework_id, "percentile_fifty", result[13])
+        # insert(framework_id, "percentile_ninety", result[14])
+        # insert(framework_id, "percentile_ninety_nine", result[15])
+        # insert(framework_id, "percentile_ninety_nine_ninety", result[16])
+      end
     end
+
+    db.close
   end
 end
 

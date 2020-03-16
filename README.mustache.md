@@ -29,6 +29,7 @@ This project aims to be a load benchmarking suite, no more, no less
 + [Crystal](https://crystal-lang.org) as `built-in` tools are made in this language
 + [Docker](https://www.docker.com) as **frameworks** are `isolated` into _containers_
 + [wrk](https://github.com/wg/wrk) as benchmarking tool, `>= 4.1.0`
++ [postgresql](https://www.postgresql.org) to store data, `>= 10`
 
 :information_source: you need `wrk` **stable**
 
@@ -52,11 +53,49 @@ shards install
 shards build
 ~~~
 
-+ Initialize `sqlite` database
++ Create and initialize the database
 
 ~~~sh
-bin/db init
+createdb -U postgres benchmark
+psql -U postgres -d benchmark < .ci/dump.sql
 ~~~
+
+Docker can be used to set up the database:
+
+~~~sh
+docker run -it --rm -d \
+  -p 5432:5432 \
+  -e POSTGRES_DB=benchmark \
+  -e POSTGRES_HOST_AUTH_METHOD=trust \
+  -v /tmp/pg-data:/var/lib/postgresql/data \
+  --name pg postgres:12-alpine
+~~~
+
+Wait several seconds for the container to start, then inject the dump:
+
+~~~sh
+docker exec pg sh -c "echo \"$(cat .ci/dump.sql)\" | psql -U postgres -d benchmark"
+~~~
+
+After creating the database, export its URL:
+
+~~~sh
+export DATABASE_URL="postgresql://postgres@localhost/benchmark"
+~~~
+
+Docker can be used to set up the database:
+
+~~~sh
+docker run -it --rm -d \
+  -p 5432:5432 \
+  -e POSTGRES_DB=benchmark \
+  -e POSTGRES_HOST_AUTH_METHOD=trust \
+  -v /tmp/pg-data:/var/lib/postgresql/data \
+  --name pg postgres:12-alpine
+docker exec pg sh -c "echo \"$(cat .ci/dump.sql)\" | psql -U postgres -d benchmark"
+~~~
+
+After creating the database, export its URL: `export DATABASE_URL="postgresql://postgres@localhost/benchmark"`
 
 + Make configuration
 
@@ -79,6 +118,15 @@ bin/db to_readme
 ~~~
 
 ## Results
+
+:information_source:  Updated on **{{date}}** :information_source:
+
+> Benchmarking with [wrk](https://github.com/ioquatix/wrk)
+   + Threads : 8
+   + Timeout : 8
+   + Duration : 15s (seconds)
+
+:information_source: Sorted by max `req/s` on concurrency **64** :information_source:
 
 {{#results}}
 {{.}}

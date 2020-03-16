@@ -1,13 +1,13 @@
-const nanoexpressPro = require("nanoexpress-pro");
+const nanoexpress = require("nanoexpress-pro/cjs");
 
-nanoexpressPro()
-	.get("/", (req, res) => {
-		res.end("");
-	})
-	.get("/user/:id", (req, res) => {
-		res.end(req.params.id);
-	})
-	.post("/user", (req, res) => {
-		res.end("");
-	})
-	.listen(3000);
+nanoexpress()
+  .get("/", (req, res) => {
+    res.end("");
+  })
+  .get("/user/:id", (req, res) => {
+    res.end(req.params.id);
+  })
+  .post("/user", (req, res) => {
+    res.end("");
+  })
+  .listen(3000);

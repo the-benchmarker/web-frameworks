@@ -6,7 +6,7 @@ end
 
 class User::Show < ApiAction
   get "/user/:id" do
-    render_text id.to_s
+    plain_text id
   end
 end
 

@@ -1,6 +1,6 @@
 framework:
-  github: workerman/workerman
-  version: 3.5
+  github: walkor/Workerman
+  version: 4.0
 
 php_mod:
   - pcntl

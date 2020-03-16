@@ -1,4 +1,4 @@
-FROM ruby:2.6-alpine
+FROM ruby:2.7-alpine
 
 WORKDIR /usr/src/app
 
@@ -6,7 +6,8 @@ COPY . ./
 
 RUN apk add build-base
 
-RUN bundle install --without development test
+RUN bundle config set without 'development test'
+RUN bundle install
 
 {{#environment}}
 ENV {{{.}}}

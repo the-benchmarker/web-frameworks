@@ -2,8 +2,8 @@ require "file_utils"
 
 logger =
   Dexter::Logger.new(
-    io: STDOUT,
-    level: Logger::Severity::INFO
+    io: nil,
+    level: Logger::Severity::ERROR
   )
 
 Lucky.configure do |settings|

@@ -1,13 +1,13 @@
 {
-    "require": {
-        "symfony/framework-bundle": "5.0.*",
-	"symfony/console": "*",
-	"symfony/yaml": "*",
-	"doctrine/annotations": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "src/"
-        }
+  "require": {
+    "symfony/framework-bundle": "~5.0.0",
+    "symfony/console": "*",
+    "symfony/yaml": "*",
+    "doctrine/annotations": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
     }
+  }
 }

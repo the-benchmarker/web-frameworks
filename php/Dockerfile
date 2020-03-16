@@ -1,18 +1,26 @@
 FROM php:7.4-fpm-alpine
 
 RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc {{#deps}} {{{.}}} {{/deps}}
-RUN docker-php-ext-install zip opcache {{#php_mod}} {{{.}}} {{/php_mod}}
+RUN docker-php-ext-install zip opcache
 
 WORKDIR /usr/src/app
-
-{{#php_mod}}
-  RUN docker-php-ext-install {{{.}}}
-{{/php_mod}}
 
 {{#php_ext}}
   RUN pecl install {{{.}}}
   RUN docker-php-ext-enable {{{.}}}
 {{/php_ext}}
+
+{{#build_deps}}
+  RUN apk add {{{.}}}
+{{/build_deps}}
+
+{{#before_build}}
+  RUN {{{.}}}
+{{/before_build}}
+
+{{#php_mod}}
+  RUN docker-php-ext-install {{{.}}}
+{{/php_mod}}
 
 COPY . ./
 

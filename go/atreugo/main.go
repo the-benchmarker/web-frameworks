@@ -1,24 +1,24 @@
 package main
 
 import (
-	"github.com/savsgio/atreugo/v9"
+	"github.com/savsgio/atreugo/v10"
 )
 
 func main() {
-	config := &atreugo.Config{
+	config := atreugo.Config{
 		Addr: "0.0.0.0:3000",
 	}
 	server := atreugo.New(config)
 
-	server.Path("GET", "/", func(ctx *atreugo.RequestCtx) error {
-		return ctx.TextResponse("")
+	server.GET("/", func(ctx *atreugo.RequestCtx) error {
+		return nil
 	})
-	server.Path("GET", "/user/:id", func(ctx *atreugo.RequestCtx) error {
+	server.GET("/user/:id", func(ctx *atreugo.RequestCtx) error {
 		id := ctx.UserValue("id").(string)
 		return ctx.TextResponse(id)
 	})
-	server.Path("POST", "/user", func(ctx *atreugo.RequestCtx) error {
-		return ctx.TextResponse("")
+	server.POST("/user", func(ctx *atreugo.RequestCtx) error {
+		return nil
 	})
 
 	err := server.ListenAndServe()
