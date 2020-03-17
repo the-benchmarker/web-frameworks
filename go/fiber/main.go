@@ -1,8 +1,12 @@
 package main
 
 import (
+	"strings"
+
 	"github.com/gofiber/fiber"
 )
+
+const pathUser = "/user/"
 
 func main() {
 	app := fiber.New(&fiber.Settings{
@@ -10,12 +14,10 @@ func main() {
 		CaseSensitive: true,
 		StrictRouting: true,
 	})
-	app.Get("/user/:id", func(c *fiber.Ctx) {
-		c.SendString(c.Params("id"))
-	})
 	app.Use(func(c *fiber.Ctx) {
-		// GET /
-		// POST /user
+		if strings.HasPrefix(c.Path(), pathUser) {
+			c.SendString(c.Path()[6:])
+		}
 	})
 	app.Listen(3000)
 }
