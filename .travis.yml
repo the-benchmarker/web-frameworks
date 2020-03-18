@@ -82,13 +82,13 @@ env:
       - FRAMEWORK=php.lumen
       - FRAMEWORK=php.slim
       - FRAMEWORK=php.hyperf
+      - FRAMEWORK=php.laminas
       - FRAMEWORK=php.one-fpm
-      - FRAMEWORK=php.zend-framework
       - FRAMEWORK=php.phalcon
-      - FRAMEWORK=php.zend-expressive
       - FRAMEWORK=php.one
       - FRAMEWORK=php.ubiquity
       - FRAMEWORK=php.sw-fw-less
+      - FRAMEWORK=php.mezzio
       - FRAMEWORK=php.basicphp
       - FRAMEWORK=php.symfony
       - FRAMEWORK=php.spiral
