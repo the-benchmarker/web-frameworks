@@ -21,7 +21,6 @@ func main() {
 
 		if bytes.Equal(method, strGET) {
 			if bytes.Equal(path, strSlash) {
-				ctx.SetBodyString("")
 				return
 			} else if bytes.HasPrefix(path, strSlashUserSlash) {
 				id := path[6:]
@@ -30,7 +29,6 @@ func main() {
 			}
 		} else if bytes.Equal(method, strPOST) {
 			if bytes.Equal(path, strSlashUser) {
-				ctx.SetBodyString("")
 				return
 			}
 		}
