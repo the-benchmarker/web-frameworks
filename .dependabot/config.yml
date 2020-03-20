@@ -301,6 +301,11 @@ update_configs:
   directory: php/workerman
   default_labels:
   - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/chubbyphp
+  default_labels:
+  - language:php
 - package_manager: python
   update_schedule: live
   directory: python/cherrypy
