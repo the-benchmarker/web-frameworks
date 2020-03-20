@@ -1,6 +1,6 @@
 framework:
-  website: framework.zend.com
-  version: 3.1
+  website: docs.mezzio.dev
+  version: 3.2
   
 before_command:
   - mkdir /usr/src/app/data

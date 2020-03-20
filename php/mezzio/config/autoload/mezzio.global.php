@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Zend\ConfigAggregator\ConfigAggregator;
+use Laminas\ConfigAggregator\ConfigAggregator;
 
 return [
     // Toggle the configuration cache. Set this to boolean false, or remove the
@@ -14,7 +14,7 @@ return [
     // Enable debugging; typically used to provide debugging information within templates.
     'debug' => false,
 
-    'zend-expressive' => [
+    'mezzio' => [
         // Provide templates for the error handling middleware to use when
         // generating responses.
         'error_handler' => [

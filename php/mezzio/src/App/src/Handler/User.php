@@ -6,9 +6,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\TextResponse;
+use Laminas\Diactoros\Response\TextResponse;
 
-class UserId implements MiddlewareInterface
+class User implements MiddlewareInterface
 {
     /**
      * Process an incoming server request.
@@ -19,6 +19,6 @@ class UserId implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        return new TextResponse($request->getAttribute('id'));
+        return new TextResponse('');
     }
 }
