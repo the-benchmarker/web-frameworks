@@ -40,7 +40,7 @@ $app = new Application([
                 return $response;
             }
         )),
-        Route::get('/user', 'user_list', new CallbackRequestHandler(
+        Route::post('/user', 'user_list', new CallbackRequestHandler(
             function () use ($responseFactory) {
                 $response = $responseFactory->createResponse();
                 $response->getBody()->write('');
