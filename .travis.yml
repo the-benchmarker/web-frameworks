@@ -168,12 +168,8 @@ script:
   - crystal spec
 
 # Push on docker registry if tests are OK
-deploy:
-  provider: script
-  script: bash .ci/deploy.sh
-  on:
-    repo: the-benchmarker/web-frameworks
-    all_branches: true
+# This does not work on forks
+after_success: if [ ${TRAVIS_REPO_SLUG} == "the-benchmarker/web-frameworks" ]; then bash .ci/docker_release.sh ; fi
 
 notifications:
   email: false
