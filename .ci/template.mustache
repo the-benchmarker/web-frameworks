@@ -32,10 +32,12 @@ script:
   - crystal spec
 
 # Push on docker registry if tests are OK
-after_success:
-  - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-  - docker tag ${FRAMEWORK} ${DOCKER_USERNAME}/${FRAMEWORK}
-  - docker push ${DOCKER_USERNAME}/${FRAMEWORK}
+deploy:
+  provider: script
+  script: bash .ci/deploy.sh
+  on:
+    repo: the-benchmarker/web-frameworks
+    all_branches: true
 
 notifications:
   email: false
