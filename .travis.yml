@@ -95,6 +95,7 @@ env:
       - FRAMEWORK=php.hamlet
       - FRAMEWORK=php.yii
       - FRAMEWORK=php.workerman
+      - FRAMEWORK=php.chubbyphp
       - FRAMEWORK=python.cherrypy
       - FRAMEWORK=python.apidaora
       - FRAMEWORK=python.responder
