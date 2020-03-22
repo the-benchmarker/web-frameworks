@@ -1,2 +1,2 @@
-const sails = require('sails');
-sails.lift()
+const sails = require("sails");
+sails.lift();
