@@ -1,5 +1,5 @@
-const feathers = require('@feathersjs/feathers');
-const express = require('@feathersjs/express');
+const feathers = require("@feathersjs/feathers");
+const express = require("@feathersjs/express");
 
 const app = express(feathers());
 
