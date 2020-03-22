@@ -1,2 +1,3 @@
-const sails = require("sails");
-sails.lift();
+const sails = require('sails');
+const rc = require('sails/accessible/rc');
+sails.lift(rc('sails'));
