@@ -32,10 +32,8 @@ script:
   - crystal spec
 
 # Push on docker registry if tests are OK
-after_success:
-  - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-  - docker tag ${FRAMEWORK} ${DOCKER_USERNAME}/${FRAMEWORK}
-  - docker push ${DOCKER_USERNAME}/${FRAMEWORK}
+# This does not work on forks
+after_success: if [ ${TRAVIS_REPO_SLUG} == "the-benchmarker/web-frameworks" ]; then bash .ci/docker_release.sh ; fi
 
 notifications:
   email: false

@@ -8,9 +8,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-func ShowEmpty(ctx *fasthttp.RequestCtx) {
-	ctx.WriteString("")
-}
+func ShowEmpty(ctx *fasthttp.RequestCtx) {}
 
 func ShowID(ctx *fasthttp.RequestCtx) {
 	fmt.Fprintf(ctx, "%s", ctx.UserValue("id"))
