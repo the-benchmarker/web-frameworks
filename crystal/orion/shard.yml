@@ -11,8 +11,8 @@ targets:
 dependencies:
   orion:
     github: obsidian/orion
-    version: ~> 2.1
+    version: ~> 2.3.2
 
-crystal: 0.29.0
+crystal: 0.33
 
 license: MIT
