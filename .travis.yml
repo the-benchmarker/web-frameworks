@@ -39,6 +39,7 @@ env:
       - FRAMEWORK=crystal.toro
       - FRAMEWORK=ruby.rails
       - FRAMEWORK=ruby.grape
+      - FRAMEWORK=ruby.rack_app
       - FRAMEWORK=ruby.flame
       - FRAMEWORK=ruby.agoo
       - FRAMEWORK=ruby.roda
