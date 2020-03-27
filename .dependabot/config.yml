@@ -48,6 +48,11 @@ update_configs:
   - language:ruby
 - package_manager: ruby:bundler
   update_schedule: live
+  directory: ruby/rack_app
+  default_labels:
+  - language:ruby
+- package_manager: ruby:bundler
+  update_schedule: live
   directory: ruby/flame
   default_labels:
   - language:ruby
