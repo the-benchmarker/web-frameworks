@@ -22,6 +22,7 @@ env:
       - FRAMEWORK=elixir.cowboy
       - FRAMEWORK=elixir.plug
       - FRAMEWORK=rust.nickel
+      - FRAMEWORK=rust.actix
       - FRAMEWORK=rust.iron
       - FRAMEWORK=rust.gotham
       - FRAMEWORK=julia.merly
