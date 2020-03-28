@@ -47,6 +47,14 @@ namespace :make do
         }
       end
 
+      Dir.glob(File.join(language, ".config", "**")).each do |path|
+        config["cloud"]["config"]["write_files"] << {
+          "path" => File.join("/usr", "src", "app", "config", path.split("/")[2..].join("/")),
+          "permission" => "0644",
+          "content" => File.read(path),
+        }
+      end
+
       if config.key?("build_deps")
         config["build_deps"].each do |package|
           config["cloud"]["config"]["packages"] << package
