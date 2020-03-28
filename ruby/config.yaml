@@ -26,7 +26,7 @@ cloud:
       - systemctl enable web
       - reboot
 
-command: /usr/src/app/bin/bundle exec /usr/src/app/bin/puma
+command: /usr/src/app/bin/bundle exec /usr/src/app/bin/puma -C config/puma.rb
 
 service: |
   [Unit]
