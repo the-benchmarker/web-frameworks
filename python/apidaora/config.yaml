@@ -4,6 +4,7 @@ framework:
 
 build_deps:
   - libffi-dev
+  - curl
   - openssl-dev
 
 # install maturin to build orjson
