@@ -2,7 +2,7 @@
 
 source("https://rubygems.org")
 
-gem "rake"
 gem "dotenv"
-gem "mustache"
 gem "droplet_kit"
+gem "mustache"
+gem "rake"
