@@ -1,3 +1,44 @@
 provider:
   default:
     language: 2.7
+  digitalocean:
+    language: 2.7
+
+environments: &default_environment
+  RACK_ENV: production
+
+cloud:
+  config:
+    package_update: true
+    package_upgrade: true
+    packages:
+      - build-essential
+    runcmd:
+      - snap install ruby --classic
+      - ln -sfv /snap/bin/bundle /usr/bin/bundle
+      - ln -sfv /snap/bin/ruby /usr/bin/ruby
+      - cd /usr/src/app && bundle config set without 'development test'
+      - cd /usr/src/app && bundle config set path 'vendor/bundle'
+      - cd /usr/src/app && bundle install
+      - cd /usr/src/app && bundle binstubs puma
+      - cd /usr/src/app && bundle binstubs bundler
+      - systemctl disable cloud-init
+      - systemctl enable web
+      - reboot
+
+command: /usr/src/app/bin/bundle exec /usr/src/app/bin/puma
+
+service: |
+  [Unit]
+  Description=Puma HTTP Server
+  After=network.target
+
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/web
+  WorkingDirectory=/usr/src/app
+  ExecStart={{{command}}}
+  Restart=always
+
+  [Install]
+  WantedBy=multi-user.target

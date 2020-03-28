@@ -16,3 +16,8 @@ group :development, :test do
   gem 'rubocop-rake'
   gem 'rubocop-rspec'
 end
+
+gem "rake"
+gem "dotenv"
+gem "mustache"
+gem "droplet_kit"
