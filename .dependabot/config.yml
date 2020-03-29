@@ -28,6 +28,11 @@ update_configs:
   - language:rust
 - package_manager: rust:cargo
   update_schedule: live
+  directory: rust/actix
+  default_labels:
+  - language:rust
+- package_manager: rust:cargo
+  update_schedule: live
   directory: rust/iron
   default_labels:
   - language:rust

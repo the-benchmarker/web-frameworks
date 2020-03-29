@@ -22,6 +22,7 @@ env:
       - FRAMEWORK=elixir.cowboy
       - FRAMEWORK=elixir.plug
       - FRAMEWORK=rust.nickel
+      - FRAMEWORK=rust.actix
       - FRAMEWORK=rust.iron
       - FRAMEWORK=rust.gotham
       - FRAMEWORK=julia.merly
@@ -167,7 +168,7 @@ script:
 
   # Create logs directory for neph
   - mkdir -p .neph/${FRAMEWORK}
-  - travis_wait 15 bin/neph ${FRAMEWORK} --mode=CI
+  - bin/neph ${FRAMEWORK} --mode=CI
 
   - crystal spec
 
