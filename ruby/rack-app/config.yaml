@@ -1,0 +1,7 @@
+framework:
+  website: rack-app.com
+  version: 7.6
+
+files:
+  - Gemfile
+  - config.ru
