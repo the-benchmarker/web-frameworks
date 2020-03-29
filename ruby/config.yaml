@@ -4,7 +4,7 @@ provider:
   digitalocean:
     language: 2.7
 
-environments: &default_environment
+environments:
   RACK_ENV: production
 
 cloud:
@@ -20,7 +20,7 @@ cloud:
       - cd /usr/src/app && bundle config set without 'development test'
       - cd /usr/src/app && bundle config set path 'vendor/bundle'
       - cd /usr/src/app && bundle install
-      - cd /usr/src/app && bundle binstubs puma
+      # - cd /usr/src/app && bundle binstubs puma
       - cd /usr/src/app && bundle binstubs bundler
       - systemctl disable cloud-init
       - systemctl enable web

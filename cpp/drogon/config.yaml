@@ -39,6 +39,7 @@ build:
   - cd build && make
 
 files:
+  - build/drogon_benchmark
   - config.json
 
 command: /opt/web/build/drogon_benchmark /opt/web/config.json
