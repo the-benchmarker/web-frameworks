@@ -1,4 +1,10 @@
 framework:
   github: AlexWayfer/flame
   version: 4.18
+
+files:
+  - config.ru
+  - Gemfile
+  - application.rb
+  - controllers/*.rb
   

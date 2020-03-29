@@ -1,8 +1,0 @@
-framework:
-  github: ohler55/agoo
-  version: 2.12
-
-environment:
-  AGOO_WORKER_COUNT: $(nproc)
-
-command: ruby app.rb
