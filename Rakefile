@@ -24,8 +24,6 @@ namespace :make do
       framework_config = YAML.safe_load(File.open(File.join(directory, "config.yaml")))
       config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
-      STDOUT.puts "Creating config for #{framework} in #{language}"
-
       config["cloud"]["config"]["write_files"] = [{
         "path" => "/lib/systemd/system/web.service",
         "permission" => "0644",
@@ -33,11 +31,13 @@ namespace :make do
       }]
 
       if config.key?("environment")
-        environments = config.fetch("environment")
+        environment = config.fetch("environment")
+        stringified_environment = String.new
+        environment.map { |k, v| stringified_environment += "#{k}=#{v}\n" }
         config["cloud"]["config"]["write_files"] << {
           "path" => "/etc/web",
           "permission" => "0644",
-          "content" => environments,
+          "content" => stringified_environment,
         }
       else
         config["cloud"]["config"]["write_files"] << {
@@ -61,6 +61,12 @@ namespace :make do
         end
       end
 
+      if config.key?("before_command")
+        config["before_command"].each do |cmd|
+          config["cloud"]["config"]["runcmd"] << cmd
+        end
+      end
+
       config["files"].each do |pattern|
         Dir.glob(File.join(directory, pattern)).each do |path|
           content = File.read(path)
@@ -71,29 +77,11 @@ namespace :make do
           }
         end
       end
-      File.open(File.join(directory, "user_data.yml"), "w") { |f| f.write(config["cloud"]["config"].to_yaml) }
-    end
-    task :droplet do
-      language = ENV.fetch("LANG")
-      framework = ENV.fetch("FRAMEWORK")
-
-      STDOUT.puts "Creating droplet for #{framework} in #{language}"
-      raise "Missing environment file" unless File.exists?(".env")
-
-      config = "#{language}/#{framework}/user_data.yml"
-      name = "#{language}.#{framework}"
-      region = ENV.fetch("REGION")
-      image = ENV.fetch("IMAGE")
-      size = ENV.fetch("SIZE")
-
-      Dotenv.load
-
-      user_data = "#cloud-config\n"
-      user_data += File.read(config)
-
-      client = DropletKit::Client.new(access_token: ENV["DO_TOKEN"])
-      droplet = DropletKit::Droplet.new(name: name, region: region, image: image, size: size, user_data: user_data, ssh_keys: [ENV["SSH_FINGERPINT"]])
-      client.droplets.create(droplet)
+      File.open(File.join(directory, "user_data.yml"), "w") { |f|
+        f.write('#cloud-config')
+        f.write("\n")
+        f.write(config["cloud"]["config"].to_yaml)
+      }
     end
   end
 end
