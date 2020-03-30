@@ -2,3 +2,7 @@ framework:
   website: sinatrarb.com
   version: 2.0
   
+files:
+  - app.rb
+  - config.ru
+  - Gemfile

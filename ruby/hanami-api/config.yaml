@@ -2,3 +2,7 @@ framework:
   website: hanamirb.org
   version: 0.1
 
+files:
+  - Gemfile
+  - app.rb
+  - config.ru
