@@ -1,3 +1,8 @@
 framework:
   website: roda.jeremyevans.net
   version: 3.32
+
+files:
+  - app.rb
+  - config.ru
+  - Gemfile
