@@ -23,3 +23,7 @@ FRAMEWORKS.yaml
 
 # Rust build directories
 rust/*/target
+
+# User data
+# For cloud-init
+**/**/user_data.yml
