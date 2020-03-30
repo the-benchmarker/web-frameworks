@@ -2,3 +2,7 @@ framework:
   github: soveran/syro
   version: 3.2
 
+files:
+  - app.rb
+  - config.ru
+  - Gemfile
