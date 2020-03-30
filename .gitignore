@@ -34,3 +34,6 @@ obj
 [Rr]elease/
 *.fsproj
 *.fsproj.user
+# User data
+# For cloud-init
+**/**/user_data.yml
