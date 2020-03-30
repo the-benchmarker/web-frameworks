@@ -83,6 +83,7 @@ env:
       - FRAMEWORK=php.swoft
       - FRAMEWORK=php.laravel
       - FRAMEWORK=php.lumen
+      - FRAMEWORK=php.simps
       - FRAMEWORK=php.slim
       - FRAMEWORK=php.hyperf
       - FRAMEWORK=php.laminas

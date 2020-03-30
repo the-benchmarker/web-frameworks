@@ -243,6 +243,11 @@ update_configs:
   - language:php
 - package_manager: php:composer
   update_schedule: live
+  directory: php/simps
+  default_labels:
+    - language:php
+- package_manager: php:composer
+  update_schedule: live
   directory: php/slim
   default_labels:
   - language:php
