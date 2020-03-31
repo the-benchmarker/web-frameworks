@@ -6,5 +6,5 @@ files:
   - config.ru
   - Gemfile
   - application.rb
-  - controllers/*.rb
-  
+  - controllers
+  - ../.config/puma.rb
