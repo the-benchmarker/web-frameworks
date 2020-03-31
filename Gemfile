@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-source("https://rubygems.org")
+source('https://rubygems.org')
 
-gem "dotenv"
-gem "droplet_kit"
-gem "mustache"
-gem "rake"
+gem 'dotenv'
+gem 'droplet_kit'
+gem 'mustache'
+gem 'rake'
