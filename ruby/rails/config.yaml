@@ -2,15 +2,14 @@ framework:
   website: rubyonrails.org
   version: 6.0
 
-build_deps:
+deps:
   - libxml2-dev
   - libxslt-dev
-
+  
 files:
-  - app/controllers/application_controller.rb
-  - app/controllers/api_controller.rb
-  - config/**/*.rb
-  - config/**/*.yml
+  - app
+  - config
   - Gemfile
   - config.ru
   - Rakefile
+  - ../.config/puma.rb

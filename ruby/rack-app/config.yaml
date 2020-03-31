@@ -5,3 +5,4 @@ framework:
 files:
   - Gemfile
   - config.ru
+  - ../.config/puma.rb
