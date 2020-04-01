@@ -16,9 +16,9 @@ func showID(ctx *fasthttp.RequestCtx) {
 func main() {
 	router := gorouter.NewFastHTTPRouter()
 
-	router.GET("/", showID)
+	router.GET("/", showEmpty)
 	router.GET("/user/{id}", showID)
-	router.POST("/user", showID)
+	router.POST("/user", showEmpty)
 
 	fasthttp.ListenAndServe(":3000", router.HandleFastHTTP)
 }
