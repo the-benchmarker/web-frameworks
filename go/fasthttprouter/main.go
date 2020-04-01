@@ -1,21 +1,24 @@
 package main
 
 import (
+	"fmt"
+	"log"
+
 	"github.com/buaazp/fasthttprouter"
 	"github.com/valyala/fasthttp"
 )
 
+func ShowEmpty(ctx *fasthttp.RequestCtx) {}
+
+func ShowID(ctx *fasthttp.RequestCtx) {
+	fmt.Fprintf(ctx, "%s", ctx.UserValue("id"))
+}
+
 func main() {
 	router := fasthttprouter.New()
-	router.GET("/", func(ctx *fasthttp.RequestCtx) {
-		ctx.SetBodyString("")
-	})
-	router.GET("/user/:id", func(ctx *fasthttp.RequestCtx) {
-		ctx.SetBodyString(ctx.UserValue("id").(string))
-	})
-	router.POST("/user", func(ctx *fasthttp.RequestCtx) {
-		ctx.SetBodyString("")
-	})
+	router.GET("/", ShowEmpty)
+	router.GET("/user/:id", ShowID)
+	router.POST("/user", ShowEmpty)
 
-	fasthttp.ListenAndServe(":3000", router.Handler)
+	log.Fatal(fasthttp.ListenAndServe(":3000", router.Handler))
 }
