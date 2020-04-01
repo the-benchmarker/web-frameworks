@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/valyala/fasthttp"
 	"github.com/vardius/gorouter/v4"
 	"github.com/vardius/gorouter/v4/context"
@@ -20,5 +22,5 @@ func main() {
 	router.GET("/user/{id}", showID)
 	router.POST("/user", showEmpty)
 
-	fasthttp.ListenAndServe(":3000", router.HandleFastHTTP)
+	log.Fatal(fasthttp.ListenAndServe(":3000", router.HandleFastHTTP))
 }
