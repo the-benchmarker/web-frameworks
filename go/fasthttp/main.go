@@ -2,37 +2,41 @@ package main
 
 import (
 	"bytes"
+	"log"
 
 	"github.com/valyala/fasthttp"
 )
 
 var (
-	strGET            = []byte("GET")
-	strPOST           = []byte("POST")
 	strSlash          = []byte("/")
 	strSlashUserSlash = []byte("/user/")
 	strSlashUser      = []byte("/user")
 )
 
-func main() {
-	fasthttp.ListenAndServe(":3000", func(ctx *fasthttp.RequestCtx) {
-		method := ctx.Method()
-		path := ctx.Request.RequestURI()
+func handler(ctx *fasthttp.RequestCtx) {
+	method := string(ctx.Method())
+	path := ctx.Request.RequestURI()
 
-		if bytes.Equal(method, strGET) {
-			if bytes.Equal(path, strSlash) {
-				return
-			} else if bytes.HasPrefix(path, strSlashUserSlash) {
-				id := path[6:]
-				ctx.SetBody(id)
-				return
-			}
-		} else if bytes.Equal(method, strPOST) {
-			if bytes.Equal(path, strSlashUser) {
-				return
-			}
+	switch method {
+	case fasthttp.MethodGet:
+		if bytes.HasPrefix(path, strSlashUserSlash) {
+			id := path[len(strSlashUserSlash):]
+			ctx.SetBody(id)
+
+			return
+		} else if bytes.Equal(path, strSlash) {
+			return
 		}
 
-		ctx.SetStatusCode(fasthttp.StatusNotFound)
-	})
+	case fasthttp.MethodPost:
+		if bytes.Equal(path, strSlashUser) {
+			return
+		}
+	}
+
+	ctx.SetStatusCode(fasthttp.StatusNotFound)
+}
+
+func main() {
+	log.Fatal(fasthttp.ListenAndServe(":3000", handler))
 }
