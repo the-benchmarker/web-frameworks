@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/savsgio/atreugo/v10"
+	"github.com/savsgio/atreugo/v11"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 	server.GET("/", func(ctx *atreugo.RequestCtx) error {
 		return nil
 	})
-	server.GET("/user/:id", func(ctx *atreugo.RequestCtx) error {
+	server.GET("/user/{id}", func(ctx *atreugo.RequestCtx) error {
 		id := ctx.UserValue("id").(string)
 		return ctx.TextResponse(id)
 	})
