@@ -1,20 +1,16 @@
 package main
 
 import (
+	"log"
+
 	"github.com/valyala/fasthttp"
 	"github.com/vardius/gorouter/v4"
 	"github.com/vardius/gorouter/v4/context"
 )
 
-func index(ctx *fasthttp.RequestCtx) {
-	ctx.SetBodyString("")
-}
+func showEmpty(ctx *fasthttp.RequestCtx) {}
 
-func user(ctx *fasthttp.RequestCtx) {
-	ctx.SetBodyString("")
-}
-
-func userID(ctx *fasthttp.RequestCtx) {
+func showID(ctx *fasthttp.RequestCtx) {
 	params := ctx.UserValue("params").(context.Params)
 	ctx.SetBodyString(params.Value("id"))
 }
@@ -22,9 +18,9 @@ func userID(ctx *fasthttp.RequestCtx) {
 func main() {
 	router := gorouter.NewFastHTTPRouter()
 
-	router.GET("/", index)
-	router.GET("/user/{id:[0-9]+}", userID)
-	router.POST("/user", user)
+	router.GET("/", showEmpty)
+	router.GET("/user/{id}", showID)
+	router.POST("/user", showEmpty)
 
-	fasthttp.ListenAndServe(":3000", router.HandleFastHTTP)
+	log.Fatal(fasthttp.ListenAndServe(":3000", router.HandleFastHTTP))
 }
