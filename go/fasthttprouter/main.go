@@ -8,17 +8,17 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-func ShowEmpty(ctx *fasthttp.RequestCtx) {}
+func showEmpty(ctx *fasthttp.RequestCtx) {}
 
-func ShowID(ctx *fasthttp.RequestCtx) {
+func showID(ctx *fasthttp.RequestCtx) {
 	fmt.Fprintf(ctx, "%s", ctx.UserValue("id"))
 }
 
 func main() {
 	router := fasthttprouter.New()
-	router.GET("/", ShowEmpty)
-	router.GET("/user/:id", ShowID)
-	router.POST("/user", ShowEmpty)
+	router.GET("/", showEmpty)
+	router.GET("/user/:id", showID)
+	router.POST("/user", showEmpty)
 
 	log.Fatal(fasthttp.ListenAndServe(":3000", router.Handler))
 }
