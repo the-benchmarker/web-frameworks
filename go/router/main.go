@@ -17,7 +17,7 @@ func ShowID(ctx *fasthttp.RequestCtx) {
 func main() {
 	r := router.New()
 	r.GET("/", ShowEmpty)
-	r.GET("/user/:id", ShowID)
+	r.GET("/user/{id}", ShowID)
 	r.POST("/user", ShowEmpty)
 
 	log.Fatal(fasthttp.ListenAndServe(":3000", r.Handler))
