@@ -6,11 +6,9 @@ import (
 	"github.com/vardius/gorouter/v4/context"
 )
 
-func index(ctx *fasthttp.RequestCtx) {}
+func showEmpty(ctx *fasthttp.RequestCtx) {}
 
-func user(ctx *fasthttp.RequestCtx) {}
-
-func userID(ctx *fasthttp.RequestCtx) {
+func showID(ctx *fasthttp.RequestCtx) {
 	params := ctx.UserValue("params").(context.Params)
 	ctx.SetBodyString(params.Value("id"))
 }
@@ -18,9 +16,9 @@ func userID(ctx *fasthttp.RequestCtx) {
 func main() {
 	router := gorouter.NewFastHTTPRouter()
 
-	router.GET("/", index)
-	router.GET("/user/{id}", userID)
-	router.POST("/user", user)
+	router.GET("/", showID)
+	router.GET("/user/{id}", showID)
+	router.POST("/user", showID)
 
 	fasthttp.ListenAndServe(":3000", router.HandleFastHTTP)
 }
