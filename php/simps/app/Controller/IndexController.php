@@ -9,23 +9,22 @@ declare(strict_types=1);
  * @license  https://github.com/simple-swoole/simps/blob/master/LICENSE
  */
 
-
 namespace App\Controller;
+
+use Simps\Server\Protocol\Http\SimpleResponse;
 
 class IndexController
 {
-    public function index($request, $response)
+    public static function onReceive($server, $fd, $from_id, $data)
     {
-        $response->end("");
-    }
-
-    public function get($request, $response, $data)
-    {
-        $response->end((string)$data["id"] ?? "");
-    }
-
-    public function create($request, $response)
-    {
-        $response->end("");
+        $first_line = \strstr($data, "\r\n", true);
+        $tmp = \explode(' ', $first_line, 3);
+        $path = isset($tmp[1]) ? $tmp[1] : '/';
+        if (0 === \strpos($path, '/user/id/') && isset($path[9])) {
+            $response = SimpleResponse::build(\substr($path, 9));
+        } else {
+            $response = SimpleResponse::build("");
+        }
+        $server->send($fd, $response);
     }
 }

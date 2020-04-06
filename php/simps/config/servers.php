@@ -16,11 +16,12 @@ return [
         'port' => 3000,
         'sock_type' => SWOOLE_SOCK_TCP,
         'callbacks' => [
+            "receive" => [\App\Controller\IndexController::class, 'onReceive'],
         ],
         'settings' => [
-            'enable_coroutine' => true,
+            'enable_coroutine' => false,
             'worker_num' => (int) shell_exec('nproc') ?? 32,
-            'max_coroutine' => 100000,
+            'only_simple_http' => true,
         ],
     ],
 ];
