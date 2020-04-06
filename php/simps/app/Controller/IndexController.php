@@ -20,8 +20,8 @@ class IndexController
         $first_line = \strstr($data, "\r\n", true);
         $tmp = \explode(' ', $first_line, 3);
         $path = isset($tmp[1]) ? $tmp[1] : '/';
-        if (0 === \strpos($path, '/user/id/') && isset($path[9])) {
-            $response = SimpleResponse::build(\substr($path, 9));
+        if (0 === \strpos($path, '/user/id/') && isset($path[6])) {
+            $response = SimpleResponse::build(\substr($path, 6));
         } else {
             $response = SimpleResponse::build("");
         }
