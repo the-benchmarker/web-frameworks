@@ -20,11 +20,18 @@ class IndexController
         $first_line = \strstr($data, "\r\n", true);
         $tmp = \explode(' ', $first_line, 3);
         $path = isset($tmp[1]) ? $tmp[1] : '/';
-        if (0 === \strpos($path, '/user/') && isset($path[6])) {
-            $response = SimpleResponse::build(\substr($path, 6));
-        } else {
-            $response = SimpleResponse::build("");
+        switch ($path) {
+            case '/':
+            case '/user':
+                $response = "";
+                break;
+            default:
+                if (0 === \strpos($path, '/user/') && isset($path[6])) {
+                    $response = \substr($path, 6);
+                    break;
+                }
+                $response = "";
         }
-        $server->send($fd, $response);
+        $server->send($fd, SimpleResponse::build($response));
     }
 }
