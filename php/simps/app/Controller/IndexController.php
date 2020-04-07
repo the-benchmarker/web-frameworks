@@ -9,8 +9,9 @@ declare(strict_types=1);
  * @license  https://github.com/simple-swoole/simps/blob/master/LICENSE
  */
 
-
 namespace App\Controller;
+
+use Simps\Server\Protocol\Http\SimpleResponse;
 
 class IndexController
 {
