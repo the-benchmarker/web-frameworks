@@ -9,23 +9,24 @@ declare(strict_types=1);
  * @license  https://github.com/simple-swoole/simps/blob/master/LICENSE
  */
 
-
 namespace App\Controller;
+
+use Simps\Server\Protocol\HTTP\SimpleResponse;
 
 class IndexController
 {
-    public function index($request, $response)
+    public function index($server, $fd)
     {
-        $response->end("");
+        $server->send($fd, SimpleResponse::build(""));
     }
 
-    public function get($request, $response, $data)
+    public function get($server, $fd, $data)
     {
-        $response->end((string)$data["id"] ?? "");
+        $server->send($fd, SimpleResponse::build((string)$data["id"] ?? ""));
     }
 
-    public function create($request, $response)
+    public function create($server, $fd)
     {
-        $response->end("");
+        $server->send($fd, SimpleResponse::build(""));
     }
 }
