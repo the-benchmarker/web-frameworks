@@ -18,9 +18,8 @@ return [
         'callbacks' => [
         ],
         'settings' => [
-            'enable_coroutine' => true,
+            'enable_coroutine' => false,
             'worker_num' => (int) shell_exec('nproc') ?? 32,
-            'max_coroutine' => 100000,
         ],
     ],
 ];

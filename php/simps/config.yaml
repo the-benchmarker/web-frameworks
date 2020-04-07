@@ -5,7 +5,4 @@ framework:
 php_ext:
   - swoole
 
-before_command: 
-  - echo "swoole.enable_library = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
-
 command: php sbin/simps.php http:start
