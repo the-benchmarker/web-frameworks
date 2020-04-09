@@ -1,19 +1,13 @@
 framework:
   website: github.com/emmett-framework/emmett
-  version: "2.0.0b1"
+  version: "2.0.0b2"
 
 build_deps:
   - libffi-dev
-  - git
+  - openssl-dev
 
-# cryptography could not be install on alpine
-# @see https://github.com/pyca/cryptography/issues/4264#issuecomment-392781146
 fixes:
-  - apk del libressl-dev
-  - apk add openssl-dev
-  - pip install cryptography==2.2.2
-  - apk del openssl-dev
-  - apk add libressl-dev
+  - pip install pendulum==2.0.5
 
 
 command: >

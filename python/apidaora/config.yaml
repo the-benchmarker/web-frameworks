@@ -3,7 +3,9 @@ framework:
   version: 0.14
 
 build_deps:
+  - libffi-dev
   - curl
+  - openssl-dev
 
 # install maturin to build orjson
 # @see https://github.com/ijl/orjson/issues/8#issuecomment-570335365

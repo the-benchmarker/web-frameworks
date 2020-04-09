@@ -10,6 +10,10 @@ WORKDIR /usr/src/app
 
 COPY app.js package.json ./
 
+{{#files}}
+  COPY {{{.}}} {{{.}}}
+{{/files}}
+
 {{#bin_deps}}
   RUN apk add {{{.}}}
 {{/bin_deps}}

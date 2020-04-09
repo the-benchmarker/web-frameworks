@@ -1,0 +1,16 @@
+name: ricr
+version: 0.1.3
+
+authors:
+  - Julien Reichardt <contact@jrei.ch>
+
+targets:
+  server:
+    main: src/server.cr
+
+dependencies:
+  ricr:
+    github: ricr-web/ricr
+    version: ~> 0.1.3
+
+license: MIT

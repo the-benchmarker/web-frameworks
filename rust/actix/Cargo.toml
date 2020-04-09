@@ -1,0 +1,15 @@
+[package]
+name = "server"
+version = "0.1.0"
+authors = ["Oisín Mac Fhearaí <denpashogai@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+actix-web = "~2.0"
+actix-rt = "*"
+
+[profile.release]
+codegen-units = 1
+opt-level = 3
+lto = true
+incremental = false

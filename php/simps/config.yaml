@@ -1,0 +1,8 @@
+framework:
+  website: simps.io
+  version: preview
+  
+php_ext:
+  - swoole
+
+command: php sbin/simps.php http:start
