@@ -1,12 +1,8 @@
 package main
 
 import (
-	"strings"
-
 	"github.com/gofiber/fiber"
 )
-
-const pathUser = "/user/"
 
 func main() {
 	app := fiber.New(&fiber.Settings{
