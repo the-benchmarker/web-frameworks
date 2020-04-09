@@ -290,7 +290,7 @@ function firewall()
     if (FIREWALL_ON == true) {
 
         // Allow only access from whitelisted IP addresses
-        if (! in_array($_SERVER['REMOTE_ADDR'], ALLOWED_IP_ADDR)) {
+        if (isset($_SERVER['REMOTE_ADDR']) && !in_array($_SERVER['REMOTE_ADDR'], ALLOWED_IP_ADDR)) {
             header($_SERVER["SERVER_PROTOCOL"]." 403 Forbidden");
             exit('<p>You are not allowed to access the application using your IP address.</p>');
         }

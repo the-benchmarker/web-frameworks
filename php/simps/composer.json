@@ -1,0 +1,10 @@
+{
+  "require": {
+    "simple-swoole/simps": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}

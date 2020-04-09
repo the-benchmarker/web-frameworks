@@ -20,3 +20,6 @@ FRAMEWORKS.yaml
 
 /lib
 /bin
+
+# Rust build directories
+rust/*/target
