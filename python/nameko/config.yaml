@@ -2,4 +2,9 @@ framework:
   github: nameko/nameko
   version: 2.12
 
-command: nameko run server --config nameko.yaml
+files:
+  - requirements.txt
+  - server.py
+  - nameko.yaml
+    
+command: /usr/local/bin/nameko run server --config /usr/src/app/nameko.yaml

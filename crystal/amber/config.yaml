@@ -3,4 +3,9 @@ framework:
   version: 0.34
   
 files:
-  - config
+  - server
+  - config/application.cr
+  - config/environments/development.yml
+  - config/environments/production.yml
+  - config/environments/test.yml
+  - config/routes.cr
