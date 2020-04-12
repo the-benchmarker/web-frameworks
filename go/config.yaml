@@ -1,3 +1,42 @@
 provider:
   default:
     language: 1.14
+  digitalocean:
+    language: 1.14
+
+binaries:
+  - app
+
+files:
+  - main.go
+  - go.mod
+
+cloud:
+  config:
+    package_update: true
+    package_upgrade: true
+    runcmd:
+      - mkdir -p /usr/src/app
+
+      # Disable cloud-init to avoid re-run on reboot
+      - systemctl disable cloud-init
+
+      # Enable web so as application is started at startup
+      - systemctl enable web
+
+# SystemD startup script
+# This need to be tuned
+# For security (do not run as root) ...
+service: |
+  [Unit]
+  Description=web
+  After=network.target
+
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/web
+  WorkingDirectory=/usr/src/app
+  ExecStart=/usr/src/app/app
+
+  [Install]
+  WantedBy=multi-user.target
