@@ -1,15 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
-use Siler\Route;
-use Siler\Functional as λ;
+use function Siler\{Functional\puts, Route\get, Route\post};
 
-chdir(dirname(dirname(__DIR__)));
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-Route\get('/', λ\puts(''));
+get('/', puts(''));
 
-Route\get('/user/{id}', function ($params) {
-    printf('%s', $params['id']);
+get('/user/{id}', function ($params) {
+    echo $params['id'];
 });
 
-Route\post('/user', λ\puts(''));
+post('/user', puts(''));
