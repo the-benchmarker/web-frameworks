@@ -2,6 +2,8 @@ framework:
   website: symfony.com
   version: 4.3
   
+files:
+  - ../.config/nginx.conf
 
 deps:
   - nginx
@@ -10,6 +12,5 @@ environment:
   APP_ENV: prod
 
 before_command:
-  - mkdir -p var/log && chown www-data var/log
-  - mkdir -p var/cache && chown www-data var/cache
-  - php bin/console cache:warmup
+  - cd /usr/src/app && mkdir -p var/log && chown www-data var/log
+  - cd /usr/src/app && mkdir -p var/cache && chown www-data var/cache

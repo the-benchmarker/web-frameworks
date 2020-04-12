@@ -4,6 +4,7 @@ framework:
 
 files:
   - athena.yml
+  - server
 
 environment:
   ATHENA_ENV: production

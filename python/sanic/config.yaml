@@ -2,11 +2,10 @@ framework:
   github: huge-success/sanic
   version: 19.12
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class sanic.worker.GunicornWorker \
-      server:app
+files:
+  - server.py
+  - requirements.txt
+  - ../.config/gunicorn.py
+
+environment:
+  WORKER_CLASS: sanic.worker.GunicornWorker

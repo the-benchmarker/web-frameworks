@@ -10,9 +10,20 @@ dist: bionic
 # This tool is written in crystal
 language: crystal
 
+# We need also ruby for beta features
+addons:
+  apt:
+    update: true
+    packages:
+      - ruby
+      - jq
+      - wrk
+
 env:
   global:
     - DATABASE_URL=postgresql://postgres@localhost/benchmark
+    - COLLECT=off
+    - CLEAN=off
   jobs:
     {{#frameworks}}
       - FRAMEWORK={{.}}
@@ -21,17 +32,19 @@ env:
 before_script:
   - psql -c 'CREATE DATABASE benchmark;' -U postgres;
   - psql -U postgres -d benchmark < .ci/dump.sql
+  - bundle install
+  - bundle exec rake config
 
 script:
   - shards install
   - shards build
-  - bin/make config --without-sieger --keep
+  - rake config
   - travis_retry bin/neph ${FRAMEWORK} --mode=CI
-  - crystal spec
+  - bundle exec rspec .spec
 
 # Push on docker registry if tests are OK
 # This does not work on forks
-#after_success: if [ ${TRAVIS_REPO_SLUG} == "the-benchmarker/web-frameworks" ]; then bash .ci/docker_release.sh ; fi
+after_success: if [ ${TRAVIS_REPO_SLUG} == "the-benchmarker/web-frameworks" ]; then bash .ci/docker_release.sh ; fi
 
 notifications:
   email: false

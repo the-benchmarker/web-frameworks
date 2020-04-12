@@ -8,11 +8,13 @@ module App::Controllers
       ''
     end
   end
+
   class User < R '/user/(\d+)'
     def get(id)
       id
     end
   end
+
   class Creator < R '/user'
     def post
       ''
