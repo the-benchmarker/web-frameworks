@@ -1,3 +1,7 @@
 provider:
   default:
     language: 8.0
+
+files:
+  - "*.csproj"
+  - "*.cs"

@@ -5,7 +5,7 @@ framework:
 files:
   - Gemfile
   - config.ru
-  - app
+  - app/**/*.rb
   - config/routes.txt
   - ../.config/puma.rb
   

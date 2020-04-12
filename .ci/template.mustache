@@ -11,9 +11,19 @@ services:
 # This tool is written in crystal
 language: crystal
 
+# We need also ruby for beta features
+addons:
+  apt:
+    update: true
+    packages:
+      - ruby
+      - jq
+
 env:
   global:
     - DATABASE_URL=postgresql://postgres@localhost/benchmark
+    - COLLECT=off
+    - CLEAN=off
   jobs:
     {{#frameworks}}
       - FRAMEWORK={{.}}
@@ -22,17 +32,17 @@ env:
 before_script:
   - psql -c 'CREATE DATABASE benchmark;' -U postgres;
   - psql -U postgres -d benchmark < .ci/dump.sql
+  - bundle install
+  - bundle exec rake config
 
 script:
   - shards install
   - shards build
-  - bin/make config --without-sieger --keep
 
   # Create logs directory for neph
-  - mkdir -p .neph/${FRAMEWORK}
   - travis_wait 15 bin/neph ${FRAMEWORK} --mode=CI
 
-  - crystal spec
+  - bundle exec rspec .spec
 
 # Push on docker registry if tests are OK
 # This does not work on forks

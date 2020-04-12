@@ -1,12 +1,11 @@
 framework:
   website: trypyramid.com
   version: 1.10
+  
+files:
+  - server.py
+  - requirements.txt
+  - ../.config/gunicorn.py
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class meinheld.gmeinheld.MeinheldWorker \
-      server:app
+environment:
+  WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker
