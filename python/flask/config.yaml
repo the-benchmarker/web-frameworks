@@ -1,11 +1,11 @@
 framework:
   website: flask.pocoo.org
   version: 1.1
-
+  
 files:
-  requirements.txt: requirements.txt
-  server.py: server.py
-  ../.config/gunicorn.py: config/gunicorn.py
+  - requirements.txt
+  - server.py
+  - ../.config/gunicorn.py
   
 environment:
   WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker

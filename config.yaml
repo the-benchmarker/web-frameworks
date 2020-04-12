@@ -8,3 +8,49 @@ cloud:
       final:
           - ">> /var/log/cloud-final.out"
           - "/var/log/cloud-final.err"
+          
+providers:
+  
+  docker:
+    build: 
+      - docker build -t {{{language}}}.{{{framework}}} .
+
+    metadata: 
+      - docker run -td {{{language}}}.{{{framework}}} | xargs -i docker inspect {} | jq -r '.[0].NetworkSettings.IPAddress' > ip.txt
+
+    clean: 
+      - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs -r docker rm -f
+
+  digitalocean:
+
+    # Create cloud-init configuration
+    - rake cloud:config LANG={{{language}}} FRAMEWORK={{{framework}}}
+
+    # Create droplet
+    - doctl compute droplet create {{{language}}}.{{{framework}}} --region {{{DO_REGION}}} --image {{{DO_IMAGE}}} --size {{{DO_SIZE}}} --user-data-file user_data.yml --wait --ssh-keys {{{DO_FINGERPRINT}}} {{{DO_OPTIONS}}}
+      
+    # Get droplet id
+    - doctl compute droplet list {{{language}}}.{{{framework}}} --format ID --no-header > id.txt
+
+    # Store IP
+    - doctl compute droplet list {{{language}}}.{{{framework}}} --format {{{DO_ATTRIBUTE}}} --no-header > ip.txt
+
+    # Wait cloud-init to finish
+    - rake cloud:wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
+    
+    # Upload files
+    - rake cloud:upload LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
+
+    # Reboot droplet
+    - doctl compute droplet-action reboot `cat id.txt`
+    - sleep 10
+    
+    # Wait for reacheable host
+    # - rake wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt`
+    - while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done
+
+    # Collect results
+    - DATABASE_URL={{{DATABASE_URL}}} ../../bin/client --language {{{language}}} --framework {{{framework}}} {{{SIEGER_OPTIONS}}}
+
+    # Drop droplet
+    - doctl compute droplet delete {{{language}}}.{{{framework}}} --force
