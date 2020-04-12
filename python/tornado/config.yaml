@@ -2,11 +2,10 @@ framework:
   website: tornadoweb.org
   version: 6.1
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class gunicorn.workers.gtornado.TornadoWorker \
-      server:app
+files:
+  - requirements.txt
+  - server.py
+  - ../.config/gunicorn.py
+
+environment:
+  WORKER_CLASS: gunicorn.workers.gtornado.TornadoWorker

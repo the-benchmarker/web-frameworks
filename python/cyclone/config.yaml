@@ -9,4 +9,8 @@ build_deps:
 fixes:
   - pip install pendulum==2.0.5
 
-command: twistd --python=server.py --nodaemon
+files:
+  - requirements.txt
+  - server.py
+
+command: /usr/local/bin/twistd --python=server.py --nodaemon

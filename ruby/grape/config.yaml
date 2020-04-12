@@ -1,12 +1,8 @@
 framework:
   website: ruby-grape.org
-<<<<<<< HEAD
   version: 1.5
-=======
-  version: 1.4
 
 files:
   - Gemfile
   - config.ru
   - ../.config/puma.rb
->>>>>>> 72a81514 (feat(python): Add flask support)

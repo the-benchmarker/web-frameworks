@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-<<<<<<< HEAD
 source 'https://rubygems.org'
 
 gem 'activesupport'
@@ -17,11 +16,10 @@ group :development, :test do
   gem 'rubocop-rake'
   gem 'rubocop-rspec'
 end
-=======
-source('https://rubygems.org')
->>>>>>> 72a81514 (feat(python): Add flask support)
 
-gem 'dotenv'
+gem 'bcrypt_pbkdf'
 gem 'droplet_kit'
-gem 'mustache'
-gem 'rake'
+gem 'ed25519'
+
+gem 'net-scp'
+gem 'net-ssh'

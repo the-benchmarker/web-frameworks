@@ -1,3 +1,8 @@
 framework:
   website: slimframework.com
   version: 4.7
+
+files:
+  - composer.json
+  - public/index.php
+  - ../config/nginx.config

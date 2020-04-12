@@ -1,3 +1,7 @@
 provider:
   default:
     language: 5.32
+
+files:
+  - cpanfile
+  - "*/**.psgi"
