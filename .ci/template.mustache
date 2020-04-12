@@ -38,10 +38,7 @@ before_script:
 script:
   - shards install
   - shards build
-
-  # Create logs directory for neph
-  - travis_wait 15 bin/neph ${FRAMEWORK} --mode=CI
-
+  - bin/neph ${FRAMEWORK} --mode=CI
   - bundle exec rspec .spec
 
 # Push on docker registry if tests are OK
