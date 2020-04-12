@@ -1,26 +1,22 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
-use Siler\Swoole;
-use Siler\Route;
-use Siler\Functional as λ;
+use function Siler\Route\{get, post};
+use function Siler\Swoole\{emit, http};
 
-chdir(dirname(dirname(__DIR__)));
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $handler = function () {
-    Route\get('/', function () {
-        Swoole\emit('');
-    });
-    Route\get('/user/{id}', function ($params) {
-        Swoole\emit($params['id']);
-    });
-    Route\post('/user', function () {
-        Swoole\emit('');
+    get('/', function () {
+        emit('');
     });
 
-    // None of the above short-circuited the response with Swoole\emit().
-    Swoole\emit('Not found', 404);
+    get('/user/{id}', function ($params) {
+        emit($params['id']);
+    });
+
+    post('/user', function () {
+        emit('');
+    });
 };
 
-Swoole\http($handler, 3000)->start();
+http($handler, 3000)->start();
