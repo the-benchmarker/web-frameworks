@@ -2,4 +2,11 @@ framework:
   github: twisted/klein
   version: 20.6
   
-command: PYTHONPATH=$(pwd) twistd -n web --class=server.application --port=tcp:3000
+files:
+  - requirements.txt
+  - server.py
+
+environment:
+  PYTHONPATH: /usr/src/app
+
+command: /usr/local/bin/twistd -n web --class=server.application --port=tcp:3000

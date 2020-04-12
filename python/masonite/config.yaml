@@ -2,6 +2,20 @@ framework:
   website: masoniteproject.com
   version: 2.3
  
+files:
+  - app/http/controllers/PageController.py
+  - bootstrap/start.py
+  - config/application.py
+  - config/database.py
+  - config/__init__.py
+  - config/packages.py
+  - config/providers.py
+  - config/storage.py
+  - requirements.txt
+  - routes/web.py
+  - wsgi.py
+  - ../.config/gunicorn.py
+
 build_deps:
   - libffi-dev
   - openssl-dev
@@ -9,11 +23,7 @@ build_deps:
 fixes:
   - pip install pendulum==2.0.5
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class meinheld.gmeinheld.MeinheldWorker \
-      wsgi
+environment:
+  WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker
+
+command: /usr/bin/python3.8 /usr/local/bin/gunicorn --log-level warning --reuse-port --log-syslog --chdir /usr/src/app -c /usr/src/app/config/gunicorn.py wsgi

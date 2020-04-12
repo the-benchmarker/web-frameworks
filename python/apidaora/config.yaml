@@ -2,25 +2,27 @@ framework:
   github: dutradda/apidaora
   version: 0.26
 
-build_deps:
+deps:
+  - libffi-devel
+  - curl
+  - openssl-devel
+  
+alpine-deps:
   - libffi-dev
   - curl
   - openssl-dev
 
-fixes:
+boostratp:
   - curl https://sh.rustup.rs > init.sh
   - sh init.sh -y
-  - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
   - rustup default nightly
+
+files:
+  - server.py
+  - requirements.txt
+  - ../.config/gunicorn.py
 
 environment:
   RUSTFLAGS: -C target-feature=-crt-static
-
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class uvicorn.workers.UvicornWorker  \
-      server:app
+  WORKER_CLASS: uvicorn.workers.UvicornWorker
+  

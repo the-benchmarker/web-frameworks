@@ -2,5 +2,9 @@ framework:
   github: athena-framework/athena
   version: 0.9
 
+files:
+  - athena.yml
+  - server
+
 environment:
   ATHENA_ENV: production

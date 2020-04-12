@@ -1,3 +1,53 @@
 provider:
   default:
     language: 3.8
+  digitalocean:
+    language: 3.8
+
+files:
+  - requirements.txt
+  - server.py
+  
+cloud:
+  config:
+    package_update: true
+    package_upgrade: true
+    packages:
+      - build-essential
+      - python3.8
+      - python3.8-dev
+      - python3-pip
+    runcmd:
+      # Isolate application
+      # Do not install development gems
+      - cd /usr/src/app && /usr/bin/python3.8 -m pip install -r requirements.txt -U
+
+      # Disable cloud-init to avoid re-run on reboot
+      - systemctl disable cloud-init
+
+      # Enable web so as application is started at startup
+      - systemctl enable web
+
+command: /usr/bin/python3.8 /usr/local/bin/gunicorn --log-level warning --reuse-port --log-syslog --chdir /usr/src/app -c /usr/src/app/config/gunicorn.py server:app
+
+# SystemD startup script
+# This need to be tuned
+# For security (do not run as root) ...
+service: |
+
+  [Unit]
+  Description=gunicorn daemon
+  After=network.target
+
+  [Service]
+  Type=notify
+  WorkingDirectory=/usr/src/app
+  EnvironmentFile=/etc/web
+  ExecStart={{{command}}}
+  ExecReload=/bin/kill -s HUP $MAINPID
+  KillMode=mixed
+  TimeoutStopSec=5
+  PrivateTmp=true
+
+  [Install]
+  WantedBy=multi-user.target
