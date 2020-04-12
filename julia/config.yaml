@@ -1,3 +1,8 @@
 provider:
   default:
     language: 1.5
+
+files:
+  - '**/*.jl'
+  - Manifest.toml
+  - Project.toml
