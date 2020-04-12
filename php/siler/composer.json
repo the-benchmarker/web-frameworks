@@ -1,17 +1,5 @@
 {
-    "minimum-stability": "stable",
-    "require": {
-      "leocavalcante/siler": "dev-master"
-    },
-    "autoload": {
-      "psr-4": {
-        "Acme\\": "src/"
-      }
-    },
-    "repositories": [
-      {
-        "type": "composer",
-        "url": "https://asset-packagist.org"
-      }
-    ]
+  "require": {
+    "leocavalcante/siler": "dev-master"
+  }
 }
