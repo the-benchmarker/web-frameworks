@@ -4,6 +4,9 @@ framework:
 
 environment:
   EXPERIMENTAL_FASTCALL: 1
+  environment:
+  NODE_ENV: production
+  PORT: 3000
 
 build_deps:
   - git

@@ -9,12 +9,10 @@ build_deps:
 fixes:
   - pip install pendulum==2.0.5
 
+files:
+  - server.py
+  - requirements.txt
+  - ../.config/gunicorn.py
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class emmett.asgi.workers.EmmettWorker  \
-      server:app
+environment:
+  WORKER_CLASS: emmett.asgi.workers.EmmettWorker

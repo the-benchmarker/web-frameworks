@@ -2,11 +2,10 @@ framework:
   website: pgjones.gitlab.io/quart
   version: 0.12
 
-command: >
-  gunicorn \
-    --log-level warning \
-    --bind 0.0.0.0:3000 \
-    --reuse-port \
-    --workers $(nproc) \
-    --worker-class uvicorn.workers.UvicornWorker \
-      server:app
+files:
+  - server.py
+  - requirements.txt
+  - ../.config/gunicorn.py
+
+environment:
+  WORKER_CLASS: uvicorn.workers.UvicornWorker

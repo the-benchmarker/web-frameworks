@@ -1,12 +1,11 @@
 framework:
   github: mahmoud/clastic
   version: 19.9
-  
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class meinheld.gmeinheld.MeinheldWorker \
-      server:app
+    
+files:
+  - server.py
+  - requirements.txt
+  - ../.config/gunicorn.py
+
+environment:
+  WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker
