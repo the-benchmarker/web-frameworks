@@ -4,9 +4,9 @@ provider:
   digitalocean:
     language: 0.35
 
-sources:
+files:
   - shard.yml
-  - src/**/*.cr
+  - "**/*.cr"
 
 binaries:
   - bin/server

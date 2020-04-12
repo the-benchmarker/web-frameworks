@@ -2,11 +2,11 @@ provider:
   default:
     language: 1.48
 
+sources:
+  - Cargo.toml
+  - src/**/*.rs
+
 binaries:
   - target/release/server
 
 command: /opt/web/server
-
-sources:
-  - Cargo.toml
-  - src/**/*.rs

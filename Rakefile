@@ -291,6 +291,8 @@ namespace :cloud do
           binaries << binary
         end
       end
+    end
+  end
 
       Net::SSH.start(ENV['HOST'], 'root', keys: [ENV['SSH_KEY']]) do |ssh|
         binaries.each do |binary|
@@ -414,5 +416,40 @@ task :clean do
         end
       end
     end
+
+    while true
+      output = ssh.exec!("cloud-init status")
+      _, status = output.split(":")
+
+      raise RuntimeError, "Cloud-init have failed" if status.strip == "error"
+
+      break if status.strip == "done"
+
+      STDOUT.puts "Cloud-init is still running"
+      sleep 5
+    end
+
+    ssh.close
+  end
+end
+
+namespace :ci do
+  task :config do
+      frameworks = []
+      Dir.glob("*/*/config.yaml").each do |file|
+        directory = File.dirname(file)
+        infos = directory.split("/")
+        framework = infos.pop
+        language = infos.pop
+        frameworks << "#{language}.#{framework}"
+      end
+      config = File.read(".ci/template.mustache")
+      File.write(".travis.yml", Mustache.render(config, {"frameworks" => frameworks}))
+  end
+end
+
+task :clean do
+  Dir.glob("**/*").each do |path|
+    File.delete(path) if File.open(path) { |f| f.gets(4) == "\x7FELF" }
   end
 end
