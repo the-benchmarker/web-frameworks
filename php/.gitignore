@@ -1,2 +1,3 @@
-config/ngnix.conf
-config/opcache.ini
+config/*/nginx.conf
+config/*/opcache.ini
+config/*/php-fpm.conf
