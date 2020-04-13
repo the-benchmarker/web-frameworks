@@ -23,5 +23,3 @@ targets:
     main: lib/neph/src/bin/neph_bin.cr
   client:
     main: tools/src/client.cr
-  make:
-    main: tools/src/make.cr
