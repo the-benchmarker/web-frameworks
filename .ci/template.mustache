@@ -24,6 +24,7 @@ env:
     - DATABASE_URL=postgresql://postgres@localhost/benchmark
     - COLLECT=off
     - CLEAN=off
+    - SLEEP=5
   jobs:
     {{#frameworks}}
       - FRAMEWORK={{.}}
