@@ -10,6 +10,9 @@ dependencies:
   neph:
     github: tbrand/neph
     version: ~> 0.2.12
+  admiral:
+    github: jwaldrip/admiral.cr
+    version: ~> 1.9.0
   crustache:
     github: MakeNowJust/crustache
     version: ~> 2.4.0
