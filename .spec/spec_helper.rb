@@ -15,7 +15,6 @@ RSpec.configure do |config|
 end
 
 def ip(name)
-  cid = `docker run -td #{name}`.strip
-  ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
-  ip
+  language, framework = name.split('.')
+  File.read(File.join(language, framework, "ip.txt")).strip
 end
