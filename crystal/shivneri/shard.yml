@@ -1,0 +1,18 @@
+name: app
+version: 0.1.0
+
+authors:
+  - Ujjwal Gupta <ujjwalkumargupta44@gmail.com>
+
+targets:
+  app:
+    main: src/app.cr
+
+crystal: 0.33.0
+
+license: MIT
+
+dependencies:
+  shivneri:
+    github: ujjwalguptaofficial/shivneri
+    version: ~> 0.12.1
