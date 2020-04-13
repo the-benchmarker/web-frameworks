@@ -6,7 +6,7 @@ authors:
 
 targets:
   server:
-    main: server.cr
+    main: src/server.cr
 
 dependencies:
   orion:
