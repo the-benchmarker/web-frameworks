@@ -8,11 +8,11 @@ targets:
   app:
     main: src/app.cr
 
-crystal: 0.33.0
+crystal: 0.34.0
 
 license: MIT
 
 dependencies:
   shivneri:
     github: ujjwalguptaofficial/shivneri
-    version: ~> 0.12.1
+    version: ~> 0.13.1
