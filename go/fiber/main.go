@@ -19,15 +19,15 @@ func main() {
 	// app.Get("/user/1", func(c *fiber.Ctx) {
 	// 	c.JSON("")
 	// })
-<<<<<<< HEAD
 	app.Post("/user", func(c *fiber.Ctx) {
 		return
 	})
-=======
 	// app.Post("/user", func(c *fiber.Ctx) {
 	// 	c.JSON("")
 	// })
->>>>>>> Update main.go
+	app.Post("/user", func(c *fiber.Ctx) {
+		return
+	})
 	// app.Put("/user/1", func(c *fiber.Ctx) {
 	// 	c.JSON("")
 	// })
