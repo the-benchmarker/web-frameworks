@@ -15,6 +15,9 @@ RSpec.configure do |config|
 end
 
 def ip(name)
-  language, framework = name.split('.')
+  language, framework = name.split(".")
+  if ENV.key?("SLEEP")
+    sleep ENV.fetch("SLEEP").to_i
+  end
   File.read(File.join(language, framework, "ip.txt")).strip
 end
