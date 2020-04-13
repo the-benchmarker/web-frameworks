@@ -29,6 +29,7 @@ env:
       - FRAMEWORK=cpp.evhtp
       - FRAMEWORK=cpp.drogon
       - FRAMEWORK=crystal.kemal
+      - FRAMEWORK=crystal.shivneri
       - FRAMEWORK=crystal.spider-gazelle
       - FRAMEWORK=crystal.router.cr
       - FRAMEWORK=crystal.amber
