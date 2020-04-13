@@ -60,11 +60,19 @@ def create_dockerfile(language, framework, **options)
   config.fetch('files').each do |path|
     Dir.glob(File.join(directory, path)).each do |f|
       if f =~ /^*\.\./
+<<<<<<< HEAD
         filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
         File.open(File.join(directory, filename), 'w') { |stream| stream.write(File.read(f)) }
         files << filename
       else
         files << f.gsub!(directory, '').gsub!(%r{^/}, '')
+=======
+        filename = f.gsub(directory, "").gsub!(/\/\.\.\/\./, "")
+        File.open(File.join(directory, filename), "w") { |stream| stream.write(File.read(f)) }
+        files << filename
+      else
+        files << f.gsub!(directory, "").gsub!(/^\//, "")
+>>>>>>> 959694a2 (test: Allow sleep to let container start)
       end
     end
   end
@@ -89,11 +97,19 @@ def create_dockerfile(language, framework, **options)
 end
 
 task :config do
+<<<<<<< HEAD
   provider = ENV.fetch('PROVIDER', 'docker')
 
   sieger_options = ENV.fetch('SIEGER_OPTIONS', '-r GET:/ -c 10')
   collect = ENV.fetch('COLLECT', 'on')
   clean = ENV.fetch('CLEAN', 'on')
+=======
+  provider = ENV.fetch("PROVIDER") { "docker" }
+
+  sieger_options = ENV.fetch("SIEGER_OPTIONS") { "-r GET:/ -c 10" }
+  collect = ENV.fetch("COLLECT") { "on" }
+  clean = ENV.fetch("CLEAN") { "on" }
+>>>>>>> 959694a2 (test: Allow sleep to let container start)
 
   config = { main: { depends_on: [] } }
 
@@ -292,15 +308,26 @@ end
 namespace :ci do
   task :config do
     frameworks = []
+<<<<<<< HEAD
     Dir.glob('*/*/config.yaml').each do |file|
       directory = File.dirname(file)
       infos = directory.split('/')
+=======
+    Dir.glob("*/*/config.yaml").each do |file|
+      directory = File.dirname(file)
+      infos = directory.split("/")
+>>>>>>> 959694a2 (test: Allow sleep to let container start)
       framework = infos.pop
       language = infos.pop
       frameworks << "#{language}.#{framework}"
     end
+<<<<<<< HEAD
     config = File.read('.ci/template.mustache')
     File.write('.travis.yml', Mustache.render(config, { 'frameworks' => frameworks }))
+=======
+    config = File.read(".ci/template.mustache")
+    File.write(".travis.yml", Mustache.render(config, { "frameworks" => frameworks }))
+>>>>>>> 959694a2 (test: Allow sleep to let container start)
   end
 end
 

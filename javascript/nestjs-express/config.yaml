@@ -8,7 +8,7 @@ files:
   - tsconfig.build.json
   - tsconfig.json
 
-before_command:
+after_command:
   - npm -g install @nestjs/cli
   - nest build
 
