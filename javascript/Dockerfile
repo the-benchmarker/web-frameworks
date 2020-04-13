@@ -1,33 +1,20 @@
 FROM node:13.14-alpine
 
-{{#build_deps}}
-  RUN apk add {{{.}}}
-{{/build_deps}}
-
-RUN npm -g install pm2
-
 WORKDIR /usr/src/app
-
-COPY app.js package.json ./
 
 {{#files}}
   COPY {{{.}}} {{{.}}}
 {{/files}}
 
-{{#bin_deps}}
-  RUN apk add {{{.}}}
-{{/bin_deps}}
-
-{{#fixes}}
-  RUN {{{.}}}
-{{/fixes}}
-
-RUN npm install
-
 {{#before_command}}
   RUN {{{.}}}
 {{/before_command}}
 
+RUN npm install
+
+{{#after_command}}
+  RUN {{{.}}}
+{{/after_command}}
 
 ENV NODE_ENV production
 
