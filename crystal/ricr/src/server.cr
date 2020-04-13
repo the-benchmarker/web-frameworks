@@ -14,7 +14,7 @@ end
 controller = Ricr::Controller::Default.new.add do
   get { }
 
-  post "user", request_body: Nil do
+  post "user", request_body: String do
   end
 
   get "user", ID do |params|
