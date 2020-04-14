@@ -2,10 +2,11 @@ framework:
   website: luckyframework.org
   version: 0.21
 
-files:
+sources:
   - public/manifest.json
   - shard.yml
-  - '**/*.cr'
+  - src/**/*.cr
+  - config/**/*.cr
 
 environment:
   LUCKY_ENV: production
