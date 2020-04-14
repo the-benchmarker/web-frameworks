@@ -4,9 +4,9 @@ provider:
   digitalocean:
     language: 0.34
 
-files:
+sources:
   - shard.yml
-  - '**/*.cr'
+  - src/**/*.cr
 
 binaries:
   - bin/server
@@ -35,8 +35,8 @@ service: |
   [Service]
   Type=simple
   EnvironmentFile=/etc/web
-  WorkingDirectory=/usr/src/app
-  ExecStart=/usr/src/app/server
+  WorkingDirectory=/opt/web
+  ExecStart=/opt/web/bin/server
 
   [Install]
   WantedBy=multi-user.target
