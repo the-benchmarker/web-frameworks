@@ -1,7 +1,8 @@
 framework:
   github: ujjwalguptaofficial/shivneri
   version: 0.13.1
-  website: https://shivneriforcrystal.com/
+
+build_opts: '--link-flags "-lxml2 -llzma"'
 
 
 environment:
