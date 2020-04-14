@@ -22,6 +22,12 @@ func main() {
 	app.Post("/user", func(c *fiber.Ctx) {
 		return
 	})
+	// app.Post("/user", func(c *fiber.Ctx) {
+	// 	c.JSON("")
+	// })
+	app.Post("/user", func(c *fiber.Ctx) {
+		return
+	})
 	// app.Put("/user/1", func(c *fiber.Ctx) {
 	// 	c.JSON("")
 	// })
