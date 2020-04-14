@@ -2,10 +2,10 @@ framework:
   website: amberframework.org
   version: 0.34
   
+sources:
+  - shard.yml
+  - config/**/*.cr
+  - src/**/*.cr
+
 files:
-  - server
-  - config/application.cr
-  - config/environments/development.yml
-  - config/environments/production.yml
-  - config/environments/test.yml
-  - config/routes.cr
+  - config/**/*.yml
