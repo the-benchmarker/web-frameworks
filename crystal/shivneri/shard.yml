@@ -5,7 +5,7 @@ authors:
   - Ujjwal Gupta <ujjwalkumargupta44@gmail.com>
 
 targets:
-  app:
+  server:
     main: src/server.cr
 
 crystal: 0.34.0
