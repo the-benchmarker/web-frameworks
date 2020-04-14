@@ -1,4 +1,4 @@
-module App
+module Server
   class DefaultController < Shivneri::Controller
     @[DefaultWorker]
     def index

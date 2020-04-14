@@ -1,6 +1,6 @@
 require "./controllers/all"
 
-module App
+module Server
   Shivneri.routes = [{
     controller: DefaultController,
     path:       "/*",

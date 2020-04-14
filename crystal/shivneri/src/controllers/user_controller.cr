@@ -1,4 +1,4 @@
-module App
+module Server
   class UserController < Shivneri::Controller
     @[Worker("POST")]
     @[Route("/")]
