@@ -1,6 +1,4 @@
-FROM alpine
-
-RUN apk add git build-base cmake
+FROM gcc
 
 WORKDIR /usr/src/app
 

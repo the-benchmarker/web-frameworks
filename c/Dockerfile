@@ -1,6 +1,4 @@
-FROM alpine 
-
-RUN apk add build-base
+FROM gcc
 
 {{#build_deps}}
    RUN apk add {{{.}}}
