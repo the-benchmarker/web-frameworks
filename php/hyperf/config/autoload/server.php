@@ -34,7 +34,7 @@ return [
         'open_tcp_nodelay' => true,
         'max_coroutine' => 100000,
         'open_http2_protocol' => true,
-        'max_request' => 100000,
+        'max_request' => 0,
         'socket_buffer_size' => 2 * 1024 * 1024,
     ],
     'callbacks' => [
