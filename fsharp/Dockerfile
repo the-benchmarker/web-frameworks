@@ -1,4 +1,4 @@
-FROM fsharp:10.7
+FROM fsharp:10.7-netcore
 
 WORKDIR /usr/src/app
 
