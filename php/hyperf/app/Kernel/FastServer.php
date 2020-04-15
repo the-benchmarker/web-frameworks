@@ -66,7 +66,12 @@ class FastServer extends Server
                 $this->routerDispatcher->dispatch(...$this->initMethodAndPath($request))
             );
 
-            $psr7Response = $this->handleFound($dispatched);
+            if ($dispatched->isFound()) {
+                $psr7Response = $this->handleFound($dispatched);
+            } else {
+                $psr7Response = $this->response()->withStatus(404);
+            }
+
         } catch (Throwable $throwable) {
             // Delegate the exception to exception handler.
             $psr7Response = $this->exceptionHandlerDispatcher->dispatch($throwable, $this->exceptionHandlers);
@@ -87,17 +92,17 @@ class FastServer extends Server
         } else {
             [$controller, $action] = explode('::', $dispatched->handler->callback);
             $controllerInstance = $this->container->get($controller);
-            if (! method_exists($controller, $action)) {
+            if (!method_exists($controller, $action)) {
                 // Route found, but the handler does not exist.
                 return $this->response()->withStatus(500)->withBody(new SwooleStream('Method of class does not exist.'));
             }
             $parameters = $this->parseParameters($controller, $action, $dispatched->params);
             $response = $controllerInstance->{$action}(...$parameters);
         }
-        if (! $response instanceof ResponseInterface) {
+        if (!$response instanceof ResponseInterface) {
             $response = $this->response()->withStatus(200)
                 ->withBody(new SwooleStream(
-                    is_array($response) ? Json::encode($response) : (string) $response
+                    is_array($response) ? Json::encode($response) : (string)$response
                 ));
         }
         return $response;
