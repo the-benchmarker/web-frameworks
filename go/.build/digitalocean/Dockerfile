@@ -1,4 +1,4 @@
-FROM golang:1.14-alpine
+FROM golang:1.14
 
 ENV CGO_ENABLED 0
 ENV GOOS linux
@@ -30,12 +30,6 @@ WORKDIR /opt/web
   ENV {{{.}}}
 {{/environment}}
 
-{{#files}}
-  COPY {{{.}}} {{{.}}}
-{{/files}}
-
 {{#binaries}}
   COPY --from=0 /go/bin/{{{.}}} {{{.}}}
 {{/binaries}}
-
-CMD ./app
