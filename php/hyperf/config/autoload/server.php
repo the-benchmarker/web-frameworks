@@ -22,7 +22,7 @@ return [
             'port' => 3000,
             'sock_type' => SWOOLE_SOCK_TCP,
             'callbacks' => [
-                SwooleEvent::ON_REQUEST => [Hyperf\HttpServer\Server::class, 'onRequest'],
+                SwooleEvent::ON_REQUEST => [App\Kernel\FastServer::class, 'onRequest'],
             ],
         ],
     ],
