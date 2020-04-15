@@ -5,11 +5,11 @@ framework:
 environment:
   AGOO_WORKER_COUNT: $(nproc)
 
-command: /usr/src/app/bin/bundle exec /usr/bin/ruby /usr/src/app/app.rb
+command: /opt/web/bin/bundle exec /usr/bin/ruby /opt/web/app.rb
 
 before_command:
   # Install bundler binstubs
-  - cd /usr/src/app && bundle binstubs bundler
+  - cd /opt/web && bundle binstubs bundler
 
 files:
   - app.rb
