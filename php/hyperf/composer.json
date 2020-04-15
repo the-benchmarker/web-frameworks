@@ -15,9 +15,5 @@
     "psr-4": {
       "App\\": "app/"
     }
-  },
-  "require-dev": {
-    "friendsofphp/php-cs-fixer": "^2.16",
-    "swoole/ide-helper": "^4.4"
   }
 }
