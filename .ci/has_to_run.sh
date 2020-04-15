@@ -46,8 +46,8 @@ fi
 LNG=`echo ${FRAMEWORK} | awk -F '.' '{print $1}'`
 FWK=`echo ${FRAMEWORK} | awk -F '.' '{print $2}'`
 
-grep "${FWK}" /tmp/list.txt && exit 0
-grep "${LNG}" /tmp/list.txt && exit 0
+grep "^${LNG}/" /tmp/list.txt && exit 0
+grep "^${LNG}/${FWK}/" /tmp/list.txt && exit 0
 
 echo "No modification, exiting ..."
 exit 1
