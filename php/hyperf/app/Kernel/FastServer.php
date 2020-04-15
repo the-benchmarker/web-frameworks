@@ -24,7 +24,6 @@ use Hyperf\HttpServer\Router\DispatcherFactory;
 use Hyperf\HttpServer\Server;
 use Hyperf\Utils\Codec\Json;
 use Hyperf\Utils\Context;
-use Hyperf\Utils\Contracts\Arrayable;
 use Hyperf\Utils\Coordinator\Constants;
 use Hyperf\Utils\Coordinator\CoordinatorManager;
 use Psr\Container\ContainerInterface;
@@ -67,10 +66,6 @@ class FastServer extends Server
             // Delegate the exception to exception handler.
             $psr7Response = $this->exceptionHandlerDispatcher->dispatch($throwable, $this->exceptionHandlers);
         } finally {
-            // Send the Response to client.
-            if (! isset($psr7Response) || ! $psr7Response instanceof Sendable) {
-                return;
-            }
             $psr7Response->send(true);
         }
     }
@@ -78,7 +73,7 @@ class FastServer extends Server
     /**
      * Handle the response when found.
      *
-     * @return array|Arrayable|mixed|ResponseInterface|string
+     * @return ResponseInterface|Sendable
      */
     protected function handleFound(Dispatched $dispatched)
     {
