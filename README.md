@@ -117,7 +117,7 @@ bin/db to_readme
 |    | Language | Framework | Speed (64) | Speed (256) | Speed (512) | Speed (1024) |  Speed (2048) |
 |----|----------|-----------|-----------:|------------:|------------:|-------------:|--------------:|
 | 1 | nim (1.0)| [httpbeast](https://github.com/dom96/httpbeast) (2.2) | 181 909 | 194 450 | 195 118 | 190 290 | 190 628 |
-| 2 | php (7.4)| [simps](https://simps.io) (1.0.0) | 169 068 | 185 705 | 186 351 | 183 263 | 183 014 |
+| 2 | php (7.4)| [simps](https://simps.io) (1.0) | 169 068 | 185 705 | 186 351 | 183 263 | 183 014 |
 | 3 | go (1.14)| [fasthttp](https://pkg.go.dev/github.com/valyala/fasthttp) (1.9) | 159 078 | 168 009 | 170 886 | 165 526 | 164 820 |
 | 4 | javascript (13.7)| [nanoexpress-pro](https://github.com/nanoexpress/pro) (1.11) | 156 498 | 169 215 | 167 921 | 166 555 | 163 500 |
 | 5 | crystal (0.34)| [toro](https://github.com/soveran/toro) (0.4) | 153 545 | 160 329 | 156 443 | 148 714 | 147 993 |
