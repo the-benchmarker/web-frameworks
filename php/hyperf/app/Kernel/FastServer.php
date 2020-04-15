@@ -38,6 +38,11 @@ class FastServer extends Server
      */
     protected $methodDefinitionCollector;
 
+    /**
+     * @var NormalizerInterface
+     */
+    protected $normalizer;
+
     public function __construct(ContainerInterface $container, HttpDispatcher $dispatcher, ExceptionHandlerDispatcher $exceptionHandlerDispatcher)
     {
         parent::__construct($container, $dispatcher, $exceptionHandlerDispatcher);
