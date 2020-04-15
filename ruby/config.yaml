@@ -22,12 +22,6 @@ cloud:
       - ln -sfv /snap/bin/bundle /usr/bin/bundle
       - ln -sfv /snap/bin/ruby /usr/bin/ruby
 
-      # Isolate application
-      # Do not install development gems
-      - cd /usr/src/app && bundle config set without 'development test'
-      - cd /usr/src/app && bundle config set path 'vendor/bundle'
-      - cd /usr/src/app && bundle install
-
       # Disable cloud-init to avoid re-run on reboot
       - systemctl disable cloud-init
 
@@ -35,15 +29,19 @@ cloud:
       - systemctl enable web
 
 after_command:
+  - cd /opt/web && bundle config set without 'development test'
+  - cd /opt/web && bundle config set path 'vendor/bundle'
+  - cd /opt/web && bundle install
+
   # Install bundler binstubs
   # This is done only if puma gem is installed (some usage does not require puma)
-  - which puma || (cd /usr/src/app && bundle binstubs puma)
+  - (cd /opt/web && bundle show puma) && bundle binstubs puma
 
   # Install bundler binstubs
-  - cd /usr/src/app && bundle binstubs bundler
+  - cd /opt/web && bundle binstubs bundler
 
 # This is the default command, and could be overwrittern
-command: /usr/src/app/bin/bundle exec /usr/src/app/bin/puma -C config/puma.rb
+command: /opt/web/bin/bundle exec /opt/web/bin/puma -C /opt/web/config/puma.rb
 
 # SystemD startup script
 # This need to be tuned
@@ -56,7 +54,7 @@ service: |
   [Service]
   Type=simple
   EnvironmentFile=/etc/web
-  WorkingDirectory=/usr/src/app
+  WorkingDirectory=/opt/web
   ExecStart={{{command}}}
   Restart=always
 
