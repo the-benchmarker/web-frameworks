@@ -14,7 +14,6 @@ deps:
 alpine-deps:
   - curl
   - libffi-dev
-  - curl
   - openssl-dev
 
 bootstrap:
