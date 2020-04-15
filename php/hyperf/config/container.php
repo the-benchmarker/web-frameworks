@@ -1,7 +1,4 @@
 <?php
-/**
- * Initial a dependency injection container that implemented PSR-11 and return the container.
- */
 
 declare(strict_types=1);
 /**
@@ -12,7 +9,6 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
-
 use Hyperf\Di\Container;
 use Hyperf\Di\Definition\DefinitionSourceFactory;
 use Hyperf\Utils\ApplicationContext;
