@@ -1,4 +1,4 @@
-FROM golang:1.15-alpine
+FROM golang:1.14
 
 ENV CGO_ENABLED 0
 ENV GOOS linux
@@ -9,10 +9,6 @@ WORKDIR /go/src/app
 {{#sources}}
   COPY {{{.}}} {{{.}}}
 {{/sources}}
-
-{{#build_deps}}
-  RUN apk add {{{.}}}
-{{/build_deps}}
 
 {{#before_command}}
   RUN {{{.}}}
@@ -34,12 +30,6 @@ WORKDIR /opt/web
   ENV {{{.}}}
 {{/environment}}
 
-{{#files}}
-  COPY {{{.}}} {{{.}}}
-{{/files}}
-
 {{#binaries}}
   COPY --from=0 /go/bin/{{{.}}} {{{.}}}
 {{/binaries}}
-
-CMD ./app
