@@ -6,8 +6,6 @@ environment:
   # FIXME: how to compute this
   AGOO_WORKER_COUNT: $(nproc)
 
-command: /usr/src/app/bin/bundle exec /usr/bin/ruby /usr/src/app/app.rb
-
 files:
   - app.rb
   - Gemfile
@@ -17,3 +15,5 @@ bootstrap:
   - bundle config set path "vendor/bundle"
   - bundle install
   - bundle binstubs bundler
+
+command: /opt/web/bin/bundle exec /usr/bin/ruby /opt/web/app.rb
