@@ -5,7 +5,9 @@ framework:
 before_command:
   - go generate main.go
 
-files:
-  - routes.conf
+sources:
   - main.go
   - go.mod
+
+files:
+  - routes.conf

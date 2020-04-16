@@ -13,14 +13,6 @@ shard.lock
 # GoLand IDE
 .idea
 
-# Temporary files
-FRAMEWORKS.yaml
-*/*/Dockerfile
-*/*/ip.txt
-
-/lib/**/*.cr
-/bin
-
 # Rust build directories
 rust/*/target
 
@@ -34,3 +26,14 @@ obj
 [Rr]elease/
 *.fsproj
 *.fsproj.user
+<<<<<<< HEAD
+=======
+
+# User data
+# For cloud-init
+*/*/user_data.yml
+*/*/Dockerfile
+*/*/ip.txt
+*/*/id.txt
+*/*/cid.txt
+>>>>>>> 132fc51a (chore(javascript): Stabilize build for all providers)

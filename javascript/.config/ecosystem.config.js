@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "app",
-      script: "/usr/src/app/app.js",
+      script: "/opt/web/app.js",
       instances: "max",
       exec_mode: "cluster"
     }
