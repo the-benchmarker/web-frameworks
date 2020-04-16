@@ -7,7 +7,7 @@ provider:
 binaries:
   - app
 
-files:
+sources:
   - main.go
   - go.mod
 
@@ -16,8 +16,6 @@ cloud:
     package_update: true
     package_upgrade: true
     runcmd:
-      - mkdir -p /usr/src/app
-
       # Disable cloud-init to avoid re-run on reboot
       - systemctl disable cloud-init
 
@@ -35,8 +33,8 @@ service: |
   [Service]
   Type=simple
   EnvironmentFile=/etc/web
-  WorkingDirectory=/usr/src/app
-  ExecStart=/usr/src/app/app
+  WorkingDirectory=/opt/web
+  ExecStart=/opt/web/app
 
   [Install]
   WantedBy=multi-user.target

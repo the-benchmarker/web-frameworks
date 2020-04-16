@@ -1,11 +1,11 @@
 {
-    "require": {
-        "laminas/laminas-mvc": "~3.1.0",
-        "laminas/laminas-dependency-plugin": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Application\\": "module/Application/src/"
-        }
+  "require": {
+    "laminas/laminas-mvc": "~3.1.0",
+    "laminas/laminas-dependency-plugin": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Application\\": "module/Application/src/"
     }
+  }
 }
