@@ -10,4 +10,4 @@ files:
 environment:
   WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker
 
-command:  /usr/bin/python3.8 /usr/local/bin/gunicorn --log-level warning --reuse-port --log-syslog --chdir /usr/src/app -c /usr/src/app/config/gunicorn.py server:__hug_wsgi__
+command:  /usr/local/bin/python /usr/local/bin/gunicorn --log-level warning --reuse-port --log-syslog --chdir /opt/web -c /opt/web/config/gunicorn.py server:__hug_wsgi__
