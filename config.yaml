@@ -23,34 +23,18 @@ providers:
 
   digitalocean:
 
-    # Create cloud-init configuration
+    build:
     - rake cloud:config LANG={{{language}}} FRAMEWORK={{{framework}}}
-
-    # Create droplet
     - doctl compute droplet create {{{language}}}.{{{framework}}} --region {{{DO_REGION}}} --image {{{DO_IMAGE}}} --size {{{DO_SIZE}}} --user-data-file user_data.yml --wait --ssh-keys {{{DO_FINGERPRINT}}} {{{DO_OPTIONS}}}
       
-    # Get droplet id
-    - doctl compute droplet list {{{language}}}.{{{framework}}} --format ID --no-header > id.txt
+    metadata:
+      - doctl compute droplet list {{{language}}}.{{{framework}}} --format ID --no-header > id.txt
+      - doctl compute droplet list {{{language}}}.{{{framework}}} --format {{{DO_ATTRIBUTE}}} --no-header > ip.txt
+      - rake cloud:wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
+      - rake cloud:upload LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
+      - doctl compute droplet-action reboot `cat id.txt`
+      - sleep 10
+      - while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done
 
-    # Store IP
-    - doctl compute droplet list {{{language}}}.{{{framework}}} --format {{{DO_ATTRIBUTE}}} --no-header > ip.txt
-
-    # Wait cloud-init to finish
-    - rake cloud:wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
-    
-    # Upload files
-    - rake cloud:upload LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
-
-    # Reboot droplet
-    - doctl compute droplet-action reboot `cat id.txt`
-    - sleep 10
-    
-    # Wait for reacheable host
-    # - rake wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt`
-    - while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done
-
-    # Collect results
-    - DATABASE_URL={{{DATABASE_URL}}} ../../bin/client --language {{{language}}} --framework {{{framework}}} {{{SIEGER_OPTIONS}}}
-
-    # Drop droplet
-    - doctl compute droplet delete {{{language}}}.{{{framework}}} --force
+    clean:
+      - doctl compute droplet delete {{{language}}}.{{{framework}}} --force

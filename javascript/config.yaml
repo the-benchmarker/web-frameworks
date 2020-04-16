@@ -15,7 +15,7 @@ environment:
   PM2_HOME: /root/.pm2
 
 after_command:
-  - npm -g install pm2
+  - /usr/local/bin/npm  -g install pm2
 
 cloud:
   config:
@@ -28,16 +28,18 @@ cloud:
       
       # Symlinks node and npm to a standard path location
 
-      - ln -sfv /snap/bin/node /usr/bin/node
-      - ln -sfv /snap/bin/npm /usr/bin/npm
+      - ln -sfv /snap/bin/node /usr/local/bin/node
+      - ln -sfv /snap/bin/npm /usr/local/bin/npm
 
-      - cd /usr/src/app && npm install
+      - cd /opt/web && /usr/local/bin/npm install
 
       # Disable cloud-init to avoid re-run on reboot
       - systemctl disable cloud-init
 
       # Enable web so as application is started at startup
       - systemctl enable web
+
+command: /usr/local/bin/pm2-runtime /opt/web/config/ecosystem.config.js app
 
 # SystemD startup script
 # This need to be tuned
@@ -48,9 +50,9 @@ service: |
 
   [Service]
   Type=simple
-  WorkingDirectory=/usr/src/app
+  WorkingDirectory=/opt/web
   EnvironmentFile=/etc/web
-  ExecStart=/usr/local/bin/pm2-runtime /usr/src/app/config/ecosystem.config.js app
+  ExecStart={{{command}}}
   Restart=on-failure
 
   [Install]
