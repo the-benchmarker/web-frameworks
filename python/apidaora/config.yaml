@@ -5,15 +5,17 @@ framework:
 deps:
   - libffi-dev
   - curl
-  - libssl1.0-dev # ubuntu
-  # - openssl-dev # alpine
+
+alpine-deps:
+  - openssl-dev
 
 # install maturin to build orjson
 # @see https://github.com/ijl/orjson/issues/8#issuecomment-570335365
-before_command:
+after_command:
   - curl https://sh.rustup.rs > init.sh
   - sh init.sh -y
   - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
+  - cd /opt/web && /usr/local/bin/python -m pip install -r requirements.txt -U
 
 files:
   - server.py
