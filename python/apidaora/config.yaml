@@ -12,10 +12,12 @@ alpine-deps:
   - curl
   - openssl-dev
 
-boostratp:
+bootstrap:
   - curl https://sh.rustup.rs > init.sh
   - sh init.sh -y
+  - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
   - rustup default nightly
+  - cd /opt/web && /usr/local/bin/python -m pip install -r requirements.txt -U
 
 files:
   - server.py

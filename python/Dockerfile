@@ -2,13 +2,19 @@ FROM python:3.8-alpine
 
 RUN apk add build-base
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
-{{#build_deps}}
+{{#deps}}
   RUN apk add {{{.}}}
-{{/build_deps}}
+{{/deps}}
 
-COPY . ./
+{{#alpine-deps}}
+  RUN apk add {{{.}}}
+{{/alpine-deps}}
+
+{{#files}}
+  COPY {{{.}}} {{{.}}}
+{{/files}}
 
 {{#fixes}}
   RUN {{{.}}}
@@ -18,6 +24,12 @@ COPY . ./
   ENV {{{.}}}
 {{/environment}}
 
-RUN pip install -r requirements.txt
+{{#before_command}}
+  RUN {{{.}}}
+{{/before_command}}
+
+{{#after_command}}
+  RUN {{{.}}}
+{{/after_command}}
 
 CMD {{command}}

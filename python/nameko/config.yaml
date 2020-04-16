@@ -7,4 +7,4 @@ files:
   - server.py
   - nameko.yaml
     
-command: /usr/local/bin/nameko run server --config /usr/src/app/nameko.yaml
+command: /usr/local/bin/nameko run server --config /opt/web/nameko.yaml
