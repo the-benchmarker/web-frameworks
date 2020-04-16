@@ -101,7 +101,7 @@ python:
 
 config:
   commands:
-    - prettier "**/**/*.json" --write
+    - prettier "**/**/*.{config.js,json}" --write
   dir: .
 
 kotlin:
