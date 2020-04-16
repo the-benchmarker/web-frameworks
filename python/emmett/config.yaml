@@ -2,9 +2,8 @@ framework:
   website: emmett.sh
   version: 2.1
 
-build_deps:
+deps:
   - libffi-dev
-  - openssl-dev
 
 files:
   - server.py

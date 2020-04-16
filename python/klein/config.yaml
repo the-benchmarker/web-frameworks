@@ -7,6 +7,6 @@ files:
   - server.py
 
 environment:
-  PYTHONPATH: /usr/src/app
+  PYTHONPATH: /opt/web
 
 command: /usr/local/bin/twistd -n web --class=server.application --port=tcp:3000
