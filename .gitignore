@@ -13,11 +13,6 @@ shard.lock
 # GoLand IDE
 .idea
 
-# Temporary files
-FRAMEWORKS.yaml
-*/*/Dockerfile
-*/*/ip.txt
-
 /lib
 /bin
 
@@ -36,4 +31,8 @@ obj
 *.fsproj.user
 # User data
 # For cloud-init
-**/**/user_data.yml
+*/*/user_data.yml
+*/*/Dockerfile
+*/*/ip.txt
+*/*/id.txt
+*/*/cid.txt
