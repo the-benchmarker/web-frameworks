@@ -2,12 +2,11 @@ framework:
   website: github.com/emmett-framework/emmett
   version: 2.0
 
-build_deps:
+deps:
   - libffi-dev
-  - openssl-dev
 
-fixes:
-  - pip install pendulum==2.0.5
+alpine-deps:
+  - openssl-dev
 
 files:
   - server.py
