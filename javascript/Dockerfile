@@ -1,6 +1,14 @@
 FROM node:13.14-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
+
+{{#deps}}
+  RUN apk add {{{.}}}
+{{/deps}}
+
+{{#alpine-deps}}
+  RUN apk add {{{.}}}
+{{/alpine-deps}}
 
 {{#files}}
   COPY {{{.}}} {{{.}}}
@@ -12,11 +20,15 @@ WORKDIR /usr/src/app
 
 RUN npm install
 
+{{#alpine-fixes}}
+  RUN {{{.}}}
+{{/alpine-fixes}}
+
+ENV NODE_ENV production
+
 {{#after_command}}
   RUN {{{.}}}
 {{/after_command}}
-
-ENV NODE_ENV production
 
 {{#environment}}
   ENV {{{.}}}

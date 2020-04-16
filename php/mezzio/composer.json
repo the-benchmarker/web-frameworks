@@ -1,18 +1,18 @@
 {
-    "require": {
-        "laminas/laminas-component-installer": "*",
-        "laminas/laminas-config-aggregator": "*",
-        "laminas/laminas-diactoros": "*",
-        "mezzio/mezzio": "~3.2.0",
-        "mezzio/mezzio-helpers": "*",
-        "laminas/laminas-stdlib": "*",
-        "laminas/laminas-servicemanager": "*",
-        "mezzio/mezzio-fastroute": "*",
-        "laminas/laminas-dependency-plugin": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "src/App/src/"
-        }
+  "require": {
+    "laminas/laminas-component-installer": "*",
+    "laminas/laminas-config-aggregator": "*",
+    "laminas/laminas-diactoros": "*",
+    "mezzio/mezzio": "~3.2.0",
+    "mezzio/mezzio-helpers": "*",
+    "laminas/laminas-stdlib": "*",
+    "laminas/laminas-servicemanager": "*",
+    "mezzio/mezzio-fastroute": "*",
+    "laminas/laminas-dependency-plugin": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/App/src/"
     }
+  }
 }
