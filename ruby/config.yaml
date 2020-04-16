@@ -18,7 +18,6 @@ cloud:
       - snap install ruby --classic
 
       # Symlinks ruby and bunlder to a standard path location
-      
       - ln -sfv /snap/bin/bundle /usr/bin/bundle
       - ln -sfv /snap/bin/ruby /usr/bin/ruby
 
