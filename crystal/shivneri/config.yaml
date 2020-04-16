@@ -1,6 +1,6 @@
 framework:
   github: ujjwalguptaofficial/shivneri
-  version: 0.13.1
+  version: 0.15
 
 build_opts: '--link-flags "-lxml2 -llzma"'
 
