@@ -2,15 +2,10 @@ framework:
   website: cyclone.io
   version: 1.3
 
-build_deps:
+deps:
   - libffi-dev
+
+alpine-deps:
   - openssl-dev
-
-fixes:
-  - pip install pendulum==2.0.5
-
-files:
-  - requirements.txt
-  - server.py
 
 command: /usr/local/bin/twistd --python=server.py --nodaemon

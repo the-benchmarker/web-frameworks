@@ -14,4 +14,4 @@ files:
 environment:
   WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker
 
-command: /usr/local/bin/gunicorn --log-level warning  --bind 0.0.0.0:3000  --reuse-port  -c /usr/src/app/config/gunicorn.py app.wsgi
+command: /usr/local/bin/gunicorn --log-level warning  --bind 0.0.0.0:3000  --reuse-port  -c /opt/web/config/gunicorn.py app.wsgi
