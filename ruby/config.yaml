@@ -32,9 +32,9 @@ after_command:
   - cd /opt/web && bundle config set path 'vendor/bundle'
   - cd /opt/web && bundle install
 
-  # Install bundler binstubs
+  # Install puma binstubs
   # This is done only if puma gem is installed (some usage does not require puma)
-  - (cd /opt/web && bundle show puma) && bundle binstubs puma
+  - cd /opt/web && bundle info puma && bundle binstubs puma || echo
 
   # Install bundler binstubs
   - cd /opt/web && bundle binstubs bundler
