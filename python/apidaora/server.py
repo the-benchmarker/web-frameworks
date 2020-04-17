@@ -5,16 +5,16 @@ from apidaora.method import MethodType
 from apidaora.asgi.responses import PLAINTEXT_RESPONSE
 
 
-def index(path, query, headers, body) -> str:
+def index(req) -> str:
     return PLAINTEXT_RESPONSE, b""
 
 
-def create(path, query, headers, body) -> str:
+def create(req) -> str:
     return PLAINTEXT_RESPONSE, b""
 
 
-def show(path, query, headers, body) -> str:
-    return PLAINTEXT_RESPONSE, bytes(path.get('id'), encoding='utf-8')
+def show(req) -> str:
+    return PLAINTEXT_RESPONSE, bytes(req.path_args.get('id'), encoding='utf-8')
 
 
 routes = (
