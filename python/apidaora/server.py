@@ -14,7 +14,7 @@ def create(req) -> str:
 
 
 def show(req) -> str:
-    return PLAINTEXT_RESPONSE, bytes(path.get('id'), encoding='utf-8')
+    return PLAINTEXT_RESPONSE, bytes(req.path_args.get('id'), encoding='utf-8')
 
 
 routes = (
