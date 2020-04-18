@@ -84,6 +84,7 @@ env:
       - FRAMEWORK=go.beego
       - FRAMEWORK=csharp.aspnetcore
       - FRAMEWORK=dart.aqueduct
+      - FRAMEWORK=php.ice
       - FRAMEWORK=php.imi
       - FRAMEWORK=php.swoft
       - FRAMEWORK=php.laravel
