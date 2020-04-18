@@ -1,0 +1,40 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+target
+.classpath
+.project
+.settings
+dependency-reduced-pom.xml
+bin
+
+# OSX
+*.DS_Store
+
+# IntelliJ IDE Project Files #
+*.iml
+*.idea
+*.versionsBackup
+pom.xml.versionsBackup
+jacoco.exec
+.*.md.html
+node
+dump
+TODO
+.interp
+tmp
+checkstyle
+javadoc
+*.mv.db
+versions
+out
+node
+node_modules
+build
+.gradle
+gradle
+gradlew
+gradlew.bat
