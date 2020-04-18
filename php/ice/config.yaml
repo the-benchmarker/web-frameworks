@@ -8,7 +8,7 @@ build_deps:
 before_build:
   - wget -O /tmp/framework-1.5.1.tar.gz https://github.com/ice/framework/archive/1.5.1.tar.gz
   - cd /tmp/ && tar -xzf framework-1.5.1.tar.gz && cd framework-1.5.1 && bash install
-  - cp /tmp/ framework-1.5.1/tests/ci/ice.ini /usr/local/etc/php/conf.d/docker-php-ext-ice.ini
+  - echo "extension=ice.so" >> /usr/local/etc/php/conf.d/docker-php-ext-ice.ini
 
 nginx_conf:
   - |
