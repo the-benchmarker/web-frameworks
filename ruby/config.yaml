@@ -18,8 +18,8 @@ cloud:
       - snap install ruby --classic
 
       # Symlinks ruby and bunlder to a standard path location
-      - ln -sfv /snap/bin/bundle /usr/bin/bundle
-      - ln -sfv /snap/bin/ruby /usr/bin/ruby
+      - ln -sfv /snap/bin/bundle /usr/local/bin/bundle
+      - ln -sfv /snap/bin/ruby /usr/local/bin/ruby
 
       # Disable cloud-init to avoid re-run on reboot
       - systemctl disable cloud-init
