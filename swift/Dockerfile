@@ -9,6 +9,6 @@ COPY Package.swift main.swift ./
 
 RUN swift build -c release
 
-FROM swift:5.1-slim
+FROM swift:5.2-slim
 COPY --from=0 /usr/src/app/.build/release/server /usr/src/app/.build/release/server
 CMD /usr/src/app/.build/release/server {{options}}
