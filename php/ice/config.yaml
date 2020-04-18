@@ -1,0 +1,23 @@
+framework:
+  website: iceframework.org
+  version: 1.5.1
+
+build_deps:
+  - bash
+
+before_build:
+  - wget -O /tmp/framework-1.5.1.tar.gz https://github.com/ice/framework/archive/1.5.1.tar.gz
+  - cd /tmp/ && tar -xzf framework-1.5.1.tar.gz && cd framework-1.5.1 && bash install
+  - cp /tmp/ framework-1.5.1/tests/ci/ice.ini /usr/local/etc/php/conf.d/docker-php-ext-ice.ini
+
+nginx_conf:
+  - |
+    location /{\n\
+        rewrite ^/(.*)$ /index.php?_url=/$1 last;\n\
+    }\n\
+  - |
+    location = /index.php {\n\
+      fastcgi_pass unix:/var/run/php-fpm.sock;\n\
+      fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
+      include fastcgi_params;\n\
+    }\n\
