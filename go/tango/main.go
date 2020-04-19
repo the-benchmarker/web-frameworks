@@ -23,7 +23,12 @@ func (Empty) Post() string {
 }
 
 func main() {
-	t := tango.Classic()
+	t := tango.New(
+		tango.Logging(),
+		tango.Recovery(false),
+		tango.Return(),
+		tango.Param(),
+	)
 	t.Get("/", new(Empty))
 	t.Get("/user/:id", new(Params))
 	t.Post("/user", new(Empty))
