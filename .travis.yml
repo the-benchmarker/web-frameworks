@@ -32,13 +32,13 @@ env:
       - FRAMEWORK=cpp.evhtp
       - FRAMEWORK=cpp.drogon
       - FRAMEWORK=crystal.kemal
-      - FRAMEWORK=crystal.shivneri
       - FRAMEWORK=crystal.spider-gazelle
       - FRAMEWORK=crystal.router.cr
       - FRAMEWORK=crystal.amber
       - FRAMEWORK=crystal.athena
       - FRAMEWORK=crystal.grip
       - FRAMEWORK=crystal.ricr
+      - FRAMEWORK=crystal.shivneri
       - FRAMEWORK=crystal.onyx
       - FRAMEWORK=crystal.lucky
       - FRAMEWORK=crystal.orion
@@ -62,6 +62,7 @@ env:
       - FRAMEWORK=go.fasthttprouter
       - FRAMEWORK=go.router
       - FRAMEWORK=go.gin
+      - FRAMEWORK=go.tango
       - FRAMEWORK=go.echo
       - FRAMEWORK=go.aero
       - FRAMEWORK=go.webgo
