@@ -19,7 +19,6 @@ let package = Package(
             name: "server",
             dependencies: [
                 .product(name: "Vapor", package: "vapor")
-            ],
-            path: "."),
+            ]),
     ]
 )
