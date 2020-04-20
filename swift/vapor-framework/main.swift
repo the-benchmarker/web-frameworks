@@ -7,7 +7,7 @@ app.get { _ in
     Response()
 }
 
-app.get("user", ":userID") { req in
+app.post("user", ":userID") { req in
     req.parameters.get("userID") ?? ""
 }
 
