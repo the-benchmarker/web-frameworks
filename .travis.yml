@@ -162,8 +162,8 @@ env:
       - FRAMEWORK=javascript.restify
       - FRAMEWORK=javascript.sifrr
       - FRAMEWORK=swift.perfect
-      - FRAMEWORK=swift.vapor
       - FRAMEWORK=swift.swifter
+      - FRAMEWORK=swift.vapor-framework
       - FRAMEWORK=swift.kitura-nio
       - FRAMEWORK=swift.kitura
 
