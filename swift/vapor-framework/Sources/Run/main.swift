@@ -3,10 +3,8 @@ import Vapor
 let app = Application()
 defer { app.shutdown() }
 
-let response = Response()
-
 app.get { _ in
-    response
+    Response()
 }
 
 app.get("user", ":userID") { req in
@@ -14,7 +12,7 @@ app.get("user", ":userID") { req in
 }
 
 app.post("empty") { _ in
-    return response
+    Response()
 }
 
 try app.run()
