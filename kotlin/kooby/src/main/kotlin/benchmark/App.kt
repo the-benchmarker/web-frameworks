@@ -14,6 +14,6 @@ fun main(args: Array<String>) {
 
     get("/") { ctx.send(StatusCode.OK) }
     get("/user/{id}") { ctx.send(ctx.path("id").value()) }
-    get("/user") { ctx.send(StatusCode.OK) }
+    post("/user") { ctx.send(StatusCode.OK) }
   }
 }
