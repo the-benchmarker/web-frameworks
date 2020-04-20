@@ -10,9 +10,10 @@ $di->dispatcher
     ->setNamespace('App');
 
 $di->router
-    ->setRoutes([
-        ['*', '[/{action}[/{id}]]', ['action' => '\w+']]
-    ]);
+   ->setRoutes([
+    ['*', '[/{action}[/{id}]]', ['action' => '\w+']],
+    ['GET', '/']
+   ]);
 
 $app = new \Ice\Mvc\App($di);
 
