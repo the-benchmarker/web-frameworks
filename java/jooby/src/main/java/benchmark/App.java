@@ -1,10 +1,10 @@
 package benchmark;
 
+import static io.jooby.ExecutionMode.EVENT_LOOP;
+
 import io.jooby.Jooby;
 import io.jooby.ServerOptions;
 import io.jooby.StatusCode;
-
-import static io.jooby.ExecutionMode.EVENT_LOOP;
 
 public class App extends Jooby {
   {
