@@ -2,6 +2,15 @@ framework:
   website: laravel.com
   version: 7.27
 
+files:
+  - app/**/*.php
+  - bootstrap/app.php
+  - composer.json
+  - routes/web.php
+  - public/index.php
+  - ../.config/nginx.conf
+  - ../.config/php-fpm.conf
+
 environment:
   APP_ENV: production
   APP_DEBUG: false
@@ -11,11 +20,6 @@ deps:
   - nginx
   - php
   - composer
-
-files:
-  - composer.json
-  - "**/*.php"
-  - ../.config/nginx.conf
 
 bootstrap:
   - mkdir bootstrap/cache -p
@@ -32,5 +36,9 @@ bootstrap:
   - composer dumpautoload -o
   - mv config/nginx.conf /etc/nginx/conf.d/default.conf
   - sed -i 's/;prefix.*/prefix = \/opt\/web\/public/g' /etc/php-fpm.d/www.conf
-    - "[[ -f /etc/fedora-release ]] && systemctl enable php-fpm || true"
-    - "[[ -f /etc/fedora-release ]] && systemctl enable nginx || true"
+  - "[[ -f /etc/fedora-release ]] && systemctl enable php-fpm || true"
+  - "[[ -f /etc/fedora-release ]] && systemctl enable nginx || true"
+  - chown -R www-data:www-data /usr/src/app
+  - find /opt/web -type f -exec chmod 644 {} \;
+  - find /opt/web -type d -exec chmod 755 {} \;
+  - chmod -R ug+rwx storage /opt/web/bootstrap/cache
