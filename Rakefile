@@ -170,11 +170,15 @@ namespace :cloud do
     framework_config = YAML.safe_load(File.open(File.join(directory, "config.yaml")))
     config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
-    config["cloud"]["config"]["write_files"] = [{
-      "path" => "/lib/systemd/system/web.service",
-      "permission" => "0644",
-      "content" => Mustache.render(config["service"], config),
-    }]
+    if config.key?("service")
+      config["cloud"]["config"]["write_files"] = [{
+        "path" => "/lib/systemd/system/web.service",
+        "permission" => "0644",
+        "content" => Mustache.render(config["service"], config),
+      }]
+    else
+      config["cloud"]["config"]["write_files"] = []
+    end
 
     if config.key?("environment")
       environment = config.fetch("environment")
@@ -194,11 +198,6 @@ namespace :cloud do
     end
 
     if config.key?("deps")
-      config["deps"].each do |package|
-        config["cloud"]["config"]["packages"] << package
-      end
-    end
-    if config.key?('specifics') && config['specifics'].key?(provider)
       config["deps"].each do |package|
         config["cloud"]["config"]["packages"] << package
       end
