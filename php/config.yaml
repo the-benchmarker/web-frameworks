@@ -1,62 +1,27 @@
 provider:
   default:
     language: 7.4
+  digitalocean:
+    language: 7.2
 
 files:
-  - '**/*.php'
+  - src/**/*.php
   
 cloud:
   config:
     package_update: true
     package_upgrade: true
     packages:
-      - build-essential
+      - php
+      - php-fpm
     runcmd:
-      # Install the latest version of ruby
-      - snap install ruby --classic
-
-      # Symlinks ruby and bunlder to a standard path location
-      
-      - ln -sfv /snap/bin/bundle /usr/bin/bundle
-      - ln -sfv /snap/bin/ruby /usr/bin/ruby
-
-      # Isolate application
-      # Do not install development gems
-      - cd /usr/src/app && bundle config set without 'development test'
-      - cd /usr/src/app && bundle config set path 'vendor/bundle'
-      - cd /usr/src/app && bundle install
 
       # Disable cloud-init to avoid re-run on reboot
       - systemctl disable cloud-init
 
-      # Enable web so as application is started at startup
-      - systemctl enable web
+      - systemctl enable php-fpm
 
-after_command:
-  # Install bundler binstubs
-  # This is done only if puma gem is installed (some usage does not require puma)
-  - which puma || (cd /usr/src/app && bundle binstubs puma)
-
-  # Install bundler binstubs
-  - cd /usr/src/app && bundle binstubs bundler
-
-# This is the default command, and could be overwrittern
-command: /usr/src/app/bin/bundle exec /usr/src/app/bin/puma -C config/puma.rb
-
-# SystemD startup script
-# This need to be tuned
-# For security (do not run as root) ...
-service: |
-  [Unit]
-  Description=Puma HTTP Server
-  After=network.target
-
-  [Service]
-  Type=simple
-  EnvironmentFile=/etc/web
-  WorkingDirectory=/usr/src/app
-  ExecStart={{{command}}}
-  Restart=always
-
-  [Install]
-  WantedBy=multi-user.target
+      # Enable configuration for NginX
+      - mv /opt/web/config/nginx.conf /etc/nginx/conf.d/nginx.conf 
+      - mv /opt/web/config/php-fpm.ini /etc/php/7.2/fpm/pool.d/www.conf
+      - rm -fr /opt/web/config

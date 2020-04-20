@@ -2,6 +2,18 @@ framework:
   website: laravel.com
   version: 7.14
 
+files:
+  - app/**/*.php
+  - bootstrap/app.php
+  - composer.json
+  - routes/web.php
+  - public/index.php
+  - ../.config/nginx.conf
+  - ../.config/php-fpm.conf
+
+deps:
+  - nginx
+
 environment:
   APP_ENV: production
   APP_DEBUG: false
@@ -14,6 +26,6 @@ before_command:
   - mkdir storage/framework/cache -p
 
   - chown -R www-data:www-data /usr/src/app
-  - find /usr/src/app -type f -exec chmod 644 {} \;
-  - find /usr/src/app -type d -exec chmod 755 {} \;
-  - chmod -R ug+rwx storage /usr/src/app/bootstrap/cache
+  - find /opt/web -type f -exec chmod 644 {} \;
+  - find /opt/web -type d -exec chmod 755 {} \;
+  - chmod -R ug+rwx storage /opt/web/bootstrap/cache
