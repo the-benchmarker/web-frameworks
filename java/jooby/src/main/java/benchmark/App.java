@@ -16,7 +16,7 @@ public class App extends Jooby {
 
     get("/", ctx -> ctx.send(StatusCode.OK));
     get("/user/{id}", ctx -> ctx.send(ctx.path("id").value()));
-    get("/user", ctx -> ctx.send(StatusCode.OK));
+    post("/user", ctx -> ctx.send(StatusCode.OK));
   }
 
   public static void main(String[] args) {
