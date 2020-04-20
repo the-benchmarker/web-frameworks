@@ -1,13 +1,23 @@
+{{#image}}
+  FROM {{{.}}}
+{{/image}}
+
+{{^image}}
 FROM ruby:2.7-alpine
+{{/image}}
 
 WORKDIR /usr/src/app
 
-COPY . ./
-
+{{^image}}
 RUN apk add build-base
+{{/image}}
 
 RUN bundle config set without 'development test'
+
+COPY Gemfile .
 RUN bundle install
+
+COPY . ./
 
 {{#environment}}
 ENV {{{.}}}

@@ -1,0 +1,7 @@
+framework:
+  website: rubyonrails.org
+  version: 6.0
+
+image: jruby:9.2
+
+command: JRUBY_OPTS=-Xcompile.invokedynamic=true bundle exec puma -p 3000 -e production
