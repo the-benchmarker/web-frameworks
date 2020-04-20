@@ -130,12 +130,14 @@ env:
       - FRAMEWORK=python.cyclone
       - FRAMEWORK=python.nameko
       - FRAMEWORK=kotlin.ktor
+      - FRAMEWORK=kotlin.kooby
       - FRAMEWORK=java.micronaut
       - FRAMEWORK=java.rapidoid
       - FRAMEWORK=java.spring-framework
       - FRAMEWORK=java.act
       - FRAMEWORK=java.spring-boot
       - FRAMEWORK=java.javalin
+      - FRAMEWORK=java.jooby
       - FRAMEWORK=perl.dancer2
       - FRAMEWORK=fsharp.suave
       - FRAMEWORK=javascript.restana

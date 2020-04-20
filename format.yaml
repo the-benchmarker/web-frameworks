@@ -103,3 +103,8 @@ config:
   commands:
     - prettier "**/**/*.json" --write
   dir: .
+
+kotlin:
+  commands:
+    - ktlint -F "**/*.kt"
+  dir: kotlin
