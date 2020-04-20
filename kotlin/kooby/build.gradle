@@ -40,6 +40,6 @@ dependencies {
 
 shadowJar {
     mergeServiceFiles()
-    archiveFileName = "benchmark.jar"
+    archiveFileName = "my-application.jar"
 }
 
