@@ -71,7 +71,6 @@ class FastServer extends Server
             } else {
                 $psr7Response = $this->response()->withStatus(404);
             }
-
         } catch (Throwable $throwable) {
             // Delegate the exception to exception handler.
             $psr7Response = $this->exceptionHandlerDispatcher->dispatch($throwable, $this->exceptionHandlers);
