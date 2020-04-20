@@ -273,6 +273,11 @@ update_configs:
   - language:php
 - package_manager: php:composer
   update_schedule: live
+  directory: php/ice
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
   directory: php/phalcon
   default_labels:
   - language:php
@@ -480,12 +485,7 @@ update_configs:
   update_schedule: daily
   directory: java/jooby
   default_labels:
-    - language:java
-- package_manager: java:gradle
-  update_schedule: daily
-  directory: kotlin/kooby
-  default_labels:
-    - language:kotlin
+  - language:java
 - package_manager: javascript
   update_schedule: live
   directory: javascript/restana

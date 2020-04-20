@@ -84,7 +84,6 @@ env:
       - FRAMEWORK=go.beego
       - FRAMEWORK=csharp.aspnetcore
       - FRAMEWORK=dart.aqueduct
-      - FRAMEWORK=php.ice
       - FRAMEWORK=php.imi
       - FRAMEWORK=php.swoft
       - FRAMEWORK=php.laravel
@@ -94,6 +93,7 @@ env:
       - FRAMEWORK=php.hyperf
       - FRAMEWORK=php.laminas
       - FRAMEWORK=php.one-fpm
+      - FRAMEWORK=php.ice
       - FRAMEWORK=php.phalcon
       - FRAMEWORK=php.chubbyphp
       - FRAMEWORK=php.one
@@ -130,8 +130,8 @@ env:
       - FRAMEWORK=python.tornado
       - FRAMEWORK=python.cyclone
       - FRAMEWORK=python.nameko
-      - FRAMEWORK=kotlin.ktor
       - FRAMEWORK=kotlin.kooby
+      - FRAMEWORK=kotlin.ktor
       - FRAMEWORK=java.micronaut
       - FRAMEWORK=java.rapidoid
       - FRAMEWORK=java.spring-framework
