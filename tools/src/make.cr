@@ -16,6 +16,7 @@ end
 
 class App < Admiral::Command
   class Config < Admiral::Command
+    define_help
     define_flag without_sieger : Bool, description: "run sieger", default: false, long: "without-sieger"
     define_flag docker_options : String, description: "extra argument to docker cli", default: "", long: "docker-options"
     define_flag keep : Bool, description: "keep container after build (default : false)", default: false, long: "keep"
@@ -333,12 +334,13 @@ class App < Admiral::Command
     end
   end
 
+  define_help
   register_sub_command config : Config, description "Create framework list"
   register_sub_command ci_config : TravisConfig, description "Create configuration file for CI"
   register_sub_command deps_config : DependabotConfig, description "Create configuration file for deps update bot"
 
   def run
-    puts "help"
+    puts help
   end
 end
 

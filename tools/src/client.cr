@@ -20,6 +20,7 @@ def insert(framework_id, metric, value, concurrency_level_id)
 end
 
 class Client < Admiral::Command
+  define_help
   define_flag threads : Int32, description: "# of threads", default: 8, long: "threads", short: "t"
   define_flag duration : Int32, description: "Time to test, in seconds", default: 15, long: "duration", short: "d"
   define_flag language : String, description: "Language used", required: true, long: "language", short: "l"
