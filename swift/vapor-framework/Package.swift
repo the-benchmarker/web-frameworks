@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "WhichIsTheFastest",
+    platforms: [
+        .macOS("10.15")
+    ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/vapor/vapor.git", from: "4.3.0")
@@ -15,7 +18,7 @@ let package = Package(
         .target(
             name: "Run",
             dependencies: [
-//                .product(name: "Vapor", package: "vapor")
+                .product(name: "Vapor", package: "vapor")
             ]),
     ]
 )
