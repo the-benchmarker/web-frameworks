@@ -1,6 +1,7 @@
 framework:
   website: vapor.codes
   version: 4.3
+  name: vapor
 
 options: serve --env prod
   

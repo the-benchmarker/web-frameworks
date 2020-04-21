@@ -10,15 +10,11 @@ app.get { _ in
     empty
 }
 
-app.post("user", ":userID") { req in
+app.get("user", ":userID") { req in
     req.parameters.get("userID") ?? ""
 }
 
 app.post("user") { _ in
-    empty
-}
-
-app.post("empty") { _ in
     empty
 }
 

@@ -54,7 +54,14 @@ class App < Admiral::Command
               yaml.scalar "depends_on"
               yaml.sequence do
                 tools.each do |tool|
-                  yaml.scalar "#{language}.#{tool}"
+                  # Fix for vapor
+                  framework_config = YAML.parse(File.read("#{language}/#{tool}/config.yaml"))
+                  if framework_config.as_h["framework"].as_h.has_key?("name")
+                    name = framework_config.as_h["framework"].as_h["name"]
+                  else
+                    name = tool
+                  end
+                  yaml.scalar "#{language}.#{name}"
                 end
               end
             end
@@ -223,15 +230,22 @@ class App < Admiral::Command
               container_expose = flags.local_port != 0 ? "-p 127.0.0.1:#{flags.local_port}:3000" : ""
               container_host = flags.local_port != 0 ? "--host 127.0.0.1:#{flags.local_port}" : ""
 
+              # Fix for vapor
+              if framework_config.as_h["framework"].as_h.has_key?("name")
+                name = framework_config.as_h["framework"].as_h["name"]
+              else
+                name = tool
+              end
+
               File.write("#{language}/#{tool}/Dockerfile", Crustache.render(dockerfile, params))
 
-              yaml.scalar "#{language}.#{tool}"
+              yaml.scalar "#{language}.#{name}"
 
               yaml.mapping do
                 yaml.scalar "commands"
                 yaml.sequence do
                   # Build container
-                  yaml.scalar "docker build -t #{language}.#{tool} . #{flags.docker_options}"
+                  yaml.scalar "docker build -t #{language}.#{name} . #{flags.docker_options}"
 
                   # Run container, and store IP
                   yaml.scalar "docker run #{container_expose} -td #{language}.#{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
@@ -287,13 +301,19 @@ class App < Admiral::Command
         directory = File.dirname(file)
         infos = directory.split("/")
         framework = infos.pop
+        config = YAML.parse(File.read(file))
+
         language = infos.pop
 
         unless frameworks.has_key?(language)
           frameworks[language] = [] of String
         end
 
-        frameworks[language] << framework
+        if config.as_h["framework"].as_h.has_key?("name")
+          frameworks[language] << config.as_h["framework"].as_h["name"].to_s
+        else
+          frameworks[language] << framework
+        end
       end
       selection = YAML.build do |yaml|
         yaml.mapping do
