@@ -16,9 +16,11 @@ end
 
 class App < Admiral::Command
   class Config < Admiral::Command
+    define_help
     define_flag without_sieger : Bool, description: "run sieger", default: false, long: "without-sieger"
     define_flag docker_options : String, description: "extra argument to docker cli", default: "", long: "docker-options"
     define_flag keep : Bool, description: "keep container after build (default : false)", default: false, long: "keep"
+    define_flag local_port : UInt16, description: "bind docker port 3000 to localhost port (docker desktop)", default: 0_u16, long: "local-port"
 
     def run
       frameworks = {} of String => Array(String)
@@ -218,6 +220,9 @@ class App < Admiral::Command
                 params["files"] = files
               end
 
+              container_expose = flags.local_port != 0 ? "-p 127.0.0.1:#{flags.local_port}:3000" : ""
+              container_host = flags.local_port != 0 ? "--host 127.0.0.1:#{flags.local_port}" : ""
+
               File.write("#{language}/#{tool}/Dockerfile", Crustache.render(dockerfile, params))
 
               yaml.scalar "#{language}.#{tool}"
@@ -229,13 +234,13 @@ class App < Admiral::Command
                   yaml.scalar "docker build -t #{language}.#{tool} . #{flags.docker_options}"
 
                   # Run container, and store IP
-                  yaml.scalar "docker run -td #{language}.#{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
+                  yaml.scalar "docker run #{container_expose} -td #{language}.#{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
 
                   # Launch sieging
                   unless flags.without_sieger
                     factor = System.cpu_count**2
                     concurrencies = [] of Int32
-                    command = "../../bin/client --language #{language} --framework #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
+                    command = "../../bin/client #{container_host} --language #{language} --framework #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
                     [1, 4, 8, 16, 32].each do |i|
                       command += " -c #{factor*i} "
                     end
@@ -333,12 +338,13 @@ class App < Admiral::Command
     end
   end
 
+  define_help
   register_sub_command config : Config, description "Create framework list"
   register_sub_command ci_config : TravisConfig, description "Create configuration file for CI"
   register_sub_command deps_config : DependabotConfig, description "Create configuration file for deps update bot"
 
   def run
-    puts "help"
+    puts help
   end
 end
 

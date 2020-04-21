@@ -107,11 +107,12 @@ class App < Admiral::Command
     end
   end
 
+  define_help
   register_sub_command to_readme : ReadmeWriter, description "Update readme with results"
   register_sub_command clear : ClearResults, description "Clears the data from past runs"
 
   def run
-    puts "help"
+    puts help
   end
 end
 

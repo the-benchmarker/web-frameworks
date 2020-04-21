@@ -20,12 +20,14 @@ def insert(framework_id, metric, value, concurrency_level_id)
 end
 
 class Client < Admiral::Command
+  define_help
   define_flag threads : Int32, description: "# of threads", default: 8, long: "threads", short: "t"
   define_flag duration : Int32, description: "Time to test, in seconds", default: 15, long: "duration", short: "d"
   define_flag language : String, description: "Language used", required: true, long: "language", short: "l"
   define_flag framework : String, description: "Framework used", required: true, long: "framework", short: "f"
   define_flag concurrencies : Array(Int32), description: "Concurrency level", required: true, long: "concurrency", short: "c"
   define_flag routes : Array(String), long: "routes", short: "r", default: ["GET:/"]
+  define_flag host : String, description: "Host and port instead ip.txt"
 
   def run
     db = DB.open(ENV["DATABASE_URL"])
@@ -39,22 +41,21 @@ class Client < Admiral::Command
     framework_id = row.read(Int)
 
     sleep 25 # due to external program usage
-
-    address = File.read("ip.txt").strip
+    address = flags.host ? flags.host : File.read("ip.txt").strip + ":3000"
 
     # Run a 5-second primer at 8 client-concurrency to verify that the server is in fact running. These results are not captured.
 
-    process = Process.new("wrk", ["-H", "Connection: keep-alive", "-d", "5s", "-c", "8", "--timeout", "8", "-t", flags.threads.to_s, "http://#{address}:3000"])
+    process = Process.new("wrk", ["-H", "Connection: keep-alive", "-d", "5s", "-c", "8", "--timeout", "8", "-t", flags.threads.to_s, "http://#{address}"])
     process.wait
 
     # Run a 15-second warmup at 256 client-concurrency to allow lazy-initialization to execute and just-in-time compilation to run. These results are not captured.
 
-    process = Process.new("wrk", ["-H", "Connection: keep-alive", "-d", "#{flags.duration}s", "-c", "256", "--timeout", "8", "-t", flags.threads.to_s, "http://#{address}:3000"])
+    process = Process.new("wrk", ["-H", "Connection: keep-alive", "-d", "#{flags.duration}s", "-c", "256", "--timeout", "8", "-t", flags.threads.to_s, "http://#{address}"])
     process.wait
 
     flags.routes.each do |route|
       method, uri = route.split(":")
-      url = "http://#{address}:3000#{uri}"
+      url = "http://#{address}#{uri}"
 
       flags.concurrencies.each do |concurrency|
         row = db.query("INSERT INTO concurrencies (level) VALUES ($1) ON CONFLICT (level) DO UPDATE SET level = $1 RETURNING id", concurrency)
