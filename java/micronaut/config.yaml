@@ -13,9 +13,9 @@ patch:
   - USER gradle
 
 files:
-  - build/distributions/micronaut-0.1.tar
+  - build/distributions/app-0.1.tar
 
 before_command:
-  - tar -xvf build/distributions/micronaut-0.1.tar
+  - tar -xvf build/distributions/app-0.1.tar
 
-command: micronaut-0.1/bin/micronaut
+command: app-0.1/bin/app
