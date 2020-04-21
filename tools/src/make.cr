@@ -286,6 +286,13 @@ class App < Admiral::Command
         infos = directory.split("/")
         framework = infos.pop
         language = infos.pop
+        config = YAML.parse(File.read("#{language}/#{framework}/config.yaml"))
+
+        # Fix for vapor
+        if config.as_h["framework"].as_h.has_key?("name")
+          framework = config.as_h["framework"].as_h["name"]
+        end
+
         frameworks << "#{language}.#{framework}"
       end
       config = Crustache.parse(File.read(".ci/template.mustache"))

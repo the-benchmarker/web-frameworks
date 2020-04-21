@@ -163,7 +163,7 @@ env:
       - FRAMEWORK=javascript.sifrr
       - FRAMEWORK=swift.perfect
       - FRAMEWORK=swift.swifter
-      - FRAMEWORK=swift.vapor-framework
+      - FRAMEWORK=swift.vapor
       - FRAMEWORK=swift.kitura-nio
       - FRAMEWORK=swift.kitura
 
