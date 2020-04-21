@@ -2,6 +2,7 @@ import Vapor
 
 let app = Application()
 defer { app.shutdown() }
+app.middleware = .init()
 
 let empty = Response()
 
