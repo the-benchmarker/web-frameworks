@@ -57,6 +57,7 @@ env:
       - FRAMEWORK=ruby.hanami-api
       - FRAMEWORK=ruby.cuba
       - FRAMEWORK=ruby.rails-jruby
+      - FRAMEWORK=ruby.rails-truffleruby
       - FRAMEWORK=scala.akkahttp
       - FRAMEWORK=scala.http4s
       - FRAMEWORK=go.gramework

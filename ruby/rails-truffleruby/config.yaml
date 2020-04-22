@@ -1,0 +1,7 @@
+framework:
+  website: rubyonrails.org
+  version: 6.0
+
+image: firodj/truffleruby:20.0-oraclelinux
+
+command: bundle exec puma -p 3000 -e production
