@@ -1,4 +1,4 @@
-FROM hseeberger/scala-sbt:8u222_1.3.3_2.13.1
+FROM hseeberger/scala-sbt:8u242_1.3.10_2.13.1
 
 WORKDIR /usr/src/app
 
