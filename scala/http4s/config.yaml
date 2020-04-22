@@ -3,6 +3,6 @@ framework:
   version: 0.21
 
 files:
-  - target/scala-2.12/http4s-assembly-0.0.2-SNAPSHOT.jar
+  - target/scala-2.13/http4s-assembly-0.0.2-SNAPSHOT.jar
 
 command: java -jar /usr/src/app/target/scala-2.13/http4s-assembly-0.0.2-SNAPSHOT.jar
