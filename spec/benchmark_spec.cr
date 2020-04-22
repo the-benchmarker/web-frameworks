@@ -5,7 +5,10 @@ def get_ip(name)
   if name == "swift.vapor"
     name = "swift.vapor-framework"
   end
-  path = File.join(name.gsub(".", "/"),"ip.txt")
+  infos = name.split(".")
+  language = infos.shift
+  framework = infos.join(".") 
+  path = File.join(language, framework, "ip.txt")
   File.read(path).strip
 end
 
