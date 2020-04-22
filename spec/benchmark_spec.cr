@@ -1,10 +1,12 @@
+require "json"
 require "./spec_helper"
 
 def get_ip(name)
-  cid = `docker run -td #{name}`.strip
-  sleep 25 # due to external program usage
-  ip = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{cid}`.strip
-  ip
+  if name == "swift.vapor"
+    name = "swift.vapor-framework"
+  end
+  path = File.join(name.gsub(".", "/"),"ip.txt")
+  File.read(path).strip
 end
 
 describe "get on /" do
