@@ -3,7 +3,7 @@ framework:
   version: 10.1
 
 files:
-  - target/scala-2.12/server_scala_akkahttp
+  - target/scala-2.13/server_scala_akkahttp
 
-command: java -jar /usr/src/app/target/scala-2.12/server_scala_akkahttp
-  
+command: java -jar /usr/src/app/target/scala-2.13/server_scala_akkahttp
+
