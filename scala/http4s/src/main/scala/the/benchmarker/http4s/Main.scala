@@ -20,7 +20,7 @@ object Main extends IOApp {
 
   def run(args: List[String]): IO[ExitCode] =
     BlazeServerBuilder[IO]
-      .bindHttp(8080, "localhost")
+      .bindHttp(3000, "0.0.0.0")
       .withHttpApp(helloWorldService)
       .serve
       .compile
