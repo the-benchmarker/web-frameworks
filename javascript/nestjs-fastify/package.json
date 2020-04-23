@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@nestjs/common": "~6.10.14",
+    "@nestjs/core": "~6.10.14",
+    "@nestjs/platform-fastify": "~7.0.8",
+    "@types/node": "^13.13.2",
+    "reflect-metadata": "~0.1.13",
+    "rxjs": "~6.5.4",
+    "@types/node": "*"
+  }
+}
