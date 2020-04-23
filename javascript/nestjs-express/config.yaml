@@ -1,0 +1,15 @@
+framework:
+  website: nestjs.com
+  version: 7.0
+
+files:
+  - nest-cli.json
+  - src
+  - tsconfig.build.json
+  - tsconfig.json
+
+before_command:
+  - npm -g install @nestjs/cli
+  - nest build
+
+command: pm2-runtime start dist/app.js -i $(nproc)
