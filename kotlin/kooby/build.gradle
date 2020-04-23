@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+
+    ext {
+        kotlinVersion = "1.3.+"
+        joobyVersion = "2.8.+"
+	shadowVersion = "+"
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+        classpath "com.github.jengelman.gradle.plugins:shadow:${shadowVersion}"
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: "com.github.johnrengelman.shadow"
+apply plugin: 'application'
+
+
+group "benchmark.kooby"
+version "1.0.0"
+mainClassName = "benchmark.AppKt"
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation "io.jooby:jooby-utow:${joobyVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
+}
+
+shadowJar {
+    mergeServiceFiles()
+    archiveFileName = "my-application.jar"
+}
+

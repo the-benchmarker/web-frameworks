@@ -93,6 +93,7 @@ env:
       - FRAMEWORK=php.hyperf
       - FRAMEWORK=php.laminas
       - FRAMEWORK=php.one-fpm
+      - FRAMEWORK=php.ice
       - FRAMEWORK=php.phalcon
       - FRAMEWORK=php.chubbyphp
       - FRAMEWORK=php.one
@@ -129,6 +130,7 @@ env:
       - FRAMEWORK=python.tornado
       - FRAMEWORK=python.cyclone
       - FRAMEWORK=python.nameko
+      - FRAMEWORK=kotlin.kooby
       - FRAMEWORK=kotlin.ktor
       - FRAMEWORK=java.micronaut
       - FRAMEWORK=java.rapidoid
@@ -136,6 +138,7 @@ env:
       - FRAMEWORK=java.act
       - FRAMEWORK=java.spring-boot
       - FRAMEWORK=java.javalin
+      - FRAMEWORK=java.jooby
       - FRAMEWORK=perl.dancer2
       - FRAMEWORK=fsharp.suave
       - FRAMEWORK=javascript.restana
@@ -159,8 +162,8 @@ env:
       - FRAMEWORK=javascript.restify
       - FRAMEWORK=javascript.sifrr
       - FRAMEWORK=swift.perfect
-      - FRAMEWORK=swift.vapor
       - FRAMEWORK=swift.swifter
+      - FRAMEWORK=swift.vapor
       - FRAMEWORK=swift.kitura-nio
       - FRAMEWORK=swift.kitura
 
@@ -173,8 +176,6 @@ script:
   - shards build
   - bin/make config --without-sieger --keep
 
-  # Create logs directory for neph
-  - mkdir -p .neph/${FRAMEWORK}
   - travis_wait 15 bin/neph ${FRAMEWORK} --mode=CI
 
   - crystal spec
