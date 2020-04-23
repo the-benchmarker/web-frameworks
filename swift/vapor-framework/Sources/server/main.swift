@@ -1,13 +1,15 @@
 import Vapor
 
+var env = Environment.production
+try LoggingSystem.bootstrap(from: &env)
 let app = Application()
 defer { app.shutdown() }
 app.middleware = .init()
 
-let empty = Response()
+app.logger.logLevel = .critical
 
 app.get { _ in
-    empty
+    Response()
 }
 
 app.get("user", ":userID") { req in
@@ -15,11 +17,11 @@ app.get("user", ":userID") { req in
 }
 
 app.post("user") { _ in
-    empty
+    Response()
 }
 
 app.post("empty") { _ in
-    empty
+    Response()
 }
 
 app.http.server.configuration.hostname = "0.0.0.0"
