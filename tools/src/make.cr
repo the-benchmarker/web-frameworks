@@ -254,7 +254,7 @@ class App < Admiral::Command
                   unless flags.without_sieger
                     factor = System.cpu_count**2
                     concurrencies = [] of Int32
-                    command = "../../bin/client #{container_host} --language #{language} --framework #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
+                    command = "../../bin/client #{container_host} --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user"
                     [1, 4, 8, 16, 32].each do |i|
                       command += " -c #{factor*i} "
                     end
@@ -264,7 +264,7 @@ class App < Admiral::Command
 
                   # Drop the container
                   unless flags.keep
-                    yaml.scalar "docker ps -a -q  --filter ancestor=#{language}.#{tool}  | xargs -r docker rm -f"
+                    yaml.scalar "docker ps -a -q  --filter ancestor=#{language}.#{name}  | xargs -r docker rm -f"
                   end
                 end
                 yaml.scalar "dir"
