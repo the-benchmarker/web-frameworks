@@ -8,6 +8,6 @@ let package = Package(
         .package(url: "https://github.com/IBM-Swift/Kitura", .upToNextMinor(from: "2.9.0"))
     ],
     targets: [
-       .target(name: "server", dependencies: ["Kitura"], path: ".")
+       .target(name: "server", dependencies: ["Kitura"])
     ]
 )
