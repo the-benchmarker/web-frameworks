@@ -7,7 +7,7 @@ def get_ip(name)
   end
   infos = name.split(".")
   language = infos.shift
-  framework = infos.join(".") 
+  framework = infos.join(".")
   path = File.join(language, framework, "ip.txt")
   File.read(path).strip
 end

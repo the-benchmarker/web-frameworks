@@ -248,7 +248,10 @@ class App < Admiral::Command
                   yaml.scalar "docker build -t #{language}.#{name} . #{flags.docker_options}"
 
                   # Run container, and store IP
-                  yaml.scalar "docker run #{container_expose} -td #{language}.#{name} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
+                  yaml.scalar "docker run #{container_expose} -td #{language}.#{name} > cid.txt"
+
+                  # Get container IP
+                  yaml.scalar "docker inspect `cat cid.txt` -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' > ip.txt"
 
                   # Launch sieging
                   unless flags.without_sieger
