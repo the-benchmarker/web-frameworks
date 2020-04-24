@@ -140,6 +140,7 @@ env:
       - FRAMEWORK=java.javalin
       - FRAMEWORK=java.jooby
       - FRAMEWORK=perl.dancer2
+      - FRAMEWORK=pony.jennet
       - FRAMEWORK=fsharp.suave
       - FRAMEWORK=javascript.restana
       - FRAMEWORK=javascript.express
