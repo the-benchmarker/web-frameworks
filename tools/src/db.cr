@@ -30,9 +30,16 @@ class App < Admiral::Command
             id = row.read(Int).to_i32
             language = row.read(String)
             framework = row.read(String)
+            if framework == "vapor"
+              subdir = "vapor-framework"
+            elsif framework == "swifter"
+              subdir = "swifter-framework"
+            else
+              subdir = framework
+            end
             language_config = YAML.parse(File.read("#{language}/config.yaml"))
             merger = Merger.new(language_config.as_h)
-            framework_config = YAML.parse(File.read("#{language}/#{framework}/config.yaml"))
+            framework_config = YAML.parse(File.read("#{language}/#{subdir}/config.yaml"))
             config = merger.merge(framework_config.as_h)
 
             if config["framework"].as_h.has_key?("github")
