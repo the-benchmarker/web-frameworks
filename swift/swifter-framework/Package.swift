@@ -8,6 +8,6 @@ let package = Package(
         .package(url: "https://github.com/httpswift/swifter.git", .upToNextMinor(from: "1.4.7"))
     ],
     targets: [
-        .target(name: "server", dependencies: ["Swifter"], path: ".")
+        .target(name: "server", dependencies: ["Swifter"])
     ]
 )
