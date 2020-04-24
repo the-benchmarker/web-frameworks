@@ -31,13 +31,17 @@ This project aims to be a load benchmarking suite, no more, no less
 + [wrk](https://github.com/wg/wrk) as benchmarking tool, `>= 4.1.0`
 + [postgresql](https://www.postgresql.org) to store data, `>= 10`
 
-:information_source: you need `wrk` **stable**
+:information_source::information_source::information_source::information_source::information_source:
 
-~~~sh
-git clone --branch 4.1.0 https://github.com/wg/wrk
+:warning: On `OSX` you need `docker-machine` to use `docker` containerization
+
+~~~
+brew install docker-machine
+docker-machine create default
+eval $(docker-machine env default)
 ~~~
 
-:warning: `docker` is used for **development** purpose, `production` results will be computed on [DigitalOcean](https://www.digitalocean.com) :warning:
+:information_source::information_source::information_source::information_source::information_source:
 
 ## Usage
 
