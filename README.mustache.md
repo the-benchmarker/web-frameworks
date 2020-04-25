@@ -111,7 +111,7 @@ bin/db to_readme
 
 :information_source:  Updated on **{{date}}** :information_source:
 
-> Benchmarking with [wrk](https://github.com/ioquatix/wrk)
+> Benchmarking with [wrk](https://github.com/wg/wrk)
    + Threads : 8
    + Timeout : 8
    + Duration : 15s (seconds)
