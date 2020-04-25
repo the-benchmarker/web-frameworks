@@ -35,10 +35,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-<<<<<<< Updated upstream
-=======
-        <version>[3.0,4.0)</version>
->>>>>>> Stashed changes
         <executions>
           <execution>
             <id>uber-jar</id>
