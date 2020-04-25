@@ -1,12 +1,6 @@
 # Exit build if no modification found
 #before_install: bash .ci/has_to_run.sh || travis_terminate 0
 
-# Use latest ubuntu LTS (18.04)
-dist: bionic
-
-# Use ARM for IPv6
-arch: arm64
-
 services:
   - docker # Use docker to containerize frameworks
   - postgresql # Use postgresql to store data
@@ -181,14 +175,12 @@ script:
   - shards install
   - shards build
   - bin/make config --without-sieger --keep
-
-  - travis_wait 15 bin/neph ${FRAMEWORK} --mode=CI
-
+  - travis_retry bin/neph ${FRAMEWORK} --mode=CI
   - crystal spec
 
 # Push on docker registry if tests are OK
 # This does not work on forks
-after_success: if [ ${TRAVIS_REPO_SLUG} == "the-benchmarker/web-frameworks" ]; then bash .ci/docker_release.sh ; fi
+#after_success: if [ ${TRAVIS_REPO_SLUG} == "the-benchmarker/web-frameworks" ]; then bash .ci/docker_release.sh ; fi
 
 notifications:
   email: false
