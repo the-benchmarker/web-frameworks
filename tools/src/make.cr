@@ -20,7 +20,7 @@ class App < Admiral::Command
     define_flag without_sieger : Bool, description: "run sieger", default: false, long: "without-sieger"
     define_flag docker_options : String, description: "extra argument to docker cli", default: "", long: "docker-options"
     define_flag keep : Bool, description: "keep container after build (default : false)", default: false, long: "keep"
-    define_flag local_port : UInt16, description: "bind docker port 3000 to localhost port (docker desktop)", default: 0_u16, long: "local-port"
+    define_flag driver : String, description: "driver to use", default: "docker", long: "driver", short: "d"
 
     def run
       frameworks = {} of String => Array(String)
@@ -227,9 +227,6 @@ class App < Admiral::Command
                 params["files"] = files
               end
 
-              container_expose = flags.local_port != 0 ? "-p 127.0.0.1:#{flags.local_port}:3000" : ""
-              container_host = flags.local_port != 0 ? "--host 127.0.0.1:#{flags.local_port}" : ""
-
               # Fix for vapor
               if framework_config.as_h["framework"].as_h.has_key?("name")
                 name = framework_config.as_h["framework"].as_h["name"]
@@ -248,16 +245,22 @@ class App < Admiral::Command
                   yaml.scalar "docker build -t #{language}.#{name} . #{flags.docker_options}"
 
                   # Run container, and store IP
-                  yaml.scalar "docker run #{container_expose} -td #{language}.#{name} > cid.txt"
-
-                  # Get container IP
-                  yaml.scalar "docker inspect `cat cid.txt` -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' > ip.txt"
+                  case flags.driver
+                  when "docker"
+                    yaml.scalar "docker run -td #{language}.#{name} > cid.txt"
+                    yaml.scalar "docker inspect `cat cid.txt` -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' > ip.txt"
+                  when "docker-machine"
+                    yaml.scalar "docker run -p 3000:3000 -d #{language}.#{name}"
+                    yaml.scalar "docker-machine ip default > ip.txt"
+                  else
+                    raise "unsupported provider"
+                  end
 
                   # Launch sieging
                   unless flags.without_sieger
                     factor = System.cpu_count**2
                     concurrencies = [] of Int32
-                    command = "../../bin/client #{container_host} --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user"
+                    command = "../../bin/client --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user -h `cat ip.txt`"
                     [1, 4, 8, 16, 32].each do |i|
                       command += " -c #{factor*i} "
                     end
@@ -267,7 +270,7 @@ class App < Admiral::Command
 
                   # Drop the container
                   unless flags.keep
-                    yaml.scalar "docker ps -a -q  --filter ancestor=#{language}.#{name}  | xargs -r docker rm -f"
+                    yaml.scalar "docker ps -a -q  --filter ancestor=#{language}.#{name}  | xargs docker rm -f"
                   end
                 end
                 yaml.scalar "dir"
