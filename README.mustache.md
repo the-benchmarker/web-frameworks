@@ -109,6 +109,12 @@ bin/db to_readme
 
 ## Results
 
+:warning::warning::warning::warning:
+
+[Vapor](https://vapor.codes) is hidden due, see https://github.com/the-benchmarker/web-frameworks/issues/2575
+
+:warning::warning::warning::warning:
+
 :information_source:  Updated on **{{date}}** :information_source:
 
 > Benchmarking with [wrk](https://github.com/wg/wrk)
