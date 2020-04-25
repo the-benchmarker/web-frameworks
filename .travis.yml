@@ -1,6 +1,11 @@
 # Exit build if no modification found
 before_install: bash .ci/has_to_run.sh || travis_terminate 0
 
+# Multi-OS
+os:
+  - linux
+  - osx
+
 # Use latest ubuntu LTS (18.04)
 dist: bionic
 
@@ -130,6 +135,7 @@ env:
       - FRAMEWORK=python.tornado
       - FRAMEWORK=python.cyclone
       - FRAMEWORK=python.nameko
+      - FRAMEWORK=pony.jennet
       - FRAMEWORK=kotlin.kooby
       - FRAMEWORK=kotlin.ktor
       - FRAMEWORK=java.micronaut
@@ -140,7 +146,6 @@ env:
       - FRAMEWORK=java.javalin
       - FRAMEWORK=java.jooby
       - FRAMEWORK=perl.dancer2
-      - FRAMEWORK=pony.jennet
       - FRAMEWORK=fsharp.suave
       - FRAMEWORK=javascript.restana
       - FRAMEWORK=javascript.express
@@ -154,8 +159,10 @@ env:
       - FRAMEWORK=javascript.turbo_polka
       - FRAMEWORK=javascript.foxify
       - FRAMEWORK=javascript.0http
+      - FRAMEWORK=javascript.nestjs-express
       - FRAMEWORK=javascript.polkadot
       - FRAMEWORK=javascript.rayo
+      - FRAMEWORK=javascript.nestjs-fastify
       - FRAMEWORK=javascript.sails
       - FRAMEWORK=javascript.koa
       - FRAMEWORK=javascript.moleculer
@@ -175,7 +182,9 @@ before_script:
 script:
   - shards install
   - shards build
-  - bin/make config --without-sieger --keep
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install docker-machine  ; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then bin/make config --without-sieger --keep --driver docker-machine ; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then bin/make config --without-sieger --keep ; fi
 
   - travis_wait 15 bin/neph ${FRAMEWORK} --mode=CI
 
@@ -183,7 +192,8 @@ script:
 
 # Push on docker registry if tests are OK
 # This does not work on forks
-after_success: if [ ${TRAVIS_REPO_SLUG} == "the-benchmarker/web-frameworks" ]; then bash .ci/docker_release.sh ; fi
+# Temporarily disabled
+#after_success: if [ ${TRAVIS_REPO_SLUG} == "the-benchmarker/web-frameworks" ]; then bash .ci/docker_release.sh ; fi
 
 notifications:
   email: false
