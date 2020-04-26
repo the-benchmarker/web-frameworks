@@ -18,21 +18,19 @@ WORKDIR /opt/web
   RUN {{{.}}}
 {{/before_command}}
 
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
+
 RUN npm install
 
 {{#alpine-fixes}}
   RUN {{{.}}}
 {{/alpine-fixes}}
 
-ENV NODE_ENV production
-
 {{#after_command}}
   RUN {{{.}}}
 {{/after_command}}
-
-{{#environment}}
-  ENV {{{.}}}
-{{/environment}}
 
 {{#command}}
   CMD {{{.}}}

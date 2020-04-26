@@ -10,7 +10,7 @@ files:
   - package.json
 
 after_command:
-  - npm -g install @nestjs/cli
-  - nest build
+  - /usr/local/bin/npm -g install @nestjs/cli
+  - /usr/local/bin/nest build
 
-command: pm2-runtime start dist/app.js -i $(nproc)
+command: /usr/local/bin/pm2-runtime start dist/app.js -i $(nproc)
