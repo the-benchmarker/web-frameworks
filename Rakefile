@@ -18,8 +18,8 @@ class ::Hash
 end
 
 def default_provider
-  provider = 'docker-machine'
-  provider = 'docker' if RbConfig::CONFIG['host_os'] =~ /linux/
+  provider = "docker-machine"
+  provider = "docker" if RbConfig::CONFIG["host_os"] =~ /linux/
 end
 
 def commands_for(language, framework, **options)
@@ -60,9 +60,7 @@ def commands_for(language, framework, **options)
     commands << Mustache.render(cmd, options).to_s
   end
 
-  unless options[:collect] == "off"
-    commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`"
-  end
+  commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`"
 
   unless options[:clean] == "off"
     config["providers"][options[:provider]]["clean"].each do |cmd|
@@ -135,7 +133,6 @@ task :config do
   provider = ENV.fetch("PROVIDER") { default_provider }
 
   sieger_options = ENV.fetch("SIEGER_OPTIONS") { "-r GET:/ -c 10" }
-  collect = ENV.fetch("COLLECT") { "on" }
   clean = ENV.fetch("CLEAN") { "on" }
 
   config = { main: { depends_on: [] } }
@@ -155,7 +152,7 @@ task :config do
     create_dockerfile(language, framework, provider: provider)
 
     config["#{language}.#{framework}"] = {
-      commands: commands_for(language, framework, provider: provider, clean: clean, collect: collect, sieger_options: sieger_options, path: path),
+      commands: commands_for(language, framework, provider: provider, clean: clean, sieger_options: sieger_options, path: path),
       dir: File.join(language, File::SEPARATOR, framework),
     }
   end
