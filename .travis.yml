@@ -170,6 +170,7 @@ env:
       - FRAMEWORK=swift.kitura
 
 before_script:
+  - echo $TRAVIS_REPO_SLUG
   - psql -c 'CREATE DATABASE benchmark;' -U postgres;
   - psql -U postgres -d benchmark < .ci/dump.sql
 
