@@ -5,7 +5,7 @@ framework:
 build:
   - mvn compile assembly:single -q
 
-files: 
+binaries: 
   - target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 
 command: >
