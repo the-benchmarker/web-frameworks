@@ -12,14 +12,27 @@ cloud:
 providers:
   
   docker:
-    build: 
+
+    build:
       - docker build -t {{{language}}}.{{{framework}}} .
 
-    metadata: 
-      - docker run -td {{{language}}}.{{{framework}}} | xargs -i docker inspect {} | jq -r '.[0].NetworkSettings.IPAddress' > ip.txt
+    metadata:
+      - docker run -td {{{language}}}.{{{framework}}} > cid.txt
+      - docker inspect `cat cid.txt` | jq -r '.[0].NetworkSettings.IPAddress' > ip.txt
 
-    clean: 
-      - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs -r docker rm -f
+    clean:
+      - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker rm -f
+
+  docker-machine:
+
+    build:
+      - docker build -t -p 3000:3000 {{{language}}}.{{{framework}}} .
+
+    metadata:
+      - docker-machine inspect the-benchmarker > ip.txt
+
+    clean:
+      - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker rm -f
 
   digitalocean:
 

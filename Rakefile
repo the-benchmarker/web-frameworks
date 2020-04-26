@@ -17,6 +17,11 @@ class ::Hash
   end
 end
 
+def default_provider
+  provider = 'docker-machine'
+  provider = 'docker' if RbConfig::CONFIG['host_os'] =~ /linux/
+end
+
 def commands_for(language, framework, **options)
   config = YAML.load(File.read("config.yaml"))
 
@@ -56,7 +61,7 @@ def commands_for(language, framework, **options)
   end
 
   unless options[:collect] == "off"
-    commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]}"
+    commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`"
   end
 
   unless options[:clean] == "off"
@@ -127,7 +132,7 @@ def create_dockerfile(language, framework, **options)
 end
 
 task :config do
-  provider = ENV.fetch("PROVIDER") { "docker" }
+  provider = ENV.fetch("PROVIDER") { default_provider }
 
   sieger_options = ENV.fetch("SIEGER_OPTIONS") { "-r GET:/ -c 10" }
   collect = ENV.fetch("COLLECT") { "on" }
