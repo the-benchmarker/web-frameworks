@@ -3,12 +3,12 @@ framework:
   version: 5.2
 
 build:
-  - mvn clean package -q
+  - mvn clean package
 
-bin_deps:
+deps:
   - jetty-runner
 
-files: 
+binaries: 
   - target/benchmark-0.0.1-SNAPSHOT.war
 
 command: >
