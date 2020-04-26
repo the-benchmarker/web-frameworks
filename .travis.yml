@@ -1,5 +1,5 @@
 # Exit build if no modification found
-#before_install: bash .ci/has_to_run.sh || travis_terminate 0
+before_install: bash .ci/has_to_run.sh || travis_terminate 0
 
 services:
   - docker # Use docker to containerize frameworks

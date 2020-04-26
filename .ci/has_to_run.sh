@@ -30,18 +30,33 @@ _travis_terminate_unix() {
 }
 
 
+CURRENT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
+
+if [[ -z ${TRAVIS_PULL_REQUEST_SLUG} ]] ; then
+  echo "This is a branch build"
+  exit(0)
+if
+
+if [[ ${CURRENT_BRANCH} == "master" && !-z ${TRAVIS_PULL_REQUEST_SLUG} ]] ; then
+  echo "This is a master build"
+  exit(0)
+fi
+
+if [[ ${CURRENT_BRANCH} == dependabot* && !-z ${TRAVIS_PULL_REQUEST_SLUG} ]] ; then
+  echo "This is a branch from dependabot"
+  exit(1)
+fi
+
+if [[ ${CURRENT_BRANCH} == renovate* && !-z ${TRAVIS_PULL_REQUEST_SLUG} ]] ; then
+  echo "This is a branch from renovate"
+  exit(1)
+fi
+
 # List of updated files
 git diff master.. --name-only > /tmp/list.txt
 
 echo "Modified files are"
 cat /tmp/list.txt
-
-CURRENT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
-
-if [[ "${CURRENT_BRANCH}" == "master" ]] ; then
-  echo "We are on master, run ..."
-  exit 0
-fi
 
 LNG=`echo ${FRAMEWORK} | awk -F '.' '{print $1}'`
 FWK=`echo ${FRAMEWORK} | awk -F '.' '{print $2}'`
