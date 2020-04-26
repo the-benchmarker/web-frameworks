@@ -5,7 +5,7 @@ framework:
 build: 
   - mvn clean package
   
-files:
+binaries:
   - target/benchmark.jar
 
 command: >

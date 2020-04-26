@@ -3,9 +3,9 @@ framework:
   version: 3.8
 
 build: 
-  - mvn compile assembly:single -q
+  - mvn compile assembly:single
   
-files:
+binaries:
   - target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 
 command: >
