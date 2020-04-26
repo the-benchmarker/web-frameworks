@@ -8,7 +8,13 @@
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
+
+{{#files}}
+  COPY {{.}} {{{.}}}
+{{/files}}
 
 {{#patch}}
   {{{.}}}
@@ -19,33 +25,34 @@ COPY . ./
 {{/build}}
 
 {{^build}}
-  RUN mvn clean package -q
+  RUN mvn package
 {{/build}}
 
 
 FROM openjdk:8-jre-alpine
 
-{{#bin_deps}}
-  RUN apk add {{{.}}}
-{{/bin_deps}}
+WORKDIR /opt/web
 
-WORKDIR /usr/src/app
+{{#binaries}}
+  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+{{/binaries}}
 
-
-{{#files}}
-COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
-{{/files}}
-
-
-WORKDIR /usr/src/app
-{{#files}}
-COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
-{{/files}}
-
-{{#before_command}}
+{{#after_command}}
   RUN {{{.}}}
-{{/before_command}}
+{{/after_command}}
+
+{{#deps}}
+  RUN apk add {{{.}}}
+{{/deps}}
+
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
 
 {{#command}}
+  CMD {{{.}}}
+{{/command}}
+
+{{^command}}
   CMD {{{.}}}
 {{/command}}

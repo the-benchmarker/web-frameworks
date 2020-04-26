@@ -2,7 +2,7 @@ framework:
   website: spring.io/projects/spring-boot
   version: 2.2
 
-files:
+binaries:
   - target/benchmark-0.0.1-SNAPSHOT.jar
 
 command: >
