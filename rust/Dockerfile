@@ -1,4 +1,4 @@
-FROM rust:1.41.0
+FROM rust:1.43
 
 WORKDIR /usr/src/app
 

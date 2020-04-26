@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
+FROM fsharp:10.7-netcore
 
 WORKDIR /usr/src/app
 

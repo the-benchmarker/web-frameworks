@@ -1,6 +1,6 @@
 framework:
   github: cherrypy/cherrypy
-  version: 18.5
+  version: 18.6
 
 command: >
   gunicorn  \

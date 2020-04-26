@@ -128,6 +128,11 @@ update_configs:
   - language:go
 - package_manager: go:modules
   update_schedule: daily
+  directory: go/tango
+  default_labels:
+  - language:go
+- package_manager: go:modules
+  update_schedule: daily
   directory: go/echo
   default_labels:
   - language:go
@@ -245,7 +250,7 @@ update_configs:
   update_schedule: live
   directory: php/simps
   default_labels:
-    - language:php
+  - language:php
 - package_manager: php:composer
   update_schedule: live
   directory: php/slim
@@ -264,6 +269,11 @@ update_configs:
 - package_manager: php:composer
   update_schedule: live
   directory: php/one-fpm
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/ice
   default_labels:
   - language:php
 - package_manager: php:composer
@@ -469,6 +479,11 @@ update_configs:
 - package_manager: java:maven
   update_schedule: daily
   directory: java/javalin
+  default_labels:
+  - language:java
+- package_manager: java:maven
+  update_schedule: daily
+  directory: java/jooby
   default_labels:
   - language:java
 - package_manager: javascript

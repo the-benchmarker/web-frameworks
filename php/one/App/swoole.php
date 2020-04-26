@@ -24,6 +24,3 @@ require __DIR__ . '/config.php';
 //\Swoole\Runtime::enableCoroutine();
 
 \One\Swoole\OneServer::runAll();
-
-
-

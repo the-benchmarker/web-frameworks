@@ -16,9 +16,11 @@ end
 
 class App < Admiral::Command
   class Config < Admiral::Command
+    define_help
     define_flag without_sieger : Bool, description: "run sieger", default: false, long: "without-sieger"
     define_flag docker_options : String, description: "extra argument to docker cli", default: "", long: "docker-options"
     define_flag keep : Bool, description: "keep container after build (default : false)", default: false, long: "keep"
+    define_flag driver : String, description: "driver to use", default: "docker", long: "driver", short: "d"
 
     def run
       frameworks = {} of String => Array(String)
@@ -52,7 +54,14 @@ class App < Admiral::Command
               yaml.scalar "depends_on"
               yaml.sequence do
                 tools.each do |tool|
-                  yaml.scalar "#{language}.#{tool}"
+                  # Fix for vapor
+                  framework_config = YAML.parse(File.read("#{language}/#{tool}/config.yaml"))
+                  if framework_config.as_h["framework"].as_h.has_key?("name")
+                    name = framework_config.as_h["framework"].as_h["name"]
+                  else
+                    name = tool
+                  end
+                  yaml.scalar "#{language}.#{name}"
                 end
               end
             end
@@ -218,24 +227,40 @@ class App < Admiral::Command
                 params["files"] = files
               end
 
+              # Fix for vapor
+              if framework_config.as_h["framework"].as_h.has_key?("name")
+                name = framework_config.as_h["framework"].as_h["name"]
+              else
+                name = tool
+              end
+
               File.write("#{language}/#{tool}/Dockerfile", Crustache.render(dockerfile, params))
 
-              yaml.scalar "#{language}.#{tool}"
+              yaml.scalar "#{language}.#{name}"
 
               yaml.mapping do
                 yaml.scalar "commands"
                 yaml.sequence do
                   # Build container
-                  yaml.scalar "docker build -t #{language}.#{tool} . #{flags.docker_options}"
+                  yaml.scalar "docker build -t #{language}.#{name} . #{flags.docker_options}"
 
                   # Run container, and store IP
-                  yaml.scalar "docker run -td #{language}.#{tool} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
+                  case flags.driver
+                  when "docker"
+                    yaml.scalar "docker run -td #{language}.#{name} > cid.txt"
+                    yaml.scalar "docker inspect `cat cid.txt` -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' > ip.txt"
+                  when "docker-machine"
+                    yaml.scalar "docker run -p 3000:3000 -d #{language}.#{name}"
+                    yaml.scalar "docker-machine ip default > ip.txt"
+                  else
+                    raise "unsupported provider"
+                  end
 
                   # Launch sieging
                   unless flags.without_sieger
                     factor = System.cpu_count**2
                     concurrencies = [] of Int32
-                    command = "../../bin/client --language #{language} --framework #{tool} -r GET:/ -r GET:/user/0 -r POST:/user"
+                    command = "../../bin/client --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user -h `cat ip.txt`"
                     [1, 4, 8, 16, 32].each do |i|
                       command += " -c #{factor*i} "
                     end
@@ -245,7 +270,7 @@ class App < Admiral::Command
 
                   # Drop the container
                   unless flags.keep
-                    yaml.scalar "docker ps -a -q  --filter ancestor=#{language}.#{tool}  | xargs -r docker rm -f"
+                    yaml.scalar "docker ps -a -q  --filter ancestor=#{language}.#{name}  | xargs docker rm -f"
                   end
                 end
                 yaml.scalar "dir"
@@ -267,6 +292,13 @@ class App < Admiral::Command
         infos = directory.split("/")
         framework = infos.pop
         language = infos.pop
+        config = YAML.parse(File.read("#{language}/#{framework}/config.yaml"))
+
+        # Fix for vapor
+        if config.as_h["framework"].as_h.has_key?("name")
+          framework = config.as_h["framework"].as_h["name"]
+        end
+
         frameworks << "#{language}.#{framework}"
       end
       config = Crustache.parse(File.read(".ci/template.mustache"))
@@ -282,13 +314,19 @@ class App < Admiral::Command
         directory = File.dirname(file)
         infos = directory.split("/")
         framework = infos.pop
+        config = YAML.parse(File.read(file))
+
         language = infos.pop
 
         unless frameworks.has_key?(language)
           frameworks[language] = [] of String
         end
 
-        frameworks[language] << framework
+        if config.as_h["framework"].as_h.has_key?("name")
+          frameworks[language] << config.as_h["framework"].as_h["name"].to_s
+        else
+          frameworks[language] << framework
+        end
       end
       selection = YAML.build do |yaml|
         yaml.mapping do
@@ -333,12 +371,13 @@ class App < Admiral::Command
     end
   end
 
+  define_help
   register_sub_command config : Config, description "Create framework list"
   register_sub_command ci_config : TravisConfig, description "Create configuration file for CI"
   register_sub_command deps_config : DependabotConfig, description "Create configuration file for deps update bot"
 
   def run
-    puts "help"
+    puts help
   end
 end
 
