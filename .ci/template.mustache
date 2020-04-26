@@ -5,7 +5,7 @@ services:
   - docker # Use docker to containerize frameworks
   - postgresql # Use postgresql to store data
 
-dist: bionic
+dist: xenial
 
 # This tool is written in crystal
 language: crystal
@@ -39,13 +39,16 @@ before_script:
 script:
   - shards install
   - shards build
+<<<<<<< HEAD
   - rake config
+=======
+>>>>>>> feat(ci): Install wrk
   - travis_retry bin/neph ${FRAMEWORK} --mode=CI
   - bundle exec rspec .spec
 
 # Push on docker registry if tests are OK
 # This does not work on forks
-after_success: if [ ${TRAVIS_REPO_SLUG} == "the-benchmarker/web-frameworks" ]; then bash .ci/docker_release.sh ; fi
+after_success: if [[ ${CURRENT_BRANCH} == "master" && !-z ${TRAVIS_PULL_REQUEST_SLUG} ]] ; then bash .ci/docker_release.sh ; fi
 
 notifications:
   email: false
