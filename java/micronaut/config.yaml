@@ -2,7 +2,7 @@ framework:
   website: micronaut.io
   version: 1.2
 
-image: gradle:6.3-jdk8
+image: gradle:6.3
 
 build:
   - gradle build --project-cache-dir ~/.gradle
@@ -12,10 +12,18 @@ patch:
   - RUN chown -R gradle /usr/src/app
   - USER gradle
 
-files:
+sources:
+  - src/**/*.java
+  - build.gradle
+
+binaries:
   - build/distributions/app-0.1.tar
 
-before_command:
+files:
+  - src/**/*.yml
+  - src/**/*.xml
+
+after_command:
   - tar -xvf build/distributions/app-0.1.tar
 
 command: app-0.1/bin/app
