@@ -14,7 +14,7 @@ environment:
   PORT: 3000
   PM2_HOME: /root/.pm2
 
-after_command:
+before_command:
   - /usr/local/bin/npm  -g install pm2
 
 cloud:
