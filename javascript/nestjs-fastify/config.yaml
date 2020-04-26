@@ -7,6 +7,7 @@ files:
   - src
   - tsconfig.build.json
   - tsconfig.json
+  - package.json
 
 after_command:
   - npm -g install @nestjs/cli
