@@ -27,7 +27,7 @@ class Client < Admiral::Command
   define_flag framework : String, description: "Framework used", required: true, long: "framework", short: "f"
   define_flag concurrencies : Array(Int32), description: "Concurrency level", required: true, long: "concurrency", short: "c"
   define_flag routes : Array(String), long: "routes", short: "r", default: ["GET:/"]
-  define_flag host : String, description: "Host and port instead ip.txt"
+  define_flag host : String, description: "Host", short: "h", required: true, long: "hostname"
 
   def run
     db = DB.open(ENV["DATABASE_URL"])
@@ -41,7 +41,7 @@ class Client < Admiral::Command
     framework_id = row.read(Int)
 
     sleep 25 # due to external program usage
-    address = flags.host ? flags.host : File.read("ip.txt").strip + ":3000"
+    address = "#{flags.host}:3000"
 
     # Run a 5-second primer at 8 client-concurrency to verify that the server is in fact running. These results are not captured.
 
