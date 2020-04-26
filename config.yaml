@@ -44,18 +44,11 @@ providers:
 
   docker-machine:
     build:
-<<<<<<< HEAD
       - docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}} .
 
     metadata:
       - docker run -p 3000:3000 -td {{{language}}}.{{{framework}}} > cid.txt
       - docker-machine ip default > ip.txt
-=======
-      - docker build -t {{{language}}}.{{{framework}}} .
-
-    metadata:
-      - docker-machine inspect the-benchmarker > ip.txt
->>>>>>> 132fc51a (chore(javascript): Stabilize build for all providers)
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker

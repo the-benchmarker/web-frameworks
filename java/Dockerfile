@@ -29,6 +29,7 @@ WORKDIR /usr/src/web
 {{/build}}
 
 FROM openjdk:11-jre-slim
+git
 
 WORKDIR /opt/web
 
