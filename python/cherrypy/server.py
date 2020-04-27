@@ -23,12 +23,8 @@ class UserAPI:
 WebRoot.user = UserAPI()
 
 
-global_config = {
-    "environment": "production" if IS_STANDALONE else "embedded",
-}
-config = {
-    "/user": {"request.dispatch": cherrypy.dispatch.MethodDispatcher(), },
-}
+global_config = {"environment": "production" if IS_STANDALONE else "embedded"}
+config = {"/user": {"request.dispatch": cherrypy.dispatch.MethodDispatcher()}}
 
 
 cherrypy.config.update(global_config)
