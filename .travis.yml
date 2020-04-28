@@ -93,6 +93,7 @@ env:
       - FRAMEWORK=php.laminas
       - FRAMEWORK=php.one-fpm
       - FRAMEWORK=php.ice
+      - FRAMEWORK=php.siler-swoole
       - FRAMEWORK=php.phalcon
       - FRAMEWORK=php.chubbyphp
       - FRAMEWORK=php.one
@@ -100,11 +101,13 @@ env:
       - FRAMEWORK=php.sw-fw-less
       - FRAMEWORK=php.mezzio
       - FRAMEWORK=php.basicphp
+      - FRAMEWORK=php.yii-swoole
       - FRAMEWORK=php.symfony
       - FRAMEWORK=php.spiral
       - FRAMEWORK=php.hamlet
       - FRAMEWORK=php.yii
       - FRAMEWORK=php.workerman
+      - FRAMEWORK=php.siler
       - FRAMEWORK=python.cherrypy
       - FRAMEWORK=python.apidaora
       - FRAMEWORK=python.responder
