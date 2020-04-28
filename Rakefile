@@ -60,7 +60,9 @@ def commands_for(language, framework, **options)
     commands << Mustache.render(cmd, options).to_s
   end
 
-  commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`"
+  unless options[:collect] == "off"
+    commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`"
+  end
 
   unless options[:clean] == "off"
     config["providers"][options[:provider]]["clean"].each do |cmd|
@@ -131,6 +133,7 @@ end
 
 task :config do
   provider = ENV.fetch("PROVIDER") { default_provider }
+  collect = ENV.fetch("COLLECT") { "on" }
 
   sieger_options = ENV.fetch("SIEGER_OPTIONS") { "-r GET:/ -c 10" }
   clean = ENV.fetch("CLEAN") { "on" }
@@ -152,7 +155,7 @@ task :config do
     create_dockerfile(language, framework, provider: provider)
 
     config["#{language}.#{framework}"] = {
-      commands: commands_for(language, framework, provider: provider, clean: clean, sieger_options: sieger_options, path: path),
+      commands: commands_for(language, framework, provider: provider, clean: clean, sieger_options: sieger_options, path: path, collect: collect),
       dir: File.join(language, File::SEPARATOR, framework),
     }
   end
@@ -323,16 +326,14 @@ end
 
 namespace :ci do
   task :config do
-    blocks = [{name: "Setup",task: {jobs: [{name: 'setup', commands:['checkout','cache restore gems','sudo snap install crystal --classic','sudo apt-get -y install libyaml-dev libevent-dev','bundle install','shards build']}]}}]
+    blocks = [{name: "setup",dependencies:[],task: {jobs: [{name: 'setup', commands:['checkout','cache restore','sudo snap install crystal --classic','sudo apt-get -y install libyaml-dev libevent-dev','bundle install','cache store','rake config','shards build']}], epilogue: {always: {commands:['artifact push workflow bin']}}}}]
     done = []
     Dir.glob("*/config.yaml").each do |path|
       language, _ = path.split(File::Separator)
-      next unless language == "ruby"
-      block = { name: language, task: { 'prologue': {commands: ['checkout','sudo snap install crystal --classic','sudo apt-get -y install libyaml-dev libevent-dev','bundle install','shards build','rake config']}, jobs: [] }}
+      block = { name: language, dependencies: ['setup'], task: { 'prologue': {commands: ['checkout','cache restore','bundle install','artifact pull workflow bin','sudo apt-get -y install libevent-2.1-6','find bin -type f -exec chmod +x {} \;','rake config']},'env_vars': [{name: 'COLLECT', 'value':'off'},{name:'CLEAN', value:'off'}],jobs:[], 'epilogue':{always:{commands:['artifact push workflow .neph']}}}}
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, _ = file.split(File::Separator)
-       next unless framework == 'rails'
-       block[:task][:jobs] << { name: framework, commands: ["bin/neph #{language}.#{framework} --mode=CIi","rspec .spec"] }
+       block[:task][:jobs] << { name: framework, commands: ["bin/neph #{language}.#{framework} --mode=CI","FRAMEWORK=#{language}.#{framework} bundle exec rspec .spec"] }
       end
       blocks << block
     end
