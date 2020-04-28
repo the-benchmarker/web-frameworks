@@ -1,0 +1,23 @@
+---
+version: v1.0
+name: Benchmarking suite
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+- name: ruby
+  task:
+    prologue:
+      commands:
+      - checkout
+      - sudo snap install crystal --classic
+      - sudo apt-get -y install libyaml-dev libevent-dev
+      - bundle install
+      - shards build
+      - rake config
+    jobs:
+    - name: rails
+      commands:
+      - bin/neph ruby.rails --mode=CIi
+      - rspec .spec

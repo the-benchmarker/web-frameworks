@@ -323,15 +323,21 @@ end
 
 namespace :ci do
   task :config do
-    frameworks = []
-    Dir.glob("*/*/config.yaml").each do |file|
-      directory = File.dirname(file)
-      infos = directory.split("/")
-      framework = infos.pop
-      language = infos.pop
-      frameworks << "#{language}.#{framework}"
+    blocks = []
+    done = []
+    Dir.glob("*/config.yaml").each do |path|
+      language, _ = path.split(File::Separator)
+      next unless language == "ruby"
+      block = { name: language, task: { 'prologue': {commands: ['checkout','sudo snap install crystal --classic','sudo apt-get -y install libyaml-dev libevent-dev','bundle install','shards build','rake config']}, jobs: [] }}
+      Dir.glob("#{language}/*/config.yaml") do |file|
+        _, framework, _ = file.split(File::Separator)
+       next unless framework == 'rails'
+       block[:task][:jobs] << { name: framework, commands: ["bin/neph #{language}.#{framework} --mode=CIi","rspec .spec"] }
+      end
+      blocks << block
     end
-    config = File.read(".ci/template.mustache")
-    File.write(".travis.yml", Mustache.render(config, { "frameworks" => frameworks }))
+
+    config = { version: "v1.0", name: "Benchmarking suite", agent: { machine: { type: "e1-standard-2", os_image: "ubuntu1804" } }, blocks: blocks }
+    File.write(".semaphore/semaphore.yml", JSON.load(config.to_json).to_yaml)
   end
 end
