@@ -1,6 +1,17 @@
 {
-  "extends": [
-    "config:base",
-    ":preserveSemverRanges"
+  "extends": ["config:base", ":preserveSemverRanges"],
+  "packageRules": [
+    {
+      "languages": ["elixir"],
+      "enabled": false
+    },
+    {
+      "languages": ["php"],
+      "enabled": false
+    },
+    {
+      "languages": ["javascript"],
+      "enabled": false
+    }
   ]
 }
