@@ -278,6 +278,11 @@ update_configs:
   - language:php
 - package_manager: php:composer
   update_schedule: live
+  directory: php/siler-swoole
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
   directory: php/phalcon
   default_labels:
   - language:php
@@ -308,6 +313,11 @@ update_configs:
   - language:php
 - package_manager: php:composer
   update_schedule: live
+  directory: php/yii-swoole
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
   directory: php/symfony
   default_labels:
   - language:php
@@ -329,6 +339,11 @@ update_configs:
 - package_manager: php:composer
   update_schedule: live
   directory: php/workerman
+  default_labels:
+  - language:php
+- package_manager: php:composer
+  update_schedule: live
+  directory: php/siler
   default_labels:
   - language:php
 - package_manager: python
@@ -548,12 +563,22 @@ update_configs:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
+  directory: javascript/nestjs-express
+  default_labels:
+  - language:javascript
+- package_manager: javascript
+  update_schedule: live
   directory: javascript/polkadot
   default_labels:
   - language:javascript
 - package_manager: javascript
   update_schedule: live
   directory: javascript/rayo
+  default_labels:
+  - language:javascript
+- package_manager: javascript
+  update_schedule: live
+  directory: javascript/nestjs-fastify
   default_labels:
   - language:javascript
 - package_manager: javascript
