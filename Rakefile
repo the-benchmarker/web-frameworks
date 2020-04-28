@@ -10,11 +10,7 @@ require 'net/http'
 require 'fileutils'
 require 'base64'
 
-environment = ENV.fetch('ENV') { 'development' }
-
-default_environment = File.join('.env', 'default')
-custom_environment = File.join('.env', environment)
-Dotenv.load(custom_environment, default_environment)
+Dotenv.load
 
 class ::Hash
   def recursive_merge(h)
