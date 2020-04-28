@@ -323,7 +323,7 @@ end
 
 namespace :ci do
   task :config do
-    blocks = []
+    blocks = [{name: "Setup",task: {jobs: [{name: 'setup', commands:['checkout','cache restore gems','sudo snap install crystal --classic','sudo apt-get -y install libyaml-dev libevent-dev','bundle install','shards build']}]}}]
     done = []
     Dir.glob("*/config.yaml").each do |path|
       language, _ = path.split(File::Separator)
