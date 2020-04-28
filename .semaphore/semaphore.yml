@@ -6,6 +6,17 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
+- name: Setup
+  task:
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+      - cache restore gems
+      - sudo snap install crystal --classic
+      - sudo apt-get -y install libyaml-dev libevent-dev
+      - bundle install
+      - shards build
 - name: ruby
   task:
     prologue:
