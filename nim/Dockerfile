@@ -2,7 +2,9 @@ FROM nimlang/nim:1.2.0-alpine
 
 WORKDIR /usr/src/app
 
-COPY server.nim server.nimble ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
 RUN nimble c \
     -d:danger \
@@ -21,5 +23,11 @@ RUN nimble c \
         -y server.nim
 
 FROM alpine
-COPY --from=0 /usr/src/app/server /usr/src/app/server
-CMD /usr/src/app/server
+
+WORKDIR /opt/web
+
+{{#binaries}}
+  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+{{/binaries}}
+
+CMD /opt/web/server
