@@ -10,6 +10,7 @@ files:
   - package.json
 
 after_command:
+  - /usr/local/bin/npm install
   - /usr/local/bin/npm -g install @nestjs/cli
   - /usr/local/bin/nest build
 
