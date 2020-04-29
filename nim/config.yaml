@@ -4,14 +4,12 @@ provider:
   digitalocean:
     language: 1.2
 
-build:
-  - /usr/src/app/server
+sources:
+  - '*.nim'
+  - '*.nimble'
 
-files:
+binaries:
   - server
-
-before_command:
-  - mkdir /usr/src/app
 
 cloud:
   config:
@@ -34,8 +32,8 @@ service: |
   [Service]
   Type=notify
   EnvironmentFile=/etc/web
-  WorkingDirectory=/usr/src/app
-  ExecStart=/usr/src/app/server
+  WorkingDirectory=/opt/web
+  ExecStart=/opt/web/server
 
   [Install]
   WantedBy=multi-user.target
