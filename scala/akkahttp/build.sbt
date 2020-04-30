@@ -16,5 +16,5 @@ assemblyJarName in assembly := "server_scala_akkahttp"
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % "[10.1.11,10.2)",
   // "com.typesafe.akka" %% "akka-http-core" % "10.1.11"
-  "com.typesafe.akka" %% "akka-stream" % "2.6.5"
+  "com.typesafe.akka" %% "akka-stream" % "[2.6,2.7)"
 )
