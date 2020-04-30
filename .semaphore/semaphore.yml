@@ -46,22 +46,27 @@ blocks:
     - name: kitura
       commands:
       - bin/neph swift.kitura --mode=CI
+      - sleep 5
       - FRAMEWORK=swift.kitura bundle exec rspec .spec
     - name: kitura-nio
       commands:
       - bin/neph swift.kitura-nio --mode=CI
+      - sleep 5
       - FRAMEWORK=swift.kitura-nio bundle exec rspec .spec
     - name: vapor-framework
       commands:
       - bin/neph swift.vapor-framework --mode=CI
+      - sleep 5
       - FRAMEWORK=swift.vapor-framework bundle exec rspec .spec
     - name: swifter-framework
       commands:
       - bin/neph swift.swifter-framework --mode=CI
+      - sleep 5
       - FRAMEWORK=swift.swifter-framework bundle exec rspec .spec
     - name: perfect
       commands:
       - bin/neph swift.perfect --mode=CI
+      - sleep 5
       - FRAMEWORK=swift.perfect bundle exec rspec .spec
     epilogue:
       always:
@@ -89,90 +94,112 @@ blocks:
     - name: sifrr
       commands:
       - bin/neph javascript.sifrr --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.sifrr bundle exec rspec .spec
     - name: restify
       commands:
       - bin/neph javascript.restify --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.restify bundle exec rspec .spec
     - name: hapi
       commands:
       - bin/neph javascript.hapi --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.hapi bundle exec rspec .spec
     - name: moleculer
       commands:
       - bin/neph javascript.moleculer --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.moleculer bundle exec rspec .spec
     - name: koa
       commands:
       - bin/neph javascript.koa --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.koa bundle exec rspec .spec
     - name: turbo-polka
       commands:
       - bin/neph javascript.turbo-polka --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.turbo-polka bundle exec rspec .spec
     - name: sails
       commands:
       - bin/neph javascript.sails --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.sails bundle exec rspec .spec
     - name: nestjs-fastify
       commands:
       - bin/neph javascript.nestjs-fastify --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.nestjs-fastify bundle exec rspec .spec
     - name: rayo
       commands:
       - bin/neph javascript.rayo --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.rayo bundle exec rspec .spec
     - name: polkadot
       commands:
       - bin/neph javascript.polkadot --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.polkadot bundle exec rspec .spec
     - name: nestjs-express
       commands:
       - bin/neph javascript.nestjs-express --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.nestjs-express bundle exec rspec .spec
     - name: 0http
       commands:
       - bin/neph javascript.0http --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.0http bundle exec rspec .spec
     - name: foxify
       commands:
       - bin/neph javascript.foxify --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.foxify bundle exec rspec .spec
     - name: nanoexpress
       commands:
       - bin/neph javascript.nanoexpress --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.nanoexpress bundle exec rspec .spec
     - name: fastify
       commands:
       - bin/neph javascript.fastify --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.fastify bundle exec rspec .spec
     - name: nanoexpress-pro
       commands:
       - bin/neph javascript.nanoexpress-pro --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.nanoexpress-pro bundle exec rspec .spec
     - name: polka
       commands:
       - bin/neph javascript.polka --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.polka bundle exec rspec .spec
     - name: feathersjs
       commands:
       - bin/neph javascript.feathersjs --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.feathersjs bundle exec rspec .spec
     - name: iotjs-express
       commands:
       - bin/neph javascript.iotjs-express --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.iotjs-express bundle exec rspec .spec
     - name: muneem
       commands:
       - bin/neph javascript.muneem --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.muneem bundle exec rspec .spec
     - name: express
       commands:
       - bin/neph javascript.express --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.express bundle exec rspec .spec
     - name: restana
       commands:
       - bin/neph javascript.restana --mode=CI
+      - sleep 5
       - FRAMEWORK=javascript.restana bundle exec rspec .spec
     epilogue:
       always:
@@ -200,6 +227,7 @@ blocks:
     - name: suave
       commands:
       - bin/neph fsharp.suave --mode=CI
+      - sleep 5
       - FRAMEWORK=fsharp.suave bundle exec rspec .spec
     epilogue:
       always:
@@ -227,6 +255,7 @@ blocks:
     - name: dancer2
       commands:
       - bin/neph perl.dancer2 --mode=CI
+      - sleep 5
       - FRAMEWORK=perl.dancer2 bundle exec rspec .spec
     epilogue:
       always:
@@ -254,30 +283,37 @@ blocks:
     - name: jooby
       commands:
       - bin/neph java.jooby --mode=CI
+      - sleep 5
       - FRAMEWORK=java.jooby bundle exec rspec .spec
     - name: javalin
       commands:
       - bin/neph java.javalin --mode=CI
+      - sleep 5
       - FRAMEWORK=java.javalin bundle exec rspec .spec
     - name: spring-boot
       commands:
       - bin/neph java.spring-boot --mode=CI
+      - sleep 5
       - FRAMEWORK=java.spring-boot bundle exec rspec .spec
     - name: act
       commands:
       - bin/neph java.act --mode=CI
+      - sleep 5
       - FRAMEWORK=java.act bundle exec rspec .spec
     - name: spring-framework
       commands:
       - bin/neph java.spring-framework --mode=CI
+      - sleep 5
       - FRAMEWORK=java.spring-framework bundle exec rspec .spec
     - name: rapidoid
       commands:
       - bin/neph java.rapidoid --mode=CI
+      - sleep 5
       - FRAMEWORK=java.rapidoid bundle exec rspec .spec
     - name: micronaut
       commands:
       - bin/neph java.micronaut --mode=CI
+      - sleep 5
       - FRAMEWORK=java.micronaut bundle exec rspec .spec
     epilogue:
       always:
@@ -305,10 +341,12 @@ blocks:
     - name: ktor
       commands:
       - bin/neph kotlin.ktor --mode=CI
+      - sleep 5
       - FRAMEWORK=kotlin.ktor bundle exec rspec .spec
     - name: kooby
       commands:
       - bin/neph kotlin.kooby --mode=CI
+      - sleep 5
       - FRAMEWORK=kotlin.kooby bundle exec rspec .spec
     epilogue:
       always:
@@ -336,6 +374,7 @@ blocks:
     - name: jennet
       commands:
       - bin/neph pony.jennet --mode=CI
+      - sleep 5
       - FRAMEWORK=pony.jennet bundle exec rspec .spec
     epilogue:
       always:
@@ -363,98 +402,122 @@ blocks:
     - name: nameko
       commands:
       - bin/neph python.nameko --mode=CI
+      - sleep 5
       - FRAMEWORK=python.nameko bundle exec rspec .spec
     - name: cyclone
       commands:
       - bin/neph python.cyclone --mode=CI
+      - sleep 5
       - FRAMEWORK=python.cyclone bundle exec rspec .spec
     - name: tornado
       commands:
       - bin/neph python.tornado --mode=CI
+      - sleep 5
       - FRAMEWORK=python.tornado bundle exec rspec .spec
     - name: masonite
       commands:
       - bin/neph python.masonite --mode=CI
+      - sleep 5
       - FRAMEWORK=python.masonite bundle exec rspec .spec
     - name: bottle
       commands:
       - bin/neph python.bottle --mode=CI
+      - sleep 5
       - FRAMEWORK=python.bottle bundle exec rspec .spec
     - name: sanic
       commands:
       - bin/neph python.sanic --mode=CI
+      - sleep 5
       - FRAMEWORK=python.sanic bundle exec rspec .spec
     - name: klein
       commands:
       - bin/neph python.klein --mode=CI
+      - sleep 5
       - FRAMEWORK=python.klein bundle exec rspec .spec
     - name: django
       commands:
       - bin/neph python.django --mode=CI
+      - sleep 5
       - FRAMEWORK=python.django bundle exec rspec .spec
     - name: fastapi
       commands:
       - bin/neph python.fastapi --mode=CI
+      - sleep 5
       - FRAMEWORK=python.fastapi bundle exec rspec .spec
     - name: flask
       commands:
       - bin/neph python.flask --mode=CI
+      - sleep 5
       - FRAMEWORK=python.flask bundle exec rspec .spec
     - name: molten
       commands:
       - bin/neph python.molten --mode=CI
+      - sleep 5
       - FRAMEWORK=python.molten bundle exec rspec .spec
     - name: falcon
       commands:
       - bin/neph python.falcon --mode=CI
+      - sleep 5
       - FRAMEWORK=python.falcon bundle exec rspec .spec
     - name: aiohttp
       commands:
       - bin/neph python.aiohttp --mode=CI
+      - sleep 5
       - FRAMEWORK=python.aiohttp bundle exec rspec .spec
     - name: clastic
       commands:
       - bin/neph python.clastic --mode=CI
+      - sleep 5
       - FRAMEWORK=python.clastic bundle exec rspec .spec
     - name: starlette
       commands:
       - bin/neph python.starlette --mode=CI
+      - sleep 5
       - FRAMEWORK=python.starlette bundle exec rspec .spec
     - name: blacksheep
       commands:
       - bin/neph python.blacksheep --mode=CI
+      - sleep 5
       - FRAMEWORK=python.blacksheep bundle exec rspec .spec
     - name: pyramid
       commands:
       - bin/neph python.pyramid --mode=CI
+      - sleep 5
       - FRAMEWORK=python.pyramid bundle exec rspec .spec
     - name: hug
       commands:
       - bin/neph python.hug --mode=CI
+      - sleep 5
       - FRAMEWORK=python.hug bundle exec rspec .spec
     - name: emmett
       commands:
       - bin/neph python.emmett --mode=CI
+      - sleep 5
       - FRAMEWORK=python.emmett bundle exec rspec .spec
     - name: quart
       commands:
       - bin/neph python.quart --mode=CI
+      - sleep 5
       - FRAMEWORK=python.quart bundle exec rspec .spec
     - name: asgineer
       commands:
       - bin/neph python.asgineer --mode=CI
+      - sleep 5
       - FRAMEWORK=python.asgineer bundle exec rspec .spec
     - name: responder
       commands:
       - bin/neph python.responder --mode=CI
+      - sleep 5
       - FRAMEWORK=python.responder bundle exec rspec .spec
     - name: apidaora
       commands:
       - bin/neph python.apidaora --mode=CI
+      - sleep 5
       - FRAMEWORK=python.apidaora bundle exec rspec .spec
     - name: cherrypy
       commands:
       - bin/neph python.cherrypy --mode=CI
+      - sleep 5
       - FRAMEWORK=python.cherrypy bundle exec rspec .spec
     epilogue:
       always:
@@ -482,102 +545,127 @@ blocks:
     - name: siler
       commands:
       - bin/neph php.siler --mode=CI
+      - sleep 5
       - FRAMEWORK=php.siler bundle exec rspec .spec
     - name: workerman
       commands:
       - bin/neph php.workerman --mode=CI
+      - sleep 5
       - FRAMEWORK=php.workerman bundle exec rspec .spec
     - name: yii
       commands:
       - bin/neph php.yii --mode=CI
+      - sleep 5
       - FRAMEWORK=php.yii bundle exec rspec .spec
     - name: hamlet
       commands:
       - bin/neph php.hamlet --mode=CI
+      - sleep 5
       - FRAMEWORK=php.hamlet bundle exec rspec .spec
     - name: spiral
       commands:
       - bin/neph php.spiral --mode=CI
+      - sleep 5
       - FRAMEWORK=php.spiral bundle exec rspec .spec
     - name: symfony
       commands:
       - bin/neph php.symfony --mode=CI
+      - sleep 5
       - FRAMEWORK=php.symfony bundle exec rspec .spec
     - name: yii-swoole
       commands:
       - bin/neph php.yii-swoole --mode=CI
+      - sleep 5
       - FRAMEWORK=php.yii-swoole bundle exec rspec .spec
     - name: basicphp
       commands:
       - bin/neph php.basicphp --mode=CI
+      - sleep 5
       - FRAMEWORK=php.basicphp bundle exec rspec .spec
     - name: mezzio
       commands:
       - bin/neph php.mezzio --mode=CI
+      - sleep 5
       - FRAMEWORK=php.mezzio bundle exec rspec .spec
     - name: sw-fw-less
       commands:
       - bin/neph php.sw-fw-less --mode=CI
+      - sleep 5
       - FRAMEWORK=php.sw-fw-less bundle exec rspec .spec
     - name: ubiquity
       commands:
       - bin/neph php.ubiquity --mode=CI
+      - sleep 5
       - FRAMEWORK=php.ubiquity bundle exec rspec .spec
     - name: one
       commands:
       - bin/neph php.one --mode=CI
+      - sleep 5
       - FRAMEWORK=php.one bundle exec rspec .spec
     - name: chubbyphp
       commands:
       - bin/neph php.chubbyphp --mode=CI
+      - sleep 5
       - FRAMEWORK=php.chubbyphp bundle exec rspec .spec
     - name: phalcon
       commands:
       - bin/neph php.phalcon --mode=CI
+      - sleep 5
       - FRAMEWORK=php.phalcon bundle exec rspec .spec
     - name: siler-swoole
       commands:
       - bin/neph php.siler-swoole --mode=CI
+      - sleep 5
       - FRAMEWORK=php.siler-swoole bundle exec rspec .spec
     - name: ice
       commands:
       - bin/neph php.ice --mode=CI
+      - sleep 5
       - FRAMEWORK=php.ice bundle exec rspec .spec
     - name: one-fpm
       commands:
       - bin/neph php.one-fpm --mode=CI
+      - sleep 5
       - FRAMEWORK=php.one-fpm bundle exec rspec .spec
     - name: laminas
       commands:
       - bin/neph php.laminas --mode=CI
+      - sleep 5
       - FRAMEWORK=php.laminas bundle exec rspec .spec
     - name: hyperf
       commands:
       - bin/neph php.hyperf --mode=CI
+      - sleep 5
       - FRAMEWORK=php.hyperf bundle exec rspec .spec
     - name: slim
       commands:
       - bin/neph php.slim --mode=CI
+      - sleep 5
       - FRAMEWORK=php.slim bundle exec rspec .spec
     - name: simps
       commands:
       - bin/neph php.simps --mode=CI
+      - sleep 5
       - FRAMEWORK=php.simps bundle exec rspec .spec
     - name: lumen
       commands:
       - bin/neph php.lumen --mode=CI
+      - sleep 5
       - FRAMEWORK=php.lumen bundle exec rspec .spec
     - name: laravel
       commands:
       - bin/neph php.laravel --mode=CI
+      - sleep 5
       - FRAMEWORK=php.laravel bundle exec rspec .spec
     - name: swoft
       commands:
       - bin/neph php.swoft --mode=CI
+      - sleep 5
       - FRAMEWORK=php.swoft bundle exec rspec .spec
     - name: imi
       commands:
       - bin/neph php.imi --mode=CI
+      - sleep 5
       - FRAMEWORK=php.imi bundle exec rspec .spec
     epilogue:
       always:
@@ -605,6 +693,7 @@ blocks:
     - name: aqueduct
       commands:
       - bin/neph dart.aqueduct --mode=CI
+      - sleep 5
       - FRAMEWORK=dart.aqueduct bundle exec rspec .spec
     epilogue:
       always:
@@ -632,6 +721,7 @@ blocks:
     - name: aspnetcore
       commands:
       - bin/neph csharp.aspnetcore --mode=CI
+      - sleep 5
       - FRAMEWORK=csharp.aspnetcore bundle exec rspec .spec
     epilogue:
       always:
@@ -659,98 +749,122 @@ blocks:
     - name: beego
       commands:
       - bin/neph go.beego --mode=CI
+      - sleep 5
       - FRAMEWORK=go.beego bundle exec rspec .spec
     - name: httprouter
       commands:
       - bin/neph go.httprouter --mode=CI
+      - sleep 5
       - FRAMEWORK=go.httprouter bundle exec rspec .spec
     - name: gf
       commands:
       - bin/neph go.gf --mode=CI
+      - sleep 5
       - FRAMEWORK=go.gf bundle exec rspec .spec
     - name: fiber
       commands:
       - bin/neph go.fiber --mode=CI
+      - sleep 5
       - FRAMEWORK=go.fiber bundle exec rspec .spec
     - name: gorouter-fasthttp
       commands:
       - bin/neph go.gorouter-fasthttp --mode=CI
+      - sleep 5
       - FRAMEWORK=go.gorouter-fasthttp bundle exec rspec .spec
     - name: rte
       commands:
       - bin/neph go.rte --mode=CI
+      - sleep 5
       - FRAMEWORK=go.rte bundle exec rspec .spec
     - name: violetear
       commands:
       - bin/neph go.violetear --mode=CI
+      - sleep 5
       - FRAMEWORK=go.violetear bundle exec rspec .spec
     - name: gorilla-mux
       commands:
       - bin/neph go.gorilla-mux --mode=CI
+      - sleep 5
       - FRAMEWORK=go.gorilla-mux bundle exec rspec .spec
     - name: atreugo
       commands:
       - bin/neph go.atreugo --mode=CI
+      - sleep 5
       - FRAMEWORK=go.atreugo bundle exec rspec .spec
     - name: goroute
       commands:
       - bin/neph go.goroute --mode=CI
+      - sleep 5
       - FRAMEWORK=go.goroute bundle exec rspec .spec
     - name: fasthttp
       commands:
       - bin/neph go.fasthttp --mode=CI
+      - sleep 5
       - FRAMEWORK=go.fasthttp bundle exec rspec .spec
     - name: kami
       commands:
       - bin/neph go.kami --mode=CI
+      - sleep 5
       - FRAMEWORK=go.kami bundle exec rspec .spec
     - name: gorouter
       commands:
       - bin/neph go.gorouter --mode=CI
+      - sleep 5
       - FRAMEWORK=go.gorouter bundle exec rspec .spec
     - name: air
       commands:
       - bin/neph go.air --mode=CI
+      - sleep 5
       - FRAMEWORK=go.air bundle exec rspec .spec
     - name: mars
       commands:
       - bin/neph go.mars --mode=CI
+      - sleep 5
       - FRAMEWORK=go.mars bundle exec rspec .spec
     - name: chi
       commands:
       - bin/neph go.chi --mode=CI
+      - sleep 5
       - FRAMEWORK=go.chi bundle exec rspec .spec
     - name: webgo
       commands:
       - bin/neph go.webgo --mode=CI
+      - sleep 5
       - FRAMEWORK=go.webgo bundle exec rspec .spec
     - name: aero
       commands:
       - bin/neph go.aero --mode=CI
+      - sleep 5
       - FRAMEWORK=go.aero bundle exec rspec .spec
     - name: echo
       commands:
       - bin/neph go.echo --mode=CI
+      - sleep 5
       - FRAMEWORK=go.echo bundle exec rspec .spec
     - name: tango
       commands:
       - bin/neph go.tango --mode=CI
+      - sleep 5
       - FRAMEWORK=go.tango bundle exec rspec .spec
     - name: gin
       commands:
       - bin/neph go.gin --mode=CI
+      - sleep 5
       - FRAMEWORK=go.gin bundle exec rspec .spec
     - name: router
       commands:
       - bin/neph go.router --mode=CI
+      - sleep 5
       - FRAMEWORK=go.router bundle exec rspec .spec
     - name: fasthttprouter
       commands:
       - bin/neph go.fasthttprouter --mode=CI
+      - sleep 5
       - FRAMEWORK=go.fasthttprouter bundle exec rspec .spec
     - name: gramework
       commands:
       - bin/neph go.gramework --mode=CI
+      - sleep 5
       - FRAMEWORK=go.gramework bundle exec rspec .spec
     epilogue:
       always:
@@ -778,10 +892,12 @@ blocks:
     - name: http4s
       commands:
       - bin/neph scala.http4s --mode=CI
+      - sleep 5
       - FRAMEWORK=scala.http4s bundle exec rspec .spec
     - name: akkahttp
       commands:
       - bin/neph scala.akkahttp --mode=CI
+      - sleep 5
       - FRAMEWORK=scala.akkahttp bundle exec rspec .spec
     epilogue:
       always:
@@ -809,54 +925,67 @@ blocks:
     - name: cuba
       commands:
       - bin/neph ruby.cuba --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.cuba bundle exec rspec .spec
     - name: hanami-api
       commands:
       - bin/neph ruby.hanami-api --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.hanami-api bundle exec rspec .spec
     - name: hanami
       commands:
       - bin/neph ruby.hanami --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.hanami bundle exec rspec .spec
     - name: rack-app
       commands:
       - bin/neph ruby.rack-app --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.rack-app bundle exec rspec .spec
     - name: camping
       commands:
       - bin/neph ruby.camping --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.camping bundle exec rspec .spec
     - name: sinatra
       commands:
       - bin/neph ruby.sinatra --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.sinatra bundle exec rspec .spec
     - name: syro
       commands:
       - bin/neph ruby.syro --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.syro bundle exec rspec .spec
     - name: rack-routing
       commands:
       - bin/neph ruby.rack-routing --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.rack-routing bundle exec rspec .spec
     - name: roda
       commands:
       - bin/neph ruby.roda --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.roda bundle exec rspec .spec
     - name: agoo
       commands:
       - bin/neph ruby.agoo --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.agoo bundle exec rspec .spec
     - name: flame
       commands:
       - bin/neph ruby.flame --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.flame bundle exec rspec .spec
     - name: grape
       commands:
       - bin/neph ruby.grape --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.grape bundle exec rspec .spec
     - name: rails
       commands:
       - bin/neph ruby.rails --mode=CI
+      - sleep 5
       - FRAMEWORK=ruby.rails bundle exec rspec .spec
     epilogue:
       always:
@@ -884,50 +1013,62 @@ blocks:
     - name: toro
       commands:
       - bin/neph crystal.toro --mode=CI
+      - sleep 5
       - FRAMEWORK=crystal.toro bundle exec rspec .spec
     - name: orion
       commands:
       - bin/neph crystal.orion --mode=CI
+      - sleep 5
       - FRAMEWORK=crystal.orion bundle exec rspec .spec
     - name: lucky
       commands:
       - bin/neph crystal.lucky --mode=CI
+      - sleep 5
       - FRAMEWORK=crystal.lucky bundle exec rspec .spec
     - name: onyx
       commands:
       - bin/neph crystal.onyx --mode=CI
+      - sleep 5
       - FRAMEWORK=crystal.onyx bundle exec rspec .spec
     - name: shivneri
       commands:
       - bin/neph crystal.shivneri --mode=CI
+      - sleep 5
       - FRAMEWORK=crystal.shivneri bundle exec rspec .spec
     - name: ricr
       commands:
       - bin/neph crystal.ricr --mode=CI
+      - sleep 5
       - FRAMEWORK=crystal.ricr bundle exec rspec .spec
     - name: grip
       commands:
       - bin/neph crystal.grip --mode=CI
+      - sleep 5
       - FRAMEWORK=crystal.grip bundle exec rspec .spec
     - name: athena
       commands:
       - bin/neph crystal.athena --mode=CI
+      - sleep 5
       - FRAMEWORK=crystal.athena bundle exec rspec .spec
     - name: amber
       commands:
       - bin/neph crystal.amber --mode=CI
+      - sleep 5
       - FRAMEWORK=crystal.amber bundle exec rspec .spec
     - name: router.cr
       commands:
       - bin/neph crystal.router.cr --mode=CI
+      - sleep 5
       - FRAMEWORK=crystal.router.cr bundle exec rspec .spec
     - name: spider-gazelle
       commands:
       - bin/neph crystal.spider-gazelle --mode=CI
+      - sleep 5
       - FRAMEWORK=crystal.spider-gazelle bundle exec rspec .spec
     - name: kemal
       commands:
       - bin/neph crystal.kemal --mode=CI
+      - sleep 5
       - FRAMEWORK=crystal.kemal bundle exec rspec .spec
     epilogue:
       always:
@@ -955,10 +1096,12 @@ blocks:
     - name: drogon
       commands:
       - bin/neph cpp.drogon --mode=CI
+      - sleep 5
       - FRAMEWORK=cpp.drogon bundle exec rspec .spec
     - name: evhtp
       commands:
       - bin/neph cpp.evhtp --mode=CI
+      - sleep 5
       - FRAMEWORK=cpp.evhtp bundle exec rspec .spec
     epilogue:
       always:
@@ -986,6 +1129,7 @@ blocks:
     - name: merly
       commands:
       - bin/neph julia.merly --mode=CI
+      - sleep 5
       - FRAMEWORK=julia.merly bundle exec rspec .spec
     epilogue:
       always:
@@ -1013,18 +1157,22 @@ blocks:
     - name: gotham
       commands:
       - bin/neph rust.gotham --mode=CI
+      - sleep 5
       - FRAMEWORK=rust.gotham bundle exec rspec .spec
     - name: iron
       commands:
       - bin/neph rust.iron --mode=CI
+      - sleep 5
       - FRAMEWORK=rust.iron bundle exec rspec .spec
     - name: actix
       commands:
       - bin/neph rust.actix --mode=CI
+      - sleep 5
       - FRAMEWORK=rust.actix bundle exec rspec .spec
     - name: nickel
       commands:
       - bin/neph rust.nickel --mode=CI
+      - sleep 5
       - FRAMEWORK=rust.nickel bundle exec rspec .spec
     epilogue:
       always:
@@ -1052,18 +1200,22 @@ blocks:
     - name: plug
       commands:
       - bin/neph elixir.plug --mode=CI
+      - sleep 5
       - FRAMEWORK=elixir.plug bundle exec rspec .spec
     - name: cowboy
       commands:
       - bin/neph elixir.cowboy --mode=CI
+      - sleep 5
       - FRAMEWORK=elixir.cowboy bundle exec rspec .spec
     - name: phoenix
       commands:
       - bin/neph elixir.phoenix --mode=CI
+      - sleep 5
       - FRAMEWORK=elixir.phoenix bundle exec rspec .spec
     - name: cowboy_stream
       commands:
       - bin/neph elixir.cowboy_stream --mode=CI
+      - sleep 5
       - FRAMEWORK=elixir.cowboy_stream bundle exec rspec .spec
     epilogue:
       always:
@@ -1091,6 +1243,7 @@ blocks:
     - name: coast
       commands:
       - bin/neph clojure.coast --mode=CI
+      - sleep 5
       - FRAMEWORK=clojure.coast bundle exec rspec .spec
     epilogue:
       always:
@@ -1118,10 +1271,12 @@ blocks:
     - name: agoo-c
       commands:
       - bin/neph c.agoo-c --mode=CI
+      - sleep 5
       - FRAMEWORK=c.agoo-c bundle exec rspec .spec
     - name: kore
       commands:
       - bin/neph c.kore --mode=CI
+      - sleep 5
       - FRAMEWORK=c.kore bundle exec rspec .spec
     epilogue:
       always:
@@ -1149,10 +1304,12 @@ blocks:
     - name: jester
       commands:
       - bin/neph nim.jester --mode=CI
+      - sleep 5
       - FRAMEWORK=nim.jester bundle exec rspec .spec
     - name: httpbeast
       commands:
       - bin/neph nim.httpbeast --mode=CI
+      - sleep 5
       - FRAMEWORK=nim.httpbeast bundle exec rspec .spec
     epilogue:
       always:
