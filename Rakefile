@@ -333,7 +333,7 @@ namespace :ci do
       block = { name: language, dependencies: ['setup'], task: { 'prologue': {commands: ['checkout','cache restore','bundle install','artifact pull workflow bin','sudo apt-get -y install libevent-2.1-6','find bin -type f -exec chmod +x {} \;','rake config']},'env_vars': [{name: 'COLLECT', 'value':'off'},{name:'CLEAN', value:'off'}],jobs:[], 'epilogue':{always:{commands:['artifact push workflow .neph']}}}}
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, _ = file.split(File::Separator)
-       block[:task][:jobs] << { name: framework, commands: ["bin/neph #{language}.#{framework} --mode=CI","sleep 5", "FRAMEWORK=#{language}.#{framework} bundle exec rspec .spec"] }
+       block[:task][:jobs] << { name: framework, commands: ["bin/neph #{language}.#{framework} --mode=CI","FRAMEWORK=#{language}.#{framework} bundle exec rspec .spec"] }
       end
       blocks << block
     end
