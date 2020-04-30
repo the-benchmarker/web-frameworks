@@ -4,14 +4,15 @@ framework:
 
 files:
   - nest-cli.json
-  - src
+  - src/**/*.ts
   - tsconfig.build.json
   - tsconfig.json
   - package.json
+  - ../.config/ecosystem.config.js
 
 after_command:
-  - /usr/local/bin/npm install
+  - /usr/local/bin/npm -g install pm2
   - /usr/local/bin/npm -g install @nestjs/cli
-  - /usr/local/bin/nest build
-
-command: /usr/local/bin/pm2-runtime start dist/app.js -i $(nproc)
+  - cd /opt/web && /usr/local/bin/nest build
+  - mv /opt/web/dist/*.js /opt/web
+  - mv /opt/web/dist/*.map /opt/web
