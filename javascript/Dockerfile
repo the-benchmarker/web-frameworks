@@ -14,19 +14,15 @@ WORKDIR /opt/web
   COPY {{{.}}} {{{.}}}
 {{/files}}
 
-{{#before_command}}
-  RUN {{{.}}}
-{{/before_command}}
-
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
-RUN npm install
-
 {{#alpine-fixes}}
   RUN {{{.}}}
 {{/alpine-fixes}}
+
+RUN npm install
 
 {{#after_command}}
   RUN {{{.}}}
