@@ -15,7 +15,7 @@ environment:
   PM2_HOME: /root/.pm2
 
 after_command:
-  - /usr/local/bin/npm  -g install pm2
+  - /usr/local/bin/npm -g install pm2
 
 cloud:
   config:
