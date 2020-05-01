@@ -5,6 +5,9 @@ RUN docker-php-ext-install zip opcache
 
 WORKDIR /usr/src/app
 
+RUN pecl install apcu
+RUN docker-php-ext-enable apcu
+
 {{#php_ext}}
   RUN pecl install {{{.}}}
   RUN docker-php-ext-enable {{{.}}}
@@ -25,13 +28,13 @@ WORKDIR /usr/src/app
 COPY . ./
 
 {{^standalone}}
-RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-dev --prefer-dist --classmap-authoritative
-RUN composer dumpautoload -o
+  RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+  RUN composer install --no-dev --prefer-dist --classmap-authoritative
+  RUN composer dumpautoload -o --apcu
 {{/standalone}}
 
 {{#environment}}
-ENV {{{.}}}
+  ENV {{{.}}}
 {{/environment}}
 
 {{#before_command}}
