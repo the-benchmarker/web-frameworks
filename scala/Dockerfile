@@ -6,7 +6,7 @@ COPY . ./
 
 RUN sbt assembly
 
-FROM openjdk:11-alpine
+FROM openjdk:11-jre
 
 WORKDIR /usr/src/app
 
