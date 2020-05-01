@@ -6,9 +6,7 @@ COPY . ./
 
 RUN sbt assembly
 
-# Use the latest stable JVM
-# @see https://docs.scala-lang.org/overviews/jdk-compatibility/overview.html
-FROM openjdk:14-alpine
+FROM openjdk:11-alpine
 
 WORKDIR /usr/src/app
 
