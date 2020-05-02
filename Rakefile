@@ -326,14 +326,19 @@ end
 
 namespace :ci do
   task :config do
-    blocks = [{name: "setup",dependencies:[],task: {jobs: [{name: 'setup', commands:['checkout','cache restore','sudo snap install crystal --classic','sudo apt-get -y install libyaml-dev libevent-dev','bundle install','cache store','rake config','shards build']}], epilogue: {always: {commands:['artifact push workflow bin']}}}}]
+    blocks = [{ name: "setup", dependencies: [], task: { jobs: [{ name: "setup", commands: ["checkout", "cache restore", "sudo snap install crystal --classic", "sudo apt-get -y install libyaml-dev libevent-dev", "bundle install", "cache store", "rake config", "shards build"] }], epilogue: { always: { commands: ["artifact push workflow bin"] } } } }]
     done = []
     Dir.glob("*/config.yaml").each do |path|
       language, _ = path.split(File::Separator)
-      block = { name: language, dependencies: ['setup'], task: { 'prologue': {commands: ['checkout','cache restore','bundle install','artifact pull workflow bin','sudo apt-get -y install libevent-2.1-6','find bin -type f -exec chmod +x {} \;','rake config']},'env_vars': [{name: 'COLLECT', 'value':'off'},{name:'CLEAN', value:'off'}],jobs:[], 'epilogue':{always:{commands:['artifact push workflow .neph']}}}}
+      block = { name: language, dependencies: ["setup"], task: { 'prologue': { commands: ["checkout", "cache restore", "bundle install", "artifact pull workflow bin", "sudo apt-get -y install libevent-2.1-6", 'find bin -type f -exec chmod +x {} \;', "rake config"] }, 'env_vars': [{ name: "COLLECT", 'value': "off" }, { name: "CLEAN", value: "off" }], jobs: [], 'epilogue': { always: { commands: ["artifact push workflow .neph"] } } } }
       Dir.glob("#{language}/*/config.yaml") do |file|
-        _, framework, _ = file.split(File::Separator)
-       block[:task][:jobs] << { name: framework, commands: ["bin/neph #{language}.#{framework} --mode=CI","FRAMEWORK=#{language}.#{framework} bundle exec rspec .spec"] }
+        config = YAML.safe_load(File.read(file))
+        if config["framework"].key?("name")
+          framework = config["framework"]["name"]
+        else
+          _, framework, _ = file.split(File::Separator)
+        end
+        block[:task][:jobs] << { name: framework, commands: ["bin/neph #{language}.#{framework} --mode=CI", "FRAMEWORK=#{language}.#{framework} bundle exec rspec .spec"] }
       end
       blocks << block
     end
