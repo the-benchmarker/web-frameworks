@@ -45,8 +45,9 @@ blocks:
     jobs:
     - name: merly
       commands:
+      - mkdir -p .neph/julia/merly
       - bin/neph julia/merly --mode=CI
-      - FRAMEWORK=julia.merly bundle exec rspec .spec
+      - FRAMEWORK=julia/merly bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -72,92 +73,114 @@ blocks:
     jobs:
     - name: sifrr
       commands:
+      - mkdir -p .neph/javascript/sifrr
       - bin/neph javascript/sifrr --mode=CI
-      - FRAMEWORK=javascript.sifrr bundle exec rspec .spec
+      - FRAMEWORK=javascript/sifrr bundle exec rspec .spec
     - name: restify
       commands:
+      - mkdir -p .neph/javascript/restify
       - bin/neph javascript/restify --mode=CI
-      - FRAMEWORK=javascript.restify bundle exec rspec .spec
+      - FRAMEWORK=javascript/restify bundle exec rspec .spec
     - name: restana
       commands:
+      - mkdir -p .neph/javascript/restana
       - bin/neph javascript/restana --mode=CI
-      - FRAMEWORK=javascript.restana bundle exec rspec .spec
+      - FRAMEWORK=javascript/restana bundle exec rspec .spec
     - name: rayo
       commands:
+      - mkdir -p .neph/javascript/rayo
       - bin/neph javascript/rayo --mode=CI
-      - FRAMEWORK=javascript.rayo bundle exec rspec .spec
+      - FRAMEWORK=javascript/rayo bundle exec rspec .spec
     - name: polkadot
       commands:
+      - mkdir -p .neph/javascript/polkadot
       - bin/neph javascript/polkadot --mode=CI
-      - FRAMEWORK=javascript.polkadot bundle exec rspec .spec
+      - FRAMEWORK=javascript/polkadot bundle exec rspec .spec
     - name: polka
       commands:
+      - mkdir -p .neph/javascript/polka
       - bin/neph javascript/polka --mode=CI
-      - FRAMEWORK=javascript.polka bundle exec rspec .spec
+      - FRAMEWORK=javascript/polka bundle exec rspec .spec
     - name: muneem
       commands:
+      - mkdir -p .neph/javascript/muneem
       - bin/neph javascript/muneem --mode=CI
-      - FRAMEWORK=javascript.muneem bundle exec rspec .spec
+      - FRAMEWORK=javascript/muneem bundle exec rspec .spec
     - name: moleculer
       commands:
+      - mkdir -p .neph/javascript/moleculer
       - bin/neph javascript/moleculer --mode=CI
-      - FRAMEWORK=javascript.moleculer bundle exec rspec .spec
+      - FRAMEWORK=javascript/moleculer bundle exec rspec .spec
     - name: koa
       commands:
+      - mkdir -p .neph/javascript/koa
       - bin/neph javascript/koa --mode=CI
-      - FRAMEWORK=javascript.koa bundle exec rspec .spec
+      - FRAMEWORK=javascript/koa bundle exec rspec .spec
     - name: iotjs-express
       commands:
+      - mkdir -p .neph/javascript/iotjs-express
       - bin/neph javascript/iotjs-express --mode=CI
-      - FRAMEWORK=javascript.iotjs-express bundle exec rspec .spec
+      - FRAMEWORK=javascript/iotjs-express bundle exec rspec .spec
     - name: hapi
       commands:
+      - mkdir -p .neph/javascript/hapi
       - bin/neph javascript/hapi --mode=CI
-      - FRAMEWORK=javascript.hapi bundle exec rspec .spec
+      - FRAMEWORK=javascript/hapi bundle exec rspec .spec
     - name: foxify
       commands:
+      - mkdir -p .neph/javascript/foxify
       - bin/neph javascript/foxify --mode=CI
-      - FRAMEWORK=javascript.foxify bundle exec rspec .spec
+      - FRAMEWORK=javascript/foxify bundle exec rspec .spec
     - name: fastify
       commands:
+      - mkdir -p .neph/javascript/fastify
       - bin/neph javascript/fastify --mode=CI
-      - FRAMEWORK=javascript.fastify bundle exec rspec .spec
+      - FRAMEWORK=javascript/fastify bundle exec rspec .spec
     - name: express
       commands:
+      - mkdir -p .neph/javascript/express
       - bin/neph javascript/express --mode=CI
-      - FRAMEWORK=javascript.express bundle exec rspec .spec
+      - FRAMEWORK=javascript/express bundle exec rspec .spec
     - name: 0http
       commands:
+      - mkdir -p .neph/javascript/0http
       - bin/neph javascript/0http --mode=CI
-      - FRAMEWORK=javascript.0http bundle exec rspec .spec
+      - FRAMEWORK=javascript/0http bundle exec rspec .spec
     - name: nanoexpress
       commands:
+      - mkdir -p .neph/javascript/nanoexpress
       - bin/neph javascript/nanoexpress --mode=CI
-      - FRAMEWORK=javascript.nanoexpress bundle exec rspec .spec
+      - FRAMEWORK=javascript/nanoexpress bundle exec rspec .spec
     - name: turbo-polka
       commands:
+      - mkdir -p .neph/javascript/turbo-polka
       - bin/neph javascript/turbo-polka --mode=CI
-      - FRAMEWORK=javascript.turbo-polka bundle exec rspec .spec
+      - FRAMEWORK=javascript/turbo-polka bundle exec rspec .spec
     - name: nestjs-fastify
       commands:
+      - mkdir -p .neph/javascript/nestjs-fastify
       - bin/neph javascript/nestjs-fastify --mode=CI
-      - FRAMEWORK=javascript.nestjs-fastify bundle exec rspec .spec
+      - FRAMEWORK=javascript/nestjs-fastify bundle exec rspec .spec
     - name: nestjs-express
       commands:
+      - mkdir -p .neph/javascript/nestjs-express
       - bin/neph javascript/nestjs-express --mode=CI
-      - FRAMEWORK=javascript.nestjs-express bundle exec rspec .spec
+      - FRAMEWORK=javascript/nestjs-express bundle exec rspec .spec
     - name: sails
       commands:
+      - mkdir -p .neph/javascript/sails
       - bin/neph javascript/sails --mode=CI
-      - FRAMEWORK=javascript.sails bundle exec rspec .spec
+      - FRAMEWORK=javascript/sails bundle exec rspec .spec
     - name: feathersjs
       commands:
+      - mkdir -p .neph/javascript/feathersjs
       - bin/neph javascript/feathersjs --mode=CI
-      - FRAMEWORK=javascript.feathersjs bundle exec rspec .spec
+      - FRAMEWORK=javascript/feathersjs bundle exec rspec .spec
     - name: nanoexpress-pro
       commands:
+      - mkdir -p .neph/javascript/nanoexpress-pro
       - bin/neph javascript/nanoexpress-pro --mode=CI
-      - FRAMEWORK=javascript.nanoexpress-pro bundle exec rspec .spec
+      - FRAMEWORK=javascript/nanoexpress-pro bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -183,8 +206,9 @@ blocks:
     jobs:
     - name: aqueduct
       commands:
+      - mkdir -p .neph/dart/aqueduct
       - bin/neph dart/aqueduct --mode=CI
-      - FRAMEWORK=dart.aqueduct bundle exec rspec .spec
+      - FRAMEWORK=dart/aqueduct bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -210,8 +234,9 @@ blocks:
     jobs:
     - name: jennet
       commands:
+      - mkdir -p .neph/pony/jennet
       - bin/neph pony/jennet --mode=CI
-      - FRAMEWORK=pony.jennet bundle exec rspec .spec
+      - FRAMEWORK=pony/jennet bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -237,24 +262,29 @@ blocks:
     jobs:
     - name: swifter-framework
       commands:
+      - mkdir -p .neph/swift/swifter-framework
       - bin/neph swift/swifter-framework --mode=CI
-      - FRAMEWORK=swift.swifter-framework bundle exec rspec .spec
+      - FRAMEWORK=swift/swifter-framework bundle exec rspec .spec
     - name: vapor-framework
       commands:
+      - mkdir -p .neph/swift/vapor-framework
       - bin/neph swift/vapor-framework --mode=CI
-      - FRAMEWORK=swift.vapor-framework bundle exec rspec .spec
+      - FRAMEWORK=swift/vapor-framework bundle exec rspec .spec
     - name: perfect
       commands:
+      - mkdir -p .neph/swift/perfect
       - bin/neph swift/perfect --mode=CI
-      - FRAMEWORK=swift.perfect bundle exec rspec .spec
+      - FRAMEWORK=swift/perfect bundle exec rspec .spec
     - name: kitura
       commands:
+      - mkdir -p .neph/swift/kitura
       - bin/neph swift/kitura --mode=CI
-      - FRAMEWORK=swift.kitura bundle exec rspec .spec
+      - FRAMEWORK=swift/kitura bundle exec rspec .spec
     - name: kitura-nio
       commands:
+      - mkdir -p .neph/swift/kitura-nio
       - bin/neph swift/kitura-nio --mode=CI
-      - FRAMEWORK=swift.kitura-nio bundle exec rspec .spec
+      - FRAMEWORK=swift/kitura-nio bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -280,12 +310,14 @@ blocks:
     jobs:
     - name: http4s
       commands:
+      - mkdir -p .neph/scala/http4s
       - bin/neph scala/http4s --mode=CI
-      - FRAMEWORK=scala.http4s bundle exec rspec .spec
+      - FRAMEWORK=scala/http4s bundle exec rspec .spec
     - name: akkahttp
       commands:
+      - mkdir -p .neph/scala/akkahttp
       - bin/neph scala/akkahttp --mode=CI
-      - FRAMEWORK=scala.akkahttp bundle exec rspec .spec
+      - FRAMEWORK=scala/akkahttp bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -311,20 +343,24 @@ blocks:
     jobs:
     - name: actix
       commands:
+      - mkdir -p .neph/rust/actix
       - bin/neph rust/actix --mode=CI
-      - FRAMEWORK=rust.actix bundle exec rspec .spec
+      - FRAMEWORK=rust/actix bundle exec rspec .spec
     - name: nickel
       commands:
+      - mkdir -p .neph/rust/nickel
       - bin/neph rust/nickel --mode=CI
-      - FRAMEWORK=rust.nickel bundle exec rspec .spec
+      - FRAMEWORK=rust/nickel bundle exec rspec .spec
     - name: iron
       commands:
+      - mkdir -p .neph/rust/iron
       - bin/neph rust/iron --mode=CI
-      - FRAMEWORK=rust.iron bundle exec rspec .spec
+      - FRAMEWORK=rust/iron bundle exec rspec .spec
     - name: gotham
       commands:
+      - mkdir -p .neph/rust/gotham
       - bin/neph rust/gotham --mode=CI
-      - FRAMEWORK=rust.gotham bundle exec rspec .spec
+      - FRAMEWORK=rust/gotham bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -350,60 +386,74 @@ blocks:
     jobs:
     - name: rackstep
       commands:
+      - mkdir -p .neph/ruby/rackstep
       - bin/neph ruby/rackstep --mode=CI
-      - FRAMEWORK=ruby.rackstep bundle exec rspec .spec
+      - FRAMEWORK=ruby/rackstep bundle exec rspec .spec
     - name: hanami-api
       commands:
+      - mkdir -p .neph/ruby/hanami-api
       - bin/neph ruby/hanami-api --mode=CI
-      - FRAMEWORK=ruby.hanami-api bundle exec rspec .spec
+      - FRAMEWORK=ruby/hanami-api bundle exec rspec .spec
     - name: rack-app
       commands:
+      - mkdir -p .neph/ruby/rack-app
       - bin/neph ruby/rack-app --mode=CI
-      - FRAMEWORK=ruby.rack-app bundle exec rspec .spec
+      - FRAMEWORK=ruby/rack-app bundle exec rspec .spec
     - name: syro
       commands:
+      - mkdir -p .neph/ruby/syro
       - bin/neph ruby/syro --mode=CI
-      - FRAMEWORK=ruby.syro bundle exec rspec .spec
+      - FRAMEWORK=ruby/syro bundle exec rspec .spec
     - name: sinatra
       commands:
+      - mkdir -p .neph/ruby/sinatra
       - bin/neph ruby/sinatra --mode=CI
-      - FRAMEWORK=ruby.sinatra bundle exec rspec .spec
+      - FRAMEWORK=ruby/sinatra bundle exec rspec .spec
     - name: roda
       commands:
+      - mkdir -p .neph/ruby/roda
       - bin/neph ruby/roda --mode=CI
-      - FRAMEWORK=ruby.roda bundle exec rspec .spec
+      - FRAMEWORK=ruby/roda bundle exec rspec .spec
     - name: rails
       commands:
+      - mkdir -p .neph/ruby/rails
       - bin/neph ruby/rails --mode=CI
-      - FRAMEWORK=ruby.rails bundle exec rspec .spec
+      - FRAMEWORK=ruby/rails bundle exec rspec .spec
     - name: rack-routing
       commands:
+      - mkdir -p .neph/ruby/rack-routing
       - bin/neph ruby/rack-routing --mode=CI
-      - FRAMEWORK=ruby.rack-routing bundle exec rspec .spec
+      - FRAMEWORK=ruby/rack-routing bundle exec rspec .spec
     - name: hanami
       commands:
+      - mkdir -p .neph/ruby/hanami
       - bin/neph ruby/hanami --mode=CI
-      - FRAMEWORK=ruby.hanami bundle exec rspec .spec
+      - FRAMEWORK=ruby/hanami bundle exec rspec .spec
     - name: grape
       commands:
+      - mkdir -p .neph/ruby/grape
       - bin/neph ruby/grape --mode=CI
-      - FRAMEWORK=ruby.grape bundle exec rspec .spec
+      - FRAMEWORK=ruby/grape bundle exec rspec .spec
     - name: flame
       commands:
+      - mkdir -p .neph/ruby/flame
       - bin/neph ruby/flame --mode=CI
-      - FRAMEWORK=ruby.flame bundle exec rspec .spec
+      - FRAMEWORK=ruby/flame bundle exec rspec .spec
     - name: cuba
       commands:
+      - mkdir -p .neph/ruby/cuba
       - bin/neph ruby/cuba --mode=CI
-      - FRAMEWORK=ruby.cuba bundle exec rspec .spec
+      - FRAMEWORK=ruby/cuba bundle exec rspec .spec
     - name: camping
       commands:
+      - mkdir -p .neph/ruby/camping
       - bin/neph ruby/camping --mode=CI
-      - FRAMEWORK=ruby.camping bundle exec rspec .spec
+      - FRAMEWORK=ruby/camping bundle exec rspec .spec
     - name: agoo
       commands:
+      - mkdir -p .neph/ruby/agoo
       - bin/neph ruby/agoo --mode=CI
-      - FRAMEWORK=ruby.agoo bundle exec rspec .spec
+      - FRAMEWORK=ruby/agoo bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -429,100 +479,124 @@ blocks:
     jobs:
     - name: emmett
       commands:
+      - mkdir -p .neph/python/emmett
       - bin/neph python/emmett --mode=CI
-      - FRAMEWORK=python.emmett bundle exec rspec .spec
+      - FRAMEWORK=python/emmett bundle exec rspec .spec
     - name: pyramid
       commands:
+      - mkdir -p .neph/python/pyramid
       - bin/neph python/pyramid --mode=CI
-      - FRAMEWORK=python.pyramid bundle exec rspec .spec
+      - FRAMEWORK=python/pyramid bundle exec rspec .spec
     - name: apidaora
       commands:
+      - mkdir -p .neph/python/apidaora
       - bin/neph python/apidaora --mode=CI
-      - FRAMEWORK=python.apidaora bundle exec rspec .spec
+      - FRAMEWORK=python/apidaora bundle exec rspec .spec
     - name: tornado
       commands:
+      - mkdir -p .neph/python/tornado
       - bin/neph python/tornado --mode=CI
-      - FRAMEWORK=python.tornado bundle exec rspec .spec
+      - FRAMEWORK=python/tornado bundle exec rspec .spec
     - name: starlette
       commands:
+      - mkdir -p .neph/python/starlette
       - bin/neph python/starlette --mode=CI
-      - FRAMEWORK=python.starlette bundle exec rspec .spec
+      - FRAMEWORK=python/starlette bundle exec rspec .spec
     - name: sanic
       commands:
+      - mkdir -p .neph/python/sanic
       - bin/neph python/sanic --mode=CI
-      - FRAMEWORK=python.sanic bundle exec rspec .spec
+      - FRAMEWORK=python/sanic bundle exec rspec .spec
     - name: responder
       commands:
+      - mkdir -p .neph/python/responder
       - bin/neph python/responder --mode=CI
-      - FRAMEWORK=python.responder bundle exec rspec .spec
+      - FRAMEWORK=python/responder bundle exec rspec .spec
     - name: quart
       commands:
+      - mkdir -p .neph/python/quart
       - bin/neph python/quart --mode=CI
-      - FRAMEWORK=python.quart bundle exec rspec .spec
+      - FRAMEWORK=python/quart bundle exec rspec .spec
     - name: nameko
       commands:
+      - mkdir -p .neph/python/nameko
       - bin/neph python/nameko --mode=CI
-      - FRAMEWORK=python.nameko bundle exec rspec .spec
+      - FRAMEWORK=python/nameko bundle exec rspec .spec
     - name: molten
       commands:
+      - mkdir -p .neph/python/molten
       - bin/neph python/molten --mode=CI
-      - FRAMEWORK=python.molten bundle exec rspec .spec
+      - FRAMEWORK=python/molten bundle exec rspec .spec
     - name: masonite
       commands:
+      - mkdir -p .neph/python/masonite
       - bin/neph python/masonite --mode=CI
-      - FRAMEWORK=python.masonite bundle exec rspec .spec
+      - FRAMEWORK=python/masonite bundle exec rspec .spec
     - name: klein
       commands:
+      - mkdir -p .neph/python/klein
       - bin/neph python/klein --mode=CI
-      - FRAMEWORK=python.klein bundle exec rspec .spec
+      - FRAMEWORK=python/klein bundle exec rspec .spec
     - name: hug
       commands:
+      - mkdir -p .neph/python/hug
       - bin/neph python/hug --mode=CI
-      - FRAMEWORK=python.hug bundle exec rspec .spec
+      - FRAMEWORK=python/hug bundle exec rspec .spec
     - name: flask
       commands:
+      - mkdir -p .neph/python/flask
       - bin/neph python/flask --mode=CI
-      - FRAMEWORK=python.flask bundle exec rspec .spec
+      - FRAMEWORK=python/flask bundle exec rspec .spec
     - name: fastapi
       commands:
+      - mkdir -p .neph/python/fastapi
       - bin/neph python/fastapi --mode=CI
-      - FRAMEWORK=python.fastapi bundle exec rspec .spec
+      - FRAMEWORK=python/fastapi bundle exec rspec .spec
     - name: falcon
       commands:
+      - mkdir -p .neph/python/falcon
       - bin/neph python/falcon --mode=CI
-      - FRAMEWORK=python.falcon bundle exec rspec .spec
+      - FRAMEWORK=python/falcon bundle exec rspec .spec
     - name: django
       commands:
+      - mkdir -p .neph/python/django
       - bin/neph python/django --mode=CI
-      - FRAMEWORK=python.django bundle exec rspec .spec
+      - FRAMEWORK=python/django bundle exec rspec .spec
     - name: cyclone
       commands:
+      - mkdir -p .neph/python/cyclone
       - bin/neph python/cyclone --mode=CI
-      - FRAMEWORK=python.cyclone bundle exec rspec .spec
+      - FRAMEWORK=python/cyclone bundle exec rspec .spec
     - name: clastic
       commands:
+      - mkdir -p .neph/python/clastic
       - bin/neph python/clastic --mode=CI
-      - FRAMEWORK=python.clastic bundle exec rspec .spec
+      - FRAMEWORK=python/clastic bundle exec rspec .spec
     - name: cherrypy
       commands:
+      - mkdir -p .neph/python/cherrypy
       - bin/neph python/cherrypy --mode=CI
-      - FRAMEWORK=python.cherrypy bundle exec rspec .spec
+      - FRAMEWORK=python/cherrypy bundle exec rspec .spec
     - name: bottle
       commands:
+      - mkdir -p .neph/python/bottle
       - bin/neph python/bottle --mode=CI
-      - FRAMEWORK=python.bottle bundle exec rspec .spec
+      - FRAMEWORK=python/bottle bundle exec rspec .spec
     - name: blacksheep
       commands:
+      - mkdir -p .neph/python/blacksheep
       - bin/neph python/blacksheep --mode=CI
-      - FRAMEWORK=python.blacksheep bundle exec rspec .spec
+      - FRAMEWORK=python/blacksheep bundle exec rspec .spec
     - name: asgineer
       commands:
+      - mkdir -p .neph/python/asgineer
       - bin/neph python/asgineer --mode=CI
-      - FRAMEWORK=python.asgineer bundle exec rspec .spec
+      - FRAMEWORK=python/asgineer bundle exec rspec .spec
     - name: aiohttp
       commands:
+      - mkdir -p .neph/python/aiohttp
       - bin/neph python/aiohttp --mode=CI
-      - FRAMEWORK=python.aiohttp bundle exec rspec .spec
+      - FRAMEWORK=python/aiohttp bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -548,104 +622,129 @@ blocks:
     jobs:
     - name: siler-swoole
       commands:
+      - mkdir -p .neph/php/siler-swoole
       - bin/neph php/siler-swoole --mode=CI
-      - FRAMEWORK=php.siler-swoole bundle exec rspec .spec
+      - FRAMEWORK=php/siler-swoole bundle exec rspec .spec
     - name: siler
       commands:
+      - mkdir -p .neph/php/siler
       - bin/neph php/siler --mode=CI
-      - FRAMEWORK=php.siler bundle exec rspec .spec
+      - FRAMEWORK=php/siler bundle exec rspec .spec
     - name: chubbyphp
       commands:
+      - mkdir -p .neph/php/chubbyphp
       - bin/neph php/chubbyphp --mode=CI
-      - FRAMEWORK=php.chubbyphp bundle exec rspec .spec
+      - FRAMEWORK=php/chubbyphp bundle exec rspec .spec
     - name: mezzio
       commands:
+      - mkdir -p .neph/php/mezzio
       - bin/neph php/mezzio --mode=CI
-      - FRAMEWORK=php.mezzio bundle exec rspec .spec
+      - FRAMEWORK=php/mezzio bundle exec rspec .spec
     - name: ice
       commands:
+      - mkdir -p .neph/php/ice
       - bin/neph php/ice --mode=CI
-      - FRAMEWORK=php.ice bundle exec rspec .spec
+      - FRAMEWORK=php/ice bundle exec rspec .spec
     - name: laminas
       commands:
+      - mkdir -p .neph/php/laminas
       - bin/neph php/laminas --mode=CI
-      - FRAMEWORK=php.laminas bundle exec rspec .spec
+      - FRAMEWORK=php/laminas bundle exec rspec .spec
     - name: simps
       commands:
+      - mkdir -p .neph/php/simps
       - bin/neph php/simps --mode=CI
-      - FRAMEWORK=php.simps bundle exec rspec .spec
+      - FRAMEWORK=php/simps bundle exec rspec .spec
     - name: yii
       commands:
+      - mkdir -p .neph/php/yii
       - bin/neph php/yii --mode=CI
-      - FRAMEWORK=php.yii bundle exec rspec .spec
+      - FRAMEWORK=php/yii bundle exec rspec .spec
     - name: hamlet
       commands:
+      - mkdir -p .neph/php/hamlet
       - bin/neph php/hamlet --mode=CI
-      - FRAMEWORK=php.hamlet bundle exec rspec .spec
+      - FRAMEWORK=php/hamlet bundle exec rspec .spec
     - name: phalcon
       commands:
+      - mkdir -p .neph/php/phalcon
       - bin/neph php/phalcon --mode=CI
-      - FRAMEWORK=php.phalcon bundle exec rspec .spec
+      - FRAMEWORK=php/phalcon bundle exec rspec .spec
     - name: workerman
       commands:
+      - mkdir -p .neph/php/workerman
       - bin/neph php/workerman --mode=CI
-      - FRAMEWORK=php.workerman bundle exec rspec .spec
+      - FRAMEWORK=php/workerman bundle exec rspec .spec
     - name: yii-swoole
       commands:
+      - mkdir -p .neph/php/yii-swoole
       - bin/neph php/yii-swoole --mode=CI
-      - FRAMEWORK=php.yii-swoole bundle exec rspec .spec
+      - FRAMEWORK=php/yii-swoole bundle exec rspec .spec
     - name: ubiquity
       commands:
+      - mkdir -p .neph/php/ubiquity
       - bin/neph php/ubiquity --mode=CI
-      - FRAMEWORK=php.ubiquity bundle exec rspec .spec
+      - FRAMEWORK=php/ubiquity bundle exec rspec .spec
     - name: one-fpm
       commands:
+      - mkdir -p .neph/php/one-fpm
       - bin/neph php/one-fpm --mode=CI
-      - FRAMEWORK=php.one-fpm bundle exec rspec .spec
+      - FRAMEWORK=php/one-fpm bundle exec rspec .spec
     - name: symfony
       commands:
+      - mkdir -p .neph/php/symfony
       - bin/neph php/symfony --mode=CI
-      - FRAMEWORK=php.symfony bundle exec rspec .spec
+      - FRAMEWORK=php/symfony bundle exec rspec .spec
     - name: swoft
       commands:
+      - mkdir -p .neph/php/swoft
       - bin/neph php/swoft --mode=CI
-      - FRAMEWORK=php.swoft bundle exec rspec .spec
+      - FRAMEWORK=php/swoft bundle exec rspec .spec
     - name: sw-fw-less
       commands:
+      - mkdir -p .neph/php/sw-fw-less
       - bin/neph php/sw-fw-less --mode=CI
-      - FRAMEWORK=php.sw-fw-less bundle exec rspec .spec
+      - FRAMEWORK=php/sw-fw-less bundle exec rspec .spec
     - name: spiral
       commands:
+      - mkdir -p .neph/php/spiral
       - bin/neph php/spiral --mode=CI
-      - FRAMEWORK=php.spiral bundle exec rspec .spec
+      - FRAMEWORK=php/spiral bundle exec rspec .spec
     - name: slim
       commands:
+      - mkdir -p .neph/php/slim
       - bin/neph php/slim --mode=CI
-      - FRAMEWORK=php.slim bundle exec rspec .spec
+      - FRAMEWORK=php/slim bundle exec rspec .spec
     - name: one
       commands:
+      - mkdir -p .neph/php/one
       - bin/neph php/one --mode=CI
-      - FRAMEWORK=php.one bundle exec rspec .spec
+      - FRAMEWORK=php/one bundle exec rspec .spec
     - name: lumen
       commands:
+      - mkdir -p .neph/php/lumen
       - bin/neph php/lumen --mode=CI
-      - FRAMEWORK=php.lumen bundle exec rspec .spec
+      - FRAMEWORK=php/lumen bundle exec rspec .spec
     - name: laravel
       commands:
+      - mkdir -p .neph/php/laravel
       - bin/neph php/laravel --mode=CI
-      - FRAMEWORK=php.laravel bundle exec rspec .spec
+      - FRAMEWORK=php/laravel bundle exec rspec .spec
     - name: imi
       commands:
+      - mkdir -p .neph/php/imi
       - bin/neph php/imi --mode=CI
-      - FRAMEWORK=php.imi bundle exec rspec .spec
+      - FRAMEWORK=php/imi bundle exec rspec .spec
     - name: hyperf
       commands:
+      - mkdir -p .neph/php/hyperf
       - bin/neph php/hyperf --mode=CI
-      - FRAMEWORK=php.hyperf bundle exec rspec .spec
+      - FRAMEWORK=php/hyperf bundle exec rspec .spec
     - name: basicphp
       commands:
+      - mkdir -p .neph/php/basicphp
       - bin/neph php/basicphp --mode=CI
-      - FRAMEWORK=php.basicphp bundle exec rspec .spec
+      - FRAMEWORK=php/basicphp bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -671,8 +770,9 @@ blocks:
     jobs:
     - name: dancer2
       commands:
+      - mkdir -p .neph/perl/dancer2
       - bin/neph perl/dancer2 --mode=CI
-      - FRAMEWORK=perl.dancer2 bundle exec rspec .spec
+      - FRAMEWORK=perl/dancer2 bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -698,12 +798,14 @@ blocks:
     jobs:
     - name: jester
       commands:
+      - mkdir -p .neph/nim/jester
       - bin/neph nim/jester --mode=CI
-      - FRAMEWORK=nim.jester bundle exec rspec .spec
+      - FRAMEWORK=nim/jester bundle exec rspec .spec
     - name: httpbeast
       commands:
+      - mkdir -p .neph/nim/httpbeast
       - bin/neph nim/httpbeast --mode=CI
-      - FRAMEWORK=nim.httpbeast bundle exec rspec .spec
+      - FRAMEWORK=nim/httpbeast bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -729,12 +831,14 @@ blocks:
     jobs:
     - name: kooby
       commands:
+      - mkdir -p .neph/kotlin/kooby
       - bin/neph kotlin/kooby --mode=CI
-      - FRAMEWORK=kotlin.kooby bundle exec rspec .spec
+      - FRAMEWORK=kotlin/kooby bundle exec rspec .spec
     - name: ktor
       commands:
+      - mkdir -p .neph/kotlin/ktor
       - bin/neph kotlin/ktor --mode=CI
-      - FRAMEWORK=kotlin.ktor bundle exec rspec .spec
+      - FRAMEWORK=kotlin/ktor bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -760,32 +864,39 @@ blocks:
     jobs:
     - name: spring-framework
       commands:
+      - mkdir -p .neph/java/spring-framework
       - bin/neph java/spring-framework --mode=CI
-      - FRAMEWORK=java.spring-framework bundle exec rspec .spec
+      - FRAMEWORK=java/spring-framework bundle exec rspec .spec
     - name: jooby
       commands:
+      - mkdir -p .neph/java/jooby
       - bin/neph java/jooby --mode=CI
-      - FRAMEWORK=java.jooby bundle exec rspec .spec
+      - FRAMEWORK=java/jooby bundle exec rspec .spec
     - name: spring-boot
       commands:
+      - mkdir -p .neph/java/spring-boot
       - bin/neph java/spring-boot --mode=CI
-      - FRAMEWORK=java.spring-boot bundle exec rspec .spec
+      - FRAMEWORK=java/spring-boot bundle exec rspec .spec
     - name: rapidoid
       commands:
+      - mkdir -p .neph/java/rapidoid
       - bin/neph java/rapidoid --mode=CI
-      - FRAMEWORK=java.rapidoid bundle exec rspec .spec
+      - FRAMEWORK=java/rapidoid bundle exec rspec .spec
     - name: micronaut
       commands:
+      - mkdir -p .neph/java/micronaut
       - bin/neph java/micronaut --mode=CI
-      - FRAMEWORK=java.micronaut bundle exec rspec .spec
+      - FRAMEWORK=java/micronaut bundle exec rspec .spec
     - name: javalin
       commands:
+      - mkdir -p .neph/java/javalin
       - bin/neph java/javalin --mode=CI
-      - FRAMEWORK=java.javalin bundle exec rspec .spec
+      - FRAMEWORK=java/javalin bundle exec rspec .spec
     - name: act
       commands:
+      - mkdir -p .neph/java/act
       - bin/neph java/act --mode=CI
-      - FRAMEWORK=java.act bundle exec rspec .spec
+      - FRAMEWORK=java/act bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -811,100 +922,124 @@ blocks:
     jobs:
     - name: httprouter
       commands:
+      - mkdir -p .neph/go/httprouter
       - bin/neph go/httprouter --mode=CI
-      - FRAMEWORK=go.httprouter bundle exec rspec .spec
+      - FRAMEWORK=go/httprouter bundle exec rspec .spec
     - name: aero
       commands:
+      - mkdir -p .neph/go/aero
       - bin/neph go/aero --mode=CI
-      - FRAMEWORK=go.aero bundle exec rspec .spec
+      - FRAMEWORK=go/aero bundle exec rspec .spec
     - name: tango
       commands:
+      - mkdir -p .neph/go/tango
       - bin/neph go/tango --mode=CI
-      - FRAMEWORK=go.tango bundle exec rspec .spec
+      - FRAMEWORK=go/tango bundle exec rspec .spec
     - name: fiber
       commands:
+      - mkdir -p .neph/go/fiber
       - bin/neph go/fiber --mode=CI
-      - FRAMEWORK=go.fiber bundle exec rspec .spec
+      - FRAMEWORK=go/fiber bundle exec rspec .spec
     - name: router
       commands:
+      - mkdir -p .neph/go/router
       - bin/neph go/router --mode=CI
-      - FRAMEWORK=go.router bundle exec rspec .spec
+      - FRAMEWORK=go/router bundle exec rspec .spec
     - name: mars
       commands:
+      - mkdir -p .neph/go/mars
       - bin/neph go/mars --mode=CI
-      - FRAMEWORK=go.mars bundle exec rspec .spec
+      - FRAMEWORK=go/mars bundle exec rspec .spec
     - name: webgo
       commands:
+      - mkdir -p .neph/go/webgo
       - bin/neph go/webgo --mode=CI
-      - FRAMEWORK=go.webgo bundle exec rspec .spec
+      - FRAMEWORK=go/webgo bundle exec rspec .spec
     - name: violetear
       commands:
+      - mkdir -p .neph/go/violetear
       - bin/neph go/violetear --mode=CI
-      - FRAMEWORK=go.violetear bundle exec rspec .spec
+      - FRAMEWORK=go/violetear bundle exec rspec .spec
     - name: rte
       commands:
+      - mkdir -p .neph/go/rte
       - bin/neph go/rte --mode=CI
-      - FRAMEWORK=go.rte bundle exec rspec .spec
+      - FRAMEWORK=go/rte bundle exec rspec .spec
     - name: kami
       commands:
+      - mkdir -p .neph/go/kami
       - bin/neph go/kami --mode=CI
-      - FRAMEWORK=go.kami bundle exec rspec .spec
+      - FRAMEWORK=go/kami bundle exec rspec .spec
     - name: gramework
       commands:
+      - mkdir -p .neph/go/gramework
       - bin/neph go/gramework --mode=CI
-      - FRAMEWORK=go.gramework bundle exec rspec .spec
+      - FRAMEWORK=go/gramework bundle exec rspec .spec
     - name: gorouter
       commands:
+      - mkdir -p .neph/go/gorouter
       - bin/neph go/gorouter --mode=CI
-      - FRAMEWORK=go.gorouter bundle exec rspec .spec
+      - FRAMEWORK=go/gorouter bundle exec rspec .spec
     - name: gorouter-fasthttp
       commands:
+      - mkdir -p .neph/go/gorouter-fasthttp
       - bin/neph go/gorouter-fasthttp --mode=CI
-      - FRAMEWORK=go.gorouter-fasthttp bundle exec rspec .spec
+      - FRAMEWORK=go/gorouter-fasthttp bundle exec rspec .spec
     - name: goroute
       commands:
+      - mkdir -p .neph/go/goroute
       - bin/neph go/goroute --mode=CI
-      - FRAMEWORK=go.goroute bundle exec rspec .spec
+      - FRAMEWORK=go/goroute bundle exec rspec .spec
     - name: gorilla-mux
       commands:
+      - mkdir -p .neph/go/gorilla-mux
       - bin/neph go/gorilla-mux --mode=CI
-      - FRAMEWORK=go.gorilla-mux bundle exec rspec .spec
+      - FRAMEWORK=go/gorilla-mux bundle exec rspec .spec
     - name: gin
       commands:
+      - mkdir -p .neph/go/gin
       - bin/neph go/gin --mode=CI
-      - FRAMEWORK=go.gin bundle exec rspec .spec
+      - FRAMEWORK=go/gin bundle exec rspec .spec
     - name: gf
       commands:
+      - mkdir -p .neph/go/gf
       - bin/neph go/gf --mode=CI
-      - FRAMEWORK=go.gf bundle exec rspec .spec
+      - FRAMEWORK=go/gf bundle exec rspec .spec
     - name: fasthttprouter
       commands:
+      - mkdir -p .neph/go/fasthttprouter
       - bin/neph go/fasthttprouter --mode=CI
-      - FRAMEWORK=go.fasthttprouter bundle exec rspec .spec
+      - FRAMEWORK=go/fasthttprouter bundle exec rspec .spec
     - name: fasthttp
       commands:
+      - mkdir -p .neph/go/fasthttp
       - bin/neph go/fasthttp --mode=CI
-      - FRAMEWORK=go.fasthttp bundle exec rspec .spec
+      - FRAMEWORK=go/fasthttp bundle exec rspec .spec
     - name: echo
       commands:
+      - mkdir -p .neph/go/echo
       - bin/neph go/echo --mode=CI
-      - FRAMEWORK=go.echo bundle exec rspec .spec
+      - FRAMEWORK=go/echo bundle exec rspec .spec
     - name: chi
       commands:
+      - mkdir -p .neph/go/chi
       - bin/neph go/chi --mode=CI
-      - FRAMEWORK=go.chi bundle exec rspec .spec
+      - FRAMEWORK=go/chi bundle exec rspec .spec
     - name: beego
       commands:
+      - mkdir -p .neph/go/beego
       - bin/neph go/beego --mode=CI
-      - FRAMEWORK=go.beego bundle exec rspec .spec
+      - FRAMEWORK=go/beego bundle exec rspec .spec
     - name: atreugo
       commands:
+      - mkdir -p .neph/go/atreugo
       - bin/neph go/atreugo --mode=CI
-      - FRAMEWORK=go.atreugo bundle exec rspec .spec
+      - FRAMEWORK=go/atreugo bundle exec rspec .spec
     - name: air
       commands:
+      - mkdir -p .neph/go/air
       - bin/neph go/air --mode=CI
-      - FRAMEWORK=go.air bundle exec rspec .spec
+      - FRAMEWORK=go/air bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -930,8 +1065,9 @@ blocks:
     jobs:
     - name: suave
       commands:
+      - mkdir -p .neph/fsharp/suave
       - bin/neph fsharp/suave --mode=CI
-      - FRAMEWORK=fsharp.suave bundle exec rspec .spec
+      - FRAMEWORK=fsharp/suave bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -957,20 +1093,24 @@ blocks:
     jobs:
     - name: cowboy_stream
       commands:
+      - mkdir -p .neph/elixir/cowboy_stream
       - bin/neph elixir/cowboy_stream --mode=CI
-      - FRAMEWORK=elixir.cowboy_stream bundle exec rspec .spec
+      - FRAMEWORK=elixir/cowboy_stream bundle exec rspec .spec
     - name: cowboy
       commands:
+      - mkdir -p .neph/elixir/cowboy
       - bin/neph elixir/cowboy --mode=CI
-      - FRAMEWORK=elixir.cowboy bundle exec rspec .spec
+      - FRAMEWORK=elixir/cowboy bundle exec rspec .spec
     - name: plug
       commands:
+      - mkdir -p .neph/elixir/plug
       - bin/neph elixir/plug --mode=CI
-      - FRAMEWORK=elixir.plug bundle exec rspec .spec
+      - FRAMEWORK=elixir/plug bundle exec rspec .spec
     - name: phoenix
       commands:
+      - mkdir -p .neph/elixir/phoenix
       - bin/neph elixir/phoenix --mode=CI
-      - FRAMEWORK=elixir.phoenix bundle exec rspec .spec
+      - FRAMEWORK=elixir/phoenix bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -996,8 +1136,9 @@ blocks:
     jobs:
     - name: aspnetcore
       commands:
+      - mkdir -p .neph/csharp/aspnetcore
       - bin/neph csharp/aspnetcore --mode=CI
-      - FRAMEWORK=csharp.aspnetcore bundle exec rspec .spec
+      - FRAMEWORK=csharp/aspnetcore bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -1023,52 +1164,64 @@ blocks:
     jobs:
     - name: ricr
       commands:
+      - mkdir -p .neph/crystal/ricr
       - bin/neph crystal/ricr --mode=CI
-      - FRAMEWORK=crystal.ricr bundle exec rspec .spec
+      - FRAMEWORK=crystal/ricr bundle exec rspec .spec
     - name: shivneri
       commands:
+      - mkdir -p .neph/crystal/shivneri
       - bin/neph crystal/shivneri --mode=CI
-      - FRAMEWORK=crystal.shivneri bundle exec rspec .spec
+      - FRAMEWORK=crystal/shivneri bundle exec rspec .spec
     - name: grip
       commands:
+      - mkdir -p .neph/crystal/grip
       - bin/neph crystal/grip --mode=CI
-      - FRAMEWORK=crystal.grip bundle exec rspec .spec
+      - FRAMEWORK=crystal/grip bundle exec rspec .spec
     - name: toro
       commands:
+      - mkdir -p .neph/crystal/toro
       - bin/neph crystal/toro --mode=CI
-      - FRAMEWORK=crystal.toro bundle exec rspec .spec
+      - FRAMEWORK=crystal/toro bundle exec rspec .spec
     - name: spider-gazelle
       commands:
+      - mkdir -p .neph/crystal/spider-gazelle
       - bin/neph crystal/spider-gazelle --mode=CI
-      - FRAMEWORK=crystal.spider-gazelle bundle exec rspec .spec
+      - FRAMEWORK=crystal/spider-gazelle bundle exec rspec .spec
     - name: router.cr
       commands:
+      - mkdir -p .neph/crystal/router.cr
       - bin/neph crystal/router.cr --mode=CI
-      - FRAMEWORK=crystal.router.cr bundle exec rspec .spec
+      - FRAMEWORK=crystal/router.cr bundle exec rspec .spec
     - name: orion
       commands:
+      - mkdir -p .neph/crystal/orion
       - bin/neph crystal/orion --mode=CI
-      - FRAMEWORK=crystal.orion bundle exec rspec .spec
+      - FRAMEWORK=crystal/orion bundle exec rspec .spec
     - name: onyx
       commands:
+      - mkdir -p .neph/crystal/onyx
       - bin/neph crystal/onyx --mode=CI
-      - FRAMEWORK=crystal.onyx bundle exec rspec .spec
+      - FRAMEWORK=crystal/onyx bundle exec rspec .spec
     - name: lucky
       commands:
+      - mkdir -p .neph/crystal/lucky
       - bin/neph crystal/lucky --mode=CI
-      - FRAMEWORK=crystal.lucky bundle exec rspec .spec
+      - FRAMEWORK=crystal/lucky bundle exec rspec .spec
     - name: kemal
       commands:
+      - mkdir -p .neph/crystal/kemal
       - bin/neph crystal/kemal --mode=CI
-      - FRAMEWORK=crystal.kemal bundle exec rspec .spec
+      - FRAMEWORK=crystal/kemal bundle exec rspec .spec
     - name: athena
       commands:
+      - mkdir -p .neph/crystal/athena
       - bin/neph crystal/athena --mode=CI
-      - FRAMEWORK=crystal.athena bundle exec rspec .spec
+      - FRAMEWORK=crystal/athena bundle exec rspec .spec
     - name: amber
       commands:
+      - mkdir -p .neph/crystal/amber
       - bin/neph crystal/amber --mode=CI
-      - FRAMEWORK=crystal.amber bundle exec rspec .spec
+      - FRAMEWORK=crystal/amber bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -1094,12 +1247,14 @@ blocks:
     jobs:
     - name: evhtp
       commands:
+      - mkdir -p .neph/cpp/evhtp
       - bin/neph cpp/evhtp --mode=CI
-      - FRAMEWORK=cpp.evhtp bundle exec rspec .spec
+      - FRAMEWORK=cpp/evhtp bundle exec rspec .spec
     - name: drogon
       commands:
+      - mkdir -p .neph/cpp/drogon
       - bin/neph cpp/drogon --mode=CI
-      - FRAMEWORK=cpp.drogon bundle exec rspec .spec
+      - FRAMEWORK=cpp/drogon bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -1125,8 +1280,9 @@ blocks:
     jobs:
     - name: coast
       commands:
+      - mkdir -p .neph/clojure/coast
       - bin/neph clojure/coast --mode=CI
-      - FRAMEWORK=clojure.coast bundle exec rspec .spec
+      - FRAMEWORK=clojure/coast bundle exec rspec .spec
     epilogue:
       always:
         commands:
@@ -1152,12 +1308,14 @@ blocks:
     jobs:
     - name: kore
       commands:
+      - mkdir -p .neph/c/kore
       - bin/neph c/kore --mode=CI
-      - FRAMEWORK=c.kore bundle exec rspec .spec
+      - FRAMEWORK=c/kore bundle exec rspec .spec
     - name: agoo-c
       commands:
+      - mkdir -p .neph/c/agoo-c
       - bin/neph c/agoo-c --mode=CI
-      - FRAMEWORK=c.agoo-c bundle exec rspec .spec
+      - FRAMEWORK=c/agoo-c bundle exec rspec .spec
     epilogue:
       always:
         commands:
