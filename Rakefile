@@ -23,7 +23,7 @@ def default_provider
 end
 
 def commands_for(language, framework, **options)
-  config = YAML.load(File.read("config.yaml"))
+  config = YAML.safe_load(File.read("config.yaml"))
 
   directory = File.dirname(options[:path])
   main_config = YAML.safe_load(File.open(File.join(directory, "..", "..", "config.yaml")))
@@ -47,7 +47,7 @@ def commands_for(language, framework, **options)
     commands << "docker run -td #{language}.#{framework} > cid.txt"
     app_config["binaries"].each do |path|
       dir = File.join(language, framework, File.dirname(path))
-      FileUtils.mkdir_p(dir) unless File.exists?(dir)
+      FileUtils.mkdir_p(dir) unless File.exist?(dir)
       commands << "docker cp `cat cid.txt`:/opt/web/#{path} #{path}"
     end
   end
@@ -60,9 +60,7 @@ def commands_for(language, framework, **options)
     commands << Mustache.render(cmd, options).to_s
   end
 
-  unless options[:collect] == "off"
-    commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`"
-  end
+  commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
 
   unless options[:clean] == "off"
     config["providers"][options[:provider]]["clean"].each do |cmd|
@@ -85,11 +83,11 @@ def create_dockerfile(language, framework, **options)
     config["sources"].each do |path|
       Dir.glob(File.join(directory, path)).each do |f|
         if f =~ /^*\.\./
-          filename = f.gsub(directory, "").gsub!(/\/\.\.\/\./, "")
+          filename = f.gsub(directory, "").gsub!(%r{/\.\./\.}, "")
           File.open(File.join(directory, filename), "w") { |stream| stream.write(File.read(f)) }
           files << filename
         else
-          files << f.gsub!(directory, "").gsub!(/^\//, "")
+          files << f.gsub!(directory, "").gsub!(%r{^/}, "")
         end
       end
     end
@@ -100,11 +98,11 @@ def create_dockerfile(language, framework, **options)
     config["files"].each do |path|
       Dir.glob(File.join(directory, path)).each do |f|
         if f =~ /^*\.\./
-          filename = f.gsub(directory, "").gsub!(/\/\.\.\/\./, "")
+          filename = f.gsub(directory, "").gsub!(%r{/\.\./\.}, "")
           File.open(File.join(directory, filename), "w") { |stream| stream.write(File.read(f)) }
           files << filename
         else
-          files << f.gsub!(directory, "").gsub!(/^\//, "")
+          files << f.gsub!(directory, "").gsub!(%r{^/}, "")
         end
       end
     end
@@ -115,9 +113,7 @@ def create_dockerfile(language, framework, **options)
   if options[:provider] == "docker"
     template = File.join(directory, "..", "Dockerfile")
   else
-    unless ["javascript", "php", "python", "ruby", "julia", "perl", "dart"].include?(language)
-      template = File.join(directory, "..", ".build", options[:provider], "Dockerfile")
-    end
+    template = File.join(directory, "..", ".build", options[:provider], "Dockerfile") unless %w[javascript php python ruby julia perl dart].include?(language)
   end
 
   if config.key?("environment")
@@ -146,15 +142,13 @@ task :config do
 
     config[:main][:depends_on] << language unless config[:main][:depends_on].include?(language)
 
-    unless config.key?(language)
-      config[language] = { depends_on: [] }
-    end
+    config[language] = { depends_on: [] } unless config.key?(language)
 
-    config[language][:depends_on] << "#{language}.#{framework}"
+    config[language][:depends_on] << "#{language}/#{framework}"
 
     create_dockerfile(language, framework, provider: provider)
 
-    config["#{language}.#{framework}"] = {
+    config["#{language}/#{framework}"] = {
       commands: commands_for(language, framework, provider: provider, clean: clean, sieger_options: sieger_options, path: path, collect: collect),
       dir: File.join(language, File::SEPARATOR, framework),
     }
@@ -175,15 +169,15 @@ namespace :cloud do
     framework_config = YAML.safe_load(File.open(File.join(directory, "config.yaml")))
     config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
-    if config.key?("service")
-      config["cloud"]["config"]["write_files"] = [{
-        "path" => "/lib/systemd/system/web.service",
-        "permission" => "0644",
-        "content" => Mustache.render(config["service"], config),
-      }]
-    else
-      config["cloud"]["config"]["write_files"] = []
-    end
+    config["cloud"]["config"]["write_files"] = if config.key?("service")
+        [{
+          "path" => "/lib/systemd/system/web.service",
+          "permission" => "0644",
+          "content" => Mustache.render(config["service"], config),
+        }]
+      else
+        []
+      end
 
     if config.key?("environment")
       environment = config.fetch("environment")
@@ -242,6 +236,7 @@ namespace :cloud do
           }
 
           next if remote_directory.start_with?(".")
+
           directories << File.join("/opt/web", File::Separator, remote_directory)
         end
       end
@@ -252,9 +247,7 @@ namespace :cloud do
       config["cloud"]["config"]["runcmd"] << "mkdir -p #{remote_directory}"
     end
 
-    if config.key?("binaries")
-      config["cloud"]["config"]["runcmd"] << "mkdir -p /opt/web/bin"
-    end
+    config["cloud"]["config"]["runcmd"] << "mkdir -p /opt/web/bin" if config.key?("binaries")
 
     File.open(File.join(directory, "user_data.yml"), "w") do |f|
       f.write("#cloud-config")
@@ -284,11 +277,11 @@ namespace :cloud do
           binaries[path] = File.join("/opt/web", remote_path)
         end
 
-        unless binaries.empty?
-          Net::SCP.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |scp|
-            binaries.each do |local_path, remote_path|
-              scp.upload!(local_path, remote_path)
-            end
+        next if binaries.empty?
+
+        Net::SCP.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |scp|
+          binaries.each do |local_path, remote_path|
+            scp.upload!(local_path, remote_path)
           end
         end
       end
@@ -308,11 +301,11 @@ namespace :cloud do
       end
     end
 
-    while true
+    loop do
       output = ssh.exec!("cloud-init status")
       _, status = output.split(":")
 
-      raise RuntimeError, "Cloud-init have failed" if status.strip == "error"
+      raise "Cloud-init have failed" if status.strip == "error"
 
       break if status.strip == "done"
 
@@ -329,16 +322,12 @@ namespace :ci do
     blocks = [{ name: "setup", dependencies: [], task: { jobs: [{ name: "setup", commands: ["checkout", "cache restore", "sudo snap install crystal --classic", "sudo apt-get -y install libyaml-dev libevent-dev", "bundle install", "cache store", "rake config", "shards build"] }], epilogue: { always: { commands: ["artifact push workflow bin"] } } } }]
     done = []
     Dir.glob("*/config.yaml").each do |path|
-      language, _ = path.split(File::Separator)
+      language, = path.split(File::Separator)
       block = { name: language, dependencies: ["setup"], task: { 'prologue': { commands: ["checkout", "cache restore", "bundle install", "artifact pull workflow bin", "sudo apt-get -y install libevent-2.1-6", 'find bin -type f -exec chmod +x {} \;', "rake config"] }, 'env_vars': [{ name: "COLLECT", 'value': "off" }, { name: "CLEAN", value: "off" }], jobs: [], 'epilogue': { always: { commands: ["artifact push workflow .neph"] } } } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         config = YAML.safe_load(File.read(file))
-        if config["framework"].key?("name")
-          framework = config["framework"]["name"]
-        else
-          _, framework, _ = file.split(File::Separator)
-        end
-        block[:task][:jobs] << { name: framework, commands: ["bin/neph #{language}.#{framework} --mode=CI", "FRAMEWORK=#{language}.#{framework} bundle exec rspec .spec"] }
+        _, framework, = file.split(File::Separator)
+        block[:task][:jobs] << { name: framework, commands: ["mkdir -p #{language}/#{framework}", "bin/neph #{language}/#{framework} --mode=CI", "FRAMEWORK=#{language}.#{framework} bundle exec rspec .spec"] }
       end
       blocks << block
     end

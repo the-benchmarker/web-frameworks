@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "net/http"
 
 require_relative "spec_helper"
@@ -9,11 +11,11 @@ RSpec.describe "routes" do
     subject(:response) { http.request(Net::HTTP::Get.new("/")) }
 
     it "returns successfully" do
-      expect (response).is_a? Net::HTTPSuccess
+      expect response.is_a? Net::HTTPSuccess
     end
 
     it "returns an empty string" do
-      expect (response.body) == ""
+      expect response.body == ""
     end
   end
 
@@ -21,11 +23,11 @@ RSpec.describe "routes" do
     subject(:response) { http.request(Net::HTTP::Get.new("/user/0")) }
 
     it "returns successfully" do
-      expect (response).is_a? Net::HTTPSuccess
+      expect response.is_a? Net::HTTPSuccess
     end
 
     it "returns the expected param" do
-      expect (response.body) == "0"
+      expect response.body == "0"
     end
   end
 
@@ -33,11 +35,11 @@ RSpec.describe "routes" do
     subject(:response) { http.request(Net::HTTP::Post.new("/user")) }
 
     it "returns successfully" do
-      expect (response).is_a? Net::HTTPSuccess
+      expect response.is_a? Net::HTTPSuccess
     end
 
     it "returns an empty string" do
-      expect (response.body) == ""
+      expect response.body == ""
     end
   end
 end
