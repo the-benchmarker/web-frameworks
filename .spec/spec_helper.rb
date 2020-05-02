@@ -1,6 +1,7 @@
-require "net/http"
-
 # frozen_string_literal: true
+
+require "net/http"
+require "yaml"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -15,9 +16,8 @@ RSpec.configure do |config|
 end
 
 def ip(name)
-  language, framework = name.split(".")
-  if ENV.key?("SLEEP")
-    sleep ENV.fetch("SLEEP").to_i
-  end
+  language, framework = name.split("/")
+  config = YAML.safe_load(File.read(File.join(name, "config.yaml")))
+  framework = config["framework"]["name"] if config["framework"].key?("name")
   File.read(File.join(language, framework, "ip.txt")).strip
 end
