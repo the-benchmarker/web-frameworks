@@ -18,6 +18,5 @@ end
 def ip(name)
   language, framework = name.split("/")
   config = YAML.safe_load(File.read(File.join(name, "config.yaml")))
-  framework = config["framework"]["name"] if config["framework"].key?("name")
   File.read(File.join(language, framework, "ip.txt")).strip
 end
