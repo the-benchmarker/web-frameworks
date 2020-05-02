@@ -19,7 +19,7 @@ providers:
     metadata:
       - docker run -td {{{language}}}.{{{framework}}} > cid.txt
       - docker inspect `cat cid.txt` | jq -r '.[0].NetworkSettings.IPAddress' > ip.txt
-      - sleep 15
+      - sleep 25
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker rm -f
