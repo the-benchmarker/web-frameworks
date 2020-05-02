@@ -327,7 +327,7 @@ namespace :ci do
       Dir.glob("#{language}/*/config.yaml") do |file|
         config = YAML.safe_load(File.read(file))
         _, framework, = file.split(File::Separator)
-        block[:task][:jobs] << { name: framework, commands: ["mkdir -p #{language}/#{framework}", "bin/neph #{language}/#{framework} --mode=CI", "FRAMEWORK=#{language}.#{framework} bundle exec rspec .spec"] }
+        block[:task][:jobs] << { name: framework, commands: ["mkdir -p .neph/#{language}/#{framework}", "bin/neph #{language}/#{framework} --mode=CI", "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec"] }
       end
       blocks << block
     end
