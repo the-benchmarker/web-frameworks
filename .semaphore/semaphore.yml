@@ -384,11 +384,6 @@ blocks:
     - name: CLEAN
       value: 'off'
     jobs:
-    - name: rackstep
-      commands:
-      - mkdir -p .neph/ruby/rackstep
-      - bin/neph ruby/rackstep --mode=CI
-      - FRAMEWORK=ruby/rackstep bundle exec rspec .spec
     - name: hanami-api
       commands:
       - mkdir -p .neph/ruby/hanami-api
