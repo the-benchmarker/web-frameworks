@@ -5,3 +5,5 @@ provider:
 files:
   - "*.csproj"
   - "*.cs"
+
+docker_pause: 15
