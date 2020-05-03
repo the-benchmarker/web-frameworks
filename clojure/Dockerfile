@@ -20,15 +20,15 @@ COPY . ./
 
 FROM openjdk:11-jre-slim-buster
 
-WORKDIR /opt/bin
+WORKDIR /opt/web
 
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
-{{#files}}
-  COPY --from=0 /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
-{{/files}}
+{{#binaries}}
+  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+{{/binaries}}
 
 {{#command}}
   CMD {{{.}}}
