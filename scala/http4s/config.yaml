@@ -2,7 +2,7 @@ framework:
   website: http4s.org
   version: 0.21
 
-files:
+binaries:
   - target/scala-2.13/http4s-assembly-0.0.2.jar
 
 command: java -jar /usr/src/app/target/scala-2.13/http4s-assembly-0.0.2.jar
