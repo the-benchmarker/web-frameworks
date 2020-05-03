@@ -20,7 +20,7 @@ COPY . ./
 
 FROM openjdk:11-jre-slim-buster
 
-WORKDIR /opt/bin
+WORKDIR /opt/web
 
 {{#environment}}
   ENV {{{.}}}
