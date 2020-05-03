@@ -25,10 +25,6 @@
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-<<<<<<< HEAD
-=======
-                <version>3.3.0</version>
->>>>>>> Initial support for java/blade. Addresses #2271.
                 <configuration>
                     <archive>
                         <manifest>
@@ -58,9 +54,14 @@
 =======
                 <version>3.8.1</version>
                 <configuration>
+<<<<<<< HEAD
                     <source>11</source>
                     <target>11</target>
 >>>>>>> Initial support for java/blade. Addresses #2271.
+=======
+                    <source>1.8</source>
+                    <target>1.8</target>
+>>>>>>> More on java/blade.
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
