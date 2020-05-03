@@ -37,6 +37,4 @@ WORKDIR /opt/web
   COPY --from=0 /src/main/{{{.}}} {{{.}}}
 {{/binaries}}
 
-RUN apt-get -y update && apt-get -y install libssl1.1 libatomic1
-
 CMD ./main
