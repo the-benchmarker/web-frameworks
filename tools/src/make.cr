@@ -306,75 +306,9 @@ class App < Admiral::Command
     end
   end
 
-  class DependabotConfig < Admiral::Command
-    def run
-      mapping = YAML.parse(File.read(".dependabot/mapping.yaml"))
-      frameworks = {} of String => Array(String)
-      Dir.glob("*/*/config.yaml").each do |file|
-        directory = File.dirname(file)
-        infos = directory.split("/")
-        framework = infos.pop
-        config = YAML.parse(File.read(file))
-
-        language = infos.pop
-
-        unless frameworks.has_key?(language)
-          frameworks[language] = [] of String
-        end
-
-        if config.as_h["framework"].as_h.has_key?("name")
-          frameworks[language] << config.as_h["framework"].as_h["name"].to_s
-        else
-          frameworks[language] << framework
-        end
-      end
-      selection = YAML.build do |yaml|
-        yaml.mapping do
-          yaml.scalar "version"
-          yaml.scalar 1
-          yaml.scalar "update_configs"
-
-          yaml.sequence do
-            frameworks.each do |language, tools|
-              tools.each do |tool|
-                # Exist if not exist for @dependabot
-                next unless mapping["languages"].as_h[language]?
-
-                # Exist if no manifest file
-                manifest = String.new
-                mapping["languages"][language].as_h.keys.each do |key|
-                  file = key.to_s
-                  if File.exists?("#{language}/#{tool}/#{file}")
-                    manifest = file
-                  end
-                end
-                next if manifest.chars.size == 0
-
-                yaml.mapping do
-                  yaml.scalar "package_manager"
-                  yaml.scalar mapping["languages"][language][manifest]["label"]
-                  yaml.scalar "update_schedule"
-                  yaml.scalar mapping["languages"][language][manifest]["update_schedule"]
-                  yaml.scalar "directory"
-                  yaml.scalar "#{language}/#{tool}"
-                  yaml.scalar "default_labels"
-                  yaml.sequence do
-                    yaml.scalar "language:#{language}"
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-      File.write(".dependabot/config.yml", selection)
-    end
-  end
-
   define_help
   register_sub_command config : Config, description "Create framework list"
   register_sub_command ci_config : TravisConfig, description "Create configuration file for CI"
-  register_sub_command deps_config : DependabotConfig, description "Create configuration file for deps update bot"
 
   def run
     puts help
