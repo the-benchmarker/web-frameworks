@@ -2,6 +2,5 @@ provider:
   default:
     language: 4.7
 
-files:
-  - '*.fs'
-  - '*.fsproj'
+sources:
+  - '**/*.fs'
