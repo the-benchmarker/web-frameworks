@@ -3,7 +3,4 @@ provider:
     language: 8.0
 
 files:
-  - "*.csproj"
-  - "*.cs"
-
-docker_pause: 15
+  - "**/*.cs"
