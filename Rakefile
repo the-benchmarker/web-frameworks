@@ -59,6 +59,9 @@ def commands_for(language, framework, **options)
   config["providers"][options[:provider]]["metadata"].each do |cmd|
     commands << Mustache.render(cmd, options).to_s
   end
+  if ['docker','docker-machine'].include?(options[:provider]) && main_config.key?('docker_pause')
+  commands << "sleep #{main_config["docker_pause"]}"
+  end
 
   commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
 
@@ -320,11 +323,40 @@ end
 
 namespace :ci do
   task :config do
-    blocks = [{ name: "setup", dependencies: [], task: { jobs: [{ name: "setup", commands: ["checkout", "cache restore", "sudo snap install crystal --classic", "sudo apt-get -y install libyaml-dev libevent-dev", "bundle install", "cache store", "rake config", "shards build"] }], epilogue: { always: { commands: ["artifact push workflow bin"] } } } }]
+    blocks = [{ name: "setup", dependencies: [], task: {
+      jobs: [{
+        name: "setup",
+        commands: [
+          "checkout",
+          "cache restore",
+          "sudo snap install crystal --classic",
+          "sudo apt-get -y install libyaml-dev libevent-dev",
+          "bundle install",
+          "cache store",
+          "rake config",
+          "shards build --static",
+        ],
+      }],
+      epilogue: {
+        always: {
+          commands: ["artifact push workflow bin"],
+        },
+      },
+    } }]
     done = []
     Dir.glob("*/config.yaml").each do |path|
       language, = path.split(File::Separator)
-      block = { name: language, dependencies: ["setup"], task: { 'prologue': { commands: ["checkout", "cache restore", "bundle install", "artifact pull workflow bin", "sudo apt-get -y install libevent-2.1-6", 'find bin -type f -exec chmod +x {} \;', "rake config"] }, 'env_vars': [{ name: "COLLECT", 'value': "off" }, { name: "CLEAN", value: "off" }], jobs: [], 'epilogue': { always: { commands: ["artifact push workflow .neph"] } } } }
+      block = { name: language, dependencies: ["setup"], task: { prologue: { commands: [
+        "checkout",
+        "cache restore",
+        "bundle install",
+        "artifact pull workflow bin",
+        "find bin -type f -exec chmod +x {} \;",
+        "rake config",
+      ] }, 'env_vars': [
+        { name: "COLLECT", 'value': "off" },
+        { name: "CLEAN", value: "off" },
+      ], jobs: [], epilogue: { always: { commands: ["artifact push workflow .neph"] } } } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         config = YAML.safe_load(File.read(file))
         _, framework, = file.split(File::Separator)

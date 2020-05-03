@@ -6,3 +6,5 @@ files:
   - '**/*.jl'
   - Manifest.toml
   - Project.toml
+
+docker_pause: 20
