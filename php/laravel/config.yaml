@@ -18,14 +18,3 @@ environment:
   APP_ENV: production
   APP_DEBUG: false
   APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
-
-before_command:
-  - mkdir bootstrap/cache
-  - mkdir storage/framework/sessions -p
-  - mkdir storage/framework/views -p
-  - mkdir storage/framework/cache -p
-
-  - chown -R www-data:www-data /usr/src/app
-  - find /opt/web -type f -exec chmod 644 {} \;
-  - find /opt/web -type d -exec chmod 755 {} \;
-  - chmod -R ug+rwx storage /opt/web/bootstrap/cache
