@@ -6,3 +6,11 @@ sources:
   - "src/**/*.scala"
   - "**/*.sbt"
   - "**/*.properties"
+<<<<<<< HEAD
+=======
+
+binary:
+  - target
+
+docker_pause: 5
+>>>>>>> 97ff2489... fix(scala): Use multi-stage docker
