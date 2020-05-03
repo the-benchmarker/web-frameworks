@@ -5,3 +5,5 @@ provider:
 files:
   - '**/*.ex'
   - mix.exs
+
+docker_pause: 25

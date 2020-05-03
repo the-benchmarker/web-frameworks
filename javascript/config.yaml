@@ -57,3 +57,6 @@ service: |
 
   [Install]
   WantedBy=multi-user.target
+
+# By default, we force a sleep on docker (or docker-machine)
+docker_pause: 5
