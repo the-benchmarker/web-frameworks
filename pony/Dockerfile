@@ -4,10 +4,11 @@ RUN apt-get -y update && apt-get -y install clang libssl-dev
 
 WORKDIR /src/main
 
-COPY bundle.json .
-RUN stable fetch
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
-COPY . ./
+RUN stable fetch
 
 {{#environment}}
   ENV {{{.}}}
@@ -25,6 +26,8 @@ RUN apt-get -y update && apt-get -y install openssl libatomic1
 
 WORKDIR /opt
 
-COPY --from=0 /src/main/main main
+{{#binaries}}
+  COPY --from=0 /src/main/{{{.}}} main
+{{/binaries}}
 
 CMD ./main

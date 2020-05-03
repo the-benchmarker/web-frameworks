@@ -1,3 +1,14 @@
 provider:
   default:
     language: 0.35
+    
+deps: 
+  - libssl1.1
+  - libatomic1
+  
+sources:
+  - "**/*.pony"
+  - bundle.json
+
+binaries:
+  - main
