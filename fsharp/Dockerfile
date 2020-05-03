@@ -7,10 +7,14 @@ COPY *.fsproj .
 RUN dotnet restore
 
 # copy everything else and build app
-COPY . .
+{{#sources}}
+    COPY {{{.}}} {{{.}}}
+{{/sources}}
+
+
 RUN dotnet publish -c release -o out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
+FROM fsharp:10.7-netcore
 
 WORKDIR /usr/src/app
 
