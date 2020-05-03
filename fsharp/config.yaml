@@ -3,5 +3,5 @@ provider:
     language: 5.0
 
 files:
-  - "*.fs"
-  - "*.fsproj"
+  - "**/*.fs"
+  - "**/*.fsproj"

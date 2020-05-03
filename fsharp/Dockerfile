@@ -7,7 +7,11 @@ COPY *.fsproj .
 RUN dotnet restore
 
 # copy everything else and build app
-COPY . .
+{{#sources}}
+    COPY {{{.}}} {{{.}}}
+{{/sources}}
+
+
 RUN dotnet publish -c release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine
