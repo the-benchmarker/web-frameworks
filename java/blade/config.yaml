@@ -1,6 +1,6 @@
 framework:
-  website: http://lets-blade.com/
-  version: 2.0.15.RELEASE
+  website: lets-blade.com/
+  version: 2.0
 
 build:
   - mvn compile assembly:single -q
