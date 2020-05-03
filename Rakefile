@@ -197,6 +197,7 @@ namespace :cloud do
     end
 
     if config.key?("deps")
+      config["cloud"]["config"]["packages"] = [] unless config["cloud"]["config"].key?("packages")
       config["deps"].each do |package|
         config["cloud"]["config"]["packages"] << package
       end
