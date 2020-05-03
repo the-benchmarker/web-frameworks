@@ -23,6 +23,12 @@ end
 class App < Admiral::Command
   class ReadmeWriter < Admiral::Command
     def run
+      factor = System.cpu_count**2
+      concurrencies = [] of String
+      [1, 4, 8, 16, 32].each do |i|
+        concurrencies << "concurrency_#{factor*i}"
+      end
+
       frameworks = {} of Int32 => Data
       DB.open(ENV["DATABASE_URL"]) do |db|
         db.query("SELECT f.id as framework, l.label, f.label FROM frameworks AS f JOIN languages AS l ON l.id = f.language_id") do |row|
@@ -80,7 +86,7 @@ class App < Admiral::Command
       ]
       c = 1
       sorted = frameworks.values.sort do |rank0, rank1|
-        rank1["concurrency_64"].to_f <=> rank0["concurrency_64"].to_f
+        rank1[concurrencies.first].to_f <=> rank0[concurrencies.first].to_f
       end
       sorted.each do |row|
         lines << "| %s | %s (%s)| [%s](%s) (%s) | %s | %s | %s | %s | %s |" % [
@@ -90,11 +96,11 @@ class App < Admiral::Command
           row["framework"],
           row["framework_website"],
           row["framework_version"],
-          row["concurrency_64"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
-          row["concurrency_256"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
-          row["concurrency_512"].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
-          row["concurrency_1024"]?.try &.to_f.trunc.format(delimiter: ' ', decimal_places: 0),
-          row["concurrency_2048"]?.try &.to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row[concurrencies[0]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row[concurrencies[1]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row[concurrencies[2]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row[concurrencies[3]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
+          row[concurrencies[4]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
         ]
         c += 1
       end
