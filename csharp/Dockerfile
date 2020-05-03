@@ -7,7 +7,11 @@ COPY *.csproj .
 RUN dotnet restore
 
 # copy everything else and build app
-COPY . .
+{{#sources}}
+    COPY {{{.}}} {{{.}}}
+{{/sources}}
+
+
 RUN dotnet publish -c release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine
@@ -16,7 +20,6 @@ WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/out out
 
-ENV ASPNETCORE_URLS http://*:3000
 ENV COMPlus_TieredCompilation 1
 
 CMD dotnet /usr/src/app/out/web.dll
