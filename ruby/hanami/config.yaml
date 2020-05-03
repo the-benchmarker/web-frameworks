@@ -10,3 +10,5 @@ files:
   - apps/web/application.rb
   - apps/web/config/routes.rb
   - apps/web/controllers/**/*.rb
+
+docker_pause: 5

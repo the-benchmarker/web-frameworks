@@ -1,5 +1,8 @@
 provider:
   default:
     language: 2.13
-
-command: target/universal/root-0.1.0-SNAPSHOT.tgz
+    
+sources:
+  - "src/**/*.scala"
+  - "**/*.sbt"
+  - "**/*.properties"
