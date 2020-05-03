@@ -1,3 +1,10 @@
 provider:
   default:
     language: 2.13
+    
+sources:
+  - "src/**/*.scala"
+  - "**/*.sbt"
+  - "**/*.properties"
+
+docker_pause: 5
