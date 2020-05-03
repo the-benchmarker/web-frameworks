@@ -1,3 +1,6 @@
 framework:
   website: docs.microsoft.com/en-us/aspnet/index
   version: 3.1
+
+sources:
+  - '**/*.cs'
