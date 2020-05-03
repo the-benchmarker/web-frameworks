@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Presenters;
 
+use Nette\Application\IPresenter;
+use Nette\Application\IResponse;
+use Nette\Application\Request;
 use Nette\Application\Responses\TextResponse;
-use Nette\Application\UI\Presenter;
 
-final class UserPresenter extends Presenter
+final class UserPresenter implements IPresenter
 {
-    public function actionDefault(string $id = null): void
+    public function run(Request $request): IResponse
     {
-        if ($id) {
-            $this->sendResponse(new TextResponse($id));
-        }
-        $this->sendResponse(new TextResponse(''));
+        return new TextResponse((string)$request->getParameter('id'));
     }
 }
