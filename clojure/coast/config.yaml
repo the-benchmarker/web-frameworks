@@ -2,6 +2,10 @@ framework:
   website: coastonclojure.com
   version: 1.0
 
+files:
+  - "src/**/*.clj"
+  - deps.edn
+
 environment:
   COAST_ENV: prod
 

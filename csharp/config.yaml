@@ -3,5 +3,5 @@ provider:
     language: 8.0
 
 files:
-  - "*.csproj"
-  - "*.cs"
+  - "**/*.csproj"
+  - "**/*.cs"
