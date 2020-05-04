@@ -5,10 +5,14 @@ framework:
 provider:
   default:
     language: 99
+    
+sources:
+  - "**/*.c"
+  - "**/*.conf"
 
-clone:
-  - wget -c https://kore.io/releases/kore-3.3.1.tar.gz && tar xvf kore-3.3.1.tar.gz
-  - cd kore-3.3.1 && TASKS=1 NOTLS=1 make && make install
+download:
+  - wget -c https://github.com/jorisvink/kore/archive/3.3.1-release.tar.gz && tar xvf 3.3.1-release.tar.gz
+  - cd kore-3.3.1-release && TASKS=1 NOTLS=1 make && make install
 
 build:
   - cd hello && kodev build
@@ -20,9 +24,12 @@ build_deps:
 bin_deps:
   - libressl
 
-files:
+binaries:
   - ../../local/bin/kore
-  - hello/conf/hello.conf
   - hello/hello.so
 
+<<<<<<< HEAD
 command: cd /usr/bin/hello && /local/bin/kore -f -n -r -c conf/hello.conf
+=======
+command: cd hello && /local/bin/kore -f -n -r -c conf/hello.conf
+>>>>>>> 90838a2f... fix(c): Use multi-stage docker
