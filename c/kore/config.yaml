@@ -6,7 +6,11 @@ provider:
   default:
     language: 99
 
-clone:
+sources:
+  - "**/*.c"
+  - "**/*.conf"
+
+download:
   - wget -c https://kore.io/releases/kore-3.3.1.tar.gz && tar xvf kore-3.3.1.tar.gz
   - cd kore-3.3.1 && TASKS=1 NOTLS=1 make && make install
 
@@ -20,9 +24,8 @@ build_deps:
 bin_deps:
   - libressl
 
-files:
+binaries:
   - ../../local/bin/kore
-  - hello/conf/hello.conf
   - hello/hello.so
 
-command: cd /usr/bin/hello && /local/bin/kore -f -n -r -c conf/hello.conf
+command: cd hello && /local/bin/kore -f -n -r -c conf/hello.conf
