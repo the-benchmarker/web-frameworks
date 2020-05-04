@@ -8,11 +8,13 @@ WORKDIR /usr/src/app
   RUN apk add {{{.}}}
 {{/build_deps}}
 
-COPY . ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
-{{#clone}}
+{{#download}}
   RUN {{{.}}}
-{{/clone}}
+{{/download}}
 
 {{#build}}
    RUN {{{.}}}
@@ -20,13 +22,19 @@ COPY . ./
 
 FROM alpine
 
+WORKDIR /opt/web
+
 {{#bin_deps}}
    RUN apk add {{{.}}}
 {{/bin_deps}}
 
 {{#files}}
-  COPY --from=0 /usr/src/app/{{.}} /usr/bin/{{{.}}}
+  COPY {{{.}}} {{{.}}}
 {{/files}}
+
+{{#binaries}}
+  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+{{/binaries}}
 
 {{#command}}
   CMD {{{.}}}
