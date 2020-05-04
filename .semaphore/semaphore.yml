@@ -19,7 +19,7 @@ blocks:
       - bundle install
       - cache store
       - rake config
-      - shards build
+      - shards build --static
     epilogue:
       always:
         commands:
@@ -34,7 +34,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -82,7 +81,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -215,7 +213,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -243,7 +240,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -271,7 +267,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -329,7 +324,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -362,7 +356,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -390,7 +383,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -533,7 +525,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -681,7 +672,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -709,7 +699,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -737,7 +726,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -880,7 +868,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -913,7 +900,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -1001,7 +987,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -1079,7 +1064,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -1112,7 +1096,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -1140,7 +1123,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -1183,7 +1165,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -1226,7 +1207,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -1254,7 +1234,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
@@ -1287,7 +1266,6 @@ blocks:
       - cache restore
       - bundle install
       - artifact pull workflow bin
-      - sudo apt-get -y install libevent-2.1-6
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
