@@ -351,7 +351,7 @@ namespace :ci do
         "cache restore",
         "bundle install",
         "artifact pull workflow bin",
-        "find bin -type f -exec chmod +x {} \;",
+        "find bin -type f -exec chmod +x {} \\;",
         "rake config",
       ] }, 'env_vars': [
         { name: "COLLECT", 'value': "off" },
