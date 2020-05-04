@@ -59,8 +59,8 @@ def commands_for(language, framework, **options)
   config["providers"][options[:provider]]["metadata"].each do |cmd|
     commands << Mustache.render(cmd, options).to_s
   end
-  if ['docker','docker-machine'].include?(options[:provider]) && main_config.key?('docker_pause')
-  commands << "sleep #{main_config["docker_pause"]}"
+  if ["docker", "docker-machine"].include?(options[:provider]) && main_config.key?("docker_pause")
+    commands << "sleep #{main_config["docker_pause"]}"
   end
 
   commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
@@ -360,7 +360,7 @@ namespace :ci do
       Dir.glob("#{language}/*/config.yaml") do |file|
         config = YAML.safe_load(File.read(file))
         _, framework, = file.split(File::Separator)
-        block[:task][:jobs] << { name: framework, commands: ["mkdir -p .neph/#{language}/#{framework}", "bin/neph #{language}/#{framework} --mode=CI", "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec"] }
+        block[:task][:jobs] << { name: framework, commands: ["artifact pull project #{language}.#{framework}.tar || echo 'not found'", "if [ -f #{language}.#{framework}.tar ]; then docker load < #{language}.#{framework}.tar ; fi", "mkdir -p .neph/#{language}/#{framework}", "bin/neph #{language}/#{framework} --mode=CI", "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec", "docker save #{language}.#{framework} > #{language}.#{framework}.tar", "artifact push project #{language}.#{framework}.tar --force"] }
       end
       blocks << block
     end
