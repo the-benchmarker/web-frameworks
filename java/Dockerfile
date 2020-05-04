@@ -23,7 +23,7 @@ COPY . ./
 {{/build}}
 
 
-FROM openjdk:8-alpine
+FROM openjdk:8-jre-alpine
 
 {{#bin_deps}}
   RUN apk add {{{.}}}
