@@ -15,7 +15,7 @@ build:
   - cmake -H. -B_builds -DCMAKE_BUILD_TYPE=Release
   - cmake --build _builds --config Release
 
-files:
+binaries:
   - _builds/server_cpp_evhtp
 
-command: /usr/bin/_builds/server_cpp_evhtp
+command: /opt/web/_builds/server_cpp_evhtp
