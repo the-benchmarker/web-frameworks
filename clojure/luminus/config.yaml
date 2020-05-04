@@ -1,0 +1,11 @@
+framework:
+  website: luminusweb.com
+  version: 1.0
+
+build_deps:
+  - bash
+
+files:
+  - compojure-0.1.0.jar
+
+command: java -jar compojure-0.1.0.jar 3000
