@@ -4,3 +4,4 @@ framework:
 
 before_command:
   - mkdir -p temp/cache
+  - chmod 777 -R temp
