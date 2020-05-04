@@ -107,6 +107,7 @@ env:
       - FRAMEWORK=php.yii
       - FRAMEWORK=php.workerman
       - FRAMEWORK=php.siler
+      - FRAMEWORK=php.nette
       - FRAMEWORK=python.cherrypy
       - FRAMEWORK=python.apidaora
       - FRAMEWORK=python.responder
