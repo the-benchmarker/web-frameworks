@@ -12,6 +12,7 @@ class Bootstrap
     {
         $configurator = new Configurator();
         $configurator->setTempDirectory(__DIR__ . '/../temp');
+        $configurator->setDebugMode(false);
 
         $configurator->addConfig(__DIR__ . '/config/common.neon');
         return $configurator;
