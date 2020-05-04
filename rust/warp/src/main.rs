@@ -10,5 +10,5 @@ async fn main() {
 
     let routes = warp::get().and(index_handler.or(user_register_handler).or(user_handler));
 
-    warp::serve(routes).run(([127, 0, 0, 1], 3000)).await;
+    warp::serve(routes).run(([0,0,0,0], 3000)).await;
 }
