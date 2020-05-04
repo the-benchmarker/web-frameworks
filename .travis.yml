@@ -141,6 +141,7 @@ env:
       - FRAMEWORK=java.spring-boot
       - FRAMEWORK=java.javalin
       - FRAMEWORK=java.jooby
+      - FRAMEWORK=java.blade
       - FRAMEWORK=perl.dancer2
       - FRAMEWORK=fsharp.suave
       - FRAMEWORK=javascript.restana
