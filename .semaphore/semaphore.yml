@@ -44,52 +44,29 @@ blocks:
     jobs:
     - name: kitura
       commands:
-      - artifact pull project swift.kitura.tar || echo 'not found'
-      - if [ -f swift.kitura.tar ]; then docker load < swift.kitura.tar ; fi
       - mkdir -p .neph/swift/kitura
       - bin/neph swift/kitura --mode=CI
       - FRAMEWORK=swift/kitura bundle exec rspec .spec
-      - docker save swift.kitura > swift.kitura.tar
-      - artifact push project swift.kitura.tar --force
     - name: kitura-nio
       commands:
-      - artifact pull project swift.kitura-nio.tar || echo 'not found'
-      - if [ -f swift.kitura-nio.tar ]; then docker load < swift.kitura-nio.tar ;
-        fi
       - mkdir -p .neph/swift/kitura-nio
       - bin/neph swift/kitura-nio --mode=CI
       - FRAMEWORK=swift/kitura-nio bundle exec rspec .spec
-      - docker save swift.kitura-nio > swift.kitura-nio.tar
-      - artifact push project swift.kitura-nio.tar --force
     - name: vapor-framework
       commands:
-      - artifact pull project swift.vapor-framework.tar || echo 'not found'
-      - if [ -f swift.vapor-framework.tar ]; then docker load < swift.vapor-framework.tar
-        ; fi
       - mkdir -p .neph/swift/vapor-framework
       - bin/neph swift/vapor-framework --mode=CI
       - FRAMEWORK=swift/vapor-framework bundle exec rspec .spec
-      - docker save swift.vapor-framework > swift.vapor-framework.tar
-      - artifact push project swift.vapor-framework.tar --force
     - name: swifter-framework
       commands:
-      - artifact pull project swift.swifter-framework.tar || echo 'not found'
-      - if [ -f swift.swifter-framework.tar ]; then docker load < swift.swifter-framework.tar
-        ; fi
       - mkdir -p .neph/swift/swifter-framework
       - bin/neph swift/swifter-framework --mode=CI
       - FRAMEWORK=swift/swifter-framework bundle exec rspec .spec
-      - docker save swift.swifter-framework > swift.swifter-framework.tar
-      - artifact push project swift.swifter-framework.tar --force
     - name: perfect
       commands:
-      - artifact pull project swift.perfect.tar || echo 'not found'
-      - if [ -f swift.perfect.tar ]; then docker load < swift.perfect.tar ; fi
       - mkdir -p .neph/swift/perfect
       - bin/neph swift/perfect --mode=CI
       - FRAMEWORK=swift/perfect bundle exec rspec .spec
-      - docker save swift.perfect > swift.perfect.tar
-      - artifact push project swift.perfect.tar --force
     epilogue:
       always:
         commands:
@@ -114,221 +91,114 @@ blocks:
     jobs:
     - name: sifrr
       commands:
-      - artifact pull project javascript.sifrr.tar || echo 'not found'
-      - if [ -f javascript.sifrr.tar ]; then docker load < javascript.sifrr.tar ;
-        fi
       - mkdir -p .neph/javascript/sifrr
       - bin/neph javascript/sifrr --mode=CI
       - FRAMEWORK=javascript/sifrr bundle exec rspec .spec
-      - docker save javascript.sifrr > javascript.sifrr.tar
-      - artifact push project javascript.sifrr.tar --force
     - name: restify
       commands:
-      - artifact pull project javascript.restify.tar || echo 'not found'
-      - if [ -f javascript.restify.tar ]; then docker load < javascript.restify.tar
-        ; fi
       - mkdir -p .neph/javascript/restify
       - bin/neph javascript/restify --mode=CI
       - FRAMEWORK=javascript/restify bundle exec rspec .spec
-      - docker save javascript.restify > javascript.restify.tar
-      - artifact push project javascript.restify.tar --force
     - name: hapi
       commands:
-      - artifact pull project javascript.hapi.tar || echo 'not found'
-      - if [ -f javascript.hapi.tar ]; then docker load < javascript.hapi.tar ; fi
       - mkdir -p .neph/javascript/hapi
       - bin/neph javascript/hapi --mode=CI
       - FRAMEWORK=javascript/hapi bundle exec rspec .spec
-      - docker save javascript.hapi > javascript.hapi.tar
-      - artifact push project javascript.hapi.tar --force
     - name: moleculer
       commands:
-      - artifact pull project javascript.moleculer.tar || echo 'not found'
-      - if [ -f javascript.moleculer.tar ]; then docker load < javascript.moleculer.tar
-        ; fi
       - mkdir -p .neph/javascript/moleculer
       - bin/neph javascript/moleculer --mode=CI
       - FRAMEWORK=javascript/moleculer bundle exec rspec .spec
-      - docker save javascript.moleculer > javascript.moleculer.tar
-      - artifact push project javascript.moleculer.tar --force
     - name: koa
       commands:
-      - artifact pull project javascript.koa.tar || echo 'not found'
-      - if [ -f javascript.koa.tar ]; then docker load < javascript.koa.tar ; fi
       - mkdir -p .neph/javascript/koa
       - bin/neph javascript/koa --mode=CI
       - FRAMEWORK=javascript/koa bundle exec rspec .spec
-      - docker save javascript.koa > javascript.koa.tar
-      - artifact push project javascript.koa.tar --force
     - name: turbo-polka
       commands:
-      - artifact pull project javascript.turbo-polka.tar || echo 'not found'
-      - if [ -f javascript.turbo-polka.tar ]; then docker load < javascript.turbo-polka.tar
-        ; fi
       - mkdir -p .neph/javascript/turbo-polka
       - bin/neph javascript/turbo-polka --mode=CI
       - FRAMEWORK=javascript/turbo-polka bundle exec rspec .spec
-      - docker save javascript.turbo-polka > javascript.turbo-polka.tar
-      - artifact push project javascript.turbo-polka.tar --force
     - name: sails
       commands:
-      - artifact pull project javascript.sails.tar || echo 'not found'
-      - if [ -f javascript.sails.tar ]; then docker load < javascript.sails.tar ;
-        fi
       - mkdir -p .neph/javascript/sails
       - bin/neph javascript/sails --mode=CI
       - FRAMEWORK=javascript/sails bundle exec rspec .spec
-      - docker save javascript.sails > javascript.sails.tar
-      - artifact push project javascript.sails.tar --force
     - name: nestjs-fastify
       commands:
-      - artifact pull project javascript.nestjs-fastify.tar || echo 'not found'
-      - if [ -f javascript.nestjs-fastify.tar ]; then docker load < javascript.nestjs-fastify.tar
-        ; fi
       - mkdir -p .neph/javascript/nestjs-fastify
       - bin/neph javascript/nestjs-fastify --mode=CI
       - FRAMEWORK=javascript/nestjs-fastify bundle exec rspec .spec
-      - docker save javascript.nestjs-fastify > javascript.nestjs-fastify.tar
-      - artifact push project javascript.nestjs-fastify.tar --force
     - name: rayo
       commands:
-      - artifact pull project javascript.rayo.tar || echo 'not found'
-      - if [ -f javascript.rayo.tar ]; then docker load < javascript.rayo.tar ; fi
       - mkdir -p .neph/javascript/rayo
       - bin/neph javascript/rayo --mode=CI
       - FRAMEWORK=javascript/rayo bundle exec rspec .spec
-      - docker save javascript.rayo > javascript.rayo.tar
-      - artifact push project javascript.rayo.tar --force
     - name: polkadot
       commands:
-      - artifact pull project javascript.polkadot.tar || echo 'not found'
-      - if [ -f javascript.polkadot.tar ]; then docker load < javascript.polkadot.tar
-        ; fi
       - mkdir -p .neph/javascript/polkadot
       - bin/neph javascript/polkadot --mode=CI
       - FRAMEWORK=javascript/polkadot bundle exec rspec .spec
-      - docker save javascript.polkadot > javascript.polkadot.tar
-      - artifact push project javascript.polkadot.tar --force
     - name: nestjs-express
       commands:
-      - artifact pull project javascript.nestjs-express.tar || echo 'not found'
-      - if [ -f javascript.nestjs-express.tar ]; then docker load < javascript.nestjs-express.tar
-        ; fi
       - mkdir -p .neph/javascript/nestjs-express
       - bin/neph javascript/nestjs-express --mode=CI
       - FRAMEWORK=javascript/nestjs-express bundle exec rspec .spec
-      - docker save javascript.nestjs-express > javascript.nestjs-express.tar
-      - artifact push project javascript.nestjs-express.tar --force
     - name: 0http
       commands:
-      - artifact pull project javascript.0http.tar || echo 'not found'
-      - if [ -f javascript.0http.tar ]; then docker load < javascript.0http.tar ;
-        fi
       - mkdir -p .neph/javascript/0http
       - bin/neph javascript/0http --mode=CI
       - FRAMEWORK=javascript/0http bundle exec rspec .spec
-      - docker save javascript.0http > javascript.0http.tar
-      - artifact push project javascript.0http.tar --force
     - name: foxify
       commands:
-      - artifact pull project javascript.foxify.tar || echo 'not found'
-      - if [ -f javascript.foxify.tar ]; then docker load < javascript.foxify.tar
-        ; fi
       - mkdir -p .neph/javascript/foxify
       - bin/neph javascript/foxify --mode=CI
       - FRAMEWORK=javascript/foxify bundle exec rspec .spec
-      - docker save javascript.foxify > javascript.foxify.tar
-      - artifact push project javascript.foxify.tar --force
     - name: nanoexpress
       commands:
-      - artifact pull project javascript.nanoexpress.tar || echo 'not found'
-      - if [ -f javascript.nanoexpress.tar ]; then docker load < javascript.nanoexpress.tar
-        ; fi
       - mkdir -p .neph/javascript/nanoexpress
       - bin/neph javascript/nanoexpress --mode=CI
       - FRAMEWORK=javascript/nanoexpress bundle exec rspec .spec
-      - docker save javascript.nanoexpress > javascript.nanoexpress.tar
-      - artifact push project javascript.nanoexpress.tar --force
     - name: fastify
       commands:
-      - artifact pull project javascript.fastify.tar || echo 'not found'
-      - if [ -f javascript.fastify.tar ]; then docker load < javascript.fastify.tar
-        ; fi
       - mkdir -p .neph/javascript/fastify
       - bin/neph javascript/fastify --mode=CI
       - FRAMEWORK=javascript/fastify bundle exec rspec .spec
-      - docker save javascript.fastify > javascript.fastify.tar
-      - artifact push project javascript.fastify.tar --force
     - name: nanoexpress-pro
       commands:
-      - artifact pull project javascript.nanoexpress-pro.tar || echo 'not found'
-      - if [ -f javascript.nanoexpress-pro.tar ]; then docker load < javascript.nanoexpress-pro.tar
-        ; fi
       - mkdir -p .neph/javascript/nanoexpress-pro
       - bin/neph javascript/nanoexpress-pro --mode=CI
       - FRAMEWORK=javascript/nanoexpress-pro bundle exec rspec .spec
-      - docker save javascript.nanoexpress-pro > javascript.nanoexpress-pro.tar
-      - artifact push project javascript.nanoexpress-pro.tar --force
     - name: polka
       commands:
-      - artifact pull project javascript.polka.tar || echo 'not found'
-      - if [ -f javascript.polka.tar ]; then docker load < javascript.polka.tar ;
-        fi
       - mkdir -p .neph/javascript/polka
       - bin/neph javascript/polka --mode=CI
       - FRAMEWORK=javascript/polka bundle exec rspec .spec
-      - docker save javascript.polka > javascript.polka.tar
-      - artifact push project javascript.polka.tar --force
     - name: feathersjs
       commands:
-      - artifact pull project javascript.feathersjs.tar || echo 'not found'
-      - if [ -f javascript.feathersjs.tar ]; then docker load < javascript.feathersjs.tar
-        ; fi
       - mkdir -p .neph/javascript/feathersjs
       - bin/neph javascript/feathersjs --mode=CI
       - FRAMEWORK=javascript/feathersjs bundle exec rspec .spec
-      - docker save javascript.feathersjs > javascript.feathersjs.tar
-      - artifact push project javascript.feathersjs.tar --force
     - name: iotjs-express
       commands:
-      - artifact pull project javascript.iotjs-express.tar || echo 'not found'
-      - if [ -f javascript.iotjs-express.tar ]; then docker load < javascript.iotjs-express.tar
-        ; fi
       - mkdir -p .neph/javascript/iotjs-express
       - bin/neph javascript/iotjs-express --mode=CI
       - FRAMEWORK=javascript/iotjs-express bundle exec rspec .spec
-      - docker save javascript.iotjs-express > javascript.iotjs-express.tar
-      - artifact push project javascript.iotjs-express.tar --force
     - name: muneem
       commands:
-      - artifact pull project javascript.muneem.tar || echo 'not found'
-      - if [ -f javascript.muneem.tar ]; then docker load < javascript.muneem.tar
-        ; fi
       - mkdir -p .neph/javascript/muneem
       - bin/neph javascript/muneem --mode=CI
       - FRAMEWORK=javascript/muneem bundle exec rspec .spec
-      - docker save javascript.muneem > javascript.muneem.tar
-      - artifact push project javascript.muneem.tar --force
     - name: express
       commands:
-      - artifact pull project javascript.express.tar || echo 'not found'
-      - if [ -f javascript.express.tar ]; then docker load < javascript.express.tar
-        ; fi
       - mkdir -p .neph/javascript/express
       - bin/neph javascript/express --mode=CI
       - FRAMEWORK=javascript/express bundle exec rspec .spec
-      - docker save javascript.express > javascript.express.tar
-      - artifact push project javascript.express.tar --force
     - name: restana
       commands:
-      - artifact pull project javascript.restana.tar || echo 'not found'
-      - if [ -f javascript.restana.tar ]; then docker load < javascript.restana.tar
-        ; fi
       - mkdir -p .neph/javascript/restana
       - bin/neph javascript/restana --mode=CI
       - FRAMEWORK=javascript/restana bundle exec rspec .spec
-      - docker save javascript.restana > javascript.restana.tar
-      - artifact push project javascript.restana.tar --force
     epilogue:
       always:
         commands:
@@ -353,13 +223,9 @@ blocks:
     jobs:
     - name: suave
       commands:
-      - artifact pull project fsharp.suave.tar || echo 'not found'
-      - if [ -f fsharp.suave.tar ]; then docker load < fsharp.suave.tar ; fi
       - mkdir -p .neph/fsharp/suave
       - bin/neph fsharp/suave --mode=CI
       - FRAMEWORK=fsharp/suave bundle exec rspec .spec
-      - docker save fsharp.suave > fsharp.suave.tar
-      - artifact push project fsharp.suave.tar --force
     epilogue:
       always:
         commands:
@@ -384,13 +250,9 @@ blocks:
     jobs:
     - name: dancer2
       commands:
-      - artifact pull project perl.dancer2.tar || echo 'not found'
-      - if [ -f perl.dancer2.tar ]; then docker load < perl.dancer2.tar ; fi
       - mkdir -p .neph/perl/dancer2
       - bin/neph perl/dancer2 --mode=CI
       - FRAMEWORK=perl/dancer2 bundle exec rspec .spec
-      - docker save perl.dancer2 > perl.dancer2.tar
-      - artifact push project perl.dancer2.tar --force
     epilogue:
       always:
         commands:
@@ -415,78 +277,44 @@ blocks:
     jobs:
     - name: jooby
       commands:
-      - artifact pull project java.jooby.tar || echo 'not found'
-      - if [ -f java.jooby.tar ]; then docker load < java.jooby.tar ; fi
       - mkdir -p .neph/java/jooby
       - bin/neph java/jooby --mode=CI
       - FRAMEWORK=java/jooby bundle exec rspec .spec
-      - docker save java.jooby > java.jooby.tar
-      - artifact push project java.jooby.tar --force
     - name: javalin
       commands:
-      - artifact pull project java.javalin.tar || echo 'not found'
-      - if [ -f java.javalin.tar ]; then docker load < java.javalin.tar ; fi
       - mkdir -p .neph/java/javalin
       - bin/neph java/javalin --mode=CI
       - FRAMEWORK=java/javalin bundle exec rspec .spec
-      - docker save java.javalin > java.javalin.tar
-      - artifact push project java.javalin.tar --force
     - name: spring-boot
       commands:
-      - artifact pull project java.spring-boot.tar || echo 'not found'
-      - if [ -f java.spring-boot.tar ]; then docker load < java.spring-boot.tar ;
-        fi
       - mkdir -p .neph/java/spring-boot
       - bin/neph java/spring-boot --mode=CI
       - FRAMEWORK=java/spring-boot bundle exec rspec .spec
-      - docker save java.spring-boot > java.spring-boot.tar
-      - artifact push project java.spring-boot.tar --force
     - name: act
       commands:
-      - artifact pull project java.act.tar || echo 'not found'
-      - if [ -f java.act.tar ]; then docker load < java.act.tar ; fi
       - mkdir -p .neph/java/act
       - bin/neph java/act --mode=CI
       - FRAMEWORK=java/act bundle exec rspec .spec
-      - docker save java.act > java.act.tar
-      - artifact push project java.act.tar --force
     - name: spring-framework
       commands:
-      - artifact pull project java.spring-framework.tar || echo 'not found'
-      - if [ -f java.spring-framework.tar ]; then docker load < java.spring-framework.tar
-        ; fi
       - mkdir -p .neph/java/spring-framework
       - bin/neph java/spring-framework --mode=CI
       - FRAMEWORK=java/spring-framework bundle exec rspec .spec
-      - docker save java.spring-framework > java.spring-framework.tar
-      - artifact push project java.spring-framework.tar --force
     - name: rapidoid
       commands:
-      - artifact pull project java.rapidoid.tar || echo 'not found'
-      - if [ -f java.rapidoid.tar ]; then docker load < java.rapidoid.tar ; fi
       - mkdir -p .neph/java/rapidoid
       - bin/neph java/rapidoid --mode=CI
       - FRAMEWORK=java/rapidoid bundle exec rspec .spec
-      - docker save java.rapidoid > java.rapidoid.tar
-      - artifact push project java.rapidoid.tar --force
     - name: micronaut
       commands:
-      - artifact pull project java.micronaut.tar || echo 'not found'
-      - if [ -f java.micronaut.tar ]; then docker load < java.micronaut.tar ; fi
       - mkdir -p .neph/java/micronaut
       - bin/neph java/micronaut --mode=CI
       - FRAMEWORK=java/micronaut bundle exec rspec .spec
-      - docker save java.micronaut > java.micronaut.tar
-      - artifact push project java.micronaut.tar --force
     - name: blade
       commands:
-      - artifact pull project java.blade.tar || echo 'not found'
-      - if [ -f java.blade.tar ]; then docker load < java.blade.tar ; fi
       - mkdir -p .neph/java/blade
       - bin/neph java/blade --mode=CI
       - FRAMEWORK=java/blade bundle exec rspec .spec
-      - docker save java.blade > java.blade.tar
-      - artifact push project java.blade.tar --force
     epilogue:
       always:
         commands:
@@ -511,22 +339,14 @@ blocks:
     jobs:
     - name: ktor
       commands:
-      - artifact pull project kotlin.ktor.tar || echo 'not found'
-      - if [ -f kotlin.ktor.tar ]; then docker load < kotlin.ktor.tar ; fi
       - mkdir -p .neph/kotlin/ktor
       - bin/neph kotlin/ktor --mode=CI
       - FRAMEWORK=kotlin/ktor bundle exec rspec .spec
-      - docker save kotlin.ktor > kotlin.ktor.tar
-      - artifact push project kotlin.ktor.tar --force
     - name: kooby
       commands:
-      - artifact pull project kotlin.kooby.tar || echo 'not found'
-      - if [ -f kotlin.kooby.tar ]; then docker load < kotlin.kooby.tar ; fi
       - mkdir -p .neph/kotlin/kooby
       - bin/neph kotlin/kooby --mode=CI
       - FRAMEWORK=kotlin/kooby bundle exec rspec .spec
-      - docker save kotlin.kooby > kotlin.kooby.tar
-      - artifact push project kotlin.kooby.tar --force
     epilogue:
       always:
         commands:
@@ -551,13 +371,9 @@ blocks:
     jobs:
     - name: jennet
       commands:
-      - artifact pull project pony.jennet.tar || echo 'not found'
-      - if [ -f pony.jennet.tar ]; then docker load < pony.jennet.tar ; fi
       - mkdir -p .neph/pony/jennet
       - bin/neph pony/jennet --mode=CI
       - FRAMEWORK=pony/jennet bundle exec rspec .spec
-      - docker save pony.jennet > pony.jennet.tar
-      - artifact push project pony.jennet.tar --force
     epilogue:
       always:
         commands:
@@ -582,223 +398,124 @@ blocks:
     jobs:
     - name: nameko
       commands:
-      - artifact pull project python.nameko.tar || echo 'not found'
-      - if [ -f python.nameko.tar ]; then docker load < python.nameko.tar ; fi
       - mkdir -p .neph/python/nameko
       - bin/neph python/nameko --mode=CI
       - FRAMEWORK=python/nameko bundle exec rspec .spec
-      - docker save python.nameko > python.nameko.tar
-      - artifact push project python.nameko.tar --force
     - name: cyclone
       commands:
-      - artifact pull project python.cyclone.tar || echo 'not found'
-      - if [ -f python.cyclone.tar ]; then docker load < python.cyclone.tar ; fi
       - mkdir -p .neph/python/cyclone
       - bin/neph python/cyclone --mode=CI
       - FRAMEWORK=python/cyclone bundle exec rspec .spec
-      - docker save python.cyclone > python.cyclone.tar
-      - artifact push project python.cyclone.tar --force
     - name: tornado
       commands:
-      - artifact pull project python.tornado.tar || echo 'not found'
-      - if [ -f python.tornado.tar ]; then docker load < python.tornado.tar ; fi
       - mkdir -p .neph/python/tornado
       - bin/neph python/tornado --mode=CI
       - FRAMEWORK=python/tornado bundle exec rspec .spec
-      - docker save python.tornado > python.tornado.tar
-      - artifact push project python.tornado.tar --force
     - name: masonite
       commands:
-      - artifact pull project python.masonite.tar || echo 'not found'
-      - if [ -f python.masonite.tar ]; then docker load < python.masonite.tar ; fi
       - mkdir -p .neph/python/masonite
       - bin/neph python/masonite --mode=CI
       - FRAMEWORK=python/masonite bundle exec rspec .spec
-      - docker save python.masonite > python.masonite.tar
-      - artifact push project python.masonite.tar --force
     - name: bottle
       commands:
-      - artifact pull project python.bottle.tar || echo 'not found'
-      - if [ -f python.bottle.tar ]; then docker load < python.bottle.tar ; fi
       - mkdir -p .neph/python/bottle
       - bin/neph python/bottle --mode=CI
       - FRAMEWORK=python/bottle bundle exec rspec .spec
-      - docker save python.bottle > python.bottle.tar
-      - artifact push project python.bottle.tar --force
     - name: sanic
       commands:
-      - artifact pull project python.sanic.tar || echo 'not found'
-      - if [ -f python.sanic.tar ]; then docker load < python.sanic.tar ; fi
       - mkdir -p .neph/python/sanic
       - bin/neph python/sanic --mode=CI
       - FRAMEWORK=python/sanic bundle exec rspec .spec
-      - docker save python.sanic > python.sanic.tar
-      - artifact push project python.sanic.tar --force
     - name: klein
       commands:
-      - artifact pull project python.klein.tar || echo 'not found'
-      - if [ -f python.klein.tar ]; then docker load < python.klein.tar ; fi
       - mkdir -p .neph/python/klein
       - bin/neph python/klein --mode=CI
       - FRAMEWORK=python/klein bundle exec rspec .spec
-      - docker save python.klein > python.klein.tar
-      - artifact push project python.klein.tar --force
     - name: django
       commands:
-      - artifact pull project python.django.tar || echo 'not found'
-      - if [ -f python.django.tar ]; then docker load < python.django.tar ; fi
       - mkdir -p .neph/python/django
       - bin/neph python/django --mode=CI
       - FRAMEWORK=python/django bundle exec rspec .spec
-      - docker save python.django > python.django.tar
-      - artifact push project python.django.tar --force
     - name: fastapi
       commands:
-      - artifact pull project python.fastapi.tar || echo 'not found'
-      - if [ -f python.fastapi.tar ]; then docker load < python.fastapi.tar ; fi
       - mkdir -p .neph/python/fastapi
       - bin/neph python/fastapi --mode=CI
       - FRAMEWORK=python/fastapi bundle exec rspec .spec
-      - docker save python.fastapi > python.fastapi.tar
-      - artifact push project python.fastapi.tar --force
     - name: flask
       commands:
-      - artifact pull project python.flask.tar || echo 'not found'
-      - if [ -f python.flask.tar ]; then docker load < python.flask.tar ; fi
       - mkdir -p .neph/python/flask
       - bin/neph python/flask --mode=CI
       - FRAMEWORK=python/flask bundle exec rspec .spec
-      - docker save python.flask > python.flask.tar
-      - artifact push project python.flask.tar --force
     - name: molten
       commands:
-      - artifact pull project python.molten.tar || echo 'not found'
-      - if [ -f python.molten.tar ]; then docker load < python.molten.tar ; fi
       - mkdir -p .neph/python/molten
       - bin/neph python/molten --mode=CI
       - FRAMEWORK=python/molten bundle exec rspec .spec
-      - docker save python.molten > python.molten.tar
-      - artifact push project python.molten.tar --force
     - name: falcon
       commands:
-      - artifact pull project python.falcon.tar || echo 'not found'
-      - if [ -f python.falcon.tar ]; then docker load < python.falcon.tar ; fi
       - mkdir -p .neph/python/falcon
       - bin/neph python/falcon --mode=CI
       - FRAMEWORK=python/falcon bundle exec rspec .spec
-      - docker save python.falcon > python.falcon.tar
-      - artifact push project python.falcon.tar --force
     - name: aiohttp
       commands:
-      - artifact pull project python.aiohttp.tar || echo 'not found'
-      - if [ -f python.aiohttp.tar ]; then docker load < python.aiohttp.tar ; fi
       - mkdir -p .neph/python/aiohttp
       - bin/neph python/aiohttp --mode=CI
       - FRAMEWORK=python/aiohttp bundle exec rspec .spec
-      - docker save python.aiohttp > python.aiohttp.tar
-      - artifact push project python.aiohttp.tar --force
     - name: clastic
       commands:
-      - artifact pull project python.clastic.tar || echo 'not found'
-      - if [ -f python.clastic.tar ]; then docker load < python.clastic.tar ; fi
       - mkdir -p .neph/python/clastic
       - bin/neph python/clastic --mode=CI
       - FRAMEWORK=python/clastic bundle exec rspec .spec
-      - docker save python.clastic > python.clastic.tar
-      - artifact push project python.clastic.tar --force
     - name: starlette
       commands:
-      - artifact pull project python.starlette.tar || echo 'not found'
-      - if [ -f python.starlette.tar ]; then docker load < python.starlette.tar ;
-        fi
       - mkdir -p .neph/python/starlette
       - bin/neph python/starlette --mode=CI
       - FRAMEWORK=python/starlette bundle exec rspec .spec
-      - docker save python.starlette > python.starlette.tar
-      - artifact push project python.starlette.tar --force
     - name: blacksheep
       commands:
-      - artifact pull project python.blacksheep.tar || echo 'not found'
-      - if [ -f python.blacksheep.tar ]; then docker load < python.blacksheep.tar
-        ; fi
       - mkdir -p .neph/python/blacksheep
       - bin/neph python/blacksheep --mode=CI
       - FRAMEWORK=python/blacksheep bundle exec rspec .spec
-      - docker save python.blacksheep > python.blacksheep.tar
-      - artifact push project python.blacksheep.tar --force
     - name: pyramid
       commands:
-      - artifact pull project python.pyramid.tar || echo 'not found'
-      - if [ -f python.pyramid.tar ]; then docker load < python.pyramid.tar ; fi
       - mkdir -p .neph/python/pyramid
       - bin/neph python/pyramid --mode=CI
       - FRAMEWORK=python/pyramid bundle exec rspec .spec
-      - docker save python.pyramid > python.pyramid.tar
-      - artifact push project python.pyramid.tar --force
     - name: hug
       commands:
-      - artifact pull project python.hug.tar || echo 'not found'
-      - if [ -f python.hug.tar ]; then docker load < python.hug.tar ; fi
       - mkdir -p .neph/python/hug
       - bin/neph python/hug --mode=CI
       - FRAMEWORK=python/hug bundle exec rspec .spec
-      - docker save python.hug > python.hug.tar
-      - artifact push project python.hug.tar --force
     - name: emmett
       commands:
-      - artifact pull project python.emmett.tar || echo 'not found'
-      - if [ -f python.emmett.tar ]; then docker load < python.emmett.tar ; fi
       - mkdir -p .neph/python/emmett
       - bin/neph python/emmett --mode=CI
       - FRAMEWORK=python/emmett bundle exec rspec .spec
-      - docker save python.emmett > python.emmett.tar
-      - artifact push project python.emmett.tar --force
     - name: quart
       commands:
-      - artifact pull project python.quart.tar || echo 'not found'
-      - if [ -f python.quart.tar ]; then docker load < python.quart.tar ; fi
       - mkdir -p .neph/python/quart
       - bin/neph python/quart --mode=CI
       - FRAMEWORK=python/quart bundle exec rspec .spec
-      - docker save python.quart > python.quart.tar
-      - artifact push project python.quart.tar --force
     - name: asgineer
       commands:
-      - artifact pull project python.asgineer.tar || echo 'not found'
-      - if [ -f python.asgineer.tar ]; then docker load < python.asgineer.tar ; fi
       - mkdir -p .neph/python/asgineer
       - bin/neph python/asgineer --mode=CI
       - FRAMEWORK=python/asgineer bundle exec rspec .spec
-      - docker save python.asgineer > python.asgineer.tar
-      - artifact push project python.asgineer.tar --force
     - name: responder
       commands:
-      - artifact pull project python.responder.tar || echo 'not found'
-      - if [ -f python.responder.tar ]; then docker load < python.responder.tar ;
-        fi
       - mkdir -p .neph/python/responder
       - bin/neph python/responder --mode=CI
       - FRAMEWORK=python/responder bundle exec rspec .spec
-      - docker save python.responder > python.responder.tar
-      - artifact push project python.responder.tar --force
     - name: apidaora
       commands:
-      - artifact pull project python.apidaora.tar || echo 'not found'
-      - if [ -f python.apidaora.tar ]; then docker load < python.apidaora.tar ; fi
       - mkdir -p .neph/python/apidaora
       - bin/neph python/apidaora --mode=CI
       - FRAMEWORK=python/apidaora bundle exec rspec .spec
-      - docker save python.apidaora > python.apidaora.tar
-      - artifact push project python.apidaora.tar --force
     - name: cherrypy
       commands:
-      - artifact pull project python.cherrypy.tar || echo 'not found'
-      - if [ -f python.cherrypy.tar ]; then docker load < python.cherrypy.tar ; fi
       - mkdir -p .neph/python/cherrypy
       - bin/neph python/cherrypy --mode=CI
       - FRAMEWORK=python/cherrypy bundle exec rspec .spec
-      - docker save python.cherrypy > python.cherrypy.tar
-      - artifact push project python.cherrypy.tar --force
     epilogue:
       always:
         commands:
@@ -821,232 +538,136 @@ blocks:
     - name: CLEAN
       value: 'off'
     jobs:
+    - name: nette
+      commands:
+      - mkdir -p .neph/php/nette
+      - bin/neph php/nette --mode=CI
+      - FRAMEWORK=php/nette bundle exec rspec .spec
     - name: siler
       commands:
-      - artifact pull project php.siler.tar || echo 'not found'
-      - if [ -f php.siler.tar ]; then docker load < php.siler.tar ; fi
       - mkdir -p .neph/php/siler
       - bin/neph php/siler --mode=CI
       - FRAMEWORK=php/siler bundle exec rspec .spec
-      - docker save php.siler > php.siler.tar
-      - artifact push project php.siler.tar --force
     - name: workerman
       commands:
-      - artifact pull project php.workerman.tar || echo 'not found'
-      - if [ -f php.workerman.tar ]; then docker load < php.workerman.tar ; fi
       - mkdir -p .neph/php/workerman
       - bin/neph php/workerman --mode=CI
       - FRAMEWORK=php/workerman bundle exec rspec .spec
-      - docker save php.workerman > php.workerman.tar
-      - artifact push project php.workerman.tar --force
     - name: yii
       commands:
-      - artifact pull project php.yii.tar || echo 'not found'
-      - if [ -f php.yii.tar ]; then docker load < php.yii.tar ; fi
       - mkdir -p .neph/php/yii
       - bin/neph php/yii --mode=CI
       - FRAMEWORK=php/yii bundle exec rspec .spec
-      - docker save php.yii > php.yii.tar
-      - artifact push project php.yii.tar --force
     - name: hamlet
       commands:
-      - artifact pull project php.hamlet.tar || echo 'not found'
-      - if [ -f php.hamlet.tar ]; then docker load < php.hamlet.tar ; fi
       - mkdir -p .neph/php/hamlet
       - bin/neph php/hamlet --mode=CI
       - FRAMEWORK=php/hamlet bundle exec rspec .spec
-      - docker save php.hamlet > php.hamlet.tar
-      - artifact push project php.hamlet.tar --force
     - name: spiral
       commands:
-      - artifact pull project php.spiral.tar || echo 'not found'
-      - if [ -f php.spiral.tar ]; then docker load < php.spiral.tar ; fi
       - mkdir -p .neph/php/spiral
       - bin/neph php/spiral --mode=CI
       - FRAMEWORK=php/spiral bundle exec rspec .spec
-      - docker save php.spiral > php.spiral.tar
-      - artifact push project php.spiral.tar --force
     - name: symfony
       commands:
-      - artifact pull project php.symfony.tar || echo 'not found'
-      - if [ -f php.symfony.tar ]; then docker load < php.symfony.tar ; fi
       - mkdir -p .neph/php/symfony
       - bin/neph php/symfony --mode=CI
       - FRAMEWORK=php/symfony bundle exec rspec .spec
-      - docker save php.symfony > php.symfony.tar
-      - artifact push project php.symfony.tar --force
     - name: yii-swoole
       commands:
-      - artifact pull project php.yii-swoole.tar || echo 'not found'
-      - if [ -f php.yii-swoole.tar ]; then docker load < php.yii-swoole.tar ; fi
       - mkdir -p .neph/php/yii-swoole
       - bin/neph php/yii-swoole --mode=CI
       - FRAMEWORK=php/yii-swoole bundle exec rspec .spec
-      - docker save php.yii-swoole > php.yii-swoole.tar
-      - artifact push project php.yii-swoole.tar --force
     - name: basicphp
       commands:
-      - artifact pull project php.basicphp.tar || echo 'not found'
-      - if [ -f php.basicphp.tar ]; then docker load < php.basicphp.tar ; fi
       - mkdir -p .neph/php/basicphp
       - bin/neph php/basicphp --mode=CI
       - FRAMEWORK=php/basicphp bundle exec rspec .spec
-      - docker save php.basicphp > php.basicphp.tar
-      - artifact push project php.basicphp.tar --force
     - name: mezzio
       commands:
-      - artifact pull project php.mezzio.tar || echo 'not found'
-      - if [ -f php.mezzio.tar ]; then docker load < php.mezzio.tar ; fi
       - mkdir -p .neph/php/mezzio
       - bin/neph php/mezzio --mode=CI
       - FRAMEWORK=php/mezzio bundle exec rspec .spec
-      - docker save php.mezzio > php.mezzio.tar
-      - artifact push project php.mezzio.tar --force
     - name: sw-fw-less
       commands:
-      - artifact pull project php.sw-fw-less.tar || echo 'not found'
-      - if [ -f php.sw-fw-less.tar ]; then docker load < php.sw-fw-less.tar ; fi
       - mkdir -p .neph/php/sw-fw-less
       - bin/neph php/sw-fw-less --mode=CI
       - FRAMEWORK=php/sw-fw-less bundle exec rspec .spec
-      - docker save php.sw-fw-less > php.sw-fw-less.tar
-      - artifact push project php.sw-fw-less.tar --force
     - name: ubiquity
       commands:
-      - artifact pull project php.ubiquity.tar || echo 'not found'
-      - if [ -f php.ubiquity.tar ]; then docker load < php.ubiquity.tar ; fi
       - mkdir -p .neph/php/ubiquity
       - bin/neph php/ubiquity --mode=CI
       - FRAMEWORK=php/ubiquity bundle exec rspec .spec
-      - docker save php.ubiquity > php.ubiquity.tar
-      - artifact push project php.ubiquity.tar --force
     - name: one
       commands:
-      - artifact pull project php.one.tar || echo 'not found'
-      - if [ -f php.one.tar ]; then docker load < php.one.tar ; fi
       - mkdir -p .neph/php/one
       - bin/neph php/one --mode=CI
       - FRAMEWORK=php/one bundle exec rspec .spec
-      - docker save php.one > php.one.tar
-      - artifact push project php.one.tar --force
     - name: chubbyphp
       commands:
-      - artifact pull project php.chubbyphp.tar || echo 'not found'
-      - if [ -f php.chubbyphp.tar ]; then docker load < php.chubbyphp.tar ; fi
       - mkdir -p .neph/php/chubbyphp
       - bin/neph php/chubbyphp --mode=CI
       - FRAMEWORK=php/chubbyphp bundle exec rspec .spec
-      - docker save php.chubbyphp > php.chubbyphp.tar
-      - artifact push project php.chubbyphp.tar --force
     - name: phalcon
       commands:
-      - artifact pull project php.phalcon.tar || echo 'not found'
-      - if [ -f php.phalcon.tar ]; then docker load < php.phalcon.tar ; fi
       - mkdir -p .neph/php/phalcon
       - bin/neph php/phalcon --mode=CI
       - FRAMEWORK=php/phalcon bundle exec rspec .spec
-      - docker save php.phalcon > php.phalcon.tar
-      - artifact push project php.phalcon.tar --force
     - name: siler-swoole
       commands:
-      - artifact pull project php.siler-swoole.tar || echo 'not found'
-      - if [ -f php.siler-swoole.tar ]; then docker load < php.siler-swoole.tar ;
-        fi
       - mkdir -p .neph/php/siler-swoole
       - bin/neph php/siler-swoole --mode=CI
       - FRAMEWORK=php/siler-swoole bundle exec rspec .spec
-      - docker save php.siler-swoole > php.siler-swoole.tar
-      - artifact push project php.siler-swoole.tar --force
     - name: ice
       commands:
-      - artifact pull project php.ice.tar || echo 'not found'
-      - if [ -f php.ice.tar ]; then docker load < php.ice.tar ; fi
       - mkdir -p .neph/php/ice
       - bin/neph php/ice --mode=CI
       - FRAMEWORK=php/ice bundle exec rspec .spec
-      - docker save php.ice > php.ice.tar
-      - artifact push project php.ice.tar --force
     - name: one-fpm
       commands:
-      - artifact pull project php.one-fpm.tar || echo 'not found'
-      - if [ -f php.one-fpm.tar ]; then docker load < php.one-fpm.tar ; fi
       - mkdir -p .neph/php/one-fpm
       - bin/neph php/one-fpm --mode=CI
       - FRAMEWORK=php/one-fpm bundle exec rspec .spec
-      - docker save php.one-fpm > php.one-fpm.tar
-      - artifact push project php.one-fpm.tar --force
     - name: laminas
       commands:
-      - artifact pull project php.laminas.tar || echo 'not found'
-      - if [ -f php.laminas.tar ]; then docker load < php.laminas.tar ; fi
       - mkdir -p .neph/php/laminas
       - bin/neph php/laminas --mode=CI
       - FRAMEWORK=php/laminas bundle exec rspec .spec
-      - docker save php.laminas > php.laminas.tar
-      - artifact push project php.laminas.tar --force
     - name: hyperf
       commands:
-      - artifact pull project php.hyperf.tar || echo 'not found'
-      - if [ -f php.hyperf.tar ]; then docker load < php.hyperf.tar ; fi
       - mkdir -p .neph/php/hyperf
       - bin/neph php/hyperf --mode=CI
       - FRAMEWORK=php/hyperf bundle exec rspec .spec
-      - docker save php.hyperf > php.hyperf.tar
-      - artifact push project php.hyperf.tar --force
     - name: slim
       commands:
-      - artifact pull project php.slim.tar || echo 'not found'
-      - if [ -f php.slim.tar ]; then docker load < php.slim.tar ; fi
       - mkdir -p .neph/php/slim
       - bin/neph php/slim --mode=CI
       - FRAMEWORK=php/slim bundle exec rspec .spec
-      - docker save php.slim > php.slim.tar
-      - artifact push project php.slim.tar --force
     - name: simps
       commands:
-      - artifact pull project php.simps.tar || echo 'not found'
-      - if [ -f php.simps.tar ]; then docker load < php.simps.tar ; fi
       - mkdir -p .neph/php/simps
       - bin/neph php/simps --mode=CI
       - FRAMEWORK=php/simps bundle exec rspec .spec
-      - docker save php.simps > php.simps.tar
-      - artifact push project php.simps.tar --force
     - name: lumen
       commands:
-      - artifact pull project php.lumen.tar || echo 'not found'
-      - if [ -f php.lumen.tar ]; then docker load < php.lumen.tar ; fi
       - mkdir -p .neph/php/lumen
       - bin/neph php/lumen --mode=CI
       - FRAMEWORK=php/lumen bundle exec rspec .spec
-      - docker save php.lumen > php.lumen.tar
-      - artifact push project php.lumen.tar --force
     - name: laravel
       commands:
-      - artifact pull project php.laravel.tar || echo 'not found'
-      - if [ -f php.laravel.tar ]; then docker load < php.laravel.tar ; fi
       - mkdir -p .neph/php/laravel
       - bin/neph php/laravel --mode=CI
       - FRAMEWORK=php/laravel bundle exec rspec .spec
-      - docker save php.laravel > php.laravel.tar
-      - artifact push project php.laravel.tar --force
     - name: swoft
       commands:
-      - artifact pull project php.swoft.tar || echo 'not found'
-      - if [ -f php.swoft.tar ]; then docker load < php.swoft.tar ; fi
       - mkdir -p .neph/php/swoft
       - bin/neph php/swoft --mode=CI
       - FRAMEWORK=php/swoft bundle exec rspec .spec
-      - docker save php.swoft > php.swoft.tar
-      - artifact push project php.swoft.tar --force
     - name: imi
       commands:
-      - artifact pull project php.imi.tar || echo 'not found'
-      - if [ -f php.imi.tar ]; then docker load < php.imi.tar ; fi
       - mkdir -p .neph/php/imi
       - bin/neph php/imi --mode=CI
       - FRAMEWORK=php/imi bundle exec rspec .spec
-      - docker save php.imi > php.imi.tar
-      - artifact push project php.imi.tar --force
     epilogue:
       always:
         commands:
@@ -1071,13 +692,9 @@ blocks:
     jobs:
     - name: aqueduct
       commands:
-      - artifact pull project dart.aqueduct.tar || echo 'not found'
-      - if [ -f dart.aqueduct.tar ]; then docker load < dart.aqueduct.tar ; fi
       - mkdir -p .neph/dart/aqueduct
       - bin/neph dart/aqueduct --mode=CI
       - FRAMEWORK=dart/aqueduct bundle exec rspec .spec
-      - docker save dart.aqueduct > dart.aqueduct.tar
-      - artifact push project dart.aqueduct.tar --force
     epilogue:
       always:
         commands:
@@ -1102,14 +719,9 @@ blocks:
     jobs:
     - name: aspnetcore
       commands:
-      - artifact pull project csharp.aspnetcore.tar || echo 'not found'
-      - if [ -f csharp.aspnetcore.tar ]; then docker load < csharp.aspnetcore.tar
-        ; fi
       - mkdir -p .neph/csharp/aspnetcore
       - bin/neph csharp/aspnetcore --mode=CI
       - FRAMEWORK=csharp/aspnetcore bundle exec rspec .spec
-      - docker save csharp.aspnetcore > csharp.aspnetcore.tar
-      - artifact push project csharp.aspnetcore.tar --force
     epilogue:
       always:
         commands:
@@ -1134,222 +746,124 @@ blocks:
     jobs:
     - name: beego
       commands:
-      - artifact pull project go.beego.tar || echo 'not found'
-      - if [ -f go.beego.tar ]; then docker load < go.beego.tar ; fi
       - mkdir -p .neph/go/beego
       - bin/neph go/beego --mode=CI
       - FRAMEWORK=go/beego bundle exec rspec .spec
-      - docker save go.beego > go.beego.tar
-      - artifact push project go.beego.tar --force
     - name: httprouter
       commands:
-      - artifact pull project go.httprouter.tar || echo 'not found'
-      - if [ -f go.httprouter.tar ]; then docker load < go.httprouter.tar ; fi
       - mkdir -p .neph/go/httprouter
       - bin/neph go/httprouter --mode=CI
       - FRAMEWORK=go/httprouter bundle exec rspec .spec
-      - docker save go.httprouter > go.httprouter.tar
-      - artifact push project go.httprouter.tar --force
     - name: gf
       commands:
-      - artifact pull project go.gf.tar || echo 'not found'
-      - if [ -f go.gf.tar ]; then docker load < go.gf.tar ; fi
       - mkdir -p .neph/go/gf
       - bin/neph go/gf --mode=CI
       - FRAMEWORK=go/gf bundle exec rspec .spec
-      - docker save go.gf > go.gf.tar
-      - artifact push project go.gf.tar --force
     - name: fiber
       commands:
-      - artifact pull project go.fiber.tar || echo 'not found'
-      - if [ -f go.fiber.tar ]; then docker load < go.fiber.tar ; fi
       - mkdir -p .neph/go/fiber
       - bin/neph go/fiber --mode=CI
       - FRAMEWORK=go/fiber bundle exec rspec .spec
-      - docker save go.fiber > go.fiber.tar
-      - artifact push project go.fiber.tar --force
     - name: gorouter-fasthttp
       commands:
-      - artifact pull project go.gorouter-fasthttp.tar || echo 'not found'
-      - if [ -f go.gorouter-fasthttp.tar ]; then docker load < go.gorouter-fasthttp.tar
-        ; fi
       - mkdir -p .neph/go/gorouter-fasthttp
       - bin/neph go/gorouter-fasthttp --mode=CI
       - FRAMEWORK=go/gorouter-fasthttp bundle exec rspec .spec
-      - docker save go.gorouter-fasthttp > go.gorouter-fasthttp.tar
-      - artifact push project go.gorouter-fasthttp.tar --force
     - name: rte
       commands:
-      - artifact pull project go.rte.tar || echo 'not found'
-      - if [ -f go.rte.tar ]; then docker load < go.rte.tar ; fi
       - mkdir -p .neph/go/rte
       - bin/neph go/rte --mode=CI
       - FRAMEWORK=go/rte bundle exec rspec .spec
-      - docker save go.rte > go.rte.tar
-      - artifact push project go.rte.tar --force
     - name: violetear
       commands:
-      - artifact pull project go.violetear.tar || echo 'not found'
-      - if [ -f go.violetear.tar ]; then docker load < go.violetear.tar ; fi
       - mkdir -p .neph/go/violetear
       - bin/neph go/violetear --mode=CI
       - FRAMEWORK=go/violetear bundle exec rspec .spec
-      - docker save go.violetear > go.violetear.tar
-      - artifact push project go.violetear.tar --force
     - name: gorilla-mux
       commands:
-      - artifact pull project go.gorilla-mux.tar || echo 'not found'
-      - if [ -f go.gorilla-mux.tar ]; then docker load < go.gorilla-mux.tar ; fi
       - mkdir -p .neph/go/gorilla-mux
       - bin/neph go/gorilla-mux --mode=CI
       - FRAMEWORK=go/gorilla-mux bundle exec rspec .spec
-      - docker save go.gorilla-mux > go.gorilla-mux.tar
-      - artifact push project go.gorilla-mux.tar --force
     - name: atreugo
       commands:
-      - artifact pull project go.atreugo.tar || echo 'not found'
-      - if [ -f go.atreugo.tar ]; then docker load < go.atreugo.tar ; fi
       - mkdir -p .neph/go/atreugo
       - bin/neph go/atreugo --mode=CI
       - FRAMEWORK=go/atreugo bundle exec rspec .spec
-      - docker save go.atreugo > go.atreugo.tar
-      - artifact push project go.atreugo.tar --force
     - name: goroute
       commands:
-      - artifact pull project go.goroute.tar || echo 'not found'
-      - if [ -f go.goroute.tar ]; then docker load < go.goroute.tar ; fi
       - mkdir -p .neph/go/goroute
       - bin/neph go/goroute --mode=CI
       - FRAMEWORK=go/goroute bundle exec rspec .spec
-      - docker save go.goroute > go.goroute.tar
-      - artifact push project go.goroute.tar --force
     - name: fasthttp
       commands:
-      - artifact pull project go.fasthttp.tar || echo 'not found'
-      - if [ -f go.fasthttp.tar ]; then docker load < go.fasthttp.tar ; fi
       - mkdir -p .neph/go/fasthttp
       - bin/neph go/fasthttp --mode=CI
       - FRAMEWORK=go/fasthttp bundle exec rspec .spec
-      - docker save go.fasthttp > go.fasthttp.tar
-      - artifact push project go.fasthttp.tar --force
     - name: kami
       commands:
-      - artifact pull project go.kami.tar || echo 'not found'
-      - if [ -f go.kami.tar ]; then docker load < go.kami.tar ; fi
       - mkdir -p .neph/go/kami
       - bin/neph go/kami --mode=CI
       - FRAMEWORK=go/kami bundle exec rspec .spec
-      - docker save go.kami > go.kami.tar
-      - artifact push project go.kami.tar --force
     - name: gorouter
       commands:
-      - artifact pull project go.gorouter.tar || echo 'not found'
-      - if [ -f go.gorouter.tar ]; then docker load < go.gorouter.tar ; fi
       - mkdir -p .neph/go/gorouter
       - bin/neph go/gorouter --mode=CI
       - FRAMEWORK=go/gorouter bundle exec rspec .spec
-      - docker save go.gorouter > go.gorouter.tar
-      - artifact push project go.gorouter.tar --force
     - name: air
       commands:
-      - artifact pull project go.air.tar || echo 'not found'
-      - if [ -f go.air.tar ]; then docker load < go.air.tar ; fi
       - mkdir -p .neph/go/air
       - bin/neph go/air --mode=CI
       - FRAMEWORK=go/air bundle exec rspec .spec
-      - docker save go.air > go.air.tar
-      - artifact push project go.air.tar --force
     - name: mars
       commands:
-      - artifact pull project go.mars.tar || echo 'not found'
-      - if [ -f go.mars.tar ]; then docker load < go.mars.tar ; fi
       - mkdir -p .neph/go/mars
       - bin/neph go/mars --mode=CI
       - FRAMEWORK=go/mars bundle exec rspec .spec
-      - docker save go.mars > go.mars.tar
-      - artifact push project go.mars.tar --force
     - name: chi
       commands:
-      - artifact pull project go.chi.tar || echo 'not found'
-      - if [ -f go.chi.tar ]; then docker load < go.chi.tar ; fi
       - mkdir -p .neph/go/chi
       - bin/neph go/chi --mode=CI
       - FRAMEWORK=go/chi bundle exec rspec .spec
-      - docker save go.chi > go.chi.tar
-      - artifact push project go.chi.tar --force
     - name: webgo
       commands:
-      - artifact pull project go.webgo.tar || echo 'not found'
-      - if [ -f go.webgo.tar ]; then docker load < go.webgo.tar ; fi
       - mkdir -p .neph/go/webgo
       - bin/neph go/webgo --mode=CI
       - FRAMEWORK=go/webgo bundle exec rspec .spec
-      - docker save go.webgo > go.webgo.tar
-      - artifact push project go.webgo.tar --force
     - name: aero
       commands:
-      - artifact pull project go.aero.tar || echo 'not found'
-      - if [ -f go.aero.tar ]; then docker load < go.aero.tar ; fi
       - mkdir -p .neph/go/aero
       - bin/neph go/aero --mode=CI
       - FRAMEWORK=go/aero bundle exec rspec .spec
-      - docker save go.aero > go.aero.tar
-      - artifact push project go.aero.tar --force
     - name: echo
       commands:
-      - artifact pull project go.echo.tar || echo 'not found'
-      - if [ -f go.echo.tar ]; then docker load < go.echo.tar ; fi
       - mkdir -p .neph/go/echo
       - bin/neph go/echo --mode=CI
       - FRAMEWORK=go/echo bundle exec rspec .spec
-      - docker save go.echo > go.echo.tar
-      - artifact push project go.echo.tar --force
     - name: tango
       commands:
-      - artifact pull project go.tango.tar || echo 'not found'
-      - if [ -f go.tango.tar ]; then docker load < go.tango.tar ; fi
       - mkdir -p .neph/go/tango
       - bin/neph go/tango --mode=CI
       - FRAMEWORK=go/tango bundle exec rspec .spec
-      - docker save go.tango > go.tango.tar
-      - artifact push project go.tango.tar --force
     - name: gin
       commands:
-      - artifact pull project go.gin.tar || echo 'not found'
-      - if [ -f go.gin.tar ]; then docker load < go.gin.tar ; fi
       - mkdir -p .neph/go/gin
       - bin/neph go/gin --mode=CI
       - FRAMEWORK=go/gin bundle exec rspec .spec
-      - docker save go.gin > go.gin.tar
-      - artifact push project go.gin.tar --force
     - name: router
       commands:
-      - artifact pull project go.router.tar || echo 'not found'
-      - if [ -f go.router.tar ]; then docker load < go.router.tar ; fi
       - mkdir -p .neph/go/router
       - bin/neph go/router --mode=CI
       - FRAMEWORK=go/router bundle exec rspec .spec
-      - docker save go.router > go.router.tar
-      - artifact push project go.router.tar --force
     - name: fasthttprouter
       commands:
-      - artifact pull project go.fasthttprouter.tar || echo 'not found'
-      - if [ -f go.fasthttprouter.tar ]; then docker load < go.fasthttprouter.tar
-        ; fi
       - mkdir -p .neph/go/fasthttprouter
       - bin/neph go/fasthttprouter --mode=CI
       - FRAMEWORK=go/fasthttprouter bundle exec rspec .spec
-      - docker save go.fasthttprouter > go.fasthttprouter.tar
-      - artifact push project go.fasthttprouter.tar --force
     - name: gramework
       commands:
-      - artifact pull project go.gramework.tar || echo 'not found'
-      - if [ -f go.gramework.tar ]; then docker load < go.gramework.tar ; fi
       - mkdir -p .neph/go/gramework
       - bin/neph go/gramework --mode=CI
       - FRAMEWORK=go/gramework bundle exec rspec .spec
-      - docker save go.gramework > go.gramework.tar
-      - artifact push project go.gramework.tar --force
     epilogue:
       always:
         commands:
@@ -1374,22 +888,14 @@ blocks:
     jobs:
     - name: http4s
       commands:
-      - artifact pull project scala.http4s.tar || echo 'not found'
-      - if [ -f scala.http4s.tar ]; then docker load < scala.http4s.tar ; fi
       - mkdir -p .neph/scala/http4s
       - bin/neph scala/http4s --mode=CI
       - FRAMEWORK=scala/http4s bundle exec rspec .spec
-      - docker save scala.http4s > scala.http4s.tar
-      - artifact push project scala.http4s.tar --force
     - name: akkahttp
       commands:
-      - artifact pull project scala.akkahttp.tar || echo 'not found'
-      - if [ -f scala.akkahttp.tar ]; then docker load < scala.akkahttp.tar ; fi
       - mkdir -p .neph/scala/akkahttp
       - bin/neph scala/akkahttp --mode=CI
       - FRAMEWORK=scala/akkahttp bundle exec rspec .spec
-      - docker save scala.akkahttp > scala.akkahttp.tar
-      - artifact push project scala.akkahttp.tar --force
     epilogue:
       always:
         commands:
@@ -1414,122 +920,69 @@ blocks:
     jobs:
     - name: cuba
       commands:
-      - artifact pull project ruby.cuba.tar || echo 'not found'
-      - if [ -f ruby.cuba.tar ]; then docker load < ruby.cuba.tar ; fi
       - mkdir -p .neph/ruby/cuba
       - bin/neph ruby/cuba --mode=CI
       - FRAMEWORK=ruby/cuba bundle exec rspec .spec
-      - docker save ruby.cuba > ruby.cuba.tar
-      - artifact push project ruby.cuba.tar --force
     - name: hanami-api
       commands:
-      - artifact pull project ruby.hanami-api.tar || echo 'not found'
-      - if [ -f ruby.hanami-api.tar ]; then docker load < ruby.hanami-api.tar ; fi
       - mkdir -p .neph/ruby/hanami-api
       - bin/neph ruby/hanami-api --mode=CI
       - FRAMEWORK=ruby/hanami-api bundle exec rspec .spec
-      - docker save ruby.hanami-api > ruby.hanami-api.tar
-      - artifact push project ruby.hanami-api.tar --force
     - name: hanami
       commands:
-      - artifact pull project ruby.hanami.tar || echo 'not found'
-      - if [ -f ruby.hanami.tar ]; then docker load < ruby.hanami.tar ; fi
       - mkdir -p .neph/ruby/hanami
       - bin/neph ruby/hanami --mode=CI
       - FRAMEWORK=ruby/hanami bundle exec rspec .spec
-      - docker save ruby.hanami > ruby.hanami.tar
-      - artifact push project ruby.hanami.tar --force
     - name: rack-app
       commands:
-      - artifact pull project ruby.rack-app.tar || echo 'not found'
-      - if [ -f ruby.rack-app.tar ]; then docker load < ruby.rack-app.tar ; fi
       - mkdir -p .neph/ruby/rack-app
       - bin/neph ruby/rack-app --mode=CI
       - FRAMEWORK=ruby/rack-app bundle exec rspec .spec
-      - docker save ruby.rack-app > ruby.rack-app.tar
-      - artifact push project ruby.rack-app.tar --force
     - name: camping
       commands:
-      - artifact pull project ruby.camping.tar || echo 'not found'
-      - if [ -f ruby.camping.tar ]; then docker load < ruby.camping.tar ; fi
       - mkdir -p .neph/ruby/camping
       - bin/neph ruby/camping --mode=CI
       - FRAMEWORK=ruby/camping bundle exec rspec .spec
-      - docker save ruby.camping > ruby.camping.tar
-      - artifact push project ruby.camping.tar --force
     - name: sinatra
       commands:
-      - artifact pull project ruby.sinatra.tar || echo 'not found'
-      - if [ -f ruby.sinatra.tar ]; then docker load < ruby.sinatra.tar ; fi
       - mkdir -p .neph/ruby/sinatra
       - bin/neph ruby/sinatra --mode=CI
       - FRAMEWORK=ruby/sinatra bundle exec rspec .spec
-      - docker save ruby.sinatra > ruby.sinatra.tar
-      - artifact push project ruby.sinatra.tar --force
     - name: syro
       commands:
-      - artifact pull project ruby.syro.tar || echo 'not found'
-      - if [ -f ruby.syro.tar ]; then docker load < ruby.syro.tar ; fi
       - mkdir -p .neph/ruby/syro
       - bin/neph ruby/syro --mode=CI
       - FRAMEWORK=ruby/syro bundle exec rspec .spec
-      - docker save ruby.syro > ruby.syro.tar
-      - artifact push project ruby.syro.tar --force
     - name: rack-routing
       commands:
-      - artifact pull project ruby.rack-routing.tar || echo 'not found'
-      - if [ -f ruby.rack-routing.tar ]; then docker load < ruby.rack-routing.tar
-        ; fi
       - mkdir -p .neph/ruby/rack-routing
       - bin/neph ruby/rack-routing --mode=CI
       - FRAMEWORK=ruby/rack-routing bundle exec rspec .spec
-      - docker save ruby.rack-routing > ruby.rack-routing.tar
-      - artifact push project ruby.rack-routing.tar --force
     - name: roda
       commands:
-      - artifact pull project ruby.roda.tar || echo 'not found'
-      - if [ -f ruby.roda.tar ]; then docker load < ruby.roda.tar ; fi
       - mkdir -p .neph/ruby/roda
       - bin/neph ruby/roda --mode=CI
       - FRAMEWORK=ruby/roda bundle exec rspec .spec
-      - docker save ruby.roda > ruby.roda.tar
-      - artifact push project ruby.roda.tar --force
     - name: agoo
       commands:
-      - artifact pull project ruby.agoo.tar || echo 'not found'
-      - if [ -f ruby.agoo.tar ]; then docker load < ruby.agoo.tar ; fi
       - mkdir -p .neph/ruby/agoo
       - bin/neph ruby/agoo --mode=CI
       - FRAMEWORK=ruby/agoo bundle exec rspec .spec
-      - docker save ruby.agoo > ruby.agoo.tar
-      - artifact push project ruby.agoo.tar --force
     - name: flame
       commands:
-      - artifact pull project ruby.flame.tar || echo 'not found'
-      - if [ -f ruby.flame.tar ]; then docker load < ruby.flame.tar ; fi
       - mkdir -p .neph/ruby/flame
       - bin/neph ruby/flame --mode=CI
       - FRAMEWORK=ruby/flame bundle exec rspec .spec
-      - docker save ruby.flame > ruby.flame.tar
-      - artifact push project ruby.flame.tar --force
     - name: grape
       commands:
-      - artifact pull project ruby.grape.tar || echo 'not found'
-      - if [ -f ruby.grape.tar ]; then docker load < ruby.grape.tar ; fi
       - mkdir -p .neph/ruby/grape
       - bin/neph ruby/grape --mode=CI
       - FRAMEWORK=ruby/grape bundle exec rspec .spec
-      - docker save ruby.grape > ruby.grape.tar
-      - artifact push project ruby.grape.tar --force
     - name: rails
       commands:
-      - artifact pull project ruby.rails.tar || echo 'not found'
-      - if [ -f ruby.rails.tar ]; then docker load < ruby.rails.tar ; fi
       - mkdir -p .neph/ruby/rails
       - bin/neph ruby/rails --mode=CI
       - FRAMEWORK=ruby/rails bundle exec rspec .spec
-      - docker save ruby.rails > ruby.rails.tar
-      - artifact push project ruby.rails.tar --force
     epilogue:
       always:
         commands:
@@ -1554,106 +1007,59 @@ blocks:
     jobs:
     - name: toro
       commands:
-      - artifact pull project crystal.toro.tar || echo 'not found'
-      - if [ -f crystal.toro.tar ]; then docker load < crystal.toro.tar ; fi
       - mkdir -p .neph/crystal/toro
       - bin/neph crystal/toro --mode=CI
       - FRAMEWORK=crystal/toro bundle exec rspec .spec
-      - docker save crystal.toro > crystal.toro.tar
-      - artifact push project crystal.toro.tar --force
     - name: orion
       commands:
-      - artifact pull project crystal.orion.tar || echo 'not found'
-      - if [ -f crystal.orion.tar ]; then docker load < crystal.orion.tar ; fi
       - mkdir -p .neph/crystal/orion
       - bin/neph crystal/orion --mode=CI
       - FRAMEWORK=crystal/orion bundle exec rspec .spec
-      - docker save crystal.orion > crystal.orion.tar
-      - artifact push project crystal.orion.tar --force
     - name: lucky
       commands:
-      - artifact pull project crystal.lucky.tar || echo 'not found'
-      - if [ -f crystal.lucky.tar ]; then docker load < crystal.lucky.tar ; fi
       - mkdir -p .neph/crystal/lucky
       - bin/neph crystal/lucky --mode=CI
       - FRAMEWORK=crystal/lucky bundle exec rspec .spec
-      - docker save crystal.lucky > crystal.lucky.tar
-      - artifact push project crystal.lucky.tar --force
     - name: onyx
       commands:
-      - artifact pull project crystal.onyx.tar || echo 'not found'
-      - if [ -f crystal.onyx.tar ]; then docker load < crystal.onyx.tar ; fi
       - mkdir -p .neph/crystal/onyx
       - bin/neph crystal/onyx --mode=CI
       - FRAMEWORK=crystal/onyx bundle exec rspec .spec
-      - docker save crystal.onyx > crystal.onyx.tar
-      - artifact push project crystal.onyx.tar --force
     - name: shivneri
       commands:
-      - artifact pull project crystal.shivneri.tar || echo 'not found'
-      - if [ -f crystal.shivneri.tar ]; then docker load < crystal.shivneri.tar ;
-        fi
       - mkdir -p .neph/crystal/shivneri
       - bin/neph crystal/shivneri --mode=CI
       - FRAMEWORK=crystal/shivneri bundle exec rspec .spec
-      - docker save crystal.shivneri > crystal.shivneri.tar
-      - artifact push project crystal.shivneri.tar --force
     - name: grip
       commands:
-      - artifact pull project crystal.grip.tar || echo 'not found'
-      - if [ -f crystal.grip.tar ]; then docker load < crystal.grip.tar ; fi
       - mkdir -p .neph/crystal/grip
       - bin/neph crystal/grip --mode=CI
       - FRAMEWORK=crystal/grip bundle exec rspec .spec
-      - docker save crystal.grip > crystal.grip.tar
-      - artifact push project crystal.grip.tar --force
     - name: athena
       commands:
-      - artifact pull project crystal.athena.tar || echo 'not found'
-      - if [ -f crystal.athena.tar ]; then docker load < crystal.athena.tar ; fi
       - mkdir -p .neph/crystal/athena
       - bin/neph crystal/athena --mode=CI
       - FRAMEWORK=crystal/athena bundle exec rspec .spec
-      - docker save crystal.athena > crystal.athena.tar
-      - artifact push project crystal.athena.tar --force
     - name: amber
       commands:
-      - artifact pull project crystal.amber.tar || echo 'not found'
-      - if [ -f crystal.amber.tar ]; then docker load < crystal.amber.tar ; fi
       - mkdir -p .neph/crystal/amber
       - bin/neph crystal/amber --mode=CI
       - FRAMEWORK=crystal/amber bundle exec rspec .spec
-      - docker save crystal.amber > crystal.amber.tar
-      - artifact push project crystal.amber.tar --force
     - name: router.cr
       commands:
-      - artifact pull project crystal.router.cr.tar || echo 'not found'
-      - if [ -f crystal.router.cr.tar ]; then docker load < crystal.router.cr.tar
-        ; fi
       - mkdir -p .neph/crystal/router.cr
       - bin/neph crystal/router.cr --mode=CI
       - FRAMEWORK=crystal/router.cr bundle exec rspec .spec
-      - docker save crystal.router.cr > crystal.router.cr.tar
-      - artifact push project crystal.router.cr.tar --force
     - name: spider-gazelle
       commands:
-      - artifact pull project crystal.spider-gazelle.tar || echo 'not found'
-      - if [ -f crystal.spider-gazelle.tar ]; then docker load < crystal.spider-gazelle.tar
-        ; fi
       - mkdir -p .neph/crystal/spider-gazelle
       - bin/neph crystal/spider-gazelle --mode=CI
       - FRAMEWORK=crystal/spider-gazelle bundle exec rspec .spec
-      - docker save crystal.spider-gazelle > crystal.spider-gazelle.tar
-      - artifact push project crystal.spider-gazelle.tar --force
     - name: kemal
       commands:
-      - artifact pull project crystal.kemal.tar || echo 'not found'
-      - if [ -f crystal.kemal.tar ]; then docker load < crystal.kemal.tar ; fi
       - mkdir -p .neph/crystal/kemal
       - bin/neph crystal/kemal --mode=CI
       - FRAMEWORK=crystal/kemal bundle exec rspec .spec
-      - docker save crystal.kemal > crystal.kemal.tar
-      - artifact push project crystal.kemal.tar --force
     epilogue:
       always:
         commands:
@@ -1678,22 +1084,14 @@ blocks:
     jobs:
     - name: drogon
       commands:
-      - artifact pull project cpp.drogon.tar || echo 'not found'
-      - if [ -f cpp.drogon.tar ]; then docker load < cpp.drogon.tar ; fi
       - mkdir -p .neph/cpp/drogon
       - bin/neph cpp/drogon --mode=CI
       - FRAMEWORK=cpp/drogon bundle exec rspec .spec
-      - docker save cpp.drogon > cpp.drogon.tar
-      - artifact push project cpp.drogon.tar --force
     - name: evhtp
       commands:
-      - artifact pull project cpp.evhtp.tar || echo 'not found'
-      - if [ -f cpp.evhtp.tar ]; then docker load < cpp.evhtp.tar ; fi
       - mkdir -p .neph/cpp/evhtp
       - bin/neph cpp/evhtp --mode=CI
       - FRAMEWORK=cpp/evhtp bundle exec rspec .spec
-      - docker save cpp.evhtp > cpp.evhtp.tar
-      - artifact push project cpp.evhtp.tar --force
     epilogue:
       always:
         commands:
@@ -1718,13 +1116,9 @@ blocks:
     jobs:
     - name: merly
       commands:
-      - artifact pull project julia.merly.tar || echo 'not found'
-      - if [ -f julia.merly.tar ]; then docker load < julia.merly.tar ; fi
       - mkdir -p .neph/julia/merly
       - bin/neph julia/merly --mode=CI
       - FRAMEWORK=julia/merly bundle exec rspec .spec
-      - docker save julia.merly > julia.merly.tar
-      - artifact push project julia.merly.tar --force
     epilogue:
       always:
         commands:
@@ -1749,40 +1143,24 @@ blocks:
     jobs:
     - name: gotham
       commands:
-      - artifact pull project rust.gotham.tar || echo 'not found'
-      - if [ -f rust.gotham.tar ]; then docker load < rust.gotham.tar ; fi
       - mkdir -p .neph/rust/gotham
       - bin/neph rust/gotham --mode=CI
       - FRAMEWORK=rust/gotham bundle exec rspec .spec
-      - docker save rust.gotham > rust.gotham.tar
-      - artifact push project rust.gotham.tar --force
     - name: iron
       commands:
-      - artifact pull project rust.iron.tar || echo 'not found'
-      - if [ -f rust.iron.tar ]; then docker load < rust.iron.tar ; fi
       - mkdir -p .neph/rust/iron
       - bin/neph rust/iron --mode=CI
       - FRAMEWORK=rust/iron bundle exec rspec .spec
-      - docker save rust.iron > rust.iron.tar
-      - artifact push project rust.iron.tar --force
     - name: actix
       commands:
-      - artifact pull project rust.actix.tar || echo 'not found'
-      - if [ -f rust.actix.tar ]; then docker load < rust.actix.tar ; fi
       - mkdir -p .neph/rust/actix
       - bin/neph rust/actix --mode=CI
       - FRAMEWORK=rust/actix bundle exec rspec .spec
-      - docker save rust.actix > rust.actix.tar
-      - artifact push project rust.actix.tar --force
     - name: nickel
       commands:
-      - artifact pull project rust.nickel.tar || echo 'not found'
-      - if [ -f rust.nickel.tar ]; then docker load < rust.nickel.tar ; fi
       - mkdir -p .neph/rust/nickel
       - bin/neph rust/nickel --mode=CI
       - FRAMEWORK=rust/nickel bundle exec rspec .spec
-      - docker save rust.nickel > rust.nickel.tar
-      - artifact push project rust.nickel.tar --force
     epilogue:
       always:
         commands:
@@ -1807,41 +1185,24 @@ blocks:
     jobs:
     - name: plug
       commands:
-      - artifact pull project elixir.plug.tar || echo 'not found'
-      - if [ -f elixir.plug.tar ]; then docker load < elixir.plug.tar ; fi
       - mkdir -p .neph/elixir/plug
       - bin/neph elixir/plug --mode=CI
       - FRAMEWORK=elixir/plug bundle exec rspec .spec
-      - docker save elixir.plug > elixir.plug.tar
-      - artifact push project elixir.plug.tar --force
     - name: cowboy
       commands:
-      - artifact pull project elixir.cowboy.tar || echo 'not found'
-      - if [ -f elixir.cowboy.tar ]; then docker load < elixir.cowboy.tar ; fi
       - mkdir -p .neph/elixir/cowboy
       - bin/neph elixir/cowboy --mode=CI
       - FRAMEWORK=elixir/cowboy bundle exec rspec .spec
-      - docker save elixir.cowboy > elixir.cowboy.tar
-      - artifact push project elixir.cowboy.tar --force
     - name: phoenix
       commands:
-      - artifact pull project elixir.phoenix.tar || echo 'not found'
-      - if [ -f elixir.phoenix.tar ]; then docker load < elixir.phoenix.tar ; fi
       - mkdir -p .neph/elixir/phoenix
       - bin/neph elixir/phoenix --mode=CI
       - FRAMEWORK=elixir/phoenix bundle exec rspec .spec
-      - docker save elixir.phoenix > elixir.phoenix.tar
-      - artifact push project elixir.phoenix.tar --force
     - name: cowboy_stream
       commands:
-      - artifact pull project elixir.cowboy_stream.tar || echo 'not found'
-      - if [ -f elixir.cowboy_stream.tar ]; then docker load < elixir.cowboy_stream.tar
-        ; fi
       - mkdir -p .neph/elixir/cowboy_stream
       - bin/neph elixir/cowboy_stream --mode=CI
       - FRAMEWORK=elixir/cowboy_stream bundle exec rspec .spec
-      - docker save elixir.cowboy_stream > elixir.cowboy_stream.tar
-      - artifact push project elixir.cowboy_stream.tar --force
     epilogue:
       always:
         commands:
@@ -1866,13 +1227,9 @@ blocks:
     jobs:
     - name: coast
       commands:
-      - artifact pull project clojure.coast.tar || echo 'not found'
-      - if [ -f clojure.coast.tar ]; then docker load < clojure.coast.tar ; fi
       - mkdir -p .neph/clojure/coast
       - bin/neph clojure/coast --mode=CI
       - FRAMEWORK=clojure/coast bundle exec rspec .spec
-      - docker save clojure.coast > clojure.coast.tar
-      - artifact push project clojure.coast.tar --force
     epilogue:
       always:
         commands:
@@ -1897,22 +1254,14 @@ blocks:
     jobs:
     - name: agoo-c
       commands:
-      - artifact pull project c.agoo-c.tar || echo 'not found'
-      - if [ -f c.agoo-c.tar ]; then docker load < c.agoo-c.tar ; fi
       - mkdir -p .neph/c/agoo-c
       - bin/neph c/agoo-c --mode=CI
       - FRAMEWORK=c/agoo-c bundle exec rspec .spec
-      - docker save c.agoo-c > c.agoo-c.tar
-      - artifact push project c.agoo-c.tar --force
     - name: kore
       commands:
-      - artifact pull project c.kore.tar || echo 'not found'
-      - if [ -f c.kore.tar ]; then docker load < c.kore.tar ; fi
       - mkdir -p .neph/c/kore
       - bin/neph c/kore --mode=CI
       - FRAMEWORK=c/kore bundle exec rspec .spec
-      - docker save c.kore > c.kore.tar
-      - artifact push project c.kore.tar --force
     epilogue:
       always:
         commands:
@@ -1937,22 +1286,14 @@ blocks:
     jobs:
     - name: jester
       commands:
-      - artifact pull project nim.jester.tar || echo 'not found'
-      - if [ -f nim.jester.tar ]; then docker load < nim.jester.tar ; fi
       - mkdir -p .neph/nim/jester
       - bin/neph nim/jester --mode=CI
       - FRAMEWORK=nim/jester bundle exec rspec .spec
-      - docker save nim.jester > nim.jester.tar
-      - artifact push project nim.jester.tar --force
     - name: httpbeast
       commands:
-      - artifact pull project nim.httpbeast.tar || echo 'not found'
-      - if [ -f nim.httpbeast.tar ]; then docker load < nim.httpbeast.tar ; fi
       - mkdir -p .neph/nim/httpbeast
       - bin/neph nim/httpbeast --mode=CI
       - FRAMEWORK=nim/httpbeast bundle exec rspec .spec
-      - docker save nim.httpbeast > nim.httpbeast.tar
-      - artifact push project nim.httpbeast.tar --force
     epilogue:
       always:
         commands:
