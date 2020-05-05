@@ -5,9 +5,6 @@ framework:
 environment:
   COAST_ENV: prod
 
-build_deps:
-  - bash
-  
 files:
   - coast.jar
 
