@@ -360,7 +360,7 @@ namespace :ci do
       Dir.glob("#{language}/*/config.yaml") do |file|
         config = YAML.safe_load(File.read(file))
         _, framework, = file.split(File::Separator)
-        block[:task][:jobs] << { name: framework, commands: ["artifact pull project #{language}.#{framework}.tar || echo 'not found'", "if [ -f #{language}.#{framework}.tar ]; then docker load < #{language}.#{framework}.tar ; fi", "mkdir -p .neph/#{language}/#{framework}", "bin/neph #{language}/#{framework} --mode=CI", "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec", "docker save #{language}.#{framework} > #{language}.#{framework}.tar", "artifact push project #{language}.#{framework}.tar --force"] }
+        block[:task][:jobs] << { name: framework, commands: ["mkdir -p .neph/#{language}/#{framework}", "bin/neph #{language}/#{framework} --mode=CI", "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec"] }
       end
       blocks << block
     end
