@@ -11,3 +11,4 @@ files:
 command: >
   java -jar target/benchmark-0.0.1-jar-with-dependencies.jar
 
+docker_pause: 5
