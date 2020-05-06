@@ -3,3 +3,32 @@ provider:
     language: 1.10
 
 docker_pause: 10
+
+sources:
+  - "src/**/*.clj"
+  - "**/*.edn"
+
+cloud:
+  config:
+    package_update: true
+    package_upgrade: true
+    packages:
+      - openjdk-11-jre
+    runcmd:
+      - systemctl disable cloud-init
+      - systemctl enable web
+
+service: |
+  [Unit]
+  Description=HTTP Server
+  After=network.target
+
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/web
+  WorkingDirectory=/opt/web
+  ExecStart={{{command}}}
+  Restart=always
+
+  [Install]
+  WantedBy=multi-user.target
