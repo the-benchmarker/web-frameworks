@@ -2,14 +2,10 @@ framework:
   website: coastonclojure.com
   version: 1.0
 
-files:
-  - "src/**/*.clj"
-  - deps.edn
-
 environment:
   COAST_ENV: prod
 
 binaries:
   - coast.jar
 
-command: java -jar coast.jar 3000
+command: /usr/bin/java -jar coast.jar 3000
