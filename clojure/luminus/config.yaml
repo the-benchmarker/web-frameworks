@@ -1,0 +1,13 @@
+framework:
+  website: luminusweb.com
+  version: 1.0
+
+image: clojure:openjdk-11-lein-slim-buster
+
+build: 
+  - lein uberjar
+
+files:
+  - target/uberjar/luminus.jar
+
+command: java -jar target/uberjar/luminus.jar 3000
