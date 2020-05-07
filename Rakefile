@@ -174,7 +174,7 @@ namespace :cloud do
 
     config["cloud"]["config"]["write_files"] = if config.key?("service")
         [{
-          "path" => "/lib/systemd/system/web.service",
+          "path" => "/usr/lib/systemd/system/web.service",
           "permission" => "0644",
           "content" => Mustache.render(config["service"], config),
         }]
@@ -278,6 +278,7 @@ namespace :cloud do
         binaries = {}
         files.each do |path|
           remote_path = path.gsub(directory, "").gsub(%r{^/}, "").gsub(%r{^\.\./\.}, "")
+          pp path, remote_path
           binaries[path] = File.join("/opt/web", remote_path)
         end
 
@@ -346,7 +347,7 @@ namespace :ci do
     done = []
     Dir.glob("*/config.yaml").each do |path|
       language, = path.split(File::Separator)
-      block = { name: language, dependencies: ["setup"], task: { prologue: { commands: [
+      block = { name: language, dependencies: ["setup"], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
         "checkout",
         "cache restore",
         "bundle install",
