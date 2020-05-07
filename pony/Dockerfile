@@ -18,13 +18,12 @@ COPY . ./
   RUN {{{.}}}
 {{/before_command}}
 
-RUN stable env ponyc -Dopenssl_1.1.x
+RUN stable env ponyc -Dopenssl_1.1.x -Dstatic
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+FROM alpine
 
-{{^command}}
-  CMD ./main
-{{/command}}
+WORKDIR /opt
 
+COPY --from=0 /src/main/main main
+
+CMD ./main
