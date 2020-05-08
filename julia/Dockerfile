@@ -1,8 +1,10 @@
 FROM julia:1.5
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
-COPY server.jl Project.toml deps.jl ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
 RUN julia deps.jl
 
