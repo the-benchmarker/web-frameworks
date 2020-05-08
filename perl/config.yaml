@@ -1,7 +1,38 @@
 provider:
   default:
     language: 5.30
+  digitalocean:
+    language: 5.30
 
 files:
   - cpanfile
-  - "*/**.psgi"
+  - "**/*.psgi"
+
+cloud:
+  config:
+    package_update: true
+    packages:
+      - perl
+      - perl-App-cpanminus
+    runcmd:
+      - systemctl disable cloud-init
+      - systemctl enable web
+      - cd /opt/web && cpanm --notest --installdeps .
+
+command: /usr/local/bin/plackup -s Gazelle --port 3000 --env production --app d2app.psgi
+
+service: |
+  [Unit]
+  Description=web
+  After=network.target
+
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/web
+  WorkingDirectory=/opt/web
+  ExecStart={{{command}}}
+  Restart=always
+
+  [Install]
+  WantedBy=multi-user.target
+
