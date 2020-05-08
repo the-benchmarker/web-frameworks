@@ -2,7 +2,7 @@ provider:
   default:
     language: 13.14
   digitalocean:
-    language: 13.14
+    language: 12.16
 
 files:
   - app.js
@@ -15,35 +15,21 @@ environment:
   PM2_HOME: /root/.pm2
 
 after_command:
-  - /usr/local/bin/npm -g install pm2
+  - npm -g install pm2
 
 cloud:
   config:
     package_update: true
-    package_upgrade: true
     packages:
-      - build-essential
+      - "@development-tools"
+      - nodejs
     runcmd:
-      - snap install node --channel=13/stable --classic
-      
-      # Symlinks node and npm to a standard path location
-
-      - ln -sfv /snap/bin/node /usr/local/bin/node
-      - ln -sfv /snap/bin/npm /usr/local/bin/npm
-
-      - cd /opt/web && /usr/local/bin/npm install
-
-      # Disable cloud-init to avoid re-run on reboot
+      - cd /opt/web && npm install
       - systemctl disable cloud-init
-
-      # Enable web so as application is started at startup
       - systemctl enable web
 
 command: /usr/local/bin/pm2-runtime /opt/web/config/ecosystem.config.js app
 
-# SystemD startup script
-# This need to be tuned
-# For security (do not run as root) ...
 service: |
   [Unit]
   After=network.target

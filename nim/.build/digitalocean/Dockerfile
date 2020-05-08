@@ -1,10 +1,10 @@
-FROM nimlang/nim:1.2.0
+FROM nimlang/nim:1.2.0-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
-{{#files}}
+{{#sources}}
   COPY {{{.}}} {{{.}}}
-{{/files}}
+{{/sources}}
 
 RUN nimble c \
     -d:danger \
@@ -21,13 +21,3 @@ RUN nimble c \
     -d:release \
     --threads:on \
         -y server.nim
-
-FROM alpine
-
-WORKDIR /opt/web
-
-{{#binaries}}
-  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
-{{/binaries}}}
-
-CMD /opt/web/server

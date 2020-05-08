@@ -1,4 +1,10 @@
-FROM clojure:openjdk-11-tools-deps-slim-buster
+{{#image}}
+  FROM {{{.}}}
+{{/image}}
+
+{{^image}}
+  FROM clojure:openjdk-11-tools-deps-slim-buster
+{{/image}}
 
 WORKDIR /opt/web
 
@@ -6,4 +12,10 @@ WORKDIR /opt/web
   COPY {{{.}}} {{{.}}}
 {{/sources}}
 
-RUN clojure -Auberjar
+{{#build}}
+  RUN {{{.}}}
+{{/build}}
+
+{{^build}}
+  RUN clojure -Auberjar
+{{/build}}
