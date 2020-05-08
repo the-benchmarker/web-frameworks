@@ -2,6 +2,15 @@ provider:
   default:
     language: 5.0
 
-files:
+sources:
   - "**/*.fs"
-  - "**/*.fsproj"
+
+binaries:
+  - out/FSharp.Core.dll
+  - out/web.dll
+  - out/web.runtimeconfig.json
+
+environment:
+  COMPlus_TieredCompilation: 1
+
+command: /usr/bin/dotnet /opt/web/out/web.dll
