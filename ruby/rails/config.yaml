@@ -3,8 +3,13 @@ framework:
   version: 6.0
 
 deps:
+  - libxml2-devel
+  - libxslt-devel
+
+alpine-deps:
   - libxml2-dev
   - libxslt-dev
+
 
 files:
   - Gemfile

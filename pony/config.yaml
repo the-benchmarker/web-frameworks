@@ -3,12 +3,12 @@ provider:
     language: 0.35
     
 deps: 
-  - libssl1.1
-  - libatomic1
-  
-sources:
-  - "**/*.pony"
-  - bundle.json
+  - libatomic
 
 binaries:
-  - main
+  - web
+ 
+sources:
+  - "**/*.pony"
+  
+command: /opt/web/web

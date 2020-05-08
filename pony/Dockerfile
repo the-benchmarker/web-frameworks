@@ -4,11 +4,13 @@ RUN apt-get -y update && apt-get -y install clang libssl-dev
 
 WORKDIR /src/main
 
+COPY bundle.json .
+
+RUN stable fetch
+
 {{#sources}}
   COPY {{{.}}} {{{.}}}
 {{/sources}}
-
-RUN stable fetch
 
 {{#environment}}
   ENV {{{.}}}
@@ -20,7 +22,7 @@ RUN stable fetch
 
 RUN stable env ponyc -Dopenssl_1.1.x -Dstatic
 
-FROM ubuntu
+FROM ubuntu 
 
 RUN apt-get -y update && apt-get -y install openssl libatomic1
 
