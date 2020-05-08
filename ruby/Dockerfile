@@ -8,6 +8,9 @@ WORKDIR /opt/web
 
 RUN apk add build-base
 
+RUN ln -sfv /usr/local/bin/ruby /usr/bin/ruby
+RUN ln -sfv /usr/local/bin/bundle /usr/bin/bundle
+
 {{#alpine-deps}}
   RUN apk add {{{.}}} {{{.}}}
 {{/alpine-deps}}
