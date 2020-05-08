@@ -4,10 +4,6 @@ RUN apk add build-base
 
 WORKDIR /opt/web
 
-{{#deps}}
-  RUN apk add {{{.}}}
-{{/deps}}
-
 {{#alpine-deps}}
   RUN apk add {{{.}}}
 {{/alpine-deps}}

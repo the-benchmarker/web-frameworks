@@ -1,18 +1,10 @@
-FROM crystallang/crystal:0.34.0
+FROM crystallang/crystal:0.34.0-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
 {{#sources}}
   COPY {{{.}}} {{{.}}}
 {{/sources}}
 
 RUN shards install --production
-RUN shards build --release --no-debug
-
-FROM alpine
-
-WORKDIR /opt/web
-
-{{#binaries}}
-  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
-{{/binaries}}
+RUN shards build --release --no-debug --static {{#build_opts}} {{{.}}} {{/build_opts}}

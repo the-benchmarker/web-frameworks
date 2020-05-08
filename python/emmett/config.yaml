@@ -3,7 +3,11 @@ framework:
   version: 2.1
 
 deps:
+  - libffi-devel
+
+alpine-deps:
   - libffi-dev
+  - openssl-dev
 
 files:
   - server.py

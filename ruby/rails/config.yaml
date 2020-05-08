@@ -3,6 +3,10 @@ framework:
   version: 6.1
 
 deps:
+  - libxml2-devel
+  - libxslt-devel
+
+alpine-deps:
   - libxml2-dev
   - libxslt-dev
 

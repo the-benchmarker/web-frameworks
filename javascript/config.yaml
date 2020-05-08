@@ -12,49 +12,5 @@ environment:
   PORT: 3000
   PM2_HOME: /root/.pm2
 
-after_command:
-  - /usr/local/bin/npm -g install pm2
-
-cloud:
-  config:
-    package_update: true
-    package_upgrade: true
-    packages:
-      - build-essential
-    runcmd:
-      - snap install node --channel=13/stable --classic
-
-      # Symlinks node and npm to a standard path location
-
-      - ln -sfv /snap/bin/node /usr/local/bin/node
-      - ln -sfv /snap/bin/npm /usr/local/bin/npm
-
-      - cd /opt/web && /usr/local/bin/npm install
-
-      # Disable cloud-init to avoid re-run on reboot
-      - systemctl disable cloud-init
-
-      # Enable web so as application is started at startup
-      - systemctl enable web
-
-command: /usr/local/bin/pm2-runtime /opt/web/config/ecosystem.config.js app
-
-# SystemD startup script
-# This need to be tuned
-# For security (do not run as root) ...
-service: |
-  [Unit]
-  After=network.target
-
-  [Service]
-  Type=simple
-  WorkingDirectory=/opt/web
-  EnvironmentFile=/etc/web
-  ExecStart={{{command}}}
-  Restart=on-failure
-
-  [Install]
-  WantedBy=multi-user.target
-
-# By default, we force a sleep on docker (or docker-machine)
-docker_pause: 5
+bootstrap:
+  - npm -g install pm2

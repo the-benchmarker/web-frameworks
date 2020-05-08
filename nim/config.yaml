@@ -3,35 +3,8 @@ provider:
     language: 1.4
 
 sources:
-  - "*.nim"
-  - "*.nimble"
+  - "**/*.nim"
+  - "**/*.nimble"
 
 binaries:
   - server
-
-cloud:
-  config:
-    package_update: true
-    package_upgrade: true
-    runcmd:
-      # Disable cloud-init to avoid re-run on reboot
-      - systemctl disable cloud-init
-
-      # Enable web so as application is started at startup
-      - systemctl enable web
-
-# SystemD startup script
-# This need to be tuned
-# For security (do not run as root) ...
-service: |
-  [Unit]
-  Description=web
-
-  [Service]
-  Type=notify
-  EnvironmentFile=/etc/web
-  WorkingDirectory=/opt/web
-  ExecStart=/opt/web/server
-
-  [Install]
-  WantedBy=multi-user.target

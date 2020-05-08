@@ -10,4 +10,4 @@ build:
 binaries:
   - target/uberjar/luminus.jar
 
-command: java -jar target/uberjar/luminus.jar 3000
+command: /usr/bin/java -jar /opt/web/target/uberjar/luminus.jar 3000

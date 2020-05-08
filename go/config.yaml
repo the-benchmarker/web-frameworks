@@ -1,3 +1,31 @@
 provider:
   default:
     language: 1.15
+
+binaries:
+  - app
+
+sources:
+  - main.go
+  - go.mod
+
+cloud:
+  config:
+    package_update: true
+    runcmd:
+      - systemctl disable cloud-init
+      - systemctl enable web
+
+service: |
+  [Unit]
+  Description=web
+  After=network.target
+
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/web
+  WorkingDirectory=/opt/web
+  ExecStart=/opt/web/app
+
+  [Install]
+  WantedBy=multi-user.target
