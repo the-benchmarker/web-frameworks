@@ -5,15 +5,15 @@ provider:
 docker_pause: 10
 
 sources:
-  - "src/**/*.clj"
+  - "**/*.clj"
   - "**/*.edn"
+  - "**/*.xml"
 
 cloud:
   config:
     package_update: true
-    package_upgrade: true
     packages:
-      - openjdk-11-jre
+      - java-11-openjdk
     runcmd:
       - systemctl disable cloud-init
       - systemctl enable web

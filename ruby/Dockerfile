@@ -8,6 +8,10 @@ WORKDIR /opt/web
 
 RUN apk add build-base
 
+{{#alpine-deps}}
+  RUN apk add {{{.}}} {{{.}}}
+{{/alpine-deps}}
+
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
