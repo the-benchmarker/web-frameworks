@@ -10,41 +10,17 @@ environments:
 cloud:
   config:
     package_update: true
-    package_upgrade: true
     packages:
-      - build-essential
+      - "@development-tools"
+      - "@rpm-development-tools"
+      - ruby
+      - ruby-devel
     runcmd:
-      # Install the latest version of ruby
-      - snap install ruby --classic
-
-      # Symlinks ruby and bunlder to a standard path location
-      - ln -sfv /snap/bin/bundle /usr/local/bin/bundle
-      - ln -sfv /snap/bin/ruby /usr/local/bin/ruby
-
-      # Disable cloud-init to avoid re-run on reboot
       - systemctl disable cloud-init
-
-      # Enable web so as application is started at startup
       - systemctl enable web
 
-after_command:
-  - cd /opt/web && bundle config set without 'development test'
-  - cd /opt/web && bundle config set path 'vendor/bundle'
-  - cd /opt/web && bundle install
-
-  # Install puma binstubs
-  # This is done only if puma gem is installed (some usage does not require puma)
-  - cd /opt/web && bundle info puma && bundle binstubs puma || echo
-
-  # Install bundler binstubs
-  - cd /opt/web && bundle binstubs bundler
-
-# This is the default command, and could be overwrittern
 command: /opt/web/bin/bundle exec /opt/web/bin/puma -C /opt/web/config/puma.rb
 
-# SystemD startup script
-# This need to be tuned
-# For security (do not run as root) ...
 service: |
   [Unit]
   Description=Puma HTTP Server
