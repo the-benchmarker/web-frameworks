@@ -1,10 +1,38 @@
 provider:
   default:
     language: 1.5
+  digitalocean:
+    language: 1.5
 
 files:
-  - '**/*.jl'
-  - Manifest.toml
+  - "**/*.jl"
   - Project.toml
 
 docker_pause: 20
+
+cloud:
+  config:
+    package_update: true
+    packages:
+      - julia
+    runcmd:
+      - systemctl disable cloud-init
+      - systemctl enable web
+      - "cd /opt/web && julia deps.jl"
+
+command: /usr/bin/julia /opt/web/server.jl
+
+service: |
+  [Unit]
+  Description=web
+  After=network.target
+
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/web
+  WorkingDirectory=/opt/web
+  ExecStart={{{command}}}
+  Restart=always
+
+  [Install]
+  WantedBy=multi-user.target
