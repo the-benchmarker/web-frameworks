@@ -7,7 +7,7 @@ image: clojure:openjdk-11-lein-slim-buster
 build: 
   - lein uberjar
 
-files:
-  - target/uberjar/luminus.jar
+binaries:
+  - /opt/web/target/uberjar/luminus.jar
 
-command: java -jar target/uberjar/luminus.jar 3000
+command: /usr/bin/java -jar /opt/web/target/uberjar/luminus.jar 3000
