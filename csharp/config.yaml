@@ -2,6 +2,13 @@ provider:
   default:
     language: 8.0
 
-files:
-  - "**/*.csproj"
+sources:
   - "**/*.cs"
+
+binaries:
+  - out/web.dll
+  - out/web.runtimeconfig.json
+
+environment:
+  ASPNETCORE_URLS: http://*:3000
+  COMPlus_TieredCompilation: 1

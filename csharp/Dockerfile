@@ -11,7 +11,6 @@ RUN dotnet restore
     COPY {{{.}}} {{{.}}}
 {{/sources}}
 
-
 RUN dotnet publish -c release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine
