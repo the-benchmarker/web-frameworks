@@ -19,6 +19,18 @@ cloud:
       - systemctl disable cloud-init
       - systemctl enable web
 
+after_command:
+  - cd /opt/web && bundle config set without 'development test'
+  - cd /opt/web && bundle config set path 'vendor/bundle'
+  - cd /opt/web && bundle install
+
+  # Install puma binstubs
+  # This is done only if puma gem is installed (some usage does not require puma)
+  - cd /opt/web && bundle info puma && bundle binstubs puma || echo
+
+  # Install bundler binstubs
+  - cd /opt/web && bundle binstubs bundler
+
 command: /opt/web/bin/bundle exec /opt/web/bin/puma -C /opt/web/config/puma.rb
 
 service: |
