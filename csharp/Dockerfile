@@ -11,7 +11,6 @@ RUN dotnet restore
     COPY {{{.}}} {{{.}}}
 {{/sources}}
 
-
 RUN dotnet publish -c release -o out
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
