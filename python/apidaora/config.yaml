@@ -7,6 +7,7 @@ deps:
   - curl
 
 alpine-deps:
+  - curl
   - libffi-dev
   - openssl-dev
 
