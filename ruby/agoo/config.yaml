@@ -5,7 +5,7 @@ framework:
 environment:
   AGOO_WORKER_COUNT: $(nproc)
 
-command: /opt/web/bin/bundle exec /usr/local/bin/ruby /opt/web/app.rb
+command: /opt/web/bin/bundle exec /usr/bin/ruby /opt/web/app.rb
 
 before_command:
   # Install bundler binstubs
