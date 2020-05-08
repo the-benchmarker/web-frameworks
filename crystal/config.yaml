@@ -14,19 +14,11 @@ binaries:
 cloud:
   config:
     package_update: true
-    package_upgrade: true
     runcmd:
-      - mkdir -p /usr/src/app
-      
-      # Disable cloud-init to avoid re-run on reboot
+      #- ln -sfv /usr/lib64/libpcre.so.1 /usr/lib64/libpcre.so.3
       - systemctl disable cloud-init
-
-      # Enable web so as application is started at startup
       - systemctl enable web
       
-# SystemD startup script
-# This need to be tuned
-# For security (do not run as root) ...
 service: |
   [Unit]
   Description=web
