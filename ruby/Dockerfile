@@ -15,6 +15,10 @@ RUN ln -sfv /usr/local/bin/bundle /usr/bin/bundle
   RUN apk add {{{.}}} {{{.}}}
 {{/alpine-deps}}
 
+{{#alpine-deps}}
+  RUN apk add {{{.}}} {{{.}}}
+{{/alpine-deps}}
+
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
