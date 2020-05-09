@@ -1,9 +1,38 @@
 provider:
   default:
     language: 2.8
+  digitalocean:
+    language: 2.8
 
 files:
   - main.dart
   - pubspec.yaml
 
 docker_pause: 5
+
+cloud:
+  config:
+    package_update: true
+    runcmd:
+      - systemctl disable cloud-init
+      - systemctl enable web
+      - dnf copr -y enable tcg/devel
+      - dnf -y install dart-bin
+      - cd /opt/web && pub get
+
+command: /usr/bin/dart /opt/web/main.dart
+
+service: |
+  [Unit]
+  Description=Puma HTTP Server
+  After=network.target
+
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/web
+  WorkingDirectory=/opt/web
+  ExecStart={{{command}}}
+  Restart=always
+
+  [Install]
+  WantedBy=multi-user.target
