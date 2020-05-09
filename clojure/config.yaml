@@ -7,7 +7,7 @@ docker_pause: 10
 sources:
   - "**/*.clj"
   - "**/*.edn"
-  - "**/*.xml"
+  - "**/logback.xml"
 
 cloud:
   config:
@@ -17,6 +17,7 @@ cloud:
     runcmd:
       - systemctl disable cloud-init
       - systemctl enable web
+      - mkdir -p /opt/web/target/uberjar
 
 service: |
   [Unit]
