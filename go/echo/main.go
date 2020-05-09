@@ -13,7 +13,8 @@ func main() {
 	})
 
 	e.GET("/user/:id", func(c echo.Context) error {
-		_, err := c.Response().Write([]byte(c.Param("id")))
+		id := c.Param("id")
+		_, err := c.Response().Write([]byte(id))
 		return err
 	})
 
