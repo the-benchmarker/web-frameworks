@@ -1228,6 +1228,11 @@ blocks:
       - mkdir -p .neph/elixir/plug
       - bin/neph elixir/plug --mode=CI
       - FRAMEWORK=elixir/plug bundle exec rspec .spec
+    - name: cowboy-stream
+      commands:
+      - mkdir -p .neph/elixir/cowboy-stream
+      - bin/neph elixir/cowboy-stream --mode=CI
+      - FRAMEWORK=elixir/cowboy-stream bundle exec rspec .spec
     - name: cowboy
       commands:
       - mkdir -p .neph/elixir/cowboy
@@ -1238,11 +1243,6 @@ blocks:
       - mkdir -p .neph/elixir/phoenix
       - bin/neph elixir/phoenix --mode=CI
       - FRAMEWORK=elixir/phoenix bundle exec rspec .spec
-    - name: cowboy_stream
-      commands:
-      - mkdir -p .neph/elixir/cowboy_stream
-      - bin/neph elixir/cowboy_stream --mode=CI
-      - FRAMEWORK=elixir/cowboy_stream bundle exec rspec .spec
     epilogue:
       always:
         commands:
