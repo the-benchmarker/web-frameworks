@@ -7,12 +7,12 @@ import (
 )
 
 func showEmpty(ctx *atreugo.RequestCtx) error {
-	return nil
+	return ctx.TextResponseBytes([]byte(""))
 }
 
 func showID(ctx *atreugo.RequestCtx) error {
 	id := ctx.UserValue("id").(string)
-	return ctx.TextResponse(id)
+	return ctx.TextResponseBytes([]byte(id))
 }
 
 func main() {
