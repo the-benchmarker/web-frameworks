@@ -7,10 +7,10 @@ image: gradle:6.1-jdk8
 build:
   - gradle clean shadowJar
 
-files:
-  - build/libs/benchmark.jar
+binaries:
+  - build/libs/my-application.jar
 
-command: >
-  java -server
-  -Xms4g -Xmx4g -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:-UseBiasedLocking -XX:+UseStringDeduplication
-  -jar build/libs/benchmark.jar benchmark.AppKt
+command: >-
+  /usr/bin/java -server
+  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:-UseBiasedLocking -XX:+UseStringDeduplication
+  -jar /opt/web/build/libs/my-application.jar benchmark.AppKt

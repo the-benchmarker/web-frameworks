@@ -6,15 +6,25 @@ USER root
 RUN chown -R gradle /usr/src/app
 USER gradle
 
-COPY . ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
-RUN gradle build
+{{#build}}
+  RUN {{{.}}}
+{{/build}}
+
+{{^build}}
+  RUN gradle build
+{{/build}}
 
 FROM openjdk:11-jre-slim
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
-COPY --from=0 /usr/src/app/build/libs/my-application.jar /usr/src/app/build/libs/my-application.jar
+COPY --from=0 /usr/src/app/build/libs/my-application.jar build/libs/my-application.jar
 
-CMD java -server -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:+AlwaysPreTouch -jar /usr/src/app/build/libs/my-application.jar
+RUN ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
+
+CMD /usr/bin/java -server -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:+AlwaysPreTouch -jar /opt/web/build/libs/my-application.jar
 
