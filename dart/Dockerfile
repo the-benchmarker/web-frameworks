@@ -1,15 +1,11 @@
 FROM google/dart:2.8
 
-WORKDIR /app
+WORKDIR /opt/web
 
-ADD pubspec.* /app/
+{{#files}}
+    COPY {{{.}}} {{{.}}}
+{{/files}}
 
-RUN pub get --no-precompile
-
-ADD . /app/
-
-RUN pub get --offline --no-precompile
-
-WORKDIR /app
+RUN pub get
 
 CMD dart main.dart
