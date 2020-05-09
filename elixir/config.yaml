@@ -4,6 +4,36 @@ provider:
 
 files:
   - '**/*.ex'
-  - mix.exs
+  - '**/*.exs'
+  - ../.script/compile.sh
+
+environment:
+  HOME: /opt/web
 
 docker_pause: 25
+
+cloud:
+  config:
+    package_update: true
+    packages:
+      - elixir
+    runcmd:
+      - systemctl disable cloud-init
+      - systemctl enable web
+      
+command: /opt/web/release/bin/server start
+
+service: |
+  [Unit]
+  Description=web
+  After=network.target
+
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/web
+  WorkingDirectory=/opt/web
+  ExecStart={{{command}}}
+  Restart=always
+
+  [Install]
+  WantedBy=multi-user.target
