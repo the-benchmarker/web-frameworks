@@ -4,10 +4,16 @@ framework:
 
 image: clojure:openjdk-11-lein-slim-buster
 
+sources:
+  - "**/*.clj"
+  - "**/*.edn"
+  - "**/logback.xml"
+  - "**/*.html"
+
 build: 
   - lein uberjar
 
 binaries:
-  - /opt/web/target/uberjar/luminus.jar
+  - target/uberjar/luminus.jar
 
 command: /usr/bin/java -jar /opt/web/target/uberjar/luminus.jar 3000
