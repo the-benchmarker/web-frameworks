@@ -11,7 +11,9 @@ RUN mix local.hex --force
 WORKDIR /usr/src/app
 
 # Copy source code
-COPY . ./
+{{#files}}
+  COPY {{{.}}} {{{.}}}
+{{/files}}
 
 ENV MIX_ENV="prod"
 ENV ERL_COMPILER_OPTIONS="[native, {hipe, [verbose, o3]}]"

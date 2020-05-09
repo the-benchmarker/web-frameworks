@@ -479,16 +479,16 @@ blocks:
       - mkdir -p .neph/elixir/cowboy
       - retry bin/neph elixir/cowboy --mode=CI
       - FRAMEWORK=elixir/cowboy bundle exec rspec .spec
-    - name: cowboy_stream
-      commands:
-      - mkdir -p .neph/elixir/cowboy_stream
-      - retry bin/neph elixir/cowboy_stream --mode=CI
-      - FRAMEWORK=elixir/cowboy_stream bundle exec rspec .spec
     - name: phoenix
       commands:
       - mkdir -p .neph/elixir/phoenix
       - retry bin/neph elixir/phoenix --mode=CI
       - FRAMEWORK=elixir/phoenix bundle exec rspec .spec
+    - name: cowboy-stream
+      commands:
+      - mkdir -p .neph/elixir/cowboy-stream
+      - retry bin/neph elixir/cowboy-stream --mode=CI
+      - FRAMEWORK=elixir/cowboy-stream bundle exec rspec .spec
     - name: plug
       commands:
       - mkdir -p .neph/elixir/plug
