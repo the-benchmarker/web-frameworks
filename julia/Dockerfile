@@ -2,9 +2,9 @@ FROM julia:1.5
 
 WORKDIR /opt/web
 
-{{#sources}}
+{{#files}}
   COPY {{{.}}} {{{.}}}
-{{/sources}}
+{{/files}}
 
 RUN julia deps.jl
 
