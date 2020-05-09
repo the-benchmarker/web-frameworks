@@ -8,7 +8,9 @@
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
 {{#build}}
   RUN {{{.}}}

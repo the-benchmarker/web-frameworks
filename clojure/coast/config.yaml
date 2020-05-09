@@ -11,4 +11,4 @@ build:
 binaries:
   - coast.jar
 
-command: /usr/bin/java -jar coast.jar 3000
+command: /usr/bin/java -jar /opt/web/coast.jar 3000
