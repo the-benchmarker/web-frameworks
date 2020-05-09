@@ -1,20 +1,19 @@
-FROM gradle:6.1-jdk8
+FROM gradle:jdk11
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
 USER root
-RUN chown -R gradle /usr/src/app
+RUN chown -R gradle /opt/web
 USER gradle
 
-COPY . ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
-RUN gradle build
+{{#build}}
+  RUN {{{.}}}
+{{/build}}
 
-FROM openjdk:8-alpine
-
-WORKDIR /usr/src/app
-
-COPY --from=0 /usr/src/app/build/libs/my-application.jar /usr/src/app/build/libs/my-application.jar
-
-CMD java -server -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:+AlwaysPreTouch -jar /usr/src/app/build/libs/my-application.jar
-
+{{^build}}
+  RUN gradle build
+{{/build}}
