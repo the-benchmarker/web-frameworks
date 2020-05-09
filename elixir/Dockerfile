@@ -1,4 +1,4 @@
-FROM elixir:1.10-alpine AS build
+FROM elixir:1.9-alpine AS build
 
 # Update system deps
 RUN apk add --update git build-base
@@ -11,7 +11,9 @@ RUN mix local.hex --force
 WORKDIR /usr/src/app
 
 # Copy source code
-COPY . ./
+{{#files}}
+  COPY {{{.}}} {{{.}}}
+{{/files}}
 
 ENV MIX_ENV="prod"
 ENV ERL_COMPILER_OPTIONS="[native, {hipe, [verbose, o3]}]"
