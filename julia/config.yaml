@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 provider:
   default:
     language: 1.5
@@ -36,3 +37,44 @@ service: |
 
   [Install]
   WantedBy=multi-user.target
+=======
+provider:
+  default:
+    language: 1.4
+  digitalocean:
+    language: 1.4
+
+files:
+  - "**/*.jl"
+  - Project.toml
+  - Manifest.toml
+
+docker_pause: 20
+
+cloud:
+  config:
+    package_update: true
+    packages:
+      - julia
+    runcmd:
+      - systemctl disable cloud-init
+      - systemctl enable web
+      - cd /opt/web && julia deps.jl
+
+command: /usr/bin/julia /opt/web/server.jl
+
+service: |
+  [Unit]
+  Description=web
+  After=network.target
+
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/web
+  WorkingDirectory=/opt/web
+  ExecStart={{{command}}}
+  Restart=always
+
+  [Install]
+  WantedBy=multi-user.target
+>>>>>>> 4db6aa6a... fix(julia): Missing files in container
