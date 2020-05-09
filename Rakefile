@@ -38,6 +38,10 @@ def commands_for(language, framework, **options)
     options[key] = value unless options.key?(key)
   end
 
+  if language == "elixir"
+    options["before"] = ['/opt/web/script/compile.sh']
+  end
+
   commands = []
 
   # Compile first
@@ -62,7 +66,7 @@ def commands_for(language, framework, **options)
   if ["docker", "docker-machine"].include?(options[:provider]) && main_config.key?("docker_pause")
     commands << "sleep #{main_config["docker_pause"]}"
   end
-
+  
   commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
 
   unless options[:clean] == "off"
@@ -116,7 +120,7 @@ def create_dockerfile(language, framework, **options)
   if options[:provider] == "docker"
     template = File.join(directory, "..", "Dockerfile")
   else
-    template = File.join(directory, "..", ".build", options[:provider], "Dockerfile") unless %w[javascript php python ruby julia perl dart].include?(language)
+    template = File.join(directory, "..", ".build", options[:provider], "Dockerfile") if config.key?("binary")
   end
 
   if config.key?("environment")
@@ -278,7 +282,6 @@ namespace :cloud do
         binaries = {}
         files.each do |path|
           remote_path = path.gsub(directory, "").gsub(%r{^/}, "").gsub(%r{^\.\./\.}, "")
-          pp path, remote_path
           binaries[path] = File.join("/opt/web", remote_path)
         end
 
@@ -286,7 +289,7 @@ namespace :cloud do
 
         Net::SCP.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |scp|
           binaries.each do |local_path, remote_path|
-            scp.upload!(local_path, remote_path)
+            scp.upload!(local_path, remote_path, {verbose: true, recursive: true})
           end
         end
       end
