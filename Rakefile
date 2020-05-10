@@ -38,9 +38,7 @@ def commands_for(language, framework, **options)
     options[key] = value unless options.key?(key)
   end
 
-  if language == "elixir"
-    options["before"] = ['/opt/web/script/compile.sh']
-  end
+    options.merge!(bootstrap: app_config['bootstrap'])  if app_config.key?('bootstrap')
 
   commands = []
 
@@ -62,9 +60,6 @@ def commands_for(language, framework, **options)
 
   config["providers"][options[:provider]]["metadata"].each do |cmd|
     commands << Mustache.render(cmd, options).to_s
-  end
-  if ["docker", "docker-machine"].include?(options[:provider]) && main_config.key?("docker_pause")
-    commands << "sleep #{main_config["docker_pause"]}"
   end
   
   commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
@@ -120,7 +115,7 @@ def create_dockerfile(language, framework, **options)
   if options[:provider] == "docker"
     template = File.join(directory, "..", "Dockerfile")
   else
-    template = File.join(directory, "..", ".build", options[:provider], "Dockerfile") if config.key?("binary")
+    template = File.join(directory, "..", ".build", options[:provider], "Dockerfile") if config.key?("binaries")
   end
 
   if config.key?("environment")
@@ -221,12 +216,6 @@ namespace :cloud do
       end
     end
 
-    if config.key?("after_command")
-      config["after_command"].each do |cmd|
-        config["cloud"]["config"]["runcmd"] << cmd
-      end
-    end
-
     directories = []
     if config.key?("files")
       config["files"].each do |pattern|
@@ -289,7 +278,7 @@ namespace :cloud do
 
         Net::SCP.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |scp|
           binaries.each do |local_path, remote_path|
-            scp.upload!(local_path, remote_path, {verbose: true, recursive: true})
+            scp.upload!(local_path, remote_path, verbose: true, recursive: true)
           end
         end
       end
