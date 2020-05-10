@@ -19,6 +19,7 @@ providers:
     metadata:
       - docker run -td {{{language}}}.{{{framework}}} > cid.txt
       - docker inspect `cat cid.txt` | jq -r '.[0].NetworkSettings.IPAddress' > ip.txt
+      - while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker rm -f
@@ -30,6 +31,7 @@ providers:
 
     metadata:
       - docker-machine inspect the-benchmarker > ip.txt
+      - while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker rm -f
@@ -45,13 +47,8 @@ providers:
       - doctl compute droplet list {{{language}}}.{{{framework}}} --format {{{DO_ATTRIBUTE}}} --no-header > ip.txt
       - rake cloud:wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
       - rake cloud:upload LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
-      - >-
-        {{#before}}
-          doctl compute ssh {{{language}}}.{{{framework}}} --ssh-key-path {{{DO_KEY}}} --ssh-command 'bash {{{.}}}'
-        {{/before}}      
+      - "{{#bootstrap}} doctl compute ssh {{{language}}}.{{{framework}}} --ssh-key-path {{{DO_KEY}}} --ssh-command '{{{.}}}' {{/bootstrap}}"
       - doctl compute droplet-action reboot `cat id.txt`
-      - sleep 10
-      - while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done
 
     clean:
       - doctl compute droplet delete {{{language}}}.{{{framework}}} --force
