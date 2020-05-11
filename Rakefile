@@ -66,9 +66,6 @@ def commands_for(language, framework, **options)
   config['providers'][options[:provider]]['metadata'].each do |cmd|
     commands << Mustache.render(cmd, options).to_s
   end
-  if ['docker','docker-machine'].include?(options[:provider]) && main_config.key?('docker_pause')
-  commands << "sleep #{main_config["docker_pause"]}"
-  end
 
   if app_config.key?('bootstrap') && config['providers'][options[:provider]].key?('exec')
     remote_command = config['providers'][options[:provider]]['exec']
