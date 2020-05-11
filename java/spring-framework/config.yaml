@@ -5,13 +5,6 @@ framework:
 build:
   - mvn clean package
 
-deps:
-  - jetty-runner
-
-binaries: 
-  - target/benchmark-0.0.1-SNAPSHOT.war
 
 command: >
-  java 
-  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts 
-  -jar /usr/share/java/jetty-runner.jar --port 3000 target/benchmark-0.0.1-SNAPSHOT.war
+  /usr/bin/java -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/benchmark-0.0.1-SNAPSHOT/WEB-INF/lib/jetty-runner-9.4.12.RC2.jar --port 3000 /opt/web/target/benchmark-0.0.1-SNAPSHOT.war
