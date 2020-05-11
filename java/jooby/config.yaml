@@ -4,11 +4,8 @@ framework:
 
 build: 
   - mvn clean package
-  
-binaries:
-  - target/benchmark.jar
 
 command: >
-  java -server
-  -Xms4g -Xmx4g -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:-UseBiasedLocking -XX:+UseStringDeduplication
-  -jar target/benchmark.jar benchmark.App
+  /usr/bin/java -server
+  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:-UseBiasedLocking -XX:+UseStringDeduplication
+  -jar /opt/web/target/benchmark.jar benchmark.App
