@@ -6,7 +6,7 @@
   FROM maven:3-jdk-8-alpine
 {{/image}}
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/web
 
 {{#sources}}
   COPY {{{.}}} {{{.}}}
@@ -34,16 +34,16 @@ FROM openjdk:8-jre-alpine
 WORKDIR /opt/web
 
 {{#binaries}}
-  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+  COPY --from=0 /usr/src/web/{{{.}}} {{{.}}}
 {{/binaries}}
 
-{{#after_command}}
+{{#bootstrap}}
   RUN {{{.}}}
-{{/after_command}}
+{{/bootstrap}}
 
-{{#deps}}
+{{#alpine-deps}}
   RUN apk add {{{.}}}
-{{/deps}}
+{{/alpine-deps}}
 
 {{#environment}}
   ENV {{{.}}}

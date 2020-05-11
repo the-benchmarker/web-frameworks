@@ -2,13 +2,10 @@ framework:
   website: actframework.org
   version: 1.8
 
-deps:
+alpine-deps:
   - bash
 
-binaries:
-  - target/dist/*.tar.gz
-
-after_command:
+bootstrap:
   - tar -xvzf target/dist/*.tar.gz
 
-command: bash run
+command: /opt/web/run
