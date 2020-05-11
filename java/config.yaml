@@ -6,7 +6,6 @@ provider:
 
 sources:
   - src/**/*.java
-  - src/**/*.properties
   - pom.xml
 
 files:
