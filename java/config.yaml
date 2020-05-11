@@ -1,10 +1,16 @@
 provider:
   default:
     language: 8
+  digitalocean:
+    language: 8
 
 sources:
   - src/**/*.java
   - src/**/*.properties
   - pom.xml
 
-docker_pause: 10
+binaries:
+  - target
+
+deps:
+  - java-1.8.0-openjdk
