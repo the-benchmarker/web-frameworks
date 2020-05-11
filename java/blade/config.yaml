@@ -5,8 +5,5 @@ framework:
 build:
   - mvn compile assembly:single -q
 
-binaries:
-  - target/benchmark-0.0.1-jar-with-dependencies.jar
-
 command: >
-  java -jar target/benchmark-0.0.1-jar-with-dependencies.jar
+  /usr/bin/java -jar /opt/web/target/benchmark-0.0.1-jar-with-dependencies.jar

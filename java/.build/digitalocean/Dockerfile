@@ -3,12 +3,18 @@
 {{/image}}
 
 {{^image}}
-  FROM maven:3-jdk-8-alpine
+  FROM maven:3-jdk-8
 {{/image}}
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
-COPY . ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
+
+{{#files}}
+  COPY {{.}} {{{.}}}
+{{/files}}
 
 {{#patch}}
   {{{.}}}
@@ -19,33 +25,5 @@ COPY . ./
 {{/build}}
 
 {{^build}}
-  RUN mvn clean package -q
+  RUN mvn package
 {{/build}}
-
-
-FROM openjdk:8-alpine
-
-{{#bin_deps}}
-  RUN apk add {{{.}}}
-{{/bin_deps}}
-
-WORKDIR /usr/src/app
-
-
-{{#files}}
-COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
-{{/files}}
-
-
-WORKDIR /usr/src/app
-{{#files}}
-COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
-{{/files}}
-
-{{#before_command}}
-  RUN {{{.}}}
-{{/before_command}}
-
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
