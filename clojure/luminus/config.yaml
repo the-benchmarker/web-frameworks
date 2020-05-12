@@ -14,6 +14,6 @@ build:
   - lein uberjar
 
 binaries:
-  - target/uberjar/luminus.jar
+  - target
 
 command: /usr/bin/java -jar /opt/web/target/uberjar/luminus.jar 3000
