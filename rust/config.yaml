@@ -3,3 +3,8 @@ provider:
     language: 1.44
   digitalocean:
     language: 1.44
+    
+binaries:
+  - server
+  
+command: /opt/web/server
