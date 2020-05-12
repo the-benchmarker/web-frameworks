@@ -10,30 +10,11 @@ files:
 environment:
   HOME: /opt/web
 
-docker_pause: 25
+bootstrap:
+  - bash script/compile.sh
 
-cloud:
-  config:
-    package_update: true
-    packages:
-      - elixir
-    runcmd:
-      - systemctl disable cloud-init
-      - systemctl enable web
-      
+deps:
+  - elixir
+
 command: /opt/web/release/bin/server start
 
-service: |
-  [Unit]
-  Description=web
-  After=network.target
-
-  [Service]
-  Type=simple
-  EnvironmentFile=/etc/web
-  WorkingDirectory=/opt/web
-  ExecStart={{{command}}}
-  Restart=always
-
-  [Install]
-  WantedBy=multi-user.target

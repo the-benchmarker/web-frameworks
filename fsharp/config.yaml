@@ -6,39 +6,12 @@ sources:
   - '**/*.fs'
 
 binaries:
-  - out/FSharp.Core.dll
-  - out/Suave.dll
-  - out/suaveapp.dll
-  - out/suaveapp.runtimeconfig.json
+  - out
 
 environment:
   COMPlus_TieredCompilation: 1
 
-cloud:
-  config:
-    package_update: true
-    packages:
-      - aspnetcore-runtime-3.1
-    runcmd:
-      - systemctl disable cloud-init
-      - systemctl enable web
-      - mkdir -p /opt/web/out
+deps:
+  - aspnetcore-runtime-3.1
 
 command: /usr/bin/dotnet /opt/web/out/suaveapp.dll
-
-service: |
-  [Unit]
-  Description=web
-  After=network.target
-
-  [Service]
-  Type=simple
-  EnvironmentFile=/etc/web
-  WorkingDirectory=/opt/web
-  ExecStart={{{command}}}
-  Restart=always
-
-  [Install]
-  WantedBy=multi-user.target
-
-

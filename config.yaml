@@ -1,13 +1,24 @@
 cloud:
   config:
-    output:
-      init:
-          output: "> /var/log/cloud-init.out"
-          error: "> /var/log/cloud-init.err"
-      config: "tee -a /var/log/cloud-config.log"
-      final:
-          - ">> /var/log/cloud-final.out"
-          - "/var/log/cloud-final.err"
+    package_update: true
+    runcmd:
+      - systemctl disable cloud-init
+      - systemctl enable web
+      - mkdir -p /opt/web
+
+service: |
+  [Unit]
+  Description=web
+  After=network.target
+
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/web
+  WorkingDirectory=/opt/web
+  ExecStart={{{command}}}
+
+  [Install]
+  WantedBy=multi-user.target
           
 providers:
   
@@ -47,8 +58,9 @@ providers:
       - doctl compute droplet list {{{language}}}.{{{framework}}} --format {{{DO_ATTRIBUTE}}} --no-header > ip.txt
       - rake cloud:wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
       - rake cloud:upload LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
-      - "{{#bootstrap}} doctl compute ssh {{{language}}}.{{{framework}}} --ssh-key-path {{{DO_KEY}}} --ssh-command '{{{.}}}' {{/bootstrap}}"
+      - "{{#bootstrap}} doctl compute ssh {{{language}}}.{{{framework}}} --ssh-key-path {{{DO_KEY}}} --ssh-command 'cd /opt/web && {{{.}}}' {{/bootstrap}}"
       - doctl compute droplet-action reboot `cat id.txt`
+      - while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done
 
     clean:
       - doctl compute droplet delete {{{language}}}.{{{framework}}} --force
