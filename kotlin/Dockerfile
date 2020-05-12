@@ -3,7 +3,7 @@ FROM gradle:jdk11 As build
 WORKDIR /usr/src/app
 
 USER root
-RUN chown -R gradle /usr/src/app
+RUN chown -R gradle .
 USER gradle
 
 {{#sources}}

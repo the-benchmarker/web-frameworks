@@ -2,6 +2,7 @@
 
 .DS_Store
 *.swp
+*.lock
 
 .neph
 neph.yaml
@@ -36,3 +37,6 @@ obj
 */*/ip.txt
 */*/id.txt
 */*/cid.txt
+
+# Custom environment
+.env

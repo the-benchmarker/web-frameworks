@@ -1,16 +1,19 @@
 provider:
   default:
     language: 2.13
-    
+
 sources:
   - "src/**/*.scala"
   - "**/*.sbt"
   - "**/*.properties"
-<<<<<<< HEAD
-=======
 
-binary:
-  - target
+deps:
+  - java-11-openjdk
 
-docker_pause: 5
->>>>>>> 97ff2489... fix(scala): Use multi-stage docker
+binaries:
+  - target/universal/server-0.1.0-SNAPSHOT.tgz
+
+bootstrap:
+  - tar -xvzf target/universal/server-0.1.0-SNAPSHOT.tgz
+
+command: /opt/web/server-0.1.0-SNAPSHOT/bin/server

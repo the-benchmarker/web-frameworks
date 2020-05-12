@@ -8,38 +8,13 @@ files:
   - requirements.txt
   - server.py
   
-cloud:
-  config:
-    package_update: true
-    packages:
-      - "@development-tools"
-      - python3
-      - python3-devel
-      - python3-pip
-    runcmd:
-      - systemctl disable cloud-init
-      - systemctl enable web
-
-after_command:
-  - cd /opt/web && python3 -m pip install -r requirements.txt -U
+deps:
+  - "@development-tools"
+  - python3
+  - python3-devel
+  - python3-pip
+  
+bootstrap:
+  - python3 -m pip install -r requirements.txt -U
 
 command: /usr/bin/python3 /usr/local/bin/gunicorn --log-level warning --reuse-port --log-syslog --chdir /opt/web -c /opt/web/config/gunicorn.py server:app
-
-service: |
-
-  [Unit]
-  Description=gunicorn daemon
-  After=network.target
-
-  [Service]
-  Type=notify
-  WorkingDirectory=/opt/web
-  EnvironmentFile=/etc/web
-  ExecStart={{{command}}}
-  ExecReload=/bin/kill -s HUP $MAINPID
-  KillMode=mixed
-  TimeoutStopSec=5
-  PrivateTmp=true
-
-  [Install]
-  WantedBy=multi-user.target

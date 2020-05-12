@@ -6,44 +6,18 @@ provider:
 
 environments:
   RACK_ENV: production
-
-cloud:
-  config:
-    package_update: true
-    packages:
-      - "@development-tools"
-      - "@rpm-development-tools"
-      - ruby
-      - ruby-devel
-    runcmd:
-      - systemctl disable cloud-init
-      - systemctl enable web
-
-after_command:
-  - cd /opt/web && bundle config set without 'development test'
-  - cd /opt/web && bundle config set path 'vendor/bundle'
-  - cd /opt/web && bundle install
-
-  # Install puma binstubs
-  # This is done only if puma gem is installed (some usage does not require puma)
-  - cd /opt/web && bundle info puma && bundle binstubs puma || echo
-
-  # Install bundler binstubs
-  - cd /opt/web && bundle binstubs bundler
+  
+deps:
+  - "@development-tools"
+  - "@rpm-development-tools"
+  - ruby
+  - ruby-devel
+  
+bootstrap:
+  - bundle config set without 'development test'
+  - bundle config set path 'vendor/bundle'
+  - bundle install
+  - bundle info puma && bundle binstubs puma || echo
+  - bundle binstubs bundler
 
 command: /opt/web/bin/bundle exec /opt/web/bin/puma -C /opt/web/config/puma.rb
-
-service: |
-  [Unit]
-  Description=Puma HTTP Server
-  After=network.target
-
-  [Service]
-  Type=simple
-  EnvironmentFile=/etc/web
-  WorkingDirectory=/opt/web
-  ExecStart={{{command}}}
-  Restart=always
-
-  [Install]
-  WantedBy=multi-user.target

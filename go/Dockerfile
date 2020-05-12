@@ -14,9 +14,9 @@ WORKDIR /go/src/app
   RUN {{{.}}}
 {{/before_command}}
 
-{{#after_command}}
+{{#boostrap}}
   RUN {{{.}}}
-{{/after_command}}
+{{/boostrap}}
 
 RUN go get
 
