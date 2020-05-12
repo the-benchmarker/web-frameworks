@@ -8,7 +8,5 @@ deps:
 
 sources:
   - "**/*.pony"
-  - bundle.json
 
-binaries:
-  - main
+command: /opt/web/web

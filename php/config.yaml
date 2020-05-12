@@ -4,17 +4,14 @@ provider:
   digitalocean:
     language: 7.4
 
+files:
+  - src/**/*.php
+
 deps:
   - php
-  - composer
-  - "@development-tools"
-  - php-pear
-  - php-devel
+  - php-fpm
 
-files:
-  - "**/*.php"
-  - composer.json
-
-bootstrap:
-  - composer install --no-dev --prefer-dist --classmap-authoritative
-  - composer dumpautoload -o
+boostrap:
+  - mv /opt/web/config/nginx.conf /etc/nginx/conf.d/nginx.conf
+  - mv /opt/web/config/php-fpm.ini /etc/php/7.2/fpm/pool.d/www.conf
+  - rm -fr /opt/web/config

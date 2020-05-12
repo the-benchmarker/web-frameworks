@@ -12,3 +12,6 @@ binaries:
   - build/libs/server.jar
 
 command: /usr/bin/java -server -XX:+UseNUMA -XX:+UseParallelGC -XX:+AlwaysPreTouch -jar /opt/web/build/libs/server.jar
+
+deps:
+  - java-11-openjdk

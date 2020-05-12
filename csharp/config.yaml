@@ -12,3 +12,8 @@ binaries:
 environment:
   ASPNETCORE_URLS: http://*:3000
   COMPlus_TieredCompilation: 1
+
+deps:
+  - aspnetcore-runtime-3.1
+
+command: /opt/web/out/web.dll

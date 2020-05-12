@@ -6,3 +6,6 @@ sources:
   - "**/*.clj"
   - "**/*.edn"
   - "**/*.xml"
+
+deps:
+  - java-11-openjdk

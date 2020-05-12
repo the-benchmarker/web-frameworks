@@ -19,9 +19,9 @@ RUN ln -sfv /usr/local/bin/bundle /usr/bin/bundle
   ENV {{{.}}}
 {{/environment}}
 
-{{#after_command}}
+{{#bootstrap}}
   RUN {{{.}}}
-{{/after_command}}
+{{/bootstrap}}
 
 {{#command}}
   CMD {{{command}}}

@@ -4,4 +4,16 @@ provider:
 
 files:
   - "**/*.ex"
-  - mix.exs
+  - "**/*.exs"
+  - ../.script/compile.sh
+
+environment:
+  HOME: /opt/web
+
+bootstrap:
+  - bash script/compile.sh
+
+deps:
+  - elixir
+
+command: /opt/web/release/bin/server start

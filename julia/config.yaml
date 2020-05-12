@@ -6,3 +6,11 @@ files:
   - "**/*.jl"
   - Manifest.toml
   - Project.toml
+
+deps:
+  - julia
+
+bootstrap:
+  - julia deps.jl
+
+command: /usr/bin/julia /opt/web/server.jl

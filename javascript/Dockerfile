@@ -24,9 +24,9 @@ WORKDIR /opt/web
 
 RUN npm install
 
-{{#after_command}}
+{{#bootstrap}}
   RUN {{{.}}}
-{{/after_command}}
+{{/bootstrap}}
 
 {{#command}}
   CMD {{{.}}}

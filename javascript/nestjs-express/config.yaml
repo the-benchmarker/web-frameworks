@@ -10,9 +10,9 @@ files:
   - package.json
   - ../.config/ecosystem.config.js
 
-after_command:
+bootstrap:
   - npm -g install pm2
   - npm -g install @nestjs/cli
-  - cd /opt/web && /usr/local/bin/nest build
-  - mv /opt/web/dist/*.js /opt/web
-  - mv /opt/web/dist/*.map /opt/web
+  - nest build
+  - mv dist/*.js .
+  - mv dist/*.map .
