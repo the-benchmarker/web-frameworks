@@ -14,7 +14,7 @@ environment:
   PORT: 3000
   PM2_HOME: /root/.pm2
 
-after_command:
+bootstrap:
   - npm -g install pm2
 
 cloud:
@@ -43,6 +43,3 @@ service: |
 
   [Install]
   WantedBy=multi-user.target
-
-# By default, we force a sleep on docker (or docker-machine)
-docker_pause: 5

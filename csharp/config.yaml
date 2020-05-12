@@ -6,37 +6,13 @@ sources:
   - "**/*.cs"
 
 binaries:
-  - out/aspnetcore.dll
-  - out/aspnetcore.runtimeconfig.json
+  - out
 
 environment:
   ASPNETCORE_URLS: http://*:3000
   COMPlus_TieredCompilation: 1
 
-cloud:
-  config:
-    package_update: true
-    packages:
-      - aspnetcore-runtime-3.1
-    runcmd:
-      - systemctl disable cloud-init
-      - systemctl enable web
-      - mkdir -p /opt/web/out
+deps:
+  - aspnetcore-runtime-3.1
 
-command: /usr/bin/dotnet /opt/web/out/aspnetcore.dll
-
-service: |
-  [Unit]
-  Description=web
-  After=network.target
-
-  [Service]
-  Type=simple
-  EnvironmentFile=/etc/web
-  WorkingDirectory=/opt/web
-  ExecStart={{{command}}}
-  Restart=always
-
-  [Install]
-  WantedBy=multi-user.target
-
+command: /opt/web/out/aspnetcore.dll

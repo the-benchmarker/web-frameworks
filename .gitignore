@@ -2,6 +2,7 @@
 
 .DS_Store
 *.swp
+*.lock
 
 .neph
 neph.yaml
@@ -26,3 +27,6 @@ rust/*/target
 */*/ip.txt
 */*/id.txt
 */*/cid.txt
+
+# Custom environment
+.env
