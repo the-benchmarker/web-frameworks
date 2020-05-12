@@ -8,19 +8,14 @@ sources:
 binaries:
   - .build/release/server 
 
-cloud:
-  config:
-    package_update: true
-    packages:
-      - swift-lang-runtime
-    runcmd:
-      - systemctl disable cloud-init
-      - systemctl enable web
-      - mkdir -p /opt/web/.build/release
-      - find /usr/libexec/swift/lib/swift/linux -type f -name '*.so' -exec ln -sfv {} /usr/lib64 \;
-      - ln -sfv /usr/libexec/swift/lib/swift/linux/libicui18nswift.so.61.2 /usr/lib64/libicui18nswift.so.61
-      - ln -sfv /usr/libexec/swift/lib/swift/linux/libicuucswift.so.61 /usr/lib64/libicuucswift.so.61
-      - ln -sfv /usr/libexec/swift/lib/swift/linux/libicudataswift.so.61 /usr/lib64/libicudataswift.so.61
+deps:
+  - swift-lang-runtime
+
+bootstreap:
+  - find /usr/libexec/swift/lib/swift/linux -type f -name '*.so' -exec ln -sfv {} /usr/lib64 \;
+  - ln -sfv /usr/libexec/swift/lib/swift/linux/libicui18nswift.so.61.2 /usr/lib64/libicui18nswift.so.61
+  - ln -sfv /usr/libexec/swift/lib/swift/linux/libicuucswift.so.61 /usr/lib64/libicuucswift.so.61
+  - ln -sfv /usr/libexec/swift/lib/swift/linux/libicudataswift.so.61 /usr/lib64/libicudataswift.so.61
 
 command: /opt/web/.build/release/server {{options}}
 

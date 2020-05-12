@@ -9,26 +9,6 @@ sources:
   - src/**/*.cr
 
 binaries:
-  - bin/server
+  - bin
 
-cloud:
-  config:
-    package_update: true
-    runcmd:
-      #- ln -sfv /usr/lib64/libpcre.so.1 /usr/lib64/libpcre.so.3
-      - systemctl disable cloud-init
-      - systemctl enable web
-      
-service: |
-  [Unit]
-  Description=web
-  After=network.target
-
-  [Service]
-  Type=simple
-  EnvironmentFile=/etc/web
-  WorkingDirectory=/opt/web
-  ExecStart=/opt/web/bin/server
-
-  [Install]
-  WantedBy=multi-user.target
+command: /opt/web/bin/server

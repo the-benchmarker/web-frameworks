@@ -38,7 +38,7 @@ def commands_for(language, framework, **options)
     options[key] = value unless options.key?(key)
   end
 
-    options.merge!(bootstrap: app_config['bootstrap'])  if app_config.key?('bootstrap')
+  options.merge!(bootstrap: app_config["bootstrap"]) if app_config.key?("bootstrap")
 
   commands = []
 
@@ -49,7 +49,6 @@ def commands_for(language, framework, **options)
     commands << "docker run -td #{language}.#{framework} > cid.txt"
     app_config["binaries"].each do |path|
       dir = File.join(language, framework, File.dirname(path))
-      FileUtils.mkdir_p(dir) unless File.exist?(dir)
       commands << "docker cp `cat cid.txt`:/opt/web/#{path} #{path}"
     end
   end
@@ -61,7 +60,7 @@ def commands_for(language, framework, **options)
   config["providers"][options[:provider]]["metadata"].each do |cmd|
     commands << Mustache.render(cmd, options).to_s
   end
-  
+
   commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
 
   unless options[:clean] == "off"
@@ -114,8 +113,12 @@ def create_dockerfile(language, framework, **options)
   template = nil
   if options[:provider] == "docker"
     template = File.join(directory, "..", "Dockerfile")
-  else
-    template = File.join(directory, "..", ".build", options[:provider], "Dockerfile") if config.key?("binaries")
+  elsif config.key?("binaries")
+    template = File.join(directory, "..", ".build", options[:provider], "Dockerfile")
+    config["binaries"].each do |path|
+      STDOUT.puts "Remove #{File.join(directory, framework, path)}"
+      FileUtils.remove_dir(File.join(directory, framework, path)) if File.directory?(File.join(directory, framework, path))
+    end
   end
 
   if config.key?("environment")
@@ -216,7 +219,6 @@ namespace :cloud do
       end
     end
 
-    directories = []
     if config.key?("files")
       config["files"].each do |pattern|
         path = File.join(directory, pattern)
@@ -233,18 +235,9 @@ namespace :cloud do
           }
 
           next if remote_directory.start_with?(".")
-
-          directories << File.join("/opt/web", File::Separator, remote_directory)
         end
       end
     end
-
-    directories.uniq!
-    directories.each do |remote_directory|
-      config["cloud"]["config"]["runcmd"] << "mkdir -p #{remote_directory}"
-    end
-
-    config["cloud"]["config"]["runcmd"] << "mkdir -p /opt/web/bin" if config.key?("binaries")
 
     File.open(File.join(directory, "user_data.yml"), "w") do |f|
       f.write("#cloud-config")
@@ -264,22 +257,12 @@ namespace :cloud do
     config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
     if config.key?("binaries")
-      config["binaries"].each do |pattern|
-        path = File.join(directory, pattern)
-        files = Dir.glob(path)
-
-        binaries = {}
-        files.each do |path|
-          remote_path = path.gsub(directory, "").gsub(%r{^/}, "").gsub(%r{^\.\./\.}, "")
-          binaries[path] = File.join("/opt/web", remote_path)
-        end
-
-        next if binaries.empty?
-
-        Net::SCP.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |scp|
-          binaries.each do |local_path, remote_path|
-            scp.upload!(local_path, remote_path, verbose: true, recursive: true)
-          end
+      Net::SCP.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |scp|
+        config["binaries"].each do |file|
+          local_path = File.join(directory, file)
+          remote_path = File.join("/opt/web", file)
+          STDOUT.puts "Uploading #{local_path} to #{remote_path}"
+          scp.upload!(local_path, remote_path, verbose: true, recursive: true)
         end
       end
     end

@@ -7,21 +7,11 @@ provider:
 files:
   - src/**/*.php
   
-cloud:
-  config:
-    package_update: true
-    package_upgrade: true
-    packages:
-      - php
-      - php-fpm
-    runcmd:
-
-      # Disable cloud-init to avoid re-run on reboot
-      - systemctl disable cloud-init
-
-      - systemctl enable php-fpm
-
-      # Enable configuration for NginX
-      - mv /opt/web/config/nginx.conf /etc/nginx/conf.d/nginx.conf 
-      - mv /opt/web/config/php-fpm.ini /etc/php/7.2/fpm/pool.d/www.conf
-      - rm -fr /opt/web/config
+deps:
+  - php
+  - php-fpm
+  
+boostrap:
+  - mv /opt/web/config/nginx.conf /etc/nginx/conf.d/nginx.conf 
+  - mv /opt/web/config/php-fpm.ini /etc/php/7.2/fpm/pool.d/www.conf
+  - rm -fr /opt/web/config
