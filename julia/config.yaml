@@ -49,18 +49,13 @@ files:
   - Project.toml
   - Manifest.toml
 
-docker_pause: 20
+deps:
+  - julia
 
-cloud:
-  config:
-    package_update: true
-    packages:
-      - julia
-    runcmd:
-      - systemctl disable cloud-init
-      - systemctl enable web
-      - cd /opt/web && julia deps.jl
+bootstrap:
+  - julia deps.jl
 
+<<<<<<< HEAD
 command: /usr/bin/julia /opt/web/server.jl
 
 service: |
@@ -78,3 +73,6 @@ service: |
   [Install]
   WantedBy=multi-user.target
 >>>>>>> 4db6aa6a... fix(julia): Missing files in container
+=======
+command: /usr/bin/julia /opt/web/server.jl
+>>>>>>> 42596089... chore: Add gitignore per language
