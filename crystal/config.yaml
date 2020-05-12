@@ -9,6 +9,6 @@ files:
   - "**/*.cr"
 
 binaries:
-  - bin/server
+  - bin
 
 command: /opt/web/server
