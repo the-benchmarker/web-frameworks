@@ -1,4 +1,4 @@
-FROM ponylang/ponyc:0.35.0
+FROM ponylang/ponyc:0.35.1
 
 RUN apt-get update
 RUN apt-get install -y clang libssl-dev
