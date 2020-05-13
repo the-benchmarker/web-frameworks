@@ -1,7 +1,6 @@
 FROM ponylang/ponyc:0.35.1
 
-RUN apt-get update
-RUN apt-get install -y clang libssl-dev
+RUN apt-get -y update && apt-get -y install clang libssl-dev
 
 WORKDIR /src/main
 
@@ -18,13 +17,14 @@ COPY . ./
   RUN {{{.}}}
 {{/before_command}}
 
-RUN stable env ponyc -Dopenssl_1.1.x
+RUN stable env ponyc -Dopenssl_1.1.x -Dstatic
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+FROM ubuntu
 
-{{^command}}
-  CMD ./main
-{{/command}}
+RUN apt-get -y update && apt-get -y install openssl libatomic1
 
+WORKDIR /opt
+
+COPY --from=0 /src/main/main main
+
+CMD ./main
