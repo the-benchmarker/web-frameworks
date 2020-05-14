@@ -32,4 +32,4 @@ WORKDIR /opt
   COPY --from=0 /src/main/{{{.}}} main
 {{/binaries}}
 
-CMD ./main
+CMD {{#command}}{{{.}}}{{/command}}

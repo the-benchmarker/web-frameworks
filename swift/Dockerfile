@@ -15,5 +15,11 @@ FROM swift:5.3-slim
 {{#environment}}
 ENV {{{.}}}
 {{/environment}}
-COPY --from=0 /usr/src/app/.build/release/server /usr/src/app/.build/release/server
-CMD /usr/src/app/.build/release/server {{options}}
+
+WORKDIR /opt/web
+
+{{#binaries}}
+  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+{{/binaries}}
+
+CMD {{#command}}{{{.}}}{{/command}}
