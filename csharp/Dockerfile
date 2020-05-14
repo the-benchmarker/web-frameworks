@@ -22,5 +22,5 @@ COPY --from=0 /usr/src/app/out out
 ENV ASPNETCORE_URLS http://*:3000
 ENV COMPlus_TieredCompilation 1
 
-CMD dotnet /usr/src/app/out/aspnetcore.dll
+CMD {{#command}}{{{.}}}{{/command}}
 

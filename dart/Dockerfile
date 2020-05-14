@@ -8,4 +8,4 @@ WORKDIR /opt/web
 
 RUN pub get
 
-CMD dart main.dart
+CMD {{#command}}{{{.}}}{{/command}}

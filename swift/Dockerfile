@@ -12,5 +12,11 @@ WORKDIR /usr/src/app
 RUN swift build -c release
 
 FROM swift:5.2-slim
-COPY --from=0 /usr/src/app/.build/release/server /usr/src/app/.build/release/server
-CMD /usr/src/app/.build/release/server {{options}}
+
+WORKDIR /opt/web
+
+{{#binaries}}
+  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+{{/binaries}}
+
+CMD {{#command}}{{{.}}}{{/command}}
