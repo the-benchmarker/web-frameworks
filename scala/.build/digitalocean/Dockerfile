@@ -1,19 +1,9 @@
-FROM hseeberger/scala-sbt:8u222_1.3.3_2.13.1
+FROM hseeberger/scala-sbt:11.0.7_1.3.10_2.13.2
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
-COPY . ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
 RUN sbt assembly
-
-FROM openjdk:13-alpine
-
-WORKDIR /usr/src/app
-
-{{#files}}
-COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
-{{/files}}
-
-{{#command}}
-  CMD {{{.}}}
-{{/command}}

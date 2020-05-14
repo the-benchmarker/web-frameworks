@@ -3,6 +3,10 @@ provider:
     language: 1.48
 
 binaries:
-  - server
+  - target/release/server
 
 command: /opt/web/server
+
+sources:
+  - Cargo.toml
+  - src/**/*.rs

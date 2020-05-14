@@ -10,7 +10,7 @@ RUN sbt universal:packageZipTarball
 
 FROM openjdk:11-jre
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
 {{#binaries}}
   COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}

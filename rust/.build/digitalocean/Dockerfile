@@ -1,17 +1,9 @@
-FROM rust:1.41.0
+FROM rust:1.43
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
-RUN apt-get -qq update && apt-get -qy install musl-tools
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
-RUN rustup target add x86_64-unknown-linux-musl
-
-COPY . ./
-
-RUN cargo build --target x86_64-unknown-linux-musl --release
-
-FROM alpine
-
-COPY --from=0 /usr/src/app/target/x86_64-unknown-linux-musl/release/server /usr/src/app/target/x86_64-unknown-linux-musl/release/server
-
-CMD /usr/src/app/target/x86_64-unknown-linux-musl/release/server
+RUN cargo build --release
