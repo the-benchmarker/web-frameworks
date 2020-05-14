@@ -49,10 +49,4 @@ WORKDIR /opt/web
   ENV {{{.}}}
 {{/environment}}
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
-
-{{^command}}
-  CMD {{{.}}}
-{{/command}}
+CMD {{#command}}{{{.}}}{{/command}}
