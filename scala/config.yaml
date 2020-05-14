@@ -7,10 +7,10 @@ sources:
   - "**/*.sbt"
   - "**/*.properties"
 
-binary:
-  - target
-
 docker_pause: 5
   
 deps:
   - java-11-openjdk
+
+binaries:
+  - target
