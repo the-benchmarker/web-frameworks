@@ -45,4 +45,4 @@ USER nobody
 ENV HOME /app
 
 # Start release
-CMD bin/server start
+CMD {{#command}}{{{.}}}{{/command}}

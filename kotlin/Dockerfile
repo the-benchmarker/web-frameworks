@@ -26,5 +26,5 @@ COPY --from=0 /usr/src/app/build/libs/my-application.jar build/libs/my-applicati
 
 RUN ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
 
-CMD /usr/bin/java -server -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:+AlwaysPreTouch -jar /opt/web/build/libs/my-application.jar
+CMD {{#command}}{{{.}}}{{/command}}
 
