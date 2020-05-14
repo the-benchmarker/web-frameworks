@@ -4,7 +4,11 @@ provider:
   digitalocean:
     language: 1.44
     
+sources:
+  - Cargo.toml
+  - src/**/*.rs
+
 binaries:
-  - server
+  - target
   
-command: /opt/web/server
+command: /opt/web/target/release/server
