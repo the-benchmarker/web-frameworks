@@ -14,4 +14,4 @@ environment:
 deps:
   - aspnetcore-runtime-3.1
 
-command: /usr/bin/dotnet /opt/web/out/suaveapp.dll
+command: /usr/bin/dotnet /usr/src/app/out/web.dll

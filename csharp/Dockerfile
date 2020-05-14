@@ -15,11 +15,12 @@ RUN dotnet publish -c release -o out
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
 COPY --from=build /usr/src/app/out out
 
 ENV ASPNETCORE_URLS http://*:3000
 ENV COMPlus_TieredCompilation 1
 
-CMD dotnet /usr/src/app/out/web.dll
+CMD {{#command}}{{{.}}}{{/command}}
+

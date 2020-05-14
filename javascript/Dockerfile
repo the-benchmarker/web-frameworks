@@ -28,10 +28,4 @@ RUN npm install
   RUN {{{.}}}
 {{/bootstrap}}
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
-
-{{^command}}
-  CMD pm2-runtime start app.js -i $(nproc)
-{{/command}}
+CMD {{#command}}{{{.}}}{{/command}}

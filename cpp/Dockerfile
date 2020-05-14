@@ -36,6 +36,4 @@ WORKDIR /opt/web
   COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+CMD {{#command}}{{{.}}}{{/command}}

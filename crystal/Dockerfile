@@ -25,4 +25,4 @@ WORKDIR /opt/web
   ENV {{{.}}}
 {{/environment}}
 
-CMD ./bin/server
+CMD {{#command}}{{{.}}}{{/command}}
