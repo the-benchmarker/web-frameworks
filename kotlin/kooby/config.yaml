@@ -7,9 +7,6 @@ image: gradle:6.1-jdk8
 build:
   - gradle clean shadowJar
 
-binaries:
-  - build/libs/my-application.jar
-
 command: >-
   /usr/bin/java -server
   -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:-UseBiasedLocking -XX:+UseStringDeduplication

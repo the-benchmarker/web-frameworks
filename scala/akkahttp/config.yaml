@@ -2,8 +2,5 @@ framework:
   website: akka.io
   version: 10.1
 
-binaries:
-  - target/scala-2.13/server_scala_akkahttp
-
-command: java -jar /usr/src/app/target/scala-2.13/server_scala_akkahttp
+command: /usr/bin/java -jar /opt/web/target/scala-2.13/server_scala_akkahttp
 
