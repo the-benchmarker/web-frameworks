@@ -3,6 +3,10 @@ framework:
   version: 0.26
 
 deps:
+  - "@development-tools"
+  - python3
+  - python3-devel
+  - python3-pip
   - libffi-devel
   - curl
 
