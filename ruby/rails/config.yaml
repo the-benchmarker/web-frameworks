@@ -3,6 +3,10 @@ framework:
   version: 6.0
 
 deps:
+  - "@development-tools"
+  - "@rpm-development-tools"
+  - ruby
+  - ruby-devel
   - libxml2-devel
   - libxslt-devel
 
