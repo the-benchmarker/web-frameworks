@@ -17,6 +17,10 @@ files:
   - ../.config/gunicorn.py
 
 deps:
+  - "@development-tools"
+  - python3
+  - python3-devel
+  - python3-pip
   - libffi-devel
 
 alpine-deps:
