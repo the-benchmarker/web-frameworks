@@ -81,8 +81,8 @@ class App < Admiral::Command
       end
 
       lines = [
-        "|    | Language | Framework | Speed (%s) | Speed (%s) | Speed (%s) | Speed (%s) |" % [concurrencies[0], concurrencies[1], concurrencies[2], concurrencies[3]],
-        "|----|----------|-----------|-----------:|------------:|------------:|-------------:|",
+        "|    | Language | Framework | Speed (%s) | Speed (%s) | Speed (%s) |" % [concurrencies[0], concurrencies[1], concurrencies[2]],
+        "|----|----------|-----------|-----------:|------------:|----------:|",
       ]
       c = 1
       sorted = frameworks.values.sort do |rank0, rank1|
@@ -99,7 +99,6 @@ class App < Admiral::Command
           row[concurrencies[0]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
           row[concurrencies[1]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
           row[concurrencies[2]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
-          row[concurrencies[3]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
         ]
         c += 1
       end

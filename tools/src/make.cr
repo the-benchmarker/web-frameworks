@@ -262,7 +262,7 @@ class App < Admiral::Command
                   unless flags.without_sieger
                     factor = System.cpu_count**2
                     command = "../../bin/client --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user -h `cat ip.txt`"
-                    [1, 4, 8, 16].each do |i|
+                    [1, 4, 8].each do |i|
                       command += " -c #{factor*i} "
                     end
 
