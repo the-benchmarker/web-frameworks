@@ -22,4 +22,4 @@ COPY --from=0 /usr/src/app/out out
 
 ENV COMPlus_TieredCompilation 1
 
-CMD dotnet /usr/src/app/out/suaveapp.dll
+CMD {{#command}}{{{.}}}{{/command}}

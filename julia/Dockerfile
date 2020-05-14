@@ -8,4 +8,4 @@ WORKDIR /opt/web
 
 RUN julia deps.jl
 
-CMD julia server.jl
+CMD {{#command}}{{{.}}}{{/command}}
