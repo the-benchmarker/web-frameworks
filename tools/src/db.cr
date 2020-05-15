@@ -89,7 +89,7 @@ class App < Admiral::Command
         rank1[concurrencies.first].to_f <=> rank0[concurrencies.first].to_f
       end
       sorted.each do |row|
-        lines << "| %s (%s)| [%s](%s) (%s) | %s | %s | %s | %s | %s |" % [
+        lines << "| %s (%s)| [%s](%s) (%s) | %s | %s | %s |"  % [
           c,
           row["language"],
           row["language_version"],
