@@ -1,6 +1,6 @@
 framework:
   github: huge-success/sanic
-  version: 19.12
+  version: 20.3
 
 command: >
   gunicorn  \
