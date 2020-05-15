@@ -6,6 +6,8 @@
 
 // Setup a PHP Autoloader
 // This allows classes to be dynamically loaded and is included when
+// dependencies are installed through the PHP Package Manager Composer.
+// This allows classes to be dynamically loaded and is included when
 // install dependencies through the PHP Package Manager Composer.
 //
 // require __DIR__ . '/../vendor/autoload.php';
@@ -37,6 +39,8 @@ $app->setup('UTC');
 $app->get('/', function() {
     return '';
 });
+
+// Safely Escape the user input since it's returned to the client. After this everything is safe and production ready.
 
 $app->get('/user/:id', function($id) {
     return $id;
