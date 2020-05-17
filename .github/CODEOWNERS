@@ -1,8 +1,14 @@
+# Reviewers
+
+/python/sanic/ @ahopkins @waghanza
+
+/go/router/ @savsgio @waghanza
+/go/atreugo/ @savsgio @waghanza
+/go/fasthttp/ @savsgio @waghanza
+/go/fiber/ @Fenny @waghanza
+
+/ruby/roda/ @jeremyevans @waghanza
+
+# By default, set @waghanza as reviewer
+
 * @waghanza
-
-/go/router/ @savsgio
-/go/atreugo/ @savsgio
-/go/fasthttp/ @savsgio
-/go/fiber/ @Fenny
-
-/python/sanic/ @ahopkins
