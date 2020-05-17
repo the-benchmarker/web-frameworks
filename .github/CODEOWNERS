@@ -1,5 +1,6 @@
 # Reviewers
 
+<<<<<<< HEAD
 javascript/0http @jkyberneees @waghanza
 javascript/restana @jkyberneees @waghanza
 
@@ -18,6 +19,17 @@ python/fastapi @tiangolo @waghanza
 
 swift/vapor-framework @0xTim @waghanza
 
+=======
+/python/sanic/ @ahopkins @waghanza
+
+/go/router/ @savsgio @waghanza
+/go/atreugo/ @savsgio @waghanza
+/go/fasthttp/ @savsgio @waghanza
+/go/fiber/ @Fenny @waghanza
+
+/ruby/roda/ @jeremyevans @waghanza
+
+>>>>>>> b2a727aa... [Ruby] Update roda to 3.32 (#2688)
 # By default, set @waghanza as reviewer
 
 * @waghanza
