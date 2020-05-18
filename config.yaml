@@ -30,7 +30,7 @@ providers:
     metadata:
       - docker run -td {{{language}}}.{{{framework}}} > cid.txt
       - docker inspect `cat cid.txt` | jq -r '.[0].NetworkSettings.IPAddress' > ip.txt
-      - while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done
+      - sleep 5
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker rm -f
@@ -42,7 +42,7 @@ providers:
 
     metadata:
       - docker-machine inspect the-benchmarker > ip.txt
-      - while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done
+      - sleep 5
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker rm -f
@@ -50,8 +50,9 @@ providers:
   digitalocean:
 
     build:
-    - rake cloud:config LANG={{{language}}} FRAMEWORK={{{framework}}}
-    - doctl compute droplet create {{{language}}}.{{{framework}}} --region {{{DO_REGION}}} --image {{{DO_IMAGE}}} --size {{{DO_SIZE}}} --user-data-file user_data.yml --wait --ssh-keys {{{DO_FINGERPRINT}}} {{{DO_OPTIONS}}}
+      - rm -fr ~/.ssh/known_hosts
+      - rake cloud:config LANG={{{language}}} FRAMEWORK={{{framework}}}
+      - doctl compute droplet create {{{language}}}.{{{framework}}} --region {{{DO_REGION}}} --image {{{DO_IMAGE}}} --size {{{DO_SIZE}}} --user-data-file user_data.yml --wait --ssh-keys {{{DO_FINGERPRINT}}} {{{DO_OPTIONS}}}
       
     metadata:
       - doctl compute droplet list {{{language}}}.{{{framework}}} --format ID --no-header > id.txt
