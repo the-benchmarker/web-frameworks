@@ -15,7 +15,7 @@ RUN dotnet publish -c release -o out
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
 COPY --from=0 /usr/src/app/out out
 
