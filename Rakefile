@@ -44,12 +44,14 @@ def commands_for(language, framework, **options)
 
   # Compile first
 
-  if options[:provider] != "docker" && app_config.key?("binaries")
+  if ["docker", "docker-machine"].include?(options[:provider]) && app_config.key?("binaries")
     commands << "docker build -t #{language}.#{framework} ."
     commands << "docker run -td #{language}.#{framework} > cid.txt"
-    app_config["binaries"].each do |path|
-      dir = File.join(language, framework, File.dirname(path))
-      commands << "docker cp `cat cid.txt`:/opt/web/#{path} #{path}"
+    app_config["binaries"].each do |out|
+      if out.count("/") > 0
+        out = out.split("/").shift
+      end
+      commands << "docker cp `cat cid.txt`:/opt/web/#{out} #{out}"
     end
   end
 
@@ -115,10 +117,6 @@ def create_dockerfile(language, framework, **options)
     template = File.join(directory, "..", "Dockerfile")
   elsif config.key?("binaries")
     template = File.join(directory, "..", ".build", options[:provider], "Dockerfile")
-    config["binaries"].each do |path|
-      STDOUT.puts "Remove #{File.join(directory, framework, path)}"
-      FileUtils.remove_dir(File.join(directory, framework, path)) if File.directory?(File.join(directory, framework, path))
-    end
   end
 
   if config.key?("environment")
@@ -257,12 +255,25 @@ namespace :cloud do
     config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
     if config.key?("binaries")
+      binaries = []
+      config["binaries"].each do |file|
+        Dir.glob(File.join(directory, file)).each do |binary|
+          binaries << binary
+        end
+      end
+
+      Net::SSH.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |ssh|
+        binaries.each do |binary|
+          directory = File.dirname(binary.gsub(directory, "/opt/web"))
+          STDOUT.puts "Creating #{directory}"
+          ssh.exec!("mkdir -p #{directory}")
+        end
+      end
+
       Net::SCP.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |scp|
-        config["binaries"].each do |file|
-          local_path = File.join(directory, file)
-          remote_path = File.join("/opt/web", file)
-          STDOUT.puts "Uploading #{local_path} to #{remote_path}"
-          scp.upload!(local_path, remote_path, verbose: true, recursive: true)
+        binaries.each do |binary|
+          STDOUT.puts "Uploading #{binary} to #{directory}"
+          scp.upload!(binary, directory, verbose: true)
         end
       end
     end
