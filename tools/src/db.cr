@@ -25,7 +25,7 @@ class App < Admiral::Command
     def run
       factor = System.cpu_count**2
       concurrencies = [] of String
-      [1, 4, 8, 16, 32].each do |i|
+      [1, 4, 8, 16].each do |i|
         concurrencies << "concurrency_#{factor*i}"
       end
 
@@ -81,15 +81,15 @@ class App < Admiral::Command
       end
 
       lines = [
-        "|    | Language | Framework | Speed (64) | Speed (256) | Speed (512) | Speed (1024) |  Speed (2048) |",
-        "|----|----------|-----------|-----------:|------------:|------------:|-------------:|--------------:|",
+        "|    | Language | Framework | Speed (%s) | Speed (%s) | Speed (%s) |" % [concurrencies[0], concurrencies[1], concurrencies[2]],
+        "|----|----------|-----------|-----------:|------------:|----------:|",
       ]
       c = 1
       sorted = frameworks.values.sort do |rank0, rank1|
         rank1[concurrencies.first].to_f <=> rank0[concurrencies.first].to_f
       end
       sorted.each do |row|
-        lines << "| %s | %s (%s)| [%s](%s) (%s) | %s | %s | %s | %s | %s |" % [
+        lines << "| %s (%s)| [%s](%s) (%s) | %s | %s | %s |"  % [
           c,
           row["language"],
           row["language_version"],
@@ -99,8 +99,6 @@ class App < Admiral::Command
           row[concurrencies[0]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
           row[concurrencies[1]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
           row[concurrencies[2]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
-          row[concurrencies[3]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
-          row[concurrencies[4]].to_f.trunc.format(delimiter: ' ', decimal_places: 0),
         ]
         c += 1
       end
