@@ -16,7 +16,7 @@ RUN dotnet publish -c release -o out
 
 FROM fsharp:10.7-netcore
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
 COPY --from=build /usr/src/app/out out
 
