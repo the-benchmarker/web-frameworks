@@ -63,6 +63,11 @@ def commands_for(language, framework, **options)
     commands << Mustache.render(cmd, options).to_s
   end
 
+  if ["docker", "docker-machine"].include?(options[:provider])
+    pause = main_config.fetch("docker_pause") { "5" }
+    commands << "sleep #{pause}"
+  end
+
   commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
 
   unless options[:clean] == "off"
