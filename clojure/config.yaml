@@ -9,3 +9,5 @@ sources:
 
 deps:
   - java-11-openjdk
+
+docker_pause: 10
