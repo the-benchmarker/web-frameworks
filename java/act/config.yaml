@@ -5,6 +5,9 @@ framework:
 alpine-deps:
   - bash
 
+binaries:
+  - target/dist/*.tar.gz
+
 bootstrap:
   - tar -xvzf target/dist/*.tar.gz
 
