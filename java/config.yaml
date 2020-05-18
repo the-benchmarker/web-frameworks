@@ -10,7 +10,7 @@ sources:
   - pom.xml
 
 binaries:
-  - target
+  - target/*.jar
 
 deps:
   - java-1.8.0-openjdk
