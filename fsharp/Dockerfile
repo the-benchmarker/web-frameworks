@@ -16,7 +16,7 @@ RUN dotnet publish -c release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
 COPY --from=build /usr/src/app/out out
 
