@@ -1,7 +1,9 @@
+import sys
+
 from sanic import Sanic
 from sanic.response import text
 
-app = Sanic(log_config=None)
+app = Sanic("benchmark")
 
 
 @app.route("/")
@@ -17,3 +19,8 @@ async def user_info(request, id):
 @app.route("/user", methods=["POST"])
 async def user(request):
     return text("")
+
+if __name__ == "__main__":
+    workers = int(sys.argv[1])
+    app.run(host='0.0.0.0', port=3000, workers=workers,
+            debug=False, access_log=False)
