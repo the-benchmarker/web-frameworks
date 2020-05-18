@@ -16,4 +16,6 @@ WORKDIR /opt/web
   COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
 
+RUN ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
+
 CMD {{#command}}{{{.}}}{{/command}}
