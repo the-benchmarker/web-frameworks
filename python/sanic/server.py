@@ -1,4 +1,4 @@
-import sys
+import multiprocessing
 
 from sanic import Sanic
 from sanic.response import text
@@ -69,6 +69,6 @@ async def user(request):
     return text("")
 
 if __name__ == "__main__":
-    workers = int(sys.argv[1])
+    workers = multiprocessing.cpu_count()
     app.run(host='0.0.0.0', port=3000, workers=workers,
             debug=False, access_log=False)
