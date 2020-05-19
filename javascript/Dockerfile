@@ -2,10 +2,6 @@ FROM node:14.15-alpine
 
 WORKDIR /opt/web
 
-{{#deps}}
-  RUN apk add {{{.}}}
-{{/deps}}
-
 {{#alpine-deps}}
   RUN apk add {{{.}}}
 {{/alpine-deps}}
