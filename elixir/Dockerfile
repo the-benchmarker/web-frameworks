@@ -33,16 +33,10 @@ FROM alpine:latest AS app
 RUN apk add --update bash openssl
 
 # Application folder
-RUN mkdir /app
-WORKDIR /app
+WORKDIR /opt/web
 
 # Copy release from build container
-COPY --from=build /usr/src/app/release ./
-
-# User
-RUN chown -R nobody: /app
-USER nobody
-ENV HOME /app
+COPY --from=build /usr/src/app/release release
 
 # Start release
 CMD {{#command}}{{{.}}}{{/command}}
