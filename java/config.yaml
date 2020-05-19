@@ -14,3 +14,5 @@ binaries:
 
 deps:
   - java-1.8.0-openjdk
+
+docker_pause: 10
