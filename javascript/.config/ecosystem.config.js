@@ -4,7 +4,7 @@ module.exports = {
       name: "app",
       script: "/opt/web/app.js",
       instances: "max",
-      exec_mode: "cluster"
-    }
-  ]
+      exec_mode: "cluster",
+    },
+  ],
 };
