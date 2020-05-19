@@ -13,4 +13,11 @@ environment:
   PM2_HOME: /root/.pm2
 
 bootstrap:
+  - npm install
   - npm -g install pm2
+
+deps:
+  - "@development-tools"
+  - nodejs
+
+command: /usr/local/bin/pm2-runtime /opt/web/config/ecosystem.config.js app
