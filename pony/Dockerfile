@@ -26,10 +26,10 @@ FROM ubuntu
 
 RUN apt-get -y update && apt-get -y install openssl libatomic1
 
-WORKDIR /opt
+WORKDIR /opt/web
 
 {{#binaries}}
-  COPY --from=0 /src/main/{{{.}}} main
+  COPY --from=0 /src/main/main {{{.}}}
 {{/binaries}}
 
 CMD {{#command}}{{{.}}}{{/command}}
