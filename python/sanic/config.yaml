@@ -6,6 +6,5 @@ files:
   - server.py
   - requirements.txt
   - ../.config/gunicorn.py
-
-command: >
-  python server.py
+  
+command: python server.py

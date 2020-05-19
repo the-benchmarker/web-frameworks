@@ -2,7 +2,7 @@ const { ServiceBroker } = require("moleculer");
 const HTTPServer = require("moleculer-web");
 
 const broker = new ServiceBroker({
-  logger: false
+  logger: false,
 });
 
 broker.createService({
@@ -18,11 +18,11 @@ broker.createService({
         aliases: {
           "GET /": "user.get",
           "POST /user": "user.post",
-          "GET /user/:id": "user.getID"
-        }
-      }
-    ]
-  }
+          "GET /user/:id": "user.getID",
+        },
+      },
+    ],
+  },
 });
 
 broker.createService({
@@ -33,8 +33,8 @@ broker.createService({
     post() {},
     getID(ctx) {
       return Number(ctx.params.id);
-    }
-  }
+    },
+  },
 });
 
 broker.start();
