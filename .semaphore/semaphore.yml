@@ -248,35 +248,6 @@ blocks:
       always:
         commands:
         - artifact push workflow .neph
-- name: haskell
-  dependencies:
-  - setup
-  run:
-    when: change_in('/haskell/')
-  task:
-    prologue:
-      commands:
-      - checkout
-      - cache restore
-      - bundle install
-      - artifact pull workflow bin
-      - find bin -type f -exec chmod +x {} \;
-      - rake config
-    env_vars:
-    - name: COLLECT
-      value: 'off'
-    - name: CLEAN
-      value: 'off'
-    jobs:
-    - name: servant-proj
-      commands:
-      - mkdir -p .neph/haskell/servant-proj
-      - retry bin/neph haskell/servant-proj --mode=CI
-      - FRAMEWORK=haskell/servant-proj bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: pony
   dependencies:
   - setup
