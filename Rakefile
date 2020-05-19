@@ -278,7 +278,7 @@ namespace :cloud do
       Net::SCP.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |scp|
         binaries.each do |binary|
           STDOUT.puts "Uploading #{binary} to #{directory}"
-          scp.upload!(binary, directory, verbose: true)
+          scp.upload!(binary, directory, verbose: true, recursive: true)
         end
       end
     end
