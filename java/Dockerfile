@@ -33,9 +33,8 @@ FROM openjdk:8-jre-alpine
 
 WORKDIR /opt/web
 
-{{#binaries}}
-  COPY --from=0 /usr/src/web/{{{.}}} {{{.}}}
-{{/binaries}}
+COPY --from=0 /usr/src/web/target target
+COPY --from=0 /usr/src/web/build build
 
 {{#bootstrap}}
   RUN {{{.}}}
