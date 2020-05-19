@@ -6,4 +6,5 @@ deps:
   - git
 
 alpine-deps:
-  -  gcompat # required by uWebSocket
+  - git
+  - gcompat # required by uWebSocket
