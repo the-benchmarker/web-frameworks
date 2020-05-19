@@ -8,4 +8,6 @@ WORKDIR /opt/web
 
 RUN julia deps.jl
 
+RUN ln -sfv /usr/local/julia/bin/julia /usr/bin/julia
+
 CMD {{#command}}{{{.}}}{{/command}}
