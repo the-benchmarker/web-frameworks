@@ -15,31 +15,10 @@ environment:
   PM2_HOME: /root/.pm2
 
 bootstrap:
-  - npm -g install pm2
+  - npm install && npm -g install pm2
 
-cloud:
-  config:
-    package_update: true
-    packages:
-      - "@development-tools"
-      - nodejs
-    runcmd:
-      - cd /opt/web && npm install
-      - systemctl disable cloud-init
-      - systemctl enable web
+deps:
+  - "@development-tools"
+  - nodejs
 
 command: /usr/local/bin/pm2-runtime /opt/web/config/ecosystem.config.js app
-
-service: |
-  [Unit]
-  After=network.target
-
-  [Service]
-  Type=simple
-  WorkingDirectory=/opt/web
-  EnvironmentFile=/etc/web
-  ExecStart={{{command}}}
-  Restart=on-failure
-
-  [Install]
-  WantedBy=multi-user.target
