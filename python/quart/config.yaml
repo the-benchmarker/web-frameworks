@@ -1,6 +1,6 @@
 framework:
   website: pgjones.gitlab.io/quart
-  version: 0.11
+  version: 0.12
 
 command: >
   gunicorn \
