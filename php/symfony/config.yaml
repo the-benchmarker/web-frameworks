@@ -2,15 +2,28 @@ framework:
   website: symfony.com
   version: 5.1
   
-files:
-  - ../.config/nginx.conf
-
 deps:
   - nginx
+  - php
+  - composer
+  
+files:
+  - composer.json
+  - '**/*.yaml'
+  - '**/*.php'
+  - ../.config/nginx.conf
 
 environment:
   APP_ENV: prod
 
 bootstrap:
-  - mkdir -p var/log && chown nginx var/log
-  - mkdir -p var/cache && chown nginx var/cache
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
+  - mv config/nginx.conf /etc/nginx/conf.d/default.conf
+  - sed -i 's/;prefix.*/prefix = \/opt\/web\/public/g' /etc/php-fpm.d/www.conf
+  - systemctl enable php-fpm
+  - systemctl enable nginx
+  - mkdir -p var/log
+  - chown nginx var/log
+  - mkdir -p var/cache
+  - chown nginx var/cache

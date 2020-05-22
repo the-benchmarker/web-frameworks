@@ -6,4 +6,13 @@ php_mod:
   - pcntl
   - posix
 
-command: php start.php start
+deps:
+  - php
+  - php-posix
+  - composer
+
+bootstrap:
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o 
+
+command: /usr/bin/php /opt/web/start.php start

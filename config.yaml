@@ -59,9 +59,10 @@ providers:
       - doctl compute droplet list {{{language}}}.{{{framework}}} --format {{{DO_ATTRIBUTE}}} --no-header > ip.txt
       - rake cloud:wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
       - rake cloud:upload LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
-      - "{{#bootstrap}} doctl compute ssh {{{language}}}.{{{framework}}} --ssh-key-path {{{DO_KEY}}} --ssh-command 'cd /opt/web && {{{.}}}' {{/bootstrap}}"
-      - doctl compute droplet-action reboot `cat id.txt`
-      - while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done
+
+    exec: doctl compute ssh {{{language}}}.{{{framework}}} --ssh-key-path {{{DO_KEY}}} --ssh-command "cd /opt/web && {{{command}}}"
+
+    reboot: doctl compute droplet-action reboot `cat id.txt`
 
     clean:
       - doctl compute droplet delete {{{language}}}.{{{framework}}} --force

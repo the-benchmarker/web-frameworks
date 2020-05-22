@@ -1,7 +1,24 @@
 framework:
   website: getlaminas.org
   version: 3.1
+
+deps:
+  - nginx
+  - php
+  - composer
   
-before_command:
-  - mkdir /usr/src/app/data
-  - chmod 777 -R /usr/src/app/data
+files:
+  - composer.json
+  - public/index.php
+  - ../.config/nginx.conf
+
+bootstrap:
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
+  - mv config/nginx.conf /etc/nginx/conf.d/default.conf
+  - rm -fr config
+  - sed -i 's/;prefix.*/prefix = \/opt\/web\/public/g' /etc/php-fpm.d/www.conf 
+  - systemctl enable php-fpm
+  - systemctl enable nginx
+  - mkdir data
+  - chmod 777 -R data
