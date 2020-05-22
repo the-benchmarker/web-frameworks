@@ -18,5 +18,5 @@ bootstrap:
   - mv config/nginx.conf /etc/nginx/conf.d/default.conf
   - rm -fr config
   - sed -i 's/;prefix.*/prefix = \/opt\/web\/public/g' /etc/php-fpm.d/www.conf
-  - systemctl enable php-fpm
-  - systemctl enable nginx 
+  - "[[ -f /etc/fedora-release ]] && systemctl enable php-fpm || true"
+  - "[[ -f /etc/fedora-release ]] && systemctl enable nginx || true" 
