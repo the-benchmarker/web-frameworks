@@ -38,6 +38,12 @@ RUN mkdir /run/nginx
   ENV {{{.}}}
 {{/environment}}
 
+RUN ln -sfv /usr/local/bin/php /usr/bin/php
+
 {{#command}}
   CMD {{{.}}}
+{{/command}}
+
+{{^command}}
+  CMD /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
 {{/command}}
