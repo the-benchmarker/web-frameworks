@@ -1,8 +1,6 @@
 <?php
 
-/**
- * 路由设置
- */
+
 
 use One\Http\Router;
 
