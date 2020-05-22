@@ -2,3 +2,21 @@ framework:
   github: chubbyphp/chubbyphp-framework
   version: 2.8
 
+deps:
+  - nginx
+  - php
+  - composer
+  
+files:
+  - composer.json
+  - public/index.php
+  - ../.config/nginx.conf
+
+bootstrap:
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
+  - mv config/nginx.conf /etc/nginx/conf.d/default.conf
+  - rm -fr config
+  - sed -i 's/;prefix.*/prefix = \/opt\/web\/public/g' /etc/php-fpm.d/www.conf
+  - systemctl enable php-fpm
+  - systemctl enable nginx 
