@@ -5,9 +5,9 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Comet\Comet;
 
-$app = new Comet([ 
-	'port'    => 3000,
-	'workers' => WORKERS_COUNT,
+$app = new Comet([
+    'port'    => 3000,
+    'workers' => WORKERS_COUNT,
 ]);
 
 
@@ -21,7 +21,7 @@ $app->post('/user', function ($request, $response) {
 
 $app->get('/user/{id}', function ($request, $response, $args) {
     return $response
-    	->with($args['id']);
+        ->with($args['id']);
 });
 
 $app->run();

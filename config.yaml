@@ -63,14 +63,10 @@ providers:
         --ssh-keys {{{DO_FINGERPRINT}}} {{{DO_OPTIONS}}}
 
     metadata:
-      - doctl compute droplet list {{{language}}}.{{{framework}}} --format ID --no-header
-        > id.txt
-      - doctl compute droplet list {{{language}}}.{{{framework}}} --format {{{DO_ATTRIBUTE}}}
-        --no-header > ip.txt
-      - rake cloud:wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt`
-        SSH_KEY={{{DO_KEY}}}
-      - rake cloud:upload LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt`
-        SSH_KEY={{{DO_KEY}}}
+      - doctl compute droplet list {{{language}}}.{{{framework}}} --format ID --no-header > id.txt
+      - doctl compute droplet list {{{language}}}.{{{framework}}} --format {{{DO_ATTRIBUTE}}} --no-header > ip.txt
+      - rake cloud:wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
+      - rake cloud:upload LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
 
     exec: doctl compute ssh {{{language}}}.{{{framework}}} --ssh-key-path {{{DO_KEY}}} --ssh-command "cd /opt/web && {{{command}}}"
 
