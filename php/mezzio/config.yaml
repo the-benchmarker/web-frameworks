@@ -2,6 +2,21 @@ framework:
   website: docs.mezzio.dev
   version: 3.2
   
-before_command:
-  - mkdir /usr/src/app/data
-  - chmod 777 -R /usr/src/app/data
+deps:
+  - nginx
+  - php
+  - php-pecl-zip
+  - composer
+  
+files:
+  - composer.json
+  - '**/*.php'
+  - ../.config/nginx.conf
+
+bootstrap:
+  - composer install --no-dev --prefer-dist --classmap-authoritative 
+  - composer dumpautoload -o
+  - mv config/nginx.conf /etc/nginx/conf.d/default.conf
+  - sed -i 's/;prefix.*/prefix = \/opt\/web\/public/g' /etc/php-fpm.d/www.conf
+  - systemctl enable php-fpm
+  - systemctl enable nginx 

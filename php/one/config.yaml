@@ -5,5 +5,9 @@ framework:
 php_ext:
   - swoole
 
-command: php App/swoole.php
+command: /usr/bin/php /opt/web/App/swoole.php
+
+bootstrap:
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
   
