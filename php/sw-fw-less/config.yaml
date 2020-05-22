@@ -2,15 +2,15 @@ framework:
   github: luoxiaojun1992/sw-fw-less
   version: preview
   
-php_mod:
-  - sodium
-  - bcmath
-  - sockets
-
-deps:
-  - libsodium-dev
-
 php_ext:
   - swoole
 
-command: php start.php
+deps:
+  - php
+  - composer
+  - "@development-tools"
+  - php-pear
+  - php-devel
+  - php-bcmath
+
+command: /usr/bin/php /opt/web/start.php
