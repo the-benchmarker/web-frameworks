@@ -8,6 +8,7 @@ require "net/ssh"
 require "net/scp"
 require "net/http"
 require "fileutils"
+require "base64"
 
 Dotenv.load
 
@@ -38,8 +39,6 @@ def commands_for(language, framework, **options)
     options[key] = value unless options.key?(key)
   end
 
-  options.merge!(bootstrap: app_config["bootstrap"]) if app_config.key?("bootstrap")
-
   commands = []
 
   # Compile first
@@ -63,9 +62,19 @@ def commands_for(language, framework, **options)
     commands << Mustache.render(cmd, options).to_s
   end
 
+  if app_config.key?("bootstrap") && config["providers"][options[:provider]].key?("exec")
+    remote_command = config["providers"][options[:provider]]["exec"]
+    app_config["bootstrap"].each do |cmd|
+      commands << Mustache.render(remote_command, options.merge!(command: cmd)).to_s
+    end
+  end
+
   if ["docker", "docker-machine"].include?(options[:provider])
     pause = main_config.fetch("docker_pause") { "5" }
     commands << "sleep #{pause}"
+  else
+    commands << config["providers"][options[:provider]].fetch("reboot")
+    commands << 'while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done'
   end
 
   commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
@@ -218,6 +227,19 @@ namespace :cloud do
         config["cloud"]["config"]["runcmd"] << cmd
       end
       commands.each do |cmd|
+        config["cloud"]["config"]["runcmd"] << cmd
+      end
+    end
+
+    if config.key?("php_ext")
+      config["php_ext"].each do |deps|
+        config["cloud"]["config"]["runcmd"] << "pecl install #{deps}"
+        config["cloud"]["config"]["runcmd"] << "echo 'extension=#{deps}' > /etc/php.d/99-#{deps}.ini"
+      end
+    end
+
+    if config.key?("after_command")
+      config["after_command"].each do |cmd|
         config["cloud"]["config"]["runcmd"] << cmd
       end
     end

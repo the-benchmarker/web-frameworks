@@ -2,8 +2,15 @@ framework:
   github: spiral/framework
   version: 2.4
 
-before_command:
+files:
+  - composer.json
+  - "**/*.php"
+  - .rr.yaml
+
+bootstrap:
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
   - vendor/bin/spiral get
   - php app.php configure
 
-command: ./spiral serve
+command: /opt/web/spiral serve

@@ -1,24 +1,28 @@
 framework:
   website: ubiquity.kobject.net
   version: 2.3
+
+deps:
+  - nginx
+  - php
+  - php-pecl-zip
+  - composer
   
-before_command:
+files:
+  - composer.json
+  - '**/*.php'
+  - ../.config/nginx-rewrite.conf
+
+bootstrap:
   - composer update
   - chmod +x vendor/bin/Ubiquity
   - mkdir .ubiquity
   - mkdir app/cache -p
-  - ./vendor/bin/Ubiquity bootstrap prod
-
-docroot: /usr/src/app
-
-nginx_conf:
-  - |
-    location /{\n\
-        rewrite ^/(.*)$ /index.php?c=$1 last;\n\
-    }\n\
-  - |
-    location = /index.php {\n\
-      fastcgi_pass unix:/var/run/php-fpm.sock;\n\
-      fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
-      include fastcgi_params;\n\
-    }\n\
+  - vendor/bin/Ubiquity bootstrap prod
+  - rm -fr vendor
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
+  - mv config/nginx-rewrite.conf /etc/nginx/conf.d/default.conf
+  - sed -i 's/;prefix.*/prefix = \/opt\/web/g' /etc/php-fpm.d/www.conf
+  - systemctl enable php-fpm
+  - systemctl enable nginx
