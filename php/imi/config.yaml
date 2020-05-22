@@ -4,6 +4,5 @@ framework:
 
 php_ext:
   - swoole
-  - redis
 
-command: /usr/local/bin/php vendor/bin/imi server/start
+command: /usr/bin/php /opt/web/vendor/bin/imi server/start

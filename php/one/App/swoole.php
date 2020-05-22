@@ -1,8 +1,5 @@
 <?php
-/**
- * swoole 运行这个文件
- * php swoole.php
- */
+
 define('_APP_PATH_', __DIR__);
 
 define('_APP_PATH_VIEW_', __DIR__ . '/View');

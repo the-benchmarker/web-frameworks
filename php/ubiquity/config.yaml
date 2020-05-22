@@ -2,7 +2,18 @@ framework:
   website: ubiquity.kobject.net
   version: 2.3
 
-before_command:
+deps:
+  - nginx
+  - php
+  - php-pecl-zip
+  - composer
+
+files:
+  - composer.json
+  - "**/*.php"
+  - ../.config/nginx-rewrite.conf
+
+bootstrap:
   - composer update
   - chmod +x vendor/bin/Ubiquity
   - mkdir .ubiquity

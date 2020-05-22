@@ -1,6 +1,6 @@
 <?php
 return [
-    'secret_key' => sha1(__FILE__), // 加密key
-    'sign_key' => sha1(__FILE__), // 签名key
+    'secret_key' => sha1(__FILE__),
+    'sign_key' => sha1(__FILE__), 
     'method' => 'AES-128-ECB'
 ];
