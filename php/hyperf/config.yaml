@@ -6,11 +6,14 @@ php_ext:
   - redis
   - swoole
 
-after_command:
-  - echo "swoole.use_shortname = 'Off'" >> /etc/php.d/99-swoole.ini
-
 bootstrap:
   - composer install --no-dev --prefer-dist --classmap-authoritative 
   - composer dumpautoload -o
+
+  # Workaround for containers
+  - "[[ ! -f '/etc/php.d/99-swoole.ini' ]] && mkdir /etc/php.d"
+  - "[[ ! -f '/etc/php.d/99-swoole.ini' ]] && ln -sfv /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini /etc/php.d/99-swoole.ini"
+
+  - echo "swoole.use_shortname = 'Off'" >> /etc/php.d/99-swoole.ini
 
 command: /usr/bin/php /opt/web/sbin/hyperf.php start
