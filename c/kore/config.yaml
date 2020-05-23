@@ -10,12 +10,17 @@ sources:
   - "**/*.c"
   - "**/*.conf"
 
+files:
+  - "**/hello.conf"
+
 download:
   - wget -c https://kore.io/releases/kore-3.3.1.tar.gz && tar xvf kore-3.3.1.tar.gz
   - cd kore-3.3.1 && TASKS=1 NOTLS=1 make && make install
 
 build:
   - cd hello && kodev build
+  - mv /usr/local/bin/kore kore
+  - mv hello/hello.so .
 
 build_deps:
   - bsd-compat-headers
@@ -25,7 +30,7 @@ bin_deps:
   - libressl
 
 binaries:
-  - ../../local/bin/kore
-  - hello/hello.so
+  - kore
+  - hello.so
 
-command: cd hello && /local/bin/kore -f -n -r -c conf/hello.conf
+command: /opt/web/kore -f -n -r -c /opt/web/hello/conf/hello.conf
