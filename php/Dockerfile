@@ -1,11 +1,7 @@
 FROM php:7.4-fpm-alpine
 
-<<<<<<< HEAD
 RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev {{#deps}} {{{.}}} {{/deps}}
-=======
-RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc
->>>>>>> 9c40c42c... feat(php): Stabilize builds
-RUN docker-php-ext-install zip opcache
+RUN docker-php-ext-install zip opcache bcmath
 
 WORKDIR /opt/web
 
