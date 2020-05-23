@@ -1,33 +1,18 @@
-FROM alpine 
+FROM gcc
 
-RUN apk add build-base
+WORKDIR /opt/web
 
-{{#build_deps}}
-   RUN apk add {{{.}}}
-{{/build_deps}}
+{{#sources}}
+   COPY {{{.}}} {{{.}}}
+{{/sources}}
 
-WORKDIR /usr/src/app
-
-COPY . ./
-
-{{#clone}}
+{{#download}}
   RUN {{{.}}}
-{{/clone}}
+{{/download}}
 
 {{#build}}
    RUN {{{.}}}
 {{/build}}
 
-FROM alpine
-
-{{#bin_deps}}
-   RUN apk add {{{.}}}
-{{/bin_deps}}
-
-{{#files}}
-COPY --from=0 /usr/src/app/{{.}} /usr/bin/{{{.}}}
-{{/files}}
-
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+# Workaround for kore
+RUN [ -f /usr/local/bin/kore ] && mv /usr/local/bin/kore kore || true
