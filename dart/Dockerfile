@@ -6,6 +6,8 @@ WORKDIR /opt/web
     COPY {{{.}}} {{{.}}}
 {{/files}}
 
-RUN pub get
+{{#bootstrap}}
+  RUN {{{.}}}
+{{/bootstrap}}
 
 CMD {{#command}}{{{.}}}{{/command}}
