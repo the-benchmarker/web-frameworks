@@ -2,12 +2,6 @@ framework:
   website: iceframework.org
   version: 1.6
 
-build_deps:
-  - bash
-
-php_ext:
-  - ice
-
 deps:
   - nginx
   - php
@@ -15,6 +9,9 @@ deps:
   - php-pear
   - "@development-tools"
   - php-devel
+
+php_ext:
+  - ice
 
 files:
   - composer.json
