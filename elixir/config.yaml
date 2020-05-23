@@ -11,7 +11,11 @@ environment:
   HOME: /opt/web
 
 bootstrap:
-  - bash script/compile.sh
+  - MIX_ENV="prod" ERL_COMPILER_OPTIONS="[native, {hipe, [verbose, o3]}]" mix local.rebar --force
+  - MIX_ENV="prod" ERL_COMPILER_OPTIONS="[native, {hipe, [verbose, o3]}]" mix local.hex --force
+  - MIX_ENV="prod" ERL_COMPILER_OPTIONS="[native, {hipe, [verbose, o3]}]" mix deps.get --only prod
+  - MIX_ENV="prod" ERL_COMPILER_OPTIONS="[native, {hipe, [verbose, o3]}]" mix compile
+  - MIX_ENV="prod" ERL_COMPILER_OPTIONS="[native, {hipe, [verbose, o3]}]" mix release --path release
 
 deps:
   - elixir
