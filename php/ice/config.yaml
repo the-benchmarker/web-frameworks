@@ -2,12 +2,6 @@ framework:
   website: iceframework.org
   version: 1.6
 
-build_deps:
-  - bash
-
-php_ext:
-  - ice
-
 deps:
   - nginx
   - php
@@ -15,6 +9,7 @@ deps:
   - php-pear
   - "@development-tools"
   - php-devel
+  - wget
   
 files:
   - composer.json
@@ -22,9 +17,15 @@ files:
   - ../.config/nginx-rewrite.conf
 
 bootstrap:
+  - wget -O /tmp/framework-1.5.1.tar.gz https://github.com/ice/framework/archive/1.5.1.tar.gz
+  - cd /tmp/ && tar -xzf framework-1.5.1.tar.gz && cd framework-1.5.1 && bash install
+  - "[[ -d /etc/php.d ]] && (echo extension=ice.so >> /etc/php.d/99-ice.ini) || true"
+  - "[[ -d /usr/local/etc/php/conf.d ]] && (echo extension=ice.so >> /usr/local/etc/php/conf.d/docker-php-ext-ice.ini) || true"
+
   - composer install --no-dev --prefer-dist --classmap-authoritative
   - composer dumpautoload -o
   - mv config/nginx-rewrite.conf /etc/nginx/conf.d/default.conf
   - sed -i 's/;prefix.*/prefix = \/opt\/web\/public/g' /etc/php-fpm.d/www.conf 
   - "[[ -f /etc/fedora-release ]] && systemctl enable php-fpm || true"
   - "[[ -f /etc/fedora-release ]] && systemctl enable nginx || true"
+
