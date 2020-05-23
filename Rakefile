@@ -43,7 +43,7 @@ def commands_for(language, framework, **options)
 
   # Compile first
 
-  if ["docker", "docker-machine"].include?(options[:provider]) && app_config.key?("binaries")
+  if app_config.key?("binaries")
     commands << "docker build -t #{language}.#{framework} ."
     commands << "docker run -td #{language}.#{framework} > cid.txt"
     app_config["binaries"].each do |out|
