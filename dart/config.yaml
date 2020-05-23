@@ -9,6 +9,8 @@ files:
   - pubspec.yaml
 
 bootstrap:
-  - dnf copr -y enable tcg/devel && dnf -y install dart-bin && pub get
+  - "[[ -f /etc/fedora-release ]] && dnf copr -y enable tcg/devel || true"
+  - "[[ -f /etc/fedora-release ]] && dnf -y install dart-bin || true"
+  - pub get
 
 command: /usr/bin/dart /opt/web/main.dart
