@@ -18,19 +18,25 @@ bin_deps:
   - libressl
   - zlib
 
+deps:
+  - jsoncpp
+  - openssl
+  - zlib
+  - uuid
+
 binaries:
-  - build/drogon_benchmark
+  - build
 
 download:
   - git clone --branch v1.0.0-beta13 https://github.com/an-tao/drogon
-  - cd /usr/src/app/drogon && git submodule update --init
+  - cd drogon && git submodule update --init
 
 build:
-  - mkdir /usr/src/app/build
-  - cd /usr/src/app/build && cmake -DCMAKE_BUILD_TYPE=release ..
-  - cd /usr/src/app/build && make
+  - mkdir build
+  - cd build && cmake -DCMAKE_BUILD_TYPE=release ..
+  - cd build && make
 
 files: 
   - config.json
 
-command: build/drogon_benchmark config.json
+command: /opt/web/build/drogon_benchmark /opt/web/config.json
