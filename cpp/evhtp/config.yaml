@@ -16,6 +16,6 @@ build:
   - cmake --build _builds --config Release
 
 binaries:
-  - _builds/server_cpp_evhtp
+  - _builds
 
 command: /opt/web/_builds/server_cpp_evhtp
