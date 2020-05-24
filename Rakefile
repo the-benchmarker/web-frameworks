@@ -47,10 +47,12 @@ def commands_for(language, framework, **options)
     commands << "docker build -t #{language}.#{framework} ."
     commands << "docker run -td #{language}.#{framework} > cid.txt"
     app_config["binaries"].each do |out|
-      if out.count("/") > 0
-        out = out.split("/").shift
+      if out.count(File::Separator) > 0
+        FileUtils.mkdir_p(File.join(directory, File.dirname(out)))
+        commands << "docker cp `cat cid.txt`:/opt/web/#{File.dirname(out)} ."
+      else
+        commands << "docker cp `cat cid.txt`:/opt/web/#{out} #{out}"
       end
-      commands << "docker cp `cat cid.txt`:/opt/web/#{out} #{out}"
     end
   end
 
@@ -283,24 +285,27 @@ namespace :cloud do
 
     if config.key?("binaries")
       binaries = []
-      config["binaries"].each do |file|
-        Dir.glob(File.join(directory, file)).each do |binary|
+      config["binaries"].each do |pattern|
+        Dir.glob(File.join(directory, pattern)).each do |binary|
           binaries << binary
         end
       end
 
       Net::SSH.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |ssh|
         binaries.each do |binary|
-          directory = File.dirname(binary.gsub(directory, "/opt/web"))
-          STDOUT.puts "Creating #{directory}"
-          ssh.exec!("mkdir -p #{directory}")
+          remote_directory = File.dirname(binary).gsub!(directory, "/opt/web")
+          STDOUT.puts "Creating #{remote_directory}"
+          ssh.exec!("mkdir -p #{remote_directory}")
         end
       end
 
       Net::SCP.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |scp|
-        binaries.each do |binary|
-          STDOUT.puts "Uploading #{binary} to #{directory}"
-          scp.upload!(binary, directory, verbose: true, recursive: true)
+        config["binaries"].each do |pattern|
+          Dir.glob(File.join(directory, pattern)).each do |binary|
+            remote_directory = File.dirname(binary).gsub!(directory, "/opt/web")
+            STDOUT.puts "Uploading #{binary} to #{remote_directory}"
+            scp.upload!(binary, remote_directory, verbose: true, recursive: true)
+          end
         end
       end
     end
@@ -381,5 +386,13 @@ namespace :ci do
 
     config = { version: "v1.0", name: "Benchmarking suite", execution_time_limit: { hours: 2 }, agent: { machine: { type: "e1-standard-2", os_image: "ubuntu1804" } }, blocks: blocks }
     File.write(".semaphore/semaphore.yml", JSON.load(config.to_json).to_yaml)
+  end
+end
+
+task :clean do
+  Dir.glob("**/*/.gitignore").each do |ignore_file|
+    File.readlines(ignore_file).reject { |line| line.start_with?("!") || line.start_with?("#") }.each do |pattern|
+      pp pattern.strip
+    end
   end
 end
