@@ -1,33 +1,17 @@
-FROM alpine
+FROM fedora:32
 
-RUN apk add git build-base cmake
+RUN dnf -y install cmake jsoncpp-devel openssl-devel zlib-devel @development-tools g++ uuid-devel
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
-{{#build_deps}}
-  RUN apk add {{{.}}}
-{{/build_deps}}
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
-COPY . ./
-
-{{#clone}}
+{{#download}}
   RUN {{{.}}}
-{{/clone}}
+{{/download}}
 
 {{#build}}
    RUN {{{.}}}
 {{/build}}
-
-FROM alpine
-
-{{#bin_deps}}
-   RUN apk add {{{.}}}
-{{/bin_deps}}
-
-{{#files}}
-  COPY --from=0 /usr/src/app/{{.}} /usr/bin/{{{.}}}
-{{/files}}
-
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
