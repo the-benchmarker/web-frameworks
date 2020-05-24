@@ -25,7 +25,7 @@ deps:
   - uuid
 
 binaries:
-  - build
+  - build/drogon_benchmark
 
 download:
   - git clone --branch v1.0.0-beta13 https://github.com/an-tao/drogon
