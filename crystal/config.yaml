@@ -9,6 +9,6 @@ sources:
   - src/**/*.cr
 
 binaries:
-  - bin
+  - bin/server
 
 command: /opt/web/bin/server
