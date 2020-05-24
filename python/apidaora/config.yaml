@@ -20,7 +20,7 @@ alpine-deps:
 bootstrap:
   - curl https://sh.rustup.rs > init.sh
   - sh init.sh -y
-  - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
+  - find /root/.cargo/bin -type f -exec install {} /usr/local/bin \;
   - python3 -m pip install -r requirements.txt -U
 
 files:
