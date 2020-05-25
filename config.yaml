@@ -5,6 +5,11 @@ cloud:
       - systemctl disable cloud-init
       - systemctl enable web
       - mkdir -p /opt/web
+    users:
+      - name: cloudy
+        gecos: Magic Cloud App Daemon User
+        inactive: true
+        system: true
 
 service: |
   [Unit]
@@ -16,6 +21,7 @@ service: |
   EnvironmentFile=/etc/web
   WorkingDirectory=/opt/web
   ExecStart={{{command}}}
+  User=cloudy
 
   [Install]
   WantedBy=multi-user.target
