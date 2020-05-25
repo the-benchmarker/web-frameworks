@@ -259,6 +259,7 @@ namespace :cloud do
             "path" => "/opt/web/#{remote_path}",
             "content" => File.read(path),
             "permission" => "0644",
+            "owner": "cloudy:cloudy"
           }
 
           next if remote_directory.start_with?(".")
