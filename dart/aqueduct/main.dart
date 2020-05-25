@@ -27,7 +27,6 @@ class AqueductDartChannel extends ApplicationChannel {
 
 Future main() async {
   final app = Application<AqueductDartChannel>()
-    ..options.configurationFilePath = "config.yaml"
     ..options.port = 3000;
 
   final count = Platform.numberOfProcessors ~/ 2;
