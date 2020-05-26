@@ -10,7 +10,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/vapor/vapor.git", .upToNextMinor(from: "4.5.0"))
+        .package(url: "https://github.com/vapor/vapor.git", .upToNextMinor(from: "4.6.0"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
