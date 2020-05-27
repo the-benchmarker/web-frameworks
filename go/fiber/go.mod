@@ -1,3 +1,5 @@
 module main
 
-require github.com/gofiber/fiber v1.14.5
+go 1.14
+
+require github.com/gofiber/fiber v1.10.0
