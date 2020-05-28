@@ -1,6 +1,6 @@
 framework:
   website: vapor.codes
-  version: 4.6
+  version: 4.7
   name: vapor
 
 options: serve --hostname 0.0.0.0 --port 3000 --env prod
