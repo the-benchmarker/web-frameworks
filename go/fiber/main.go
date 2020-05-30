@@ -6,9 +6,11 @@ import (
 	"github.com/gofiber/fiber"
 )
 
-const empty = func(c *fiber.Ctx) {}
-const sendID = func(c *fiber.Ctx) {
-	c.SendString(c.Params("id"))
+const id = "id"
+
+var empty = func(c *fiber.Ctx) {}
+var sendID = func(c *fiber.Ctx) {
+	c.SendString(c.Params(id))
 }
 
 func main() {
@@ -20,5 +22,5 @@ func main() {
 	app.Get("/", empty)
 	app.Get("/user/:id", sendID)
 	app.Post("/user", empty)
-	app.Listen(3000)
+	log.Fatal(app.Listen(3000))
 }
