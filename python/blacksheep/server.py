@@ -1,5 +1,4 @@
 from blacksheep.server import Application
-import multiprocessing
 from blacksheep.server.responses import text
 
 
