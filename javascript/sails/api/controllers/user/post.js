@@ -1,5 +1,3 @@
 module.exports = {
-  fn: async function () {
-    this.res.send("");
-  },
+  fn : async function() { this.res.send(""); },
 };
