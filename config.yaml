@@ -29,7 +29,6 @@ service: |
 providers:
   docker:
     build:
-      - mkdir -p ../../.neph/{{{language}}}
       - docker build -t {{{language}}}.{{{framework}}} .
 
     metadata:
@@ -41,7 +40,6 @@ providers:
 
   docker-machine:
     build:
-      - mkdir -p ../../.neph/{{{language}}}
       - docker build -t -p 3000:3000 {{{language}}}.{{{framework}}} .
 
     metadata:
@@ -52,7 +50,6 @@ providers:
 
   digitalocean:
     build:
-      - mkdir -p ../../.neph/{{{language}}}
       - rm -fr ~/.ssh/known_hosts
       - rake cloud:config LANG={{{language}}} FRAMEWORK={{{framework}}}
       - doctl compute droplet create {{{language}}}.{{{framework}}} --region {{{DO_REGION}}} --image {{{DO_IMAGE}}} --size {{{DO_SIZE}}} --user-data-file user_data.yml --wait --ssh-keys {{{DO_FINGERPRINT}}} {{{DO_OPTIONS}}}
