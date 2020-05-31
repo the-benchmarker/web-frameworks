@@ -1,0 +1,57 @@
+# Do not push style fixes directly to the original PR
+auto: false
+
+# Add reviewer for the current PR, if any style violation is found
+request_review: author
+
+restylers:
+  - image: restyled/restyler-clang-format
+    command:
+    - clang-format
+    - "-i"
+    arguments: []
+    include:
+    - "**/*.c"
+    - "**/*.cc"
+    - "**/*.h"
+    - "**/*.cmake"
+  - image: restyled/restyler-google-java-format
+    command:
+    - google-java-format
+    - "--replace"
+    arguments: []
+    include:
+    - "**/*.java"
+    interpreters: []
+  - image: restyled/restyler-black
+    command:
+    - black
+    arguments: []
+    include:
+    - "**/*.py"
+    interpreters:
+    - python
+  - image: restyled/restyler-rustfmt
+    command:
+    - rustfmt
+    arguments: []
+    include:
+    - "**/*.rs"
+    interpreters: []
+  - image: restyled/restyler-php-cs-fixer
+    command:
+    - php-cs-fixer
+    - fix
+    arguments: []
+    include:
+    - "**/*.php"
+    interpreters: []
+  - image: restyled/restyler-prettier
+    command:
+    - prettier
+    - "--write"
+    arguments: []
+    include:
+    - "**/*.json"
+    - "**/*.js"
+    interpreters: []
