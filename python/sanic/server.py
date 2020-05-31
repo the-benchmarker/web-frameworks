@@ -7,7 +7,10 @@ LOGGING_CONFIG = dict(
     version=1,
     disable_existing_loggers=False,
     loggers={
-        "sanic.root": {"level": "WARNING", "handlers": ["console"]},
+        "sanic.root": {
+            "level": "WARNING",
+            "handlers": ["console"]
+        },
         "sanic.error": {
             "level": "WARNING",
             "handlers": ["error_console"],
@@ -22,9 +25,18 @@ LOGGING_CONFIG = dict(
         },
     },
     handlers={
-        "console": {"class": "logging.NullHandler", "formatter": "generic",},
-        "error_console": {"class": "logging.NullHandler", "formatter": "generic",},
-        "access_console": {"class": "logging.NullHandler", "formatter": "access",},
+        "console": {
+            "class": "logging.NullHandler",
+            "formatter": "generic",
+        },
+        "error_console": {
+            "class": "logging.NullHandler",
+            "formatter": "generic",
+        },
+        "access_console": {
+            "class": "logging.NullHandler",
+            "formatter": "access",
+        },
     },
     formatters={
         "generic": {
@@ -33,14 +45,13 @@ LOGGING_CONFIG = dict(
             "class": "logging.Formatter",
         },
         "access": {
-            "format": "%(asctime)s - (%(name)s)[%(levelname)s][%(host)s]: "
-            + "%(request)s %(message)s %(status)d %(byte)d",
+            "format": "%(asctime)s - (%(name)s)[%(levelname)s][%(host)s]: " +
+            "%(request)s %(message)s %(status)d %(byte)d",
             "datefmt": "[%Y-%m-%d %H:%M:%S %z]",
             "class": "logging.Formatter",
         },
     },
 )
-
 
 app = Sanic("benchmark", log_config=LOGGING_CONFIG)
 
@@ -62,4 +73,8 @@ async def user(request):
 
 if __name__ == "__main__":
     workers = multiprocessing.cpu_count()
-    app.run(host="0.0.0.0", port=3000, workers=workers, debug=False, access_log=False)
+    app.run(host="0.0.0.0",
+            port=3000,
+            workers=workers,
+            debug=False,
+            access_log=False)

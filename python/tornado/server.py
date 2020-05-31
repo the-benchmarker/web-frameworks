@@ -18,10 +18,8 @@ class UserInfoHandler(tornado.web.RequestHandler):
         self.write(id)
 
 
-app = tornado.web.Application(
-    handlers=[
-        (r"/", MainHandler),
-        (r"/user", UserHandler),
-        (r"/user/(\d+)", UserInfoHandler),
-    ]
-)
+app = tornado.web.Application(handlers=[
+    (r"/", MainHandler),
+    (r"/user", UserHandler),
+    (r"/user/(\d+)", UserInfoHandler),
+])
