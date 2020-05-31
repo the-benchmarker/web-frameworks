@@ -1,7 +1,6 @@
 from blacksheep.server import Application
 from blacksheep.server.responses import text
 
-
 app = Application()
 
 
