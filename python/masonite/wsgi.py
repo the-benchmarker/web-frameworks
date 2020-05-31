@@ -3,7 +3,7 @@
 from masonite.app import App
 
 from bootstrap.start import app
-from config import application, providers
+from config import providers
 
 """Instantiate Container And Perform Important Bindings
 Some Service providers need important bindings like the WSGI application
