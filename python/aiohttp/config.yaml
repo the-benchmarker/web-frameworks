@@ -6,6 +6,6 @@ files:
   - server.py
   - requirements.txt
   - ../.config/gunicorn.py
-  
+
 environment:
   WORKER_CLASS: aiohttp.GunicornUVLoopWebWorker

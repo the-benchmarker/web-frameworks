@@ -1,7 +1,7 @@
 framework:
   github: twisted/klein
   version: 19.6
-  
+
 files:
   - requirements.txt
   - server.py

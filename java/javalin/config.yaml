@@ -2,7 +2,7 @@ framework:
   website: javalin.io
   version: 3.8
 
-build: 
+build:
   - mvn compile assembly:single
 
 command: >

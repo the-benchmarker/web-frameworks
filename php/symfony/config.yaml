@@ -1,16 +1,16 @@
 framework:
   website: symfony.com
   version: 5.1
-  
+
 deps:
   - nginx
   - php
   - composer
-  
+
 files:
   - composer.json
-  - '**/*.yaml'
-  - '**/*.php'
+  - "**/*.yaml"
+  - "**/*.php"
   - ../.config/nginx.conf
 
 environment:

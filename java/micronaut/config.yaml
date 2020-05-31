@@ -22,7 +22,7 @@ files:
 
 binaries:
   - build/distributions/web-0.1.tar
-  
+
 bootstrap:
   - tar -xvf build/distributions/web-0.1.tar
 
