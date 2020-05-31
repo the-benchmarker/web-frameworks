@@ -1,4 +1,5 @@
-from clastic import Application, render_basic
+from clastic import Application
+from clastic import render_basic
 
 
 def index():
