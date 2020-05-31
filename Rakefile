@@ -259,7 +259,7 @@ namespace :cloud do
             "path" => "/opt/web/#{remote_path}",
             "content" => File.read(path),
             "permission" => "0644",
-            "owner": "cloudy:cloudy"
+            "owner": "cloudy:cloudy",
           }
 
           next if remote_directory.start_with?(".")
@@ -380,7 +380,7 @@ namespace :ci do
       Dir.glob("#{language}/*/config.yaml") do |file|
         config = YAML.safe_load(File.read(file))
         _, framework, = file.split(File::Separator)
-        block[:task][:jobs] << { name: framework, commands: ["mkdir -p .neph/#{language}/#{framework}", "retry bin/neph #{language}/#{framework} --mode=CI", "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec"] }
+        block[:task][:jobs] << { name: framework, commands: ["retry bin/neph #{language}/#{framework} --mode=CI", "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec"] }
       end
       blocks << block
     end
