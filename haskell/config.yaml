@@ -3,9 +3,9 @@ provider:
     language: 8.8
 
 sources:
-  - '**/*.hs'
+  - "**/*.hs"
   - stack.yaml
-  - '*.cabal' 
+  - "*.cabal"
 
 binaries:
   - .stack-work/dist/x86_64-linux/Cabal-3.0.1.0/build/servant-proj-exe/servant-proj-exe
