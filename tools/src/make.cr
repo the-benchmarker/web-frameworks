@@ -249,11 +249,11 @@ class App < Admiral::Command
                   when "docker"
                     yaml.scalar "docker run -td #{language}.#{name} > cid.txt"
                     yaml.scalar "docker inspect `cat cid.txt` -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' > ip.txt"
-                    yaml.scalar "sleep 5"
+                    yaml.scalar "sleep 25"
                   when "docker-machine"
                     yaml.scalar "docker run -p 3000:3000 -d #{language}.#{name}"
                     yaml.scalar "docker-machine ip default > ip.txt"
-                    yaml.scalar "sleep 5"
+                    yaml.scalar "sleep 25"
                   else
                     raise "unsupported provider"
                   end
