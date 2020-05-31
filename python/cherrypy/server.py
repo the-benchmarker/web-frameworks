@@ -7,16 +7,19 @@ IS_STANDALONE = __name__ == "__main__"
 
 class WebRoot:
     @cherrypy.expose
-    def index(self):
+    @staticmethod
+    def index():
         return ""
 
 
 @cherrypy.expose
 class UserAPI:
-    def GET(self, user_id):
+    @staticmethod
+    def GET(user_id):
         return user_id
 
-    def POST(self):
+    @staticmethod
+    def POST():
         return ""
 
 

@@ -2,11 +2,14 @@ from masonite.request import Request
 
 
 class PageController:
-    def index(self, request: Request):
+    @staticmethod
+    def index(request: Request):
         return ""
 
-    def show_user(self, request: Request):
+    @staticmethod
+    def show_user(request: Request):
         return request.param("id")
 
-    def create_user(self):
+    @staticmethod
+    def create_user():
         return ""

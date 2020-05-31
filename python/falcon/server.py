@@ -5,15 +5,18 @@ patch.patch_all()
 
 
 class EmptyResponse:
-    def on_get(self, req, resp):
+    @staticmethod
+    def on_get(req, resp):
         resp.data = bytes("", "utf8")
 
-    def on_post(self, req, resp):
+    @staticmethod
+    def on_post(req, resp):
         resp.data = bytes("", "utf8")
 
 
 class StringResponse:
-    def on_get(self, req, resp, id):
+    @staticmethod
+    def on_get(req, resp, id):
         resp.data = bytes(id, "utf8")
 
 

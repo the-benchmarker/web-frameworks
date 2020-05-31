@@ -5,13 +5,16 @@ class HttpService:
     name = "http_service"
 
     @http("GET", "/")
-    def index(self, request):
+    @staticmethod
+    def index(request):
         return ""
 
     @http("GET", "/user/<int:id>")
-    def get_user(self, request, id):
+    @staticmethod
+    def get_user(request, id):
         return str(id)
 
     @http("POST", "/user")
-    def do_post(self, request):
+    @staticmethod
+    def do_post(request):
         return ""
