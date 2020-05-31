@@ -22,7 +22,7 @@ RUN stable fetch
 
 RUN stable env ponyc -Dopenssl_1.1.x -Dstatic
 
-FROM ubuntu 
+FROM ubuntu
 
 RUN apt-get -y update && apt-get -y install openssl libatomic1
 

@@ -1,4 +1,4 @@
-FROM alpine 
+FROM alpine
 
 RUN apk add build-base
 
