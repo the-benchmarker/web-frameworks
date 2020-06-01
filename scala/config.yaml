@@ -1,7 +1,7 @@
 provider:
   default:
     language: 2.13
-    
+
 sources:
   - "src/**/*.scala"
   - "**/*.sbt"

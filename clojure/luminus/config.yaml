@@ -10,7 +10,7 @@ sources:
   - "**/logback.xml"
   - "**/*.html"
 
-build: 
+build:
   - lein uberjar
 
 binaries:

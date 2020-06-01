@@ -12,7 +12,7 @@ deps:
   - php-devel
 
 files:
-  - '**/*.php'
+  - "**/*.php"
   - composer.json
 
 bootstrap:
