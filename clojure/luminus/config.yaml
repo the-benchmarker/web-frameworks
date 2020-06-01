@@ -4,6 +4,12 @@ framework:
 
 image: clojure:openjdk-11-lein-slim-buster
 
+sources:
+  - "**/*.clj"
+  - "**/*.edn"
+  - "**/logback.xml"
+  - "**/*.html"
+
 build:
   - lein uberjar
 
