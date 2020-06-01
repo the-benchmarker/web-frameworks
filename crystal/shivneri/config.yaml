@@ -4,6 +4,5 @@ framework:
 
 build_opts: '--link-flags "-lxml2 -llzma"'
 
-
 environment:
   CRYSTAL_ENV: production

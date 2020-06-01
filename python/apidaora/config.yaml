@@ -32,4 +32,3 @@ files:
 environment:
   RUSTFLAGS: -C target-feature=-crt-static
   WORKER_CLASS: uvicorn.workers.UvicornWorker
-  

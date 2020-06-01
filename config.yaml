@@ -53,7 +53,7 @@ providers:
       - rm -fr ~/.ssh/known_hosts
       - rake cloud:config LANG={{{language}}} FRAMEWORK={{{framework}}}
       - doctl compute droplet create {{{language}}}.{{{framework}}} --region {{{DO_REGION}}} --image {{{DO_IMAGE}}} --size {{{DO_SIZE}}} --user-data-file user_data.yml --wait --ssh-keys {{{DO_FINGERPRINT}}} {{{DO_OPTIONS}}}
-      
+
     metadata:
       - doctl compute droplet list {{{language}}}.{{{framework}}} --format ID --no-header > id.txt
       - doctl compute droplet list {{{language}}}.{{{framework}}} --format {{{DO_ATTRIBUTE}}} --no-header > ip.txt

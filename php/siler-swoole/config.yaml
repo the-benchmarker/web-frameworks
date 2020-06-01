@@ -1,12 +1,12 @@
 framework:
   website: siler.leocavalcante.dev
   version: 1.7
-  
+
 php_ext:
   - swoole
 
 bootstrap:
   - composer install --no-dev --prefer-dist --classmap-authoritative
-  - composer dumpautoload -o 
+  - composer dumpautoload -o
 
 command: /usr/bin/php /opt/web/public/index.php

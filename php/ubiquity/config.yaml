@@ -7,10 +7,10 @@ deps:
   - php
   - php-pecl-zip
   - composer
-  
+
 files:
   - composer.json
-  - '**/*.php'
+  - "**/*.php"
   - ../.config/nginx-rewrite.conf
 
 bootstrap:

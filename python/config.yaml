@@ -7,13 +7,13 @@ provider:
 files:
   - requirements.txt
   - server.py
-  
+
 deps:
   - "@development-tools"
   - python3
   - python3-devel
   - python3-pip
-  
+
 bootstrap:
   - python3 -m pip install -r requirements.txt -U
 

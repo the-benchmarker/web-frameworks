@@ -7,7 +7,7 @@ php_ext:
   - swoole
 
 bootstrap:
-  - composer install --no-dev --prefer-dist --classmap-authoritative 
+  - composer install --no-dev --prefer-dist --classmap-authoritative
   - composer dumpautoload -o
 
   # Workaround for containers

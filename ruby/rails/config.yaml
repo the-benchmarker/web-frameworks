@@ -14,7 +14,6 @@ alpine-deps:
   - libxml2-dev
   - libxslt-dev
 
-
 files:
   - Gemfile
   - config.ru
