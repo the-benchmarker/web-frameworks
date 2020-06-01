@@ -12,7 +12,7 @@ files:
 environment:
   NODE_ENV: production
   PORT: 3000
-  PM2_HOME: /root/.pm2
+  PM2_HOME: /opt/web
 
 bootstrap:
   - npm install
