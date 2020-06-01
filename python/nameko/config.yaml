@@ -6,5 +6,5 @@ files:
   - requirements.txt
   - server.py
   - nameko.yaml
-    
+
 command: /usr/local/bin/nameko run server --config /opt/web/nameko.yaml

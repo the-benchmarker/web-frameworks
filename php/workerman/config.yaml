@@ -13,6 +13,6 @@ deps:
 
 bootstrap:
   - composer install --no-dev --prefer-dist --classmap-authoritative
-  - composer dumpautoload -o 
+  - composer dumpautoload -o
 
 command: /usr/bin/php /opt/web/start.php start

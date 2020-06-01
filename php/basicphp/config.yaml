@@ -5,10 +5,10 @@ framework:
 deps:
   - nginx
   - php
-  
+
 files:
   - composer.json
-  - '**/*.php'
+  - "**/*.php"
   - ../.config/nginx.conf
 
 bootstrap:
@@ -16,4 +16,4 @@ bootstrap:
   - sed -i 's/;prefix.*/prefix = \/opt\/web\/public/g' /etc/php-fpm.d/www.conf
   - rm -fr config
   - "[[ -f /etc/fedora-release ]] && systemctl enable php-fpm || true"
-  - "[[ -f /etc/fedora-release ]] && systemctl enable nginx || true" 
+  - "[[ -f /etc/fedora-release ]] && systemctl enable nginx || true"

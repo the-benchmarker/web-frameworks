@@ -11,7 +11,7 @@ files:
 deps:
   - perl
   - perl-App-cpanminus
-  
+
 bootstrap:
   - cpanm --notest --installdeps .
 

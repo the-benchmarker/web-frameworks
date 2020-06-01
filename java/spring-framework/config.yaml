@@ -9,6 +9,5 @@ binaries:
   - target/benchmark-0.0.1-SNAPSHOT/WEB-INF/lib/jetty-runner-9.4.12.RC2.jar
   - target/*.war
 
-
 command: >
   /usr/bin/java -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/benchmark-0.0.1-SNAPSHOT/WEB-INF/lib/jetty-runner-9.4.12.RC2.jar --port 3000 /opt/web/target/benchmark-0.0.1-SNAPSHOT.war

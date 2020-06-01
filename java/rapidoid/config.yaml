@@ -10,4 +10,3 @@ command: >
   -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts 
   -cp /opt/web/target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar
   benchmark.rapidoid.Main profiles=production
-  
