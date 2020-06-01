@@ -11,7 +11,7 @@ build_deps:
 bin_deps:
   - libstdc++
 
-build: 
+build:
   - cmake -H. -B_builds -DCMAKE_BUILD_TYPE=Release
   - cmake --build _builds --config Release
 

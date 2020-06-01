@@ -1,14 +1,14 @@
 provider:
   default:
     language: 0.35
-    
-deps: 
+
+deps:
   - libatomic
 
 binaries:
   - web
- 
+
 sources:
   - "**/*.pony"
-  
+
 command: /opt/web/web

@@ -25,11 +25,9 @@ service: |
 
   [Install]
   WantedBy=multi-user.target
-          
-providers:
-  
-  docker:
 
+providers:
+  docker:
     build:
       - docker build -t {{{language}}}.{{{framework}}} .
 
@@ -41,7 +39,6 @@ providers:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker rm -f
 
   docker-machine:
-
     build:
       - docker build -t -p 3000:3000 {{{language}}}.{{{framework}}} .
 
@@ -52,12 +49,11 @@ providers:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker rm -f
 
   digitalocean:
-
     build:
       - rm -fr ~/.ssh/known_hosts
       - rake cloud:config LANG={{{language}}} FRAMEWORK={{{framework}}}
       - doctl compute droplet create {{{language}}}.{{{framework}}} --region {{{DO_REGION}}} --image {{{DO_IMAGE}}} --size {{{DO_SIZE}}} --user-data-file user_data.yml --wait --ssh-keys {{{DO_FINGERPRINT}}} {{{DO_OPTIONS}}}
-      
+
     metadata:
       - doctl compute droplet list {{{language}}}.{{{framework}}} --format ID --no-header > id.txt
       - doctl compute droplet list {{{language}}}.{{{framework}}} --format {{{DO_ATTRIBUTE}}} --no-header > ip.txt

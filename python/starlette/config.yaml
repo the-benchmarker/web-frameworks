@@ -1,7 +1,7 @@
 framework:
   website: starlette.io
   version: 0.13
-  
+
 files:
   - server.py
   - requirements.txt
@@ -9,6 +9,3 @@ files:
 
 environment:
   WORKER_CLASS: uvicorn.workers.UvicornWorker
-
-
-  
