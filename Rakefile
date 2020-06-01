@@ -393,6 +393,7 @@ end
 task :clean do
   Dir.glob("**/.gitignore").each do |ignore_file|
     directory = File.dirname(ignore_file)
+    next if directory == "lib"
     File.foreach(ignore_file) do |line|
       line.strip!
       next if line.start_with?("!")
