@@ -6,10 +6,10 @@ deps:
   - nginx
   - php
   - composer
-  
+
 files:
   - composer.json
-  - '**/*.php'
+  - "**/*.php"
   - ../.config/nginx.conf
 
 bootstrap:

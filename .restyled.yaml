@@ -14,61 +14,60 @@ statuses: true
 request_review: author
 
 restylers:
-
   - image: restyled/restyler-clang-format:v9.0.0
     command:
-    - clang-format
-    - "-i"
+      - clang-format
+      - "-i"
     arguments: []
     include:
-    - "**/*.c"
-    - "**/*.cc"
-    - "**/*.h"
-    - "**/*.cmake"
+      - "**/*.c"
+      - "**/*.cc"
+      - "**/*.h"
+      - "**/*.cmake"
 
   - image: restyled/restyler-google-java-format:v1.6
     command:
-    - google-java-format
-    - "--replace"
+      - google-java-format
+      - "--replace"
     arguments: []
     include:
-    - "**/*.java"
+      - "**/*.java"
     interpreters: []
 
   - image: restyled/restyler-black:v19.10b0
     command:
-    - black
+      - black
     arguments: []
     include:
-    - "**/*.py"
+      - "**/*.py"
     interpreters:
-    - python
+      - python
 
   - image: restyled/restyler-rustfmt:v1.4.14-nightly
     command:
-    - rustfmt
+      - rustfmt
     arguments: []
     include:
-    - "**/*.rs"
+      - "**/*.rs"
     interpreters: []
 
   - image: restyled/restyler-php-cs-fixer:v2.14.2
     command:
-    - php-cs-fixer
-    - fix
+      - php-cs-fixer
+      - fix
     arguments: []
     include:
-    - "**/*.php"
+      - "**/*.php"
     interpreters: []
-    
+
   - image: restyled/restyler-prettier:v2.0.2-1
     command:
-    - prettier
-    - "--write"
+      - prettier
+      - "--write"
     arguments: []
     include:
-    - "**/*.json"
-    - "**/*.js"
-    - "**/*.yml"
-    - "**/*.yaml"
+      - "**/*.json"
+      - "**/*.js"
+      - "**/*.yml"
+      - "**/*.yaml"
     interpreters: []

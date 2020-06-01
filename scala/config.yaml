@@ -1,12 +1,12 @@
 provider:
   default:
     language: 2.13
-    
+
 sources:
   - "src/**/*.scala"
   - "**/*.sbt"
   - "**/*.properties"
-  
+
 deps:
   - java-11-openjdk
 

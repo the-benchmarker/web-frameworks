@@ -3,12 +3,12 @@ provider:
     language: 1.43
   digitalocean:
     language: 1.43
-    
+
 sources:
   - Cargo.toml
   - src/**/*.rs
 
 binaries:
   - target
-  
+
 command: /opt/web/target/release/server
