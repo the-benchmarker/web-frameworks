@@ -5,6 +5,7 @@ cloud:
       - systemctl disable cloud-init
       - systemctl enable web
       - mkdir -p /opt/web
+      - chown -R cloudy:cloudy /opt/web
     users:
       - name: cloudy
         gecos: Magic Cloud App Daemon User
