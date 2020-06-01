@@ -1,11 +1,21 @@
-# Do not push style fixes directly to the original PR
-auto: false
+enabled: true
 
-# Add reviewer for the current PR, if any style violation is found
+# Push the style fixes directly to the original PR
+auto: false
+pull_requests: false
+
+# Leave comments on the original PR linking to the Restyle PR?
+comments: true
+
+# Set commit statuses?
+statuses: true
+
+# Request review on the Restyle PR?
 request_review: author
 
 restylers:
-  - image: restyled/restyler-clang-format
+
+  - image: restyled/restyler-clang-format:v9.0.0
     command:
     - clang-format
     - "-i"
@@ -15,7 +25,8 @@ restylers:
     - "**/*.cc"
     - "**/*.h"
     - "**/*.cmake"
-  - image: restyled/restyler-google-java-format
+
+  - image: restyled/restyler-google-java-format:v1.6
     command:
     - google-java-format
     - "--replace"
@@ -23,7 +34,8 @@ restylers:
     include:
     - "**/*.java"
     interpreters: []
-  - image: restyled/restyler-black
+
+  - image: restyled/restyler-black:v19.10b0
     command:
     - black
     arguments: []
@@ -31,14 +43,16 @@ restylers:
     - "**/*.py"
     interpreters:
     - python
-  - image: restyled/restyler-rustfmt
+
+  - image: restyled/restyler-rustfmt:v1.4.14-nightly
     command:
     - rustfmt
     arguments: []
     include:
     - "**/*.rs"
     interpreters: []
-  - image: restyled/restyler-php-cs-fixer
+
+  - image: restyled/restyler-php-cs-fixer:v2.14.2
     command:
     - php-cs-fixer
     - fix
@@ -46,7 +60,8 @@ restylers:
     include:
     - "**/*.php"
     interpreters: []
-  - image: restyled/restyler-prettier
+    
+  - image: restyled/restyler-prettier:v2.0.2-1
     command:
     - prettier
     - "--write"
@@ -54,4 +69,6 @@ restylers:
     include:
     - "**/*.json"
     - "**/*.js"
+    - "**/*.yml"
+    - "**/*.yaml"
     interpreters: []
