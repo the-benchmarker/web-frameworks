@@ -1,11 +1,14 @@
+# Exit build if no modification found
+before_install: bash .ci/has_to_run.sh || travis_terminate 0
+
 services:
   - docker # Use docker to containerize frameworks
   - postgresql # Use postgresql to store data
 
+dist: xenial
+
 # This tool is written in crystal
 language: crystal
-
-dist: bionic
 
 env:
   global:
