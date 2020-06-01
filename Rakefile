@@ -391,9 +391,25 @@ namespace :ci do
 end
 
 task :clean do
-  Dir.glob("**/*/.gitignore").each do |ignore_file|
-    File.readlines(ignore_file).reject { |line| line.start_with?("!") || line.start_with?("#") }.each do |pattern|
-      pp pattern.strip
+  Dir.glob("**/.gitignore").each do |ignore_file|
+    directory = File.dirname(ignore_file)
+    File.foreach(ignore_file) do |line|
+      line.strip!
+      next if line.start_with?("!")
+      next if line.start_with?("#")
+      next if line.start_with?(".env")
+      next if line.empty?
+      Dir.glob(File.join(directory, line)).each do |file|
+        if File.exist?(file)
+          if File.file?(file)
+            warn "Delting file #{file}"
+            File.delete(file)
+          elsif File.directory?(file)
+            warn "Deleting directory #{file}"
+            FileUtils.rm_rf(file)
+          end
+        end
+      end
     end
   end
 end
