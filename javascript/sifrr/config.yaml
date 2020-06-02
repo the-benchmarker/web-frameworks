@@ -4,6 +4,8 @@ framework:
 
 deps:
   - git
+  - "@development-tools"
+  - nodejs
 
 alpine-deps:
   - git
