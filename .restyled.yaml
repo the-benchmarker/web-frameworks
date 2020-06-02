@@ -1,74 +1,163 @@
-enabled: true
+---
 
-# Push the style fixes directly to the original PR
-auto: false
-pull_requests: false
+# Python
 
-# Leave comments on the original PR linking to the Restyle PR?
-comments: true
+- enabled: true
+  name: black
+  image: restyled/restyler-black
+  command:
+    - black
+  arguments: []
+  include:
+    - "**/*.py"
+  interpreters:
+    - python
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+    - https://github.com/python/black
 
-# Set commit statuses?
-statuses: true
+# C / C++
 
-# Request review on the Restyle PR?
-request_review: author
-
-restylers:
-
-  - image: restyled/restyler-clang-format:v9.0.0
-    command:
+- enabled: true
+  name: clang-format
+  image: restyled/restyler-clang-format
+  command:
     - clang-format
     - "-i"
-    arguments: []
-    include:
+  arguments: []
+  include:
     - "**/*.c"
     - "**/*.cc"
+    - "**/*.cpp"
     - "**/*.h"
-    - "**/*.cmake"
+  interpreters: []
+  supports_arg_sep: false
+  supports_multiple_paths: true
+  documentation:
+    - https://clang.llvm.org/docs/ClangFormat.html
 
-  - image: restyled/restyler-google-java-format:v1.6
-    command:
+# Java
+
+- enabled: true
+  name: google-java-format
+  image: restyled/restyler-google-java-format
+  command:
     - google-java-format
     - "--replace"
-    arguments: []
-    include:
+  arguments: []
+  include:
     - "**/*.java"
-    interpreters: []
+  interpreters: []
+  supports_arg_sep: false
+  supports_multiple_paths: true
+  documentation:
+    - https://github.com/google/google-java-format#readme
 
-  - image: restyled/restyler-black:v19.10b0
-    command:
-    - black
-    arguments: []
-    include:
-    - "**/*.py"
-    interpreters:
-    - python
+# PHP
 
-  - image: restyled/restyler-rustfmt:v1.4.14-nightly
-    command:
-    - rustfmt
-    arguments: []
-    include:
-    - "**/*.rs"
-    interpreters: []
-
-  - image: restyled/restyler-php-cs-fixer:v2.14.2
-    command:
+- enabled: true
+  name: php-cs-fixer
+  image: restyled/restyler-php-cs-fixer
+  command:
     - php-cs-fixer
     - fix
-    arguments: []
-    include:
+  arguments: []
+  include:
     - "**/*.php"
-    interpreters: []
-    
-  - image: restyled/restyler-prettier:v2.0.2-1
-    command:
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: false
+  documentation:
+    - https://github.com/FriendsOfPHP/PHP-CS-Fixer
+
+# JSON
+ 
+- enabled: true
+  name: prettier-json
+  image: restyled/restyler-prettier
+  command:
     - prettier
     - "--write"
-    arguments: []
-    include:
+  arguments: []
+  include:
     - "**/*.json"
-    - "**/*.js"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+    - https://prettier.io/docs/en/options.html#parser
+
+# YAML config
+
+- enabled: true
+  name: prettier-yaml
+  image: restyled/restyler-prettier
+  command:
+    - prettier
+    - "--write"
+  arguments: []
+  include:
     - "**/*.yml"
     - "**/*.yaml"
-    interpreters: []
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+    - https://prettier.io/docs/en/
+    - https://prettier.io/blog/2018/07/29/1.14.0.html
+
+# Javascript
+      
+- enabled: true
+  name: prettier
+  image: restyled/restyler-prettier:v2.0.2-1
+  command:
+    - prettier
+    - "--write"
+  arguments: []
+  include:
+    - "**/*.js"
+    - "**/*.jsx"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+    - https://prettier.io/docs/en/
+
+# Ruby
+
+- enabled: true
+  name: rubocop
+  image: restyled/restyler-rubocop
+  command:
+    - rubocop
+    - "--auto-correct"
+    - "--fail-level"
+    - fatal
+  arguments: []
+  include:
+    - "**/*.rb"
+  interpreters:
+    - ruby
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+    - https://rubocop.readthedocs.io/en/latest/
+
+# Rust
+
+- enabled: true
+  name: rustfmt
+  image: restyled/restyler-rustfmt
+  command:
+    - rustfmt
+  arguments: []
+  include:
+    - "**/*.rs"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+    - https://github.com/rust-lang-nursery/rustfmt#readme
+    - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Rustfmt
