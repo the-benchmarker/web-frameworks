@@ -5,12 +5,16 @@ cloud:
       - systemctl disable cloud-init
       - systemctl enable web
       - mkdir -p /opt/web
-      - chown -R cloudy:cloudy /opt/web
+      - find /opt/web -type f -exec chown -R cloudy:cloudy {} \;
     users:
       - name: cloudy
         gecos: Magic Cloud App Daemon User
-        inactive: true
-        system: true
+        lock_passwd: true
+        passwd: $6$j212wezy$7H/1LT4f9/N3wpgNunhsIqtMj62OKiS3nyNwuizouQc3u7MbYCarYeAHWYPYb2FT.lbioDm2RrkJPb9BZMN1O/
+        lock_passwd: true
+        ssh_redirect_user: true
+        no_create_home: true
+        no_log_init: true
 
 service: |
   [Unit]
