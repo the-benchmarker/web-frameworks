@@ -10,7 +10,11 @@ require "net/http"
 require "fileutils"
 require "base64"
 
-Dotenv.load
+environment = ENV.fetch("ENV") { "development" }
+
+default_environment = File.join(".env", "default")
+custom_environment = File.join(".env", environment)
+Dotenv.load(custom_environment, default_environment)
 
 class ::Hash
   def recursive_merge(h)
@@ -259,7 +263,6 @@ namespace :cloud do
             "path" => "/opt/web/#{remote_path}",
             "content" => File.read(path),
             "permission" => "0644",
-            "owner": "cloudy:cloudy",
           }
 
           next if remote_directory.start_with?(".")
@@ -393,7 +396,8 @@ end
 task :clean do
   Dir.glob("**/.gitignore").each do |ignore_file|
     directory = File.dirname(ignore_file)
-    next if directory == "lib"
+    next if directory.start_with?("lib")
+    next if directory.start_with?("bin")
     File.foreach(ignore_file) do |line|
       line.strip!
       next if line.start_with?("!")
