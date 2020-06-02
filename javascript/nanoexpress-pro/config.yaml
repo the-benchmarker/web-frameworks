@@ -8,6 +8,8 @@ environment:
   PORT: 3000
 
 deps:
+  - "@development-tools"
+  - nodejs
   - git
 
 alpine-deps:
