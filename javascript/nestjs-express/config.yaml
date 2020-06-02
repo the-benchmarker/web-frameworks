@@ -11,6 +11,7 @@ files:
   - ../.config/ecosystem.config.js
 
 bootstrap:
+  - npm install
   - npm -g install pm2
   - npm -g install @nestjs/cli
   - nest build
