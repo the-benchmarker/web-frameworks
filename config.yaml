@@ -61,7 +61,7 @@ providers:
       - rake cloud:wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
       - rake cloud:upload LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt` SSH_KEY={{{DO_KEY}}}
 
-    exec: doctl compute ssh {{{language}}}.{{{framework}}} --ssh-key-path {{{DO_KEY}}} --ssh-command "cd /opt/web && {{{command}}}"
+    exec: doctl compute ssh {{{language}}}.{{{framework}}} {{{DO_SSH_OPTIONS}}} --ssh-key-path {{{DO_KEY}}} --ssh-command "cd /opt/web && {{{command}}}"
 
     reboot: doctl compute droplet-action reboot `cat id.txt`
 
