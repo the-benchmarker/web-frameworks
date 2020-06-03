@@ -1,18 +1,21 @@
-{-# LANGUAGE DataKinds       #-}
+{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE TypeOperators   #-}
+{-# LANGUAGE TypeOperators #-}
+
 module Lib
-    ( startApp
-    , app
-    ) where
+  ( startApp,
+    app,
+  )
+where
 
 import Network.Wai
 import Network.Wai.Handler.Warp
 import Servant
 
-type API = Get '[PlainText] String
-  :<|> "user" :> Capture "id" String :> Get '[PlainText] String
-  :<|> "user" :> Post '[PlainText] String
+type API =
+  Get '[PlainText] String
+    :<|> "user" :> Capture "id" String :> Get '[PlainText] String
+    :<|> "user" :> Post '[PlainText] String
 
 startApp :: IO ()
 startApp = run 3000 app
@@ -31,5 +34,3 @@ notMuch = ""
 
 echoId :: String -> Handler String
 echoId = pure
-
-

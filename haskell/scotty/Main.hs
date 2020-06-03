@@ -6,4 +6,4 @@ main = scotty 3000 $ do
   get "/user/:userId" $ do
     userId <- param "userId"
     text userId
-  post "/user" $ text ""  
+  post "/user" $ text ""
