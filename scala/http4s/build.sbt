@@ -1,5 +1,7 @@
 val Http4sVersionRange = "[0.21,0.22)"
 
+enablePlugins(UniversalPlugin)
+
 lazy val root = (project in file("."))
   .settings(
     organization := "the.benchmarker",
@@ -12,3 +14,4 @@ lazy val root = (project in file("."))
       "org.http4s" %% "http4s-dsl" % Http4sVersionRange
     )
   )
+
