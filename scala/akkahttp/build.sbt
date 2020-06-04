@@ -1,6 +1,6 @@
 organization := "the.benchmarker"
 name := "AkkaHttp"
-version := "0.0.3 "
+version := "0.0.3"
 scalaVersion := "2.13.2"
 
 libraryDependencies ++= Seq(
