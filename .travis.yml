@@ -144,6 +144,7 @@ env:
       - FRAMEWORK=clojure.luminus
       - FRAMEWORK=clojure.coast
       - FRAMEWORK=pony.jennet
+      - FRAMEWORK=haskell.scotty
       - FRAMEWORK=haskell.servant
       - FRAMEWORK=dart.aqueduct
       - FRAMEWORK=swift.kitura
