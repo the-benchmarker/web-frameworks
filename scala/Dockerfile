@@ -1,4 +1,4 @@
-FROM hseeberger/scala-sbt:11.0.7_1.3.12_2.13.2
+FROM hseeberger/scala-sbt:11.0.7_1.3.12_2.13.2 AS build
 
 WORKDIR /usr/src/app
 
@@ -10,7 +10,7 @@ FROM openjdk:11-jre
 
 WORKDIR /usr/src/app
 
-COPY --from=0 /usr/src/app/target target
+COPY --from=build /usr/src/app/target target
 
 RUN tar -xvzf target/universal/*.tgz
 
