@@ -1,4 +1,4 @@
-name:                servant-proj
+name:                server
 version:             0.1.0.0
 -- synopsis:
 -- description:
@@ -16,10 +16,10 @@ library
                      , warp
   default-language:    Haskell2010
 
-executable servant-proj-exe
+executable server
   hs-source-dirs:      app
   main-is:             Main.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N -with-rtsopts=-A64M -O2 -funbox-strict-fields
   build-depends:       base
-                     , servant-proj
+                     , server
   default-language:    Haskell2010
