@@ -1,4 +1,4 @@
 GET     /                           controllers.Application.index
 GET     /user/:id                   controllers.Application.g(id: Int)
-GET     /user                       controllers.Application.p
+POST    /user                       controllers.Application.p
 
