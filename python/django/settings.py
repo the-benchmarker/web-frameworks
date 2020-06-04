@@ -11,8 +11,7 @@ SECRET_KEY = "3f51&0k++@_2u24_v@f)_-n7a0y&hc8^wmru)q^_flty9%!@er"
 DEBUG = False
 
 ALLOWED_HOSTS = ["127.0.0.1", "::1", "localhost"]
-ALLOWED_HOSTS += ["172.17.%s.%s" % (i, j)
-                  for i in range(256) for j in range(256)]
+ALLOWED_HOSTS += ["172.17.%s.%s" % (i, j) for i in range(256) for j in range(256)]
 
 
 # Application definition
