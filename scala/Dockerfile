@@ -4,16 +4,14 @@ WORKDIR /usr/src/app
 
 COPY . ./
 
-RUN sbt assembly
+RUN sbt universal:packageZipTarball
 
 FROM openjdk:11-jre
 
 WORKDIR /usr/src/app
 
-{{#files}}
-COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
-{{/files}}
+COPY --from=0 /usr/src/app/target target
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+RUN tar -xvzf target/universal/*.tgz
+
+CMD {{#command}} {{{.}}} {{/command}}
