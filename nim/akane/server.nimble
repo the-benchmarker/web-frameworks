@@ -1,1 +1,1 @@
-requires "akane >= 0.1.1 & < 0.2"
+requires "akane >= 0.1 & < 0.2"
