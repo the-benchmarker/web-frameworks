@@ -17,14 +17,35 @@ statuses:
   error: true           # Red if we encounter errors restyling
 
 restylers:
-  - name: ormolu
-  - name: clang-format
+  - name: ormolu # Haskell
+  - name: clang-format # C / C++
     include:
     - "**/*.c"
     - "**/*.cc"
     - "**/*.h"
-  - name: google-java-format
-  - name: black
-  - name: rubocop
-  - name: rustfmt
-  - name: php-cs-fixer
+  - name: google-java-format # Java
+  - name: black # Python
+  - name: rubocop # Ruby
+  - name: rustfmt # Rust
+  - name: php-cs-fixer # PHP
+  - name: prettier # Javascript / JSON / YAML
+    include:
+    - "**/*.js"
+    - "**/*.json"
+    - "**/*.md"
+    - "**/*.yml"
+    - "**/*.yaml"
+  # Missing clojure
+  # Missing crystal
+  # Missing csharp
+  # Missing dart
+  # Missing elixir
+  # Missing fsharp
+  # Missing go
+  # Missing julia
+  # Missing kotlin
+  # Missing nim
+  # Missing perl
+  # Missing pony
+  # Missing scala
+  # Missing swift
