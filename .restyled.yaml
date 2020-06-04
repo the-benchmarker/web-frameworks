@@ -17,10 +17,14 @@ statuses:
   error: true           # Red if we encounter errors restyling
 
 restylers:
-  - ormolu
-  - clang-format
-  - google-java-format
-  - black
-  - rubocop
-  - rustfmt
-  - php-cs-fixer
+  - name: ormolu
+  - name: clang-format
+    include:
+    - "**/*.c"
+    - "**/*.cc"
+    - "**/*.h"
+  - name: google-java-format
+  - name: black
+  - name: rubocop
+  - name: rustfmt
+  - name: php-cs-fixer
