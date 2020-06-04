@@ -1,7 +1,7 @@
 import 'package:start/start.dart';
 
 void main() {
-  start(port: 3000).then((Server app) {
+  start(host: '0.0.0.0', port: 3000).then((Server app) {
 
     app.get('/').listen((request) {
       request.response
