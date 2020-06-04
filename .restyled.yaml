@@ -17,60 +17,10 @@ statuses:
   error: true           # Red if we encounter errors restyling
 
 restylers:
-  - image: restyled/restyler-clang-format:v9.0.0
-    command:
-      - clang-format
-      - "-i"
-    arguments: []
-    include:
-      - "**/*.c"
-      - "**/*.cc"
-      - "**/*.h"
-      - "**/*.cmake"
-
-  - image: restyled/restyler-google-java-format:v1.6
-    command:
-      - google-java-format
-      - "--replace"
-    arguments: []
-    include:
-      - "**/*.java"
-    interpreters: []
-
-  - image: restyled/restyler-black:v19.10b0
-    command:
-      - black
-    arguments: []
-    include:
-      - "**/*.py"
-    interpreters:
-      - python
-
-  - image: restyled/restyler-rustfmt:v1.4.14-nightly
-    command:
-      - rustfmt
-    arguments: []
-    include:
-      - "**/*.rs"
-    interpreters: []
-
-  - image: restyled/restyler-php-cs-fixer:v2.14.2
-    command:
-      - php-cs-fixer
-      - fix
-    arguments: []
-    include:
-      - "**/*.php"
-    interpreters: []
-
-  - image: restyled/restyler-prettier:v2.0.2-1
-    command:
-      - prettier
-      - "--write"
-    arguments: []
-    include:
-      - "**/*.json"
-      - "**/*.js"
-      - "**/*.yml"
-      - "**/*.yaml"
-    interpreters: []
+  - ormolu
+  - clang-format
+  - google-java-format
+  - black
+  - rubocop
+  - rustfmt
+  - php-cs-fixer
