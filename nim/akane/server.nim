@@ -7,21 +7,21 @@ proc main {.gcsafe.} =
   server.pages:
     "/": 
       if request.reqMethod == HttpGet:
-        await request.answer("")
+        await request.send("")
       else:
         await request.error("not GET :(")
 
     "/user":
-      if request.reqMethod == HttpGet:
-        await request.answer("")
-      else:
-        await request.error("not GET :(")
+      await request.send("")
 
-    regex(re"\A/user/id(\d+)\Z"):
-      if request.reqMethod == HttpPost:
-        await request.sendJson(%*{"id": url[0]})
+    regex(re"\A/user/(\d+)\Z"):
+      if request.reqMethod == HttpGet:
+        await request.send(url[0])
       else:
-        await request.error("not POST :(")
+        await request.error("method not allowed")
+
+    notfound:
+      await request.error("not found")
 
   server.start()
 
