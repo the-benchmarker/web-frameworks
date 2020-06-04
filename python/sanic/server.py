@@ -22,18 +22,9 @@ LOGGING_CONFIG = dict(
         },
     },
     handlers={
-        "console": {
-            "class": "logging.NullHandler",
-            "formatter": "generic",
-        },
-        "error_console": {
-            "class": "logging.NullHandler",
-            "formatter": "generic",
-        },
-        "access_console": {
-            "class": "logging.NullHandler",
-            "formatter": "access",
-        },
+        "console": {"class": "logging.NullHandler", "formatter": "generic",},
+        "error_console": {"class": "logging.NullHandler", "formatter": "generic",},
+        "access_console": {"class": "logging.NullHandler", "formatter": "access",},
     },
     formatters={
         "generic": {
@@ -68,7 +59,7 @@ async def user_info(request, id):
 async def user(request):
     return text("")
 
+
 if __name__ == "__main__":
     workers = multiprocessing.cpu_count()
-    app.run(host='0.0.0.0', port=3000, workers=workers,
-            debug=False, access_log=False)
+    app.run(host="0.0.0.0", port=3000, workers=workers, debug=False, access_log=False)
