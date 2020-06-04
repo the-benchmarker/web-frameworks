@@ -3,8 +3,7 @@ val Http4sVersionRange = "[0.21,0.22)"
 organization := "the.benchmarker"
 name := "http4s"
 version := "0.0.2"
-scalaVersion := "2.13.1"
-maintainer := "pippo"
+scalaVersion := "2.13.2"
 
 lazy val root = (project in file("."))
   .settings(
