@@ -1,73 +1,26 @@
-enabled: true
-
 # Push the style fixes directly to the original PR
+#
+# This setting implies pull_requests: false for origin PRs, and has no effect on
+# forked PRs (since we can't push to those).
+#
 auto: false
-pull_requests: false
+
+# Open Restyle PRs?
+pull_requests: true
 
 # Leave comments on the original PR linking to the Restyle PR?
 comments: true
 
-# Set commit statuses?
-statuses: true
-
-# Request review on the Restyle PR?
-request_review: author
+statuses:
+  differences: true     # Red when style differences are found
+  no_differences: true  # Green when no differences are found
+  error: true           # Red if we encounter errors restyling
 
 restylers:
-  - image: restyled/restyler-clang-format:v9.0.0
-    command:
-      - clang-format
-      - "-i"
-    arguments: []
-    include:
-      - "**/*.c"
-      - "**/*.cc"
-      - "**/*.h"
-      - "**/*.cmake"
-
-  - image: restyled/restyler-google-java-format:v1.6
-    command:
-      - google-java-format
-      - "--replace"
-    arguments: []
-    include:
-      - "**/*.java"
-    interpreters: []
-
-  - image: restyled/restyler-black:v19.10b0
-    command:
-      - black
-    arguments: []
-    include:
-      - "**/*.py"
-    interpreters:
-      - python
-
-  - image: restyled/restyler-rustfmt:v1.4.14-nightly
-    command:
-      - rustfmt
-    arguments: []
-    include:
-      - "**/*.rs"
-    interpreters: []
-
-  - image: restyled/restyler-php-cs-fixer:v2.14.2
-    command:
-      - php-cs-fixer
-      - fix
-    arguments: []
-    include:
-      - "**/*.php"
-    interpreters: []
-
-  - image: restyled/restyler-prettier:v2.0.2-1
-    command:
-      - prettier
-      - "--write"
-    arguments: []
-    include:
-      - "**/*.json"
-      - "**/*.js"
-      - "**/*.yml"
-      - "**/*.yaml"
-    interpreters: []
+  - ormolu
+  - clang-format
+  - google-java-format
+  - black
+  - rubocop
+  - rustfmt
+  - php-cs-fixer
