@@ -1,0 +1,8 @@
+framework:
+  website: playframework.com
+  version: 2.8
+
+files:
+  - target/scala-2.13/http4s-assembly-0.0.2.jar
+
+command: java -jar /usr/src/app/target/scala-2.13/http4s-assembly-0.0.2.jar
