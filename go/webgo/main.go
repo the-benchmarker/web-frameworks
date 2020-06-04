@@ -5,39 +5,39 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/bnkamalesh/webgo/v3"
+	"github.com/bnkamalesh/webgo/v4"
 )
 
 func empty(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "")
-	// webgo.Send(w, "text", "text/plain", http.StatusOK)
 }
 
 func userID(w http.ResponseWriter, r *http.Request) {
 	wctx := webgo.Context(r)
-	fmt.Fprint(w, wctx.Params["id"])
-	// webgo.Send(w, "text/plain", wctx.Params["id"], http.StatusOK)
+	fmt.Fprint(w, wctx.Params()["id"])
 }
 
 func getRoutes() []*webgo.Route {
 	return []*webgo.Route{
 		&webgo.Route{
-			Method:        http.MethodGet,            // request type
-			Pattern:       "/",                       // Pattern for the route
-			Handlers:      []http.HandlerFunc{empty}, // route handler
+			Name:          "root",
+			Method:        http.MethodGet,
+			Pattern:       "/",
+			Handlers:      []http.HandlerFunc{empty},
 			TrailingSlash: true,
 		},
 		&webgo.Route{
-			Method:        http.MethodGet,             // request type
-			Pattern:       "/user/:id",                // Pattern for the route
-			Handlers:      []http.HandlerFunc{userID}, // route handler
+			Name:          "user-with-URI-params",
+			Method:        http.MethodGet,
+			Pattern:       "/user/:id",
+			Handlers:      []http.HandlerFunc{userID},
 			TrailingSlash: true,
 		},
 		&webgo.Route{
-			Name:          "api",                     // A label for the API/URI, this is not used anywhere.
-			Method:        http.MethodPost,           // request type
-			Pattern:       "/user",                   // Pattern for the route
-			Handlers:      []http.HandlerFunc{empty}, // route handler
+			Name:          "user-without-params",
+			Method:        http.MethodPost,
+			Pattern:       "/user",
+			Handlers:      []http.HandlerFunc{empty},
 			TrailingSlash: true,
 		},
 	}
@@ -50,7 +50,7 @@ func main() {
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
+
 	router := webgo.NewRouter(cfg, getRoutes())
-	// router.Use(middleware.AccessLog)
 	router.Start()
 }
