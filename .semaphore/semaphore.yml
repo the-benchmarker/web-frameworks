@@ -101,6 +101,11 @@ blocks:
       - mkdir -p .neph/go/router
       - retry bin/neph go/router --mode=CI
       - FRAMEWORK=go/router bundle exec rspec .spec
+    - name: macaron
+      commands:
+      - mkdir -p .neph/go/macaron
+      - retry bin/neph go/macaron --mode=CI
+      - FRAMEWORK=go/macaron bundle exec rspec .spec
     - name: chi
       commands:
       - mkdir -p .neph/go/chi
@@ -273,6 +278,11 @@ blocks:
       - mkdir -p .neph/haskell/servant
       - retry bin/neph haskell/servant --mode=CI
       - FRAMEWORK=haskell/servant bundle exec rspec .spec
+    - name: scotty
+      commands:
+      - mkdir -p .neph/haskell/scotty
+      - retry bin/neph haskell/scotty --mode=CI
+      - FRAMEWORK=haskell/scotty bundle exec rspec .spec
     epilogue:
       always:
         commands:
