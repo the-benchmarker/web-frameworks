@@ -1,6 +1,6 @@
-name := "web-frameworks-play"
 organization := "the-benchmarker"
 
+name := "server"
 scalaVersion := "2.13.2"
 
 lazy val root = (project.in(file("."))
