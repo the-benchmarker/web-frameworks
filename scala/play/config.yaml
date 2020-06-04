@@ -2,7 +2,4 @@ framework:
   website: playframework.com
   version: 2.8
 
-files:
-  - target/universal/web-frameworks-play-0.1.0-SNAPSHOT.tgz
-
 command: web-frameworks-play-0.1.0-SNAPSHOT/bin/web-frameworks-play
