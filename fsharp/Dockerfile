@@ -16,6 +16,8 @@ WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/out out
 
+ENV ASPNETCORE_URLS=http://+:3000
 ENV COMPlus_TieredCompilation 1
+EXPOSE 3000
 
 CMD dotnet /usr/src/app/out/web.dll
