@@ -1,4 +1,4 @@
-FROM fsharp:10.7-netcore
+FROM fsharp:10.7-netcore AS build
 
 WORKDIR /usr/src/app
 
@@ -14,7 +14,7 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
 
 WORKDIR /usr/src/app
 
-COPY --from=0 /usr/src/app/out out
+COPY --from=build /usr/src/app/out out
 
 ENV COMPlus_TieredCompilation 1
 
