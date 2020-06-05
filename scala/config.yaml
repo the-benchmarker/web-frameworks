@@ -7,22 +7,13 @@ sources:
   - "**/*.sbt"
   - "**/*.properties"
 
-<<<<<<< HEAD
-=======
-docker_pause: 5
-  
->>>>>>> f6623903... chore: Ensure cloud version is working equaly than docker version
 deps:
   - java-11-openjdk
 
 binaries:
-<<<<<<< HEAD
   - target/universal/server-0.1.0-SNAPSHOT.tgz
 
 bootstrap:
   - tar -xvzf target/universal/server-0.1.0-SNAPSHOT.tgz
 
 command: /opt/web/server-0.1.0-SNAPSHOT/bin/server
-=======
-  - target
->>>>>>> f6623903... chore: Ensure cloud version is working equaly than docker version
