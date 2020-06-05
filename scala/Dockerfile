@@ -6,12 +6,20 @@ WORKDIR /usr/src/app
   COPY {{{.}}} {{{.}}}
 {{/sources}}
 
+{{#files}}
+  COPY {{.}} {{{.}}}
+{{/files}}
+
 RUN sbt universal:packageZipTarball
 
 FROM openjdk:11-jre
 
 WORKDIR /opt/web
 
+{{#files}}
+  COPY {{{.}}} {{{.}}}
+{{/files}}
+  
 {{#binaries}}
   COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
