@@ -106,6 +106,7 @@ env:
       - FRAMEWORK=php.spiral
       - FRAMEWORK=fsharp.frank
       - FRAMEWORK=fsharp.giraffe
+      - FRAMEWORK=fsharp.websharper
       - FRAMEWORK=fsharp.falco
       - FRAMEWORK=fsharp.suave
       - FRAMEWORK=java.micronaut
