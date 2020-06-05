@@ -21,6 +21,6 @@ FROM alpine
 
 WORKDIR /opt/web
 
-COPY --from=build /usr/src/app/target/x86_64-unknown-linux-musl/release/server /usr/src/app/target/x86_64-unknown-linux-musl/release/server
+COPY --from=build /usr/src/app/target/x86_64-unknown-linux-musl/release/server target/x86_64-unknown-linux-musl/release/server
 
 CMD /opt/web/target/x86_64-unknown-linux-musl/release/server
