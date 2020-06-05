@@ -114,6 +114,9 @@ env:
       - FRAMEWORK=java.javalin
       - FRAMEWORK=java.jooby
       - FRAMEWORK=fsharp.suave
+      - FRAMEWORK=fsharp.frank
+      - FRAMEWORK=fsharp.giraffe
+      - FRAMEWORK=fsharp.falco
       - FRAMEWORK=rust.actix
       - FRAMEWORK=rust.nickel
       - FRAMEWORK=rust.iron
