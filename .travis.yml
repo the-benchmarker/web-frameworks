@@ -117,6 +117,7 @@ env:
       - FRAMEWORK=fsharp.frank
       - FRAMEWORK=fsharp.giraffe
       - FRAMEWORK=fsharp.falco
+      - FRAMEWORK=fsharp.websharper
       - FRAMEWORK=rust.actix
       - FRAMEWORK=rust.nickel
       - FRAMEWORK=rust.iron
