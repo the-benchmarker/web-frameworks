@@ -3,4 +3,7 @@ framework:
   version: 4.8
   name: vapor
 
-options: serve --hostname 0.0.0.0 --port 3000 --env prod
+environment:
+  VAPOR_ENV: production
+
+command: /opt/web/.build/release/server serve

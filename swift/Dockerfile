@@ -15,6 +15,10 @@ FROM swift:5.2-slim
 
 WORKDIR /opt/web
 
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
+
 {{#binaries}}
   COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
