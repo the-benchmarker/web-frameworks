@@ -23,8 +23,11 @@ class ::Hash
 end
 
 def default_provider
-  provider = "docker-machine"
-  provider = "docker" if RbConfig::CONFIG["host_os"] =~ /linux/
+  if RbConfig::CONFIG["host_os"] =~ /linux/
+    "docker"
+  else
+    "docker-machine"
+  end
 end
 
 def commands_for(language, framework, **options)
@@ -133,7 +136,7 @@ def create_dockerfile(language, framework, **options)
   end
 
   template = nil
-  if options[:provider] == "docker"
+  if (options[:provider].start_with?("docker") || options[:provider].start_with?("podman"))
     template = File.join(directory, "..", "Dockerfile")
   elsif config.key?("binaries")
     template = File.join(directory, "..", ".build", options[:provider], "Dockerfile")
