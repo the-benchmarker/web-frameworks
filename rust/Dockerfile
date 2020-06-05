@@ -10,7 +10,7 @@ COPY . ./
 
 RUN cargo build --target x86_64-unknown-linux-musl --release
 
-FROM alpine
+FROM alpine:latest
 
 COPY --from=build /usr/src/app/target/x86_64-unknown-linux-musl/release/server /usr/src/app/target/x86_64-unknown-linux-musl/release/server
 
