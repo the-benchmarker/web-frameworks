@@ -16,4 +16,6 @@ build:
 binaries:
   - target
 
+docker_pause: 10
+
 command: /usr/bin/java -jar /opt/web/target/uberjar/luminus.jar 3000
