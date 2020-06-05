@@ -2,7 +2,9 @@ FROM rust:1.44 AS build
 
 WORKDIR /usr/src/app
 
-RUN apt-get -qq update && apt-get -qy install musl-tools
+RUN apt-get -qq update 
+
+RUN apt-get -y install musl-tools --no-install-recommends
 
 RUN rustup target add x86_64-unknown-linux-musl
 
