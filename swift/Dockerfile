@@ -18,6 +18,10 @@ ENV {{{.}}}
 
 WORKDIR /opt/web
 
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
+
 {{#binaries}}
   COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
