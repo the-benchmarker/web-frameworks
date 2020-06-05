@@ -17,19 +17,4 @@ bootstrap:
   - ln -sfv /usr/libexec/swift/lib/swift/linux/libicuucswift.so.61 /usr/lib64/libicuucswift.so.61
   - ln -sfv /usr/libexec/swift/lib/swift/linux/libicudataswift.so.61 /usr/lib64/libicudataswift.so.61
 
-command: /opt/web/.build/release/server {{options}}
-
-service: |
-  [Unit]
-  Description=Web
-  After=network.target
-
-  [Service]
-  Type=simple
-  EnvironmentFile=/etc/web
-  WorkingDirectory=/opt/web
-  ExecStart={{{command}}}
-  Restart=always
-
-  [Install]
-  WantedBy=multi-user.target
+command: /opt/web/.build/release/server
