@@ -3,7 +3,6 @@ framework:
   version: 4.14
   name: vapor
 
-options: serve
 environment:
    SERVER_HOSTNAME: 0.0.0.0
    SERVER_PORT: 3000
