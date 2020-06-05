@@ -4,13 +4,13 @@ open Microsoft.AspNetCore.Http
 open Microsoft.AspNetCore.Routing
 
 let home =
-    resource "" {
+    resource "/" {
         name "Hello Name"
         get (fun (ctx:HttpContext) -> ctx.Response.WriteAsync(""))
     }
 
 let userId =
-    resource "user/{id}" {
+    resource "/user/{id}" {
         name "User Id"
         get (fun (ctx:HttpContext) ->
             let userId = ctx.GetRouteValue("id")
@@ -18,7 +18,7 @@ let userId =
     }
 
 let user =
-    resource "user" {
+    resource "/user" {
         name "User"
         post (fun (ctx:HttpContext) -> ctx.Response.WriteAsync(""))
     }
