@@ -1,4 +1,4 @@
-FROM rust:1.44
+FROM rust:1.44 AS build
 
 WORKDIR /usr/src/app
 
@@ -12,6 +12,6 @@ RUN cargo build --target x86_64-unknown-linux-musl --release
 
 FROM alpine
 
-COPY --from=0 /usr/src/app/target/x86_64-unknown-linux-musl/release/server /usr/src/app/target/x86_64-unknown-linux-musl/release/server
+COPY --from=build /usr/src/app/target/x86_64-unknown-linux-musl/release/server /usr/src/app/target/x86_64-unknown-linux-musl/release/server
 
 CMD /usr/src/app/target/x86_64-unknown-linux-musl/release/server
