@@ -14,7 +14,8 @@ COPY . ./
 
 RUN cargo build --target x86_64-unknown-linux-musl --release
 
-FROM alpine:latest
+# hadolint ignore=DL3006
+FROM alpine
 
 COPY --from=build /usr/src/app/target/x86_64-unknown-linux-musl/release/server /usr/src/app/target/x86_64-unknown-linux-musl/release/server
 
