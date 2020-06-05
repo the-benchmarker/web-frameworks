@@ -28,13 +28,9 @@ restylers:
   - name: rubocop # Ruby
   - name: rustfmt # Rust
   - name: php-cs-fixer # PHP
-  - name: prettier # Javascript / JSON / YAML
-    include:
-    - "**/*.js"
-    - "**/*.json"
-    - "**/*.md"
-    - "**/*.yml"
-    - "**/*.yaml"
+  - name: prettier # Javascript
+  - name: prettier-json # JSON
+  - name: prettier-yaml # YAML
   # Missing clojure
   # Missing crystal
   # Missing csharp
