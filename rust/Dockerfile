@@ -2,7 +2,9 @@ FROM rust:1.44 AS build
 
 WORKDIR /usr/src/app
 
-RUN apt-get -qq update 
+RUN apt-get update && apt-get -y install musl-tools --no-install-recommends \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get -y install musl-tools --no-install-recommends
 
