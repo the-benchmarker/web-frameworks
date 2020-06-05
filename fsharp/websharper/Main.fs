@@ -14,19 +14,18 @@ open WebSharper.UI.Server
 
 type EndPoint =
     | [<EndPoint "GET /">] Home
-    | [<EndPoint "GET /user">] GetUser of id:string
+    | [<EndPoint "GET /user">] GetUser of id: string
     | [<EndPoint "POST /user">] User
 
 module Site =
 
     let Main =
-        Application.MultiPage (fun ctx endpoint ->
+        Application.MultiPage(fun ctx endpoint ->
             match endpoint with
             | Home -> Content.Text ""
             | GetUser id -> Content.Text id
             | User -> Content.Text ""
-            |> Content.WithContentType "text/plain"
-        )
+            |> Content.WithContentType "text/plain")
 
 type Website(config: IConfiguration) =
     inherit SiteletService<EndPoint>()
@@ -34,24 +33,16 @@ type Website(config: IConfiguration) =
 
 type Startup() =
 
-    member this.ConfigureServices(services: IServiceCollection) =
-        services.AddSitelet<Website>()
-        |> ignore
+    member this.ConfigureServices(services: IServiceCollection) = services.AddSitelet<Website>() |> ignore
 
     member this.Configure(app: IApplicationBuilder) =
-        app
-            .UseWebSharper()
-            .Run(fun context ->
-                context.Response.StatusCode <- 404
-                context.Response.WriteAsync("Page not found"))
+        app.UseWebSharper().Run(fun context ->
+           context.Response.StatusCode <- 404
+           context.Response.WriteAsync("Page not found"))
 
 module Program =
 
     [<EntryPoint>]
     let main args =
-        WebHostBuilder()
-            .UseKestrel()
-            .UseStartup<Startup>()
-            .Build()
-            .Run()
+        WebHostBuilder().UseKestrel().UseStartup<Startup>().Build().Run()
         0

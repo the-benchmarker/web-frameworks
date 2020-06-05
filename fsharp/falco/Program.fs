@@ -4,7 +4,7 @@ open Microsoft.AspNetCore.Http
 let homeHandler = textOut ""
 
 let userIdHandler =
-    fun next (ctx:HttpContext) ->
+    fun next (ctx: HttpContext) ->
         let userId = ctx.TryGetRouteValue "id" |> Option.defaultValue ""
         textOut userId next ctx
 
