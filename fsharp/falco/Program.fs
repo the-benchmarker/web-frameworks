@@ -7,7 +7,7 @@ let userIdHandler =
         textOut userId next ctx
 
 webApp {
-    get "/"           (textOut "")
-    get "/user/{id}"  userIdHandler
-    post "/user"      (textOut "")
+    get "/" (textOut "")
+    get "/user/{id}" userIdHandler
+    post "/user" (textOut "")
 }
