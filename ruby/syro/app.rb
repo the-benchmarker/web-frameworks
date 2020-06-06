@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'syro'
+require "syro"
 
 App = Syro.new do
   get do
-    res.write ''
+    res.write ""
   end
 
-  on 'user' do
+  on "user" do
     on :id do
       get do
         res.write inbox[:id]
@@ -15,7 +15,7 @@ App = Syro.new do
     end
 
     post do
-      res.write ''
+      res.write ""
     end
   end
 end

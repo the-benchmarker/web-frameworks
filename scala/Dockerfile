@@ -21,7 +21,7 @@ WORKDIR /opt/web
 {{/files}}
   
 {{#binaries}}
-  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+  COPY --from=build /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
 
 RUN tar -xvzf target/universal/*.tgz

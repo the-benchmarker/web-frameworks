@@ -17,7 +17,7 @@ class App
       puts "Error processing request: #{error.message}"
       puts error.backtrace[0..6]
 
-      Rack::Response.new('Error', 500).finish
+      Rack::Response.new("Error", 500).finish
     end
   end
 end

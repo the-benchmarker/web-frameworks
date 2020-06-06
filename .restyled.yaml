@@ -12,17 +12,17 @@ pull_requests: true
 comments: true
 
 statuses:
-  differences: true     # Red when style differences are found
-  no_differences: true  # Green when no differences are found
-  error: true           # Red if we encounter errors restyling
+  differences: true # Red when style differences are found
+  no_differences: true # Green when no differences are found
+  error: true # Red if we encounter errors restyling
 
 restylers:
   - name: ormolu # Haskell
   - name: clang-format # C / C++
     include:
-    - "**/*.c"
-    - "**/*.cc"
-    - "**/*.h"
+      - "**/*.c"
+      - "**/*.cc"
+      - "**/*.h"
   - name: google-java-format # Java
   - name: black # Python
   - name: rubocop # Ruby

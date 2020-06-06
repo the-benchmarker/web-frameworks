@@ -2,7 +2,7 @@
 
 use_frameworks!
 
-target 'server_objc_criollo' do
-  platform :osx, '10.10'
-  pod 'Criollo', '~> 0.4'
+target "server_objc_criollo" do
+  platform :osx, "10.10"
+  pod "Criollo", "~> 0.4"
 end

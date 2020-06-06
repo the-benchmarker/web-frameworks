@@ -27,7 +27,8 @@ RUN mix release --path release
 
 # ===============================================================================================
 
-FROM alpine:latest AS app
+# hadolint ignore=DL3006
+FROM alpine
 
 # Update system deps
 RUN apk add --update bash openssl

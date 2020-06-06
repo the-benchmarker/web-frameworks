@@ -1,4 +1,4 @@
-FROM swift:5.2
+FROM swift:5.2 AS build
 
 RUN apt -y update
 RUN apt -y install libssl-dev zlib1g-dev libcurl4-openssl-dev uuid-dev
@@ -20,7 +20,7 @@ WORKDIR /opt/web
 {{/environment}}
 
 {{#binaries}}
-  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+  COPY --from=build /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
 
 CMD {{#command}}{{{.}}}{{/command}}

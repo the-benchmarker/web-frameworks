@@ -1,4 +1,4 @@
-FROM nimlang/nim:1.2.0-alpine
+FROM nimlang/nim:1.2.0-alpine AS build
 
 WORKDIR /usr/src/app
 
@@ -22,12 +22,13 @@ RUN nimble c \
     --threads:on \
         -y server.nim
 
+# hadolint ignore=DL3006
 FROM alpine
 
 WORKDIR /opt/web
 
 {{#binaries}}
-  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+  COPY --from=build /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
 
 CMD {{#command}}{{{.}}}{{/command}}

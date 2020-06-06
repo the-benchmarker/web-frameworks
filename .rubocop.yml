@@ -10,7 +10,14 @@ Style/MixinUsage:
 Metrics/LineLength:
   Enabled: false
 
+Metrics/BlockLength:
+  Exclude:
+    - ".spec"
+
 # rack-routing use method name for route handling
 Naming/AccessorMethodName:
   Exclude:
     - ruby/rack-routing/app/route_handler.rb
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes

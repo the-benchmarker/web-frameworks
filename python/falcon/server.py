@@ -13,11 +13,11 @@ class EmptyResponse:
 
 
 class StringResponse:
-    def on_get(self, req, resp, id):
-        resp.data = bytes(id, "utf8")
+    def on_get(self, req, resp, user_id):
+        resp.data = bytes(user_id, "utf8")
 
 
 app = falcon.API()
 app.add_route("/", EmptyResponse())
 app.add_route("/user", EmptyResponse())
-app.add_route("/user/{id}", StringResponse())
+app.add_route("/user/{user_id}", StringResponse())

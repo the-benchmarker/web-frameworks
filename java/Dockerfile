@@ -1,9 +1,9 @@
 {{#image}}
-  FROM {{{.}}}
+  FROM {{{.}}} AS build
 {{/image}}
 
 {{^image}}
-  FROM maven:3-jdk-8-alpine
+  FROM maven:3-jdk-8-alpine AS build
 {{/image}}
 
 WORKDIR /usr/src/web
@@ -35,8 +35,8 @@ FROM openjdk:8-jre-alpine
 
 WORKDIR /opt/web
 
-COPY --from=0 /usr/src/web/target target
-COPY --from=0 /usr/src/web/build build
+COPY --from=build /usr/src/web/target target
+COPY --from=build /usr/src/web/build build
 
 {{#bootstrap}}
   RUN {{{.}}}

@@ -2,9 +2,6 @@
 import cherrypy
 
 
-IS_STANDALONE = __name__ == "__main__"
-
-
 class WebRoot:
     @cherrypy.expose
     def index(self):
@@ -29,15 +26,12 @@ config = {"/user": {"request.dispatch": cherrypy.dispatch.MethodDispatcher()}}
 
 cherrypy.config.update(global_config)
 
-if not IS_STANDALONE:
+app = cherrypy.tree.mount(WebRoot(), "", config)
+
+if __name__ == "__main__":
+    cherrypy.quickstart(app)
+else:
     # on top of another WSGI server
     # https://docs.cherrypy.org/en/latest/deploy.html#uwsgi
     cherrypy.server.unsubscribe()
     cherrypy.engine.start()
-
-app = cherrypy.tree.mount(WebRoot(), "", config)
-
-
-# standalone self-test
-# python3 -m this_module_name
-IS_STANDALONE and cherrypy.quickstart(app)

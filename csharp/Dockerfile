@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build
 
 WORKDIR /usr/src/app
 
@@ -17,7 +17,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
 
 WORKDIR /opt/web
 
-COPY --from=0 /usr/src/app/out out
+COPY --from=build /usr/src/app/out out
 
 ENV ASPNETCORE_URLS http://*:3000
 ENV COMPlus_TieredCompilation 1

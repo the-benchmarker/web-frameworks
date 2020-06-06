@@ -3,7 +3,7 @@
 module FlameTest
   # Application that will be launched
   class Application < Flame::Application
-    mount IndexController, '/'
+    mount IndexController, "/"
     mount UserController
   end
 end

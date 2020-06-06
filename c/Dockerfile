@@ -1,10 +1,13 @@
-FROM alpine 
+# hadolint ignore=DL3006
+FROM gcc AS build
 
-RUN apk add build-base
+RUN apt-get update
 
 {{#build_deps}}
-   RUN apk add {{{.}}}
+   RUN apt-get -y install {{{.}}} --no-install-recommends
 {{/build_deps}}
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app
 
@@ -20,6 +23,7 @@ WORKDIR /usr/src/app
    RUN {{{.}}}
 {{/build}}
 
+# hadolint ignore=DL3006
 FROM alpine
 
 WORKDIR /opt/web
@@ -33,7 +37,7 @@ WORKDIR /opt/web
 {{/files}}
 
 {{#binaries}}
-   COPY --from=0 /usr/src/app/{{.}} {{{.}}}
+   COPY --from=build /usr/src/app/{{.}} {{{.}}}
 {{/binaries}}
 
 CMD {{#command}}{{{.}}}{{/command}}

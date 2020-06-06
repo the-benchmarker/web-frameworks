@@ -78,7 +78,7 @@ def commands_for(language, framework, **options)
     end
   end
 
-  if ["docker", "docker-machine"].include?(options[:provider])
+  if %w[docker docker-machine].include?(options[:provider])
     pause = main_config.fetch("docker_pause") { "5" }
     commands << "sleep #{pause}"
   else
@@ -86,7 +86,7 @@ def commands_for(language, framework, **options)
     commands << 'while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done'
   end
 
-  commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
+  commands << "DATABASE_URL=#{ENV['DATABASE_URL']} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
 
   unless options[:clean] == "off"
     config["providers"][options[:provider]]["clean"].each do |cmd|
@@ -136,7 +136,7 @@ def create_dockerfile(language, framework, **options)
   end
 
   template = nil
-  if (options[:provider].start_with?("docker") || options[:provider].start_with?("podman"))
+  if options[:provider].start_with?("docker") || options[:provider].start_with?("podman")
     template = File.join(directory, "..", "Dockerfile")
   elsif config.key?("binaries")
     template = File.join(directory, "..", ".build", options[:provider], "Dockerfile")
@@ -176,7 +176,7 @@ task :config do
 
     config["#{language}/#{framework}"] = {
       commands: commands_for(language, framework, provider: provider, clean: clean, sieger_options: sieger_options, path: path, collect: collect),
-      dir: File.join(language, File::SEPARATOR, framework),
+      dir: File.join(language, File::SEPARATOR, framework)
     }
   end
 
@@ -196,13 +196,13 @@ namespace :cloud do
     config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
     config["cloud"]["config"]["write_files"] = if config.key?("service")
-        [{
-          "path" => "/usr/lib/systemd/system/web.service",
-          "permission" => "0644",
-          "content" => Mustache.render(config["service"], config),
-        }]
-      else
-        []
+                                                 [{
+                                                   "path" => "/usr/lib/systemd/system/web.service",
+                                                   "permission" => "0644",
+                                                   "content" => Mustache.render(config["service"], config)
+                                                 }]
+                                               else
+                                                 []
       end
 
     if config.key?("environment")
@@ -212,13 +212,13 @@ namespace :cloud do
       config["cloud"]["config"]["write_files"] << {
         "path" => "/etc/web",
         "permission" => "0644",
-        "content" => stringified_environment,
+        "content" => stringified_environment
       }
     else
       config["cloud"]["config"]["write_files"] << {
         "path" => "/etc/web",
         "permission" => "0644",
-        "content" => "",
+        "content" => ""
       }
     end
 
@@ -265,7 +265,7 @@ namespace :cloud do
           config["cloud"]["config"]["write_files"] << {
             "path" => "/opt/web/#{remote_path}",
             "content" => File.read(path),
-            "permission" => "0644",
+            "permission" => "0644"
           }
 
           next if remote_directory.start_with?(".")
@@ -360,14 +360,14 @@ namespace :ci do
           "bundle install",
           "cache store",
           "rake config",
-          "shards build --static",
-        ],
+          "shards build --static"
+        ]
       }],
       epilogue: {
         always: {
-          commands: ["artifact push workflow bin"],
-        },
-      },
+          commands: ["artifact push workflow bin"]
+        }
+      }
     } }]
     done = []
     Dir.glob("*/config.yaml").each do |path|
@@ -377,11 +377,11 @@ namespace :ci do
         "cache restore",
         "bundle install",
         "artifact pull workflow bin",
-        "find bin -type f -exec chmod +x {} \\;",
-        "rake config",
+        'find bin -type f -exec chmod +x {} \\;',
+        "rake config"
       ] }, 'env_vars': [
         { name: "COLLECT", 'value': "off" },
-        { name: "CLEAN", value: "off" },
+        { name: "CLEAN", value: "off" }
       ], jobs: [], epilogue: { always: { commands: ["artifact push workflow .neph"] } } } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         config = YAML.safe_load(File.read(file))
@@ -401,12 +401,14 @@ task :clean do
     directory = File.dirname(ignore_file)
     next if directory.start_with?("lib")
     next if directory.start_with?("bin")
+
     File.foreach(ignore_file) do |line|
       line.strip!
       next if line.start_with?("!")
       next if line.start_with?("#")
       next if line.start_with?(".env")
       next if line.empty?
+
       Dir.glob(File.join(directory, line)).each do |file|
         if File.exist?(file)
           if File.file?(file)

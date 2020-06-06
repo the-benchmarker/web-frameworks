@@ -10,9 +10,9 @@ async def home(_):
     return text(f"")
 
 
-@app.router.get("/user/:id")
-async def user_info(_, id: int):
-    return text(f"{id}")
+@app.router.get("/user/:user_id")
+async def user_info(_, user_id: int):
+    return text(f"{user_id}")
 
 
 @app.router.post("/user")

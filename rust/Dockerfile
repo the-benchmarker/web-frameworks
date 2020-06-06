@@ -6,8 +6,6 @@ RUN apt-get update && apt-get -y install musl-tools --no-install-recommends \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get -y install musl-tools --no-install-recommends
-
 RUN rustup target add x86_64-unknown-linux-musl
 
 {{#sources}}

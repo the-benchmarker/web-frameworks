@@ -1,4 +1,4 @@
-FROM golang:1.14
+FROM golang:1.14 AS build
 
 ENV CGO_ENABLED 0
 ENV GOOS linux
@@ -22,6 +22,7 @@ RUN go get
 
 RUN go build -a -ldflags '-extldflags "-static"' -o /go/bin/app ./
 
+# hadolint ignore=DL3006
 FROM alpine
 
 WORKDIR /opt/web
@@ -31,5 +32,5 @@ WORKDIR /opt/web
 {{/environment}}
 
 {{#binaries}}
-  COPY --from=0 /go/bin/{{{.}}} {{{.}}}
+  COPY --from=build /go/bin/{{{.}}} {{{.}}}
 {{/binaries}}

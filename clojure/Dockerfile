@@ -1,9 +1,9 @@
 {{#image}}
-  FROM {{{.}}}
+  FROM {{{.}}} AS build
 {{/image}}
 
 {{^image}}
-  FROM clojure:openjdk-11-tools-deps-slim-buster
+  FROM clojure:openjdk-11-tools-deps-slim-buster AS build
 {{/image}}
 
 WORKDIR /usr/src/app
@@ -29,7 +29,7 @@ WORKDIR /opt/web
 {{/environment}}
 
 {{#binaries}}
-  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+  COPY --from=build /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
 
 RUN ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java

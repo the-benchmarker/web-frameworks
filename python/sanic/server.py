@@ -50,9 +50,9 @@ async def index(request):
     return text("")
 
 
-@app.route("/user/<id:int>", methods=["GET"])
-async def user_info(request, id):
-    return text(str(id))
+@app.route("/user/<user_id:int>", methods=["GET"])
+async def user_info(request, user_id):
+    return text(str(user_id))
 
 
 @app.route("/user", methods=["POST"])
