@@ -18,6 +18,7 @@ env:
       - FRAMEWORK=fsharp.frank
       - FRAMEWORK=fsharp.giraffe
       - FRAMEWORK=fsharp.falco
+      - FRAMEWORK=fsharp.websharper
       - FRAMEWORK=swift.kitura-nio
       - FRAMEWORK=swift.kitura
       - FRAMEWORK=swift.perfect
