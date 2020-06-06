@@ -1,6 +1,4 @@
-
-
 # B104 => Bind to all interface
 # B105 => hardcode password strings
 
-skips: ['B104','B105']
+skips: ["B104", "B105"]
