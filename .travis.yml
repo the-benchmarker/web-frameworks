@@ -108,6 +108,7 @@ env:
       - FRAMEWORK=fsharp.giraffe
       - FRAMEWORK=fsharp.falco
       - FRAMEWORK=fsharp.suave
+      - FRAMEWORK=fsharp2.websharper
       - FRAMEWORK=java.micronaut
       - FRAMEWORK=java.spring-framework
       - FRAMEWORK=java.spring-boot
