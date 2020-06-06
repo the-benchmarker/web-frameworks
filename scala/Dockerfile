@@ -12,6 +12,6 @@ WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/target target
 
-RUN tar -xvzf target/universal/*.tgz
+RUN tar -xvzf target/universal/server-0.1.0-SNAPSHOT.tgz
 
-CMD {{#command}} {{{.}}} {{/command}}
+CMD server-0.1.0-SNAPSHOT/bin/server
