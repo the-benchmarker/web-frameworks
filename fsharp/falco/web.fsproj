@@ -6,6 +6,6 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Falco" Version="1.0.10-alpha" />
+    <PackageReference Include="Falco" Version="1.1.0" />
   </ItemGroup>
 </Project>
