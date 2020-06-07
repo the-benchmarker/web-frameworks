@@ -11,7 +11,6 @@ RUN dotnet restore
     COPY {{{.}}} {{{.}}}
 {{/sources}}
 
-
 RUN dotnet publish -c release -o out
 
 FROM fsharp:10.7-netcore
@@ -20,8 +19,8 @@ WORKDIR /opt/web
 
 COPY --from=build /usr/src/app/out out
 
-ENV ASPNETCORE_URLS=http://+:3000
-ENV COMPlus_TieredCompilation 1
-EXPOSE 3000
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
 
 CMD {{#command}}{{{.}}}{{/command}}

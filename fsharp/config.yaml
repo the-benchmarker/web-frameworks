@@ -8,10 +8,11 @@ sources:
 binaries:
   - out
 
-environment:
-  COMPlus_TieredCompilation: 1
-
 deps:
   - aspnetcore-runtime-3.1
 
-command: /usr/bin/dotnet /usr/src/app/out/web.dll
+environment:
+  ASPNETCORE_URLS: http://+:3000
+  COMPlus_TieredCompilation: 1
+
+command: /usr/bin/dotnet /opt/web/out/web.dll
