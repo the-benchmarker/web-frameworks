@@ -3,11 +3,11 @@ provider:
     language: 1.10
 
 sources:
-- '**/*.clj'
-- '**/*.edn'
-- '**/logback.xml'
+  - "**/*.clj"
+  - "**/*.edn"
+  - "**/logback.xml"
 
 deps:
-- java-11-openjdk
+  - java-11-openjdk
 
 docker_pause: 10

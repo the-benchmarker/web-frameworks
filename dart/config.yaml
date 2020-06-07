@@ -5,12 +5,12 @@ provider:
     language: 2.8
 
 files:
-- main.dart
-- pubspec.yaml
+  - main.dart
+  - pubspec.yaml
 
 bootstrap:
-- '[[ -f /etc/fedora-release ]] && dnf copr -y enable tcg/devel || true'
-- '[[ -f /etc/fedora-release ]] && dnf -y install dart-bin || true'
-- pub get
+  - "[[ -f /etc/fedora-release ]] && dnf copr -y enable tcg/devel || true"
+  - "[[ -f /etc/fedora-release ]] && dnf -y install dart-bin || true"
+  - pub get
 
 command: /usr/bin/dart /opt/web/main.dart

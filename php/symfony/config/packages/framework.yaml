@@ -1,5 +1,5 @@
 framework:
-  secret: '%env(APP_SECRET)%'
+  secret: "%env(APP_SECRET)%"
 
   session:
     handler_id:

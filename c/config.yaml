@@ -3,8 +3,8 @@ provider:
     language: 11
 
 sources:
-- '**/*.c'
-- Makefile
+  - "**/*.c"
+  - Makefile
 
 files:
-- '**/*.conf'
+  - "**/*.conf"

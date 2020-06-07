@@ -3,17 +3,17 @@ framework:
   version: 7.2
 
 files:
-- nest-cli.json
-- src/**/*.ts
-- tsconfig.build.json
-- tsconfig.json
-- package.json
-- ../.config/ecosystem.config.js
+  - nest-cli.json
+  - src/**/*.ts
+  - tsconfig.build.json
+  - tsconfig.json
+  - package.json
+  - ../.config/ecosystem.config.js
 
 bootstrap:
-- npm install
-- npm -g install pm2
-- npm -g install @nestjs/cli
-- nest build
-- mv dist/*.js .
-- mv dist/*.map .
+  - npm install
+  - npm -g install pm2
+  - npm -g install @nestjs/cli
+  - nest build
+  - mv dist/*.js .
+  - mv dist/*.map .

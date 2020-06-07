@@ -3,9 +3,9 @@ framework:
   version: 0.35
 
 sources:
-- shard.yml
-- config/**/*.cr
-- src/**/*.cr
+  - shard.yml
+  - config/**/*.cr
+  - src/**/*.cr
 
 files:
-- config/**/*.yml
+  - config/**/*.yml

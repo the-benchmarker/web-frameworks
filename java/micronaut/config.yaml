@@ -5,25 +5,25 @@ framework:
 image: gradle:6.3-jdk8
 
 build:
-- gradle build --project-cache-dir ~/.gradle
+  - gradle build --project-cache-dir ~/.gradle
 
 patch:
-- USER root
-- RUN chown -R gradle .
-- USER gradle
+  - USER root
+  - RUN chown -R gradle .
+  - USER gradle
 
 sources:
-- src/**/*.java
-- build.gradle
+  - src/**/*.java
+  - build.gradle
 
 files:
-- src/**/*.yml
-- src/**/*.xml
+  - src/**/*.yml
+  - src/**/*.xml
 
 binaries:
-- build/distributions/web-0.1.tar
+  - build/distributions/web-0.1.tar
 
 bootstrap:
-- tar -xvf build/distributions/web-0.1.tar
+  - tar -xvf build/distributions/web-0.1.tar
 
 command: /opt/web/web-0.1/bin/web

@@ -3,12 +3,12 @@ framework:
   version: 1.9
 
 alpine-deps:
-- bash
+  - bash
 
 binaries:
-- target/dist/*.tar.gz
+  - target/dist/*.tar.gz
 
 bootstrap:
-- tar -xvzf target/dist/*.tar.gz
+  - tar -xvzf target/dist/*.tar.gz
 
 command: /opt/web/run

@@ -3,10 +3,10 @@ framework:
   version: 0.0
 
 deps:
-- git
-- '@development-tools'
-- nodejs
+  - git
+  - "@development-tools"
+  - nodejs
 
 alpine-deps:
-- git
-- gcompat   # required by uWebSocket
+  - git
+  - gcompat # required by uWebSocket

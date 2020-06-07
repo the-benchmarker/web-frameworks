@@ -7,15 +7,15 @@ provider:
     language: 11
 
 download:
-- wget -c https://github.com/ohler55/agoo-c/tarball/v0.7.3 -O agoo.tar.gz
-- tar xzf agoo.tar.gz
-- mv ohler55* agoo-c
-- cd agoo-c/src && make
+  - wget -c https://github.com/ohler55/agoo-c/tarball/v0.7.3 -O agoo.tar.gz
+  - tar xzf agoo.tar.gz
+  - mv ohler55* agoo-c
+  - cd agoo-c/src && make
 
 build:
-- make
+  - make
 
 binaries:
-- simple
+  - simple
 
 command: /opt/web/simple

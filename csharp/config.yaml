@@ -3,16 +3,16 @@ provider:
     language: 8.0
 
 sources:
-- '**/*.cs'
+  - "**/*.cs"
 
 binaries:
-- out
+  - out
 
 environment:
   ASPNETCORE_URLS: http://*:3000
   COMPlus_TieredCompilation: 1
 
 deps:
-- aspnetcore-runtime-3.1
+  - aspnetcore-runtime-3.1
 
 command: /usr/bin/dotnet /opt/web/out/web.dll

@@ -3,16 +3,16 @@ framework:
   version: 4.0
 
 php_mod:
-- pcntl
-- posix
+  - pcntl
+  - posix
 
 deps:
-- php
-- php-posix
-- composer
+  - php
+  - php-posix
+  - composer
 
 bootstrap:
-- composer install --no-dev --prefer-dist --classmap-authoritative
-- composer dumpautoload -o
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
 
 command: /usr/bin/php /opt/web/start.php start

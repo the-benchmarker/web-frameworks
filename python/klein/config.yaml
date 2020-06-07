@@ -3,8 +3,8 @@ framework:
   version: 20.6
   
 files:
-- requirements.txt
-- server.py
+  - requirements.txt
+  - server.py
 
 environment:
   PYTHONPATH: /opt/web

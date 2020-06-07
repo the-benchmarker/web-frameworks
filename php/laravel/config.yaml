@@ -8,29 +8,29 @@ environment:
   APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
 
 deps:
-- nginx
-- php
-- composer
+  - nginx
+  - php
+  - composer
 
 files:
-- composer.json
-- '**/*.php'
-- ../.config/nginx.conf
+  - composer.json
+  - "**/*.php"
+  - ../.config/nginx.conf
 
 bootstrap:
-- mkdir bootstrap/cache -p
-- mkdir storage/framework/sessions -p
-- mkdir storage/framework/views -p
-- mkdir storage/framework/cache -p
+  - mkdir bootstrap/cache -p
+  - mkdir storage/framework/sessions -p
+  - mkdir storage/framework/views -p
+  - mkdir storage/framework/cache -p
 
-- chown -R www-data:www-data .
-- find -type f -exec chmod 644 {} \;
-- find -type d -exec chmod 755 {} \;
-- chmod -R ug+rwx storage bootstrap/cache
+  - chown -R www-data:www-data .
+  - find -type f -exec chmod 644 {} \;
+  - find -type d -exec chmod 755 {} \;
+  - chmod -R ug+rwx storage bootstrap/cache
 
-- composer install --no-dev --prefer-dist --classmap-authoritative
-- composer dumpautoload -o
-- mv config/nginx.conf /etc/nginx/conf.d/default.conf
-- sed -i 's/;prefix.*/prefix = \/opt\/web\/public/g' /etc/php-fpm.d/www.conf
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
+  - mv config/nginx.conf /etc/nginx/conf.d/default.conf
+  - sed -i 's/;prefix.*/prefix = \/opt\/web\/public/g' /etc/php-fpm.d/www.conf
     #  - "[[ -f /etc/fedora-release ]] && systemctl enable php-fpm || true"
     #  - "[[ -f /etc/fedora-release ]] && systemctl enable nginx || true"

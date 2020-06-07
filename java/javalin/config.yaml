@@ -3,7 +3,7 @@ framework:
   version: 3.9
 
 build:
-- mvn compile assembly:single
+  - mvn compile assembly:single
 
 command: >
   /usr/bin/java -server  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts  -cp

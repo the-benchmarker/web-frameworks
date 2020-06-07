@@ -6,6 +6,6 @@ environment:
   COAST_ENV: prod
 
 binaries:
-- coast.jar
+  - coast.jar
 
 command: /usr/bin/java -jar /opt/web/coast.jar 3000

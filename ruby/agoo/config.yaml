@@ -9,11 +9,11 @@ environment:
 command: /opt/web/bin/bundle exec /usr/bin/ruby /opt/web/app.rb
 
 files:
-- app.rb
-- Gemfile
+  - app.rb
+  - Gemfile
 
 bootstrap:
-- bundle config set without "development test"
-- bundle config set path "vendor/bundle"
-- bundle install
-- bundle binstubs bundler
+  - bundle config set without "development test"
+  - bundle config set path "vendor/bundle"
+  - bundle install
+  - bundle binstubs bundler

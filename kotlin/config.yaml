@@ -3,10 +3,10 @@ provider:
     language: 1.3
 
 sources:
-- '**/*.kt'
-- '**/*.gradle'
-- '**/*.properties'
-- '**/*.conf'
+  - "**/*.kt"
+  - "**/*.gradle"
+  - "**/*.properties"
+  - "**/*.conf"
 
 binaries:
   - build/libs/server.jar
@@ -14,4 +14,4 @@ binaries:
 command: /usr/bin/java -server -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:+AlwaysPreTouch -jar /opt/web/build/libs/server.jar
 
 deps:
-- java-11-openjdk
+  - java-11-openjdk

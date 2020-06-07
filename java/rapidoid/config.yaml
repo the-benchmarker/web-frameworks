@@ -3,7 +3,7 @@ framework:
   version: 5.5
 
 build:
-- mvn compile assembly:single -q
+  - mvn compile assembly:single -q
 
 command: >
   /usr/bin/java -server

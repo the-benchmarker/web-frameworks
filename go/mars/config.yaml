@@ -3,11 +3,11 @@ framework:
   version: 1.0
 
 before_command:
-- go generate main.go
+  - go generate main.go
 
 sources:
-- main.go
-- go.mod
+  - main.go
+  - go.mod
 
 files:
-- routes.conf
+  - routes.conf

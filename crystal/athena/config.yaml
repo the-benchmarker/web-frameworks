@@ -3,7 +3,7 @@ framework:
   version: 0.9
 
 files:
-- athena.yml
+  - athena.yml
 
 environment:
   ATHENA_ENV: production

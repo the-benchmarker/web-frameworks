@@ -3,14 +3,14 @@ framework:
   version: 2.4
 
 files:
-- composer.json
-- '**/*.php'
-- .rr.yaml
+  - composer.json
+  - "**/*.php"
+  - .rr.yaml
 
 bootstrap:
-- composer install --no-dev --prefer-dist --classmap-authoritative
-- composer dumpautoload -o
-- vendor/bin/spiral get
-- php app.php configure
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
+  - vendor/bin/spiral get
+  - php app.php configure
 
 command: /opt/web/spiral serve

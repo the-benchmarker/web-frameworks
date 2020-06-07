@@ -5,9 +5,9 @@ provider:
     language: 12.16
 
 files:
-- app.js
-- package.json
-- ../.config/ecosystem.config.js
+  - app.js
+  - package.json
+  - ../.config/ecosystem.config.js
 
 environment:
   NODE_ENV: production
@@ -15,11 +15,11 @@ environment:
   PM2_HOME: /opt/web
 
 bootstrap:
-- npm install
-- npm -g install pm2
+  - npm install
+  - npm -g install pm2
 
 deps:
-- '@development-tools'
-- nodejs
+  - "@development-tools"
+  - nodejs
 
 command: /usr/local/bin/pm2-runtime /opt/web/config/ecosystem.config.js app

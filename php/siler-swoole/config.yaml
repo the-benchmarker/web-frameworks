@@ -3,10 +3,10 @@ framework:
   version: 1.7
 
 php_ext:
-- swoole
+  - swoole
 
 bootstrap:
-- composer install --no-dev --prefer-dist --classmap-authoritative
-- composer dumpautoload -o
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
 
 command: /usr/bin/php /opt/web/public/index.php

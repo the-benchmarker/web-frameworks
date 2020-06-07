@@ -3,15 +3,15 @@ provider:
     language: 4.7
 
 sources:
-- '**/*.fs'
+  - "**/*.fs"
 
 binaries:
-- out
+  - out
 
 environment:
   COMPlus_TieredCompilation: 1
 
 deps:
-- aspnetcore-runtime-3.1
+  - aspnetcore-runtime-3.1
 
 command: /usr/bin/dotnet /usr/src/app/out/web.dll

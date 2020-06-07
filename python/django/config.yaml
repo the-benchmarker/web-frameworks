@@ -3,16 +3,17 @@ framework:
   version: 3.0
 
 files:
-- requirements.txt
-- settings.py
-- app/__init__.py
-- app/urls.py
-- app/views.py
-- app/wsgi.py
-- ../.config/gunicorn.py
+  - requirements.txt
+  - settings.py
+  - app/__init__.py
+  - app/urls.py
+  - app/views.py
+  - app/wsgi.py
+  - ../.config/gunicorn.py
 
 environment:
   WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker
 
-command: /usr/local/bin/gunicorn --log-level warning  --bind 0.0.0.0:3000  --reuse-port  -c
+command:
+  /usr/local/bin/gunicorn --log-level warning  --bind 0.0.0.0:3000  --reuse-port  -c
   /opt/web/config/gunicorn.py app.wsgi

@@ -3,5 +3,5 @@ framework:
   version: 2.8
 
 files:
-- src/main/resources/application.conf
-- src/main/resources/routes
+  - src/main/resources/application.conf
+  - src/main/resources/routes

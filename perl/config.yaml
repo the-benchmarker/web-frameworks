@@ -5,14 +5,14 @@ provider:
     language: 5.32
 
 files:
-- cpanfile
-- '**/*.psgi'
+  - cpanfile
+  - "**/*.psgi"
 
 deps:
-- perl
-- perl-App-cpanminus
+  - perl
+  - perl-App-cpanminus
 
 bootstrap:
-- cpanm --notest --installdeps .
+  - cpanm --notest --installdeps .
 
 command: /usr/local/bin/plackup -s Gazelle --port 3000 --env production --app d2app.psgi

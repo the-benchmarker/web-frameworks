@@ -3,8 +3,8 @@ framework:
   version: 0.0
 
 files:
-- Gemfile
-- config.ru
-- app/**/*.rb
-- config/routes.txt
-- ../.config/puma.rb
+  - Gemfile
+  - config.ru
+  - app/**/*.rb
+  - config/routes.txt
+  - ../.config/puma.rb

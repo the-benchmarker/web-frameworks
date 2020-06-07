@@ -3,19 +3,19 @@ framework:
   version: 1.2
 
 build_deps:
-- libevent-dev
-- perl
-- linux-headers
-- bsd-compat-headers
+  - libevent-dev
+  - perl
+  - linux-headers
+  - bsd-compat-headers
 
 bin_deps:
-- libstdc++
+  - libstdc++
 
 build:
-- cmake -H. -B_builds -DCMAKE_BUILD_TYPE=Release
-- cmake --build _builds --config Release
+  - cmake -H. -B_builds -DCMAKE_BUILD_TYPE=Release
+  - cmake --build _builds --config Release
 
 binaries:
-- _builds/server_cpp_evhtp
+  - _builds/server_cpp_evhtp
 
 command: /opt/web/_builds/server_cpp_evhtp

@@ -7,36 +7,36 @@ provider:
     language: 14/17
 
 build_deps:
-- jsoncpp-dev
-- util-linux-dev
-- libressl-dev
-- zlib-dev
+  - jsoncpp-dev
+  - util-linux-dev
+  - libressl-dev
+  - zlib-dev
 
 bin_deps:
-- jsoncpp
-- libuuid
-- libressl
-- zlib
+  - jsoncpp
+  - libuuid
+  - libressl
+  - zlib
 
 deps:
-- jsoncpp
-- openssl
-- zlib
-- uuid
+  - jsoncpp
+  - openssl
+  - zlib
+  - uuid
 
 binaries:
-- build/drogon_benchmark
+  - build/drogon_benchmark
 
 download:
-- git clone --branch v1.0.0-beta13 https://github.com/an-tao/drogon
-- cd drogon && git submodule update --init
+  - git clone --branch v1.0.0-beta13 https://github.com/an-tao/drogon
+  - cd drogon && git submodule update --init
 
 build:
-- mkdir build
-- cd build && cmake -DCMAKE_BUILD_TYPE=release ..
-- cd build && make
+  - mkdir build
+  - cd build && cmake -DCMAKE_BUILD_TYPE=release ..
+  - cd build && make
 
 files:
-- config.json
+  - config.json
 
 command: /opt/web/build/drogon_benchmark /opt/web/config.json

@@ -5,16 +5,16 @@ provider:
     language: 7.4
 
 deps:
-- php
-- composer
-- '@development-tools'
-- php-pear
-- php-devel
+  - php
+  - composer
+  - "@development-tools"
+  - php-pear
+  - php-devel
 
 files:
-- '**/*.php'
-- composer.json
+  - "**/*.php"
+  - composer.json
 
 bootstrap:
-- composer install --no-dev --prefer-dist --classmap-authoritative
-- composer dumpautoload -o
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
