@@ -9,8 +9,6 @@ open Microsoft.Extensions.DependencyInjection
 open WebSharper
 open WebSharper.AspNetCore
 open WebSharper.Sitelets
-open WebSharper.UI
-open WebSharper.UI.Server
 
 type EndPoint =
     | [<EndPoint "GET /">] Home
