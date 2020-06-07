@@ -10,7 +10,7 @@ RUN dotnet restore
 COPY . .
 RUN dotnet publish -c release -o out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-alpine
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.1
 
 WORKDIR /usr/src/app
 
