@@ -3,31 +3,32 @@ framework:
   version: 2.3
 
 files:
-  - app/http/controllers/PageController.py
-  - bootstrap/start.py
-  - config/application.py
-  - config/database.py
-  - config/__init__.py
-  - config/packages.py
-  - config/providers.py
-  - config/storage.py
-  - requirements.txt
-  - routes/web.py
-  - wsgi.py
-  - ../.config/gunicorn.py
+- app/http/controllers/PageController.py
+- bootstrap/start.py
+- config/application.py
+- config/database.py
+- config/__init__.py
+- config/packages.py
+- config/providers.py
+- config/storage.py
+- requirements.txt
+- routes/web.py
+- wsgi.py
+- ../.config/gunicorn.py
 
 deps:
-  - "@development-tools"
-  - python3
-  - python3-devel
-  - python3-pip
-  - libffi-devel
+- '@development-tools'
+- python3
+- python3-devel
+- python3-pip
+- libffi-devel
 
 alpine-deps:
-  - libffi-dev
-  - openssl-dev
+- libffi-dev
+- openssl-dev
 
 environment:
   WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker
 
-command: /usr/bin/python3 /usr/local/bin/gunicorn --log-level warning --reuse-port --log-syslog --chdir /opt/web -c /opt/web/config/gunicorn.py wsgi
+command: /usr/bin/python3 /usr/local/bin/gunicorn --log-level warning --reuse-port
+  --log-syslog --chdir /opt/web -c /opt/web/config/gunicorn.py wsgi

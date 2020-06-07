@@ -3,10 +3,9 @@ framework:
   version: 5.5
 
 build:
-  - mvn compile assembly:single -q
+- mvn compile assembly:single -q
 
 command: >
   /usr/bin/java -server
-  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts 
-  -cp /opt/web/target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts  -cp /opt/web/target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar
   benchmark.rapidoid.Main profiles=production

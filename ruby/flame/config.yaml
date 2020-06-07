@@ -3,8 +3,8 @@ framework:
   version: 4.18
 
 files:
-  - application.rb
-  - config.ru
-  - controllers/*.rb
-  - Gemfile
-  - ../.config/puma.rb
+- application.rb
+- config.ru
+- controllers/*.rb
+- Gemfile
+- ../.config/puma.rb

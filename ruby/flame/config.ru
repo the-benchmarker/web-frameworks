@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'flame'
+require("flame")
 
-Dir['controllers/**/*'].each { |controller| require_relative controller }
+Dir["controllers/**/*"].each { |controller| require_relative controller }
 
-require_relative 'application'
+require_relative("application")
 
-run FlameTest::Application
+run(FlameTest::Application)

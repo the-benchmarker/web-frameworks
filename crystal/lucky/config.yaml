@@ -3,10 +3,10 @@ framework:
   version: 0.23
 
 sources:
-  - public/manifest.json
-  - shard.yml
-  - src/**/*.cr
-  - config/**/*.cr
+- public/manifest.json
+- shard.yml
+- src/**/*.cr
+- config/**/*.cr
 
 environment:
   LUCKY_ENV: production

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-source 'https://rubygems.org'
+source("https://rubygems.org")
 
-gem 'camping', '~> 2.1.532'
-gem 'puma'
+gem("camping", "~> 2.1.532")
+gem("puma")

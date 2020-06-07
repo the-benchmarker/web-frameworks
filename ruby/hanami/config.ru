@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-require './config/environment'
+require("./config/environment")
 
-run Hanami.app
+run(Hanami.app)

@@ -3,9 +3,9 @@ framework:
   version: 1.2
 
 files:
-  - config/**/*.js
-  - app.js
-  - api/**/*.js
-  - .sailsrc
-  - package.json
-  - ../.config/ecosystem.config.js
+- config/**/*.js
+- app.js
+- api/**/*.js
+- .sailsrc
+- package.json
+- ../.config/ecosystem.config.js

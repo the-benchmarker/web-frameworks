@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'app'
+require_relative("app")
 
-run App.freeze.app
+run(App.freeze.app)

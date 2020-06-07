@@ -7,27 +7,27 @@ provider:
     language: 99
     
 sources:
-  - "**/*.c"
-  - "**/*.conf"
+- '**/*.c'
+- '**/*.conf'
 
 files:
-  - "**/hello.conf"
+- '**/hello.conf'
 
 download:
   - wget -c https://github.com/jorisvink/kore/archive/3.3.1-release.tar.gz && tar xvf 3.3.1-release.tar.gz
   - cd kore-3.3.1-release && TASKS=1 NOTLS=1 make && make install
 
 build:
-  - cd hello && kodev build
-  - mv /usr/local/bin/kore kore
-  - mv hello/hello.so .
+- cd hello && kodev build
+- mv /usr/local/bin/kore kore
+- mv hello/hello.so .
 
 build_deps:
-  - bsd-compat-headers
-  - libressl-dev
+- bsd-compat-headers
+- libressl-dev
 
 bin_deps:
-  - libressl
+- libressl
 
 binaries:
   - kore

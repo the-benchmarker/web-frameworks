@@ -5,16 +5,17 @@ provider:
     language: 3.8
 
 files:
-  - requirements.txt
-  - server.py
+- requirements.txt
+- server.py
 
 deps:
-  - "@development-tools"
-  - python3
-  - python3-devel
-  - python3-pip
+- '@development-tools'
+- python3
+- python3-devel
+- python3-pip
 
 bootstrap:
-  - python3 -m pip install -r requirements.txt -U
+- python3 -m pip install -r requirements.txt -U
 
-command: /usr/bin/python3 /usr/local/bin/gunicorn --log-level warning --reuse-port --log-syslog --chdir /opt/web -c /opt/web/config/gunicorn.py server:app
+command: /usr/bin/python3 /usr/local/bin/gunicorn --log-level warning --reuse-port
+  --log-syslog --chdir /opt/web -c /opt/web/config/gunicorn.py server:app

@@ -5,10 +5,10 @@ provider:
     language: 0.35
 
 sources:
-  - shard.yml
-  - src/**/*.cr
+- shard.yml
+- src/**/*.cr
 
 binaries:
-  - bin/server
+- bin/server
 
 command: /opt/web/bin/server

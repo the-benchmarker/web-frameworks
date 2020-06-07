@@ -13,9 +13,9 @@ async def user_info(request):
     return web.Response(text="")
 
 
-@routes.get("/user/{id}")
+@routes.get("/user/{user_id}")
 async def user_id(request):
-    return web.Response(text=request.match_info["id"])
+    return web.Response(text=request.match_info["user_id"])
 
 
 async def app():

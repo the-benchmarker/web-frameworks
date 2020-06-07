@@ -1,9 +1,10 @@
-FROM alpine 
+# hadolint ignore=DL3006
+FROM alpine
 
-RUN apk add build-base
+RUN apk add build-base --no-cache
 
 {{#build_deps}}
-   RUN apk add {{{.}}}
+   RUN apk add {{{.}}} --no-cache
 {{/build_deps}}
 
 WORKDIR /usr/src/app
@@ -20,6 +21,7 @@ WORKDIR /usr/src/app
    RUN {{{.}}}
 {{/build}}
 
+# hadolint ignore=DL3006
 FROM alpine
 
 WORKDIR /opt/web

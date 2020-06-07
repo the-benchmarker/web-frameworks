@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'hanami/api'
+require("hanami/api")
 
 class App < Hanami::API
-  get '/', to: ->(*) { [200, {}, ['']] }
+  get "/", to: ->(*) { [200, {}, [""]] }
 
-  get '/user/:id' do
+  get "/user/:id" do
     params[:id]
   end
 
-  post '/user' do
-    ''
+  post "/user" do
+    ""
   end
 end

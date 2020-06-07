@@ -1,4 +1,6 @@
-// Copyright 2018 by Peter Ohler, All Rights Reserved
+/**
+  Copyright 2018 by Peter Ohler, All Rights Reserved
+  */
 
 #include <stdio.h>
 #include <stdlib.h>

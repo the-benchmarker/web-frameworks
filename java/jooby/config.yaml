@@ -3,7 +3,7 @@ framework:
   version: 2.8
 
 build:
-  - mvn clean package
+- mvn clean package
 
 command: >
   /usr/bin/java -server

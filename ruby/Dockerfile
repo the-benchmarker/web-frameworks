@@ -6,7 +6,7 @@ WORKDIR /opt/web
   COPY {{{.}}} {{{.}}}
 {{/files}}
 
-RUN apk add build-base
+RUN apk add build-base --no-cache
 
 RUN ln -sfv /usr/local/bin/ruby /usr/bin/ruby
 RUN ln -sfv /usr/local/bin/bundle /usr/bin/bundle

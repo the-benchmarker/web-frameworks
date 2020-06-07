@@ -9,9 +9,9 @@ async def index():
     return PlainTextResponse(content="")
 
 
-@app.get("/user/{id}")
-async def get_user(id: int):
-    return PlainTextResponse(content=f"{id}".encode())
+@app.get("/user/{user_id}")
+async def get_user(user_id: int):
+    return PlainTextResponse(content=f"{user_id}".encode())
 
 
 @app.post("/user")

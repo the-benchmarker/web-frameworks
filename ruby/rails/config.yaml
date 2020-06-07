@@ -3,24 +3,24 @@ framework:
   version: 6.0
 
 deps:
-  - "@development-tools"
-  - "@rpm-development-tools"
-  - ruby
-  - ruby-devel
-  - libxml2-devel
-  - libxslt-devel
+- '@development-tools'
+- '@rpm-development-tools'
+- ruby
+- ruby-devel
+- libxml2-devel
+- libxslt-devel
 
 alpine-deps:
-  - libxml2-dev
-  - libxslt-dev
+- libxml2-dev
+- libxslt-dev
 
 files:
-  - Gemfile
-  - config.ru
-  - Rakefile
-  - ../.config/puma.rb
-  - app/controllers/*.rb
-  - app/controllers/*.yml
-  - config/*.rb
-  - config/environments/*.rb
-  - config/application.rb
+- Gemfile
+- config.ru
+- Rakefile
+- ../.config/puma.rb
+- app/controllers/*.rb
+- app/controllers/*.yml
+- config/*.rb
+- config/environments/*.rb
+- config/application.rb

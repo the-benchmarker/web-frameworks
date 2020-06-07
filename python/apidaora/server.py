@@ -13,13 +13,13 @@ def create(req) -> str:
 
 
 def show(req) -> str:
-    return PLAINTEXT_RESPONSE, bytes(req.path_args.get("id"), encoding="utf-8")
+    return PLAINTEXT_RESPONSE, bytes(req.path_args.get("user_id"), encoding="utf-8")
 
 
 routes = (
     Route("/", MethodType.GET, index),
     Route("/user", MethodType.POST, create),
-    Route("/user/{id}", MethodType.GET, show),
+    Route("/user/{user_id}", MethodType.GET, show),
 )
 router = make_router(routes)
 app = asgi_app(router)

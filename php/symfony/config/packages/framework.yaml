@@ -1,8 +1,8 @@
 framework:
-  secret: "%env(APP_SECRET)%"
+  secret: '%env(APP_SECRET)%'
 
   session:
-    handler_id: ~
+    handler_id:
 
   php_errors:
     log: true

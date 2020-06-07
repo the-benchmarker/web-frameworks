@@ -3,8 +3,8 @@ provider:
     language: 11
 
 sources:
-  - CMakeLists.txt
-  - "**/*.h"
-  - "**/*.cc"
-  - "**/*.cpp"
-  - "**/*.cmake"
+- CMakeLists.txt
+- '**/*.h'
+- '**/*.cc'
+- '**/*.cpp'
+- '**/*.cmake'

@@ -12,9 +12,9 @@ def index():
     return ""
 
 
-@hug.get("/user/{id}")
-def user_info(id):
-    return str(id)
+@hug.get("/user/{user_id}")
+def user_info(user_id):
+    return str(user_id)
 
 
 @hug.post("/user", methods=["POST"])

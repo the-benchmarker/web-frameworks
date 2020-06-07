@@ -4,7 +4,7 @@ version: 0.0.1
 author: stable|kernel <jobs@stablekernel.com>
 
 environment:
-  sdk: ">=2.0.0 <3.0.0"
+  sdk: '>=2.0.0 <3.0.0'
 
 dependencies:
-  aqueduct: ">=3.3.0 <3.4.0"
+  aqueduct: '>=3.3.0 <3.4.0'

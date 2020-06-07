@@ -3,11 +3,12 @@ framework:
   version: 2.6
 
 files:
-  - server.py
-  - requirements.txt
-  - ../.config/gunicorn.py
+- server.py
+- requirements.txt
+- ../.config/gunicorn.py
 
 environment:
   WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker
 
-command: /usr/bin/python3 /usr/local/bin/gunicorn --log-level warning --reuse-port --log-syslog --chdir /opt/web -c /opt/web/config/gunicorn.py server:__hug_wsgi__
+command: /usr/bin/python3 /usr/local/bin/gunicorn --log-level warning --reuse-port
+  --log-syslog --chdir /opt/web -c /opt/web/config/gunicorn.py server:__hug_wsgi__

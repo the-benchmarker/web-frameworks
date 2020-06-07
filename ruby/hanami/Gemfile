@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-source 'https://rubygems.org'
+source("https://rubygems.org")
 
-gem 'hanami', '~> 1.3.2'
-gem 'puma'
+gem("hanami", "~> 1.3.2")
+gem("puma")

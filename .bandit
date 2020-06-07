@@ -1,0 +1,6 @@
+[bandit]
+
+# B104 => Bind to all interfaces
+# B105 => Hardcoded password
+
+skips: B104,B105

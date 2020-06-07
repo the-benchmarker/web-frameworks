@@ -3,9 +3,9 @@ framework:
   version: 2.0
 
 files:
-  - server.py
-  - requirements.txt
-  - ../.config/gunicorn.py
+- server.py
+- requirements.txt
+- ../.config/gunicorn.py
 
 environment:
   WORKER_CLASS: uvicorn.workers.UvicornWorker

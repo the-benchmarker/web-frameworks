@@ -3,9 +3,9 @@ framework:
   version: 6.0
 
 files:
-  - requirements.txt
-  - server.py
-  - ../.config/gunicorn.py
+- requirements.txt
+- server.py
+- ../.config/gunicorn.py
 
 environment:
   WORKER_CLASS: gunicorn.workers.gtornado.TornadoWorker

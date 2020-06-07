@@ -5,10 +5,10 @@ provider:
     language: 1.2
 
 sources:
-  - "**/*.nim"
-  - "**/*.nimble"
+- '**/*.nim'
+- '**/*.nimble'
 
 binaries:
-  - server
+- server
 
 command: /opt/web/server

@@ -1,3 +1,9 @@
+AllCops:
+
+  Exclude:
+    - Rakefile
+    - "lib" # this is from crystal build
+
 Documentation:
   Enabled: false
 
@@ -14,3 +20,15 @@ Metrics/LineLength:
 Naming/AccessorMethodName:
   Exclude:
     - ruby/rack-routing/app/route_handler.rb
+
+# Single quotes being faster is hardly measurable and only affects parse time.
+# Enforcing double quotes reduces the times where you need to change them
+# when introducing an interpolation. Use single quotes only if their semantics
+# are needed.
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+
+Metrics/BlockLength:
+  Exclude:
+    - '.spec/**'

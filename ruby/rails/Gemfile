@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-source 'https://rubygems.org'
+source("https://rubygems.org")
 
-gem 'puma'
-gem 'rails', '~> 6.0.0'
-gem 'tzinfo-data'
+gem("puma")
+gem("rails", "~> 6.0.0")
+gem("tzinfo-data")

@@ -3,10 +3,10 @@ framework:
   version: 1.3
 
 files:
-  - config/*.rb
-  - config.ru
-  - Gemfile
-  - ../.config/puma.rb
-  - apps/web/application.rb
-  - apps/web/config/routes.rb
-  - apps/web/controllers/**/*.rb
+- config/*.rb
+- config.ru
+- Gemfile
+- ../.config/puma.rb
+- apps/web/application.rb
+- apps/web/config/routes.rb
+- apps/web/controllers/**/*.rb

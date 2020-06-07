@@ -22,6 +22,7 @@ RUN go get
 
 RUN go build -a -ldflags '-extldflags "-static"' -o /go/bin/app ./
 
+# hadolint ignore=DL3006
 FROM alpine
 
 WORKDIR /opt/web

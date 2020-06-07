@@ -3,14 +3,14 @@ framework:
   version: preview
 
 php_ext:
-  - swoole
+- swoole
 
 deps:
-  - php
-  - composer
-  - "@development-tools"
-  - php-pear
-  - php-devel
-  - php-bcmath
+- php
+- composer
+- '@development-tools'
+- php-pear
+- php-devel
+- php-bcmath
 
 command: /usr/bin/php /opt/web/start.php

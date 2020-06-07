@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Bundler.require :default
+Bundler.require(:default)
 
 module Bench
   class BaseAPI < Grape::API
@@ -10,10 +10,10 @@ module Bench
   end
 
   class UserAPI < Grape::API
-    get '/user/:id' do
+    get "/user/:id" do
       params[:id]
     end
-    post '/user' do
+    post "/user" do
       body false
     end
   end
@@ -24,4 +24,4 @@ module Bench
   end
 end
 
-run Bench::API
+run(Bench::API)

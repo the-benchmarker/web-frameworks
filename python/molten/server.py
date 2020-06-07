@@ -5,8 +5,8 @@ def index() -> str:
     return Response(HTTP_200, content="")
 
 
-def get_user(id: int) -> str:
-    return Response(HTTP_200, content=f"{id}")
+def get_user(user_id: int) -> str:
+    return Response(HTTP_200, content=f"{user_id}")
 
 
 def create_user() -> str:
@@ -16,7 +16,7 @@ def create_user() -> str:
 app = App(
     routes=[
         Route("/", index),
-        Route("/user/{id}", get_user),
+        Route("/user/{user_id}", get_user),
         Route("/user", create_user, method="POST"),
     ]
 )

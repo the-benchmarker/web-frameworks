@@ -3,9 +3,9 @@
 class App
   class << self
     def call(env)
-      process env
+      process(env)
     rescue StandardError => e
-      handle_error e
+      handle_error(e)
     end
 
     def process(env)
@@ -14,10 +14,10 @@ class App
     end
 
     def handle_error(error)
-      puts "Error processing request: #{error.message}"
-      puts error.backtrace[0..6]
+      puts("Error processing request: #{error.message}")
+      puts(error.backtrace[0..6])
 
-      Rack::Response.new('Error', 500).finish
+      Rack::Response.new("Error", 500).finish
     end
   end
 end

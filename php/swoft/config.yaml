@@ -3,7 +3,7 @@ framework:
   version: 2.0
 
 php_ext:
-  - redis
-  - swoole
+- redis
+- swoole
 
 command: /usr/bin/php /opt/web/bin/swoft.php http:start

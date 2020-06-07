@@ -5,15 +5,15 @@ provider:
     language: 1.4
 
 files:
-  - "**/*.jl"
-  - Project.toml
-  - Manifest.toml
+- '**/*.jl'
+- Project.toml
+- Manifest.toml
 
 deps:
-  - julia
+- julia
 
 bootstrap:
-  - julia deps.jl
+- julia deps.jl
 
 command: /usr/bin/julia /opt/web/server.jl
 

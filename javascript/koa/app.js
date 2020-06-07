@@ -5,13 +5,13 @@ var app = new Koa();
 var router = new Router();
 
 router
-  .get("/", (ctx, next) => {
+  .get("/", (ctx) => {
     ctx.body = "";
   })
-  .get("/user/:id", (ctx, next) => {
+  .get("/user/:id", (ctx) => {
     ctx.body = ctx.params.id;
   })
-  .post("/user", (ctx, next) => {
+  .post("/user", (ctx) => {
     ctx.body = "";
   });
 

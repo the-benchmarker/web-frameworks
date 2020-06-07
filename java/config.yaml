@@ -5,14 +5,14 @@ provider:
     language: 8
 
 sources:
-  - src/**/*.java
-  - src/**/*.properties
-  - pom.xml
+- src/**/*.java
+- src/**/*.properties
+- pom.xml
 
 binaries:
-  - target/*.jar
+- target/*.jar
 
 deps:
-  - java-1.8.0-openjdk
+- java-1.8.0-openjdk
 
 docker_pause: 10

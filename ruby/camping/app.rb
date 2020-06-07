@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-Camping.goes :App
+Camping.goes(:App)
 
 module App::Controllers
-  class Index < R '/'
+  class Index < R "/"
     def get
-      ''
+      ""
     end
   end
 
@@ -15,9 +15,9 @@ module App::Controllers
     end
   end
 
-  class Creator < R '/user'
+  class Creator < R "/user"
     def post
-      ''
+      ""
     end
   end
 end

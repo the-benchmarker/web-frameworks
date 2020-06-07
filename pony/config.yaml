@@ -3,12 +3,12 @@ provider:
     language: 0.35
 
 deps:
-  - libatomic
+- libatomic
 
 binaries:
-  - web
+- web
 
 sources:
-  - "**/*.pony"
+- '**/*.pony'
 
 command: /opt/web/web

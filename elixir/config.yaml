@@ -3,23 +3,27 @@ provider:
     language: 1.10
 
 files:
-  - "**/*.ex"
-  - "**/*.exs"
-  - ../.script/compile.sh
+- '**/*.ex'
+- '**/*.exs'
+- ../.script/compile.sh
 
 environment:
   HOME: /opt/web
 
 bootstrap:
-  - "MIX_ENV=prod ERL_COMPILER_OPTIONS='[native, {hipe, [verbose, o3]}]' mix local.rebar --force"
-  - "MIX_ENV=prod ERL_COMPILER_OPTIONS='[native, {hipe, [verbose, o3]}]' mix local.hex --force"
-  - "MIX_ENV=prod ERL_COMPILER_OPTIONS='[native, {hipe, [verbose, o3]}]' mix deps.get --only prod"
-  - "MIX_ENV=prod ERL_COMPILER_OPTIONS='[native, {hipe, [verbose, o3]}]' mix compile"
-  - "MIX_ENV=prod ERL_COMPILER_OPTIONS='[native, {hipe, [verbose, o3]}]' mix release --path release"
-  - chown -R cloudy:cloudy /opt/web
+- MIX_ENV=prod ERL_COMPILER_OPTIONS='[native, {hipe, [verbose, o3]}]' mix local.rebar
+  --force
+- MIX_ENV=prod ERL_COMPILER_OPTIONS='[native, {hipe, [verbose, o3]}]' mix local.hex
+  --force
+- MIX_ENV=prod ERL_COMPILER_OPTIONS='[native, {hipe, [verbose, o3]}]' mix deps.get
+  --only prod
+- MIX_ENV=prod ERL_COMPILER_OPTIONS='[native, {hipe, [verbose, o3]}]' mix compile
+- MIX_ENV=prod ERL_COMPILER_OPTIONS='[native, {hipe, [verbose, o3]}]' mix release
+  --path release
+- chown -R cloudy:cloudy /opt/web
 
 deps:
-  - elixir
+- elixir
 
 command: /opt/web/release/bin/server start
 

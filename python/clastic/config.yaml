@@ -3,9 +3,9 @@ framework:
   version: 19.9
 
 files:
-  - server.py
-  - requirements.txt
-  - ../.config/gunicorn.py
+- server.py
+- requirements.txt
+- ../.config/gunicorn.py
 
 environment:
   WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker

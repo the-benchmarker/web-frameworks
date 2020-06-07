@@ -5,10 +5,10 @@ provider:
     language: 1.14
 
 binaries:
-  - app
+- app
 
 sources:
-  - main.go
-  - go.mod
+- main.go
+- go.mod
 
 command: /opt/web/app

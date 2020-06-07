@@ -5,10 +5,10 @@ provider:
     language: 1.44
 
 sources:
-  - Cargo.toml
-  - src/**/*.rs
+- Cargo.toml
+- src/**/*.rs
 
 binaries:
-  - target
+- target
 
 command: /opt/web/target/release/server

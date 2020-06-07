@@ -3,7 +3,7 @@ framework:
   version: 2.1
 
 files:
-  - app.rb
-  - config.ru
-  - Gemfile
-  - ../.config/puma.rb
+- app.rb
+- config.ru
+- Gemfile
+- ../.config/puma.rb

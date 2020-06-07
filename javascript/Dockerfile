@@ -3,7 +3,7 @@ FROM node:13.14-alpine
 WORKDIR /opt/web
 
 {{#alpine-deps}}
-  RUN apk add {{{.}}}
+  RUN apk add {{{.}}} --no-cache
 {{/alpine-deps}}
 
 {{#files}}

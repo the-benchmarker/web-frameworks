@@ -3,6 +3,6 @@ framework:
   version: 1.3
 
 files:
-  - Gemfile
-  - config.ru
-  - ../.config/puma.rb
+- Gemfile
+- config.ru
+- ../.config/puma.rb

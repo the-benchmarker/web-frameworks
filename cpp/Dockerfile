@@ -1,11 +1,12 @@
+# hadolint ignore=DL3006
 FROM alpine
 
-RUN apk add git build-base cmake
+RUN apk add git build-base cmake --no-cache
 
 WORKDIR /usr/src/app
 
 {{#build_deps}}
-  RUN apk add {{{.}}}
+  RUN apk add {{{.}}} --no-cache
 {{/build_deps}}
 
 {{#sources}}
@@ -20,12 +21,13 @@ WORKDIR /usr/src/app
    RUN {{{.}}}
 {{/build}}
 
+# hadolint ignore=DL3006
 FROM alpine
 
 WORKDIR /opt/web
 
 {{#bin_deps}}
-   RUN apk add {{{.}}}
+   RUN apk add {{{.}}} --no-cache
 {{/bin_deps}}
 
 {{#files}}

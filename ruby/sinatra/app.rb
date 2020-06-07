@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'sinatra'
+require("sinatra")
 
-get '/' do
+get "/" do
   # do nothing
 end
 
-get '/user/:id' do |id|
+get "/user/:id" do |id|
   body id.to_s
 end
 
-post '/user' do
+post "/user" do
   # do nothing
 end

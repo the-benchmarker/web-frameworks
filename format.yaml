@@ -1,110 +1,111 @@
 main:
   depends_on:
-    - java
-    - nim
-    - c
-    - rust
-    - ruby
-    - objc
-    - javascript
-    - scala
-    - cpp
-    - go
-    - csharp
-    - elixir
-    - swift
-    - php
-    - crystal
-    - python
-    - config
+  - java
+  - nim
+  - c
+  - rust
+  - ruby
+  - objc
+  - javascript
+  - scala
+  - cpp
+  - go
+  - csharp
+  - elixir
+  - swift
+  - php
+  - crystal
+  - python
+  - config
 
 java:
   commands:
-    - find -type f -name '*.java' -exec clang-format -style=google -i {} \;
+  - find -type f -name '*.java' -exec clang-format -style=google -i {} \;
   dir: java
 
 nim:
   commands:
-    - find -type f -name '*.nim' -exec nimpretty {} \;
+  - find -type f -name '*.nim' -exec nimpretty {} \;
   dir: nim
 
 c:
   commands:
-    - find -type f -name '.c' -exec clang-format -i {} \;
+  - find -type f -name '.c' -exec clang-format -i {} \;
   dir: c
 
 rust:
   commands:
-    - find -type f -name '*.rs' -exec rustfmt {} \;
+  - find -type f -name '*.rs' -exec rustfmt {} \;
   dir: rust
 
 ruby:
   commands:
-    - rubocop -a
+  - rubocop -a
   dir: ruby
 
 objc:
   commands:
-    - find -type f -name '*.m' -exec clang-format -i {} \;
+  - find -type f -name '*.m' -exec clang-format -i {} \;
   dir: objc
 
 javascript:
   commands:
-    - prettier --write '**/*.js'
+  - prettier --write '**/*.js'
   dir: javascript
 
 scala:
   commands:
-    - find -type f -name '*.scala' -exec scalafmt {} \;
+  - find -type f -name '*.scala' -exec scalafmt {} \;
   dir: scala
 
 cpp:
   commands:
-    - find -type f -name '*.cpp' -exec clang-format -i [} \;
+  - find -type f -name '*.cpp' -exec clang-format -i [} \;
   dir: cpp
 
 go:
   commands:
-    - find -type f -name '*.go' -exec gofmt -w {} \;
+  - find -type f -name '*.go' -exec gofmt -w {} \;
   dir: go
 
 csharp:
   commands:
-    - find -type f -name '*.cs' -exec astyle --mode=cs {} \;
+  - find -type f -name '*.cs' -exec astyle --mode=cs {} \;
   dir: csharp
 
 elixir:
   commands:
-    - find -type f -name '*.ex' -exec mix format {} \;
+  - find -type f -name '*.ex' -exec mix format {} \;
   dir: elixir
 
 swift:
   commands:
-    - find -type f -name '*.swift' -exec swiflint {} \;
+  - find -type f -name '*.swift' -exec swiflint {} \;
   dir: swift
 
 php:
   commands:
-    - ~/.config/composer/vendor/bin/php-cs-fixer fix --verbose --rules=@PSR1,@PSR2 --using-cache=no .
+  - ~/.config/composer/vendor/bin/php-cs-fixer fix --verbose --rules=@PSR1,@PSR2 --using-cache=no
+    .
   dir: php
 
 crystal:
   commands:
-    - crystal tool format .
+  - crystal tool format .
   dir: crystal
 
 python:
   commands:
-    - find -type f -name '*.py' -exec autopep8 -i {} \;
-    - black
+  - find -type f -name '*.py' -exec autopep8 -i {} \;
+  - black
   dir: python
 
 config:
   commands:
-    - prettier "**/**/*.{config.js,json}" --write
+  - prettier "**/**/*.{config.js,json}" --write
   dir: .
 
 kotlin:
   commands:
-    - ktlint -F "**/*.kt"
+  - ktlint -F "**/*.kt"
   dir: kotlin
