@@ -2,7 +2,7 @@ AllCops:
 
   Exclude:
     - Rakefile
-    - "lib" # this is from crystal build
+    - "lib/*" # this is from crystal build
 
 Documentation:
   Enabled: false

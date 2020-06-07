@@ -86,7 +86,7 @@ def commands_for(language, framework, **options)
     commands << 'while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done'
   end
 
-  commands << "DATABASE_URL=#{ENV['DATABASE_URL']} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
+  commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
 
   unless options[:clean] == "off"
     config["providers"][options[:provider]]["clean"].each do |cmd|
@@ -176,7 +176,7 @@ task :config do
 
     config["#{language}/#{framework}"] = {
       commands: commands_for(language, framework, provider: provider, clean: clean, sieger_options: sieger_options, path: path, collect: collect),
-      dir: File.join(language, File::SEPARATOR, framework)
+      dir: File.join(language, File::SEPARATOR, framework),
     }
   end
 
@@ -195,13 +195,13 @@ namespace :cloud do
     config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
     config["cloud"]["config"]["write_files"] = if config.key?("service")
-                                                 [{
-                                                   "path" => "/usr/lib/systemd/system/web.service",
-                                                   "permission" => "0644",
-                                                   "content" => Mustache.render(config["service"], config)
-                                                 }]
-                                               else
-                                                 []
+        [{
+          "path" => "/usr/lib/systemd/system/web.service",
+          "permission" => "0644",
+          "content" => Mustache.render(config["service"], config),
+        }]
+      else
+        []
       end
 
     if config.key?("environment")
@@ -211,13 +211,13 @@ namespace :cloud do
       config["cloud"]["config"]["write_files"] << {
         "path" => "/etc/web",
         "permission" => "0644",
-        "content" => stringified_environment
+        "content" => stringified_environment,
       }
     else
       config["cloud"]["config"]["write_files"] << {
         "path" => "/etc/web",
         "permission" => "0644",
-        "content" => ""
+        "content" => "",
       }
     end
 
@@ -264,7 +264,7 @@ namespace :cloud do
           config["cloud"]["config"]["write_files"] << {
             "path" => "/opt/web/#{remote_path}",
             "content" => File.read(path),
-            "permission" => "0644"
+            "permission" => "0644",
           }
 
           next if remote_directory.start_with?(".")
@@ -359,14 +359,14 @@ namespace :ci do
           "bundle install",
           "cache store",
           "rake config",
-          "shards build --static"
-        ]
+          "shards build --static",
+        ],
       }],
       epilogue: {
         always: {
-          commands: ["artifact push workflow bin"]
-        }
-      }
+          commands: ["artifact push workflow bin"],
+        },
+      },
     } }]
     Dir.glob("*/config.yaml").each do |path|
       language, = path.split(File::Separator)
@@ -376,10 +376,10 @@ namespace :ci do
         "bundle install",
         "artifact pull workflow bin",
         "find bin -type f -exec chmod +x {} \\;",
-        "rake config"
+        "rake config",
       ] }, 'env_vars': [
         { name: "COLLECT", 'value': "off" },
-        { name: "CLEAN", value: "off" }
+        { name: "CLEAN", value: "off" },
       ], jobs: [], epilogue: { always: { commands: ["artifact push workflow .neph"] } } } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
