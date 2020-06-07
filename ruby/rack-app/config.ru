@@ -17,4 +17,4 @@ class App < Rack::App
 end
 
 # for more check out how-to
-run App
+run(App)
