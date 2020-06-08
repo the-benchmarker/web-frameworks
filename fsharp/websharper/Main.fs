@@ -21,7 +21,7 @@ module Site =
         Application.MultiPage(fun ctx endpoint ->
             match endpoint with
             | Home -> Content.Text ""
-            | GetUser id -> Content.Text id
+            | GetUser id -> Content.Text(id.Trim())
             | User -> Content.Text ""
             |> Content.WithContentType "text/plain")
 
