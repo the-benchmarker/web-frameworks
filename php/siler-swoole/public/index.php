@@ -23,6 +23,5 @@ $server = http($handler, 3000);
 $server->set([
     'enable_coroutine' => false,
     'worker_num' => (int) shell_exec('nproc') ?? 32,
-    'only_simple_http' => true,
 ]);
 $server->start();
