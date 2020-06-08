@@ -1,0 +1,6 @@
+framework:
+  github: taojy123/valval
+  version: 0.1
+
+before_command:
+  - v install watchmen123456.valval

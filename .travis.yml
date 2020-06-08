@@ -182,6 +182,7 @@ env:
       - FRAMEWORK=go.fasthttprouter
       - FRAMEWORK=go.rte
       - FRAMEWORK=go.atreugo
+      - FRAMEWORK=v.valval
 
 before_script:
   - psql -c 'CREATE DATABASE benchmark;' -U postgres;
