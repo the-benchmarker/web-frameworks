@@ -1,4 +1,4 @@
-FROM taojy123/vlang:v0.1.24
+FROM gladmo/vlang:0.1.27-alpine
 
 WORKDIR /usr/src/app
 
@@ -8,9 +8,10 @@ WORKDIR /usr/src/app
 
 COPY . ./
 
-RUN v build main.v
+RUN v main.v
 
-FROM ubuntu
+# hadolint ignore=DL3006
+FROM alpine
 
 WORKDIR /opt/web
 
