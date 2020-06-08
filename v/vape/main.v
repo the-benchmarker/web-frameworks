@@ -1,6 +1,6 @@
 import exastencil.vape
 
-server := vape.Server{port: 3000}
+mut server := vape.Server{port: 3000}
 
 server.mount('GET', '/', fn (req vape.Request) vape.Response {
 	return vape.Response{

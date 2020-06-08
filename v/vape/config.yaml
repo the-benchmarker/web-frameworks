@@ -1,6 +1,6 @@
 framework:
   github: exastencil/vape
-  version: 0.3.0
+  version: 0.3
 
 before_command:
   - v install exastencil.vape
