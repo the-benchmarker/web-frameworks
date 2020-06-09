@@ -17,3 +17,5 @@ bootstrap:
   - tar -xvzf target/universal/server-0.1.0-SNAPSHOT.tgz
 
 command: /opt/web/server-0.1.0-SNAPSHOT/bin/server
+
+docker_pause: 10
