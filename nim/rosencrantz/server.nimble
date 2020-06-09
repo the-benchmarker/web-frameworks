@@ -8,4 +8,4 @@ license = "MIT"
 # Dependencies
 
 requires "nim >= 1.0.0"
-requires "rosencrantz >= 0.4.3"
+requires "rosencrantz >= 0.4.3 & < 0.5"
