@@ -109,7 +109,7 @@ bin/db to_readme
 
 ## Results
 
-:information_source:  Updated on **2020-06-07** :information_source:
+:information_source:  Updated on **2020-06-09** :information_source:
 
 > Benchmarking with [wrk](https://github.com/wg/wrk)
    + Threads : 8
@@ -154,12 +154,12 @@ bin/db to_readme
 | 32 | go (1.14)| [gorouter](https://github.com/vardius/gorouter/wiki) (4.4) | 104 189 | 106 959 | 109 760 |
 | 33 | fsharp (4.7)| [frank](https://github.com/frank-fs/frank) (6.0) | 102 691 | 109 611 | 111 141 |
 | 34 | go (1.14)| [aero](https://github.com/aerogo/aero) (1.3) | 102 269 | 102 221 | 105 211 |
-| 35 | go (1.14)| [violetear](https://violetear.org) (7.0) | 101 123 | 99 962 | 103 792 |
-| 36 | go (1.14)| [goroute](https://goroute.github.io) (0.0) | 99 261 | 97 129 | 100 102 |
-| 37 | go (1.14)| [gorilla-mux](https://www.gorillatoolkit.org/pkg/mux) (1.7) | 98 135 | 94 847 | 98 054 |
-| 38 | go (1.14)| [kami](https://github.com/guregu/kami) (2.2) | 97 858 | 102 054 | 103 869 |
-| 39 | ruby (2.7)| [agoo](https://github.com/ohler55/agoo) (2.12) | 96 424 | 119 233 | 123 228 |
-| 40 | csharp (8.0)| [aspnetcore](https://docs.microsoft.com/en-us/aspnet/index) (3.1) | 96 156 | 102 179 | 102 316 |
+| 35 | csharp (8.0)| [aspnetcore](https://docs.microsoft.com/en-us/aspnet/index) (3.1) | 101 209 | 107 750 | 105 295 |
+| 36 | go (1.14)| [violetear](https://violetear.org) (7.0) | 101 123 | 99 962 | 103 792 |
+| 37 | go (1.14)| [goroute](https://goroute.github.io) (0.0) | 99 261 | 97 129 | 100 102 |
+| 38 | go (1.14)| [gorilla-mux](https://www.gorillatoolkit.org/pkg/mux) (1.7) | 98 135 | 94 847 | 98 054 |
+| 39 | go (1.14)| [kami](https://github.com/guregu/kami) (2.2) | 97 858 | 102 054 | 103 869 |
+| 40 | ruby (2.7)| [agoo](https://github.com/ohler55/agoo) (2.12) | 96 424 | 119 233 | 123 228 |
 | 41 | go (1.14)| [beego](https://beego.me) (1.12) | 95 973 | 98 990 | 101 788 |
 | 42 | cpp (14/17)| [drogon](https://github.com/an-tao/drogon) (1.0) | 89 209 | 93 729 | 97 267 |
 | 43 | fsharp (4.7)| [falco](https://github.com/pimbrouwers/Falco) (1.1) | 88 585 | 94 545 | 95 288 |
