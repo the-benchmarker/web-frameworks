@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Suave" Version="2.5.*" />
+    <PackageReference Include="Suave" Version="[2.5,2.6)" />
   </ItemGroup>
 
 </Project>

@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Giraffe" Version="4.1.*" />
-    <PackageReference Include="TaskBuilder.fs" Version="2.1.*" />
+    <PackageReference Include="Giraffe" Version="[4.1,4.2)" />
+    <PackageReference Include="TaskBuilder.fs" Version="[2.1,2.2)" />
   </ItemGroup>
 
   <ItemGroup>

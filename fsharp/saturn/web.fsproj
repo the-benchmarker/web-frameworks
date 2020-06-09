@@ -9,6 +9,6 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Saturn" Version="0.13.*" />
+    <PackageReference Include="Saturn" Version="[0.13,0.14)" />
   </ItemGroup>
 </Project>
