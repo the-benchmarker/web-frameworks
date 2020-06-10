@@ -15,7 +15,9 @@ $serverConfig = [
     'socket_buffer_size' => envInt('SERVER_SOCKET_BUFFER_SIZE', 2 * 1024 * 1024),
 ];
 
-if (!empty($pidFile = env('SERVER_PID_FILE'))) {
+$pidFile = env('SERVER_PID_FILE', '');
+
+if (!empty($pidFile)) {
     $serverConfig['pid_file'] = $pidFile;
 }
 
