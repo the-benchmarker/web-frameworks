@@ -378,8 +378,8 @@ namespace :ci do
         "find bin -type f -exec chmod +x {} \\;",
         "rake config",
       ] }, 'env_vars': [
-        { name: "COLLECT", 'value': "off" },
         { name: "CLEAN", value: "off" },
+        { name: "COLLECT", 'value': "off" },
       ], jobs: [], epilogue: { always: { commands: ["artifact push workflow .neph"] } } } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)

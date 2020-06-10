@@ -41,9 +41,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: atreugo
@@ -292,9 +292,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: perfect
@@ -363,9 +363,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: start
@@ -405,9 +405,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: servant
@@ -447,9 +447,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: jennet
@@ -480,9 +480,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: coast
@@ -522,9 +522,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: bottle
@@ -763,9 +763,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: actix
@@ -823,9 +823,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: aspnetcore
@@ -857,9 +857,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: blade
@@ -954,9 +954,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: suave
@@ -1014,9 +1014,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: spiral
@@ -1281,9 +1281,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: toro
@@ -1406,9 +1406,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: cowboy-stream
@@ -1467,9 +1467,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: akkahttp
@@ -1518,9 +1518,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: kooby
@@ -1560,9 +1560,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: httpbeast
@@ -1611,9 +1611,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: dancer2
@@ -1644,9 +1644,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: agoo-c
@@ -1686,9 +1686,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: drogon
@@ -1728,9 +1728,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: grape
@@ -1870,9 +1870,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: merly
@@ -1903,9 +1903,9 @@ blocks:
       - find bin -type f -exec chmod +x {} \;
       - rake config
     env_vars:
-    - name: COLLECT
-      value: 'off'
     - name: CLEAN
+      value: 'off'
+    - name: COLLECT
       value: 'off'
     jobs:
     - name: feathersjs
