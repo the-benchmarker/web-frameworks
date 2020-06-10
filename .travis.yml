@@ -118,6 +118,7 @@ env:
       - FRAMEWORK=java.javalin
       - FRAMEWORK=java.blade
       - FRAMEWORK=csharp.aspnetcore
+      - FRAMEWORK=csharp.carter
       - FRAMEWORK=rust.nickel
       - FRAMEWORK=rust.gotham
       - FRAMEWORK=rust.iron
