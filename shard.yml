@@ -15,10 +15,10 @@ dependencies:
     version: ~> 2.4.0
   admiral:
     github: jwaldrip/admiral.cr
-    version: ~> 1.8.0
+    version: ~> 1.11.0
   pg:
     github: will/crystal-pg
-    version: ~> 0.18.0
+    version: ~> 0.21.0
 
 targets:
   db:
