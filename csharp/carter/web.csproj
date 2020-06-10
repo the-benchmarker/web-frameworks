@@ -6,6 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Carter" Version="[5.1,5.2)" />
+    <PackageReference Include="Carter" Version="5.1.*" />
   </ItemGroup>
 </Project>
