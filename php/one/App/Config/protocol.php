@@ -16,7 +16,8 @@ return [
         'sock_type'   => SWOOLE_SOCK_TCP,
         'ip'          => '0.0.0.0',
         'set'         => [
-            'worker_num'       => swoole_cpu_num(),
+            'enable_coroutine' => false,
+            'worker_num' => (int) shell_exec('nproc') ?? 32,
         ],
     ]
 ];
