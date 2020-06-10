@@ -383,7 +383,7 @@ namespace :ci do
       ], jobs: [], epilogue: { always: { commands: ["artifact push workflow .neph"] } } } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
-        block[:task][:jobs] << { name: framework, commands: ["mkdir -p .neph/#{language}/#{framework}", "retry bin/neph #{language}/#{framework} --mode=CI", "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec"] }
+        block[:task][:jobs] << { name: framework, commands: ["cache restore docker-cache", "[[ -f #{language}.#{framework}.tar ]] && docker load -i #{language}.#{framework}.tar || true", "mkdir -p .neph/#{language}/#{framework}", "retry bin/neph #{language}/#{framework} --mode=CI", "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec", "docker save -o #{language}.#{framework}.tar #{language}.#{framework}", "cache store docker-cache #{language}.#{framework}.tar"] }
       end
       blocks << block
     end
