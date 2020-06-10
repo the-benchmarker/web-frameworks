@@ -10,7 +10,6 @@ $serverConfig = [
     'dispatch_mode' => envInt('SERVER_DISPATCH_MODE', 2),
     'open_http2_protocol' => envBool('SERVER_OPEN_HTTP2', false),
     'task_worker_num' => envInt('SERVER_TASK_WORKER_NUM', 0),
-    'task_enable_coroutine' => envBool('SERVER_TASK_ENABLE_COROUTINE', false),
     'open_tcp_nodelay' => envBool('SERVER_OPEN_TCP_NODELAY', true),
     'max_coroutine' => envInt('SERVER_MAX_COROUTINE', 1000000),
     'socket_buffer_size' => envInt('SERVER_SOCKET_BUFFER_SIZE', 2 * 1024 * 1024),

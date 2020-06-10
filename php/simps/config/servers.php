@@ -18,7 +18,6 @@ return [
         'callbacks' => [
         ],
         'settings' => [
-            'enable_coroutine' => false,
             'worker_num' => (int) shell_exec('nproc') ?? 32,
             'only_simple_http' => true,
         ],
