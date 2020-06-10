@@ -1,8 +1,8 @@
 name: athena
-version: 0.1.0
+version: 0.2.0
 
 authors:
-  - Blacksmoke16 <blacksmoke16@eve.tools>
+  - George Dietrich <george@dietrich.app>
 
 targets:
   server:
@@ -11,6 +11,6 @@ targets:
 dependencies:
   athena:
     github: athena-framework/athena
-    version: ~> 0.8.0
+    version: ~> 0.9.0
 
 license: MIT

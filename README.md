@@ -104,7 +104,7 @@ bin/neph [job1] [job2] [job3] ...
 + Export all results readme
 
 ~~~sh
-bin/db to_readme
+bin/db to_readme --concurrency 64 --concurrency 256 --concurrency 512
 ~~~
 
 ## Results
