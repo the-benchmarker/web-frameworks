@@ -1,25 +1,33 @@
-FROM clojure:openjdk-14-tools-deps-1.10.1.478-alpine
+{{#image}}
+  FROM {{{.}}}
+{{/image}}
+
+{{^image}}
+  FROM clojure:openjdk-11-tools-deps-slim-buster
+{{/image}}
 
 WORKDIR /usr/src/app
 
 COPY . ./
 
-{{#build_deps}}
-  RUN apk add {{{.}}}
-{{/build_deps}}
+{{#build}}
+  RUN {{{.}}}
+{{/build}}
 
-RUN clojure -Auberjar
+{{^build}}
+  RUN clojure -Auberjar
+{{/build}}
 
-FROM openjdk:14-alpine
+FROM openjdk:11-jre-slim-buster
 
 WORKDIR /opt/bin
 
 {{#environment}}
-ENV {{{.}}}
+  ENV {{{.}}}
 {{/environment}}
 
 {{#files}}
-COPY --from=0 /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
+  COPY --from=0 /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
 {{/files}}
 
 {{#command}}

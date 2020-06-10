@@ -1,3 +1,3 @@
 module main
 
-require github.com/bnkamalesh/webgo/v3 v3.0.2 // indirect
+require github.com/bnkamalesh/webgo/v4 v4.1.1

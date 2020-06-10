@@ -12,6 +12,7 @@ func showEmpty(ctx *atreugo.RequestCtx) error {
 
 func showID(ctx *atreugo.RequestCtx) error {
 	id := ctx.UserValue("id").(string)
+
 	return ctx.TextResponse(id)
 }
 

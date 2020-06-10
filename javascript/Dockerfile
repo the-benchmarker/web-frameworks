@@ -1,4 +1,4 @@
-FROM node:13.13-alpine
+FROM node:13.14-alpine
 
 {{#build_deps}}
   RUN apk add {{{.}}}
@@ -24,10 +24,21 @@ COPY app.js package.json ./
 
 RUN npm install
 
+{{#before_command}}
+  RUN {{{.}}}
+{{/before_command}}
+
+
 ENV NODE_ENV production
 
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
-CMD pm2-runtime start app.js -i $(nproc)
+{{#command}}
+  CMD {{{.}}}
+{{/command}}
+
+{{^command}}
+  CMD pm2-runtime start app.js -i $(nproc)
+{{/command}}

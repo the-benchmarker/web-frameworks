@@ -1,8 +1,17 @@
 package main
 
 import (
+	"log"
+
 	"github.com/gofiber/fiber"
 )
+
+const id = "id"
+
+var empty = func(c *fiber.Ctx) {}
+var sendID = func(c *fiber.Ctx) {
+	c.SendString(c.Params(id))
+}
 
 func main() {
 	app := fiber.New(&fiber.Settings{
@@ -10,33 +19,8 @@ func main() {
 		CaseSensitive: true,
 		StrictRouting: true,
 	})
-	app.Get("/", func(c *fiber.Ctx) {
-		return
-	})
-	app.Get("/user/:id", func(c *fiber.Ctx) {
-		c.SendString(c.Params("id"))
-	})
-	// app.Get("/user/1", func(c *fiber.Ctx) {
-	// 	c.JSON("")
-	// })
-	app.Post("/user", func(c *fiber.Ctx) {
-		return
-	})
-	// app.Post("/user", func(c *fiber.Ctx) {
-	// 	c.JSON("")
-	// })
-	app.Post("/user", func(c *fiber.Ctx) {
-		return
-	})
-	// app.Put("/user/1", func(c *fiber.Ctx) {
-	// 	c.JSON("")
-	// })
-	// app.Patch("/user/1", func(c *fiber.Ctx) {
-	// 	c.JSON("")
-	// })
-	// app.Delete("/user/1", func(c *fiber.Ctx) {
-	// 	c.JSON("")
-	// })
-
-	app.Listen(3000)
+	app.Get("/", empty)
+	app.Get("/user/:id", sendID)
+	app.Post("/user", empty)
+	log.Fatal(app.Listen(3000))
 }

@@ -1,4 +1,4 @@
-FROM gradle:6.3-jdk8
+FROM gradle:jdk11
 
 WORKDIR /usr/src/app
 
@@ -10,7 +10,7 @@ COPY . ./
 
 RUN gradle build
 
-FROM openjdk:8-alpine
+FROM openjdk:11-jre-slim
 
 WORKDIR /usr/src/app
 

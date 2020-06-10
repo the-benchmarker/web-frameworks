@@ -29,7 +29,7 @@ defmodule Server.MixProject do
 
   defp deps do
     [
-      {:cowboy, "~> 2.7.0"}
+      {:cowboy, "~> 2.8.0"}
     ]
   end
 end

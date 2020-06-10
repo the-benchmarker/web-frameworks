@@ -20,7 +20,7 @@ class App < Admiral::Command
     define_flag without_sieger : Bool, description: "run sieger", default: false, long: "without-sieger"
     define_flag docker_options : String, description: "extra argument to docker cli", default: "", long: "docker-options"
     define_flag keep : Bool, description: "keep container after build (default : false)", default: false, long: "keep"
-    define_flag local_port : UInt16, description: "bind docker port 3000 to localhost port (docker desktop)", default: 0_u16, long: "local-port"
+    define_flag driver : String, description: "driver to use", default: "docker", long: "driver", short: "d"
 
     def run
       frameworks = {} of String => Array(String)
@@ -227,9 +227,6 @@ class App < Admiral::Command
                 params["files"] = files
               end
 
-              container_expose = flags.local_port != 0 ? "-p 127.0.0.1:#{flags.local_port}:3000" : ""
-              container_host = flags.local_port != 0 ? "--host 127.0.0.1:#{flags.local_port}" : ""
-
               # Fix for vapor
               if framework_config.as_h["framework"].as_h.has_key?("name")
                 name = framework_config.as_h["framework"].as_h["name"]
@@ -248,14 +245,24 @@ class App < Admiral::Command
                   yaml.scalar "docker build -t #{language}.#{name} . #{flags.docker_options}"
 
                   # Run container, and store IP
-                  yaml.scalar "docker run #{container_expose} -td #{language}.#{name} | xargs -i docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' {} > ip.txt"
+                  case flags.driver
+                  when "docker"
+                    yaml.scalar "docker run -td #{language}.#{name} > cid.txt"
+                    yaml.scalar "docker inspect `cat cid.txt` -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' > ip.txt"
+                    yaml.scalar "sleep 25"
+                  when "docker-machine"
+                    yaml.scalar "docker run -p 3000:3000 -d #{language}.#{name}"
+                    yaml.scalar "docker-machine ip default > ip.txt"
+                    yaml.scalar "sleep 25"
+                  else
+                    raise "unsupported provider"
+                  end
 
                   # Launch sieging
                   unless flags.without_sieger
                     factor = System.cpu_count**2
-                    concurrencies = [] of Int32
-                    command = "../../bin/client #{container_host} --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user"
-                    [1, 4, 8, 16, 32].each do |i|
+                    command = "../../bin/client --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user -h `cat ip.txt`"
+                    [1, 4, 8].each do |i|
                       command += " -c #{factor*i} "
                     end
 
@@ -264,7 +271,7 @@ class App < Admiral::Command
 
                   # Drop the container
                   unless flags.keep
-                    yaml.scalar "docker ps -a -q  --filter ancestor=#{language}.#{name}  | xargs -r docker rm -f"
+                    yaml.scalar "docker ps -a -q  --filter ancestor=#{language}.#{name}  | xargs docker rm -f"
                   end
                 end
                 yaml.scalar "dir"
@@ -300,75 +307,9 @@ class App < Admiral::Command
     end
   end
 
-  class DependabotConfig < Admiral::Command
-    def run
-      mapping = YAML.parse(File.read(".dependabot/mapping.yaml"))
-      frameworks = {} of String => Array(String)
-      Dir.glob("*/*/config.yaml").each do |file|
-        directory = File.dirname(file)
-        infos = directory.split("/")
-        framework = infos.pop
-        config = YAML.parse(File.read(file))
-
-        language = infos.pop
-
-        unless frameworks.has_key?(language)
-          frameworks[language] = [] of String
-        end
-
-        if config.as_h["framework"].as_h.has_key?("name")
-          frameworks[language] << config.as_h["framework"].as_h["name"].to_s
-        else
-          frameworks[language] << framework
-        end
-      end
-      selection = YAML.build do |yaml|
-        yaml.mapping do
-          yaml.scalar "version"
-          yaml.scalar 1
-          yaml.scalar "update_configs"
-
-          yaml.sequence do
-            frameworks.each do |language, tools|
-              tools.each do |tool|
-                # Exist if not exist for @dependabot
-                next unless mapping["languages"].as_h[language]?
-
-                # Exist if no manifest file
-                manifest = String.new
-                mapping["languages"][language].as_h.keys.each do |key|
-                  file = key.to_s
-                  if File.exists?("#{language}/#{tool}/#{file}")
-                    manifest = file
-                  end
-                end
-                next if manifest.chars.size == 0
-
-                yaml.mapping do
-                  yaml.scalar "package_manager"
-                  yaml.scalar mapping["languages"][language][manifest]["label"]
-                  yaml.scalar "update_schedule"
-                  yaml.scalar mapping["languages"][language][manifest]["update_schedule"]
-                  yaml.scalar "directory"
-                  yaml.scalar "#{language}/#{tool}"
-                  yaml.scalar "default_labels"
-                  yaml.sequence do
-                    yaml.scalar "language:#{language}"
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-      File.write(".dependabot/config.yml", selection)
-    end
-  end
-
   define_help
   register_sub_command config : Config, description "Create framework list"
   register_sub_command ci_config : TravisConfig, description "Create configuration file for CI"
-  register_sub_command deps_config : DependabotConfig, description "Create configuration file for deps update bot"
 
   def run
     puts help

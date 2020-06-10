@@ -4,10 +4,12 @@ require "./spec_helper"
 def get_ip(name)
   if name == "swift.vapor"
     name = "swift.vapor-framework"
+  elsif name == "swift.swifter"
+    name = "swift.swifter-framework"
   end
   infos = name.split(".")
   language = infos.shift
-  framework = infos.join(".") 
+  framework = infos.join(".")
   path = File.join(language, framework, "ip.txt")
   File.read(path).strip
 end

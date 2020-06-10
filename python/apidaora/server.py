@@ -1,4 +1,3 @@
-from apidaora import appdaora, route
 from apidaora.asgi.router import Route, make_router
 from apidaora.asgi.app import asgi_app
 from apidaora.method import MethodType
@@ -14,7 +13,7 @@ def create(req) -> str:
 
 
 def show(req) -> str:
-    return PLAINTEXT_RESPONSE, bytes(req.path_args.get('id'), encoding='utf-8')
+    return PLAINTEXT_RESPONSE, bytes(req.path_args.get("id"), encoding="utf-8")
 
 
 routes = (

@@ -27,7 +27,7 @@ class Client < Admiral::Command
   define_flag framework : String, description: "Framework used", required: true, long: "framework", short: "f"
   define_flag concurrencies : Array(Int32), description: "Concurrency level", required: true, long: "concurrency", short: "c"
   define_flag routes : Array(String), long: "routes", short: "r", default: ["GET:/"]
-  define_flag host : String, description: "Host and port instead ip.txt"
+  define_flag host : String, description: "Host", short: "h", required: true, long: "hostname"
 
   def run
     db = DB.open(ENV["DATABASE_URL"])
@@ -40,8 +40,7 @@ class Client < Admiral::Command
     row.move_next
     framework_id = row.read(Int)
 
-    sleep 25 # due to external program usage
-    address = flags.host ? flags.host : File.read("ip.txt").strip + ":3000"
+    address = "#{flags.host}:3000"
 
     # Run a 5-second primer at 8 client-concurrency to verify that the server is in fact running. These results are not captured.
 
@@ -58,6 +57,7 @@ class Client < Admiral::Command
       url = "http://#{address}#{uri}"
 
       flags.concurrencies.each do |concurrency|
+        puts "Start @ #{concurrency}"
         row = db.query("INSERT INTO concurrencies (level) VALUES ($1) ON CONFLICT (level) DO UPDATE SET level = $1 RETURNING id", concurrency)
         row.move_next
         concurrency_level_id = row.read(Int)
@@ -105,6 +105,7 @@ class Client < Admiral::Command
         # insert(framework_id, "percentile_ninety", result[14])
         # insert(framework_id, "percentile_ninety_nine", result[15])
         # insert(framework_id, "percentile_ninety_nine_ninety", result[16])
+        puts "End @ #{concurrency}"
       end
     end
 

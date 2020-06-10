@@ -1,0 +1,13 @@
+framework:
+  website: lets-blade.com
+  version: 2.0
+
+build:
+  - mvn compile assembly:single -q
+
+files:
+  - target/benchmark-0.0.1-jar-with-dependencies.jar
+
+command: >
+  java -jar target/benchmark-0.0.1-jar-with-dependencies.jar
+
