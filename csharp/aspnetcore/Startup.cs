@@ -5,30 +5,26 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace aspnetcore
 {
-public class Startup
-{
-    public void ConfigureServices(IServiceCollection services)
+    public class Startup
     {
-        services.AddRouting();
-    }
-
-    public void Configure(IApplicationBuilder app)
-    {
-        app.UseRouter(routes =>
+        public void Configure(IApplicationBuilder app)
         {
-            routes.MapGet("", context => {
-                return context.Response.WriteAsync("");
-            });
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGet("", context => {
+                    return context.Response.WriteAsync("");
+                });
 
-            routes.MapGet("user/{id}", context => {
-                var id = context.GetRouteValue("id").ToString();
-                return context.Response.WriteAsync(id);
-            });
+                endpoints.MapGet("user/{id}", context => {
+                    var id = context.GetRouteValue("id").ToString();
+                    return context.Response.WriteAsync(id);
+                });
 
-            routes.MapPost("user", context => {
-                return context.Response.WriteAsync("");
+                endpoints.MapPost("user", context => {
+                    return context.Response.WriteAsync("");
+                });
             });
-        });
+        }
     }
-}
 }
