@@ -58,6 +58,7 @@ env:
       - FRAMEWORK=nim.jester
       - FRAMEWORK=nim.rosencrantz
       - FRAMEWORK=nim.httpbeast
+      - FRAMEWORK=nim.whip
       - FRAMEWORK=kotlin.ktor
       - FRAMEWORK=kotlin.kooby
       - FRAMEWORK=scala.play
