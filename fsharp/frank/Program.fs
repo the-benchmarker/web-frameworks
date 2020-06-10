@@ -23,7 +23,7 @@ let userId =
 let user =
     resource "/user" {
         name "User"
-        get (fun _ -> Task.CompletedTask)
+        post (fun _ -> Task.CompletedTask)
     }
 
 [<EntryPoint>]
