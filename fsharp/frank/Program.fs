@@ -2,11 +2,14 @@ open Frank.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Http
 open Microsoft.AspNetCore.Routing
+open Microsoft.Extensions.Hosting
+open Microsoft.Extensions.Logging
+open System.Threading.Tasks
 
 let home =
     resource "/" {
         name "Hello Name"
-        get (fun (ctx: HttpContext) -> ctx.Response.WriteAsync(""))
+        get (fun _ -> Task.CompletedTask)
     }
 
 let userId =
@@ -20,13 +23,13 @@ let userId =
 let user =
     resource "/user" {
         name "User"
-        post (fun (ctx: HttpContext) -> ctx.Response.WriteAsync(""))
+        get (fun _ -> Task.CompletedTask)
     }
 
 [<EntryPoint>]
 let main args =
     let builder =
-        webHost (WebHostBuilder().UseKestrel()) {
+        webHost (WebHostBuilder().UseKestrel(fun c -> c.AddServerHeader <- false).ConfigureLogging(fun c -> c.ClearProviders() |> ignore)) {
             resource home
             resource userId
             resource user
