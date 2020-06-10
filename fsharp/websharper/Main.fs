@@ -21,9 +21,8 @@ module Site =
         Application.MultiPage(fun ctx endpoint ->
             match endpoint with
             | Home -> Content.Text ""
-            | GetUser id -> Content.Text(id.Trim())
+            | GetUser id -> Content.Text(id)
             | User -> Content.Text ""
-            |> Content.WithContentType "text/plain")
 
 type Website(config: IConfiguration) =
     inherit SiteletService<EndPoint>()
