@@ -1,6 +1,6 @@
 import Vapor
 
-var env = Environment(name: Environment.get("VAPOR_ENV") ?? "production")
+var env = Environment(name: Environment.get("VAPOR_ENV") ?? "development")
 try LoggingSystem.bootstrap(from: &env)
 let app = Application()
 defer { app.shutdown() }
