@@ -3,6 +3,7 @@
     using Carter;
     using Carter.Request;
     using Microsoft.AspNetCore.Http;
+    using System.Threading.Tasks;
 
     public class UserModule : CarterModule
     {
@@ -14,7 +15,7 @@
                 await res.WriteAsync(id);
             });
 
-            Post("/user", async(req, res) => await res.WriteAsync(""));
+            Post("/user", (req, res) => Task.CompletedTask);
         }
     }
 }

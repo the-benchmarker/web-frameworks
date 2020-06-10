@@ -1,6 +1,5 @@
-﻿using System.IO;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace aspnetcore
@@ -8,9 +7,13 @@ namespace aspnetcore
     public class Program
     {
         public static void Main(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .ConfigureLogging(config => config.ClearProviders())
-                .UseStartup<Startup>()
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.ConfigureKestrel(c => c.AddServerHeader = false);
+                    webBuilder.ConfigureLogging(config => config.ClearProviders());
+                    webBuilder.UseStartup<Startup>();
+                })
                 .Build()
                 .Run();
     }

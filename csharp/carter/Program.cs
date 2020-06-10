@@ -6,17 +6,15 @@ namespace web
 
     public class Program
     {
-        public static void Main(string[] args)
-        {
-            var host = Host.CreateDefaultBuilder(args)
+        public static void Main(string[] args) =>
+            Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureKestrel(c => c.AddServerHeader = false);
                     webBuilder.ConfigureLogging(config => config.ClearProviders());
                     webBuilder.UseStartup<Startup>();
                 })
-                .Build();
-
-            host.Run();
-        }
+                .Build()
+                .Run();
     }
 }
