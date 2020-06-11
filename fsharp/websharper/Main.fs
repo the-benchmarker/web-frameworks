@@ -16,13 +16,20 @@ type EndPoint =
     | [<EndPoint "POST /user">] User
 
 module Site =
+    let Text (msg: string) =
+        Content.Custom(
+            Headers = [Http.Header.Custom "content-type" "text/plain"],
+            WriteBody = fun s ->
+                let encoding = System.Text.Encoding.UTF8
+                use w = new System.IO.StreamWriter(s, encoding)
+                w.Write msg)
 
     let Main =
-        Application.MultiPage(fun ctx endpoint ->
+        Application.MultiPage(fun _ endpoint ->
             match endpoint with
-            | Home -> Content.Text ""
-            | GetUser id -> Content.Text(id)
-            | User -> Content.Text ""
+            | Home -> Text ""
+            | GetUser id -> Text(id)
+            | User -> Text "")
 
 type Website(config: IConfiguration) =
     inherit SiteletService<EndPoint>()
