@@ -6,6 +6,7 @@ open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
+open Microsoft.Extensions.Logging
 open WebSharper
 open WebSharper.AspNetCore
 open WebSharper.Sitelets
@@ -18,11 +19,9 @@ type EndPoint =
 module Site =
     let Text (msg: string) =
         Content.Custom(
-            Headers = [Http.Header.Custom "content-type" "text/plain"],
             WriteBody = fun s ->
-                let encoding = System.Text.Encoding.UTF8
-                use w = new System.IO.StreamWriter(s, encoding)
-                w.Write msg)
+                let bytes = System.Text.Encoding.UTF8.GetBytes(msg)
+                s.Write(bytes, 0, bytes.Length))
 
     let Main =
         Application.MultiPage(fun _ endpoint ->
@@ -48,5 +47,5 @@ module Program =
 
     [<EntryPoint>]
     let main args =
-        WebHostBuilder().UseKestrel().UseStartup<Startup>().Build().Run()
+        WebHostBuilder().UseKestrel(fun c -> c.AddServerHeader <- false).ConfigureLogging(fun config -> config.ClearProviders() |> ignore).UseStartup<Startup>().Build().Run()
         0
