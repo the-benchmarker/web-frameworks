@@ -54,6 +54,7 @@ blocks:
       - retry bin/neph go/atreugo --mode=CI
       - FRAMEWORK=go/atreugo bundle exec rspec .spec
       - docker save -o go.atreugo.tar go.atreugo
+      - cache delete go-atreugo
       - cache store go-atreugo go.atreugo.tar
     - name: rte
       commands:
@@ -63,6 +64,7 @@ blocks:
       - retry bin/neph go/rte --mode=CI
       - FRAMEWORK=go/rte bundle exec rspec .spec
       - docker save -o go.rte.tar go.rte
+      - cache delete go-rte
       - cache store go-rte go.rte.tar
     - name: fasthttprouter
       commands:
@@ -73,6 +75,7 @@ blocks:
       - retry bin/neph go/fasthttprouter --mode=CI
       - FRAMEWORK=go/fasthttprouter bundle exec rspec .spec
       - docker save -o go.fasthttprouter.tar go.fasthttprouter
+      - cache delete go-fasthttprouter
       - cache store go-fasthttprouter go.fasthttprouter.tar
     - name: violetear
       commands:
@@ -82,6 +85,7 @@ blocks:
       - retry bin/neph go/violetear --mode=CI
       - FRAMEWORK=go/violetear bundle exec rspec .spec
       - docker save -o go.violetear.tar go.violetear
+      - cache delete go-violetear
       - cache store go-violetear go.violetear.tar
     - name: gorouter
       commands:
@@ -91,6 +95,7 @@ blocks:
       - retry bin/neph go/gorouter --mode=CI
       - FRAMEWORK=go/gorouter bundle exec rspec .spec
       - docker save -o go.gorouter.tar go.gorouter
+      - cache delete go-gorouter
       - cache store go-gorouter go.gorouter.tar
     - name: kami
       commands:
@@ -100,6 +105,7 @@ blocks:
       - retry bin/neph go/kami --mode=CI
       - FRAMEWORK=go/kami bundle exec rspec .spec
       - docker save -o go.kami.tar go.kami
+      - cache delete go-kami
       - cache store go-kami go.kami.tar
     - name: gin
       commands:
@@ -109,6 +115,7 @@ blocks:
       - retry bin/neph go/gin --mode=CI
       - FRAMEWORK=go/gin bundle exec rspec .spec
       - docker save -o go.gin.tar go.gin
+      - cache delete go-gin
       - cache store go-gin go.gin.tar
     - name: gorilla-mux
       commands:
@@ -118,6 +125,7 @@ blocks:
       - retry bin/neph go/gorilla-mux --mode=CI
       - FRAMEWORK=go/gorilla-mux bundle exec rspec .spec
       - docker save -o go.gorilla-mux.tar go.gorilla-mux
+      - cache delete go-gorilla-mux
       - cache store go-gorilla-mux go.gorilla-mux.tar
     - name: fiber
       commands:
@@ -127,6 +135,7 @@ blocks:
       - retry bin/neph go/fiber --mode=CI
       - FRAMEWORK=go/fiber bundle exec rspec .spec
       - docker save -o go.fiber.tar go.fiber
+      - cache delete go-fiber
       - cache store go-fiber go.fiber.tar
     - name: goroute
       commands:
@@ -136,6 +145,7 @@ blocks:
       - retry bin/neph go/goroute --mode=CI
       - FRAMEWORK=go/goroute bundle exec rspec .spec
       - docker save -o go.goroute.tar go.goroute
+      - cache delete go-goroute
       - cache store go-goroute go.goroute.tar
     - name: router
       commands:
@@ -145,6 +155,7 @@ blocks:
       - retry bin/neph go/router --mode=CI
       - FRAMEWORK=go/router bundle exec rspec .spec
       - docker save -o go.router.tar go.router
+      - cache delete go-router
       - cache store go-router go.router.tar
     - name: macaron
       commands:
@@ -154,6 +165,7 @@ blocks:
       - retry bin/neph go/macaron --mode=CI
       - FRAMEWORK=go/macaron bundle exec rspec .spec
       - docker save -o go.macaron.tar go.macaron
+      - cache delete go-macaron
       - cache store go-macaron go.macaron.tar
     - name: chi
       commands:
@@ -163,6 +175,7 @@ blocks:
       - retry bin/neph go/chi --mode=CI
       - FRAMEWORK=go/chi bundle exec rspec .spec
       - docker save -o go.chi.tar go.chi
+      - cache delete go-chi
       - cache store go-chi go.chi.tar
     - name: mars
       commands:
@@ -172,6 +185,7 @@ blocks:
       - retry bin/neph go/mars --mode=CI
       - FRAMEWORK=go/mars bundle exec rspec .spec
       - docker save -o go.mars.tar go.mars
+      - cache delete go-mars
       - cache store go-mars go.mars.tar
     - name: beego
       commands:
@@ -181,6 +195,7 @@ blocks:
       - retry bin/neph go/beego --mode=CI
       - FRAMEWORK=go/beego bundle exec rspec .spec
       - docker save -o go.beego.tar go.beego
+      - cache delete go-beego
       - cache store go-beego go.beego.tar
     - name: gramework
       commands:
@@ -190,6 +205,7 @@ blocks:
       - retry bin/neph go/gramework --mode=CI
       - FRAMEWORK=go/gramework bundle exec rspec .spec
       - docker save -o go.gramework.tar go.gramework
+      - cache delete go-gramework
       - cache store go-gramework go.gramework.tar
     - name: aero
       commands:
@@ -199,6 +215,7 @@ blocks:
       - retry bin/neph go/aero --mode=CI
       - FRAMEWORK=go/aero bundle exec rspec .spec
       - docker save -o go.aero.tar go.aero
+      - cache delete go-aero
       - cache store go-aero go.aero.tar
     - name: fasthttp
       commands:
@@ -208,6 +225,7 @@ blocks:
       - retry bin/neph go/fasthttp --mode=CI
       - FRAMEWORK=go/fasthttp bundle exec rspec .spec
       - docker save -o go.fasthttp.tar go.fasthttp
+      - cache delete go-fasthttp
       - cache store go-fasthttp go.fasthttp.tar
     - name: gorouter-fasthttp
       commands:
@@ -218,6 +236,7 @@ blocks:
       - retry bin/neph go/gorouter-fasthttp --mode=CI
       - FRAMEWORK=go/gorouter-fasthttp bundle exec rspec .spec
       - docker save -o go.gorouter-fasthttp.tar go.gorouter-fasthttp
+      - cache delete go-gorouter-fasthttp
       - cache store go-gorouter-fasthttp go.gorouter-fasthttp.tar
     - name: tango
       commands:
@@ -227,6 +246,7 @@ blocks:
       - retry bin/neph go/tango --mode=CI
       - FRAMEWORK=go/tango bundle exec rspec .spec
       - docker save -o go.tango.tar go.tango
+      - cache delete go-tango
       - cache store go-tango go.tango.tar
     - name: httprouter
       commands:
@@ -236,6 +256,7 @@ blocks:
       - retry bin/neph go/httprouter --mode=CI
       - FRAMEWORK=go/httprouter bundle exec rspec .spec
       - docker save -o go.httprouter.tar go.httprouter
+      - cache delete go-httprouter
       - cache store go-httprouter go.httprouter.tar
     - name: gf
       commands:
@@ -245,6 +266,7 @@ blocks:
       - retry bin/neph go/gf --mode=CI
       - FRAMEWORK=go/gf bundle exec rspec .spec
       - docker save -o go.gf.tar go.gf
+      - cache delete go-gf
       - cache store go-gf go.gf.tar
     - name: webgo
       commands:
@@ -254,6 +276,7 @@ blocks:
       - retry bin/neph go/webgo --mode=CI
       - FRAMEWORK=go/webgo bundle exec rspec .spec
       - docker save -o go.webgo.tar go.webgo
+      - cache delete go-webgo
       - cache store go-webgo go.webgo.tar
     - name: echo
       commands:
@@ -263,6 +286,7 @@ blocks:
       - retry bin/neph go/echo --mode=CI
       - FRAMEWORK=go/echo bundle exec rspec .spec
       - docker save -o go.echo.tar go.echo
+      - cache delete go-echo
       - cache store go-echo go.echo.tar
     - name: air
       commands:
@@ -272,6 +296,7 @@ blocks:
       - retry bin/neph go/air --mode=CI
       - FRAMEWORK=go/air bundle exec rspec .spec
       - docker save -o go.air.tar go.air
+      - cache delete go-air
       - cache store go-air go.air.tar
     epilogue:
       always:
@@ -305,6 +330,7 @@ blocks:
       - retry bin/neph swift/perfect --mode=CI
       - FRAMEWORK=swift/perfect bundle exec rspec .spec
       - docker save -o swift.perfect.tar swift.perfect
+      - cache delete swift-perfect
       - cache store swift-perfect swift.perfect.tar
     - name: vapor-framework
       commands:
@@ -315,6 +341,7 @@ blocks:
       - retry bin/neph swift/vapor-framework --mode=CI
       - FRAMEWORK=swift/vapor-framework bundle exec rspec .spec
       - docker save -o swift.vapor-framework.tar swift.vapor-framework
+      - cache delete swift-vapor-framework
       - cache store swift-vapor-framework swift.vapor-framework.tar
     - name: kitura-nio
       commands:
@@ -324,6 +351,7 @@ blocks:
       - retry bin/neph swift/kitura-nio --mode=CI
       - FRAMEWORK=swift/kitura-nio bundle exec rspec .spec
       - docker save -o swift.kitura-nio.tar swift.kitura-nio
+      - cache delete swift-kitura-nio
       - cache store swift-kitura-nio swift.kitura-nio.tar
     - name: swifter-framework
       commands:
@@ -334,6 +362,7 @@ blocks:
       - retry bin/neph swift/swifter-framework --mode=CI
       - FRAMEWORK=swift/swifter-framework bundle exec rspec .spec
       - docker save -o swift.swifter-framework.tar swift.swifter-framework
+      - cache delete swift-swifter-framework
       - cache store swift-swifter-framework swift.swifter-framework.tar
     - name: kitura
       commands:
@@ -343,6 +372,7 @@ blocks:
       - retry bin/neph swift/kitura --mode=CI
       - FRAMEWORK=swift/kitura bundle exec rspec .spec
       - docker save -o swift.kitura.tar swift.kitura
+      - cache delete swift-kitura
       - cache store swift-kitura swift.kitura.tar
     epilogue:
       always:
@@ -376,6 +406,7 @@ blocks:
       - retry bin/neph dart/start --mode=CI
       - FRAMEWORK=dart/start bundle exec rspec .spec
       - docker save -o dart.start.tar dart.start
+      - cache delete dart-start
       - cache store dart-start dart.start.tar
     - name: aqueduct
       commands:
@@ -385,6 +416,7 @@ blocks:
       - retry bin/neph dart/aqueduct --mode=CI
       - FRAMEWORK=dart/aqueduct bundle exec rspec .spec
       - docker save -o dart.aqueduct.tar dart.aqueduct
+      - cache delete dart-aqueduct
       - cache store dart-aqueduct dart.aqueduct.tar
     epilogue:
       always:
@@ -418,6 +450,7 @@ blocks:
       - retry bin/neph haskell/servant --mode=CI
       - FRAMEWORK=haskell/servant bundle exec rspec .spec
       - docker save -o haskell.servant.tar haskell.servant
+      - cache delete haskell-servant
       - cache store haskell-servant haskell.servant.tar
     - name: scotty
       commands:
@@ -427,6 +460,7 @@ blocks:
       - retry bin/neph haskell/scotty --mode=CI
       - FRAMEWORK=haskell/scotty bundle exec rspec .spec
       - docker save -o haskell.scotty.tar haskell.scotty
+      - cache delete haskell-scotty
       - cache store haskell-scotty haskell.scotty.tar
     epilogue:
       always:
@@ -460,6 +494,7 @@ blocks:
       - retry bin/neph pony/jennet --mode=CI
       - FRAMEWORK=pony/jennet bundle exec rspec .spec
       - docker save -o pony.jennet.tar pony.jennet
+      - cache delete pony-jennet
       - cache store pony-jennet pony.jennet.tar
     epilogue:
       always:
@@ -493,6 +528,7 @@ blocks:
       - retry bin/neph clojure/coast --mode=CI
       - FRAMEWORK=clojure/coast bundle exec rspec .spec
       - docker save -o clojure.coast.tar clojure.coast
+      - cache delete clojure-coast
       - cache store clojure-coast clojure.coast.tar
     - name: luminus
       commands:
@@ -502,6 +538,7 @@ blocks:
       - retry bin/neph clojure/luminus --mode=CI
       - FRAMEWORK=clojure/luminus bundle exec rspec .spec
       - docker save -o clojure.luminus.tar clojure.luminus
+      - cache delete clojure-luminus
       - cache store clojure-luminus clojure.luminus.tar
     epilogue:
       always:
@@ -535,6 +572,7 @@ blocks:
       - retry bin/neph python/bottle --mode=CI
       - FRAMEWORK=python/bottle bundle exec rspec .spec
       - docker save -o python.bottle.tar python.bottle
+      - cache delete python-bottle
       - cache store python-bottle python.bottle.tar
     - name: aiohttp
       commands:
@@ -544,6 +582,7 @@ blocks:
       - retry bin/neph python/aiohttp --mode=CI
       - FRAMEWORK=python/aiohttp bundle exec rspec .spec
       - docker save -o python.aiohttp.tar python.aiohttp
+      - cache delete python-aiohttp
       - cache store python-aiohttp python.aiohttp.tar
     - name: responder
       commands:
@@ -553,6 +592,7 @@ blocks:
       - retry bin/neph python/responder --mode=CI
       - FRAMEWORK=python/responder bundle exec rspec .spec
       - docker save -o python.responder.tar python.responder
+      - cache delete python-responder
       - cache store python-responder python.responder.tar
     - name: asgineer
       commands:
@@ -562,6 +602,7 @@ blocks:
       - retry bin/neph python/asgineer --mode=CI
       - FRAMEWORK=python/asgineer bundle exec rspec .spec
       - docker save -o python.asgineer.tar python.asgineer
+      - cache delete python-asgineer
       - cache store python-asgineer python.asgineer.tar
     - name: klein
       commands:
@@ -571,6 +612,7 @@ blocks:
       - retry bin/neph python/klein --mode=CI
       - FRAMEWORK=python/klein bundle exec rspec .spec
       - docker save -o python.klein.tar python.klein
+      - cache delete python-klein
       - cache store python-klein python.klein.tar
     - name: django
       commands:
@@ -580,6 +622,7 @@ blocks:
       - retry bin/neph python/django --mode=CI
       - FRAMEWORK=python/django bundle exec rspec .spec
       - docker save -o python.django.tar python.django
+      - cache delete python-django
       - cache store python-django python.django.tar
     - name: flask
       commands:
@@ -589,6 +632,7 @@ blocks:
       - retry bin/neph python/flask --mode=CI
       - FRAMEWORK=python/flask bundle exec rspec .spec
       - docker save -o python.flask.tar python.flask
+      - cache delete python-flask
       - cache store python-flask python.flask.tar
     - name: cherrypy
       commands:
@@ -598,6 +642,7 @@ blocks:
       - retry bin/neph python/cherrypy --mode=CI
       - FRAMEWORK=python/cherrypy bundle exec rspec .spec
       - docker save -o python.cherrypy.tar python.cherrypy
+      - cache delete python-cherrypy
       - cache store python-cherrypy python.cherrypy.tar
     - name: apidaora
       commands:
@@ -607,6 +652,7 @@ blocks:
       - retry bin/neph python/apidaora --mode=CI
       - FRAMEWORK=python/apidaora bundle exec rspec .spec
       - docker save -o python.apidaora.tar python.apidaora
+      - cache delete python-apidaora
       - cache store python-apidaora python.apidaora.tar
     - name: blacksheep
       commands:
@@ -617,6 +663,7 @@ blocks:
       - retry bin/neph python/blacksheep --mode=CI
       - FRAMEWORK=python/blacksheep bundle exec rspec .spec
       - docker save -o python.blacksheep.tar python.blacksheep
+      - cache delete python-blacksheep
       - cache store python-blacksheep python.blacksheep.tar
     - name: hug
       commands:
@@ -626,6 +673,7 @@ blocks:
       - retry bin/neph python/hug --mode=CI
       - FRAMEWORK=python/hug bundle exec rspec .spec
       - docker save -o python.hug.tar python.hug
+      - cache delete python-hug
       - cache store python-hug python.hug.tar
     - name: quart
       commands:
@@ -635,6 +683,7 @@ blocks:
       - retry bin/neph python/quart --mode=CI
       - FRAMEWORK=python/quart bundle exec rspec .spec
       - docker save -o python.quart.tar python.quart
+      - cache delete python-quart
       - cache store python-quart python.quart.tar
     - name: falcon
       commands:
@@ -644,6 +693,7 @@ blocks:
       - retry bin/neph python/falcon --mode=CI
       - FRAMEWORK=python/falcon bundle exec rspec .spec
       - docker save -o python.falcon.tar python.falcon
+      - cache delete python-falcon
       - cache store python-falcon python.falcon.tar
     - name: clastic
       commands:
@@ -653,6 +703,7 @@ blocks:
       - retry bin/neph python/clastic --mode=CI
       - FRAMEWORK=python/clastic bundle exec rspec .spec
       - docker save -o python.clastic.tar python.clastic
+      - cache delete python-clastic
       - cache store python-clastic python.clastic.tar
     - name: cyclone
       commands:
@@ -662,6 +713,7 @@ blocks:
       - retry bin/neph python/cyclone --mode=CI
       - FRAMEWORK=python/cyclone bundle exec rspec .spec
       - docker save -o python.cyclone.tar python.cyclone
+      - cache delete python-cyclone
       - cache store python-cyclone python.cyclone.tar
     - name: starlette
       commands:
@@ -671,6 +723,7 @@ blocks:
       - retry bin/neph python/starlette --mode=CI
       - FRAMEWORK=python/starlette bundle exec rspec .spec
       - docker save -o python.starlette.tar python.starlette
+      - cache delete python-starlette
       - cache store python-starlette python.starlette.tar
     - name: nameko
       commands:
@@ -680,6 +733,7 @@ blocks:
       - retry bin/neph python/nameko --mode=CI
       - FRAMEWORK=python/nameko bundle exec rspec .spec
       - docker save -o python.nameko.tar python.nameko
+      - cache delete python-nameko
       - cache store python-nameko python.nameko.tar
     - name: molten
       commands:
@@ -689,6 +743,7 @@ blocks:
       - retry bin/neph python/molten --mode=CI
       - FRAMEWORK=python/molten bundle exec rspec .spec
       - docker save -o python.molten.tar python.molten
+      - cache delete python-molten
       - cache store python-molten python.molten.tar
     - name: tornado
       commands:
@@ -698,6 +753,7 @@ blocks:
       - retry bin/neph python/tornado --mode=CI
       - FRAMEWORK=python/tornado bundle exec rspec .spec
       - docker save -o python.tornado.tar python.tornado
+      - cache delete python-tornado
       - cache store python-tornado python.tornado.tar
     - name: fastapi
       commands:
@@ -707,6 +763,7 @@ blocks:
       - retry bin/neph python/fastapi --mode=CI
       - FRAMEWORK=python/fastapi bundle exec rspec .spec
       - docker save -o python.fastapi.tar python.fastapi
+      - cache delete python-fastapi
       - cache store python-fastapi python.fastapi.tar
     - name: masonite
       commands:
@@ -716,6 +773,7 @@ blocks:
       - retry bin/neph python/masonite --mode=CI
       - FRAMEWORK=python/masonite bundle exec rspec .spec
       - docker save -o python.masonite.tar python.masonite
+      - cache delete python-masonite
       - cache store python-masonite python.masonite.tar
     - name: emmett
       commands:
@@ -725,6 +783,7 @@ blocks:
       - retry bin/neph python/emmett --mode=CI
       - FRAMEWORK=python/emmett bundle exec rspec .spec
       - docker save -o python.emmett.tar python.emmett
+      - cache delete python-emmett
       - cache store python-emmett python.emmett.tar
     - name: pyramid
       commands:
@@ -734,6 +793,7 @@ blocks:
       - retry bin/neph python/pyramid --mode=CI
       - FRAMEWORK=python/pyramid bundle exec rspec .spec
       - docker save -o python.pyramid.tar python.pyramid
+      - cache delete python-pyramid
       - cache store python-pyramid python.pyramid.tar
     - name: sanic
       commands:
@@ -743,6 +803,7 @@ blocks:
       - retry bin/neph python/sanic --mode=CI
       - FRAMEWORK=python/sanic bundle exec rspec .spec
       - docker save -o python.sanic.tar python.sanic
+      - cache delete python-sanic
       - cache store python-sanic python.sanic.tar
     epilogue:
       always:
@@ -776,6 +837,7 @@ blocks:
       - retry bin/neph rust/actix --mode=CI
       - FRAMEWORK=rust/actix bundle exec rspec .spec
       - docker save -o rust.actix.tar rust.actix
+      - cache delete rust-actix
       - cache store rust-actix rust.actix.tar
     - name: iron
       commands:
@@ -785,6 +847,7 @@ blocks:
       - retry bin/neph rust/iron --mode=CI
       - FRAMEWORK=rust/iron bundle exec rspec .spec
       - docker save -o rust.iron.tar rust.iron
+      - cache delete rust-iron
       - cache store rust-iron rust.iron.tar
     - name: gotham
       commands:
@@ -794,6 +857,7 @@ blocks:
       - retry bin/neph rust/gotham --mode=CI
       - FRAMEWORK=rust/gotham bundle exec rspec .spec
       - docker save -o rust.gotham.tar rust.gotham
+      - cache delete rust-gotham
       - cache store rust-gotham rust.gotham.tar
     - name: nickel
       commands:
@@ -803,6 +867,7 @@ blocks:
       - retry bin/neph rust/nickel --mode=CI
       - FRAMEWORK=rust/nickel bundle exec rspec .spec
       - docker save -o rust.nickel.tar rust.nickel
+      - cache delete rust-nickel
       - cache store rust-nickel rust.nickel.tar
     epilogue:
       always:
@@ -837,6 +902,7 @@ blocks:
       - retry bin/neph csharp/aspnetcore --mode=CI
       - FRAMEWORK=csharp/aspnetcore bundle exec rspec .spec
       - docker save -o csharp.aspnetcore.tar csharp.aspnetcore
+      - cache delete csharp-aspnetcore
       - cache store csharp-aspnetcore csharp.aspnetcore.tar
     epilogue:
       always:
@@ -870,6 +936,7 @@ blocks:
       - retry bin/neph java/blade --mode=CI
       - FRAMEWORK=java/blade bundle exec rspec .spec
       - docker save -o java.blade.tar java.blade
+      - cache delete java-blade
       - cache store java-blade java.blade.tar
     - name: javalin
       commands:
@@ -879,6 +946,7 @@ blocks:
       - retry bin/neph java/javalin --mode=CI
       - FRAMEWORK=java/javalin bundle exec rspec .spec
       - docker save -o java.javalin.tar java.javalin
+      - cache delete java-javalin
       - cache store java-javalin java.javalin.tar
     - name: act
       commands:
@@ -888,6 +956,7 @@ blocks:
       - retry bin/neph java/act --mode=CI
       - FRAMEWORK=java/act bundle exec rspec .spec
       - docker save -o java.act.tar java.act
+      - cache delete java-act
       - cache store java-act java.act.tar
     - name: rapidoid
       commands:
@@ -897,6 +966,7 @@ blocks:
       - retry bin/neph java/rapidoid --mode=CI
       - FRAMEWORK=java/rapidoid bundle exec rspec .spec
       - docker save -o java.rapidoid.tar java.rapidoid
+      - cache delete java-rapidoid
       - cache store java-rapidoid java.rapidoid.tar
     - name: jooby
       commands:
@@ -906,6 +976,7 @@ blocks:
       - retry bin/neph java/jooby --mode=CI
       - FRAMEWORK=java/jooby bundle exec rspec .spec
       - docker save -o java.jooby.tar java.jooby
+      - cache delete java-jooby
       - cache store java-jooby java.jooby.tar
     - name: spring-boot
       commands:
@@ -915,6 +986,7 @@ blocks:
       - retry bin/neph java/spring-boot --mode=CI
       - FRAMEWORK=java/spring-boot bundle exec rspec .spec
       - docker save -o java.spring-boot.tar java.spring-boot
+      - cache delete java-spring-boot
       - cache store java-spring-boot java.spring-boot.tar
     - name: spring-framework
       commands:
@@ -925,6 +997,7 @@ blocks:
       - retry bin/neph java/spring-framework --mode=CI
       - FRAMEWORK=java/spring-framework bundle exec rspec .spec
       - docker save -o java.spring-framework.tar java.spring-framework
+      - cache delete java-spring-framework
       - cache store java-spring-framework java.spring-framework.tar
     - name: micronaut
       commands:
@@ -934,6 +1007,7 @@ blocks:
       - retry bin/neph java/micronaut --mode=CI
       - FRAMEWORK=java/micronaut bundle exec rspec .spec
       - docker save -o java.micronaut.tar java.micronaut
+      - cache delete java-micronaut
       - cache store java-micronaut java.micronaut.tar
     epilogue:
       always:
@@ -967,6 +1041,7 @@ blocks:
       - retry bin/neph fsharp/suave --mode=CI
       - FRAMEWORK=fsharp/suave bundle exec rspec .spec
       - docker save -o fsharp.suave.tar fsharp.suave
+      - cache delete fsharp-suave
       - cache store fsharp-suave fsharp.suave.tar
     - name: falco
       commands:
@@ -976,6 +1051,7 @@ blocks:
       - retry bin/neph fsharp/falco --mode=CI
       - FRAMEWORK=fsharp/falco bundle exec rspec .spec
       - docker save -o fsharp.falco.tar fsharp.falco
+      - cache delete fsharp-falco
       - cache store fsharp-falco fsharp.falco.tar
     - name: giraffe
       commands:
@@ -985,6 +1061,7 @@ blocks:
       - retry bin/neph fsharp/giraffe --mode=CI
       - FRAMEWORK=fsharp/giraffe bundle exec rspec .spec
       - docker save -o fsharp.giraffe.tar fsharp.giraffe
+      - cache delete fsharp-giraffe
       - cache store fsharp-giraffe fsharp.giraffe.tar
     - name: frank
       commands:
@@ -994,6 +1071,7 @@ blocks:
       - retry bin/neph fsharp/frank --mode=CI
       - FRAMEWORK=fsharp/frank bundle exec rspec .spec
       - docker save -o fsharp.frank.tar fsharp.frank
+      - cache delete fsharp-frank
       - cache store fsharp-frank fsharp.frank.tar
     epilogue:
       always:
@@ -1027,6 +1105,7 @@ blocks:
       - retry bin/neph php/spiral --mode=CI
       - FRAMEWORK=php/spiral bundle exec rspec .spec
       - docker save -o php.spiral.tar php.spiral
+      - cache delete php-spiral
       - cache store php-spiral php.spiral.tar
     - name: yii-swoole
       commands:
@@ -1036,6 +1115,7 @@ blocks:
       - retry bin/neph php/yii-swoole --mode=CI
       - FRAMEWORK=php/yii-swoole bundle exec rspec .spec
       - docker save -o php.yii-swoole.tar php.yii-swoole
+      - cache delete php-yii-swoole
       - cache store php-yii-swoole php.yii-swoole.tar
     - name: basicphp
       commands:
@@ -1045,6 +1125,7 @@ blocks:
       - retry bin/neph php/basicphp --mode=CI
       - FRAMEWORK=php/basicphp bundle exec rspec .spec
       - docker save -o php.basicphp.tar php.basicphp
+      - cache delete php-basicphp
       - cache store php-basicphp php.basicphp.tar
     - name: phalcon
       commands:
@@ -1054,6 +1135,7 @@ blocks:
       - retry bin/neph php/phalcon --mode=CI
       - FRAMEWORK=php/phalcon bundle exec rspec .spec
       - docker save -o php.phalcon.tar php.phalcon
+      - cache delete php-phalcon
       - cache store php-phalcon php.phalcon.tar
     - name: workerman
       commands:
@@ -1063,6 +1145,7 @@ blocks:
       - retry bin/neph php/workerman --mode=CI
       - FRAMEWORK=php/workerman bundle exec rspec .spec
       - docker save -o php.workerman.tar php.workerman
+      - cache delete php-workerman
       - cache store php-workerman php.workerman.tar
     - name: laminas
       commands:
@@ -1072,6 +1155,7 @@ blocks:
       - retry bin/neph php/laminas --mode=CI
       - FRAMEWORK=php/laminas bundle exec rspec .spec
       - docker save -o php.laminas.tar php.laminas
+      - cache delete php-laminas
       - cache store php-laminas php.laminas.tar
     - name: one
       commands:
@@ -1081,6 +1165,7 @@ blocks:
       - retry bin/neph php/one --mode=CI
       - FRAMEWORK=php/one bundle exec rspec .spec
       - docker save -o php.one.tar php.one
+      - cache delete php-one
       - cache store php-one php.one.tar
     - name: siler
       commands:
@@ -1090,6 +1175,7 @@ blocks:
       - retry bin/neph php/siler --mode=CI
       - FRAMEWORK=php/siler bundle exec rspec .spec
       - docker save -o php.siler.tar php.siler
+      - cache delete php-siler
       - cache store php-siler php.siler.tar
     - name: fastsitephp
       commands:
@@ -1099,6 +1185,7 @@ blocks:
       - retry bin/neph php/fastsitephp --mode=CI
       - FRAMEWORK=php/fastsitephp bundle exec rspec .spec
       - docker save -o php.fastsitephp.tar php.fastsitephp
+      - cache delete php-fastsitephp
       - cache store php-fastsitephp php.fastsitephp.tar
     - name: one-fpm
       commands:
@@ -1108,6 +1195,7 @@ blocks:
       - retry bin/neph php/one-fpm --mode=CI
       - FRAMEWORK=php/one-fpm bundle exec rspec .spec
       - docker save -o php.one-fpm.tar php.one-fpm
+      - cache delete php-one-fpm
       - cache store php-one-fpm php.one-fpm.tar
     - name: symfony
       commands:
@@ -1117,6 +1205,7 @@ blocks:
       - retry bin/neph php/symfony --mode=CI
       - FRAMEWORK=php/symfony bundle exec rspec .spec
       - docker save -o php.symfony.tar php.symfony
+      - cache delete php-symfony
       - cache store php-symfony php.symfony.tar
     - name: hyperf
       commands:
@@ -1126,6 +1215,7 @@ blocks:
       - retry bin/neph php/hyperf --mode=CI
       - FRAMEWORK=php/hyperf bundle exec rspec .spec
       - docker save -o php.hyperf.tar php.hyperf
+      - cache delete php-hyperf
       - cache store php-hyperf php.hyperf.tar
     - name: siler-swoole
       commands:
@@ -1135,6 +1225,7 @@ blocks:
       - retry bin/neph php/siler-swoole --mode=CI
       - FRAMEWORK=php/siler-swoole bundle exec rspec .spec
       - docker save -o php.siler-swoole.tar php.siler-swoole
+      - cache delete php-siler-swoole
       - cache store php-siler-swoole php.siler-swoole.tar
     - name: simps
       commands:
@@ -1144,6 +1235,7 @@ blocks:
       - retry bin/neph php/simps --mode=CI
       - FRAMEWORK=php/simps bundle exec rspec .spec
       - docker save -o php.simps.tar php.simps
+      - cache delete php-simps
       - cache store php-simps php.simps.tar
     - name: hamlet
       commands:
@@ -1153,6 +1245,7 @@ blocks:
       - retry bin/neph php/hamlet --mode=CI
       - FRAMEWORK=php/hamlet bundle exec rspec .spec
       - docker save -o php.hamlet.tar php.hamlet
+      - cache delete php-hamlet
       - cache store php-hamlet php.hamlet.tar
     - name: swoft
       commands:
@@ -1162,6 +1255,7 @@ blocks:
       - retry bin/neph php/swoft --mode=CI
       - FRAMEWORK=php/swoft bundle exec rspec .spec
       - docker save -o php.swoft.tar php.swoft
+      - cache delete php-swoft
       - cache store php-swoft php.swoft.tar
     - name: mezzio
       commands:
@@ -1171,6 +1265,7 @@ blocks:
       - retry bin/neph php/mezzio --mode=CI
       - FRAMEWORK=php/mezzio bundle exec rspec .spec
       - docker save -o php.mezzio.tar php.mezzio
+      - cache delete php-mezzio
       - cache store php-mezzio php.mezzio.tar
     - name: ubiquity
       commands:
@@ -1180,6 +1275,7 @@ blocks:
       - retry bin/neph php/ubiquity --mode=CI
       - FRAMEWORK=php/ubiquity bundle exec rspec .spec
       - docker save -o php.ubiquity.tar php.ubiquity
+      - cache delete php-ubiquity
       - cache store php-ubiquity php.ubiquity.tar
     - name: imi
       commands:
@@ -1189,6 +1285,7 @@ blocks:
       - retry bin/neph php/imi --mode=CI
       - FRAMEWORK=php/imi bundle exec rspec .spec
       - docker save -o php.imi.tar php.imi
+      - cache delete php-imi
       - cache store php-imi php.imi.tar
     - name: lumen
       commands:
@@ -1198,6 +1295,7 @@ blocks:
       - retry bin/neph php/lumen --mode=CI
       - FRAMEWORK=php/lumen bundle exec rspec .spec
       - docker save -o php.lumen.tar php.lumen
+      - cache delete php-lumen
       - cache store php-lumen php.lumen.tar
     - name: sw-fw-less
       commands:
@@ -1207,6 +1305,7 @@ blocks:
       - retry bin/neph php/sw-fw-less --mode=CI
       - FRAMEWORK=php/sw-fw-less bundle exec rspec .spec
       - docker save -o php.sw-fw-less.tar php.sw-fw-less
+      - cache delete php-sw-fw-less
       - cache store php-sw-fw-less php.sw-fw-less.tar
     - name: nette
       commands:
@@ -1216,6 +1315,7 @@ blocks:
       - retry bin/neph php/nette --mode=CI
       - FRAMEWORK=php/nette bundle exec rspec .spec
       - docker save -o php.nette.tar php.nette
+      - cache delete php-nette
       - cache store php-nette php.nette.tar
     - name: laravel
       commands:
@@ -1225,6 +1325,7 @@ blocks:
       - retry bin/neph php/laravel --mode=CI
       - FRAMEWORK=php/laravel bundle exec rspec .spec
       - docker save -o php.laravel.tar php.laravel
+      - cache delete php-laravel
       - cache store php-laravel php.laravel.tar
     - name: yii
       commands:
@@ -1234,6 +1335,7 @@ blocks:
       - retry bin/neph php/yii --mode=CI
       - FRAMEWORK=php/yii bundle exec rspec .spec
       - docker save -o php.yii.tar php.yii
+      - cache delete php-yii
       - cache store php-yii php.yii.tar
     - name: chubbyphp
       commands:
@@ -1243,6 +1345,7 @@ blocks:
       - retry bin/neph php/chubbyphp --mode=CI
       - FRAMEWORK=php/chubbyphp bundle exec rspec .spec
       - docker save -o php.chubbyphp.tar php.chubbyphp
+      - cache delete php-chubbyphp
       - cache store php-chubbyphp php.chubbyphp.tar
     - name: ice
       commands:
@@ -1252,6 +1355,7 @@ blocks:
       - retry bin/neph php/ice --mode=CI
       - FRAMEWORK=php/ice bundle exec rspec .spec
       - docker save -o php.ice.tar php.ice
+      - cache delete php-ice
       - cache store php-ice php.ice.tar
     - name: slim
       commands:
@@ -1261,6 +1365,7 @@ blocks:
       - retry bin/neph php/slim --mode=CI
       - FRAMEWORK=php/slim bundle exec rspec .spec
       - docker save -o php.slim.tar php.slim
+      - cache delete php-slim
       - cache store php-slim php.slim.tar
     epilogue:
       always:
@@ -1294,6 +1399,7 @@ blocks:
       - retry bin/neph crystal/toro --mode=CI
       - FRAMEWORK=crystal/toro bundle exec rspec .spec
       - docker save -o crystal.toro.tar crystal.toro
+      - cache delete crystal-toro
       - cache store crystal-toro crystal.toro.tar
     - name: grip
       commands:
@@ -1303,6 +1409,7 @@ blocks:
       - retry bin/neph crystal/grip --mode=CI
       - FRAMEWORK=crystal/grip bundle exec rspec .spec
       - docker save -o crystal.grip.tar crystal.grip
+      - cache delete crystal-grip
       - cache store crystal-grip crystal.grip.tar
     - name: kemal
       commands:
@@ -1312,6 +1419,7 @@ blocks:
       - retry bin/neph crystal/kemal --mode=CI
       - FRAMEWORK=crystal/kemal bundle exec rspec .spec
       - docker save -o crystal.kemal.tar crystal.kemal
+      - cache delete crystal-kemal
       - cache store crystal-kemal crystal.kemal.tar
     - name: onyx
       commands:
@@ -1321,6 +1429,7 @@ blocks:
       - retry bin/neph crystal/onyx --mode=CI
       - FRAMEWORK=crystal/onyx bundle exec rspec .spec
       - docker save -o crystal.onyx.tar crystal.onyx
+      - cache delete crystal-onyx
       - cache store crystal-onyx crystal.onyx.tar
     - name: lucky
       commands:
@@ -1330,6 +1439,7 @@ blocks:
       - retry bin/neph crystal/lucky --mode=CI
       - FRAMEWORK=crystal/lucky bundle exec rspec .spec
       - docker save -o crystal.lucky.tar crystal.lucky
+      - cache delete crystal-lucky
       - cache store crystal-lucky crystal.lucky.tar
     - name: orion
       commands:
@@ -1339,6 +1449,7 @@ blocks:
       - retry bin/neph crystal/orion --mode=CI
       - FRAMEWORK=crystal/orion bundle exec rspec .spec
       - docker save -o crystal.orion.tar crystal.orion
+      - cache delete crystal-orion
       - cache store crystal-orion crystal.orion.tar
     - name: router.cr
       commands:
@@ -1349,6 +1460,7 @@ blocks:
       - retry bin/neph crystal/router.cr --mode=CI
       - FRAMEWORK=crystal/router.cr bundle exec rspec .spec
       - docker save -o crystal.router.cr.tar crystal.router.cr
+      - cache delete crystal-router.cr
       - cache store crystal-router.cr crystal.router.cr.tar
     - name: amber
       commands:
@@ -1358,6 +1470,7 @@ blocks:
       - retry bin/neph crystal/amber --mode=CI
       - FRAMEWORK=crystal/amber bundle exec rspec .spec
       - docker save -o crystal.amber.tar crystal.amber
+      - cache delete crystal-amber
       - cache store crystal-amber crystal.amber.tar
     - name: athena
       commands:
@@ -1367,6 +1480,7 @@ blocks:
       - retry bin/neph crystal/athena --mode=CI
       - FRAMEWORK=crystal/athena bundle exec rspec .spec
       - docker save -o crystal.athena.tar crystal.athena
+      - cache delete crystal-athena
       - cache store crystal-athena crystal.athena.tar
     - name: shivneri
       commands:
@@ -1376,6 +1490,7 @@ blocks:
       - retry bin/neph crystal/shivneri --mode=CI
       - FRAMEWORK=crystal/shivneri bundle exec rspec .spec
       - docker save -o crystal.shivneri.tar crystal.shivneri
+      - cache delete crystal-shivneri
       - cache store crystal-shivneri crystal.shivneri.tar
     - name: spider-gazelle
       commands:
@@ -1386,6 +1501,7 @@ blocks:
       - retry bin/neph crystal/spider-gazelle --mode=CI
       - FRAMEWORK=crystal/spider-gazelle bundle exec rspec .spec
       - docker save -o crystal.spider-gazelle.tar crystal.spider-gazelle
+      - cache delete crystal-spider-gazelle
       - cache store crystal-spider-gazelle crystal.spider-gazelle.tar
     epilogue:
       always:
@@ -1420,6 +1536,7 @@ blocks:
       - retry bin/neph elixir/cowboy-stream --mode=CI
       - FRAMEWORK=elixir/cowboy-stream bundle exec rspec .spec
       - docker save -o elixir.cowboy-stream.tar elixir.cowboy-stream
+      - cache delete elixir-cowboy-stream
       - cache store elixir-cowboy-stream elixir.cowboy-stream.tar
     - name: cowboy
       commands:
@@ -1429,6 +1546,7 @@ blocks:
       - retry bin/neph elixir/cowboy --mode=CI
       - FRAMEWORK=elixir/cowboy bundle exec rspec .spec
       - docker save -o elixir.cowboy.tar elixir.cowboy
+      - cache delete elixir-cowboy
       - cache store elixir-cowboy elixir.cowboy.tar
     - name: plug
       commands:
@@ -1438,6 +1556,7 @@ blocks:
       - retry bin/neph elixir/plug --mode=CI
       - FRAMEWORK=elixir/plug bundle exec rspec .spec
       - docker save -o elixir.plug.tar elixir.plug
+      - cache delete elixir-plug
       - cache store elixir-plug elixir.plug.tar
     - name: phoenix
       commands:
@@ -1447,6 +1566,7 @@ blocks:
       - retry bin/neph elixir/phoenix --mode=CI
       - FRAMEWORK=elixir/phoenix bundle exec rspec .spec
       - docker save -o elixir.phoenix.tar elixir.phoenix
+      - cache delete elixir-phoenix
       - cache store elixir-phoenix elixir.phoenix.tar
     epilogue:
       always:
@@ -1480,6 +1600,7 @@ blocks:
       - retry bin/neph scala/akkahttp --mode=CI
       - FRAMEWORK=scala/akkahttp bundle exec rspec .spec
       - docker save -o scala.akkahttp.tar scala.akkahttp
+      - cache delete scala-akkahttp
       - cache store scala-akkahttp scala.akkahttp.tar
     - name: http4s
       commands:
@@ -1489,6 +1610,7 @@ blocks:
       - retry bin/neph scala/http4s --mode=CI
       - FRAMEWORK=scala/http4s bundle exec rspec .spec
       - docker save -o scala.http4s.tar scala.http4s
+      - cache delete scala-http4s
       - cache store scala-http4s scala.http4s.tar
     - name: play
       commands:
@@ -1498,6 +1620,7 @@ blocks:
       - retry bin/neph scala/play --mode=CI
       - FRAMEWORK=scala/play bundle exec rspec .spec
       - docker save -o scala.play.tar scala.play
+      - cache delete scala-play
       - cache store scala-play scala.play.tar
     epilogue:
       always:
@@ -1531,6 +1654,7 @@ blocks:
       - retry bin/neph kotlin/kooby --mode=CI
       - FRAMEWORK=kotlin/kooby bundle exec rspec .spec
       - docker save -o kotlin.kooby.tar kotlin.kooby
+      - cache delete kotlin-kooby
       - cache store kotlin-kooby kotlin.kooby.tar
     - name: ktor
       commands:
@@ -1540,6 +1664,7 @@ blocks:
       - retry bin/neph kotlin/ktor --mode=CI
       - FRAMEWORK=kotlin/ktor bundle exec rspec .spec
       - docker save -o kotlin.ktor.tar kotlin.ktor
+      - cache delete kotlin-ktor
       - cache store kotlin-ktor kotlin.ktor.tar
     epilogue:
       always:
@@ -1573,6 +1698,7 @@ blocks:
       - retry bin/neph nim/httpbeast --mode=CI
       - FRAMEWORK=nim/httpbeast bundle exec rspec .spec
       - docker save -o nim.httpbeast.tar nim.httpbeast
+      - cache delete nim-httpbeast
       - cache store nim-httpbeast nim.httpbeast.tar
     - name: rosencrantz
       commands:
@@ -1582,6 +1708,7 @@ blocks:
       - retry bin/neph nim/rosencrantz --mode=CI
       - FRAMEWORK=nim/rosencrantz bundle exec rspec .spec
       - docker save -o nim.rosencrantz.tar nim.rosencrantz
+      - cache delete nim-rosencrantz
       - cache store nim-rosencrantz nim.rosencrantz.tar
     - name: jester
       commands:
@@ -1591,6 +1718,7 @@ blocks:
       - retry bin/neph nim/jester --mode=CI
       - FRAMEWORK=nim/jester bundle exec rspec .spec
       - docker save -o nim.jester.tar nim.jester
+      - cache delete nim-jester
       - cache store nim-jester nim.jester.tar
     epilogue:
       always:
@@ -1624,6 +1752,7 @@ blocks:
       - retry bin/neph perl/dancer2 --mode=CI
       - FRAMEWORK=perl/dancer2 bundle exec rspec .spec
       - docker save -o perl.dancer2.tar perl.dancer2
+      - cache delete perl-dancer2
       - cache store perl-dancer2 perl.dancer2.tar
     epilogue:
       always:
@@ -1657,6 +1786,7 @@ blocks:
       - retry bin/neph c/agoo-c --mode=CI
       - FRAMEWORK=c/agoo-c bundle exec rspec .spec
       - docker save -o c.agoo-c.tar c.agoo-c
+      - cache delete c-agoo-c
       - cache store c-agoo-c c.agoo-c.tar
     - name: kore
       commands:
@@ -1666,6 +1796,7 @@ blocks:
       - retry bin/neph c/kore --mode=CI
       - FRAMEWORK=c/kore bundle exec rspec .spec
       - docker save -o c.kore.tar c.kore
+      - cache delete c-kore
       - cache store c-kore c.kore.tar
     epilogue:
       always:
@@ -1699,6 +1830,7 @@ blocks:
       - retry bin/neph cpp/drogon --mode=CI
       - FRAMEWORK=cpp/drogon bundle exec rspec .spec
       - docker save -o cpp.drogon.tar cpp.drogon
+      - cache delete cpp-drogon
       - cache store cpp-drogon cpp.drogon.tar
     - name: evhtp
       commands:
@@ -1708,6 +1840,7 @@ blocks:
       - retry bin/neph cpp/evhtp --mode=CI
       - FRAMEWORK=cpp/evhtp bundle exec rspec .spec
       - docker save -o cpp.evhtp.tar cpp.evhtp
+      - cache delete cpp-evhtp
       - cache store cpp-evhtp cpp.evhtp.tar
     epilogue:
       always:
@@ -1741,6 +1874,7 @@ blocks:
       - retry bin/neph ruby/grape --mode=CI
       - FRAMEWORK=ruby/grape bundle exec rspec .spec
       - docker save -o ruby.grape.tar ruby.grape
+      - cache delete ruby-grape
       - cache store ruby-grape ruby.grape.tar
     - name: hanami
       commands:
@@ -1750,6 +1884,7 @@ blocks:
       - retry bin/neph ruby/hanami --mode=CI
       - FRAMEWORK=ruby/hanami bundle exec rspec .spec
       - docker save -o ruby.hanami.tar ruby.hanami
+      - cache delete ruby-hanami
       - cache store ruby-hanami ruby.hanami.tar
     - name: cuba
       commands:
@@ -1759,6 +1894,7 @@ blocks:
       - retry bin/neph ruby/cuba --mode=CI
       - FRAMEWORK=ruby/cuba bundle exec rspec .spec
       - docker save -o ruby.cuba.tar ruby.cuba
+      - cache delete ruby-cuba
       - cache store ruby-cuba ruby.cuba.tar
     - name: agoo
       commands:
@@ -1768,6 +1904,7 @@ blocks:
       - retry bin/neph ruby/agoo --mode=CI
       - FRAMEWORK=ruby/agoo bundle exec rspec .spec
       - docker save -o ruby.agoo.tar ruby.agoo
+      - cache delete ruby-agoo
       - cache store ruby-agoo ruby.agoo.tar
     - name: roda
       commands:
@@ -1777,6 +1914,7 @@ blocks:
       - retry bin/neph ruby/roda --mode=CI
       - FRAMEWORK=ruby/roda bundle exec rspec .spec
       - docker save -o ruby.roda.tar ruby.roda
+      - cache delete ruby-roda
       - cache store ruby-roda ruby.roda.tar
     - name: camping
       commands:
@@ -1786,6 +1924,7 @@ blocks:
       - retry bin/neph ruby/camping --mode=CI
       - FRAMEWORK=ruby/camping bundle exec rspec .spec
       - docker save -o ruby.camping.tar ruby.camping
+      - cache delete ruby-camping
       - cache store ruby-camping ruby.camping.tar
     - name: rack-routing
       commands:
@@ -1796,6 +1935,7 @@ blocks:
       - retry bin/neph ruby/rack-routing --mode=CI
       - FRAMEWORK=ruby/rack-routing bundle exec rspec .spec
       - docker save -o ruby.rack-routing.tar ruby.rack-routing
+      - cache delete ruby-rack-routing
       - cache store ruby-rack-routing ruby.rack-routing.tar
     - name: flame
       commands:
@@ -1805,6 +1945,7 @@ blocks:
       - retry bin/neph ruby/flame --mode=CI
       - FRAMEWORK=ruby/flame bundle exec rspec .spec
       - docker save -o ruby.flame.tar ruby.flame
+      - cache delete ruby-flame
       - cache store ruby-flame ruby.flame.tar
     - name: rails
       commands:
@@ -1814,6 +1955,7 @@ blocks:
       - retry bin/neph ruby/rails --mode=CI
       - FRAMEWORK=ruby/rails bundle exec rspec .spec
       - docker save -o ruby.rails.tar ruby.rails
+      - cache delete ruby-rails
       - cache store ruby-rails ruby.rails.tar
     - name: rack-app
       commands:
@@ -1823,6 +1965,7 @@ blocks:
       - retry bin/neph ruby/rack-app --mode=CI
       - FRAMEWORK=ruby/rack-app bundle exec rspec .spec
       - docker save -o ruby.rack-app.tar ruby.rack-app
+      - cache delete ruby-rack-app
       - cache store ruby-rack-app ruby.rack-app.tar
     - name: sinatra
       commands:
@@ -1832,6 +1975,7 @@ blocks:
       - retry bin/neph ruby/sinatra --mode=CI
       - FRAMEWORK=ruby/sinatra bundle exec rspec .spec
       - docker save -o ruby.sinatra.tar ruby.sinatra
+      - cache delete ruby-sinatra
       - cache store ruby-sinatra ruby.sinatra.tar
     - name: hanami-api
       commands:
@@ -1841,6 +1985,7 @@ blocks:
       - retry bin/neph ruby/hanami-api --mode=CI
       - FRAMEWORK=ruby/hanami-api bundle exec rspec .spec
       - docker save -o ruby.hanami-api.tar ruby.hanami-api
+      - cache delete ruby-hanami-api
       - cache store ruby-hanami-api ruby.hanami-api.tar
     - name: syro
       commands:
@@ -1850,6 +1995,7 @@ blocks:
       - retry bin/neph ruby/syro --mode=CI
       - FRAMEWORK=ruby/syro bundle exec rspec .spec
       - docker save -o ruby.syro.tar ruby.syro
+      - cache delete ruby-syro
       - cache store ruby-syro ruby.syro.tar
     epilogue:
       always:
@@ -1883,6 +2029,7 @@ blocks:
       - retry bin/neph julia/merly --mode=CI
       - FRAMEWORK=julia/merly bundle exec rspec .spec
       - docker save -o julia.merly.tar julia.merly
+      - cache delete julia-merly
       - cache store julia-merly julia.merly.tar
     epilogue:
       always:
@@ -1917,6 +2064,7 @@ blocks:
       - retry bin/neph javascript/feathersjs --mode=CI
       - FRAMEWORK=javascript/feathersjs bundle exec rspec .spec
       - docker save -o javascript.feathersjs.tar javascript.feathersjs
+      - cache delete javascript-feathersjs
       - cache store javascript-feathersjs javascript.feathersjs.tar
     - name: rayo
       commands:
@@ -1926,6 +2074,7 @@ blocks:
       - retry bin/neph javascript/rayo --mode=CI
       - FRAMEWORK=javascript/rayo bundle exec rspec .spec
       - docker save -o javascript.rayo.tar javascript.rayo
+      - cache delete javascript-rayo
       - cache store javascript-rayo javascript.rayo.tar
     - name: muneem
       commands:
@@ -1936,6 +2085,7 @@ blocks:
       - retry bin/neph javascript/muneem --mode=CI
       - FRAMEWORK=javascript/muneem bundle exec rspec .spec
       - docker save -o javascript.muneem.tar javascript.muneem
+      - cache delete javascript-muneem
       - cache store javascript-muneem javascript.muneem.tar
     - name: foxify
       commands:
@@ -1946,6 +2096,7 @@ blocks:
       - retry bin/neph javascript/foxify --mode=CI
       - FRAMEWORK=javascript/foxify bundle exec rspec .spec
       - docker save -o javascript.foxify.tar javascript.foxify
+      - cache delete javascript-foxify
       - cache store javascript-foxify javascript.foxify.tar
     - name: 0http
       commands:
@@ -1955,6 +2106,7 @@ blocks:
       - retry bin/neph javascript/0http --mode=CI
       - FRAMEWORK=javascript/0http bundle exec rspec .spec
       - docker save -o javascript.0http.tar javascript.0http
+      - cache delete javascript-0http
       - cache store javascript-0http javascript.0http.tar
     - name: koa
       commands:
@@ -1964,6 +2116,7 @@ blocks:
       - retry bin/neph javascript/koa --mode=CI
       - FRAMEWORK=javascript/koa bundle exec rspec .spec
       - docker save -o javascript.koa.tar javascript.koa
+      - cache delete javascript-koa
       - cache store javascript-koa javascript.koa.tar
     - name: sifrr
       commands:
@@ -1973,6 +2126,7 @@ blocks:
       - retry bin/neph javascript/sifrr --mode=CI
       - FRAMEWORK=javascript/sifrr bundle exec rspec .spec
       - docker save -o javascript.sifrr.tar javascript.sifrr
+      - cache delete javascript-sifrr
       - cache store javascript-sifrr javascript.sifrr.tar
     - name: nestjs-express
       commands:
@@ -1983,6 +2137,7 @@ blocks:
       - retry bin/neph javascript/nestjs-express --mode=CI
       - FRAMEWORK=javascript/nestjs-express bundle exec rspec .spec
       - docker save -o javascript.nestjs-express.tar javascript.nestjs-express
+      - cache delete javascript-nestjs-express
       - cache store javascript-nestjs-express javascript.nestjs-express.tar
     - name: polka
       commands:
@@ -1992,6 +2147,7 @@ blocks:
       - retry bin/neph javascript/polka --mode=CI
       - FRAMEWORK=javascript/polka bundle exec rspec .spec
       - docker save -o javascript.polka.tar javascript.polka
+      - cache delete javascript-polka
       - cache store javascript-polka javascript.polka.tar
     - name: polkadot
       commands:
@@ -2002,6 +2158,7 @@ blocks:
       - retry bin/neph javascript/polkadot --mode=CI
       - FRAMEWORK=javascript/polkadot bundle exec rspec .spec
       - docker save -o javascript.polkadot.tar javascript.polkadot
+      - cache delete javascript-polkadot
       - cache store javascript-polkadot javascript.polkadot.tar
     - name: express
       commands:
@@ -2012,6 +2169,7 @@ blocks:
       - retry bin/neph javascript/express --mode=CI
       - FRAMEWORK=javascript/express bundle exec rspec .spec
       - docker save -o javascript.express.tar javascript.express
+      - cache delete javascript-express
       - cache store javascript-express javascript.express.tar
     - name: restify
       commands:
@@ -2022,6 +2180,7 @@ blocks:
       - retry bin/neph javascript/restify --mode=CI
       - FRAMEWORK=javascript/restify bundle exec rspec .spec
       - docker save -o javascript.restify.tar javascript.restify
+      - cache delete javascript-restify
       - cache store javascript-restify javascript.restify.tar
     - name: hapi
       commands:
@@ -2031,6 +2190,7 @@ blocks:
       - retry bin/neph javascript/hapi --mode=CI
       - FRAMEWORK=javascript/hapi bundle exec rspec .spec
       - docker save -o javascript.hapi.tar javascript.hapi
+      - cache delete javascript-hapi
       - cache store javascript-hapi javascript.hapi.tar
     - name: sails
       commands:
@@ -2040,6 +2200,7 @@ blocks:
       - retry bin/neph javascript/sails --mode=CI
       - FRAMEWORK=javascript/sails bundle exec rspec .spec
       - docker save -o javascript.sails.tar javascript.sails
+      - cache delete javascript-sails
       - cache store javascript-sails javascript.sails.tar
     - name: nanoexpress-pro
       commands:
@@ -2050,6 +2211,7 @@ blocks:
       - retry bin/neph javascript/nanoexpress-pro --mode=CI
       - FRAMEWORK=javascript/nanoexpress-pro bundle exec rspec .spec
       - docker save -o javascript.nanoexpress-pro.tar javascript.nanoexpress-pro
+      - cache delete javascript-nanoexpress-pro
       - cache store javascript-nanoexpress-pro javascript.nanoexpress-pro.tar
     - name: fastify
       commands:
@@ -2060,6 +2222,7 @@ blocks:
       - retry bin/neph javascript/fastify --mode=CI
       - FRAMEWORK=javascript/fastify bundle exec rspec .spec
       - docker save -o javascript.fastify.tar javascript.fastify
+      - cache delete javascript-fastify
       - cache store javascript-fastify javascript.fastify.tar
     - name: nestjs-fastify
       commands:
@@ -2070,6 +2233,7 @@ blocks:
       - retry bin/neph javascript/nestjs-fastify --mode=CI
       - FRAMEWORK=javascript/nestjs-fastify bundle exec rspec .spec
       - docker save -o javascript.nestjs-fastify.tar javascript.nestjs-fastify
+      - cache delete javascript-nestjs-fastify
       - cache store javascript-nestjs-fastify javascript.nestjs-fastify.tar
     - name: turbo-polka
       commands:
@@ -2080,6 +2244,7 @@ blocks:
       - retry bin/neph javascript/turbo-polka --mode=CI
       - FRAMEWORK=javascript/turbo-polka bundle exec rspec .spec
       - docker save -o javascript.turbo-polka.tar javascript.turbo-polka
+      - cache delete javascript-turbo-polka
       - cache store javascript-turbo-polka javascript.turbo-polka.tar
     - name: restana
       commands:
@@ -2090,6 +2255,7 @@ blocks:
       - retry bin/neph javascript/restana --mode=CI
       - FRAMEWORK=javascript/restana bundle exec rspec .spec
       - docker save -o javascript.restana.tar javascript.restana
+      - cache delete javascript-restana
       - cache store javascript-restana javascript.restana.tar
     - name: moleculer
       commands:
@@ -2100,6 +2266,7 @@ blocks:
       - retry bin/neph javascript/moleculer --mode=CI
       - FRAMEWORK=javascript/moleculer bundle exec rspec .spec
       - docker save -o javascript.moleculer.tar javascript.moleculer
+      - cache delete javascript-moleculer
       - cache store javascript-moleculer javascript.moleculer.tar
     - name: nanoexpress
       commands:
@@ -2110,6 +2277,7 @@ blocks:
       - retry bin/neph javascript/nanoexpress --mode=CI
       - FRAMEWORK=javascript/nanoexpress bundle exec rspec .spec
       - docker save -o javascript.nanoexpress.tar javascript.nanoexpress
+      - cache delete javascript-nanoexpress
       - cache store javascript-nanoexpress javascript.nanoexpress.tar
     - name: iotjs-express
       commands:
@@ -2120,6 +2288,7 @@ blocks:
       - retry bin/neph javascript/iotjs-express --mode=CI
       - FRAMEWORK=javascript/iotjs-express bundle exec rspec .spec
       - docker save -o javascript.iotjs-express.tar javascript.iotjs-express
+      - cache delete javascript-iotjs-express
       - cache store javascript-iotjs-express javascript.iotjs-express.tar
     epilogue:
       always:
