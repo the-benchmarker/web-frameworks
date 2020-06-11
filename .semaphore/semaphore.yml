@@ -48,231 +48,231 @@ blocks:
     jobs:
     - name: atreugo
       commands:
-      - cache restore docker-cache
+      - cache restore go-atreugo
       - "[[ -f go.atreugo.tar ]] && docker load -i go.atreugo.tar || true"
       - mkdir -p .neph/go/atreugo
       - retry bin/neph go/atreugo --mode=CI
       - FRAMEWORK=go/atreugo bundle exec rspec .spec
       - docker save -o go.atreugo.tar go.atreugo
-      - cache store docker-cache go.atreugo.tar -f
+      - cache store go-atreugo go.atreugo.tar
     - name: rte
       commands:
-      - cache restore docker-cache
+      - cache restore go-rte
       - "[[ -f go.rte.tar ]] && docker load -i go.rte.tar || true"
       - mkdir -p .neph/go/rte
       - retry bin/neph go/rte --mode=CI
       - FRAMEWORK=go/rte bundle exec rspec .spec
       - docker save -o go.rte.tar go.rte
-      - cache store docker-cache go.rte.tar -f
+      - cache store go-rte go.rte.tar
     - name: fasthttprouter
       commands:
-      - cache restore docker-cache
+      - cache restore go-fasthttprouter
       - "[[ -f go.fasthttprouter.tar ]] && docker load -i go.fasthttprouter.tar ||
         true"
       - mkdir -p .neph/go/fasthttprouter
       - retry bin/neph go/fasthttprouter --mode=CI
       - FRAMEWORK=go/fasthttprouter bundle exec rspec .spec
       - docker save -o go.fasthttprouter.tar go.fasthttprouter
-      - cache store docker-cache go.fasthttprouter.tar -f
+      - cache store go-fasthttprouter go.fasthttprouter.tar
     - name: violetear
       commands:
-      - cache restore docker-cache
+      - cache restore go-violetear
       - "[[ -f go.violetear.tar ]] && docker load -i go.violetear.tar || true"
       - mkdir -p .neph/go/violetear
       - retry bin/neph go/violetear --mode=CI
       - FRAMEWORK=go/violetear bundle exec rspec .spec
       - docker save -o go.violetear.tar go.violetear
-      - cache store docker-cache go.violetear.tar -f
+      - cache store go-violetear go.violetear.tar
     - name: gorouter
       commands:
-      - cache restore docker-cache
+      - cache restore go-gorouter
       - "[[ -f go.gorouter.tar ]] && docker load -i go.gorouter.tar || true"
       - mkdir -p .neph/go/gorouter
       - retry bin/neph go/gorouter --mode=CI
       - FRAMEWORK=go/gorouter bundle exec rspec .spec
       - docker save -o go.gorouter.tar go.gorouter
-      - cache store docker-cache go.gorouter.tar -f
+      - cache store go-gorouter go.gorouter.tar
     - name: kami
       commands:
-      - cache restore docker-cache
+      - cache restore go-kami
       - "[[ -f go.kami.tar ]] && docker load -i go.kami.tar || true"
       - mkdir -p .neph/go/kami
       - retry bin/neph go/kami --mode=CI
       - FRAMEWORK=go/kami bundle exec rspec .spec
       - docker save -o go.kami.tar go.kami
-      - cache store docker-cache go.kami.tar -f
+      - cache store go-kami go.kami.tar
     - name: gin
       commands:
-      - cache restore docker-cache
+      - cache restore go-gin
       - "[[ -f go.gin.tar ]] && docker load -i go.gin.tar || true"
       - mkdir -p .neph/go/gin
       - retry bin/neph go/gin --mode=CI
       - FRAMEWORK=go/gin bundle exec rspec .spec
       - docker save -o go.gin.tar go.gin
-      - cache store docker-cache go.gin.tar -f
+      - cache store go-gin go.gin.tar
     - name: gorilla-mux
       commands:
-      - cache restore docker-cache
+      - cache restore go-gorilla-mux
       - "[[ -f go.gorilla-mux.tar ]] && docker load -i go.gorilla-mux.tar || true"
       - mkdir -p .neph/go/gorilla-mux
       - retry bin/neph go/gorilla-mux --mode=CI
       - FRAMEWORK=go/gorilla-mux bundle exec rspec .spec
       - docker save -o go.gorilla-mux.tar go.gorilla-mux
-      - cache store docker-cache go.gorilla-mux.tar -f
+      - cache store go-gorilla-mux go.gorilla-mux.tar
     - name: fiber
       commands:
-      - cache restore docker-cache
+      - cache restore go-fiber
       - "[[ -f go.fiber.tar ]] && docker load -i go.fiber.tar || true"
       - mkdir -p .neph/go/fiber
       - retry bin/neph go/fiber --mode=CI
       - FRAMEWORK=go/fiber bundle exec rspec .spec
       - docker save -o go.fiber.tar go.fiber
-      - cache store docker-cache go.fiber.tar -f
+      - cache store go-fiber go.fiber.tar
     - name: goroute
       commands:
-      - cache restore docker-cache
+      - cache restore go-goroute
       - "[[ -f go.goroute.tar ]] && docker load -i go.goroute.tar || true"
       - mkdir -p .neph/go/goroute
       - retry bin/neph go/goroute --mode=CI
       - FRAMEWORK=go/goroute bundle exec rspec .spec
       - docker save -o go.goroute.tar go.goroute
-      - cache store docker-cache go.goroute.tar -f
+      - cache store go-goroute go.goroute.tar
     - name: router
       commands:
-      - cache restore docker-cache
+      - cache restore go-router
       - "[[ -f go.router.tar ]] && docker load -i go.router.tar || true"
       - mkdir -p .neph/go/router
       - retry bin/neph go/router --mode=CI
       - FRAMEWORK=go/router bundle exec rspec .spec
       - docker save -o go.router.tar go.router
-      - cache store docker-cache go.router.tar -f
+      - cache store go-router go.router.tar
     - name: macaron
       commands:
-      - cache restore docker-cache
+      - cache restore go-macaron
       - "[[ -f go.macaron.tar ]] && docker load -i go.macaron.tar || true"
       - mkdir -p .neph/go/macaron
       - retry bin/neph go/macaron --mode=CI
       - FRAMEWORK=go/macaron bundle exec rspec .spec
       - docker save -o go.macaron.tar go.macaron
-      - cache store docker-cache go.macaron.tar -f
+      - cache store go-macaron go.macaron.tar
     - name: chi
       commands:
-      - cache restore docker-cache
+      - cache restore go-chi
       - "[[ -f go.chi.tar ]] && docker load -i go.chi.tar || true"
       - mkdir -p .neph/go/chi
       - retry bin/neph go/chi --mode=CI
       - FRAMEWORK=go/chi bundle exec rspec .spec
       - docker save -o go.chi.tar go.chi
-      - cache store docker-cache go.chi.tar -f
+      - cache store go-chi go.chi.tar
     - name: mars
       commands:
-      - cache restore docker-cache
+      - cache restore go-mars
       - "[[ -f go.mars.tar ]] && docker load -i go.mars.tar || true"
       - mkdir -p .neph/go/mars
       - retry bin/neph go/mars --mode=CI
       - FRAMEWORK=go/mars bundle exec rspec .spec
       - docker save -o go.mars.tar go.mars
-      - cache store docker-cache go.mars.tar -f
+      - cache store go-mars go.mars.tar
     - name: beego
       commands:
-      - cache restore docker-cache
+      - cache restore go-beego
       - "[[ -f go.beego.tar ]] && docker load -i go.beego.tar || true"
       - mkdir -p .neph/go/beego
       - retry bin/neph go/beego --mode=CI
       - FRAMEWORK=go/beego bundle exec rspec .spec
       - docker save -o go.beego.tar go.beego
-      - cache store docker-cache go.beego.tar -f
+      - cache store go-beego go.beego.tar
     - name: gramework
       commands:
-      - cache restore docker-cache
+      - cache restore go-gramework
       - "[[ -f go.gramework.tar ]] && docker load -i go.gramework.tar || true"
       - mkdir -p .neph/go/gramework
       - retry bin/neph go/gramework --mode=CI
       - FRAMEWORK=go/gramework bundle exec rspec .spec
       - docker save -o go.gramework.tar go.gramework
-      - cache store docker-cache go.gramework.tar -f
+      - cache store go-gramework go.gramework.tar
     - name: aero
       commands:
-      - cache restore docker-cache
+      - cache restore go-aero
       - "[[ -f go.aero.tar ]] && docker load -i go.aero.tar || true"
       - mkdir -p .neph/go/aero
       - retry bin/neph go/aero --mode=CI
       - FRAMEWORK=go/aero bundle exec rspec .spec
       - docker save -o go.aero.tar go.aero
-      - cache store docker-cache go.aero.tar -f
+      - cache store go-aero go.aero.tar
     - name: fasthttp
       commands:
-      - cache restore docker-cache
+      - cache restore go-fasthttp
       - "[[ -f go.fasthttp.tar ]] && docker load -i go.fasthttp.tar || true"
       - mkdir -p .neph/go/fasthttp
       - retry bin/neph go/fasthttp --mode=CI
       - FRAMEWORK=go/fasthttp bundle exec rspec .spec
       - docker save -o go.fasthttp.tar go.fasthttp
-      - cache store docker-cache go.fasthttp.tar -f
+      - cache store go-fasthttp go.fasthttp.tar
     - name: gorouter-fasthttp
       commands:
-      - cache restore docker-cache
+      - cache restore go-gorouter-fasthttp
       - "[[ -f go.gorouter-fasthttp.tar ]] && docker load -i go.gorouter-fasthttp.tar
         || true"
       - mkdir -p .neph/go/gorouter-fasthttp
       - retry bin/neph go/gorouter-fasthttp --mode=CI
       - FRAMEWORK=go/gorouter-fasthttp bundle exec rspec .spec
       - docker save -o go.gorouter-fasthttp.tar go.gorouter-fasthttp
-      - cache store docker-cache go.gorouter-fasthttp.tar -f
+      - cache store go-gorouter-fasthttp go.gorouter-fasthttp.tar
     - name: tango
       commands:
-      - cache restore docker-cache
+      - cache restore go-tango
       - "[[ -f go.tango.tar ]] && docker load -i go.tango.tar || true"
       - mkdir -p .neph/go/tango
       - retry bin/neph go/tango --mode=CI
       - FRAMEWORK=go/tango bundle exec rspec .spec
       - docker save -o go.tango.tar go.tango
-      - cache store docker-cache go.tango.tar -f
+      - cache store go-tango go.tango.tar
     - name: httprouter
       commands:
-      - cache restore docker-cache
+      - cache restore go-httprouter
       - "[[ -f go.httprouter.tar ]] && docker load -i go.httprouter.tar || true"
       - mkdir -p .neph/go/httprouter
       - retry bin/neph go/httprouter --mode=CI
       - FRAMEWORK=go/httprouter bundle exec rspec .spec
       - docker save -o go.httprouter.tar go.httprouter
-      - cache store docker-cache go.httprouter.tar -f
+      - cache store go-httprouter go.httprouter.tar
     - name: gf
       commands:
-      - cache restore docker-cache
+      - cache restore go-gf
       - "[[ -f go.gf.tar ]] && docker load -i go.gf.tar || true"
       - mkdir -p .neph/go/gf
       - retry bin/neph go/gf --mode=CI
       - FRAMEWORK=go/gf bundle exec rspec .spec
       - docker save -o go.gf.tar go.gf
-      - cache store docker-cache go.gf.tar -f
+      - cache store go-gf go.gf.tar
     - name: webgo
       commands:
-      - cache restore docker-cache
+      - cache restore go-webgo
       - "[[ -f go.webgo.tar ]] && docker load -i go.webgo.tar || true"
       - mkdir -p .neph/go/webgo
       - retry bin/neph go/webgo --mode=CI
       - FRAMEWORK=go/webgo bundle exec rspec .spec
       - docker save -o go.webgo.tar go.webgo
-      - cache store docker-cache go.webgo.tar -f
+      - cache store go-webgo go.webgo.tar
     - name: echo
       commands:
-      - cache restore docker-cache
+      - cache restore go-echo
       - "[[ -f go.echo.tar ]] && docker load -i go.echo.tar || true"
       - mkdir -p .neph/go/echo
       - retry bin/neph go/echo --mode=CI
       - FRAMEWORK=go/echo bundle exec rspec .spec
       - docker save -o go.echo.tar go.echo
-      - cache store docker-cache go.echo.tar -f
+      - cache store go-echo go.echo.tar
     - name: air
       commands:
-      - cache restore docker-cache
+      - cache restore go-air
       - "[[ -f go.air.tar ]] && docker load -i go.air.tar || true"
       - mkdir -p .neph/go/air
       - retry bin/neph go/air --mode=CI
       - FRAMEWORK=go/air bundle exec rspec .spec
       - docker save -o go.air.tar go.air
-      - cache store docker-cache go.air.tar -f
+      - cache store go-air go.air.tar
     epilogue:
       always:
         commands:
@@ -299,51 +299,51 @@ blocks:
     jobs:
     - name: perfect
       commands:
-      - cache restore docker-cache
+      - cache restore swift-perfect
       - "[[ -f swift.perfect.tar ]] && docker load -i swift.perfect.tar || true"
       - mkdir -p .neph/swift/perfect
       - retry bin/neph swift/perfect --mode=CI
       - FRAMEWORK=swift/perfect bundle exec rspec .spec
       - docker save -o swift.perfect.tar swift.perfect
-      - cache store docker-cache swift.perfect.tar -f
+      - cache store swift-perfect swift.perfect.tar
     - name: vapor-framework
       commands:
-      - cache restore docker-cache
+      - cache restore swift-vapor-framework
       - "[[ -f swift.vapor-framework.tar ]] && docker load -i swift.vapor-framework.tar
         || true"
       - mkdir -p .neph/swift/vapor-framework
       - retry bin/neph swift/vapor-framework --mode=CI
       - FRAMEWORK=swift/vapor-framework bundle exec rspec .spec
       - docker save -o swift.vapor-framework.tar swift.vapor-framework
-      - cache store docker-cache swift.vapor-framework.tar -f
+      - cache store swift-vapor-framework swift.vapor-framework.tar
     - name: kitura-nio
       commands:
-      - cache restore docker-cache
+      - cache restore swift-kitura-nio
       - "[[ -f swift.kitura-nio.tar ]] && docker load -i swift.kitura-nio.tar || true"
       - mkdir -p .neph/swift/kitura-nio
       - retry bin/neph swift/kitura-nio --mode=CI
       - FRAMEWORK=swift/kitura-nio bundle exec rspec .spec
       - docker save -o swift.kitura-nio.tar swift.kitura-nio
-      - cache store docker-cache swift.kitura-nio.tar -f
+      - cache store swift-kitura-nio swift.kitura-nio.tar
     - name: swifter-framework
       commands:
-      - cache restore docker-cache
+      - cache restore swift-swifter-framework
       - "[[ -f swift.swifter-framework.tar ]] && docker load -i swift.swifter-framework.tar
         || true"
       - mkdir -p .neph/swift/swifter-framework
       - retry bin/neph swift/swifter-framework --mode=CI
       - FRAMEWORK=swift/swifter-framework bundle exec rspec .spec
       - docker save -o swift.swifter-framework.tar swift.swifter-framework
-      - cache store docker-cache swift.swifter-framework.tar -f
+      - cache store swift-swifter-framework swift.swifter-framework.tar
     - name: kitura
       commands:
-      - cache restore docker-cache
+      - cache restore swift-kitura
       - "[[ -f swift.kitura.tar ]] && docker load -i swift.kitura.tar || true"
       - mkdir -p .neph/swift/kitura
       - retry bin/neph swift/kitura --mode=CI
       - FRAMEWORK=swift/kitura bundle exec rspec .spec
       - docker save -o swift.kitura.tar swift.kitura
-      - cache store docker-cache swift.kitura.tar -f
+      - cache store swift-kitura swift.kitura.tar
     epilogue:
       always:
         commands:
@@ -370,22 +370,22 @@ blocks:
     jobs:
     - name: start
       commands:
-      - cache restore docker-cache
+      - cache restore dart-start
       - "[[ -f dart.start.tar ]] && docker load -i dart.start.tar || true"
       - mkdir -p .neph/dart/start
       - retry bin/neph dart/start --mode=CI
       - FRAMEWORK=dart/start bundle exec rspec .spec
       - docker save -o dart.start.tar dart.start
-      - cache store docker-cache dart.start.tar -f
+      - cache store dart-start dart.start.tar
     - name: aqueduct
       commands:
-      - cache restore docker-cache
+      - cache restore dart-aqueduct
       - "[[ -f dart.aqueduct.tar ]] && docker load -i dart.aqueduct.tar || true"
       - mkdir -p .neph/dart/aqueduct
       - retry bin/neph dart/aqueduct --mode=CI
       - FRAMEWORK=dart/aqueduct bundle exec rspec .spec
       - docker save -o dart.aqueduct.tar dart.aqueduct
-      - cache store docker-cache dart.aqueduct.tar -f
+      - cache store dart-aqueduct dart.aqueduct.tar
     epilogue:
       always:
         commands:
@@ -412,22 +412,22 @@ blocks:
     jobs:
     - name: servant
       commands:
-      - cache restore docker-cache
+      - cache restore haskell-servant
       - "[[ -f haskell.servant.tar ]] && docker load -i haskell.servant.tar || true"
       - mkdir -p .neph/haskell/servant
       - retry bin/neph haskell/servant --mode=CI
       - FRAMEWORK=haskell/servant bundle exec rspec .spec
       - docker save -o haskell.servant.tar haskell.servant
-      - cache store docker-cache haskell.servant.tar -f
+      - cache store haskell-servant haskell.servant.tar
     - name: scotty
       commands:
-      - cache restore docker-cache
+      - cache restore haskell-scotty
       - "[[ -f haskell.scotty.tar ]] && docker load -i haskell.scotty.tar || true"
       - mkdir -p .neph/haskell/scotty
       - retry bin/neph haskell/scotty --mode=CI
       - FRAMEWORK=haskell/scotty bundle exec rspec .spec
       - docker save -o haskell.scotty.tar haskell.scotty
-      - cache store docker-cache haskell.scotty.tar -f
+      - cache store haskell-scotty haskell.scotty.tar
     epilogue:
       always:
         commands:
@@ -454,13 +454,13 @@ blocks:
     jobs:
     - name: jennet
       commands:
-      - cache restore docker-cache
+      - cache restore pony-jennet
       - "[[ -f pony.jennet.tar ]] && docker load -i pony.jennet.tar || true"
       - mkdir -p .neph/pony/jennet
       - retry bin/neph pony/jennet --mode=CI
       - FRAMEWORK=pony/jennet bundle exec rspec .spec
       - docker save -o pony.jennet.tar pony.jennet
-      - cache store docker-cache pony.jennet.tar -f
+      - cache store pony-jennet pony.jennet.tar
     epilogue:
       always:
         commands:
@@ -487,22 +487,22 @@ blocks:
     jobs:
     - name: coast
       commands:
-      - cache restore docker-cache
+      - cache restore clojure-coast
       - "[[ -f clojure.coast.tar ]] && docker load -i clojure.coast.tar || true"
       - mkdir -p .neph/clojure/coast
       - retry bin/neph clojure/coast --mode=CI
       - FRAMEWORK=clojure/coast bundle exec rspec .spec
       - docker save -o clojure.coast.tar clojure.coast
-      - cache store docker-cache clojure.coast.tar -f
+      - cache store clojure-coast clojure.coast.tar
     - name: luminus
       commands:
-      - cache restore docker-cache
+      - cache restore clojure-luminus
       - "[[ -f clojure.luminus.tar ]] && docker load -i clojure.luminus.tar || true"
       - mkdir -p .neph/clojure/luminus
       - retry bin/neph clojure/luminus --mode=CI
       - FRAMEWORK=clojure/luminus bundle exec rspec .spec
       - docker save -o clojure.luminus.tar clojure.luminus
-      - cache store docker-cache clojure.luminus.tar -f
+      - cache store clojure-luminus clojure.luminus.tar
     epilogue:
       always:
         commands:
@@ -529,221 +529,221 @@ blocks:
     jobs:
     - name: bottle
       commands:
-      - cache restore docker-cache
+      - cache restore python-bottle
       - "[[ -f python.bottle.tar ]] && docker load -i python.bottle.tar || true"
       - mkdir -p .neph/python/bottle
       - retry bin/neph python/bottle --mode=CI
       - FRAMEWORK=python/bottle bundle exec rspec .spec
       - docker save -o python.bottle.tar python.bottle
-      - cache store docker-cache python.bottle.tar -f
+      - cache store python-bottle python.bottle.tar
     - name: aiohttp
       commands:
-      - cache restore docker-cache
+      - cache restore python-aiohttp
       - "[[ -f python.aiohttp.tar ]] && docker load -i python.aiohttp.tar || true"
       - mkdir -p .neph/python/aiohttp
       - retry bin/neph python/aiohttp --mode=CI
       - FRAMEWORK=python/aiohttp bundle exec rspec .spec
       - docker save -o python.aiohttp.tar python.aiohttp
-      - cache store docker-cache python.aiohttp.tar -f
+      - cache store python-aiohttp python.aiohttp.tar
     - name: responder
       commands:
-      - cache restore docker-cache
+      - cache restore python-responder
       - "[[ -f python.responder.tar ]] && docker load -i python.responder.tar || true"
       - mkdir -p .neph/python/responder
       - retry bin/neph python/responder --mode=CI
       - FRAMEWORK=python/responder bundle exec rspec .spec
       - docker save -o python.responder.tar python.responder
-      - cache store docker-cache python.responder.tar -f
+      - cache store python-responder python.responder.tar
     - name: asgineer
       commands:
-      - cache restore docker-cache
+      - cache restore python-asgineer
       - "[[ -f python.asgineer.tar ]] && docker load -i python.asgineer.tar || true"
       - mkdir -p .neph/python/asgineer
       - retry bin/neph python/asgineer --mode=CI
       - FRAMEWORK=python/asgineer bundle exec rspec .spec
       - docker save -o python.asgineer.tar python.asgineer
-      - cache store docker-cache python.asgineer.tar -f
+      - cache store python-asgineer python.asgineer.tar
     - name: klein
       commands:
-      - cache restore docker-cache
+      - cache restore python-klein
       - "[[ -f python.klein.tar ]] && docker load -i python.klein.tar || true"
       - mkdir -p .neph/python/klein
       - retry bin/neph python/klein --mode=CI
       - FRAMEWORK=python/klein bundle exec rspec .spec
       - docker save -o python.klein.tar python.klein
-      - cache store docker-cache python.klein.tar -f
+      - cache store python-klein python.klein.tar
     - name: django
       commands:
-      - cache restore docker-cache
+      - cache restore python-django
       - "[[ -f python.django.tar ]] && docker load -i python.django.tar || true"
       - mkdir -p .neph/python/django
       - retry bin/neph python/django --mode=CI
       - FRAMEWORK=python/django bundle exec rspec .spec
       - docker save -o python.django.tar python.django
-      - cache store docker-cache python.django.tar -f
+      - cache store python-django python.django.tar
     - name: flask
       commands:
-      - cache restore docker-cache
+      - cache restore python-flask
       - "[[ -f python.flask.tar ]] && docker load -i python.flask.tar || true"
       - mkdir -p .neph/python/flask
       - retry bin/neph python/flask --mode=CI
       - FRAMEWORK=python/flask bundle exec rspec .spec
       - docker save -o python.flask.tar python.flask
-      - cache store docker-cache python.flask.tar -f
+      - cache store python-flask python.flask.tar
     - name: cherrypy
       commands:
-      - cache restore docker-cache
+      - cache restore python-cherrypy
       - "[[ -f python.cherrypy.tar ]] && docker load -i python.cherrypy.tar || true"
       - mkdir -p .neph/python/cherrypy
       - retry bin/neph python/cherrypy --mode=CI
       - FRAMEWORK=python/cherrypy bundle exec rspec .spec
       - docker save -o python.cherrypy.tar python.cherrypy
-      - cache store docker-cache python.cherrypy.tar -f
+      - cache store python-cherrypy python.cherrypy.tar
     - name: apidaora
       commands:
-      - cache restore docker-cache
+      - cache restore python-apidaora
       - "[[ -f python.apidaora.tar ]] && docker load -i python.apidaora.tar || true"
       - mkdir -p .neph/python/apidaora
       - retry bin/neph python/apidaora --mode=CI
       - FRAMEWORK=python/apidaora bundle exec rspec .spec
       - docker save -o python.apidaora.tar python.apidaora
-      - cache store docker-cache python.apidaora.tar -f
+      - cache store python-apidaora python.apidaora.tar
     - name: blacksheep
       commands:
-      - cache restore docker-cache
+      - cache restore python-blacksheep
       - "[[ -f python.blacksheep.tar ]] && docker load -i python.blacksheep.tar ||
         true"
       - mkdir -p .neph/python/blacksheep
       - retry bin/neph python/blacksheep --mode=CI
       - FRAMEWORK=python/blacksheep bundle exec rspec .spec
       - docker save -o python.blacksheep.tar python.blacksheep
-      - cache store docker-cache python.blacksheep.tar -f
+      - cache store python-blacksheep python.blacksheep.tar
     - name: hug
       commands:
-      - cache restore docker-cache
+      - cache restore python-hug
       - "[[ -f python.hug.tar ]] && docker load -i python.hug.tar || true"
       - mkdir -p .neph/python/hug
       - retry bin/neph python/hug --mode=CI
       - FRAMEWORK=python/hug bundle exec rspec .spec
       - docker save -o python.hug.tar python.hug
-      - cache store docker-cache python.hug.tar -f
+      - cache store python-hug python.hug.tar
     - name: quart
       commands:
-      - cache restore docker-cache
+      - cache restore python-quart
       - "[[ -f python.quart.tar ]] && docker load -i python.quart.tar || true"
       - mkdir -p .neph/python/quart
       - retry bin/neph python/quart --mode=CI
       - FRAMEWORK=python/quart bundle exec rspec .spec
       - docker save -o python.quart.tar python.quart
-      - cache store docker-cache python.quart.tar -f
+      - cache store python-quart python.quart.tar
     - name: falcon
       commands:
-      - cache restore docker-cache
+      - cache restore python-falcon
       - "[[ -f python.falcon.tar ]] && docker load -i python.falcon.tar || true"
       - mkdir -p .neph/python/falcon
       - retry bin/neph python/falcon --mode=CI
       - FRAMEWORK=python/falcon bundle exec rspec .spec
       - docker save -o python.falcon.tar python.falcon
-      - cache store docker-cache python.falcon.tar -f
+      - cache store python-falcon python.falcon.tar
     - name: clastic
       commands:
-      - cache restore docker-cache
+      - cache restore python-clastic
       - "[[ -f python.clastic.tar ]] && docker load -i python.clastic.tar || true"
       - mkdir -p .neph/python/clastic
       - retry bin/neph python/clastic --mode=CI
       - FRAMEWORK=python/clastic bundle exec rspec .spec
       - docker save -o python.clastic.tar python.clastic
-      - cache store docker-cache python.clastic.tar -f
+      - cache store python-clastic python.clastic.tar
     - name: cyclone
       commands:
-      - cache restore docker-cache
+      - cache restore python-cyclone
       - "[[ -f python.cyclone.tar ]] && docker load -i python.cyclone.tar || true"
       - mkdir -p .neph/python/cyclone
       - retry bin/neph python/cyclone --mode=CI
       - FRAMEWORK=python/cyclone bundle exec rspec .spec
       - docker save -o python.cyclone.tar python.cyclone
-      - cache store docker-cache python.cyclone.tar -f
+      - cache store python-cyclone python.cyclone.tar
     - name: starlette
       commands:
-      - cache restore docker-cache
+      - cache restore python-starlette
       - "[[ -f python.starlette.tar ]] && docker load -i python.starlette.tar || true"
       - mkdir -p .neph/python/starlette
       - retry bin/neph python/starlette --mode=CI
       - FRAMEWORK=python/starlette bundle exec rspec .spec
       - docker save -o python.starlette.tar python.starlette
-      - cache store docker-cache python.starlette.tar -f
+      - cache store python-starlette python.starlette.tar
     - name: nameko
       commands:
-      - cache restore docker-cache
+      - cache restore python-nameko
       - "[[ -f python.nameko.tar ]] && docker load -i python.nameko.tar || true"
       - mkdir -p .neph/python/nameko
       - retry bin/neph python/nameko --mode=CI
       - FRAMEWORK=python/nameko bundle exec rspec .spec
       - docker save -o python.nameko.tar python.nameko
-      - cache store docker-cache python.nameko.tar -f
+      - cache store python-nameko python.nameko.tar
     - name: molten
       commands:
-      - cache restore docker-cache
+      - cache restore python-molten
       - "[[ -f python.molten.tar ]] && docker load -i python.molten.tar || true"
       - mkdir -p .neph/python/molten
       - retry bin/neph python/molten --mode=CI
       - FRAMEWORK=python/molten bundle exec rspec .spec
       - docker save -o python.molten.tar python.molten
-      - cache store docker-cache python.molten.tar -f
+      - cache store python-molten python.molten.tar
     - name: tornado
       commands:
-      - cache restore docker-cache
+      - cache restore python-tornado
       - "[[ -f python.tornado.tar ]] && docker load -i python.tornado.tar || true"
       - mkdir -p .neph/python/tornado
       - retry bin/neph python/tornado --mode=CI
       - FRAMEWORK=python/tornado bundle exec rspec .spec
       - docker save -o python.tornado.tar python.tornado
-      - cache store docker-cache python.tornado.tar -f
+      - cache store python-tornado python.tornado.tar
     - name: fastapi
       commands:
-      - cache restore docker-cache
+      - cache restore python-fastapi
       - "[[ -f python.fastapi.tar ]] && docker load -i python.fastapi.tar || true"
       - mkdir -p .neph/python/fastapi
       - retry bin/neph python/fastapi --mode=CI
       - FRAMEWORK=python/fastapi bundle exec rspec .spec
       - docker save -o python.fastapi.tar python.fastapi
-      - cache store docker-cache python.fastapi.tar -f
+      - cache store python-fastapi python.fastapi.tar
     - name: masonite
       commands:
-      - cache restore docker-cache
+      - cache restore python-masonite
       - "[[ -f python.masonite.tar ]] && docker load -i python.masonite.tar || true"
       - mkdir -p .neph/python/masonite
       - retry bin/neph python/masonite --mode=CI
       - FRAMEWORK=python/masonite bundle exec rspec .spec
       - docker save -o python.masonite.tar python.masonite
-      - cache store docker-cache python.masonite.tar -f
+      - cache store python-masonite python.masonite.tar
     - name: emmett
       commands:
-      - cache restore docker-cache
+      - cache restore python-emmett
       - "[[ -f python.emmett.tar ]] && docker load -i python.emmett.tar || true"
       - mkdir -p .neph/python/emmett
       - retry bin/neph python/emmett --mode=CI
       - FRAMEWORK=python/emmett bundle exec rspec .spec
       - docker save -o python.emmett.tar python.emmett
-      - cache store docker-cache python.emmett.tar -f
+      - cache store python-emmett python.emmett.tar
     - name: pyramid
       commands:
-      - cache restore docker-cache
+      - cache restore python-pyramid
       - "[[ -f python.pyramid.tar ]] && docker load -i python.pyramid.tar || true"
       - mkdir -p .neph/python/pyramid
       - retry bin/neph python/pyramid --mode=CI
       - FRAMEWORK=python/pyramid bundle exec rspec .spec
       - docker save -o python.pyramid.tar python.pyramid
-      - cache store docker-cache python.pyramid.tar -f
+      - cache store python-pyramid python.pyramid.tar
     - name: sanic
       commands:
-      - cache restore docker-cache
+      - cache restore python-sanic
       - "[[ -f python.sanic.tar ]] && docker load -i python.sanic.tar || true"
       - mkdir -p .neph/python/sanic
       - retry bin/neph python/sanic --mode=CI
       - FRAMEWORK=python/sanic bundle exec rspec .spec
       - docker save -o python.sanic.tar python.sanic
-      - cache store docker-cache python.sanic.tar -f
+      - cache store python-sanic python.sanic.tar
     epilogue:
       always:
         commands:
@@ -770,40 +770,40 @@ blocks:
     jobs:
     - name: actix
       commands:
-      - cache restore docker-cache
+      - cache restore rust-actix
       - "[[ -f rust.actix.tar ]] && docker load -i rust.actix.tar || true"
       - mkdir -p .neph/rust/actix
       - retry bin/neph rust/actix --mode=CI
       - FRAMEWORK=rust/actix bundle exec rspec .spec
       - docker save -o rust.actix.tar rust.actix
-      - cache store docker-cache rust.actix.tar -f
+      - cache store rust-actix rust.actix.tar
     - name: iron
       commands:
-      - cache restore docker-cache
+      - cache restore rust-iron
       - "[[ -f rust.iron.tar ]] && docker load -i rust.iron.tar || true"
       - mkdir -p .neph/rust/iron
       - retry bin/neph rust/iron --mode=CI
       - FRAMEWORK=rust/iron bundle exec rspec .spec
       - docker save -o rust.iron.tar rust.iron
-      - cache store docker-cache rust.iron.tar -f
+      - cache store rust-iron rust.iron.tar
     - name: gotham
       commands:
-      - cache restore docker-cache
+      - cache restore rust-gotham
       - "[[ -f rust.gotham.tar ]] && docker load -i rust.gotham.tar || true"
       - mkdir -p .neph/rust/gotham
       - retry bin/neph rust/gotham --mode=CI
       - FRAMEWORK=rust/gotham bundle exec rspec .spec
       - docker save -o rust.gotham.tar rust.gotham
-      - cache store docker-cache rust.gotham.tar -f
+      - cache store rust-gotham rust.gotham.tar
     - name: nickel
       commands:
-      - cache restore docker-cache
+      - cache restore rust-nickel
       - "[[ -f rust.nickel.tar ]] && docker load -i rust.nickel.tar || true"
       - mkdir -p .neph/rust/nickel
       - retry bin/neph rust/nickel --mode=CI
       - FRAMEWORK=rust/nickel bundle exec rspec .spec
       - docker save -o rust.nickel.tar rust.nickel
-      - cache store docker-cache rust.nickel.tar -f
+      - cache store rust-nickel rust.nickel.tar
     epilogue:
       always:
         commands:
@@ -830,14 +830,14 @@ blocks:
     jobs:
     - name: aspnetcore
       commands:
-      - cache restore docker-cache
+      - cache restore csharp-aspnetcore
       - "[[ -f csharp.aspnetcore.tar ]] && docker load -i csharp.aspnetcore.tar ||
         true"
       - mkdir -p .neph/csharp/aspnetcore
       - retry bin/neph csharp/aspnetcore --mode=CI
       - FRAMEWORK=csharp/aspnetcore bundle exec rspec .spec
       - docker save -o csharp.aspnetcore.tar csharp.aspnetcore
-      - cache store docker-cache csharp.aspnetcore.tar -f
+      - cache store csharp-aspnetcore csharp.aspnetcore.tar
     epilogue:
       always:
         commands:
@@ -864,77 +864,77 @@ blocks:
     jobs:
     - name: blade
       commands:
-      - cache restore docker-cache
+      - cache restore java-blade
       - "[[ -f java.blade.tar ]] && docker load -i java.blade.tar || true"
       - mkdir -p .neph/java/blade
       - retry bin/neph java/blade --mode=CI
       - FRAMEWORK=java/blade bundle exec rspec .spec
       - docker save -o java.blade.tar java.blade
-      - cache store docker-cache java.blade.tar -f
+      - cache store java-blade java.blade.tar
     - name: javalin
       commands:
-      - cache restore docker-cache
+      - cache restore java-javalin
       - "[[ -f java.javalin.tar ]] && docker load -i java.javalin.tar || true"
       - mkdir -p .neph/java/javalin
       - retry bin/neph java/javalin --mode=CI
       - FRAMEWORK=java/javalin bundle exec rspec .spec
       - docker save -o java.javalin.tar java.javalin
-      - cache store docker-cache java.javalin.tar -f
+      - cache store java-javalin java.javalin.tar
     - name: act
       commands:
-      - cache restore docker-cache
+      - cache restore java-act
       - "[[ -f java.act.tar ]] && docker load -i java.act.tar || true"
       - mkdir -p .neph/java/act
       - retry bin/neph java/act --mode=CI
       - FRAMEWORK=java/act bundle exec rspec .spec
       - docker save -o java.act.tar java.act
-      - cache store docker-cache java.act.tar -f
+      - cache store java-act java.act.tar
     - name: rapidoid
       commands:
-      - cache restore docker-cache
+      - cache restore java-rapidoid
       - "[[ -f java.rapidoid.tar ]] && docker load -i java.rapidoid.tar || true"
       - mkdir -p .neph/java/rapidoid
       - retry bin/neph java/rapidoid --mode=CI
       - FRAMEWORK=java/rapidoid bundle exec rspec .spec
       - docker save -o java.rapidoid.tar java.rapidoid
-      - cache store docker-cache java.rapidoid.tar -f
+      - cache store java-rapidoid java.rapidoid.tar
     - name: jooby
       commands:
-      - cache restore docker-cache
+      - cache restore java-jooby
       - "[[ -f java.jooby.tar ]] && docker load -i java.jooby.tar || true"
       - mkdir -p .neph/java/jooby
       - retry bin/neph java/jooby --mode=CI
       - FRAMEWORK=java/jooby bundle exec rspec .spec
       - docker save -o java.jooby.tar java.jooby
-      - cache store docker-cache java.jooby.tar -f
+      - cache store java-jooby java.jooby.tar
     - name: spring-boot
       commands:
-      - cache restore docker-cache
+      - cache restore java-spring-boot
       - "[[ -f java.spring-boot.tar ]] && docker load -i java.spring-boot.tar || true"
       - mkdir -p .neph/java/spring-boot
       - retry bin/neph java/spring-boot --mode=CI
       - FRAMEWORK=java/spring-boot bundle exec rspec .spec
       - docker save -o java.spring-boot.tar java.spring-boot
-      - cache store docker-cache java.spring-boot.tar -f
+      - cache store java-spring-boot java.spring-boot.tar
     - name: spring-framework
       commands:
-      - cache restore docker-cache
+      - cache restore java-spring-framework
       - "[[ -f java.spring-framework.tar ]] && docker load -i java.spring-framework.tar
         || true"
       - mkdir -p .neph/java/spring-framework
       - retry bin/neph java/spring-framework --mode=CI
       - FRAMEWORK=java/spring-framework bundle exec rspec .spec
       - docker save -o java.spring-framework.tar java.spring-framework
-      - cache store docker-cache java.spring-framework.tar -f
+      - cache store java-spring-framework java.spring-framework.tar
     - name: micronaut
       commands:
-      - cache restore docker-cache
+      - cache restore java-micronaut
       - "[[ -f java.micronaut.tar ]] && docker load -i java.micronaut.tar || true"
       - mkdir -p .neph/java/micronaut
       - retry bin/neph java/micronaut --mode=CI
       - FRAMEWORK=java/micronaut bundle exec rspec .spec
       - docker save -o java.micronaut.tar java.micronaut
-      - cache store docker-cache java.micronaut.tar -f
+      - cache store java-micronaut java.micronaut.tar
     epilogue:
       always:
         commands:
@@ -961,40 +961,40 @@ blocks:
     jobs:
     - name: suave
       commands:
-      - cache restore docker-cache
+      - cache restore fsharp-suave
       - "[[ -f fsharp.suave.tar ]] && docker load -i fsharp.suave.tar || true"
       - mkdir -p .neph/fsharp/suave
       - retry bin/neph fsharp/suave --mode=CI
       - FRAMEWORK=fsharp/suave bundle exec rspec .spec
       - docker save -o fsharp.suave.tar fsharp.suave
-      - cache store docker-cache fsharp.suave.tar -f
+      - cache store fsharp-suave fsharp.suave.tar
     - name: falco
       commands:
-      - cache restore docker-cache
+      - cache restore fsharp-falco
       - "[[ -f fsharp.falco.tar ]] && docker load -i fsharp.falco.tar || true"
       - mkdir -p .neph/fsharp/falco
       - retry bin/neph fsharp/falco --mode=CI
       - FRAMEWORK=fsharp/falco bundle exec rspec .spec
       - docker save -o fsharp.falco.tar fsharp.falco
-      - cache store docker-cache fsharp.falco.tar -f
+      - cache store fsharp-falco fsharp.falco.tar
     - name: giraffe
       commands:
-      - cache restore docker-cache
+      - cache restore fsharp-giraffe
       - "[[ -f fsharp.giraffe.tar ]] && docker load -i fsharp.giraffe.tar || true"
       - mkdir -p .neph/fsharp/giraffe
       - retry bin/neph fsharp/giraffe --mode=CI
       - FRAMEWORK=fsharp/giraffe bundle exec rspec .spec
       - docker save -o fsharp.giraffe.tar fsharp.giraffe
-      - cache store docker-cache fsharp.giraffe.tar -f
+      - cache store fsharp-giraffe fsharp.giraffe.tar
     - name: frank
       commands:
-      - cache restore docker-cache
+      - cache restore fsharp-frank
       - "[[ -f fsharp.frank.tar ]] && docker load -i fsharp.frank.tar || true"
       - mkdir -p .neph/fsharp/frank
       - retry bin/neph fsharp/frank --mode=CI
       - FRAMEWORK=fsharp/frank bundle exec rspec .spec
       - docker save -o fsharp.frank.tar fsharp.frank
-      - cache store docker-cache fsharp.frank.tar -f
+      - cache store fsharp-frank fsharp.frank.tar
     epilogue:
       always:
         commands:
@@ -1021,247 +1021,247 @@ blocks:
     jobs:
     - name: spiral
       commands:
-      - cache restore docker-cache
+      - cache restore php-spiral
       - "[[ -f php.spiral.tar ]] && docker load -i php.spiral.tar || true"
       - mkdir -p .neph/php/spiral
       - retry bin/neph php/spiral --mode=CI
       - FRAMEWORK=php/spiral bundle exec rspec .spec
       - docker save -o php.spiral.tar php.spiral
-      - cache store docker-cache php.spiral.tar -f
+      - cache store php-spiral php.spiral.tar
     - name: yii-swoole
       commands:
-      - cache restore docker-cache
+      - cache restore php-yii-swoole
       - "[[ -f php.yii-swoole.tar ]] && docker load -i php.yii-swoole.tar || true"
       - mkdir -p .neph/php/yii-swoole
       - retry bin/neph php/yii-swoole --mode=CI
       - FRAMEWORK=php/yii-swoole bundle exec rspec .spec
       - docker save -o php.yii-swoole.tar php.yii-swoole
-      - cache store docker-cache php.yii-swoole.tar -f
+      - cache store php-yii-swoole php.yii-swoole.tar
     - name: basicphp
       commands:
-      - cache restore docker-cache
+      - cache restore php-basicphp
       - "[[ -f php.basicphp.tar ]] && docker load -i php.basicphp.tar || true"
       - mkdir -p .neph/php/basicphp
       - retry bin/neph php/basicphp --mode=CI
       - FRAMEWORK=php/basicphp bundle exec rspec .spec
       - docker save -o php.basicphp.tar php.basicphp
-      - cache store docker-cache php.basicphp.tar -f
+      - cache store php-basicphp php.basicphp.tar
     - name: phalcon
       commands:
-      - cache restore docker-cache
+      - cache restore php-phalcon
       - "[[ -f php.phalcon.tar ]] && docker load -i php.phalcon.tar || true"
       - mkdir -p .neph/php/phalcon
       - retry bin/neph php/phalcon --mode=CI
       - FRAMEWORK=php/phalcon bundle exec rspec .spec
       - docker save -o php.phalcon.tar php.phalcon
-      - cache store docker-cache php.phalcon.tar -f
+      - cache store php-phalcon php.phalcon.tar
     - name: workerman
       commands:
-      - cache restore docker-cache
+      - cache restore php-workerman
       - "[[ -f php.workerman.tar ]] && docker load -i php.workerman.tar || true"
       - mkdir -p .neph/php/workerman
       - retry bin/neph php/workerman --mode=CI
       - FRAMEWORK=php/workerman bundle exec rspec .spec
       - docker save -o php.workerman.tar php.workerman
-      - cache store docker-cache php.workerman.tar -f
+      - cache store php-workerman php.workerman.tar
     - name: laminas
       commands:
-      - cache restore docker-cache
+      - cache restore php-laminas
       - "[[ -f php.laminas.tar ]] && docker load -i php.laminas.tar || true"
       - mkdir -p .neph/php/laminas
       - retry bin/neph php/laminas --mode=CI
       - FRAMEWORK=php/laminas bundle exec rspec .spec
       - docker save -o php.laminas.tar php.laminas
-      - cache store docker-cache php.laminas.tar -f
+      - cache store php-laminas php.laminas.tar
     - name: one
       commands:
-      - cache restore docker-cache
+      - cache restore php-one
       - "[[ -f php.one.tar ]] && docker load -i php.one.tar || true"
       - mkdir -p .neph/php/one
       - retry bin/neph php/one --mode=CI
       - FRAMEWORK=php/one bundle exec rspec .spec
       - docker save -o php.one.tar php.one
-      - cache store docker-cache php.one.tar -f
+      - cache store php-one php.one.tar
     - name: siler
       commands:
-      - cache restore docker-cache
+      - cache restore php-siler
       - "[[ -f php.siler.tar ]] && docker load -i php.siler.tar || true"
       - mkdir -p .neph/php/siler
       - retry bin/neph php/siler --mode=CI
       - FRAMEWORK=php/siler bundle exec rspec .spec
       - docker save -o php.siler.tar php.siler
-      - cache store docker-cache php.siler.tar -f
+      - cache store php-siler php.siler.tar
     - name: fastsitephp
       commands:
-      - cache restore docker-cache
+      - cache restore php-fastsitephp
       - "[[ -f php.fastsitephp.tar ]] && docker load -i php.fastsitephp.tar || true"
       - mkdir -p .neph/php/fastsitephp
       - retry bin/neph php/fastsitephp --mode=CI
       - FRAMEWORK=php/fastsitephp bundle exec rspec .spec
       - docker save -o php.fastsitephp.tar php.fastsitephp
-      - cache store docker-cache php.fastsitephp.tar -f
+      - cache store php-fastsitephp php.fastsitephp.tar
     - name: one-fpm
       commands:
-      - cache restore docker-cache
+      - cache restore php-one-fpm
       - "[[ -f php.one-fpm.tar ]] && docker load -i php.one-fpm.tar || true"
       - mkdir -p .neph/php/one-fpm
       - retry bin/neph php/one-fpm --mode=CI
       - FRAMEWORK=php/one-fpm bundle exec rspec .spec
       - docker save -o php.one-fpm.tar php.one-fpm
-      - cache store docker-cache php.one-fpm.tar -f
+      - cache store php-one-fpm php.one-fpm.tar
     - name: symfony
       commands:
-      - cache restore docker-cache
+      - cache restore php-symfony
       - "[[ -f php.symfony.tar ]] && docker load -i php.symfony.tar || true"
       - mkdir -p .neph/php/symfony
       - retry bin/neph php/symfony --mode=CI
       - FRAMEWORK=php/symfony bundle exec rspec .spec
       - docker save -o php.symfony.tar php.symfony
-      - cache store docker-cache php.symfony.tar -f
+      - cache store php-symfony php.symfony.tar
     - name: hyperf
       commands:
-      - cache restore docker-cache
+      - cache restore php-hyperf
       - "[[ -f php.hyperf.tar ]] && docker load -i php.hyperf.tar || true"
       - mkdir -p .neph/php/hyperf
       - retry bin/neph php/hyperf --mode=CI
       - FRAMEWORK=php/hyperf bundle exec rspec .spec
       - docker save -o php.hyperf.tar php.hyperf
-      - cache store docker-cache php.hyperf.tar -f
+      - cache store php-hyperf php.hyperf.tar
     - name: siler-swoole
       commands:
-      - cache restore docker-cache
+      - cache restore php-siler-swoole
       - "[[ -f php.siler-swoole.tar ]] && docker load -i php.siler-swoole.tar || true"
       - mkdir -p .neph/php/siler-swoole
       - retry bin/neph php/siler-swoole --mode=CI
       - FRAMEWORK=php/siler-swoole bundle exec rspec .spec
       - docker save -o php.siler-swoole.tar php.siler-swoole
-      - cache store docker-cache php.siler-swoole.tar -f
+      - cache store php-siler-swoole php.siler-swoole.tar
     - name: simps
       commands:
-      - cache restore docker-cache
+      - cache restore php-simps
       - "[[ -f php.simps.tar ]] && docker load -i php.simps.tar || true"
       - mkdir -p .neph/php/simps
       - retry bin/neph php/simps --mode=CI
       - FRAMEWORK=php/simps bundle exec rspec .spec
       - docker save -o php.simps.tar php.simps
-      - cache store docker-cache php.simps.tar -f
+      - cache store php-simps php.simps.tar
     - name: hamlet
       commands:
-      - cache restore docker-cache
+      - cache restore php-hamlet
       - "[[ -f php.hamlet.tar ]] && docker load -i php.hamlet.tar || true"
       - mkdir -p .neph/php/hamlet
       - retry bin/neph php/hamlet --mode=CI
       - FRAMEWORK=php/hamlet bundle exec rspec .spec
       - docker save -o php.hamlet.tar php.hamlet
-      - cache store docker-cache php.hamlet.tar -f
+      - cache store php-hamlet php.hamlet.tar
     - name: swoft
       commands:
-      - cache restore docker-cache
+      - cache restore php-swoft
       - "[[ -f php.swoft.tar ]] && docker load -i php.swoft.tar || true"
       - mkdir -p .neph/php/swoft
       - retry bin/neph php/swoft --mode=CI
       - FRAMEWORK=php/swoft bundle exec rspec .spec
       - docker save -o php.swoft.tar php.swoft
-      - cache store docker-cache php.swoft.tar -f
+      - cache store php-swoft php.swoft.tar
     - name: mezzio
       commands:
-      - cache restore docker-cache
+      - cache restore php-mezzio
       - "[[ -f php.mezzio.tar ]] && docker load -i php.mezzio.tar || true"
       - mkdir -p .neph/php/mezzio
       - retry bin/neph php/mezzio --mode=CI
       - FRAMEWORK=php/mezzio bundle exec rspec .spec
       - docker save -o php.mezzio.tar php.mezzio
-      - cache store docker-cache php.mezzio.tar -f
+      - cache store php-mezzio php.mezzio.tar
     - name: ubiquity
       commands:
-      - cache restore docker-cache
+      - cache restore php-ubiquity
       - "[[ -f php.ubiquity.tar ]] && docker load -i php.ubiquity.tar || true"
       - mkdir -p .neph/php/ubiquity
       - retry bin/neph php/ubiquity --mode=CI
       - FRAMEWORK=php/ubiquity bundle exec rspec .spec
       - docker save -o php.ubiquity.tar php.ubiquity
-      - cache store docker-cache php.ubiquity.tar -f
+      - cache store php-ubiquity php.ubiquity.tar
     - name: imi
       commands:
-      - cache restore docker-cache
+      - cache restore php-imi
       - "[[ -f php.imi.tar ]] && docker load -i php.imi.tar || true"
       - mkdir -p .neph/php/imi
       - retry bin/neph php/imi --mode=CI
       - FRAMEWORK=php/imi bundle exec rspec .spec
       - docker save -o php.imi.tar php.imi
-      - cache store docker-cache php.imi.tar -f
+      - cache store php-imi php.imi.tar
     - name: lumen
       commands:
-      - cache restore docker-cache
+      - cache restore php-lumen
       - "[[ -f php.lumen.tar ]] && docker load -i php.lumen.tar || true"
       - mkdir -p .neph/php/lumen
       - retry bin/neph php/lumen --mode=CI
       - FRAMEWORK=php/lumen bundle exec rspec .spec
       - docker save -o php.lumen.tar php.lumen
-      - cache store docker-cache php.lumen.tar -f
+      - cache store php-lumen php.lumen.tar
     - name: sw-fw-less
       commands:
-      - cache restore docker-cache
+      - cache restore php-sw-fw-less
       - "[[ -f php.sw-fw-less.tar ]] && docker load -i php.sw-fw-less.tar || true"
       - mkdir -p .neph/php/sw-fw-less
       - retry bin/neph php/sw-fw-less --mode=CI
       - FRAMEWORK=php/sw-fw-less bundle exec rspec .spec
       - docker save -o php.sw-fw-less.tar php.sw-fw-less
-      - cache store docker-cache php.sw-fw-less.tar -f
+      - cache store php-sw-fw-less php.sw-fw-less.tar
     - name: nette
       commands:
-      - cache restore docker-cache
+      - cache restore php-nette
       - "[[ -f php.nette.tar ]] && docker load -i php.nette.tar || true"
       - mkdir -p .neph/php/nette
       - retry bin/neph php/nette --mode=CI
       - FRAMEWORK=php/nette bundle exec rspec .spec
       - docker save -o php.nette.tar php.nette
-      - cache store docker-cache php.nette.tar -f
+      - cache store php-nette php.nette.tar
     - name: laravel
       commands:
-      - cache restore docker-cache
+      - cache restore php-laravel
       - "[[ -f php.laravel.tar ]] && docker load -i php.laravel.tar || true"
       - mkdir -p .neph/php/laravel
       - retry bin/neph php/laravel --mode=CI
       - FRAMEWORK=php/laravel bundle exec rspec .spec
       - docker save -o php.laravel.tar php.laravel
-      - cache store docker-cache php.laravel.tar -f
+      - cache store php-laravel php.laravel.tar
     - name: yii
       commands:
-      - cache restore docker-cache
+      - cache restore php-yii
       - "[[ -f php.yii.tar ]] && docker load -i php.yii.tar || true"
       - mkdir -p .neph/php/yii
       - retry bin/neph php/yii --mode=CI
       - FRAMEWORK=php/yii bundle exec rspec .spec
       - docker save -o php.yii.tar php.yii
-      - cache store docker-cache php.yii.tar -f
+      - cache store php-yii php.yii.tar
     - name: chubbyphp
       commands:
-      - cache restore docker-cache
+      - cache restore php-chubbyphp
       - "[[ -f php.chubbyphp.tar ]] && docker load -i php.chubbyphp.tar || true"
       - mkdir -p .neph/php/chubbyphp
       - retry bin/neph php/chubbyphp --mode=CI
       - FRAMEWORK=php/chubbyphp bundle exec rspec .spec
       - docker save -o php.chubbyphp.tar php.chubbyphp
-      - cache store docker-cache php.chubbyphp.tar -f
+      - cache store php-chubbyphp php.chubbyphp.tar
     - name: ice
       commands:
-      - cache restore docker-cache
+      - cache restore php-ice
       - "[[ -f php.ice.tar ]] && docker load -i php.ice.tar || true"
       - mkdir -p .neph/php/ice
       - retry bin/neph php/ice --mode=CI
       - FRAMEWORK=php/ice bundle exec rspec .spec
       - docker save -o php.ice.tar php.ice
-      - cache store docker-cache php.ice.tar -f
+      - cache store php-ice php.ice.tar
     - name: slim
       commands:
-      - cache restore docker-cache
+      - cache restore php-slim
       - "[[ -f php.slim.tar ]] && docker load -i php.slim.tar || true"
       - mkdir -p .neph/php/slim
       - retry bin/neph php/slim --mode=CI
       - FRAMEWORK=php/slim bundle exec rspec .spec
       - docker save -o php.slim.tar php.slim
-      - cache store docker-cache php.slim.tar -f
+      - cache store php-slim php.slim.tar
     epilogue:
       always:
         commands:
@@ -1288,105 +1288,105 @@ blocks:
     jobs:
     - name: toro
       commands:
-      - cache restore docker-cache
+      - cache restore crystal-toro
       - "[[ -f crystal.toro.tar ]] && docker load -i crystal.toro.tar || true"
       - mkdir -p .neph/crystal/toro
       - retry bin/neph crystal/toro --mode=CI
       - FRAMEWORK=crystal/toro bundle exec rspec .spec
       - docker save -o crystal.toro.tar crystal.toro
-      - cache store docker-cache crystal.toro.tar -f
+      - cache store crystal-toro crystal.toro.tar
     - name: grip
       commands:
-      - cache restore docker-cache
+      - cache restore crystal-grip
       - "[[ -f crystal.grip.tar ]] && docker load -i crystal.grip.tar || true"
       - mkdir -p .neph/crystal/grip
       - retry bin/neph crystal/grip --mode=CI
       - FRAMEWORK=crystal/grip bundle exec rspec .spec
       - docker save -o crystal.grip.tar crystal.grip
-      - cache store docker-cache crystal.grip.tar -f
+      - cache store crystal-grip crystal.grip.tar
     - name: kemal
       commands:
-      - cache restore docker-cache
+      - cache restore crystal-kemal
       - "[[ -f crystal.kemal.tar ]] && docker load -i crystal.kemal.tar || true"
       - mkdir -p .neph/crystal/kemal
       - retry bin/neph crystal/kemal --mode=CI
       - FRAMEWORK=crystal/kemal bundle exec rspec .spec
       - docker save -o crystal.kemal.tar crystal.kemal
-      - cache store docker-cache crystal.kemal.tar -f
+      - cache store crystal-kemal crystal.kemal.tar
     - name: onyx
       commands:
-      - cache restore docker-cache
+      - cache restore crystal-onyx
       - "[[ -f crystal.onyx.tar ]] && docker load -i crystal.onyx.tar || true"
       - mkdir -p .neph/crystal/onyx
       - retry bin/neph crystal/onyx --mode=CI
       - FRAMEWORK=crystal/onyx bundle exec rspec .spec
       - docker save -o crystal.onyx.tar crystal.onyx
-      - cache store docker-cache crystal.onyx.tar -f
+      - cache store crystal-onyx crystal.onyx.tar
     - name: lucky
       commands:
-      - cache restore docker-cache
+      - cache restore crystal-lucky
       - "[[ -f crystal.lucky.tar ]] && docker load -i crystal.lucky.tar || true"
       - mkdir -p .neph/crystal/lucky
       - retry bin/neph crystal/lucky --mode=CI
       - FRAMEWORK=crystal/lucky bundle exec rspec .spec
       - docker save -o crystal.lucky.tar crystal.lucky
-      - cache store docker-cache crystal.lucky.tar -f
+      - cache store crystal-lucky crystal.lucky.tar
     - name: orion
       commands:
-      - cache restore docker-cache
+      - cache restore crystal-orion
       - "[[ -f crystal.orion.tar ]] && docker load -i crystal.orion.tar || true"
       - mkdir -p .neph/crystal/orion
       - retry bin/neph crystal/orion --mode=CI
       - FRAMEWORK=crystal/orion bundle exec rspec .spec
       - docker save -o crystal.orion.tar crystal.orion
-      - cache store docker-cache crystal.orion.tar -f
+      - cache store crystal-orion crystal.orion.tar
     - name: router.cr
       commands:
-      - cache restore docker-cache
+      - cache restore crystal-router.cr
       - "[[ -f crystal.router.cr.tar ]] && docker load -i crystal.router.cr.tar ||
         true"
       - mkdir -p .neph/crystal/router.cr
       - retry bin/neph crystal/router.cr --mode=CI
       - FRAMEWORK=crystal/router.cr bundle exec rspec .spec
       - docker save -o crystal.router.cr.tar crystal.router.cr
-      - cache store docker-cache crystal.router.cr.tar -f
+      - cache store crystal-router.cr crystal.router.cr.tar
     - name: amber
       commands:
-      - cache restore docker-cache
+      - cache restore crystal-amber
       - "[[ -f crystal.amber.tar ]] && docker load -i crystal.amber.tar || true"
       - mkdir -p .neph/crystal/amber
       - retry bin/neph crystal/amber --mode=CI
       - FRAMEWORK=crystal/amber bundle exec rspec .spec
       - docker save -o crystal.amber.tar crystal.amber
-      - cache store docker-cache crystal.amber.tar -f
+      - cache store crystal-amber crystal.amber.tar
     - name: athena
       commands:
-      - cache restore docker-cache
+      - cache restore crystal-athena
       - "[[ -f crystal.athena.tar ]] && docker load -i crystal.athena.tar || true"
       - mkdir -p .neph/crystal/athena
       - retry bin/neph crystal/athena --mode=CI
       - FRAMEWORK=crystal/athena bundle exec rspec .spec
       - docker save -o crystal.athena.tar crystal.athena
-      - cache store docker-cache crystal.athena.tar -f
+      - cache store crystal-athena crystal.athena.tar
     - name: shivneri
       commands:
-      - cache restore docker-cache
+      - cache restore crystal-shivneri
       - "[[ -f crystal.shivneri.tar ]] && docker load -i crystal.shivneri.tar || true"
       - mkdir -p .neph/crystal/shivneri
       - retry bin/neph crystal/shivneri --mode=CI
       - FRAMEWORK=crystal/shivneri bundle exec rspec .spec
       - docker save -o crystal.shivneri.tar crystal.shivneri
-      - cache store docker-cache crystal.shivneri.tar -f
+      - cache store crystal-shivneri crystal.shivneri.tar
     - name: spider-gazelle
       commands:
-      - cache restore docker-cache
+      - cache restore crystal-spider-gazelle
       - "[[ -f crystal.spider-gazelle.tar ]] && docker load -i crystal.spider-gazelle.tar
         || true"
       - mkdir -p .neph/crystal/spider-gazelle
       - retry bin/neph crystal/spider-gazelle --mode=CI
       - FRAMEWORK=crystal/spider-gazelle bundle exec rspec .spec
       - docker save -o crystal.spider-gazelle.tar crystal.spider-gazelle
-      - cache store docker-cache crystal.spider-gazelle.tar -f
+      - cache store crystal-spider-gazelle crystal.spider-gazelle.tar
     epilogue:
       always:
         commands:
@@ -1413,41 +1413,41 @@ blocks:
     jobs:
     - name: cowboy-stream
       commands:
-      - cache restore docker-cache
+      - cache restore elixir-cowboy-stream
       - "[[ -f elixir.cowboy-stream.tar ]] && docker load -i elixir.cowboy-stream.tar
         || true"
       - mkdir -p .neph/elixir/cowboy-stream
       - retry bin/neph elixir/cowboy-stream --mode=CI
       - FRAMEWORK=elixir/cowboy-stream bundle exec rspec .spec
       - docker save -o elixir.cowboy-stream.tar elixir.cowboy-stream
-      - cache store docker-cache elixir.cowboy-stream.tar -f
+      - cache store elixir-cowboy-stream elixir.cowboy-stream.tar
     - name: cowboy
       commands:
-      - cache restore docker-cache
+      - cache restore elixir-cowboy
       - "[[ -f elixir.cowboy.tar ]] && docker load -i elixir.cowboy.tar || true"
       - mkdir -p .neph/elixir/cowboy
       - retry bin/neph elixir/cowboy --mode=CI
       - FRAMEWORK=elixir/cowboy bundle exec rspec .spec
       - docker save -o elixir.cowboy.tar elixir.cowboy
-      - cache store docker-cache elixir.cowboy.tar -f
+      - cache store elixir-cowboy elixir.cowboy.tar
     - name: plug
       commands:
-      - cache restore docker-cache
+      - cache restore elixir-plug
       - "[[ -f elixir.plug.tar ]] && docker load -i elixir.plug.tar || true"
       - mkdir -p .neph/elixir/plug
       - retry bin/neph elixir/plug --mode=CI
       - FRAMEWORK=elixir/plug bundle exec rspec .spec
       - docker save -o elixir.plug.tar elixir.plug
-      - cache store docker-cache elixir.plug.tar -f
+      - cache store elixir-plug elixir.plug.tar
     - name: phoenix
       commands:
-      - cache restore docker-cache
+      - cache restore elixir-phoenix
       - "[[ -f elixir.phoenix.tar ]] && docker load -i elixir.phoenix.tar || true"
       - mkdir -p .neph/elixir/phoenix
       - retry bin/neph elixir/phoenix --mode=CI
       - FRAMEWORK=elixir/phoenix bundle exec rspec .spec
       - docker save -o elixir.phoenix.tar elixir.phoenix
-      - cache store docker-cache elixir.phoenix.tar -f
+      - cache store elixir-phoenix elixir.phoenix.tar
     epilogue:
       always:
         commands:
@@ -1474,31 +1474,31 @@ blocks:
     jobs:
     - name: akkahttp
       commands:
-      - cache restore docker-cache
+      - cache restore scala-akkahttp
       - "[[ -f scala.akkahttp.tar ]] && docker load -i scala.akkahttp.tar || true"
       - mkdir -p .neph/scala/akkahttp
       - retry bin/neph scala/akkahttp --mode=CI
       - FRAMEWORK=scala/akkahttp bundle exec rspec .spec
       - docker save -o scala.akkahttp.tar scala.akkahttp
-      - cache store docker-cache scala.akkahttp.tar -f
+      - cache store scala-akkahttp scala.akkahttp.tar
     - name: http4s
       commands:
-      - cache restore docker-cache
+      - cache restore scala-http4s
       - "[[ -f scala.http4s.tar ]] && docker load -i scala.http4s.tar || true"
       - mkdir -p .neph/scala/http4s
       - retry bin/neph scala/http4s --mode=CI
       - FRAMEWORK=scala/http4s bundle exec rspec .spec
       - docker save -o scala.http4s.tar scala.http4s
-      - cache store docker-cache scala.http4s.tar -f
+      - cache store scala-http4s scala.http4s.tar
     - name: play
       commands:
-      - cache restore docker-cache
+      - cache restore scala-play
       - "[[ -f scala.play.tar ]] && docker load -i scala.play.tar || true"
       - mkdir -p .neph/scala/play
       - retry bin/neph scala/play --mode=CI
       - FRAMEWORK=scala/play bundle exec rspec .spec
       - docker save -o scala.play.tar scala.play
-      - cache store docker-cache scala.play.tar -f
+      - cache store scala-play scala.play.tar
     epilogue:
       always:
         commands:
@@ -1525,22 +1525,22 @@ blocks:
     jobs:
     - name: kooby
       commands:
-      - cache restore docker-cache
+      - cache restore kotlin-kooby
       - "[[ -f kotlin.kooby.tar ]] && docker load -i kotlin.kooby.tar || true"
       - mkdir -p .neph/kotlin/kooby
       - retry bin/neph kotlin/kooby --mode=CI
       - FRAMEWORK=kotlin/kooby bundle exec rspec .spec
       - docker save -o kotlin.kooby.tar kotlin.kooby
-      - cache store docker-cache kotlin.kooby.tar -f
+      - cache store kotlin-kooby kotlin.kooby.tar
     - name: ktor
       commands:
-      - cache restore docker-cache
+      - cache restore kotlin-ktor
       - "[[ -f kotlin.ktor.tar ]] && docker load -i kotlin.ktor.tar || true"
       - mkdir -p .neph/kotlin/ktor
       - retry bin/neph kotlin/ktor --mode=CI
       - FRAMEWORK=kotlin/ktor bundle exec rspec .spec
       - docker save -o kotlin.ktor.tar kotlin.ktor
-      - cache store docker-cache kotlin.ktor.tar -f
+      - cache store kotlin-ktor kotlin.ktor.tar
     epilogue:
       always:
         commands:
@@ -1567,31 +1567,31 @@ blocks:
     jobs:
     - name: httpbeast
       commands:
-      - cache restore docker-cache
+      - cache restore nim-httpbeast
       - "[[ -f nim.httpbeast.tar ]] && docker load -i nim.httpbeast.tar || true"
       - mkdir -p .neph/nim/httpbeast
       - retry bin/neph nim/httpbeast --mode=CI
       - FRAMEWORK=nim/httpbeast bundle exec rspec .spec
       - docker save -o nim.httpbeast.tar nim.httpbeast
-      - cache store docker-cache nim.httpbeast.tar -f
+      - cache store nim-httpbeast nim.httpbeast.tar
     - name: rosencrantz
       commands:
-      - cache restore docker-cache
+      - cache restore nim-rosencrantz
       - "[[ -f nim.rosencrantz.tar ]] && docker load -i nim.rosencrantz.tar || true"
       - mkdir -p .neph/nim/rosencrantz
       - retry bin/neph nim/rosencrantz --mode=CI
       - FRAMEWORK=nim/rosencrantz bundle exec rspec .spec
       - docker save -o nim.rosencrantz.tar nim.rosencrantz
-      - cache store docker-cache nim.rosencrantz.tar -f
+      - cache store nim-rosencrantz nim.rosencrantz.tar
     - name: jester
       commands:
-      - cache restore docker-cache
+      - cache restore nim-jester
       - "[[ -f nim.jester.tar ]] && docker load -i nim.jester.tar || true"
       - mkdir -p .neph/nim/jester
       - retry bin/neph nim/jester --mode=CI
       - FRAMEWORK=nim/jester bundle exec rspec .spec
       - docker save -o nim.jester.tar nim.jester
-      - cache store docker-cache nim.jester.tar -f
+      - cache store nim-jester nim.jester.tar
     epilogue:
       always:
         commands:
@@ -1618,13 +1618,13 @@ blocks:
     jobs:
     - name: dancer2
       commands:
-      - cache restore docker-cache
+      - cache restore perl-dancer2
       - "[[ -f perl.dancer2.tar ]] && docker load -i perl.dancer2.tar || true"
       - mkdir -p .neph/perl/dancer2
       - retry bin/neph perl/dancer2 --mode=CI
       - FRAMEWORK=perl/dancer2 bundle exec rspec .spec
       - docker save -o perl.dancer2.tar perl.dancer2
-      - cache store docker-cache perl.dancer2.tar -f
+      - cache store perl-dancer2 perl.dancer2.tar
     epilogue:
       always:
         commands:
@@ -1651,22 +1651,22 @@ blocks:
     jobs:
     - name: agoo-c
       commands:
-      - cache restore docker-cache
+      - cache restore c-agoo-c
       - "[[ -f c.agoo-c.tar ]] && docker load -i c.agoo-c.tar || true"
       - mkdir -p .neph/c/agoo-c
       - retry bin/neph c/agoo-c --mode=CI
       - FRAMEWORK=c/agoo-c bundle exec rspec .spec
       - docker save -o c.agoo-c.tar c.agoo-c
-      - cache store docker-cache c.agoo-c.tar -f
+      - cache store c-agoo-c c.agoo-c.tar
     - name: kore
       commands:
-      - cache restore docker-cache
+      - cache restore c-kore
       - "[[ -f c.kore.tar ]] && docker load -i c.kore.tar || true"
       - mkdir -p .neph/c/kore
       - retry bin/neph c/kore --mode=CI
       - FRAMEWORK=c/kore bundle exec rspec .spec
       - docker save -o c.kore.tar c.kore
-      - cache store docker-cache c.kore.tar -f
+      - cache store c-kore c.kore.tar
     epilogue:
       always:
         commands:
@@ -1693,22 +1693,22 @@ blocks:
     jobs:
     - name: drogon
       commands:
-      - cache restore docker-cache
+      - cache restore cpp-drogon
       - "[[ -f cpp.drogon.tar ]] && docker load -i cpp.drogon.tar || true"
       - mkdir -p .neph/cpp/drogon
       - retry bin/neph cpp/drogon --mode=CI
       - FRAMEWORK=cpp/drogon bundle exec rspec .spec
       - docker save -o cpp.drogon.tar cpp.drogon
-      - cache store docker-cache cpp.drogon.tar -f
+      - cache store cpp-drogon cpp.drogon.tar
     - name: evhtp
       commands:
-      - cache restore docker-cache
+      - cache restore cpp-evhtp
       - "[[ -f cpp.evhtp.tar ]] && docker load -i cpp.evhtp.tar || true"
       - mkdir -p .neph/cpp/evhtp
       - retry bin/neph cpp/evhtp --mode=CI
       - FRAMEWORK=cpp/evhtp bundle exec rspec .spec
       - docker save -o cpp.evhtp.tar cpp.evhtp
-      - cache store docker-cache cpp.evhtp.tar -f
+      - cache store cpp-evhtp cpp.evhtp.tar
     epilogue:
       always:
         commands:
@@ -1735,122 +1735,122 @@ blocks:
     jobs:
     - name: grape
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-grape
       - "[[ -f ruby.grape.tar ]] && docker load -i ruby.grape.tar || true"
       - mkdir -p .neph/ruby/grape
       - retry bin/neph ruby/grape --mode=CI
       - FRAMEWORK=ruby/grape bundle exec rspec .spec
       - docker save -o ruby.grape.tar ruby.grape
-      - cache store docker-cache ruby.grape.tar -f
+      - cache store ruby-grape ruby.grape.tar
     - name: hanami
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-hanami
       - "[[ -f ruby.hanami.tar ]] && docker load -i ruby.hanami.tar || true"
       - mkdir -p .neph/ruby/hanami
       - retry bin/neph ruby/hanami --mode=CI
       - FRAMEWORK=ruby/hanami bundle exec rspec .spec
       - docker save -o ruby.hanami.tar ruby.hanami
-      - cache store docker-cache ruby.hanami.tar -f
+      - cache store ruby-hanami ruby.hanami.tar
     - name: cuba
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-cuba
       - "[[ -f ruby.cuba.tar ]] && docker load -i ruby.cuba.tar || true"
       - mkdir -p .neph/ruby/cuba
       - retry bin/neph ruby/cuba --mode=CI
       - FRAMEWORK=ruby/cuba bundle exec rspec .spec
       - docker save -o ruby.cuba.tar ruby.cuba
-      - cache store docker-cache ruby.cuba.tar -f
+      - cache store ruby-cuba ruby.cuba.tar
     - name: agoo
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-agoo
       - "[[ -f ruby.agoo.tar ]] && docker load -i ruby.agoo.tar || true"
       - mkdir -p .neph/ruby/agoo
       - retry bin/neph ruby/agoo --mode=CI
       - FRAMEWORK=ruby/agoo bundle exec rspec .spec
       - docker save -o ruby.agoo.tar ruby.agoo
-      - cache store docker-cache ruby.agoo.tar -f
+      - cache store ruby-agoo ruby.agoo.tar
     - name: roda
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-roda
       - "[[ -f ruby.roda.tar ]] && docker load -i ruby.roda.tar || true"
       - mkdir -p .neph/ruby/roda
       - retry bin/neph ruby/roda --mode=CI
       - FRAMEWORK=ruby/roda bundle exec rspec .spec
       - docker save -o ruby.roda.tar ruby.roda
-      - cache store docker-cache ruby.roda.tar -f
+      - cache store ruby-roda ruby.roda.tar
     - name: camping
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-camping
       - "[[ -f ruby.camping.tar ]] && docker load -i ruby.camping.tar || true"
       - mkdir -p .neph/ruby/camping
       - retry bin/neph ruby/camping --mode=CI
       - FRAMEWORK=ruby/camping bundle exec rspec .spec
       - docker save -o ruby.camping.tar ruby.camping
-      - cache store docker-cache ruby.camping.tar -f
+      - cache store ruby-camping ruby.camping.tar
     - name: rack-routing
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-rack-routing
       - "[[ -f ruby.rack-routing.tar ]] && docker load -i ruby.rack-routing.tar ||
         true"
       - mkdir -p .neph/ruby/rack-routing
       - retry bin/neph ruby/rack-routing --mode=CI
       - FRAMEWORK=ruby/rack-routing bundle exec rspec .spec
       - docker save -o ruby.rack-routing.tar ruby.rack-routing
-      - cache store docker-cache ruby.rack-routing.tar -f
+      - cache store ruby-rack-routing ruby.rack-routing.tar
     - name: flame
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-flame
       - "[[ -f ruby.flame.tar ]] && docker load -i ruby.flame.tar || true"
       - mkdir -p .neph/ruby/flame
       - retry bin/neph ruby/flame --mode=CI
       - FRAMEWORK=ruby/flame bundle exec rspec .spec
       - docker save -o ruby.flame.tar ruby.flame
-      - cache store docker-cache ruby.flame.tar -f
+      - cache store ruby-flame ruby.flame.tar
     - name: rails
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-rails
       - "[[ -f ruby.rails.tar ]] && docker load -i ruby.rails.tar || true"
       - mkdir -p .neph/ruby/rails
       - retry bin/neph ruby/rails --mode=CI
       - FRAMEWORK=ruby/rails bundle exec rspec .spec
       - docker save -o ruby.rails.tar ruby.rails
-      - cache store docker-cache ruby.rails.tar -f
+      - cache store ruby-rails ruby.rails.tar
     - name: rack-app
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-rack-app
       - "[[ -f ruby.rack-app.tar ]] && docker load -i ruby.rack-app.tar || true"
       - mkdir -p .neph/ruby/rack-app
       - retry bin/neph ruby/rack-app --mode=CI
       - FRAMEWORK=ruby/rack-app bundle exec rspec .spec
       - docker save -o ruby.rack-app.tar ruby.rack-app
-      - cache store docker-cache ruby.rack-app.tar -f
+      - cache store ruby-rack-app ruby.rack-app.tar
     - name: sinatra
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-sinatra
       - "[[ -f ruby.sinatra.tar ]] && docker load -i ruby.sinatra.tar || true"
       - mkdir -p .neph/ruby/sinatra
       - retry bin/neph ruby/sinatra --mode=CI
       - FRAMEWORK=ruby/sinatra bundle exec rspec .spec
       - docker save -o ruby.sinatra.tar ruby.sinatra
-      - cache store docker-cache ruby.sinatra.tar -f
+      - cache store ruby-sinatra ruby.sinatra.tar
     - name: hanami-api
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-hanami-api
       - "[[ -f ruby.hanami-api.tar ]] && docker load -i ruby.hanami-api.tar || true"
       - mkdir -p .neph/ruby/hanami-api
       - retry bin/neph ruby/hanami-api --mode=CI
       - FRAMEWORK=ruby/hanami-api bundle exec rspec .spec
       - docker save -o ruby.hanami-api.tar ruby.hanami-api
-      - cache store docker-cache ruby.hanami-api.tar -f
+      - cache store ruby-hanami-api ruby.hanami-api.tar
     - name: syro
       commands:
-      - cache restore docker-cache
+      - cache restore ruby-syro
       - "[[ -f ruby.syro.tar ]] && docker load -i ruby.syro.tar || true"
       - mkdir -p .neph/ruby/syro
       - retry bin/neph ruby/syro --mode=CI
       - FRAMEWORK=ruby/syro bundle exec rspec .spec
       - docker save -o ruby.syro.tar ruby.syro
-      - cache store docker-cache ruby.syro.tar -f
+      - cache store ruby-syro ruby.syro.tar
     epilogue:
       always:
         commands:
@@ -1877,13 +1877,13 @@ blocks:
     jobs:
     - name: merly
       commands:
-      - cache restore docker-cache
+      - cache restore julia-merly
       - "[[ -f julia.merly.tar ]] && docker load -i julia.merly.tar || true"
       - mkdir -p .neph/julia/merly
       - retry bin/neph julia/merly --mode=CI
       - FRAMEWORK=julia/merly bundle exec rspec .spec
       - docker save -o julia.merly.tar julia.merly
-      - cache store docker-cache julia.merly.tar -f
+      - cache store julia-merly julia.merly.tar
     epilogue:
       always:
         commands:
@@ -1910,217 +1910,217 @@ blocks:
     jobs:
     - name: feathersjs
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-feathersjs
       - "[[ -f javascript.feathersjs.tar ]] && docker load -i javascript.feathersjs.tar
         || true"
       - mkdir -p .neph/javascript/feathersjs
       - retry bin/neph javascript/feathersjs --mode=CI
       - FRAMEWORK=javascript/feathersjs bundle exec rspec .spec
       - docker save -o javascript.feathersjs.tar javascript.feathersjs
-      - cache store docker-cache javascript.feathersjs.tar -f
+      - cache store javascript-feathersjs javascript.feathersjs.tar
     - name: rayo
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-rayo
       - "[[ -f javascript.rayo.tar ]] && docker load -i javascript.rayo.tar || true"
       - mkdir -p .neph/javascript/rayo
       - retry bin/neph javascript/rayo --mode=CI
       - FRAMEWORK=javascript/rayo bundle exec rspec .spec
       - docker save -o javascript.rayo.tar javascript.rayo
-      - cache store docker-cache javascript.rayo.tar -f
+      - cache store javascript-rayo javascript.rayo.tar
     - name: muneem
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-muneem
       - "[[ -f javascript.muneem.tar ]] && docker load -i javascript.muneem.tar ||
         true"
       - mkdir -p .neph/javascript/muneem
       - retry bin/neph javascript/muneem --mode=CI
       - FRAMEWORK=javascript/muneem bundle exec rspec .spec
       - docker save -o javascript.muneem.tar javascript.muneem
-      - cache store docker-cache javascript.muneem.tar -f
+      - cache store javascript-muneem javascript.muneem.tar
     - name: foxify
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-foxify
       - "[[ -f javascript.foxify.tar ]] && docker load -i javascript.foxify.tar ||
         true"
       - mkdir -p .neph/javascript/foxify
       - retry bin/neph javascript/foxify --mode=CI
       - FRAMEWORK=javascript/foxify bundle exec rspec .spec
       - docker save -o javascript.foxify.tar javascript.foxify
-      - cache store docker-cache javascript.foxify.tar -f
+      - cache store javascript-foxify javascript.foxify.tar
     - name: 0http
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-0http
       - "[[ -f javascript.0http.tar ]] && docker load -i javascript.0http.tar || true"
       - mkdir -p .neph/javascript/0http
       - retry bin/neph javascript/0http --mode=CI
       - FRAMEWORK=javascript/0http bundle exec rspec .spec
       - docker save -o javascript.0http.tar javascript.0http
-      - cache store docker-cache javascript.0http.tar -f
+      - cache store javascript-0http javascript.0http.tar
     - name: koa
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-koa
       - "[[ -f javascript.koa.tar ]] && docker load -i javascript.koa.tar || true"
       - mkdir -p .neph/javascript/koa
       - retry bin/neph javascript/koa --mode=CI
       - FRAMEWORK=javascript/koa bundle exec rspec .spec
       - docker save -o javascript.koa.tar javascript.koa
-      - cache store docker-cache javascript.koa.tar -f
+      - cache store javascript-koa javascript.koa.tar
     - name: sifrr
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-sifrr
       - "[[ -f javascript.sifrr.tar ]] && docker load -i javascript.sifrr.tar || true"
       - mkdir -p .neph/javascript/sifrr
       - retry bin/neph javascript/sifrr --mode=CI
       - FRAMEWORK=javascript/sifrr bundle exec rspec .spec
       - docker save -o javascript.sifrr.tar javascript.sifrr
-      - cache store docker-cache javascript.sifrr.tar -f
+      - cache store javascript-sifrr javascript.sifrr.tar
     - name: nestjs-express
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-nestjs-express
       - "[[ -f javascript.nestjs-express.tar ]] && docker load -i javascript.nestjs-express.tar
         || true"
       - mkdir -p .neph/javascript/nestjs-express
       - retry bin/neph javascript/nestjs-express --mode=CI
       - FRAMEWORK=javascript/nestjs-express bundle exec rspec .spec
       - docker save -o javascript.nestjs-express.tar javascript.nestjs-express
-      - cache store docker-cache javascript.nestjs-express.tar -f
+      - cache store javascript-nestjs-express javascript.nestjs-express.tar
     - name: polka
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-polka
       - "[[ -f javascript.polka.tar ]] && docker load -i javascript.polka.tar || true"
       - mkdir -p .neph/javascript/polka
       - retry bin/neph javascript/polka --mode=CI
       - FRAMEWORK=javascript/polka bundle exec rspec .spec
       - docker save -o javascript.polka.tar javascript.polka
-      - cache store docker-cache javascript.polka.tar -f
+      - cache store javascript-polka javascript.polka.tar
     - name: polkadot
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-polkadot
       - "[[ -f javascript.polkadot.tar ]] && docker load -i javascript.polkadot.tar
         || true"
       - mkdir -p .neph/javascript/polkadot
       - retry bin/neph javascript/polkadot --mode=CI
       - FRAMEWORK=javascript/polkadot bundle exec rspec .spec
       - docker save -o javascript.polkadot.tar javascript.polkadot
-      - cache store docker-cache javascript.polkadot.tar -f
+      - cache store javascript-polkadot javascript.polkadot.tar
     - name: express
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-express
       - "[[ -f javascript.express.tar ]] && docker load -i javascript.express.tar
         || true"
       - mkdir -p .neph/javascript/express
       - retry bin/neph javascript/express --mode=CI
       - FRAMEWORK=javascript/express bundle exec rspec .spec
       - docker save -o javascript.express.tar javascript.express
-      - cache store docker-cache javascript.express.tar -f
+      - cache store javascript-express javascript.express.tar
     - name: restify
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-restify
       - "[[ -f javascript.restify.tar ]] && docker load -i javascript.restify.tar
         || true"
       - mkdir -p .neph/javascript/restify
       - retry bin/neph javascript/restify --mode=CI
       - FRAMEWORK=javascript/restify bundle exec rspec .spec
       - docker save -o javascript.restify.tar javascript.restify
-      - cache store docker-cache javascript.restify.tar -f
+      - cache store javascript-restify javascript.restify.tar
     - name: hapi
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-hapi
       - "[[ -f javascript.hapi.tar ]] && docker load -i javascript.hapi.tar || true"
       - mkdir -p .neph/javascript/hapi
       - retry bin/neph javascript/hapi --mode=CI
       - FRAMEWORK=javascript/hapi bundle exec rspec .spec
       - docker save -o javascript.hapi.tar javascript.hapi
-      - cache store docker-cache javascript.hapi.tar -f
+      - cache store javascript-hapi javascript.hapi.tar
     - name: sails
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-sails
       - "[[ -f javascript.sails.tar ]] && docker load -i javascript.sails.tar || true"
       - mkdir -p .neph/javascript/sails
       - retry bin/neph javascript/sails --mode=CI
       - FRAMEWORK=javascript/sails bundle exec rspec .spec
       - docker save -o javascript.sails.tar javascript.sails
-      - cache store docker-cache javascript.sails.tar -f
+      - cache store javascript-sails javascript.sails.tar
     - name: nanoexpress-pro
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-nanoexpress-pro
       - "[[ -f javascript.nanoexpress-pro.tar ]] && docker load -i javascript.nanoexpress-pro.tar
         || true"
       - mkdir -p .neph/javascript/nanoexpress-pro
       - retry bin/neph javascript/nanoexpress-pro --mode=CI
       - FRAMEWORK=javascript/nanoexpress-pro bundle exec rspec .spec
       - docker save -o javascript.nanoexpress-pro.tar javascript.nanoexpress-pro
-      - cache store docker-cache javascript.nanoexpress-pro.tar -f
+      - cache store javascript-nanoexpress-pro javascript.nanoexpress-pro.tar
     - name: fastify
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-fastify
       - "[[ -f javascript.fastify.tar ]] && docker load -i javascript.fastify.tar
         || true"
       - mkdir -p .neph/javascript/fastify
       - retry bin/neph javascript/fastify --mode=CI
       - FRAMEWORK=javascript/fastify bundle exec rspec .spec
       - docker save -o javascript.fastify.tar javascript.fastify
-      - cache store docker-cache javascript.fastify.tar -f
+      - cache store javascript-fastify javascript.fastify.tar
     - name: nestjs-fastify
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-nestjs-fastify
       - "[[ -f javascript.nestjs-fastify.tar ]] && docker load -i javascript.nestjs-fastify.tar
         || true"
       - mkdir -p .neph/javascript/nestjs-fastify
       - retry bin/neph javascript/nestjs-fastify --mode=CI
       - FRAMEWORK=javascript/nestjs-fastify bundle exec rspec .spec
       - docker save -o javascript.nestjs-fastify.tar javascript.nestjs-fastify
-      - cache store docker-cache javascript.nestjs-fastify.tar -f
+      - cache store javascript-nestjs-fastify javascript.nestjs-fastify.tar
     - name: turbo-polka
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-turbo-polka
       - "[[ -f javascript.turbo-polka.tar ]] && docker load -i javascript.turbo-polka.tar
         || true"
       - mkdir -p .neph/javascript/turbo-polka
       - retry bin/neph javascript/turbo-polka --mode=CI
       - FRAMEWORK=javascript/turbo-polka bundle exec rspec .spec
       - docker save -o javascript.turbo-polka.tar javascript.turbo-polka
-      - cache store docker-cache javascript.turbo-polka.tar -f
+      - cache store javascript-turbo-polka javascript.turbo-polka.tar
     - name: restana
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-restana
       - "[[ -f javascript.restana.tar ]] && docker load -i javascript.restana.tar
         || true"
       - mkdir -p .neph/javascript/restana
       - retry bin/neph javascript/restana --mode=CI
       - FRAMEWORK=javascript/restana bundle exec rspec .spec
       - docker save -o javascript.restana.tar javascript.restana
-      - cache store docker-cache javascript.restana.tar -f
+      - cache store javascript-restana javascript.restana.tar
     - name: moleculer
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-moleculer
       - "[[ -f javascript.moleculer.tar ]] && docker load -i javascript.moleculer.tar
         || true"
       - mkdir -p .neph/javascript/moleculer
       - retry bin/neph javascript/moleculer --mode=CI
       - FRAMEWORK=javascript/moleculer bundle exec rspec .spec
       - docker save -o javascript.moleculer.tar javascript.moleculer
-      - cache store docker-cache javascript.moleculer.tar -f
+      - cache store javascript-moleculer javascript.moleculer.tar
     - name: nanoexpress
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-nanoexpress
       - "[[ -f javascript.nanoexpress.tar ]] && docker load -i javascript.nanoexpress.tar
         || true"
       - mkdir -p .neph/javascript/nanoexpress
       - retry bin/neph javascript/nanoexpress --mode=CI
       - FRAMEWORK=javascript/nanoexpress bundle exec rspec .spec
       - docker save -o javascript.nanoexpress.tar javascript.nanoexpress
-      - cache store docker-cache javascript.nanoexpress.tar -f
+      - cache store javascript-nanoexpress javascript.nanoexpress.tar
     - name: iotjs-express
       commands:
-      - cache restore docker-cache
+      - cache restore javascript-iotjs-express
       - "[[ -f javascript.iotjs-express.tar ]] && docker load -i javascript.iotjs-express.tar
         || true"
       - mkdir -p .neph/javascript/iotjs-express
       - retry bin/neph javascript/iotjs-express --mode=CI
       - FRAMEWORK=javascript/iotjs-express bundle exec rspec .spec
       - docker save -o javascript.iotjs-express.tar javascript.iotjs-express
-      - cache store docker-cache javascript.iotjs-express.tar -f
+      - cache store javascript-iotjs-express javascript.iotjs-express.tar
     epilogue:
       always:
         commands:
