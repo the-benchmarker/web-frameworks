@@ -76,7 +76,7 @@ end
 
 class App < Admiral::Command
   class ReadmeWriter < Admiral::Command
-    define_flag concurrencies : Array(Int32), description: "Concurrency level", required: true, long: "concurrency", short: "c"
+    define_flag concurrencies : Array(Int32), description: "Concurrency level", long: "concurrency", short: "c", default: [64,256,512]
 
     def run
       frameworks = list_of
