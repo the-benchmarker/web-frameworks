@@ -2,7 +2,6 @@ open Frank.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Http
 open Microsoft.AspNetCore.Routing
-open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
 open System.Threading.Tasks
 
@@ -28,11 +27,10 @@ let user =
 
 [<EntryPoint>]
 let main args =
-    let builder =
-        webHost (WebHostBuilder().UseKestrel(fun c -> c.AddServerHeader <- false).ConfigureLogging(fun c -> c.ClearProviders() |> ignore)) {
-            resource home
-            resource userId
-            resource user
-        }
-    builder.Build().Run()
+    webHost args {
+        configure (fun bldr -> bldr.UseKestrel(fun c -> c.AddServerHeader <- false).ConfigureLogging(fun c -> c.ClearProviders() |> ignore))
+        resource home
+        resource userId
+        resource user
+    }
     0
