@@ -26,6 +26,40 @@ blocks:
       always:
         commands:
         - artifact push workflow bin
+- name: v
+  dependencies:
+  - setup
+  run:
+    when: change_in('/v/')
+  task:
+    prologue:
+      commands:
+      - checkout
+      - cache restore
+      - bundle install
+      - artifact pull workflow bin
+      - find bin -type f -exec chmod +x {} \;
+      - rake config
+    env_vars:
+    - name: CLEAN
+      value: 'off'
+    - name: COLLECT
+      value: 'off'
+    jobs:
+    - name: vape
+      commands:
+      - cache restore v-vape
+      - "[[ -f v.vape.tar ]] && docker load -i v.vape.tar || true"
+      - mkdir -p .neph/v/vape
+      - retry bin/neph v/vape --mode=CI
+      - FRAMEWORK=v/vape bundle exec rspec .spec
+      - docker save -o v.vape.tar v.vape
+      - cache delete v-vape
+      - cache store v-vape v.vape.tar
+    epilogue:
+      always:
+        commands:
+        - artifact push workflow .neph
 - name: go
   dependencies:
   - setup
@@ -893,6 +927,16 @@ blocks:
     - name: COLLECT
       value: 'off'
     jobs:
+    - name: carter
+      commands:
+      - cache restore csharp-carter
+      - "[[ -f csharp.carter.tar ]] && docker load -i csharp.carter.tar || true"
+      - mkdir -p .neph/csharp/carter
+      - retry bin/neph csharp/carter --mode=CI
+      - FRAMEWORK=csharp/carter bundle exec rspec .spec
+      - docker save -o csharp.carter.tar csharp.carter
+      - cache delete csharp-carter
+      - cache store csharp-carter csharp.carter.tar
     - name: aspnetcore
       commands:
       - cache restore csharp-aspnetcore
@@ -1053,6 +1097,27 @@ blocks:
       - docker save -o fsharp.falco.tar fsharp.falco
       - cache delete fsharp-falco
       - cache store fsharp-falco fsharp.falco.tar
+    - name: saturn
+      commands:
+      - cache restore fsharp-saturn
+      - "[[ -f fsharp.saturn.tar ]] && docker load -i fsharp.saturn.tar || true"
+      - mkdir -p .neph/fsharp/saturn
+      - retry bin/neph fsharp/saturn --mode=CI
+      - FRAMEWORK=fsharp/saturn bundle exec rspec .spec
+      - docker save -o fsharp.saturn.tar fsharp.saturn
+      - cache delete fsharp-saturn
+      - cache store fsharp-saturn fsharp.saturn.tar
+    - name: websharper
+      commands:
+      - cache restore fsharp-websharper
+      - "[[ -f fsharp.websharper.tar ]] && docker load -i fsharp.websharper.tar ||
+        true"
+      - mkdir -p .neph/fsharp/websharper
+      - retry bin/neph fsharp/websharper --mode=CI
+      - FRAMEWORK=fsharp/websharper bundle exec rspec .spec
+      - docker save -o fsharp.websharper.tar fsharp.websharper
+      - cache delete fsharp-websharper
+      - cache store fsharp-websharper fsharp.websharper.tar
     - name: giraffe
       commands:
       - cache restore fsharp-giraffe
@@ -1710,6 +1775,16 @@ blocks:
       - docker save -o nim.rosencrantz.tar nim.rosencrantz
       - cache delete nim-rosencrantz
       - cache store nim-rosencrantz nim.rosencrantz.tar
+    - name: whip
+      commands:
+      - cache restore nim-whip
+      - "[[ -f nim.whip.tar ]] && docker load -i nim.whip.tar || true"
+      - mkdir -p .neph/nim/whip
+      - retry bin/neph nim/whip --mode=CI
+      - FRAMEWORK=nim/whip bundle exec rspec .spec
+      - docker save -o nim.whip.tar nim.whip
+      - cache delete nim-whip
+      - cache store nim-whip nim.whip.tar
     - name: jester
       commands:
       - cache restore nim-jester
