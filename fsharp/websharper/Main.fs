@@ -1,6 +1,5 @@
 namespace web
 
-open Microsoft.AspNetCore
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Http
@@ -17,18 +16,13 @@ type EndPoint =
     | [<EndPoint "POST /user">] User
 
 module Site =
-    let Text (msg: string) =
-        Content.Custom(
-            WriteBody = fun s ->
-                let bytes = System.Text.Encoding.UTF8.GetBytes(msg)
-                s.Write(bytes, 0, bytes.Length))
-
+    let encoding = System.Text.UTF8Encoding(false)
     let Main =
         Application.MultiPage(fun _ endpoint ->
             match endpoint with
-            | Home -> Text ""
-            | GetUser id -> Text(id)
-            | User -> Text "")
+            | Home -> Content.Ok
+            | GetUser id -> Content.Text(id, encoding=encoding)
+            | User -> Content.Ok)
 
 type Website(config: IConfiguration) =
     inherit SiteletService<EndPoint>()
