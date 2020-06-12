@@ -6,6 +6,6 @@ files:
   - target/benchmark-0.0.1-SNAPSHOT.jar
 
 command: >
-  java 
-  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts 
+  java
+  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts
   -jar target/benchmark-0.0.1-SNAPSHOT.jar
