@@ -1,4 +1,4 @@
-FROM gradle:jdk11
+FROM gradle:jdk11 As build
 
 WORKDIR /usr/src/app
 
@@ -14,7 +14,7 @@ FROM openjdk:11-jre-slim
 
 WORKDIR /usr/src/app
 
-COPY --from=0 /usr/src/app/build/libs/server.jar /usr/src/app/build/libs/server.jar
+COPY --from=build /usr/src/app/build/libs/server.jar /usr/src/app/build/libs/server.jar
 
 CMD java -server -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:+AlwaysPreTouch -jar /usr/src/app/build/libs/server.jar
 
