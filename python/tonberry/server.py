@@ -1,6 +1,4 @@
-import uvicorn
-
-from tonberry import create_app, expose
+from tonberry import expose
 from tonberry.content_types import TextPlain
 
 
