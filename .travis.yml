@@ -82,6 +82,7 @@ env:
       - FRAMEWORK=php.slim
       - FRAMEWORK=php.ice
       - FRAMEWORK=php.chubbyphp
+      - FRAMEWORK=php.chubbyphp-roadrunner
       - FRAMEWORK=php.yii
       - FRAMEWORK=php.laravel
       - FRAMEWORK=php.nette
