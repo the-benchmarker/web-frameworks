@@ -353,7 +353,6 @@ namespace :ci do
         name: "setup",
         commands: [
           "checkout",
-          "cache restore",
           "sudo snap install crystal --classic",
           "sudo apt-get -y install libyaml-dev libevent-dev",
           "bundle install",
@@ -364,7 +363,7 @@ namespace :ci do
       }],
       epilogue: {
         always: {
-          commands: ["artifact push workflow bin"],
+          commands: ["cache store bin bin", "cache store bundler vendor/bundle"],
         },
       },
     } }]
@@ -374,7 +373,7 @@ namespace :ci do
         "checkout",
         "cache restore",
         "bundle install",
-        "artifact pull workflow bin",
+        "cache restore bin,bundler",
         "find bin -type f -exec chmod +x {} \\;",
         "rake config",
       ] }, 'env_vars': [
@@ -383,7 +382,11 @@ namespace :ci do
       ], jobs: [], epilogue: { always: { commands: ["artifact push workflow .neph"] } } } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
-        block[:task][:jobs] << { name: framework, commands: ["cache restore #{language}-#{framework}", "[[ -f #{language}.#{framework}.tar ]] && docker load -i #{language}.#{framework}.tar || true", "mkdir -p .neph/#{language}/#{framework}", "retry bin/neph #{language}/#{framework} --mode=CI", "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec", "docker save -o #{language}.#{framework}.tar #{language}.#{framework}", "cache delete #{language}-#{framework}", "cache store #{language}-#{framework} #{language}.#{framework}.tar"] }
+        block[:task][:jobs] << { name: framework, commands: [
+          "mkdir -p .neph/#{language}/#{framework}",
+          "retry bin/neph #{language}/#{framework} --mode=CI",
+          "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec",
+        ] }
       end
       blocks << block
     end
