@@ -355,7 +355,6 @@ namespace :ci do
           "checkout",
           "sudo snap install crystal --classic",
           "sudo apt-get -y install libyaml-dev libevent-dev",
-          "bundle install",
           "cache store",
           "rake config",
           "shards build --static",
@@ -363,7 +362,7 @@ namespace :ci do
       }],
       epilogue: {
         always: {
-          commands: ["cache store bin bin", "cache store bundler vendor/bundle"],
+          commands: ["cache store bin bin"],
         },
       },
     } }]
@@ -371,11 +370,10 @@ namespace :ci do
       language, = path.split(File::Separator)
       block = { name: language, dependencies: ["setup"], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
         "checkout",
-        "cache restore",
         "bundle install",
-        "cache restore bin,bundler",
+        "cache restore bin",
         "find bin -type f -exec chmod +x {} \\;",
-        "rake config",
+        "bundle exec rake config",
       ] }, 'env_vars': [
         { name: "CLEAN", value: "off" },
         { name: "COLLECT", 'value': "off" },

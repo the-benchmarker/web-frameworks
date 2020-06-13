@@ -17,7 +17,6 @@ blocks:
       - checkout
       - sudo snap install crystal --classic
       - sudo apt-get -y install libyaml-dev libevent-dev
-      - bundle install
       - cache store
       - rake config
       - shards build --static
@@ -25,7 +24,6 @@ blocks:
       always:
         commands:
         - cache store bin bin
-        - cache store bundler vendor/bundle
 - name: pony
   dependencies:
   - setup
@@ -35,11 +33,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -64,11 +61,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -213,11 +209,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -257,11 +252,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -401,11 +395,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -435,11 +428,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -479,11 +471,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -513,11 +504,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -542,11 +532,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -586,11 +575,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -640,11 +628,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -704,11 +691,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -738,11 +724,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -817,11 +802,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -851,11 +835,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1015,11 +998,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1054,11 +1036,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1088,11 +1069,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1137,11 +1117,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1171,11 +1150,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1200,11 +1178,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1334,11 +1311,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1368,11 +1344,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1397,11 +1372,10 @@ blocks:
     prologue:
       commands:
       - checkout
-      - cache restore
       - bundle install
-      - cache restore bin,bundler
+      - cache restore bin
       - find bin -type f -exec chmod +x {} \;
-      - rake config
+      - bundle exec rake config
     env_vars:
     - name: CLEAN
       value: 'off'
