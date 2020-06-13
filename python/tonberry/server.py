@@ -16,8 +16,3 @@ class Root:
     @expose.get
     async def user(self, user_id: int) -> TextPlain:
         return user_id
-
-
-if __name__ == "__main__":
-    app = create_app(root=Root)
-    uvicorn.run(app, host="0.0.0.0", port=3000)
