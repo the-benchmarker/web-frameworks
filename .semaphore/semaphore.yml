@@ -18,7 +18,8 @@ blocks:
       - sudo snap install crystal --classic
       - sudo apt-get -y install libyaml-dev libevent-dev
       - cache store
-      - rake config
+      - bundle install
+      - bundle exec rake config
       - shards build --static
     epilogue:
       always:
