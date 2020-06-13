@@ -42,7 +42,8 @@ dependencies {
 }
 
 shadowJar {
-    baseName = 'my-application'
+    mergeServiceFiles()
+    baseName = "server"
     classifier = null
     version = null
 }

@@ -1,16 +1,3 @@
 framework:
   website: jooby.io
   version: 2.8
-
-image: gradle:6.1-jdk8
-
-build:
-  - gradle clean shadowJar
-
-files:
-  - build/libs/benchmark.jar
-
-command: >
-  java -server
-  -Xms4g -Xmx4g -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:-UseBiasedLocking -XX:+UseStringDeduplication
-  -jar build/libs/benchmark.jar benchmark.AppKt
