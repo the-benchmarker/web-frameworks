@@ -2,7 +2,14 @@ framework:
   github: chubbyphp/chubbyphp-framework
   version: 3.0
 
-before_command:
+files:
+  - composer.json
+  - "**/*.php"
+  - .rr.yaml
+
+bootstrap:
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
   - vendor/bin/rr get-binary
 
-command: ./rr serve -v -d
+command: /opt/web/rr serve
