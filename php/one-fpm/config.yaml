@@ -2,10 +2,6 @@ framework:
   github: lizhichao/one
   version: 2.0
 
-before_command:
-  - mkdir -p App/RunCache
-  - chmod 777 App/RunCache
-
 deps:
   - nginx
   - php
