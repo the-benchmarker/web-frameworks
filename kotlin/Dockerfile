@@ -8,7 +8,7 @@ USER gradle
 
 COPY . ./
 
-RUN gradle build
+RUN gradle clean build
 
 FROM openjdk:11-jre-slim
 
