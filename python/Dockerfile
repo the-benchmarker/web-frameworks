@@ -23,9 +23,9 @@ WORKDIR /opt/web
   ENV {{{.}}}
 {{/environment}}
 
-{{#before_command}}
+{{#bootstrap}}
   RUN {{{.}}}
-{{/before_command}}
+{{/bootstrap}}
 
 {{#bootstrap}}
   RUN {{{.}}}
