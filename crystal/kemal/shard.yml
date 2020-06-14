@@ -11,6 +11,6 @@ targets:
 dependencies:
   kemal:
     github: kemalcr/kemal
-    kemal: ~> 0.26.0
+    branch: master
 
 license: MIT
