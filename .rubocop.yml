@@ -1,5 +1,4 @@
 AllCops:
-
   Exclude:
     - Rakefile
     - "lib/*" # this is from crystal build
@@ -28,7 +27,6 @@ Naming/AccessorMethodName:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
-
 Metrics/BlockLength:
   Exclude:
-    - '.spec/**'
+    - ".spec/**"

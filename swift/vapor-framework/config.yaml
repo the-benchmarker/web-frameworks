@@ -4,8 +4,8 @@ framework:
   name: vapor
 
 environment:
-   SERVER_HOSTNAME: 0.0.0.0
-   SERVER_PORT: 3000
-   VAPOR_ENV: production
+  SERVER_HOSTNAME: 0.0.0.0
+  SERVER_PORT: 3000
+  VAPOR_ENV: production
 
 command: /opt/web/.build/release/server serve
