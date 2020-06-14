@@ -16,10 +16,6 @@ RUN stable fetch
   ENV {{{.}}}
 {{/environment}}
 
-{{#before_command}}
-  RUN {{{.}}}
-{{/before_command}}
-
 RUN stable env ponyc -Dopenssl_1.1.x -Dstatic
 
 FROM ubuntu 
