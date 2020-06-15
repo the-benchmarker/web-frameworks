@@ -368,7 +368,9 @@ namespace :ci do
     Dir.glob("*/config.yaml").each do |path|
       language, = path.split(File::Separator)
       block = { name: language, dependencies: ["setup"], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
-        "cache restore $SEMAPHORE_GIT_SHA,bin,built-in",
+        "cache restore $SEMAPHORE_GIT_SHA",
+        "cache restore bin",
+        "cache restore built-in",
         "find bin -type f -exec chmod +x {} \\;",
         "bundle config path .cache",
         "bundle exec rake config",
