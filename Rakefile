@@ -356,17 +356,14 @@ namespace :ci do
           "cache store $SEMAPHORE_GIT_SHA .",
           "sudo snap install crystal --classic",
           "sudo apt-get -y install libyaml-dev libevent-dev",
-          "cache store",
+          "shards build --static",
+          "cache store bin bin",
+          "bundle config path .cache",
           "bundle install",
           "bundle exec rake config",
-          "shards build --static",
+          "cache store built-in .cache",
         ],
       }],
-      epilogue: {
-        always: {
-          commands: ["cache store bin bin"],
-        },
-      },
     } }]
     Dir.glob("*/config.yaml").each do |path|
       language, = path.split(File::Separator)
@@ -375,6 +372,8 @@ namespace :ci do
         "bundle install",
         "cache restore bin",
         "find bin -type f -exec chmod +x {} \\;",
+        "cache restore built-in",
+        "bundle config path .cache",
         "bundle exec rake config",
       ] }, 'env_vars': [
         { name: "CLEAN", value: "off" },
