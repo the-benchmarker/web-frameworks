@@ -15,6 +15,7 @@ blocks:
     - name: setup
       commands:
       - checkout
+      - cache store $SEMAPHORE_GIT_SHA .
       - sudo snap install crystal --classic
       - sudo apt-get -y install libyaml-dev libevent-dev
       - cache store
@@ -33,7 +34,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -49,10 +50,6 @@ blocks:
       - mkdir -p .neph/pony/jennet
       - retry bin/neph pony/jennet --mode=CI
       - FRAMEWORK=pony/jennet bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: go
   dependencies:
   - setup
@@ -61,7 +58,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -207,10 +204,6 @@ blocks:
       - mkdir -p .neph/go/router
       - retry bin/neph go/router --mode=CI
       - FRAMEWORK=go/router bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: nim
   dependencies:
   - setup
@@ -219,7 +212,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -250,10 +243,6 @@ blocks:
       - mkdir -p .neph/nim/rosencrantz
       - retry bin/neph nim/rosencrantz --mode=CI
       - FRAMEWORK=nim/rosencrantz bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: python
   dependencies:
   - setup
@@ -262,7 +251,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -393,10 +382,6 @@ blocks:
       - mkdir -p .neph/python/bottle
       - retry bin/neph python/bottle --mode=CI
       - FRAMEWORK=python/bottle bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: clojure
   dependencies:
   - setup
@@ -405,7 +390,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -426,10 +411,6 @@ blocks:
       - mkdir -p .neph/clojure/luminus
       - retry bin/neph clojure/luminus --mode=CI
       - FRAMEWORK=clojure/luminus bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: elixir
   dependencies:
   - setup
@@ -438,7 +419,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -469,10 +450,6 @@ blocks:
       - mkdir -p .neph/elixir/plug
       - retry bin/neph elixir/plug --mode=CI
       - FRAMEWORK=elixir/plug bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: dart
   dependencies:
   - setup
@@ -481,7 +458,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -502,10 +479,6 @@ blocks:
       - mkdir -p .neph/dart/start
       - retry bin/neph dart/start --mode=CI
       - FRAMEWORK=dart/start bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: perl
   dependencies:
   - setup
@@ -514,7 +487,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -530,10 +503,6 @@ blocks:
       - mkdir -p .neph/perl/dancer2
       - retry bin/neph perl/dancer2 --mode=CI
       - FRAMEWORK=perl/dancer2 bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: rust
   dependencies:
   - setup
@@ -542,7 +511,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -573,10 +542,6 @@ blocks:
       - mkdir -p .neph/rust/actix
       - retry bin/neph rust/actix --mode=CI
       - FRAMEWORK=rust/actix bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: fsharp
   dependencies:
   - setup
@@ -585,7 +550,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -626,10 +591,6 @@ blocks:
       - mkdir -p .neph/fsharp/falco
       - retry bin/neph fsharp/falco --mode=CI
       - FRAMEWORK=fsharp/falco bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: java
   dependencies:
   - setup
@@ -638,7 +599,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -689,10 +650,6 @@ blocks:
       - mkdir -p .neph/java/spring-boot
       - retry bin/neph java/spring-boot --mode=CI
       - FRAMEWORK=java/spring-boot bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: kotlin
   dependencies:
   - setup
@@ -701,7 +658,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -722,10 +679,6 @@ blocks:
       - mkdir -p .neph/kotlin/ktor
       - retry bin/neph kotlin/ktor --mode=CI
       - FRAMEWORK=kotlin/ktor bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: crystal
   dependencies:
   - setup
@@ -734,7 +687,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -800,10 +753,6 @@ blocks:
       - mkdir -p .neph/crystal/athena
       - retry bin/neph crystal/athena --mode=CI
       - FRAMEWORK=crystal/athena bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: haskell
   dependencies:
   - setup
@@ -812,7 +761,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -833,10 +782,6 @@ blocks:
       - mkdir -p .neph/haskell/servant
       - retry bin/neph haskell/servant --mode=CI
       - FRAMEWORK=haskell/servant bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: php
   dependencies:
   - setup
@@ -845,7 +790,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -996,10 +941,6 @@ blocks:
       - mkdir -p .neph/php/hyperf
       - retry bin/neph php/hyperf --mode=CI
       - FRAMEWORK=php/hyperf bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: scala
   dependencies:
   - setup
@@ -1008,7 +949,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -1034,10 +975,6 @@ blocks:
       - mkdir -p .neph/scala/http4s
       - retry bin/neph scala/http4s --mode=CI
       - FRAMEWORK=scala/http4s bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: cpp
   dependencies:
   - setup
@@ -1046,7 +983,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -1067,10 +1004,6 @@ blocks:
       - mkdir -p .neph/cpp/evhtp
       - retry bin/neph cpp/evhtp --mode=CI
       - FRAMEWORK=cpp/evhtp bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: swift
   dependencies:
   - setup
@@ -1079,7 +1012,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -1115,10 +1048,6 @@ blocks:
       - mkdir -p .neph/swift/kitura
       - retry bin/neph swift/kitura --mode=CI
       - FRAMEWORK=swift/kitura bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: csharp
   dependencies:
   - setup
@@ -1127,7 +1056,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -1148,10 +1077,6 @@ blocks:
       - mkdir -p .neph/csharp/carter
       - retry bin/neph csharp/carter --mode=CI
       - FRAMEWORK=csharp/carter bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: julia
   dependencies:
   - setup
@@ -1160,7 +1085,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -1176,10 +1101,6 @@ blocks:
       - mkdir -p .neph/julia/merly
       - retry bin/neph julia/merly --mode=CI
       - FRAMEWORK=julia/merly bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: javascript
   dependencies:
   - setup
@@ -1188,7 +1109,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -1309,10 +1230,6 @@ blocks:
       - mkdir -p .neph/javascript/koa
       - retry bin/neph javascript/koa --mode=CI
       - FRAMEWORK=javascript/koa bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: c
   dependencies:
   - setup
@@ -1321,7 +1238,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -1342,10 +1259,6 @@ blocks:
       - mkdir -p .neph/c/agoo-c
       - retry bin/neph c/agoo-c --mode=CI
       - FRAMEWORK=c/agoo-c bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: v
   dependencies:
   - setup
@@ -1354,7 +1267,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -1370,10 +1283,6 @@ blocks:
       - mkdir -p .neph/v/vape
       - retry bin/neph v/vape --mode=CI
       - FRAMEWORK=v/vape bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph
 - name: ruby
   dependencies:
   - setup
@@ -1382,7 +1291,7 @@ blocks:
   task:
     prologue:
       commands:
-      - checkout
+      - cache restore $SEMAPHORE_GIT_SHA
       - bundle install
       - cache restore bin
       - find bin -type f -exec chmod +x {} \;
@@ -1458,7 +1367,3 @@ blocks:
       - mkdir -p .neph/ruby/rails
       - retry bin/neph ruby/rails --mode=CI
       - FRAMEWORK=ruby/rails bundle exec rspec .spec
-    epilogue:
-      always:
-        commands:
-        - artifact push workflow .neph

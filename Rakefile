@@ -353,6 +353,7 @@ namespace :ci do
         name: "setup",
         commands: [
           "checkout",
+          "cache store $SEMAPHORE_GIT_SHA .",
           "sudo snap install crystal --classic",
           "sudo apt-get -y install libyaml-dev libevent-dev",
           "cache store",
@@ -370,7 +371,7 @@ namespace :ci do
     Dir.glob("*/config.yaml").each do |path|
       language, = path.split(File::Separator)
       block = { name: language, dependencies: ["setup"], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
-        "checkout",
+        "cache restore $SEMAPHORE_GIT_SHA",
         "bundle install",
         "cache restore bin",
         "find bin -type f -exec chmod +x {} \\;",
@@ -378,7 +379,7 @@ namespace :ci do
       ] }, 'env_vars': [
         { name: "CLEAN", value: "off" },
         { name: "COLLECT", 'value': "off" },
-      ], jobs: [], epilogue: { always: { commands: ["artifact push workflow .neph"] } } } }
+      ], jobs: [] } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
         block[:task][:jobs] << { name: framework, commands: [
