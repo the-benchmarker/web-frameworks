@@ -8,11 +8,6 @@ namespace aspnetcore
 {
     public class Startup
     {
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddRouting();
-        }
-
         public void Configure(IApplicationBuilder app)
         {
             app.UseRouting();
