@@ -357,18 +357,16 @@ namespace :ci do
           "cache store bin bin",
           "bundle config path .cache",
           "bundle install",
-          "bundle exec rake config",
           "cache store built-in .cache",
+          "bundle exec rake config",
         ],
       }],
     } }]
     Dir.glob("*/config.yaml").each do |path|
       language, = path.split(File::Separator)
       block = { name: language, dependencies: ["setup"], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
-        "cache restore $SEMAPHORE_GIT_SHA",
-        "cache restore bin",
+        "cache restore $SEMAPHORE_GIT_SHA,bin,built-in",
         "find bin -type f -exec chmod +x {} \\;",
-        "cache restore built-in",
         "bundle config path .cache",
         "bundle exec rake config",
       ] }, 'env_vars': [
