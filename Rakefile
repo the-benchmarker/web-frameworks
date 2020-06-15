@@ -369,7 +369,6 @@ namespace :ci do
       language, = path.split(File::Separator)
       block = { name: language, dependencies: ["setup"], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
         "cache restore $SEMAPHORE_GIT_SHA",
-        "bundle install",
         "cache restore bin",
         "find bin -type f -exec chmod +x {} \\;",
         "cache restore built-in",
