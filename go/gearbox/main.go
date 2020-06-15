@@ -10,7 +10,7 @@ const id = "id"
 
 var empty = func(c *gearbox.Context) {}
 var sendID = func(c *gearbox.Context) {
-	 c.RequestCtx.Response.SetBodyString(string(c.Params.GetString(id).([]byte)))
+	 c.RequestCtx.Response.SetBody(c.Params.GetString(id).([]byte))
 }
 
 func main() {
