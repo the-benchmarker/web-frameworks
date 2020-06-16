@@ -353,6 +353,7 @@ namespace :ci do
         name: "setup",
         commands: [
           "checkout",
+          "cache store $SEMAPHORE_GIT_SHA .",
           "sudo snap install crystal --classic",
           "sudo apt-get -y install libyaml-dev libevent-dev",
           "shards build --static",
@@ -367,7 +368,7 @@ namespace :ci do
     Dir.glob("*/config.yaml").each do |path|
       language, = path.split(File::Separator)
       block = { name: language, dependencies: ["setup"], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
-        "checkout",
+        "cache restore $SEMAPHORE_GIT_SHA",
         "cache restore bin",
         "cache restore built-in",
         "find bin -type f -exec chmod +x {} \\;",
