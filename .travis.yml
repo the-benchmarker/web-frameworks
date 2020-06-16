@@ -14,6 +14,9 @@ env:
   global:
     - DATABASE_URL=postgresql://postgres@localhost/benchmark
   jobs:
+      - FRAMEWORK=csharp.aspnetcore
+      - FRAMEWORK=csharp.carter
+      - FRAMEWORK=csharp.simplify.web
       - FRAMEWORK=javascript.iotjs-express
       - FRAMEWORK=javascript.moleculer
       - FRAMEWORK=javascript.restana
@@ -118,8 +121,6 @@ env:
       - FRAMEWORK=java.act
       - FRAMEWORK=java.javalin
       - FRAMEWORK=java.blade
-      - FRAMEWORK=csharp.aspnetcore
-      - FRAMEWORK=csharp.carter
       - FRAMEWORK=rust.nickel
       - FRAMEWORK=rust.gotham
       - FRAMEWORK=rust.iron
