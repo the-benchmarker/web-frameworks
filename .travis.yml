@@ -76,7 +76,6 @@ env:
       - FRAMEWORK=crystal.runcobo
       - FRAMEWORK=crystal.orion
       - FRAMEWORK=crystal.lucky
-      - FRAMEWORK=crystal.onyx
       - FRAMEWORK=crystal.kemal
       - FRAMEWORK=crystal.toro
       - FRAMEWORK=php.slim
