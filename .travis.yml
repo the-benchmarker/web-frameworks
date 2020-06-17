@@ -14,9 +14,6 @@ env:
   global:
     - DATABASE_URL=postgresql://postgres@localhost/benchmark
   jobs:
-      - FRAMEWORK=csharp.aspnetcore
-      - FRAMEWORK=csharp.carter
-      - FRAMEWORK=csharp.simplify.web
       - FRAMEWORK=javascript.iotjs-express
       - FRAMEWORK=javascript.moleculer
       - FRAMEWORK=javascript.restana
@@ -71,6 +68,7 @@ env:
       - FRAMEWORK=elixir.cowboy_stream
       - FRAMEWORK=elixir.cowboy
       - FRAMEWORK=crystal.spider-gazelle
+      - FRAMEWORK=crystal.shivneri
       - FRAMEWORK=crystal.athena
       - FRAMEWORK=crystal.amber
       - FRAMEWORK=crystal.router.cr
@@ -78,6 +76,7 @@ env:
       - FRAMEWORK=crystal.lucky
       - FRAMEWORK=crystal.onyx
       - FRAMEWORK=crystal.kemal
+      - FRAMEWORK=crystal.grip
       - FRAMEWORK=crystal.toro
       - FRAMEWORK=php.slim
       - FRAMEWORK=php.chubbyphp-roadrunner
@@ -121,6 +120,9 @@ env:
       - FRAMEWORK=java.act
       - FRAMEWORK=java.javalin
       - FRAMEWORK=java.blade
+      - FRAMEWORK=csharp.aspnetcore
+      - FRAMEWORK=csharp.carter
+      - FRAMEWORK=csharp.simplify.web
       - FRAMEWORK=rust.nickel
       - FRAMEWORK=rust.gotham
       - FRAMEWORK=rust.iron
@@ -170,7 +172,6 @@ env:
       - FRAMEWORK=go.tango
       - FRAMEWORK=go.gorouter-fasthttp
       - FRAMEWORK=go.fasthttp
-      - FRAMEWORK=go.revel
       - FRAMEWORK=go.aero
       - FRAMEWORK=go.gramework
       - FRAMEWORK=go.beego
