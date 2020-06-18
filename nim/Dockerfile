@@ -1,4 +1,4 @@
-FROM nimlang/nim:1.2.0-alpine
+FROM nimlang/nim:1.2.2-alpine
 
 WORKDIR /usr/src/app
 
@@ -21,5 +21,7 @@ RUN nimble c \
         -y server.nim
 
 FROM alpine
+
 COPY --from=0 /usr/src/app/server /usr/src/app/server
+
 CMD /usr/src/app/server
