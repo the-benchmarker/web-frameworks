@@ -4,6 +4,7 @@ open System
 open Giraffe.ResponseWriters
 open Giraffe.Core
 open Saturn
+open Microsoft.Extensions.Logging
 
 let topRouter = router {
     get "/" (text "")
@@ -15,6 +16,7 @@ let topRouter = router {
 
 let app = application {
     use_router topRouter
+    logging (fun logger -> logger.ClearProviders() |> ignore)
 }
 
 [<EntryPoint>]
