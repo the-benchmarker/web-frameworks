@@ -22,7 +22,8 @@ return [
         'port'      =>  3000,
         'mode'      =>  SWOOLE_BASE,
         'configs'   =>  [
-            'worker_num'        => swoole_cpu_num(),
+            'worker_num'       => swoole_cpu_num() * 2,
+            'enable_coroutine' => false,
             'open_tcp_nodelay'  => true,
             'tcp_fastopen'      => true,
         ],

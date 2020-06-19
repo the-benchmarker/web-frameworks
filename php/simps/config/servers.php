@@ -18,7 +18,8 @@ return [
         'callbacks' => [
         ],
         'settings' => [
-            'worker_num' => (int) shell_exec('nproc') ?? 32,
+            'worker_num'       => swoole_cpu_num() * 2,
+            'enable_coroutine' => false,
             'only_simple_http' => true,
         ],
     ],

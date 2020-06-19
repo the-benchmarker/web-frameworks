@@ -4,6 +4,7 @@ $serverConfig = [
     'host' => env('SERVER_HOST', '0.0.0.0'),
     'port' => envInt('SERVER_PORT', 3000),
     'worker_num' => envInt('SERVER_WORKER_NUM', swoole_cpu_num() * 2),
+    'enable_coroutine' => envBool('SERVER_ENABLE_COROUTINE', false),
     'daemonize' => envBool('SERVER_DAEMONIZE', false),
     'backlog' => envInt('SERVER_BACKLOG', 128),
     'max_request' => envInt('SERVER_MAX_REQUEST', 0),
