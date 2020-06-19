@@ -6,11 +6,10 @@ import (
 	"github.com/gogearbox/gearbox"
 )
 
-var id = []byte("id")
 
 var empty = func(c *gearbox.Context) {}
 var sendID = func(c *gearbox.Context) {
-	c.RequestCtx.Response.SetBody(c.Params.Get(id).([]byte))
+	c.RequestCtx.Response.SetBodyString(c.Params["id"])
 }
 
 func main() {
