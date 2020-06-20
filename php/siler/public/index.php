@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
-use function Siler\{Functional\puts, Route\get, Route\post};
+use function Siler\Functional\puts;
+use function Siler\Route\get;
+use function Siler\Route\post;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
