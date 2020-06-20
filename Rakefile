@@ -78,12 +78,11 @@ def commands_for(language, framework, **options)
     end
   end
 
-  if options[:provider].start_with?('docker')
-    commands << 'for i in {1..30} ; do curl "http://`cat ip.txt`:3000" > /dev/null && break && sleep 1; done'
-  else
+  if config["providers"][options[:provider]].key?("reboot")
     commands << config["providers"][options[:provider]].fetch("reboot")
-    commands << 'while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done'
   end
+
+  commands << "curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v"
 
   commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
 

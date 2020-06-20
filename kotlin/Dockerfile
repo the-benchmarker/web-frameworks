@@ -17,7 +17,7 @@ FROM openjdk:11-jre-slim
 WORKDIR /opt/web
 
 {{#binaries}}
-  COPY --from=build /usr/src/app/{{{.}}} {{{.}}}}
+  COPY --from=build /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
 
 RUN ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
