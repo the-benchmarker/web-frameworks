@@ -10,7 +10,8 @@ dependencies:
   neph:
     github: tbrand/neph
   crustache:
-    github: MakeNowJust/crustache
+    github: the-benchmarker/crustache
+    branch: fix/return_nil
   admiral:
     github: jwaldrip/admiral.cr
   pg:
