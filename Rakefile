@@ -78,9 +78,8 @@ def commands_for(language, framework, **options)
     end
   end
 
-  if %w[docker docker-machine].include?(options[:provider])
-    pause = main_config.fetch("docker_pause") { "5" }
-    commands << "sleep #{pause}"
+  if options[:provider].start_with?('docker')
+    commands << 'for i in {1..30} ; do curl "http://`cat ip.txt`:3000" > /dev/null && break && sleep 1; done'
   else
     commands << config["providers"][options[:provider]].fetch("reboot")
     commands << 'while true; do curl "http://`cat ip.txt`:3000" > /dev/null && break; done'
