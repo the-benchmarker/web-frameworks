@@ -4,7 +4,11 @@ WORKDIR /usr/src/app
 
 COPY server.nim server.nimble ./
 
-RUN nimble c \
+{{#deps}}
+  RUN apk --no-cache add {{{.}}}
+{{/deps}}
+
+RUN nimble c {{#build_opts}} {{{.}}} {{/build_opts}} \
     -d:danger \
     -d:noSignalHandler \
     --gc:markAndSweep \
