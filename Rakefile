@@ -80,6 +80,7 @@ def commands_for(language, framework, **options)
 
   if config["providers"][options[:provider]].key?("reboot")
     commands << config["providers"][options[:provider]].fetch("reboot")
+    commands << "sleep 30"
   end
 
   commands << "curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v"
