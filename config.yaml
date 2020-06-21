@@ -44,7 +44,7 @@ providers:
 
   docker-machine:
     build:
-      - docker build -t -p 3000:3000 {{{language}}}.{{{framework}}} .
+      - docker build -t {{{language}}}.{{{framework}}} .
 
     metadata:
       - docker-machine inspect the-benchmarker > ip.txt
