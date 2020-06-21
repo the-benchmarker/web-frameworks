@@ -1,0 +1,6 @@
+framework:
+  github: nedpals/vex
+  version: 0.2
+
+before_command:
+  - v install nedpals.vex
