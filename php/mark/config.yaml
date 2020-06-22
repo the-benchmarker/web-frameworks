@@ -1,0 +1,9 @@
+framework:
+  github: passwalls/mark 
+  version: 1.0
+
+php_mod:
+  - pcntl
+  - posix
+
+command: php start.php start
