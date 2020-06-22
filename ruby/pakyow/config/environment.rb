@@ -1,3 +1,3 @@
 Pakyow.configure do
-  # Global environment configuration.
+  config.secrets = ["sekret"]
 end
