@@ -192,6 +192,7 @@ env:
       - FRAMEWORK=go.fasthttprouter
       - FRAMEWORK=go.rte
       - FRAMEWORK=go.atreugo
+      - FRAMEWORK=go.clevergo
       - FRAMEWORK=v.vape
 
 before_script:
