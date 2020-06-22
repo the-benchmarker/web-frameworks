@@ -47,6 +47,7 @@ env:
       - FRAMEWORK=ruby.agoo
       - FRAMEWORK=ruby.cuba
       - FRAMEWORK=ruby.hanami
+      - FRAMEWORK=ruby.pakyow
       - FRAMEWORK=ruby.grape
       - FRAMEWORK=ruby.rack_app
       - FRAMEWORK=cpp.evhtp
@@ -69,7 +70,6 @@ env:
       - FRAMEWORK=elixir.cowboy_stream
       - FRAMEWORK=elixir.cowboy
       - FRAMEWORK=crystal.spider-gazelle
-      - FRAMEWORK=crystal.shivneri
       - FRAMEWORK=crystal.athena
       - FRAMEWORK=crystal.amber
       - FRAMEWORK=crystal.router.cr
@@ -78,7 +78,6 @@ env:
       - FRAMEWORK=crystal.lucky
       - FRAMEWORK=crystal.onyx
       - FRAMEWORK=crystal.kemal
-      - FRAMEWORK=crystal.grip
       - FRAMEWORK=crystal.toro
       - FRAMEWORK=php.slim
       - FRAMEWORK=php.chubbyphp-roadrunner
@@ -91,6 +90,7 @@ env:
       - FRAMEWORK=php.lumen
       - FRAMEWORK=php.imi
       - FRAMEWORK=php.ubiquity
+      - FRAMEWORK=php.mark
       - FRAMEWORK=php.mezzio
       - FRAMEWORK=php.swoft
       - FRAMEWORK=php.hamlet
@@ -108,7 +108,6 @@ env:
       - FRAMEWORK=php.basicphp
       - FRAMEWORK=php.yii-swoole
       - FRAMEWORK=php.spiral
-      - FRAMEWORK=php.mark
       - FRAMEWORK=fsharp.frank
       - FRAMEWORK=fsharp.giraffe
       - FRAMEWORK=fsharp.websharper
@@ -191,9 +190,9 @@ env:
       - FRAMEWORK=go.gorouter
       - FRAMEWORK=go.violetear
       - FRAMEWORK=go.fasthttprouter
+      - FRAMEWORK=go.clevergo
       - FRAMEWORK=go.rte
       - FRAMEWORK=go.atreugo
-      - FRAMEWORK=go.clevergo
       - FRAMEWORK=v.vape
 
 before_script:
