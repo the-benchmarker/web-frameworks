@@ -122,6 +122,7 @@ env:
       - FRAMEWORK=java.act
       - FRAMEWORK=java.javalin
       - FRAMEWORK=java.blade
+      - FRAMEWORK=java.struts2
       - FRAMEWORK=csharp.aspnetcore
       - FRAMEWORK=csharp.carter
       - FRAMEWORK=csharp.simplify.web

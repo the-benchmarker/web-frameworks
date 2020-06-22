@@ -2,5 +2,8 @@ framework:
   website: struts.apache.org
   version: 2.5
 
+build:
+  mvn clean package
+
 command: >
   mvn jetty:run
