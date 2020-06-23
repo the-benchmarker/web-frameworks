@@ -8,8 +8,6 @@ targets:
   server:
     main: src/server.cr
 
-crystal: 0.34.0
-
 license: MIT
 
 dependencies:
