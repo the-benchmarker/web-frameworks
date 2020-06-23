@@ -3,7 +3,12 @@ framework:
   version: 2.5
 
 build:
-  mvn clean package
+  - mvn clean package
 
-command: >
-  mvn jetty:run
+bin_deps:
+  - jetty-runner
+
+files:
+  - target/struts2-1.0.war
+
+command: java  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts  -jar /usr/share/java/jetty-runner.jar --port 3000 target/struts2-1.0.war
