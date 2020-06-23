@@ -1,0 +1,5 @@
+framework:
+  website: pakyow.com
+  version: 1.0
+
+command: bundle exec pakyow boot -e production
