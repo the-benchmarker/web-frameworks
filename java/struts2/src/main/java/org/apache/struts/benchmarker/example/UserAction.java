@@ -6,6 +6,10 @@ public class UserAction {
 
     private String id;
 
+    public String execute() {
+        return SUCCESS  ;
+    }
+
     public String index() {
         return SUCCESS  ;
     }
