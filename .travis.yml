@@ -109,6 +109,7 @@ env:
       - FRAMEWORK=php.basicphp
       - FRAMEWORK=php.yii-swoole
       - FRAMEWORK=php.spiral
+      - FRAMEWORK=php.comet
       - FRAMEWORK=fsharp.frank
       - FRAMEWORK=fsharp.giraffe
       - FRAMEWORK=fsharp.websharper

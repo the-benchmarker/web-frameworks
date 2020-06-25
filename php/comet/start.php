@@ -1,11 +1,13 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
+! defined('WORKERS_COUNT') && define('WORKERS_COUNT', shell_exec('nproc'));
+
 use Comet\Comet;
 
 $app = new Comet([ 
-	'port' => 3000,
-	shell_exec('nproc') ?? 32,
+	'port'    => 3000,
+	'workers' => WORKERS_COUNT,
 ]);
 
 
