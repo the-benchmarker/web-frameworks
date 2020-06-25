@@ -158,6 +158,7 @@ env:
       - FRAMEWORK=python.bottle
       - FRAMEWORK=clojure.luminus
       - FRAMEWORK=clojure.coast
+      - FRAMEWORK=clojure.yada
       - FRAMEWORK=pony.jennet
       - FRAMEWORK=haskell.scotty
       - FRAMEWORK=haskell.servant
