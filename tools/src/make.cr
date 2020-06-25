@@ -260,13 +260,7 @@ class App < Admiral::Command
 
                   # Launch sieging
                   unless flags.without_sieger
-                    factor = System.cpu_count**2
-                    command = "../../bin/client --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user -h `cat ip.txt`"
-                    [1, 4, 8].each do |i|
-                      command += " -c #{factor*i} "
-                    end
-
-                    yaml.scalar command
+                    yaml.scalar '../../bin/client --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user -h `cat ip.txt` -c 64 -c 256 -c 512'
                   end
 
                   # Drop the container
