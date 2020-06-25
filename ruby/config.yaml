@@ -14,6 +14,10 @@ deps:
   - ruby
   - ruby-devel
 
+files:
+  - Gemfile
+  - '**/*.rb'
+  - '**/*.ru'
 bootstrap:
   - bundle config set without "development test"
   - bundle config set path "vendor/bundle"
