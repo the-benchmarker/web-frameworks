@@ -6,7 +6,9 @@ execution_time_limit:
 agent:
   machine:
     type: e1-standard-2
-    os_image: ubuntu1804
+  containers:
+  - name: main
+    image: crystallang/crystal:nightly
 blocks:
 - name: setup
   dependencies: []

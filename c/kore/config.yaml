@@ -5,7 +5,7 @@ framework:
 provider:
   default:
     language: 99
-    
+
 sources:
   - "**/*.c"
   - "**/*.conf"
