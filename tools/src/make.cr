@@ -260,7 +260,7 @@ class App < Admiral::Command
 
                   # Launch sieging
                   unless flags.without_sieger
-                    yaml.scalar '../../bin/client --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user -h `cat ip.txt` -c 64 -c 256 -c 512'
+                    yaml.scalar "../../bin/client --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user -h `cat ip.txt` -c 64 -c 256 -c 512"
                   end
 
                   # Drop the container
