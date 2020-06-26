@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <WebSharperProject>Website</WebSharperProject>
+    <WebProjectOutputDir>$(MSBuildThisFileDirectory)/wwwroot</WebProjectOutputDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Main.fs" />
+    <None Include="wsconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WebSharper.Core" Version="4.6.*" />
+    <PackageReference Include="WebSharper" Version="4.6.*" />
+    <PackageReference Include="WebSharper.AspNetCore" Version="4.6.*" />
+  </ItemGroup>
+
+</Project>

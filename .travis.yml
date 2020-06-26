@@ -15,7 +15,6 @@ env:
     - DATABASE_URL=postgresql://postgres@localhost/benchmark
   jobs:
       - FRAMEWORK=javascript.iotjs-express
-      - FRAMEWORK=javascript.nanoexpress
       - FRAMEWORK=javascript.moleculer
       - FRAMEWORK=javascript.restana
       - FRAMEWORK=javascript.nestjs-fastify
@@ -48,6 +47,7 @@ env:
       - FRAMEWORK=ruby.agoo
       - FRAMEWORK=ruby.cuba
       - FRAMEWORK=ruby.hanami
+      - FRAMEWORK=ruby.pakyow
       - FRAMEWORK=ruby.grape
       - FRAMEWORK=ruby.rack_app
       - FRAMEWORK=cpp.evhtp
@@ -55,7 +55,10 @@ env:
       - FRAMEWORK=c.kore
       - FRAMEWORK=c.agoo-c
       - FRAMEWORK=perl.dancer2
+      - FRAMEWORK=nim.akane
       - FRAMEWORK=nim.jester
+      - FRAMEWORK=nim.whip
+      - FRAMEWORK=nim.rosencrantz
       - FRAMEWORK=nim.httpbeast
       - FRAMEWORK=kotlin.ktor
       - FRAMEWORK=kotlin.kooby
@@ -71,13 +74,14 @@ env:
       - FRAMEWORK=crystal.athena
       - FRAMEWORK=crystal.amber
       - FRAMEWORK=crystal.router.cr
+      - FRAMEWORK=crystal.runcobo
       - FRAMEWORK=crystal.orion
       - FRAMEWORK=crystal.lucky
-      - FRAMEWORK=crystal.onyx
       - FRAMEWORK=crystal.kemal
       - FRAMEWORK=crystal.grip
       - FRAMEWORK=crystal.toro
       - FRAMEWORK=php.slim
+      - FRAMEWORK=php.chubbyphp-roadrunner
       - FRAMEWORK=php.ice
       - FRAMEWORK=php.chubbyphp
       - FRAMEWORK=php.yii
@@ -87,6 +91,7 @@ env:
       - FRAMEWORK=php.lumen
       - FRAMEWORK=php.imi
       - FRAMEWORK=php.ubiquity
+      - FRAMEWORK=php.mark
       - FRAMEWORK=php.mezzio
       - FRAMEWORK=php.swoft
       - FRAMEWORK=php.hamlet
@@ -104,8 +109,15 @@ env:
       - FRAMEWORK=php.basicphp
       - FRAMEWORK=php.yii-swoole
       - FRAMEWORK=php.spiral
+      - FRAMEWORK=php.comet
+      - FRAMEWORK=fsharp.frank
+      - FRAMEWORK=fsharp.giraffe
+      - FRAMEWORK=fsharp.websharper
+      - FRAMEWORK=fsharp.saturn
+      - FRAMEWORK=fsharp.falco
       - FRAMEWORK=fsharp.suave
       - FRAMEWORK=java.micronaut
+      - FRAMEWORK=java.struts2
       - FRAMEWORK=java.spring-framework
       - FRAMEWORK=java.spring-boot
       - FRAMEWORK=java.jooby
@@ -114,6 +126,8 @@ env:
       - FRAMEWORK=java.javalin
       - FRAMEWORK=java.blade
       - FRAMEWORK=csharp.aspnetcore
+      - FRAMEWORK=csharp.carter
+      - FRAMEWORK=csharp.simplify.web
       - FRAMEWORK=rust.nickel
       - FRAMEWORK=rust.gotham
       - FRAMEWORK=rust.iron
@@ -127,6 +141,7 @@ env:
       - FRAMEWORK=python.molten
       - FRAMEWORK=python.nameko
       - FRAMEWORK=python.starlette
+      - FRAMEWORK=python.tonberry
       - FRAMEWORK=python.cyclone
       - FRAMEWORK=python.clastic
       - FRAMEWORK=python.falcon
@@ -172,13 +187,16 @@ env:
       - FRAMEWORK=go.goroute
       - FRAMEWORK=go.fiber
       - FRAMEWORK=go.gorilla-mux
+      - FRAMEWORK=go.gearbox
       - FRAMEWORK=go.gin
       - FRAMEWORK=go.kami
       - FRAMEWORK=go.gorouter
       - FRAMEWORK=go.violetear
       - FRAMEWORK=go.fasthttprouter
+      - FRAMEWORK=go.clevergo
       - FRAMEWORK=go.rte
       - FRAMEWORK=go.atreugo
+      - FRAMEWORK=v.vape
 
 before_script:
   - psql -c 'CREATE DATABASE benchmark;' -U postgres;

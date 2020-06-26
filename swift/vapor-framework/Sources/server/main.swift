@@ -1,6 +1,6 @@
 import Vapor
 
-var env = Environment.production
+var env = Environment(name: Environment.get("VAPOR_ENV") ?? "development")
 try LoggingSystem.bootstrap(from: &env)
 let app = Application()
 defer { app.shutdown() }
@@ -24,7 +24,11 @@ app.post("empty") { _ in
     Response()
 }
 
-app.http.server.configuration.hostname = "0.0.0.0"
-app.http.server.configuration.port = 3000
+app.http.server.configuration.hostname = Environment.get("SERVER_HOSTNAME") ?? "0.0.0.0"
+if let portString = Environment.get("SERVER_PORT"), let port = Int(portString) {
+    app.http.server.configuration.port = port
+} else {
+    app.http.server.configuration.port = 3000
+}
 
 try app.run()

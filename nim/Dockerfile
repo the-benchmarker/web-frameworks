@@ -1,10 +1,14 @@
-FROM nimlang/nim:1.2.0-alpine
+FROM nimlang/nim:1.2.2-alpine
 
 WORKDIR /usr/src/app
 
 COPY server.nim server.nimble ./
 
-RUN nimble c \
+{{#deps}}
+  RUN apk --no-cache add {{{.}}}
+{{/deps}}
+
+RUN nimble c {{#build_opts}} {{{.}}} {{/build_opts}} \
     -d:danger \
     -d:noSignalHandler \
     --gc:markAndSweep \
@@ -21,5 +25,7 @@ RUN nimble c \
         -y server.nim
 
 FROM alpine
+
 COPY --from=0 /usr/src/app/server /usr/src/app/server
+
 CMD /usr/src/app/server

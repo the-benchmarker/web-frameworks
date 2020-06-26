@@ -1,7 +1,7 @@
 <?php
 
 // -----------------------------------------------
-// Load Dependencies (additional PHP files) 
+// Load Dependencies (additional PHP files)
 // -----------------------------------------------
 
 // Setup a PHP Autoloader
@@ -34,16 +34,16 @@ $app->setup('UTC');
 // Define Routes
 // -----------------------------------------------
 
-$app->get('/', function() {
+$app->get('/', function () {
     return '';
 });
 
-$app->get('/user/:id', function($id) use ($app) {
+$app->get('/user/:id', function ($id) use ($app) {
     // Safely escape the user input since it's returned to the client.
     return $app->escape($id);
 });
 
-$app->post('/user', function() {
+$app->post('/user', function () {
     return '';
 });
 

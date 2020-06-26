@@ -1,20 +1,20 @@
-﻿using System.IO;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace aspnetcore
 {
-public class Program
-{
-    public static void Main(string[] args)
+    public class Program
     {
-        CreateWebHostBuilder(args).Build().Run();
+        public static void Main(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.ConfigureKestrel(c => c.AddServerHeader = false);
+                    webBuilder.ConfigureLogging(config => config.ClearProviders());
+                    webBuilder.UseStartup<Startup>();
+                })
+                .Build()
+                .Run();
     }
-
-    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-    WebHost.CreateDefaultBuilder(args)
-    .ConfigureLogging(config => config.ClearProviders())
-    .UseStartup<Startup>();
-}
 }

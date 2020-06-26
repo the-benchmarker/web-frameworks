@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -9,12 +8,12 @@ import (
 )
 
 func empty(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "")
+	w.Write(nil)
 }
 
 func userID(w http.ResponseWriter, r *http.Request) {
 	wctx := webgo.Context(r)
-	fmt.Fprint(w, wctx.Params()["id"])
+	w.Write([]byte(wctx.Params()["id"]))
 }
 
 func getRoutes() []*webgo.Route {

@@ -40,6 +40,7 @@ dependencies {
 
 shadowJar {
     mergeServiceFiles()
-    archiveFileName = "my-application.jar"
+    baseName = "server"
+    classifier = null
+    version = null
 }
-

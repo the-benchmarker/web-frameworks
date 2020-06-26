@@ -1,4 +1,5 @@
 require "amber"
+require "./logger"
 
 require "../src/controllers/application_controller"
 require "../src/controllers/**"
@@ -32,7 +33,7 @@ Amber::Server.configure do |settings|
   # when logging information, display the time and/or to display the severity level.
   # Defaults to true.
   #
-  # Log Level defines the verbosity of the Amber logger. This option defaults to
+  # Log Level defines the verbosity of the Amber logging. This option defaults to
   # debug for all environments. The available log levels are: debug, info, warn,
   # error, fatal, and unknown.
   #
@@ -120,10 +121,7 @@ Amber::Server.configure do |settings|
   # settings.session = { "key" => "amber.session", "store" => "signed_cookie", "expires" => 0 }
   #
   #
-  # Logger: is the logger that Amber and other capable shards in the project will use
-  # instead of writing directly to STDOUT. Supply a custom logger to write to syslog, etc.
-  #
-  settings.logger = Amber::Environment::Logger.new(nil)
-  #
+  # Logger: is the logging that Amber and other capable shards in the project will use
+  # instead of writing directly to STDOUT. Supply a custom logging to write to syslog, etc.
   #
 end
