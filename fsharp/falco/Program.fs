@@ -17,7 +17,7 @@ let routes =
     [
         get "/" noContentHandler
         get "/user/{id}" userIdHandler
-        get "/user" noContentHandler
+        post "/user" noContentHandler
     ]
 
 // Enable services (routing required for Falco)
