@@ -39,8 +39,8 @@
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-runner</artifactId>
-            <version>9.4.12.RC2</version>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>9.4.30.v20200611</version>
         </dependency>
 
     </dependencies>

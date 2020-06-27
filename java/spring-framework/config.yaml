@@ -6,9 +6,9 @@ build:
   - mvn clean package
 
 binaries:
-  - target/benchmark-0.0.1-SNAPSHOT/WEB-INF/lib/jetty-runner-9.4.12.RC2.jar
-  - target/*.war
+  - target/struts2-1.0/WEB-INF/lib/jetty-runner-9.4.30.v20200611.jar
+  - target/benchmark-0.0.1-SNAPSHOT.war
 
 command: >
-  /usr/bin/java -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/benchmark-0.0.1-SNAPSHOT/WEB-INF/lib/jetty-runner-9.4.12.RC2.jar
+  /usr/bin/java -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/struts2-1.0/WEB-INF/lib/jetty-runner-9.4.30.v20200611.jar
   --port 3000 /opt/web/target/benchmark-0.0.1-SNAPSHOT.war
