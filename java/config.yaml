@@ -5,9 +5,9 @@ provider:
     language: 8
 
 sources:
-  - '**/*.java'
-  - '**/*.properties'
-  - '**/*.xml'
+  - "**/*.java"
+  - "**/*.properties"
+  - "**/*.xml"
 
 binaries:
   - target/*.jar
@@ -15,4 +15,5 @@ binaries:
 deps:
   - java-1.8.0-openjdk
 
-docker_pause: 10
+alpine-deps:
+  - jetty-runner
