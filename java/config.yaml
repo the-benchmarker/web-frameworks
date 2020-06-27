@@ -9,8 +9,5 @@ sources:
   - "**/*.properties"
   - "**/*.xml"
 
-binaries:
-  - target/*.jar
-
 deps:
   - java-1.8.0-openjdk
