@@ -28,15 +28,13 @@ WORKDIR /usr/src/web
   RUN mvn package
 {{/build}}
 
-RUN mkdir -p target
-RUN mkdir -p build
-
 FROM openjdk:8-jre-alpine
 
 WORKDIR /opt/web
 
-COPY --from=0 /usr/src/web/target target
-COPY --from=0 /usr/src/web/build build
+{{#binaries}}
+  COPY --from=0 /usr/src/web/{{{.}}} {{{.}}}
+{{/binaries}}
 
 {{#bootstrap}}
   RUN {{{.}}}
