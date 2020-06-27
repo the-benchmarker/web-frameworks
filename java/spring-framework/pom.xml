@@ -36,7 +36,6 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>(4,5]</version>
             <scope>provided</scope>
-	    <version>[4,5)</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
