@@ -2,6 +2,10 @@ framework:
   website: aiohttp.readthedocs.io
   version: 3.6
 
+before_command:
+  - >
+    echo "logconfig_dict = {'handlers': { 'console': { 'class': 'logging.NullHandler', }, 'error_console': { 'class': 'logging.NullHandler', }, } }" > config.py
+
 command: >
   gunicorn -c config.py \
     --bind 0.0.0.0:3000  \
