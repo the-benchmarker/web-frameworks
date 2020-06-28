@@ -320,3 +320,4 @@ Any kind of idea is :heart:
 - [Taichiro Suzuki](https://github.com/tbrand) - Author | Maintainer
 - [OvermindDL1](https://github.com/OvermindDL1) - Maintainer
 - [Marwan Rabbâa](https://github.com/waghanza) - Maintainer
+
