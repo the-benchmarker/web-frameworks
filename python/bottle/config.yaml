@@ -1,10 +1,12 @@
 framework:
   website: bottlepy.org
-  version: 0.12
+  version: 0.12  
   
+before_command:
+  - >
+    echo "logconfig_dict = {'handlers': { 'console': { 'class': 'logging.NullHandler', }, 'error_console': { 'class': 'logging.NullHandler', }, } }" > config.py
 command: >
-  gunicorn  \
-    --log-level warning  \
+  gunicorn -c config.py \
     --bind 0.0.0.0:3000  \
     --reuse-port  \
     --workers $(nproc)  \

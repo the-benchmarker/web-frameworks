@@ -2,10 +2,12 @@ framework:
   website: falconframework.org
   version: 2.0
   
-  
+before_command:
+  - >
+    echo "logconfig_dict = {'handlers': { 'console': { 'class': 'logging.NullHandler', }, 'error_console': { 'class': 'logging.NullHandler', }, } }" > config.py
+    
 command: >
-  gunicorn  \
-    --log-level warning  \
+  gunicorn -c config.py \
     --bind 0.0.0.0:3000  \
     --reuse-port  \
     --workers $(nproc)  \

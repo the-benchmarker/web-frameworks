@@ -3,8 +3,7 @@ framework:
   version: 3.6
 
 command: >
-  gunicorn  \
-    --log-level warning  \
+  gunicorn -c config.py \
     --bind 0.0.0.0:3000  \
     --reuse-port  \
     --workers $(nproc)  \
