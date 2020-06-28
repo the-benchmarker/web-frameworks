@@ -2,6 +2,10 @@ framework:
   website: fastapi.tiangolo.com
   version: 0.59
 
+before_command:
+  - >
+    echo "logconfig_dict = {'handlers': { 'console': { 'class': 'logging.NullHandler', }, 'error_console': { 'class': 'logging.NullHandler', }, } }" > config.py
+
 command: >
   gunicorn -c config.py \
     --bind 0.0.0.0:3000  \
