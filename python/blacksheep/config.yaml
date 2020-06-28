@@ -8,6 +8,7 @@ before_command:
 
 command: >
   gunicorn -c config.py \
+    --bind 0.0.0.0:3000  \
     --reuse-port  \
     --workers $(nproc)  \
     --worker-class uvicorn.workers.UvicornWorker  \
