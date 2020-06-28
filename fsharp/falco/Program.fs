@@ -1,36 +1,48 @@
 open Falco
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
-open Microsoft.AspNetCore.Http
+open Microsoft.Extensions.DependencyInjection
+open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 
-let noContentHandler =
-    fun next (ctx: HttpContext) ->
-        setStatusCode 200 next ctx
+let defaultHandler : HttpHandler =  
+    (textOut "")
 
-let userIdHandler =
-    fun next (ctx: HttpContext) ->
+let userIdHandler : HttpHandler =
+    fun next ctx -> 
         let userId = ctx.TryGetRouteValue "id" |> Option.defaultValue ""
         textOut userId next ctx
 
-let routes =
+let routes = 
     [
-        get "/" noContentHandler
-        get "/user/{id}" userIdHandler
-        post "/user" noContentHandler
+        get  "/user/{id}" userIdHandler
+        post "/user"      defaultHandler
+        get  "/"          defaultHandler
     ]
 
-// Enable services (routing required for Falco)
-let configureServices (services : IServiceCollection) =
-    services.AddRouting() |> ignore
+let configureLogging (log : ILoggingBuilder) =
+    log.ClearProviders()
+    |> ignore
 
-// Activate middleware
-let configureApp (app : IApplicationBuilder) = 
-    app.UseRouting().UseHttpEndPoints(routes)
-        .UseNotFoundHandler(setStatusCode 404 >=> textOut "Not found") |> ignore
+let configureServices (services : IServiceCollection) =
+    services.AddRouting() 
+    |> ignore
+
+let configure (app : IApplicationBuilder) = 
+    app.UseRouting()
+       .UseHttpEndPoints(routes)       
+       |> ignore 
 
 [<EntryPoint>]
 let main _ =
-    WebHostBuilder().UseKestrel().ConfigureServices(configureServices)
-        .Configure(configureApp).Build().Run()
-    0
+    try
+        WebHostBuilder()
+            .UseKestrel()
+            .ConfigureLogging(configureLogging)
+            .ConfigureServices(configureServices)
+            .Configure(configure)
+            .Build()
+            .Run()
+        0
+    with 
+        | _ -> -1
