@@ -3,6 +3,7 @@ open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Logging
+open Microsoft.Extensions.DependencyInjection
 
 let defaultHandler : HttpHandler =  
     (textOut "")
