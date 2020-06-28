@@ -1,29 +1,31 @@
 open Falco
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
-open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.DependencyInjection
+open Microsoft.Extensions.Logging
 
-let defaultHandler = 
+let defaultHandler : HttpHandler =  
     (textOut "")
 
-let userIdHandler =
-    fun next (ctx: HttpContext) ->
-        let userId = ctx.TryGetRouteValue "id" |> Option.defaultValue ""
-        textOut userId next ctx
+let userIdHandler : HttpHandler =
+    fun next ctx -> textOut (ctx.TryGetRouteValue "id" |> Option.defaultValue "") next ctx
 
 let routes = 
     [
-        get  "/"          defaultHandler
         get  "/user/{id}" userIdHandler
         post "/user"      defaultHandler
+        get  "/"          defaultHandler
     ]
+
+let configureLogging (log : ILoggingBuilder) =
+    log.ClearProviders()
+    |> ignore
 
 let configureServices (services : IServiceCollection) =
     services.AddRouting() 
     |> ignore
 
-let configureApp (app : IApplicationBuilder) = 
+let configure (app : IApplicationBuilder) = 
     app.UseRouting()
        .UseHttpEndPoints(routes)       
        |> ignore 
@@ -33,8 +35,9 @@ let main _ =
     try
         WebHostBuilder()
             .UseKestrel()
+            .ConfigureLogging(configureLogging)
             .ConfigureServices(configureServices)
-            .Configure(configureApp)
+            .Configure(configure)
             .Build()
             .Run()
         0

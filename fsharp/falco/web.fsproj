@@ -4,11 +4,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Falco" Version="1.2.0" />
-  </ItemGroup>
+  </ItemGroup>  
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="4.7.2" />
+    <PackageReference Include="Falco" Version="1.2.*" />
   </ItemGroup>
 </Project>
