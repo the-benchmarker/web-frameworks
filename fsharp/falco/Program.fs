@@ -9,7 +9,9 @@ let defaultHandler : HttpHandler =
     (textOut "")
 
 let userIdHandler : HttpHandler =
-    fun next ctx -> textOut (ctx.TryGetRouteValue "id" |> Option.defaultValue "") next ctx
+    fun next ctx -> 
+        let userId = ctx.TryGetRouteValue "id" |> Option.defaultValue ""
+        textOut userId next ctx
 
 let routes = 
     [
