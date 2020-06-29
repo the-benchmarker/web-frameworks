@@ -110,6 +110,8 @@ env:
       - FRAMEWORK=php.yii-swoole
       - FRAMEWORK=php.spiral
       - FRAMEWORK=php.comet
+      - FRAMEWORK=php.sunrise-router
+      - FRAMEWORK=php.sunrise-router-annotations
       - FRAMEWORK=fsharp.frank
       - FRAMEWORK=fsharp.giraffe
       - FRAMEWORK=fsharp.websharper
