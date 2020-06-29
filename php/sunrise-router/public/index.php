@@ -5,6 +5,8 @@ declare(strict_types=1);
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Sunrise\Http\Message\ResponseFactory;
+use Sunrise\Http\Router\Exception\MethodNotAllowedException;
+use Sunrise\Http\Router\Exception\RouteNotFoundException;
 use Sunrise\Http\Router\RequestHandler\CallableRequestHandler;
 use Sunrise\Http\Router\RouteCollector;
 use Sunrise\Http\Router\Router;
@@ -34,4 +36,10 @@ $routeCollector->post('userCreate', '/user', new CallableRequestHandler(function
 
 $router->addRoute(...$routeCollector->getCollection()->all());
 
-emit($router->handle(ServerRequestFactory::fromGlobals()));
+try {
+	emit($router->handle(ServerRequestFactory::fromGlobals()));
+} catch (MethodNotAllowedException $e) {
+	emit((new ResponseFactory)->createResponse(405));
+} catch (RouteNotFoundException $e) {
+	emit((new ResponseFactory)->createResponse(404));
+}

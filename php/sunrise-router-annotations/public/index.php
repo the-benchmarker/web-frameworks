@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Sunrise\Http\Message\ResponseFactory;
+use Sunrise\Http\Router\Exception\MethodNotAllowedException;
+use Sunrise\Http\Router\Exception\RouteNotFoundException;
 use Sunrise\Http\Router\Loader\AnnotationDirectoryLoader;
 use Sunrise\Http\Router\Router;
 use Sunrise\Http\ServerRequest\ServerRequestFactory;
@@ -23,4 +26,10 @@ $loader->attach(__DIR__ . '/../src/Controller');
 $router = new Router();
 $router->load($loader);
 
-emit($router->handle(ServerRequestFactory::fromGlobals()));
+try {
+	emit($router->handle(ServerRequestFactory::fromGlobals()));
+} catch (MethodNotAllowedException $e) {
+	emit((new ResponseFactory)->createResponse(405));
+} catch (RouteNotFoundException $e) {
+	emit((new ResponseFactory)->createResponse(404));
+}
