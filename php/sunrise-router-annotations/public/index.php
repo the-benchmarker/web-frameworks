@@ -16,6 +16,10 @@ AnnotationRegistry::registerLoader('class_exists');
 $loader = new AnnotationDirectoryLoader();
 $loader->attach(__DIR__ . '/../src/Controller');
 
+// [!] Use cache in production
+// @see https://www.php-fig.org/psr/psr-16/
+// $loader->setCache(...);
+
 $router = new Router();
 $router->load($loader);
 
