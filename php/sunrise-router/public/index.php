@@ -28,8 +28,8 @@ $routeCollector->get('userRead', '/user/{id}', new CallableRequestHandler(functi
     return $response;
 }));
 
-$routeCollector->get('userList', '/user', new CallableRequestHandler(function (ServerRequestInterface $request) : ResponseInterface {
-    return (new ResponseFactory)->createResponse(200);
+$routeCollector->post('userCreate', '/user', new CallableRequestHandler(function (ServerRequestInterface $request) : ResponseInterface {
+    return (new ResponseFactory)->createResponse(201);
 }));
 
 $router->addRoute(...$routeCollector->getCollection()->all());
