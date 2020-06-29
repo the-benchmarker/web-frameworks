@@ -11,12 +11,12 @@ use Sunrise\Http\Message\ResponseFactory;
 
 /**
  * @Route(
- *   name="userList",
+ *   name="userCreate",
  *   path="/user",
- *   methods={"GET"},
+ *   methods={"POST"},
  * )
  */
-final class UserListController implements RequestHandlerInterface
+final class UserCreateController implements RequestHandlerInterface
 {
 
     /**
@@ -28,6 +28,6 @@ final class UserListController implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        return (new ResponseFactory)->createResponse(200);
+        return (new ResponseFactory)->createResponse(201);
     }
 }
