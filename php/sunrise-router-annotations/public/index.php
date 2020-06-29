@@ -19,7 +19,7 @@ AnnotationRegistry::registerLoader('class_exists');
 $loader = new AnnotationDirectoryLoader();
 $loader->attach(__DIR__ . '/../src/Controller');
 
-// [!] Use cache in production
+// [!] Use cache in production...
 // @see https://www.php-fig.org/psr/psr-16/
 // $loader->setCache(...);
 
@@ -27,9 +27,9 @@ $router = new Router();
 $router->load($loader);
 
 try {
-	emit($router->handle(ServerRequestFactory::fromGlobals()));
+    emit($router->handle(ServerRequestFactory::fromGlobals()));
 } catch (MethodNotAllowedException $e) {
-	emit((new ResponseFactory)->createResponse(405));
+    emit((new ResponseFactory)->createResponse(405));
 } catch (RouteNotFoundException $e) {
-	emit((new ResponseFactory)->createResponse(404));
+    emit((new ResponseFactory)->createResponse(404));
 }

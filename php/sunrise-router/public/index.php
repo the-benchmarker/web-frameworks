@@ -37,9 +37,9 @@ $routeCollector->post('userCreate', '/user', new CallableRequestHandler(function
 $router->addRoute(...$routeCollector->getCollection()->all());
 
 try {
-	emit($router->handle(ServerRequestFactory::fromGlobals()));
+    emit($router->handle(ServerRequestFactory::fromGlobals()));
 } catch (MethodNotAllowedException $e) {
-	emit((new ResponseFactory)->createResponse(405));
+    emit((new ResponseFactory)->createResponse(405));
 } catch (RouteNotFoundException $e) {
-	emit((new ResponseFactory)->createResponse(404));
+    emit((new ResponseFactory)->createResponse(404));
 }
