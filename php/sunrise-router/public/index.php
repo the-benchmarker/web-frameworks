@@ -14,7 +14,7 @@ use Sunrise\Http\ServerRequest\ServerRequestFactory;
 
 use function Sunrise\Http\Router\emit;
 
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $router = new Router();
 $routeCollector = new RouteCollector();
