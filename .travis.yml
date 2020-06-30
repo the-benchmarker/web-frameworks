@@ -112,6 +112,7 @@ env:
       - FRAMEWORK=php.comet
       - FRAMEWORK=php.sunrise-router
       - FRAMEWORK=php.sunrise-router-annotations
+      - FRAMEWORK=php.sunrise-router-roadrunner
       - FRAMEWORK=fsharp.frank
       - FRAMEWORK=fsharp.giraffe
       - FRAMEWORK=fsharp.websharper
