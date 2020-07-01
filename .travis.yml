@@ -85,6 +85,7 @@ env:
       - FRAMEWORK=php.ice
       - FRAMEWORK=php.chubbyphp
       - FRAMEWORK=php.yii
+      - FRAMEWORK=php.comet
       - FRAMEWORK=php.laravel
       - FRAMEWORK=php.nette
       - FRAMEWORK=php.sw-fw-less
@@ -98,7 +99,10 @@ env:
       - FRAMEWORK=php.simps
       - FRAMEWORK=php.siler-swoole
       - FRAMEWORK=php.hyperf
+      - FRAMEWORK=php.sunrise-router-roadrunner
+      - FRAMEWORK=php.sunrise-router-annotations
       - FRAMEWORK=php.symfony
+      - FRAMEWORK=php.sunrise-router
       - FRAMEWORK=php.one-fpm
       - FRAMEWORK=php.fastsitephp
       - FRAMEWORK=php.siler
@@ -109,9 +113,6 @@ env:
       - FRAMEWORK=php.basicphp
       - FRAMEWORK=php.yii-swoole
       - FRAMEWORK=php.spiral
-      - FRAMEWORK=php.comet
-      - FRAMEWORK=php.sunrise-router
-      - FRAMEWORK=php.sunrise-router-annotations
       - FRAMEWORK=fsharp.frank
       - FRAMEWORK=fsharp.giraffe
       - FRAMEWORK=fsharp.websharper
