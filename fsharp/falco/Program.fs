@@ -8,11 +8,7 @@ open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
 
 module Server =
-    module Config = 
-        let configureKestrel (k : KestrelServerOptions) =
-            k.AddServerHeader <- false
-            ()
-
+    module Config =         
         let configureLogging (log : ILoggingBuilder) =
             log.ClearProviders()
             |> ignore
@@ -46,7 +42,7 @@ module Server =
             ]
 
         webHostBuilder     
-            .UseKestrel(Config.configureKestrel)
+            .UseKestrel()
             .ConfigureLogging(Config.configureLogging)
             .ConfigureServices(Config.configureServices)
             .Configure(Config.configure routes)                   
@@ -55,7 +51,7 @@ module Server =
 [<EntryPoint>]
 let main args =    
     Host.CreateDefaultBuilder(args)
-        .ConfigureWebHost(fun b -> Server.buildServer b)
+        .ConfigureWebHost(fun webHost -> Server.buildServer webHost)
         .Build()
         .Run()
     0
