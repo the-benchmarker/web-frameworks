@@ -46,6 +46,8 @@ module Program =
             .ConfigureWebHost(fun webHost ->
                 webHost.UseKestrel(fun c -> c.AddServerHeader <- false)
                        .ConfigureLogging(fun config -> config.ClearProviders() |> ignore)
-                       .UseStartup<Startup>().Build().Run() 
+                       .UseStartup<Startup>()
                        |> ignore)
+            .Build()
+            .Run() 
         0
