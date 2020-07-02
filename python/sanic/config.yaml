@@ -1,6 +1,5 @@
 framework:
   github: huge-success/sanic
-  version: 20.3
+  version: 20.6
 
-command: >
-  python server.py
+command: python server.py
