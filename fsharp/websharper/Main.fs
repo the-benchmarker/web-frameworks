@@ -5,6 +5,7 @@ open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
+open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
 open WebSharper
 open WebSharper.AspNetCore
@@ -41,5 +42,10 @@ module Program =
 
     [<EntryPoint>]
     let main args =
-        WebHostBuilder().UseKestrel(fun c -> c.AddServerHeader <- false).ConfigureLogging(fun config -> config.ClearProviders() |> ignore).UseStartup<Startup>().Build().Run()
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHost(fun webHost ->
+                webHost.UseKestrel(fun c -> c.AddServerHeader <- false)
+                       .ConfigureLogging(fun config -> config.ClearProviders() |> ignore)
+                       .UseStartup<Startup>().Build().Run() 
+                       |> ignore)
         0
