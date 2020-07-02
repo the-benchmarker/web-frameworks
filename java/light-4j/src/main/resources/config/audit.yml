@@ -1,0 +1,56 @@
+# AuditHandler will pick some important fields from headers and tokens and logs into a audit appender.
+---
+# Enable Audit
+enabled: true
+
+# Enable mask
+mask: ${audit.mask:true}
+
+# Output response status code
+statusCode: ${audit.statusCode:true}
+
+# Output response time
+responseTime: ${audit.responseTime:true}
+
+# audit only on error responses; by default log for any return status code
+# if true, audit at error level if status code >= 400
+# log level is controlled by logLevel
+auditOnError: ${audit.auditOnError:false}
+
+# log level; by default set to info
+logLevelIsError: ${audit.logLevelIsError:false}
+
+
+# Output header elements. You can add more if you want.
+headers:
+
+# Correlation Id
+- X-Correlation-Id
+
+# Traceability Id
+- X-Traceability-Id
+
+# Output from id token and access token
+audit:
+
+# Client Id
+- client_id
+
+# User Id in id token, this is optional
+- user_id
+
+# Client Id in scope/access token, this is optional
+- scope_client_id
+
+# Request endpoint urimethod.
+- endpoint
+
+# Service ID assigned to the service, this is optional and must be set by the service in its implementation
+- serviceId
+
+# Request Body, this is optional and must be set by the service in its implementation
+- request
+
+# Response payload, this is optional and must be set by the service in its implementation
+- response
+

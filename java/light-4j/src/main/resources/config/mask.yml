@@ -1,0 +1,25 @@
+description: mask configuration for different type of inputs
+string:
+  uri:
+#    password=[^&]*: password=******
+#    number=\d{1,16}: number=----------------
+#    sin=\d{1,9}: sin=masked
+regex:
+  queryParameter:
+#    accountNo: "(.*)"
+  requestHeader:
+#    header1: "(.*)"
+#    header2: "(.*)"
+  responseHeader:
+#    header3: "(.*)"
+  requestCookies:
+#    userName: "(.*)"
+  responseCookies:
+#    sensitiveData: "(.*)"
+json:
+  requestBody:
+#    "$.*.email": "(.*)"
+#    "$.product[*].item[*].name": "(.*)"
+  responseBody:
+#    "$.product[*].item[*].name": "(.*)"
+#    "$.product[*].item[*].name[0]": "(.*)"

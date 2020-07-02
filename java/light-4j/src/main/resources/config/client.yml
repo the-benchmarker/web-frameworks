@@ -1,0 +1,74 @@
+# This is the configuration file for Http2Client.
+---
+# Settings for TLS
+tls:
+  # if the server is using self-signed certificate, this need to be false. If true, you have to use CA signed certificate
+  # or load truststore that contains the self-signed cretificate.
+  verifyHostname: true
+  # trust store contains certifictes that server needs. Enable if tls is used.
+  loadTrustStore: true
+  # trust store location can be specified here or system properties javax.net.ssl.trustStore and password javax.net.ssl.trustStorePassword
+  trustStore: ${client.trustStore:client.truststore}
+  # key store contains client key and it should be loaded if two-way ssl is uesed.
+  loadKeyStore: false
+  # key store location
+  keyStore: ${client.keyStore:client.keystore}
+# settings for OAuth2 server communication
+oauth:
+  # OAuth 2.0 token endpoint configuration
+  token:
+    # The scope token will be renewed automatically 1 minutes before expiry
+    tokenRenewBeforeExpired: 60000
+    # if scope token is expired, we need short delay so that we can retry faster.
+    expiredRefreshRetryDelay: 2000
+    # if scope token is not expired but in renew windown, we need slow retry delay.
+    earlyRefreshRetryDelay: 4000
+    # token server url. The default port number for token service is 6882.
+    server_url: ${client.server_url:https://localhost:6882}
+    # token service unique id for OAuth 2.0 provider
+    serviceId: com.networknt.oauth2-token-1.0.0
+    # set to true if the oauth2 provider supports HTTP/2
+    enableHttp2: true
+    # the following section defines uri and parameters for authorization code grant type
+    authorization_code:
+      # token endpoint for authorization code grant
+      uri: "/oauth2/token"
+      # client_id for authorization code grant flow. client_secret is in secret.yml
+      client_id: ${client.client_id:f7d42348-c647-4efb-a52d-4c5787421e72}
+      # the web server uri that will receive the redirected authorization code
+      redirect_uri: https://localhost:8080/authorization_code
+      # optional scope, default scope in the client registration will be used if not defined.
+      scope:
+      - petstore.r
+      - petstore.w
+    # the following section defines uri and parameters for client credentials grant type
+    client_credentials:
+      # token endpoint for client credentials grant
+      uri: "/oauth2/token"
+      # client_id for client credentials grant flow. client_secret is in secret.yml
+      client_id: f7d42348-c647-4efb-a52d-4c5787421e72
+      # optional scope, default scope in the client registration will be used if not defined.
+      scope:
+      - petstore.r
+      - petstore.w
+    refresh_token:
+      # token endpoint for refresh token grant
+      uri: "/oauth2/token"
+      # client_id for refresh token grant flow. client_secret is in secret.yml
+      client_id: ${client.client_id:f7d42348-c647-4efb-a52d-4c5787421e72}
+      # optional scope, default scope in the client registration will be used if not defined.
+      scope:
+      - petstore.r
+      - petstore.w
+  # light-oauth2 key distribution endpoint configuration
+  key:
+    # key distribution server url
+    server_url: ${client.server_url:https://localhost:6882}
+    # the unique service id for key distribution service
+    serviceId: com.networknt.oauth2-key-1.0.0
+    # the path for the key distribution endpoint
+    uri: "/oauth2/key"
+    # client_id used to access key distribution service. It can be the same client_id with token service or not.
+    client_id: ${client.client_id:f7d42348-c647-4efb-a52d-4c5787421e72}
+    # set to true if the oauth2 provider supports HTTP/2
+    enableHttp2: true

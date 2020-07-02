@@ -1,0 +1,20 @@
+---
+# Metrics handler configuration
+
+# If metrics handler is enabled or not
+enabled: ${metrics.enabled:false}
+
+# influxdb protocal can be http, https
+influxdbProtocol: ${metrics.influxdbProtocol:http}
+# influxdb hostname
+influxdbHost: ${metrics.influxdbHost:localhost}
+# influxdb port number
+influxdbPort: ${metrics.influxdbPort:8086}
+# influxdb database name
+influxdbName: ${metrics.influxdbName:metrics}
+# influxdb user
+influxdbUser: ${metrics.influxdbUser:admin}
+# influx db password
+influxdbPass: ${metrics.influxdbPass:admin}
+# report and reset metrics in minutes.
+reportInMinutes: ${metrics.reportInMinutes:1}

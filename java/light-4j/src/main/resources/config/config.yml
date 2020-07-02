@@ -1,0 +1,20 @@
+
+#----------------------------------------------------------------------------------------------------------------
+# Scalable Config file
+#
+# This file serves as a configuration extension platform. Functions are list below:
+#
+# [1]   exclusionConfigFileList: this configuration will be used by the light-4j/config module, when reading
+#       config files. it allows the listing of files which will be excluded from parameterized values set at
+#       the command-line or in a values.yml file
+#       Notes:
+#       File name included in the list will be excluded
+#       If the file is not provided, the config module will safely ignore it
+#       Simply list the config file names without extensions(.json, .yaml, .yml)
+#----------------------------------------------------------------------------------------------------------------
+exclusionConfigFileList:
+  - openapi
+  - values
+  - status
+
+decryptorClass: com.networknt.decrypt.AESDecryptor
