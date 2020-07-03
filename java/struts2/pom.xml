@@ -9,6 +9,7 @@
     <name>benchmark</name>
 
     <properties>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jetty.version>11.0.0</jetty.version>
         <jetty-jsp.version>9.2.30.v20200428</jetty-jsp.version>
