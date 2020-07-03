@@ -7,7 +7,6 @@ provider:
 sources:
   - src/**/*.java
   - pom.xml
-  - src/main/webapp/WEB-INF/web.xml
 
 files:
   - src/**/*.properties
