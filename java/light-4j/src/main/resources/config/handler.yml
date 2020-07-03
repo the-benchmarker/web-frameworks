@@ -41,25 +41,25 @@ auditStackTrace: ${handler.auditStackTrace:false}
 #------------------------------------------------------------------------------
 handlers:
   # Light-framework cross-cutting concerns implemented in the microservice
-  - com.networknt.exception.ExceptionHandler@exception
-  - com.networknt.metrics.MetricsHandler@metrics
-  - com.networknt.traceability.TraceabilityHandler@traceability
-  - com.networknt.correlation.CorrelationHandler@correlation
-  - com.networknt.openapi.OpenApiHandler@specification
-  - com.networknt.openapi.JwtVerifyHandler@security
-  - com.networknt.body.BodyHandler@body
-  - com.networknt.audit.AuditHandler@audit
+  # - com.networknt.exception.ExceptionHandler@exception
+  # - com.networknt.metrics.MetricsHandler@metrics
+  # - com.networknt.traceability.TraceabilityHandler@traceability
+  # - com.networknt.correlation.CorrelationHandler@correlation
+  # - com.networknt.openapi.OpenApiHandler@specification
+  # - com.networknt.openapi.JwtVerifyHandler@security
+  # - com.networknt.body.BodyHandler@body
+  # - com.networknt.audit.AuditHandler@audit
   # DumpHandler is to dump detail request/response info to log, useful for troubleshooting but not suggested to use in production due to it may lower the performance
   # - com.networknt.dump.DumpHandler@dump
-  - com.networknt.sanitizer.SanitizerHandler@sanitizer
-  - com.networknt.openapi.ValidatorHandler@validator
+  # - com.networknt.sanitizer.SanitizerHandler@sanitizer
+  # - com.networknt.openapi.ValidatorHandler@validator
   # Customer business domain specific cross-cutting concerns handlers
   # - com.example.validator.CustomizedValidator@custvalidator
   # Framework endpoint handlers
-  - com.networknt.health.HealthGetHandler@health
-  - com.networknt.info.ServerInfoGetHandler@info
-  - com.networknt.specification.SpecDisplayHandler@spec
-  - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
+  # - com.networknt.health.HealthGetHandler@health
+  # - com.networknt.info.ServerInfoGetHandler@info
+  # - com.networknt.specification.SpecDisplayHandler@spec
+  # - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
   # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
   # Business Handlers
   - benchmark.light4j.handler.GetHandler
@@ -67,53 +67,30 @@ handlers:
   - benchmark.light4j.handler.UserPostHandler
 
 
-chains:
-  default:
-    - exception
-    - metrics
-    - traceability
-    - correlation
-    - specification
-    - security
-    - body
-    - audit
+#chains:
+#  default:
+#    - exception
+#    - metrics
+#    - traceability
+#    - correlation
+#    - specification
+#    - security
+#    - body
+#    - audit
 #    - dump
-    - sanitizer
-    - validator
+#    - sanitizer
+#    - validator
 
 paths:
   - path: '/'
     method: 'GET'
     exec:
-      - default
       - benchmark.light4j.handler.GetHandler
   - path: '/user/{id}'
     method: 'GET'
     exec:
-      - default
       - benchmark.light4j.handler.UserIdGetHandler
   - path: '/user'
     method: 'POST'
     exec:
-      - default
       - benchmark.light4j.handler.UserPostHandler
-
-  - path: '/health/${server.serviceId:benchmark.light-4j.benchmark-0.0.1}'
-    method: 'get'
-    exec:
-      - health
-
-  - path: '/server/info'
-    method: 'get'
-    exec:
-      - info
-
-
-  - path: '/spec.yaml'
-    method: 'get'
-    exec:
-      - spec
-  - path: '/specui.html'
-    method: 'get'
-    exec:
-      - swaggerui
