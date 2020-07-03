@@ -9,7 +9,6 @@
     <name>benchmark</name>
 
     <properties>
-        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jetty.version>11.0.0</jetty.version>
         <jetty-jsp.version>9.2.30.v20200428</jetty-jsp.version>
@@ -44,12 +43,6 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-jsp</artifactId>
             <version>${jetty-jsp.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-runner</artifactId>
-            <version>9.4.30.v20200611</version>
         </dependency>
 
     </dependencies>
