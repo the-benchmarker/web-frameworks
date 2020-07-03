@@ -46,6 +46,12 @@
             <version>${jetty-jsp.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-runner</artifactId>
+            <version>9.4.30.v20200611</version>
+        </dependency>
+
     </dependencies>
 
     <build>
