@@ -290,7 +290,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.4.0</version>
+                        <version>1.6.0</version>
                         <configuration>
                             <executable>java</executable>
                             <arguments>
@@ -316,7 +316,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.4.0</version>
+                        <version>1.6.0</version>
                         <configuration>
                             <workingDirectory>${project.build.directory}</workingDirectory>
                             <executable>java</executable>
