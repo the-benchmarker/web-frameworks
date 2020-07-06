@@ -25,9 +25,9 @@ COPY . ./
 
 FROM openjdk:11-jre-slim
 
-{{#bin_deps}}
-  RUN apk add {{{.}}}
-{{/bin_deps}}
+{{#fixes}}
+  RUN {{{.}}}
+{{/fixes}}
 
 WORKDIR /usr/src/app
 
