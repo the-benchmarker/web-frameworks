@@ -3,7 +3,7 @@
 {{/image}}
 
 {{^image}}
-  FROM maven:3-jdk-8-alpine
+  FROM maven:3-jdk-11-slim
 {{/image}}
 
 WORKDIR /usr/src/app
@@ -23,7 +23,7 @@ COPY . ./
 {{/build}}
 
 
-FROM openjdk:8-jre-alpine
+FROM openjdk:11-jre-slim
 
 {{#bin_deps}}
   RUN apk add {{{.}}}
