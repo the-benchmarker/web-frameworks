@@ -5,8 +5,10 @@ framework:
 build:
   - mvn clean package
 
-bin_deps:
-  - jetty-runner
+fixes:
+  - mkdir -p /usr/share/java
+  - apt-get -y update && apt-get -y install wget
+  - wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-runner/9.4.30.v20200611/jetty-runner-9.4.30.v20200611.jar -O /usr/share/java/jetty-runner.jar
 
 files:
   - target/struts2-1.0.war
