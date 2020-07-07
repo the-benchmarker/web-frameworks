@@ -1,0 +1,21 @@
+{
+  "name": "benchmark",
+  "version": "0.0.1",
+  "groupId": "benchmark.light-4j",
+  "artifactId": "benchmark",
+  "rootPackage": "benchmark.light4j",
+  "handlerPackage":"benchmark.light4j.handler",
+  "modelPackage":"benchmark.light4j.model",
+  "overwriteHandler": true,
+  "overwriteHandlerTest": true,
+  "overwriteModel": true,
+  "httpPort": 3000,
+  "enableHttp": true,
+  "httpsPort": 3443,
+  "enableHttps": false,
+  "enableHttp2": true,
+  "enableRegistry": false,
+  "supportDb": false,
+  "supportH2ForTest": false,
+  "supportClient": true
+}
