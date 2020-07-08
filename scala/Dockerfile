@@ -1,4 +1,4 @@
-FROM hseeberger/scala-sbt:11.0.7_1.3.12_2.13.2 AS build
+FROM hseeberger/scala-sbt:11.0.7_1.3.13_2.13.3 AS build
 
 WORKDIR /usr/src/app
 

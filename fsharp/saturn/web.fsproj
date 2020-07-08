@@ -9,6 +9,7 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.7.2" />
     <PackageReference Include="Saturn" Version="0.14.*" />
   </ItemGroup>
 </Project>

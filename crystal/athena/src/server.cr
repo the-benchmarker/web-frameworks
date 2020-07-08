@@ -1,5 +1,7 @@
 require "athena"
 
+Log.setup :none
+
 class BenchmarkController < ART::Controller
   @[ART::Get("/")]
   def root_get : Nil
@@ -15,7 +17,7 @@ class BenchmarkController < ART::Controller
   end
 end
 
-System.cpu_count.times do |i|
+System.cpu_count.times do
   Process.fork do
     ART.run reuse_port: true
   end
