@@ -1,7 +1,5 @@
 package org.apache.struts.benchmarker.example;
 
-import org.apache.struts2.result.PlainResult;
-
 public class UserAction {
 
     private String id;
