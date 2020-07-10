@@ -2,7 +2,7 @@
 
 use BearFramework\App;
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 $app = new App();
 
