@@ -14,14 +14,10 @@
         <default-action-ref name="index"/>
         <global-allowed-methods>index,view,create</global-allowed-methods>
 
-        <action name="index">
-            <result>/WEB-INF/index.jsp</result>
-        </action>
+        <action name="index" class="org.apache.struts.benchmarker.example.UserAction"/>
 
         <action name="user/*" class="org.apache.struts.benchmarker.example.UserAction">
             <param name="id">{1}</param>
-            <result>/WEB-INF/index.jsp</result>
-            <result name="user-id">/WEB-INF/user-id.jsp</result>
         </action>
 
     </package>
