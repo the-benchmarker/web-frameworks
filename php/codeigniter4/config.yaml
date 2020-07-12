@@ -1,0 +1,16 @@
+
+framework:
+  website: codeigniter.com
+  version: 4.0.3
+
+php_mod:
+  - curl
+  - intl
+  - json
+  - mbstring
+
+environment:
+  CI_ENVIRONMENT: production
+
+before_command:
+  - mkdir writable/cache -p
