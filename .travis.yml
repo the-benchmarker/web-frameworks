@@ -81,6 +81,7 @@ env:
       - FRAMEWORK=crystal.grip
       - FRAMEWORK=crystal.toro
       - FRAMEWORK=php.slim
+      - FRAMEWORK=php.bearframework
       - FRAMEWORK=php.chubbyphp-roadrunner
       - FRAMEWORK=php.ice
       - FRAMEWORK=php.chubbyphp

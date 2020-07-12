@@ -13,6 +13,7 @@ use Hyperf\Contract\StdoutLoggerInterface;
 
 return [
     'app_name' => env('APP_NAME', 'skeleton'),
+    'scan_cacheable' => true,
     StdoutLoggerInterface::class => [
         'log_level' => [
         ],
