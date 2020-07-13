@@ -14,3 +14,4 @@ environment:
 
 before_command:
   - mkdir writable/cache -p
+  - chown -R www-data:www-data writable/cache
