@@ -9,4 +9,7 @@ deps:
 sources:
   - "**/*.pony"
 
+binaries:
+  - web
+
 command: /opt/web/web

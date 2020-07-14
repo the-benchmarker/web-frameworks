@@ -2,7 +2,7 @@ FROM ponylang/ponyc:0.38.1
 
 RUN apt-get -y update && apt-get -y install clang libssl-dev
 
-WORKDIR /src/main
+WORKDIR /src/web
 
 COPY bundle.json .
 
@@ -25,7 +25,7 @@ RUN apt-get -y update && apt-get -y install openssl libatomic1
 WORKDIR /opt/web
 
 {{#binaries}}
-  COPY --from=0 /src/main/main {{{.}}}
+  COPY --from=0 /src/web/{{{.}}} {{{.}}}
 {{/binaries}}
 
 CMD {{{command}}}
