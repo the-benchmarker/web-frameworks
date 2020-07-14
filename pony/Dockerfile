@@ -28,4 +28,4 @@ WORKDIR /opt/web
   COPY --from=0 /src/main/main {{{.}}}
 {{/binaries}}
 
-CMD {{#command}}{{{.}}}{{/command}}
+CMD {{{command}}}

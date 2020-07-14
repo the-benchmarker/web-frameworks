@@ -9,4 +9,4 @@ sources:
 binaries:
   - target/release/server
 
-command: /opt/web/server
+command: /opt/web/target/release/server

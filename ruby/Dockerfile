@@ -27,4 +27,4 @@ RUN ln -sfv /usr/local/bin/bundle /usr/bin/bundle
   RUN {{{.}}}
 {{/bootstrap}}
 
-CMD {{#command}}{{{.}}}{{/command}}
+CMD {{{command}}}

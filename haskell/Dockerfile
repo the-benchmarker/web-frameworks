@@ -18,4 +18,4 @@ WORKDIR /opt/web
 
 RUN apk add gmp
 
-CMD {{command}}
+CMD {{{command}}}

@@ -24,4 +24,4 @@ RUN npm install
   RUN {{{.}}}
 {{/bootstrap}}
 
-CMD {{#command}}{{{.}}}{{/command}}
+CMD {{{command}}}

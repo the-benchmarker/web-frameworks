@@ -8,4 +8,4 @@ COPY cpanfile d2app.psgi ./
 RUN cpanm --notest --installdeps .
 
 EXPOSE 3000
-CMD {{#command}}{{{.}}}{{/command}}
+CMD {{{command}}}

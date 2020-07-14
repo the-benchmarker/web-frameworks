@@ -10,4 +10,4 @@ WORKDIR /opt/web
   RUN {{{.}}}
 {{/bootstrap}}
 
-CMD {{#command}}{{{.}}}{{/command}}
+CMD {{{command}}}

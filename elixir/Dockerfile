@@ -39,4 +39,4 @@ WORKDIR /opt/web
 COPY --from=build /usr/src/app/release release
 
 # Start release
-CMD {{#command}}{{{.}}}{{/command}}
+CMD {{{command}}}

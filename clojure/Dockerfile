@@ -34,4 +34,4 @@ WORKDIR /opt/web
 
 RUN ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
 
-CMD {{#command}}{{{.}}}{{/command}}
+CMD {{{command}}}

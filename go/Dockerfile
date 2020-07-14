@@ -34,4 +34,4 @@ WORKDIR /opt/web
   COPY --from=0 /go/bin/{{{.}}} {{{.}}}
 {{/binaries}}
 
-CMD {{#command}}{{{.}}}{{/command}}
+CMD {{{command}}}
