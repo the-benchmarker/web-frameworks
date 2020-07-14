@@ -19,8 +19,10 @@ alpine-deps:
 bootstrap:
   - curl https://sh.rustup.rs > init.sh
   - sh init.sh -y
-  - rustup default nightly
-  - cd /opt/web && /usr/local/bin/python -m pip install -r requirements.txt -U
+  - $HOME/.cargo/bin/rustup default nightly
+  - install $HOME/.cargo/bin/rustc /usr/local/bin
+  - install $HOME/.cargo/bin/cargo /usr/local/bin
+  - python3 -m pip install -r requirements.txt -U
 
 files:
   - server.py
