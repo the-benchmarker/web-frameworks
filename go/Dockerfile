@@ -10,17 +10,9 @@ WORKDIR /go/src/app
   COPY {{{.}}} {{{.}}}
 {{/sources}}
 
-{{#build_deps}}
-  RUN apk add {{{.}}}
-{{/build_deps}}
-
-{{#before_command}}
+{{#bootstrap}}
   RUN {{{.}}}
-{{/before_command}}
-
-{{#boostrap}}
-  RUN {{{.}}}
-{{/boostrap}}
+{{/bootstrap}}
 
 RUN go get
 
