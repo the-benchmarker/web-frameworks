@@ -15,12 +15,15 @@ RUN rustup target add x86_64-unknown-linux-musl
 {{/sources}}
 
 RUN cargo build --target x86_64-unknown-linux-musl --release
+RUN cp target/x86_64-unknown-linux-musl/release/server target/release/server
 
 # hadolint ignore=DL3006
 FROM alpine
 
 WORKDIR /opt/web
 
-COPY --from=build /usr/src/app/target/x86_64-unknown-linux-musl/release/server target/x86_64-unknown-linux-musl/release/server
+{{#binaries}}
+  COPY --from=build /usr/src/app/{{{.}}} {{{.}}}
+{{/binaries}}
 
-CMD /opt/web/target/x86_64-unknown-linux-musl/release/server
+CMD {{command}}
