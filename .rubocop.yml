@@ -11,3 +11,12 @@ Style/Documentation:
 Naming/AccessorMethodName:
   Exclude: 
     - ruby/rack-routing/app/route_handler.rb
+
+Metrics/BlockLength:
+  Enabled: false
+
+Rake/Desc:
+  Enabled: false
+
+Layout/LineLength:
+  Enabled: false
