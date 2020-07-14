@@ -27,8 +27,4 @@ WORKDIR /opt/web
   RUN {{{.}}}
 {{/bootstrap}}
 
-{{#bootstrap}}
-  RUN {{{.}}}
-{{/bootstrap}}
-
-CMD {{#command}}{{{.}}}{{/command}}
+CMD {{{command}}}
