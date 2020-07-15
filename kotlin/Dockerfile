@@ -12,7 +12,11 @@ RUN gradle build
 
 FROM openjdk:11-jre-slim
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
+
+{{#binaries}}
+  COPY --from=build /usr/src/app/{{{.}}} {{{.}}}
+{{/binaries}}
 
 COPY --from=build /usr/src/app/build/libs/server.jar /usr/src/app/build/libs/server.jar
 
