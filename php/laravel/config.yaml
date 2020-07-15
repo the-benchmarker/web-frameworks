@@ -38,7 +38,7 @@ bootstrap:
   - sed -i 's/;prefix.*/prefix = \/opt\/web\/public/g' /etc/php-fpm.d/www.conf
   - "[[ -f /etc/fedora-release ]] && systemctl enable php-fpm || true"
   - "[[ -f /etc/fedora-release ]] && systemctl enable nginx || true"
-  - chown -R www-data:www-data /usr/src/app
+  - chown -R www-data:www-data /opt/web
   - find /opt/web -type f -exec chmod 644 {} \;
   - find /opt/web -type d -exec chmod 755 {} \;
   - chmod -R ug+rwx storage /opt/web/bootstrap/cache
