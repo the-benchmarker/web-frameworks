@@ -10,9 +10,15 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>benchmark.spring-boot</groupId>
+<<<<<<< HEAD:java/spring/pom.xml
 	<artifactId>benchmark</artifactId>
 	<version>1.0.0</version>
 	<name>benchmark</name>
+=======
+	<artifactId>server</artifactId>
+	<version>1.0.0</version>
+	<name>server</name>
+>>>>>>> 4da86d24 (fix(spring-boot): Wrong binary path):java/spring-boot/pom.xml
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
