@@ -4,3 +4,8 @@ framework:
 
 build:
   - mvn clean package -Prelease
+
+files:
+  - src/**/*.yml
+  - project/**/*.json
+  - project/**/*.yaml
