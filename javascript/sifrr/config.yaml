@@ -9,3 +9,4 @@ deps:
 
 alpine-deps:
   - gcompat # required by uWebSocket
+  - git
