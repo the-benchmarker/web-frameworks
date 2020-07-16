@@ -2,7 +2,14 @@ framework:
   github: sunrise-php/http-router
   version: 2.4
 
-before_command:
+bootstrap:
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
   - ./vendor/bin/rr get-binary
+
+files:
+  - "**/*.php"
+  - composer.json
+  - .rr.yaml
 
 command: ./rr serve
