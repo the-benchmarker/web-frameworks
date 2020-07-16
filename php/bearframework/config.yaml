@@ -9,12 +9,10 @@ deps:
   - nginx
   - php
   - composer
+  - libpng-devel
 
 alpine-deps:
   - libpng-dev
-
-deps:
-  - libpng-devel
 
 files:
   - composer.json

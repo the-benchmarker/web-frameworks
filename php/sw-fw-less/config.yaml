@@ -5,6 +5,9 @@ framework:
 php_ext:
   - swoole
 
+php_mod:
+  - sockets
+
 deps:
   - php
   - composer
