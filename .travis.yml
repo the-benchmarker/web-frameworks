@@ -81,7 +81,6 @@ env:
       - FRAMEWORK=crystal.grip
       - FRAMEWORK=crystal.toro
       - FRAMEWORK=php.slim
-      - FRAMEWORK=php.bearframework
       - FRAMEWORK=php.chubbyphp-roadrunner
       - FRAMEWORK=php.chubbyphp-swoole
       - FRAMEWORK=php.ice
@@ -95,6 +94,8 @@ env:
       - FRAMEWORK=php.imi
       - FRAMEWORK=php.ubiquity
       - FRAMEWORK=php.mark
+      - FRAMEWORK=php.codeigniter4
+      - FRAMEWORK=php.bearframework
       - FRAMEWORK=php.mezzio
       - FRAMEWORK=php.swoft
       - FRAMEWORK=php.hamlet
@@ -115,7 +116,6 @@ env:
       - FRAMEWORK=php.basicphp
       - FRAMEWORK=php.yii-swoole
       - FRAMEWORK=php.spiral
-      - FRAMEWORK=php.codeigniter4
       - FRAMEWORK=fsharp.frank
       - FRAMEWORK=fsharp.giraffe
       - FRAMEWORK=fsharp.websharper
@@ -130,6 +130,7 @@ env:
       - FRAMEWORK=java.rapidoid
       - FRAMEWORK=java.act
       - FRAMEWORK=java.javalin
+      - FRAMEWORK=java.light-4j
       - FRAMEWORK=java.blade
       - FRAMEWORK=csharp.aspnetcore
       - FRAMEWORK=csharp.carter
