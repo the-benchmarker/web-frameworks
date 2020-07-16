@@ -1,32 +1,27 @@
 package org.apache.struts.benchmarker.example;
 
-import static com.opensymphony.xwork2.Action.SUCCESS;
-
 public class UserAction {
 
     private String id;
 
-    public String execute() {
-        return SUCCESS  ;
+    public PlainResult execute() {
+        return response -> response.write("");
     }
 
-    public String index() {
-        return SUCCESS  ;
+    public PlainResult index() {
+        return response -> response.write("");
     }
 
-    public String view() {
-        return "user-id";
+    public PlainResult view() {
+        return response -> response.write(id);
     }
 
-    public String create() {
-        return SUCCESS;
-    }
-
-    public String getId() {
-        return id;
+    public PlainResult create() {
+        return response -> response.write("");
     }
 
     public void setId(String id) {
         this.id = id;
     }
+
 }

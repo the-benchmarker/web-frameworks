@@ -82,9 +82,11 @@ env:
       - FRAMEWORK=crystal.toro
       - FRAMEWORK=php.slim
       - FRAMEWORK=php.chubbyphp-roadrunner
+      - FRAMEWORK=php.chubbyphp-swoole
       - FRAMEWORK=php.ice
       - FRAMEWORK=php.chubbyphp
       - FRAMEWORK=php.yii
+      - FRAMEWORK=php.comet
       - FRAMEWORK=php.laravel
       - FRAMEWORK=php.nette
       - FRAMEWORK=php.sw-fw-less
@@ -92,13 +94,18 @@ env:
       - FRAMEWORK=php.imi
       - FRAMEWORK=php.ubiquity
       - FRAMEWORK=php.mark
+      - FRAMEWORK=php.codeigniter4
+      - FRAMEWORK=php.bearframework
       - FRAMEWORK=php.mezzio
       - FRAMEWORK=php.swoft
       - FRAMEWORK=php.hamlet
       - FRAMEWORK=php.simps
       - FRAMEWORK=php.siler-swoole
       - FRAMEWORK=php.hyperf
+      - FRAMEWORK=php.sunrise-router-roadrunner
+      - FRAMEWORK=php.sunrise-router-annotations
       - FRAMEWORK=php.symfony
+      - FRAMEWORK=php.sunrise-router
       - FRAMEWORK=php.one-fpm
       - FRAMEWORK=php.fastsitephp
       - FRAMEWORK=php.siler
@@ -109,7 +116,6 @@ env:
       - FRAMEWORK=php.basicphp
       - FRAMEWORK=php.yii-swoole
       - FRAMEWORK=php.spiral
-      - FRAMEWORK=php.comet
       - FRAMEWORK=fsharp.frank
       - FRAMEWORK=fsharp.giraffe
       - FRAMEWORK=fsharp.websharper
@@ -124,6 +130,7 @@ env:
       - FRAMEWORK=java.rapidoid
       - FRAMEWORK=java.act
       - FRAMEWORK=java.javalin
+      - FRAMEWORK=java.light-4j
       - FRAMEWORK=java.blade
       - FRAMEWORK=csharp.aspnetcore
       - FRAMEWORK=csharp.carter

@@ -1,48 +1,44 @@
+module Program 
+
 open Falco
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Logging
-open Microsoft.Extensions.DependencyInjection
 
-let defaultHandler : HttpHandler =  
-    (textOut "")
+let configureWebHost 
+    (routes : HttpEndpoint list)
+    (webHost : IWebHostBuilder) =
+    let configureLogging (log : ILoggingBuilder) =
+        log.ClearProviders()
+        |> ignore
 
-let userIdHandler : HttpHandler =
-    fun next ctx -> 
-        let userId = ctx.TryGetRouteValue "id" |> Option.defaultValue ""
-        textOut userId next ctx
+    let configureServices (services : IServiceCollection) =
+        services.AddRouting() 
+        |> ignore
 
-let routes = 
-    [
-        get  "/user/{id}" userIdHandler
-        post "/user"      defaultHandler
-        get  "/"          defaultHandler
-    ]
+    let configure (routes : HttpEndpoint list) (app : IApplicationBuilder) = 
+        app.UseRouting()
+            .UseHttpEndPoints(routes)       
+            |> ignore 
 
-let configureLogging (log : ILoggingBuilder) =
-    log.ClearProviders()
-    |> ignore
-
-let configureServices (services : IServiceCollection) =
-    services.AddRouting() 
-    |> ignore
-
-let configure (app : IApplicationBuilder) = 
-    app.UseRouting()
-       .UseHttpEndPoints(routes)       
-       |> ignore 
+    webHost
+        .UseKestrel()
+        .ConfigureLogging(configureLogging)
+        .ConfigureServices(configureServices)
+        .Configure(configure routes)
+        |> ignore
 
 [<EntryPoint>]
-let main _ =
-    try
-        WebHostBuilder()
-            .UseKestrel()
-            .ConfigureLogging(configureLogging)
-            .ConfigureServices(configureServices)
-            .Configure(configure)
-            .Build()
-            .Run()
-        0
-    with 
-        | _ -> -1
+let main args =   
+    let message = ""
+
+    Host.startWebHost 
+        args 
+        configureWebHost
+        [
+            get  "/user/{id}" (fun ctx -> Response.ofPlainText (Request.tryGetRouteValue "id" ctx |> Option.defaultValue "") ctx)
+            post "/user"      (Response.ofPlainText message)
+            get  "/"          (Response.ofPlainText message)
+        ]
+    0

@@ -5,10 +5,7 @@ framework:
 build:
   - mvn clean package
 
-bin_deps:
-  - jetty-runner
-
 files:
-  - target/struts2-1.0.war
+  - target/struts2-1.0-standalone.jar
 
-command: java  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts  -jar /usr/share/java/jetty-runner.jar --port 3000 target/struts2-1.0.war
+command: java -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar target/struts2-1.0-standalone.jar --port 3000
