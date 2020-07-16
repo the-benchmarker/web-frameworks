@@ -5,5 +5,26 @@ framework:
 php_mod:
   - gd
 
-build_deps:
+deps:
+  - nginx
+  - php
+  - composer
+
+alpine-deps:
   - libpng-dev
+
+deps:
+  - libpng-devel
+
+files:
+  - composer.json
+  - public/index.php
+  - ../.config/nginx.conf
+
+bootstrap:
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o
+  - mv config/nginx.conf /etc/nginx/conf.d/default.conf
+  - sed -i 's/;prefix.*/prefix = \/opt\/web\/public/g' /etc/php-fpm.d/www.conf
+  - "[[ -f /etc/fedora-release ]] && systemctl enable php-fpm || true"
+  - "[[ -f /etc/fedora-release ]] && systemctl enable nginx || true"
