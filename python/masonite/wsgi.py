@@ -1,3 +1,7 @@
+# Disable all logging features
+import logging
+logging.disable()
+
 """First Entry For The WSGI Server."""
 
 from masonite.app import App

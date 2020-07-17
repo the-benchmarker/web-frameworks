@@ -1,3 +1,7 @@
+# Disable all logging features
+import logging
+logging.disable()
+
 import hug
 from meinheld import patch
 

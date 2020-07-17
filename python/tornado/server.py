@@ -1,3 +1,7 @@
+# Disable all logging features
+import logging
+logging.disable()
+
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web

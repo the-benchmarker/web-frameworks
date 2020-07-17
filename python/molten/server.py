@@ -1,3 +1,7 @@
+# Disable all logging features
+import logging
+logging.disable()
+
 from molten import App, Route, HTTP_200, Response
 
 

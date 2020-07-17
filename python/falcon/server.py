@@ -1,3 +1,7 @@
+# Disable all logging features
+import logging
+logging.disable()
+
 import falcon
 from meinheld import patch
 

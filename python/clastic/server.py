@@ -1,3 +1,7 @@
+# Disable all logging features
+import logging
+logging.disable()
+
 from clastic import Application, render_basic
 
 

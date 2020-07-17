@@ -1,3 +1,7 @@
+# Disable all logging features
+import logging
+logging.disable()
+
 from tonberry import create_app, expose
 from tonberry.content_types import TextPlain
 

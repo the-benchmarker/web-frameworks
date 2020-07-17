@@ -1,3 +1,7 @@
+# Disable all logging features
+import logging
+logging.disable()
+
 from fastapi import FastAPI
 from starlette.responses import PlainTextResponse
 

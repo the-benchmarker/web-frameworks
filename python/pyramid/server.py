@@ -1,6 +1,9 @@
+# Disable all logging features
+import logging
+logging.disable()
+
 from pyramid.config import Configurator
 from pyramid.response import Response
-
 
 def empty(request):
     return Response()

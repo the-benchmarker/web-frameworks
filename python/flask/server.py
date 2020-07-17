@@ -1,3 +1,7 @@
+# Disable all logging features
+import logging
+logging.disable()
+
 from flask import Flask
 from meinheld import patch
 

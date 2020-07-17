@@ -1,3 +1,9 @@
+# Disable all logging features
+import logging
+logging.disable()
+
+import responder
+
 from aiohttp import web
 
 routes = web.RouteTableDef()
