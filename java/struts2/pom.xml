@@ -10,7 +10,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jetty.version>9.2.30.v20200428</jetty.version>
+        <jetty.version>9.4.30.v20200611</jetty.version>
+        <jetty-jsp.version>9.2.30.v20200428</jetty-jsp.version>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
     </properties>
@@ -41,7 +42,7 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-jsp</artifactId>
-            <version>${jetty.version}</version>
+            <version>${jetty-jsp.version}</version>
         </dependency>
 
     </dependencies>
