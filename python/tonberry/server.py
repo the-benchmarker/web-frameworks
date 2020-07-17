@@ -1,3 +1,9 @@
+# Disable all logging features
+import logging
+
+logging.disable()
+
+
 from tonberry import create_app, expose
 from tonberry.content_types import TextPlain
 
@@ -14,5 +20,6 @@ class Root:
     @expose.get
     async def user(self, user_id: int) -> TextPlain:
         return user_id
+
 
 app = create_app(root=Root)
