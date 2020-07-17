@@ -1,10 +1,6 @@
 framework:
   website: flask.pocoo.org
   version: 1.1
-  
-before_command:
-  - >
-    echo "logconfig_dict = {'handlers': { 'console': { 'class': 'logging.NullHandler', }, 'error_console': { 'class': 'logging.NullHandler', }, } }" > config.py
 
 command: >
   gunicorn -c config.py \

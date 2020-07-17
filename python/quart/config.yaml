@@ -2,9 +2,6 @@ framework:
   website: pgjones.gitlab.io/quart
   version: 0.13
 
-before_command:
-  - >
-    echo "logconfig_dict = {'handlers': { 'console': { 'class': 'logging.NullHandler', }, 'error_console': { 'class': 'logging.NullHandler', }, } }" > config.py
 command: >
   gunicorn -c config.py \
     --bind 0.0.0.0:3000 \

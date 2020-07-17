@@ -14,10 +14,6 @@ COPY . ./
   RUN {{{.}}}
 {{/fixes}}
 
-{{#before_command}}
-  RUN {{{.}}}
-{{/before_command}}
-
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
