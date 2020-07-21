@@ -249,24 +249,18 @@ class App < Admiral::Command
                   when "docker"
                     yaml.scalar "docker run -td #{language}.#{name} > cid.txt"
                     yaml.scalar "docker inspect `cat cid.txt` -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' > ip.txt"
-                    yaml.scalar "sleep 5"
+                    yaml.scalar "sleep 25"
                   when "docker-machine"
                     yaml.scalar "docker run -p 3000:3000 -d #{language}.#{name}"
                     yaml.scalar "docker-machine ip default > ip.txt"
-                    yaml.scalar "sleep 5"
+                    yaml.scalar "sleep 25"
                   else
                     raise "unsupported provider"
                   end
 
                   # Launch sieging
                   unless flags.without_sieger
-                    factor = System.cpu_count**2
-                    command = "../../bin/client --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user -h `cat ip.txt`"
-                    [1, 4, 8].each do |i|
-                      command += " -c #{factor*i} "
-                    end
-
-                    yaml.scalar command
+                    yaml.scalar "../../bin/client --language #{language} --framework #{name} -r GET:/ -r GET:/user/0 -r POST:/user -h `cat ip.txt` -c 64 -c 256 -c 512"
                   end
 
                   # Drop the container
