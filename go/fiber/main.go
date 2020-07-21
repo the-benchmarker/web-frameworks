@@ -4,23 +4,33 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber"
+	"github.com/gofiber/utils"
 )
 
 const id = "id"
 
-var empty = func(c *fiber.Ctx) {}
-var sendID = func(c *fiber.Ctx) {
-	c.SendString(c.Params(id))
-}
+var (
+	handlerOK = func(c *fiber.Ctx) {}
+	handlerID = func(c *fiber.Ctx) {
+		c.SendBytes(utils.GetBytes(c.Params(id)))
+	}
+)
 
 func main() {
 	app := fiber.New(&fiber.Settings{
-		Prefork:       true,
-		CaseSensitive: true,
-		StrictRouting: true,
+		Prefork:                   true,
+		CaseSensitive:             true,
+		StrictRouting:             true,
+		DisableDefaultDate:        true,
+		DisableStartupMessage:     true,
+		DisableHeaderNormalizing:  true,
+		DisableDefaultContentType: true,
 	})
-	app.Get("/", empty)
-	app.Get("/user/:id", sendID)
-	app.Post("/user", empty)
+
+	app.Get("/", handlerOK)
+	app.Get("/user/:id", handlerID)
+
+	app.Post("/user", handlerOK)
+
 	log.Fatal(app.Listen(3000))
 }
