@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber"
-	"github.com/gofiber/utils"
 )
 
 const id = "id"
@@ -12,7 +11,7 @@ const id = "id"
 var (
 	handlerOK = func(c *fiber.Ctx) {}
 	handlerID = func(c *fiber.Ctx) {
-		c.SendBytes(utils.GetBytes(c.Params(id)))
+		c.SendString(c.Params(id))
 	}
 )
 
