@@ -1,0 +1,9 @@
+framework:
+  github: gotzmann/comet
+  version: 0.8
+
+php_mod:
+  - pcntl
+  - posix
+
+command: php start.php start

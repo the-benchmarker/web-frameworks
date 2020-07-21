@@ -5,7 +5,7 @@ services:
   - docker # Use docker to containerize frameworks
   - postgresql # Use postgresql to store data
 
-dist: bionic
+dist: xenial
 
 # This tool is written in crystal
 language: crystal
@@ -15,7 +15,6 @@ env:
     - DATABASE_URL=postgresql://postgres@localhost/benchmark
   jobs:
       - FRAMEWORK=javascript.iotjs-express
-      - FRAMEWORK=javascript.nanoexpress
       - FRAMEWORK=javascript.moleculer
       - FRAMEWORK=javascript.restana
       - FRAMEWORK=javascript.nestjs-fastify
@@ -48,6 +47,7 @@ env:
       - FRAMEWORK=ruby.agoo
       - FRAMEWORK=ruby.cuba
       - FRAMEWORK=ruby.hanami
+      - FRAMEWORK=ruby.pakyow
       - FRAMEWORK=ruby.grape
       - FRAMEWORK=ruby.rack_app
       - FRAMEWORK=cpp.evhtp
@@ -55,10 +55,14 @@ env:
       - FRAMEWORK=c.kore
       - FRAMEWORK=c.agoo-c
       - FRAMEWORK=perl.dancer2
+      - FRAMEWORK=nim.akane
       - FRAMEWORK=nim.jester
+      - FRAMEWORK=nim.whip
+      - FRAMEWORK=nim.rosencrantz
       - FRAMEWORK=nim.httpbeast
       - FRAMEWORK=kotlin.ktor
       - FRAMEWORK=kotlin.kooby
+      - FRAMEWORK=scala.play
       - FRAMEWORK=scala.http4s
       - FRAMEWORK=scala.akkahttp
       - FRAMEWORK=elixir.phoenix
@@ -70,30 +74,40 @@ env:
       - FRAMEWORK=crystal.athena
       - FRAMEWORK=crystal.amber
       - FRAMEWORK=crystal.router.cr
+      - FRAMEWORK=crystal.runcobo
       - FRAMEWORK=crystal.orion
       - FRAMEWORK=crystal.lucky
-      - FRAMEWORK=crystal.onyx
       - FRAMEWORK=crystal.kemal
       - FRAMEWORK=crystal.grip
       - FRAMEWORK=crystal.toro
       - FRAMEWORK=php.slim
+      - FRAMEWORK=php.chubbyphp-roadrunner
+      - FRAMEWORK=php.chubbyphp-swoole
       - FRAMEWORK=php.ice
       - FRAMEWORK=php.chubbyphp
       - FRAMEWORK=php.yii
+      - FRAMEWORK=php.comet
       - FRAMEWORK=php.laravel
       - FRAMEWORK=php.nette
       - FRAMEWORK=php.sw-fw-less
       - FRAMEWORK=php.lumen
       - FRAMEWORK=php.imi
       - FRAMEWORK=php.ubiquity
+      - FRAMEWORK=php.mark
+      - FRAMEWORK=php.codeigniter4
+      - FRAMEWORK=php.bearframework
       - FRAMEWORK=php.mezzio
       - FRAMEWORK=php.swoft
       - FRAMEWORK=php.hamlet
       - FRAMEWORK=php.simps
       - FRAMEWORK=php.siler-swoole
       - FRAMEWORK=php.hyperf
+      - FRAMEWORK=php.sunrise-router-roadrunner
+      - FRAMEWORK=php.sunrise-router-annotations
       - FRAMEWORK=php.symfony
+      - FRAMEWORK=php.sunrise-router
       - FRAMEWORK=php.one-fpm
+      - FRAMEWORK=php.fastsitephp
       - FRAMEWORK=php.siler
       - FRAMEWORK=php.one
       - FRAMEWORK=php.laminas
@@ -102,16 +116,25 @@ env:
       - FRAMEWORK=php.basicphp
       - FRAMEWORK=php.yii-swoole
       - FRAMEWORK=php.spiral
+      - FRAMEWORK=fsharp.frank
+      - FRAMEWORK=fsharp.giraffe
+      - FRAMEWORK=fsharp.websharper
+      - FRAMEWORK=fsharp.saturn
+      - FRAMEWORK=fsharp.falco
       - FRAMEWORK=fsharp.suave
       - FRAMEWORK=java.micronaut
+      - FRAMEWORK=java.struts2
       - FRAMEWORK=java.spring-framework
       - FRAMEWORK=java.spring-boot
       - FRAMEWORK=java.jooby
       - FRAMEWORK=java.rapidoid
       - FRAMEWORK=java.act
       - FRAMEWORK=java.javalin
+      - FRAMEWORK=java.light-4j
       - FRAMEWORK=java.blade
       - FRAMEWORK=csharp.aspnetcore
+      - FRAMEWORK=csharp.carter
+      - FRAMEWORK=csharp.simplify.web
       - FRAMEWORK=rust.nickel
       - FRAMEWORK=rust.gotham
       - FRAMEWORK=rust.iron
@@ -125,6 +148,7 @@ env:
       - FRAMEWORK=python.molten
       - FRAMEWORK=python.nameko
       - FRAMEWORK=python.starlette
+      - FRAMEWORK=python.tonberry
       - FRAMEWORK=python.cyclone
       - FRAMEWORK=python.clastic
       - FRAMEWORK=python.falcon
@@ -143,8 +167,10 @@ env:
       - FRAMEWORK=clojure.luminus
       - FRAMEWORK=clojure.coast
       - FRAMEWORK=pony.jennet
+      - FRAMEWORK=haskell.scotty
       - FRAMEWORK=haskell.servant
       - FRAMEWORK=dart.aqueduct
+      - FRAMEWORK=dart.start
       - FRAMEWORK=swift.kitura
       - FRAMEWORK=swift.swifter
       - FRAMEWORK=swift.kitura-nio
@@ -163,17 +189,21 @@ env:
       - FRAMEWORK=go.beego
       - FRAMEWORK=go.mars
       - FRAMEWORK=go.chi
+      - FRAMEWORK=go.macaron
       - FRAMEWORK=go.router
       - FRAMEWORK=go.goroute
       - FRAMEWORK=go.fiber
       - FRAMEWORK=go.gorilla-mux
+      - FRAMEWORK=go.gearbox
       - FRAMEWORK=go.gin
       - FRAMEWORK=go.kami
       - FRAMEWORK=go.gorouter
       - FRAMEWORK=go.violetear
       - FRAMEWORK=go.fasthttprouter
+      - FRAMEWORK=go.clevergo
       - FRAMEWORK=go.rte
       - FRAMEWORK=go.atreugo
+      - FRAMEWORK=v.vape
 
 before_script:
   - psql -c 'CREATE DATABASE benchmark;' -U postgres;

@@ -1,0 +1,9 @@
+framework:
+  github: bearframework/bearframework
+  version: 1.2
+
+php_mod:
+  - gd
+
+build_deps:
+  - libpng-dev

@@ -1,0 +1,11 @@
+name: runcobo
+version: 0.1.0
+
+dependencies:
+  runcobo:
+    github: runcobo/runcobo
+    version: ~> 0.2.0
+
+targets:
+  server:
+    main: src/server.cr

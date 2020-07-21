@@ -23,3 +23,14 @@ FRAMEWORKS.yaml
 
 # Rust build directories
 rust/*/target
+
+#fsharp
+launchSettings.json
+.vs
+obj
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.fsproj
+*.fsproj.user

@@ -4,9 +4,10 @@
    'port' => 3000,
    'mode' => SWOOLE_PROCESS,
    'sockType' => SWOOLE_SOCK_TCP,
-   'app' => require __DIR__ . '/swoole.php', 
+   'app' => require __DIR__ . '/swoole.php',
    'options' => [
-       'worker_num' => swoole_cpu_num(),
-       'daemonize' => 0,
+      'worker_num'       => swoole_cpu_num() * 2,
+      'enable_coroutine' => false,
+      'daemonize' => 0,
    ]
 ];

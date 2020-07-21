@@ -18,8 +18,10 @@ return [
         'callbacks' => [
         ],
         'settings' => [
+            'worker_num' => swoole_cpu_num() * 2,
+            'open_tcp_nodelay' => true,
+            'enable_reuse_port' => true,
             'enable_coroutine' => false,
-            'worker_num' => (int) shell_exec('nproc') ?? 32,
             'only_simple_http' => true,
         ],
     ],
