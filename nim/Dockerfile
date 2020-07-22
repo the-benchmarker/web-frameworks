@@ -2,7 +2,6 @@ FROM nimlang/nim:1.2.4-alpine
 
 WORKDIR /usr/src/app
 
-# COPY server.nim server.nimble ./
 COPY . ./
 
 {{#deps}}
