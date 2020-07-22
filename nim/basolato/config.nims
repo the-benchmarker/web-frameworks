@@ -8,7 +8,7 @@ putEnv("DB_PASSWORD", "")
 putEnv("DB_DATABASE", "benchmark")
 
 # Logging
-putEnv("LOG_IS_DISPLAY", "false")
+putEnv("LOG_IS_DISPLAY", "true")
 putEnv("LOG_IS_FILE", "false")
 putEnv("LOG_DIR", "/usr/src/app/logs")
 

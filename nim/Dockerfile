@@ -2,14 +2,19 @@ FROM nimlang/nim:1.2.4-alpine
 
 WORKDIR /usr/src/app
 
-COPY server.nim server.nimble ./
+# COPY server.nim server.nimble ./
+COPY . ./
 
 {{#deps}}
   RUN apk --no-cache add {{{.}}}
 {{/deps}}
 
-RUN nimble c {{#build_opts}} {{{.}}} {{/build_opts}} \
-    -d:danger \
+ENV PATH $PATH:/root/.nimble/bin
+
+RUN nimble install -y
+
+RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
+    # -d:danger \
     -d:noSignalHandler \
     --gc:markAndSweep \
     --listFullPaths:off \
@@ -22,7 +27,7 @@ RUN nimble c {{#build_opts}} {{{.}}} {{/build_opts}} \
     --passC:"-fsingle-precision-constant" \
     -d:release \
     --threads:on \
-        -y server.nim
+    server.nim
 
 FROM alpine
 
