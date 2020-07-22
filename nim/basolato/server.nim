@@ -15,6 +15,6 @@ routes:
   error Exception: exceptionRoute
   # before: framework
 
-  get "/": route(newBenchmarkController(request).root())
+  get "/": route(newBenchmarkController(request).index())
   get "/user/@id": route(newBenchmarkController(request).show(@"id"))
-  get "/user": route(newBenchmarkController(request).index())
+  post "/user": route(newBenchmarkController(request).store())
