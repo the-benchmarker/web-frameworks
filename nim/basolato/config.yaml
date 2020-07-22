@@ -4,3 +4,8 @@ framework:
 
 files:
   - /usr/src/app/server
+
+deps:
+  - pcre-dev
+
+build_opts: '--define: usePcreHeader --passL: "/usr/lib/libpcre.a"'

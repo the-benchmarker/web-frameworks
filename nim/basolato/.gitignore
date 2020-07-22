@@ -1,0 +1,16 @@
+# Binaries
+*
+!*.*
+!*/
+
+# Test coverage
+coverage/*
+lcov.info
+
+*.sqlite3
+*.db
+*.db.bak
+*.log
+
+ip.txt
+cid.txt

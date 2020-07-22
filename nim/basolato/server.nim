@@ -13,7 +13,7 @@ routes:
   # Framework
   error Http404: http404Route
   error Exception: exceptionRoute
-  before: framework
+  # before: framework
 
   get "/": route(newBenchmarkController(request).root())
   get "/user/@id": route(newBenchmarkController(request).show(@"id"))
