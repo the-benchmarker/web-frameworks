@@ -1,14 +1,14 @@
 import os
 
 # DB Connection
-putEnv("DB_DRIVER", "postgres")
-putEnv("DB_CONNECTION", "localhost:5432")
-putEnv("DB_USER", "postgres")
-putEnv("DB_PASSWORD", "")
-putEnv("DB_DATABASE", "benchmark")
+# putEnv("DB_DRIVER", "postgres")
+# putEnv("DB_CONNECTION", "localhost:5432")
+# putEnv("DB_USER", "postgres")
+# putEnv("DB_PASSWORD", "")
+# putEnv("DB_DATABASE", "benchmark")
 
 # Logging
-putEnv("LOG_IS_DISPLAY", "true")
+putEnv("LOG_IS_DISPLAY", "false")
 putEnv("LOG_IS_FILE", "false")
 putEnv("LOG_DIR", "/usr/src/app/logs")
 
