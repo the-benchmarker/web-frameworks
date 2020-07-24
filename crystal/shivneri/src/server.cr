@@ -7,6 +7,6 @@ module Server
   Shivneri.port = 3000
   Shivneri.host = "0.0.0.0"
   Shivneri.open do
-    puts "Shivneri is created"
+    #puts "Shivneri is created"
   end
 end
