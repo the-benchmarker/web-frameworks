@@ -16,8 +16,7 @@ proc index*(this:BenchmarkController):Response =
   return render("").setHeader(header)
 
 proc show*(this:BenchmarkController, id:string):Response =
-  let id = id.parseInt
-  return render(&"{id}")
+  return render(id)
 
 proc store*(this:BenchmarkController):Response =
   var header = newHeaders()
