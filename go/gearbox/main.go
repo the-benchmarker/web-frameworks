@@ -6,14 +6,15 @@ import (
 	"github.com/gogearbox/gearbox"
 )
 
-
-var empty = func(c *gearbox.Context) {}
-var sendID = func(c *gearbox.Context) {
-	c.RequestCtx.Response.SetBodyString(c.Params["id"])
+var empty = func(c gearbox.Context) {}
+var sendID = func(c gearbox.Context) {
+	c.SendString(c.Param("id"))
 }
 
 func main() {
-	app := gearbox.New()
+	app := gearbox.New(&gearbox.Settings{
+		Prefork: true,
+	})
 	app.Get("/", empty)
 	app.Get("/user/:id", sendID)
 	app.Post("/user", empty)
