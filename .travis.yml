@@ -55,6 +55,7 @@ env:
       - FRAMEWORK=c.kore
       - FRAMEWORK=c.agoo-c
       - FRAMEWORK=perl.dancer2
+      - FRAMEWORK=nim.basolato
       - FRAMEWORK=nim.akane
       - FRAMEWORK=nim.jester
       - FRAMEWORK=nim.whip
