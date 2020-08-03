@@ -1,3 +1,8 @@
 {
-  "extends": ["config:base", ":preserveSemverRanges"]
+  "extends": ["config:base", ":preserveSemverRanges"],
+  "node": {
+    "major": {
+      "enabled": true
+    }
+  }
 }
