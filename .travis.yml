@@ -19,7 +19,6 @@ env:
       - FRAMEWORK=javascript.restana
       - FRAMEWORK=javascript.nestjs-fastify
       - FRAMEWORK=javascript.fastify
-      - FRAMEWORK=javascript.nanoexpress-pro
       - FRAMEWORK=javascript.sails
       - FRAMEWORK=javascript.hapi
       - FRAMEWORK=javascript.restify
@@ -55,8 +54,8 @@ env:
       - FRAMEWORK=c.kore
       - FRAMEWORK=c.agoo-c
       - FRAMEWORK=perl.dancer2
-      - FRAMEWORK=nim.basolato
       - FRAMEWORK=nim.akane
+      - FRAMEWORK=nim.basolato
       - FRAMEWORK=nim.jester
       - FRAMEWORK=nim.whip
       - FRAMEWORK=nim.rosencrantz
