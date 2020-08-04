@@ -31,5 +31,5 @@ func main() {
 
 	app.Post("/user", handlerOK)
 
-	log.Fatal(app.Listen("0.0.0.0:3000"))
+	log.Fatal(app.Listen(":3000"))
 }
