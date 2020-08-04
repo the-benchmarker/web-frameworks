@@ -17,7 +17,7 @@ var (
 
 func main() {
 	app := fiber.New(&fiber.Settings{
-		Prefork:                   true,
+		Prefork:                   false,
 		CaseSensitive:             true,
 		StrictRouting:             true,
 		DisableDefaultDate:        true,
