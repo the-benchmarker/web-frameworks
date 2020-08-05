@@ -8,19 +8,28 @@ import (
 
 const id = "id"
 
-var empty = func(c *fiber.Ctx) {}
-var sendID = func(c *fiber.Ctx) {
-	c.SendString(c.Params(id))
-}
+var (
+	handlerOK = func(c *fiber.Ctx) {}
+	handlerID = func(c *fiber.Ctx) {
+		c.SendString(c.Params(id))
+	}
+)
 
 func main() {
 	app := fiber.New(&fiber.Settings{
-		Prefork:       true,
-		CaseSensitive: true,
-		StrictRouting: true,
+		Prefork:                   false,
+		CaseSensitive:             true,
+		StrictRouting:             true,
+		DisableDefaultDate:        true,
+		DisableStartupMessage:     true,
+		DisableHeaderNormalizing:  true,
+		DisableDefaultContentType: true,
 	})
-	app.Get("/", empty)
-	app.Get("/user/:id", sendID)
-	app.Post("/user", empty)
-	log.Fatal(app.Listen("0.0.0.0:3000"))
+
+	app.Get("/", handlerOK)
+	app.Get("/user/:id", handlerID)
+
+	app.Post("/user", handlerOK)
+
+	log.Fatal(app.Listen(":3000"))
 }
