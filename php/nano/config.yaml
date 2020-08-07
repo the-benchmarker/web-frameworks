@@ -6,4 +6,4 @@ php_mod:
   - pcntl
   - posix
 
-command: php start.php start
+command: php index.php start
