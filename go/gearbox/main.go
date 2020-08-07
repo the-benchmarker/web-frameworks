@@ -13,7 +13,8 @@ var sendID = func(c gearbox.Context) {
 
 func main() {
 	app := gearbox.New(&gearbox.Settings{
-		Prefork: true,
+		Prefork:               false,
+		DisableStartupMessage: true,
 	})
 	app.Get("/", empty)
 	app.Get("/user/:id", sendID)
