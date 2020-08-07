@@ -42,6 +42,8 @@ def list_of
 
         if config["framework"].as_h.has_key?("github")
           website = "https://github.com/#{config["framework"]["github"].to_s}"
+        elsif config["framework"].as_h.has_key?("gitlab")
+          website = "https://gitlab.com/#{config["framework"]["gitlab"].to_s}"
         else
           website = "https://#{config["framework"]["website"].to_s}"
         end
