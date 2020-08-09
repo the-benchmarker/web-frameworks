@@ -5,4 +5,4 @@ framework:
 before_command:
   - vendor/bin/rr get-binary
 
-command: ./rr serve -v -d
+command: ./rr serve
