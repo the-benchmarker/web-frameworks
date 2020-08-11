@@ -1,7 +1,7 @@
 val Http4sVersionRange = "[0.21,0.22)"
 
 name := "server"
-scalaVersion := "2.13.2"
+scalaVersion := "2.13.3"
 
 lazy val root = (project in file("."))
   .settings(
