@@ -168,6 +168,7 @@ env:
       - FRAMEWORK=python.responder
       - FRAMEWORK=python.aiohttp
       - FRAMEWORK=python.bottle
+      - FRAMEWORK=python.index.py
       - FRAMEWORK=clojure.luminus
       - FRAMEWORK=clojure.coast
       - FRAMEWORK=pony.jennet
