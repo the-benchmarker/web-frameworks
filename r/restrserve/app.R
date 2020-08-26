@@ -1,15 +1,25 @@
+# func_ServeMain ----------------------------
 
-# load_libraries ----------------------------
+serve_main <- function(req, res) {
+  res$set_body("")
+}
 
-library("RestRserve")
+# func_UserId ----------------------------
 
-# Source_Files ------------------------------
+get_userid <- function(req, res) {
+  id <- req$parameters_path
+  res$set_body(id)
+}
 
-source("R/Functions.R")
+# func_postuser ----------------------------
+
+post_user <- function(req, res) {
+  res$set_body("")
+}
 
 # create app --------------------------------
 
-app = Application$new()
+app = RestRserve::Application$new()
 
 # define Routes -----------------------------
 
@@ -36,5 +46,5 @@ app$add_post(
 
 # Run App -----------------------------------
 
-backend = BackendRserve$new()
+backend = RestRserve::BackendRserve$new()
 backend$start(app, http_port = 3000)
