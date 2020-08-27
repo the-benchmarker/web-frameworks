@@ -5,8 +5,8 @@ buildscript {
     }
 
     ext {
-        kotlinVersion = "1.3.+"
-	shadowVersion = "+"
+        kotlinVersion = "1.4.+"
+	    shadowVersion = "+"
     }
 
     dependencies {
