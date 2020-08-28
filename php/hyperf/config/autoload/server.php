@@ -31,7 +31,6 @@ return [
         'enable_coroutine' => false,
         'pid_file' => BASE_PATH . '/runtime/hyperf.pid',
         'open_tcp_nodelay' => true,
-        'open_http2_protocol' => true,
         'max_request' => 0,
         'socket_buffer_size' => 2 * 1024 * 1024,
     ],
