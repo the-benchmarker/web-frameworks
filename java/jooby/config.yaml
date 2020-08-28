@@ -2,13 +2,13 @@ framework:
   website: jooby.io
   version: 2.8
 
-build: 
+build:
   - mvn clean package
-  
+
 files:
   - target/benchmark.jar
 
 command: >
   java -server
-  -Xms4g -Xmx4g -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -XX:-UseBiasedLocking -XX:+UseStringDeduplication
+  -Xms4g -Xmx4g -XX:+UseNUMA -XX:+UseParallelGC -XX:-UseBiasedLocking -XX:+UseStringDeduplication
   -jar target/benchmark.jar benchmark.App
