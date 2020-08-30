@@ -1,5 +1,4 @@
 require "amber"
-require "./logger"
 
 require "../src/controllers/application_controller"
 require "../src/controllers/**"
