@@ -193,7 +193,6 @@ env:
       - FRAMEWORK=go.gorouter-fasthttp
       - FRAMEWORK=go.beego
       - FRAMEWORK=go.goroute
-      - FRAMEWORK=go.fasthttprouter
       - FRAMEWORK=go.tango
       - FRAMEWORK=go.air
       - FRAMEWORK=go.aero
