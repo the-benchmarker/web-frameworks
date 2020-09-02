@@ -50,8 +50,8 @@ RUN composer dumpautoload -o
   
   RUN echo -e 'opcache.enable=1\n\
   opcache.preload="/usr/src/app/preload.php"\n\
-  opcache.memory_consumption=2048\n\
-  opcache.interned_strings_buffer=512\n\
+  opcache.memory_consumption=128\n\
+  opcache.interned_strings_buffer=64\n\
   opcache.max_accelerated_files=32531\n\
   opcache.validate_timestamps=1\n\
   opcache.save_comments=1\n\
