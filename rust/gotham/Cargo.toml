@@ -6,7 +6,7 @@ authors = ["Isaac Whitfield <iw@whitfin.io>"]
 [dependencies]
 gotham = "~0.5"
 gotham_derive = "*"
-hyper = "0.12"
+hyper = "*"
 serde = "*"
 serde_derive = "*"
 
