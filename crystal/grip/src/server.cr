@@ -6,26 +6,20 @@ end
 
 class Index < Grip::Controllers::Http
   def get(context)
-    context.response.content_type = "text/html"
-    context.response.print(nil)
-    context.response
+    text!(context, "")
   end
 end
 
 class Users < Grip::Controllers::Http
   def get(context)
-    params = url(context)
-    context.response.content_type = "text/html"
-    context.response.print(params["id"])
-    context.response
+    params = url?(context)
+    text!(context, params["id"])
   end
 end
 
 class User < Grip::Controllers::Http
   def post(context)
-    context.response.content_type = "text/html"
-    context.response.print(nil)
-    context.response
+    text!(context, "")
   end
 end
 
