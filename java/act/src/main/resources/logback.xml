@@ -101,7 +101,7 @@
     <appender-ref ref="FILE"/>
   </logger>
 
-  <logger name="act.test" level="INFO" additivity="false">
+  <logger name="act.test" level="OFF" additivity="false">
     <appender-ref ref="STDOUT"/>
   </logger>
 
