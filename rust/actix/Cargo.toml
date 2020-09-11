@@ -5,7 +5,7 @@ authors = ["Oisín Mac Fhearaí <denpashogai@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-actix-web = "~2.0"
+actix-web = "~3.0"
 actix-rt = "*"
 
 [profile.release]
