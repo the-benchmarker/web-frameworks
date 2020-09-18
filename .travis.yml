@@ -208,6 +208,7 @@ env:
       - FRAMEWORK=go.httprouter
       - FRAMEWORK=go.violetear
       - FRAMEWORK=go.chi
+      - FRAMEWORK=go.goyave
       - FRAMEWORK=pony.jennet
 
 before_script:
