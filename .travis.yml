@@ -33,6 +33,7 @@ env:
       - FRAMEWORK=c.kore
       - FRAMEWORK=javascript.koa
       - FRAMEWORK=javascript.fastify
+      - FRAMEWORK=javascript.fyrejet
       - FRAMEWORK=javascript.sails
       - FRAMEWORK=javascript.rayo
       - FRAMEWORK=javascript.polkadot
