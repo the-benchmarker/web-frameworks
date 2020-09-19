@@ -2,3 +2,9 @@ framework:
   github: jesusvilla/natural
   version: 0.1.1
 
+build_deps:
+  - git
+
+bin_deps:
+  - gcompat # required by uWebSocket
+
