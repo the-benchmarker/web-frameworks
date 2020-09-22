@@ -1,4 +1,4 @@
-# While plumber could be made faster, this represents the common setup
+# While plumber could be made ~ 50% faster, this represents the common setup
 # See https://github.com/the-benchmarker/web-frameworks/issues/3303#issuecomment-694351654
 
 
