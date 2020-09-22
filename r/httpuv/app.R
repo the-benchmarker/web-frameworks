@@ -7,7 +7,7 @@ s <- httpuv::startServer(host = "0.0.0.0", port = 3000,
           ""
         } else {
           # /user/id path
-          match_info <- regexec("^/id/(.*)", path)
+          match_info <- regexec("^/user/(.*)", path)
           user_id <- regmatches(path, match_info)[[1]][2]
           user_id
         }
