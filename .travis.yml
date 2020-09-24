@@ -52,6 +52,7 @@ env:
       - FRAMEWORK=javascript.foxify
       - FRAMEWORK=javascript.polka
       - FRAMEWORK=javascript.moleculer
+      - FRAMEWORK=javascript.naturaljs-router
       - FRAMEWORK=julia.merly
       - FRAMEWORK=csharp.simplify.web
       - FRAMEWORK=csharp.carter
