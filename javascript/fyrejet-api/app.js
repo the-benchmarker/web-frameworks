@@ -1,7 +1,7 @@
 var fyrejet = require("fyrejet");
 var app = fyrejet();
 
-app.set('fyrejet mode', 'api')
+app.set('fyrejet mode', 'api');
 
 app.get("/", function (req, res) {
   res.send("");
