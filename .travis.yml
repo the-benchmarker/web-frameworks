@@ -134,6 +134,8 @@ env:
       - FRAMEWORK=java.javalin
       - FRAMEWORK=java.jooby
       - FRAMEWORK=java.light-4j
+      - FRAMEWORK=r.httpuv
+      - FRAMEWORK=r.plumber
       - FRAMEWORK=r.restrserve
       - FRAMEWORK=fsharp.falco
       - FRAMEWORK=fsharp.suave
