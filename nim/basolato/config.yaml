@@ -1,15 +1,11 @@
 framework:
   github: itsumura-h/nim-basolato
-  version: 0.5
+  version: 0.6
 
 files:
   - /usr/src/app/server
 
 deps:
-  - openssh-client
-  - openssl
-  - pcre
-  - pcre-dev
   - bsd-compat-headers
-
-build_opts: '--define: usePcreHeader --passL: "/usr/lib/libpcre.a"'
+  
+build_opts: '--threadAnalysis:off'

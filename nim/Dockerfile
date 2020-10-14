@@ -13,17 +13,7 @@ ENV PATH $PATH:/root/.nimble/bin
 RUN nimble install -y
 
 RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
-    # -d:danger \
-    -d:noSignalHandler \
-    --gc:markAndSweep \
-    --listFullPaths:off \
     --excessiveStackTrace:off \
-    --passL:-static \
-    --passL:"-s" \
-    --passC:"-fno-ident" \
-    --passC:"-flto" \
-    --passC:"-ffast-math" \
-    --passC:"-fsingle-precision-constant" \
     -d:release \
     --threads:on \
     server.nim
