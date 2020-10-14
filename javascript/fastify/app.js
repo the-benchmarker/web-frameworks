@@ -5,17 +5,7 @@ app.get("/", function (request, reply) {
   reply.send();
 });
 
-const opts = {
-  schema: {
-    response: {
-      200: {
-        type: "string",
-      },
-    },
-  },
-};
-
-app.get("/user/:id", opts, function (request, reply) {
+app.get("/user/:id", function (request, reply) {
   reply.send(request.params.id);
 });
 

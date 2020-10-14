@@ -4,28 +4,22 @@ Grip.config do |cfg|
   cfg.env = "production"
 end
 
-class Index < Grip::Controller::Http
+class Index < Grip::Controllers::Http
   def get(context)
-    context.response.content_type = "text/html"
-    context.response.print(nil)
-    context.response
+    text!(context, "")
   end
 end
 
-class Users < Grip::Controller::Http
+class Users < Grip::Controllers::Http
   def get(context)
-    params = url(context)
-    context.response.content_type = "text/html"
-    context.response.print(params["id"])
-    context.response
+    params = url?(context)
+    text!(context, params["id"])
   end
 end
 
-class User < Grip::Controller::Http
+class User < Grip::Controllers::Http
   def post(context)
-    context.response.content_type = "text/html"
-    context.response.print(nil)
-    context.response
+    text!(context, "")
   end
 end
 
