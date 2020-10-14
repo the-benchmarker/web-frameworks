@@ -1,12 +1,12 @@
 # framework
-import basolato/routing
+import basolato
 # controller
 import app/controllers/benchmark_controller
 
-settings:
-  port = Port(3000)
+var routes = newRoutes()
 
-routes:
-  get "/": route(newBenchmarkController(request).index())
-  get "/user/@id": route(newBenchmarkController(request).show(@"id"))
-  post "/user": route(newBenchmarkController(request).store())
+routes.get("/", benchmark_controller.index)
+routes.get("/user/{id:int}", benchmark_controller.show)
+routes.post("/user", benchmark_controller.store)
+
+serve(routes, 3000)
