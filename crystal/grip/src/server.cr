@@ -1,33 +1,38 @@
 require "grip"
 
-Grip.config do |cfg|
-  cfg.env = "production"
-end
-
-class Index < Grip::Controllers::Http
+class IndexController < Grip::Controllers::Http
   def get(context)
-    text!(context, "")
+    context
+      .text("")
   end
 end
 
-class Users < Grip::Controllers::Http
+class UserController < Grip::Controllers::Http
   def get(context)
-    params = url?(context)
-    text!(context, params["id"])
+    id = 
+      context
+        .fetch_path_params
+        .["id"]
+    
+    context
+      .text(id)
   end
-end
-
-class User < Grip::Controllers::Http
+  
   def post(context)
-    text!(context, "")
+    context
+      .text("")
   end
 end
 
-class App < Grip::Application
-  def initialize
-    get "/", Index
-    get "/user/:id", Users
-    post "/user", User
+class Application < Grip::Application
+  def reuse_port
+    true
+  end
+  
+  def routes
+    get "/", IndexController
+    get "/user/:id", UserController
+    post "/user", UserController
   end
 end
 
@@ -35,10 +40,7 @@ app = App.new
 
 System.cpu_count.times do |_|
   Process.fork do
-    app.run do |config|
-      server = config.server.not_nil!
-      server.bind_tcp "0.0.0.0", 3000, reuse_port: true
-    end
+    app.run
   end
 end
 
