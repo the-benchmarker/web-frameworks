@@ -29,6 +29,10 @@ class Application < Grip::Application
     true
   end
   
+  def port
+    3000
+  end
+  
   def routes
     get "/", IndexController
     get "/user/:id", UserController
