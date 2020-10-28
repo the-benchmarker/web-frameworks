@@ -136,6 +136,7 @@ env:
       - FRAMEWORK=java.light-4j
       - FRAMEWORK=r.httpuv
       - FRAMEWORK=r.plumber
+      - FRAMEWORK=r.rserve
       - FRAMEWORK=r.restrserve
       - FRAMEWORK=fsharp.falco
       - FRAMEWORK=fsharp.suave
