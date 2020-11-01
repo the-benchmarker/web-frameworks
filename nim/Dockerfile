@@ -8,6 +8,10 @@ COPY . ./
   RUN apk --no-cache add {{{.}}}
 {{/deps}}
 
+{{#alpine-deps}}
+  RUN apk --no-cache add {{{.}}}
+{{/alpine-deps}}
+
 ENV PATH $PATH:/root/.nimble/bin
 
 RUN nimble install -y
