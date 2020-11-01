@@ -3,12 +3,12 @@ framework:
   version: 3.9
 
 build:
-  - mvn compile assembly:single -q
+  - mvn compile assembly:single
 
-files:
-  - target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+binaries:
+  - target/benchmark-1.0.0-jar-with-dependencies.jar
 
 command: >
-  java -server 
+  java -benchmark 
   -XX:+UseNUMA -XX:+UseParallelGC 
-  -cp target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar benchmark.javalin.Bench profiles=production
+  -cp target/benchmark-1.0.0-jar-with-dependencies.jar benchmark.javalin.Bench profiles=production
