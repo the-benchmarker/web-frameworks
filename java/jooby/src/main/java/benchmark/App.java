@@ -3,16 +3,16 @@ package benchmark;
 import static io.jooby.ExecutionMode.EVENT_LOOP;
 
 import io.jooby.Jooby;
-import io.jooby.benchmarkOptions;
+import io.jooby.ServerOptions;
 import io.jooby.StatusCode;
 
 public class App extends Jooby {
   {
-    benchmarkOptions options = new benchmarkOptions();
+    ServerOptions options = new ServerOptions();
     options.setPort(3000);
-    // Turn off Date and benchmark Response headers.
+    // Turn off Date and Server Response headers.
     options.setDefaultHeaders(false);
-    setbenchmarkOptions(options);
+    setServerOptions(options);
 
     get("/", ctx -> ctx.send(StatusCode.OK));
     get("/user/{id}", ctx -> ctx.send(ctx.path("id").value()));

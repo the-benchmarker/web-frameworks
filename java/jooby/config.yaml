@@ -9,6 +9,6 @@ binaries:
   - target/benchmark.jar
 
 command: >
-  java -benchmark
+  java -server
   -Xms4g -Xmx4g -XX:+UseNUMA -XX:+UseParallelGC -XX:-UseBiasedLocking -XX:+UseStringDeduplication
   -jar target/benchmark.jar benchmark.App

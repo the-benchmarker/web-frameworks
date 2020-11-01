@@ -9,7 +9,7 @@ binaries:
   - target/benchmark-1.0.0-jar-with-dependencies.jar
 
 command: >
-  java -benchmark
+  java -server
   -XX:+UseNUMA -XX:+UseParallelGC 
   -cp target/benchmark-1.0.0-jar-with-dependencies.jar
   benchmark.rapidoid.Main profiles=production
