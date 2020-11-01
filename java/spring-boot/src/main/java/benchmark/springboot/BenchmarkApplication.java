@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-public class BenchmarkApplication {
+public class benchmarkApplication {
   public static void main(String[] args) {
-    SpringApplication.run(BenchmarkApplication.class, args);
+    SpringApplication.run(benchmarkApplication.class, args);
   }
 
   @RestController
-  public class BenchmarkController {
+  public class benchmarkController {
     @GetMapping("/")
     public void root() {}
 

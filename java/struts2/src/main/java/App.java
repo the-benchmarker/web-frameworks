@@ -1,5 +1,5 @@
 
-import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.benchmark.benchmark;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 import java.net.URL;
@@ -13,21 +13,21 @@ public class App {
             port = Integer.parseInt(args[1]);
         }
 
-        Server server = new Server(port);
+        benchmark benchmark = new benchmark(port);
 
         WebAppContext context = new WebAppContext();
-        context.setServer(server);
+        context.setbenchmark(benchmark);
         context.setContextPath("/");
 
         ProtectionDomain protectionDomain = App.class.getProtectionDomain();
         URL location = protectionDomain.getCodeSource().getLocation();
         context.setWar(location.toExternalForm());
 
-        server.setHandler(context);
+        benchmark.setHandler(context);
         while (true) {
             try {
-                server.start();
-                server.join();
+                benchmark.start();
+                benchmark.join();
                 break;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -35,8 +35,8 @@ public class App {
         }
         try {
             System.in.read();
-            server.stop();
-            server.join();
+            benchmark.stop();
+            benchmark.join();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(100);
