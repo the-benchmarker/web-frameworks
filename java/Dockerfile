@@ -1,14 +1,20 @@
 {{#image}}
-  FROM {{{.}}}
+  FROM {{{.}}} AS build
 {{/image}}
 
 {{^image}}
-  FROM maven:3-jdk-11-slim
+  FROM maven:3-jdk-11-slim AS build
 {{/image}}
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/web
 
-COPY . ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
+
+{{#files}}
+  COPY {{.}} {{{.}}}
+{{/files}}
 
 {{#patch}}
   {{{.}}}
@@ -19,33 +25,25 @@ COPY . ./
 {{/build}}
 
 {{^build}}
-  RUN mvn clean package -q
+  RUN mvn package
 {{/build}}
-
 
 FROM openjdk:11-jre-slim
 
-{{#fixes}}
+WORKDIR /opt/web
+
+RUN ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
+
+{{#binaries}}
+  COPY --from=build /usr/src/web/{{{.}}} {{{.}}}
+{{/binaries}}
+
+{{#bootstrap}}
   RUN {{{.}}}
-{{/fixes}}
+{{/bootstrap}}
 
-WORKDIR /usr/src/app
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
 
-
-{{#files}}
-COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
-{{/files}}
-
-
-WORKDIR /usr/src/app
-{{#files}}
-COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
-{{/files}}
-
-{{#before_command}}
-  RUN {{{.}}}
-{{/before_command}}
-
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+CMD {{{command}}}
