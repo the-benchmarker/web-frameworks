@@ -9,13 +9,21 @@ build:
 
 patch:
   - USER root
-  - RUN chown -R gradle /usr/src/app
+  - RUN chown -R gradle .
   - USER gradle
 
+sources:
+  - src/**/*.java
+  - build.gradle
+
 files:
-  - build/distributions/app-0.1.tar
+  - src/**/*.yml
+  - src/**/*.xml
 
-before_command:
-  - tar -xvf build/distributions/app-0.1.tar
+binaries:
+  - build/distributions/web-0.1.tar
 
-command: app-0.1/bin/app
+bootstrap:
+  - tar -xvf build/distributions/web-0.1.tar
+
+command: /opt/web/web-0.1/bin/web

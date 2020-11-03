@@ -7,8 +7,7 @@
         "mezzio/mezzio-helpers": "*",
         "laminas/laminas-stdlib": "*",
         "laminas/laminas-servicemanager": "*",
-        "mezzio/mezzio-fastroute": "*",
-        "laminas/laminas-dependency-plugin": "*"
+        "mezzio/mezzio-fastroute": "*"
     },
     "autoload": {
         "psr-4": {
