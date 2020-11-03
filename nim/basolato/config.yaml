@@ -8,4 +8,7 @@ files:
 deps:
   - bsd-compat-headers
 
-build_opts: '--threadAnalysis:off'
+alpine-deps:
+  - pcre-dev
+
+build_opts: '--threadAnalysis:off --define: usePcreHeader --passL: "/usr/lib/libpcre.a"'
