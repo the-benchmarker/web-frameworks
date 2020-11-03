@@ -1,24 +1,18 @@
-import strformat
-from strutils import parseInt
+import json
 # framework
 import basolato/controller
 
 
-type BenchmarkController* = ref object of Controller
-
-proc newBenchmarkController*(request:Request):BenchmarkController =
-  return BenchmarkController.newController(request)
-
-
-proc index*(this:BenchmarkController):Response =
+proc index*(request:Request, params:Params):Future[Response] {.async.} =
   var header = newHeaders()
   header.set("Content-Type", "text/plain")
-  return render("").setHeader(header)
+  return render("", header)
 
-proc show*(this:BenchmarkController, id:string):Response =
-  return render(id)
+proc show*(request:Request, params:Params):Future[Response] {.async.} =
+  let id = params.urlParams["id"].getInt
+  return render($id)
 
-proc store*(this:BenchmarkController):Response =
+proc store*(request:Request, params:Params):Future[Response] {.async.} =
   var header = newHeaders()
   header.set("Content-Type", "text/plain")
-  return render("").setHeader(header)
+  return render("", header)

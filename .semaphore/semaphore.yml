@@ -1,0 +1,77 @@
+---
+version: v1.0
+name: Benchmarking suite
+execution_time_limit:
+  hours: 2
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+- name: setup
+  dependencies: []
+  task:
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+      - cache store $SEMAPHORE_GIT_SHA .
+      - sudo snap install crystal --classic
+      - sudo apt-get -y install libyaml-dev libevent-dev
+      - shards build --static
+      - cache store bin bin
+      - bundle config path .cache
+      - bundle install
+      - cache store built-in .cache
+      - bundle exec rake config
+- name: nim
+  dependencies:
+  - setup
+  run:
+    when: change_in('/nim/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore bin
+      - cache restore built-in
+      - find bin -type f -exec chmod +x {} \;
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    env_vars:
+    - name: CLEAN
+      value: 'off'
+    - name: COLLECT
+      value: 'off'
+    jobs:
+    - name: basolato
+      commands:
+      - mkdir -p .neph/nim/basolato
+      - retry bin/neph nim/basolato --mode=CI
+      - FRAMEWORK=nim/basolato bundle exec rspec .spec
+    - name: akane
+      commands:
+      - mkdir -p .neph/nim/akane
+      - retry bin/neph nim/akane --mode=CI
+      - FRAMEWORK=nim/akane bundle exec rspec .spec
+    - name: httpbeast
+      commands:
+      - mkdir -p .neph/nim/httpbeast
+      - retry bin/neph nim/httpbeast --mode=CI
+      - FRAMEWORK=nim/httpbeast bundle exec rspec .spec
+    - name: jester
+      commands:
+      - mkdir -p .neph/nim/jester
+      - retry bin/neph nim/jester --mode=CI
+      - FRAMEWORK=nim/jester bundle exec rspec .spec
+    - name: whip
+      commands:
+      - mkdir -p .neph/nim/whip
+      - retry bin/neph nim/whip --mode=CI
+      - FRAMEWORK=nim/whip bundle exec rspec .spec
+    - name: rosencrantz
+      commands:
+      - mkdir -p .neph/nim/rosencrantz
+      - retry bin/neph nim/rosencrantz --mode=CI
+      - FRAMEWORK=nim/rosencrantz bundle exec rspec .spec
