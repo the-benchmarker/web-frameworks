@@ -1,6 +1,6 @@
 FROM php:7.4-fpm-alpine
 
-RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc {{#deps}} {{{.}}} {{/deps}}
+RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev {{#deps}} {{{.}}} {{/deps}}
 RUN docker-php-ext-install zip opcache
 
 WORKDIR /usr/src/app
