@@ -5,7 +5,7 @@ framework:
 environment:
   COAST_ENV: prod
 
-files:
+binaries:
   - coast.jar
 
 command: java -jar coast.jar 3000
