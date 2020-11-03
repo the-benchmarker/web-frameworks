@@ -3,4 +3,4 @@ resolver: lts-15.12
 allow-newer: true
 
 packages:
-- .
+  - .

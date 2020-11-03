@@ -1,7 +1,7 @@
 framework:
   website: djangoproject.com
   version: 3.1
-  
+
 command: >
   gunicorn  \
     --log-level warning  \

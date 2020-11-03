@@ -4,7 +4,7 @@ framework:
 
 image: clojure:openjdk-11-lein-slim-buster
 
-build: 
+build:
   - lein uberjar
 
 binaries:

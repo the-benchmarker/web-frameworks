@@ -1,7 +1,7 @@
 framework:
   website: ubiquity.kobject.net
   version: 2.3
-  
+
 before_command:
   - composer update
   - chmod +x vendor/bin/Ubiquity
