@@ -6,9 +6,7 @@ open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Logging
 
-let configureWebHost 
-    (routes : HttpEndpoint list)
-    (webHost : IWebHostBuilder) =
+let configureWebHost : Host.ConfigureWebHost =
     let configureLogging (log : ILoggingBuilder) =
         log.ClearProviders()
         |> ignore
@@ -21,24 +19,29 @@ let configureWebHost
         app.UseRouting()
             .UseHttpEndPoints(routes)       
             |> ignore 
+    
+    fun endpoints webHost ->
+        webHost
+            .UseKestrel()
+            .ConfigureLogging(configureLogging)
+            .ConfigureServices(configureServices)
+            .Configure(configure endpoints)
+            |> ignore
 
-    webHost
-        .UseKestrel()
-        .ConfigureLogging(configureLogging)
-        .ConfigureServices(configureServices)
-        .Configure(configure routes)
-        |> ignore
+module Request =
+    let mapRoute
+        (map : Map<string, string> -> 'a) 
+        (next : 'a -> HttpHandler) : HttpHandler = 
+        fun ctx -> next (Request.getRouteValues ctx |> map) ctx
 
 [<EntryPoint>]
-let main args =   
-    let message = ""
-
+let main args =       
     Host.startWebHost 
         args 
         configureWebHost
         [
-            get  "/user/{id}" (fun ctx -> Response.ofPlainText (Request.tryGetRouteValue "id" ctx |> Option.defaultValue "") ctx)
-            post "/user"      (Response.ofPlainText message)
-            get  "/"          (Response.ofPlainText message)
+            get  "/user/{id}" (Request.mapRoute (fun m -> m.["id"]) Response.ofPlainText)
+            post "/user"      (Response.ofPlainText "")
+            get  "/"          (Response.ofPlainText "")
         ]
     0
