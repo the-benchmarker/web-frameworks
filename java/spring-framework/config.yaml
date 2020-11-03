@@ -3,17 +3,13 @@ framework:
   version: 5.2
 
 build:
-  - mvn clean package -q
+  - mvn clean package
 
-fixes:
-  - mkdir -p /usr/share/java
-  - apt-get -y update && apt-get -y install wget
-  - wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-runner/9.4.31.v20200723/jetty-runner-9.4.31.v20200723.jar -O /usr/share/java/jetty-runner.jar
-
-files:
-  - target/benchmark-0.0.1-SNAPSHOT.war
+binaries:
+  - target/benchmark-1.0.0.war
+  - target/benchmark-1.0.0/WEB-INF/lib/jetty-runner-9.4.30.v20200611.jar
 
 command: >
   java 
   -XX:+UseNUMA -XX:+UseParallelGC 
-  -jar /usr/share/java/jetty-runner.jar --port 3000 target/benchmark-0.0.1-SNAPSHOT.war
+  -jar target/benchmark-1.0.0/WEB-INF/lib/jetty-runner-9.4.30.v20200611.jar --port 3000 target/benchmark-1.0.0.war
