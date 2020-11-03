@@ -24,11 +24,187 @@ blocks:
       - bundle install
       - cache store built-in .cache
       - bundle exec rake config
+- name: pony
+  dependencies:
+  - setup
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore bin
+      - cache restore built-in
+      - find bin -type f -exec chmod +x {} \;
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    env_vars:
+    - name: CLEAN
+      value: 'off'
+    - name: COLLECT
+      value: 'off'
+    jobs:
+    - name: jennet
+      commands:
+      - mkdir -p .neph/pony/jennet
+      - retry bin/neph pony/jennet --mode=CI
+      - FRAMEWORK=pony/jennet bundle exec rspec .spec
+- name: go
+  dependencies:
+  - setup
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore bin
+      - cache restore built-in
+      - find bin -type f -exec chmod +x {} \;
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    env_vars:
+    - name: CLEAN
+      value: 'off'
+    - name: COLLECT
+      value: 'off'
+    jobs:
+    - name: chi
+      commands:
+      - mkdir -p .neph/go/chi
+      - retry bin/neph go/chi --mode=CI
+      - FRAMEWORK=go/chi bundle exec rspec .spec
+    - name: violetear
+      commands:
+      - mkdir -p .neph/go/violetear
+      - retry bin/neph go/violetear --mode=CI
+      - FRAMEWORK=go/violetear bundle exec rspec .spec
+    - name: httprouter
+      commands:
+      - mkdir -p .neph/go/httprouter
+      - retry bin/neph go/httprouter --mode=CI
+      - FRAMEWORK=go/httprouter bundle exec rspec .spec
+    - name: macaron
+      commands:
+      - mkdir -p .neph/go/macaron
+      - retry bin/neph go/macaron --mode=CI
+      - FRAMEWORK=go/macaron bundle exec rspec .spec
+    - name: gramework
+      commands:
+      - mkdir -p .neph/go/gramework
+      - retry bin/neph go/gramework --mode=CI
+      - FRAMEWORK=go/gramework bundle exec rspec .spec
+    - name: gearbox
+      commands:
+      - mkdir -p .neph/go/gearbox
+      - retry bin/neph go/gearbox --mode=CI
+      - FRAMEWORK=go/gearbox bundle exec rspec .spec
+    - name: fasthttp
+      commands:
+      - mkdir -p .neph/go/fasthttp
+      - retry bin/neph go/fasthttp --mode=CI
+      - FRAMEWORK=go/fasthttp bundle exec rspec .spec
+    - name: gf
+      commands:
+      - mkdir -p .neph/go/gf
+      - retry bin/neph go/gf --mode=CI
+      - FRAMEWORK=go/gf bundle exec rspec .spec
+    - name: echo
+      commands:
+      - mkdir -p .neph/go/echo
+      - retry bin/neph go/echo --mode=CI
+      - FRAMEWORK=go/echo bundle exec rspec .spec
+    - name: gorouter
+      commands:
+      - mkdir -p .neph/go/gorouter
+      - retry bin/neph go/gorouter --mode=CI
+      - FRAMEWORK=go/gorouter bundle exec rspec .spec
+    - name: goyave
+      commands:
+      - mkdir -p .neph/go/goyave
+      - retry bin/neph go/goyave --mode=CI
+      - FRAMEWORK=go/goyave bundle exec rspec .spec
+    - name: atreugo
+      commands:
+      - mkdir -p .neph/go/atreugo
+      - retry bin/neph go/atreugo --mode=CI
+      - FRAMEWORK=go/atreugo bundle exec rspec .spec
+    - name: kami
+      commands:
+      - mkdir -p .neph/go/kami
+      - retry bin/neph go/kami --mode=CI
+      - FRAMEWORK=go/kami bundle exec rspec .spec
+    - name: aero
+      commands:
+      - mkdir -p .neph/go/aero
+      - retry bin/neph go/aero --mode=CI
+      - FRAMEWORK=go/aero bundle exec rspec .spec
+    - name: air
+      commands:
+      - mkdir -p .neph/go/air
+      - retry bin/neph go/air --mode=CI
+      - FRAMEWORK=go/air bundle exec rspec .spec
+    - name: tango
+      commands:
+      - mkdir -p .neph/go/tango
+      - retry bin/neph go/tango --mode=CI
+      - FRAMEWORK=go/tango bundle exec rspec .spec
+    - name: goroute
+      commands:
+      - mkdir -p .neph/go/goroute
+      - retry bin/neph go/goroute --mode=CI
+      - FRAMEWORK=go/goroute bundle exec rspec .spec
+    - name: beego
+      commands:
+      - mkdir -p .neph/go/beego
+      - retry bin/neph go/beego --mode=CI
+      - FRAMEWORK=go/beego bundle exec rspec .spec
+    - name: gorouter-fasthttp
+      commands:
+      - mkdir -p .neph/go/gorouter-fasthttp
+      - retry bin/neph go/gorouter-fasthttp --mode=CI
+      - FRAMEWORK=go/gorouter-fasthttp bundle exec rspec .spec
+    - name: fiber
+      commands:
+      - mkdir -p .neph/go/fiber
+      - retry bin/neph go/fiber --mode=CI
+      - FRAMEWORK=go/fiber bundle exec rspec .spec
+    - name: rte
+      commands:
+      - mkdir -p .neph/go/rte
+      - retry bin/neph go/rte --mode=CI
+      - FRAMEWORK=go/rte bundle exec rspec .spec
+    - name: clevergo
+      commands:
+      - mkdir -p .neph/go/clevergo
+      - retry bin/neph go/clevergo --mode=CI
+      - FRAMEWORK=go/clevergo bundle exec rspec .spec
+    - name: gorilla-mux
+      commands:
+      - mkdir -p .neph/go/gorilla-mux
+      - retry bin/neph go/gorilla-mux --mode=CI
+      - FRAMEWORK=go/gorilla-mux bundle exec rspec .spec
+    - name: mars
+      commands:
+      - mkdir -p .neph/go/mars
+      - retry bin/neph go/mars --mode=CI
+      - FRAMEWORK=go/mars bundle exec rspec .spec
+    - name: gin
+      commands:
+      - mkdir -p .neph/go/gin
+      - retry bin/neph go/gin --mode=CI
+      - FRAMEWORK=go/gin bundle exec rspec .spec
+    - name: webgo
+      commands:
+      - mkdir -p .neph/go/webgo
+      - retry bin/neph go/webgo --mode=CI
+      - FRAMEWORK=go/webgo bundle exec rspec .spec
+    - name: router
+      commands:
+      - mkdir -p .neph/go/router
+      - retry bin/neph go/router --mode=CI
+      - FRAMEWORK=go/router bundle exec rspec .spec
 - name: nim
   dependencies:
   - setup
-  run:
-    when: change_in('/nim/')
   task:
     prologue:
       commands:
