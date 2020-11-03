@@ -1,3 +1,3 @@
 module main
 
-require github.com/gogearbox/gearbox v1.0.3
+require github.com/gogearbox/gearbox v1.1.1

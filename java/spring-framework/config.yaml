@@ -8,12 +8,12 @@ build:
 fixes:
   - mkdir -p /usr/share/java
   - apt-get -y update && apt-get -y install wget
-  - wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-runner/9.4.30.v20200611/jetty-runner-9.4.30.v20200611.jar -O /usr/share/java/jetty-runner.jar
+  - wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-runner/9.4.31.v20200723/jetty-runner-9.4.31.v20200723.jar -O /usr/share/java/jetty-runner.jar
 
-files: 
+files:
   - target/benchmark-0.0.1-SNAPSHOT.war
 
 command: >
   java 
-  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts 
+  -XX:+UseNUMA -XX:+UseParallelGC 
   -jar /usr/share/java/jetty-runner.jar --port 3000 target/benchmark-0.0.1-SNAPSHOT.war

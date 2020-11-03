@@ -1,0 +1,9 @@
+framework:
+  gitlab: x.laylatichy.x/nano
+  version: 0.0.9
+
+php_mod:
+  - pcntl
+  - posix
+
+command: php index.php start

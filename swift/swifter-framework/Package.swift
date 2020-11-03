@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "MyServer",
     dependencies: [
-        .package(url: "https://github.com/httpswift/swifter.git", .upToNextMinor(from: "1.4.7"))
+        .package(url: "https://github.com/httpswift/swifter.git", .upToNextMinor(from: "1.5.0"))
     ],
     targets: [
         .target(name: "server", dependencies: ["Swifter"])
