@@ -1,4 +1,4 @@
-FROM rust:1.44 AS build
+FROM rust:1.46 AS build
 
 WORKDIR /usr/src/app
 

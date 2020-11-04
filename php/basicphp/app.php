@@ -2,12 +2,12 @@
 
 /*
 |--------------------------------------------------------------------------
-| Load BasicPHP Functions Library and Configuration File
+| Load Configuration File and BasicPHP Class Library
 |--------------------------------------------------------------------------
 */
 
-require_once 'functions.php';
 require_once 'config.php';
+require_once 'Basic.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +15,8 @@ require_once 'config.php';
 |--------------------------------------------------------------------------
 */
 
-// firewall(); // Firewall
-// force_ssl(); // SSL/HTTPS
+// Basic::firewall(); // Firewall
+// Basic::force_ssl(); // SSL/HTTPS
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +24,8 @@ require_once 'config.php';
 |--------------------------------------------------------------------------
 */
 
-// route_rpc(); // JSON-RPC v2.0
-// route_auto(); // Automatic '/class/method' routing
-// homepage(); // Render homepage
+// Basic::route_auto(); // Automatic '/class/method' routing
+// Basic::homepage(); // Render homepage
 
 /*
 |--------------------------------------------------------------------------
@@ -34,9 +33,15 @@ require_once 'config.php';
 |--------------------------------------------------------------------------
 */
 
-route_class('GET', '/', 'AppController@index');
-route_class('GET', '/user/(:num)', 'AppController@viewUser');
-route_class('POST', '/user', 'AppController@addUser');
+Basic::route('GET', '/', function() {
+    echo '';
+});
+Basic::route('GET', '/user/(:num)', function() {
+    echo Basic::segment(2);
+});
+Basic::route('POST', '/user', function() {
+    echo '';
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +49,4 @@ route_class('POST', '/user', 'AppController@addUser');
 |--------------------------------------------------------------------------
 */
 
-// error404(); // Handle Error 404
+Basic::error404(); // Handle Error 404

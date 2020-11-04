@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 controller do
   disable_protection :csrf
 
@@ -5,11 +7,11 @@ controller do
     # do nothing
   end
 
-  get "/user/:id" do
+  get '/user/:id' do
     send params[:id].to_s
   end
 
-  post "/user" do
+  post '/user' do
     # do nothing
   end
 end

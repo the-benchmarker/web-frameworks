@@ -1,4 +1,4 @@
-FROM golang:1.14-alpine
+FROM golang:1.15-alpine
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
@@ -6,6 +6,10 @@ ENV GOARCH=amd64
 
 WORKDIR /go/src/app
 COPY . ./
+
+{{#build_deps}}
+  RUN apk add {{{.}}}
+{{/build_deps}}
 
 {{#before_command}}
   RUN {{{.}}}

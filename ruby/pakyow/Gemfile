@@ -1,5 +1,6 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
 
-gem "pakyow", "~> 1.0.0"
-gem "pakyow-core", "~> 1.0.0"
-gem "pakyow-routing", "~> 1.0.0"
+source 'https://rubygems.org'
+
+gem 'pakyow-core', '~> 1.0.0'
+gem 'pakyow-routing', '~> 1.0.0'

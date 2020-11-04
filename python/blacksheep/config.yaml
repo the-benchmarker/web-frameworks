@@ -1,7 +1,7 @@
 framework:
   github: RobertoPrevato/BlackSheep
   version: 0.2
-  
+
 command: >
   gunicorn  \ 
     --log-level warning  \

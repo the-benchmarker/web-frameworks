@@ -2,13 +2,13 @@ framework:
   website: javalin.io
   version: 3.9
 
-build: 
-  - mvn compile assembly:single -q
-  
-files:
-  - target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+build:
+  - mvn compile assembly:single
+
+binaries:
+  - target/benchmark-1.0.0-jar-with-dependencies.jar
 
 command: >
   java -server 
-  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts 
-  -cp target/benchmark-0.0.1-SNAPSHOT-jar-with-dependencies.jar benchmark.javalin.Bench profiles=production
+  -XX:+UseNUMA -XX:+UseParallelGC 
+  -cp target/benchmark-1.0.0-jar-with-dependencies.jar benchmark.javalin.Bench profiles=production
