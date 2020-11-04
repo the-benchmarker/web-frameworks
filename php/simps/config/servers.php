@@ -19,8 +19,6 @@ return [
         ],
         'settings' => [
             'worker_num' => swoole_cpu_num() * 2,
-            'open_tcp_nodelay' => true,
-            'enable_reuse_port' => true,
             'enable_coroutine' => false,
             'only_simple_http' => true,
         ],
