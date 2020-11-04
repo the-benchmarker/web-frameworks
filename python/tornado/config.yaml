@@ -1,7 +1,7 @@
 framework:
   website: tornadoweb.org
   version: 6.0
-  
+
 command: >
   gunicorn  \
     --log-level warning  \

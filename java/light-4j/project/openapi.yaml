@@ -3,14 +3,14 @@ info:
   version: 0.0.1
   title: The Benchmarker web-frameworks
 servers:
-  - url: 'http://benchmarker.networknt.com'
+  - url: "http://benchmarker.networknt.com"
 paths:
   /:
     get:
       responses:
-        '200':
+        "200":
           description: Empty response
-  '/user/{id}':
+  "/user/{id}":
     get:
       parameters:
         - name: id
@@ -20,15 +20,15 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: The id of the user
           content:
             text/plain:
               schema:
                 type: integer
                 example: 123
-  '/user':
+  "/user":
     post:
       responses:
-        '200':
+        "200":
           description: Empty response

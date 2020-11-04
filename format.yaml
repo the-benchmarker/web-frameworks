@@ -17,12 +17,12 @@ main:
     - crystal
     - python
     - config
-    
+
 java:
   commands:
     - find -type f -name '*.java' -exec clang-format -style=google -i {} \;
   dir: java
-  
+
 nim:
   commands:
     - find -type f -name '*.nim' -exec nimpretty {} \;
@@ -52,7 +52,7 @@ javascript:
   commands:
     - prettier --write '**/*.js'
   dir: javascript
-  
+
 scala:
   commands:
     - find -type f -name '*.scala' -exec scalafmt {} \;
@@ -62,12 +62,12 @@ cpp:
   commands:
     - find -type f -name '*.cpp' -exec clang-format -i [} \;
   dir: cpp
-  
+
 go:
   commands:
     - find -type f -name '*.go' -exec gofmt -w {} \;
   dir: go
-  
+
 csharp:
   commands:
     - find -type f -name '*.cs' -exec astyle --mode=cs {} \;

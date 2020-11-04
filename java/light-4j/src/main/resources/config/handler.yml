@@ -1,7 +1,5 @@
-
-
+--- #----------------------------------------
 # Handler middleware chain configuration
-#----------------------------------------
 enabled: true
 
 # Configuration for the LightHttpHandler. The handler is the base class  for all middleware, server and health handlers
@@ -66,7 +64,6 @@ handlers:
   - benchmark.light4j.handler.UserIdGetHandler
   - benchmark.light4j.handler.UserPostHandler
 
-
 #chains:
 #  default:
 #    - exception
@@ -82,15 +79,15 @@ handlers:
 #    - validator
 
 paths:
-  - path: '/'
-    method: 'GET'
+  - path: "/"
+    method: "GET"
     exec:
       - benchmark.light4j.handler.GetHandler
-  - path: '/user/{id}'
-    method: 'GET'
+  - path: "/user/{id}"
+    method: "GET"
     exec:
       - benchmark.light4j.handler.UserIdGetHandler
-  - path: '/user'
-    method: 'POST'
+  - path: "/user"
+    method: "POST"
     exec:
       - benchmark.light4j.handler.UserPostHandler

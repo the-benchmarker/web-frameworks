@@ -5,7 +5,7 @@
     <artifactId>benchmark</artifactId>
     <packaging>jar</packaging>
     <name>benchmark</name>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
 
     <properties>
         <java.version>11</java.version>
@@ -178,12 +178,12 @@
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
+            <artifactId>jackson-annotations</artifactId>
             <version>${version.jackson}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
             <version>${version.jackson}</version>
         </dependency>
         <dependency>
