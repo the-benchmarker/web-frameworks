@@ -40,7 +40,7 @@ class Application < Grip::Application
   end
 end
 
-app = App.new
+app = Application.new
 
 System.cpu_count.times do |_|
   Process.fork do
