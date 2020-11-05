@@ -9,7 +9,6 @@ build_deps:
 fixes:
   - pip install pendulum==2.0.5
 
-
 command: >
   gunicorn  \
     --log-level warning  \

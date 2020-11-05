@@ -1,7 +1,7 @@
 framework:
   website: bottlepy.org
   version: 0.12
-  
+
 command: >
   gunicorn  \
     --log-level warning  \
