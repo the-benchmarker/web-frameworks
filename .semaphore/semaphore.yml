@@ -665,6 +665,11 @@ blocks:
       - mkdir -p .neph/r/restrserve
       - retry bin/neph r/restrserve --mode=CI
       - FRAMEWORK=r/restrserve bundle exec rspec .spec
+    - name: rserve
+      commands:
+      - mkdir -p .neph/r/rserve
+      - retry bin/neph r/rserve --mode=CI
+      - FRAMEWORK=r/rserve bundle exec rspec .spec
     - name: httpuv
       commands:
       - mkdir -p .neph/r/httpuv
