@@ -2,7 +2,7 @@
 version: v1.0
 name: Benchmarking suite
 execution_time_limit:
-  hours: 2
+  hours: 3
 agent:
   machine:
     type: e1-standard-2
