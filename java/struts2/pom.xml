@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.struts.benchmarker</groupId>
-    <artifactId>struts2</artifactId>
-    <version>1.0</version>
+    <artifactId>benchmark</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>struts2</name>
+    <name>benchmark</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jetty.version>9.4.32.v20200930</jetty.version>
+        <jetty.version>9.4.34.v20201102</jetty.version>
         <jetty-jsp.version>9.2.30.v20200428</jetty-jsp.version>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>

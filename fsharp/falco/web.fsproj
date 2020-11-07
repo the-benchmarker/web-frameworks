@@ -7,6 +7,6 @@
   </ItemGroup>  
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="5.0.0" />
-    <PackageReference Include="Falco" Version="2.0.3" />
+    <PackageReference Include="Falco" Version="2.0.*" />
   </ItemGroup>
 </Project>

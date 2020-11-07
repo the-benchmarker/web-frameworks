@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>benchmark.spring-framework</groupId>
     <artifactId>benchmark</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>benchmark</name>
     <description>Demo project for Spring Framework</description>
     <packaging>war</packaging>
@@ -19,6 +19,7 @@
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
+        <jetty.version>9.4.30.v20200611</jetty.version>
     </properties>
 
     <dependencies>
@@ -37,6 +38,12 @@
             <scope>provided</scope>
 	        <version>[4,5)</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-runner</artifactId>
+            <version>9.4.34.v20201102</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
