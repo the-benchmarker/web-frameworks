@@ -5,10 +5,15 @@ framework:
 build:
   - mvn clean package -Prelease
 
+sources:
+  - src/**/*.java
+  - src/**/*.yml
+  - pom.xml
+
 files:
-  - target/benchmark-0.0.1.jar
+  - target/benchmark-1.0.0.jar
 
 command: >
   java
   -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts
-  -jar target/benchmark-0.0.1.jar
+  -jar target/benchmark-1.0.0.jar

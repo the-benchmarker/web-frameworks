@@ -1,8 +1,8 @@
 framework:
   website: swoft.org
   version: 2.0
-  
-php_ext: 
+
+php_ext:
   - redis
   - swoole
 

@@ -8,7 +8,7 @@ authors = [
 edition = "2018"
 
 [dependencies]
-actix-web = "~3.1"
+actix-web = "~3.2"
 
 [profile.release]
 codegen-units = 1

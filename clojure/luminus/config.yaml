@@ -4,10 +4,10 @@ framework:
 
 image: clojure:openjdk-11-lein-slim-buster
 
-build: 
+build:
   - lein uberjar
 
-files:
+binaries:
   - target/uberjar/luminus.jar
 
 command: java -jar target/uberjar/luminus.jar 3000

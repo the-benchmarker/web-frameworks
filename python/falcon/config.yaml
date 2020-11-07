@@ -1,8 +1,7 @@
 framework:
   website: falconframework.org
   version: 2.0
-  
-  
+
 command: >
   gunicorn  \
     --log-level warning  \

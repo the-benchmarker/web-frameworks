@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Pakyow.app :pakyow, only: [:routing] do
   # Learn more about configuring an application:
   #
