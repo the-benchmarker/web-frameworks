@@ -1,3 +1,9 @@
 framework:
   github: fyrejet/fyrejet
   version: 2.3
+
+build_deps:
+  - git
+
+bin_deps:
+  - gcompat
