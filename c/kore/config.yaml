@@ -1,6 +1,6 @@
 framework:
   website: kore.io
-  version: 3.3
+  version: 4.0
 
 provider:
   default:
@@ -14,9 +14,9 @@ files:
   - "**/hello.conf"
 
 download:
-  - wget -c https://kore.io/releases/kore-3.3.1.tar.gz
-  - tar -xvf kore-3.3.1.tar.gz
-  - cd kore-3.3.1 && TASKS=1 NOTLS=1 make && make install
+  - wget -c https://kore.io/releases/kore-4.0.1.tar.gz
+  - tar -xvf kore-4.0.1.tar.gz
+  - cd kore-4.0.1 && TASKS=1 NOTLS=1 make && make install
 
 build:
   - cd hello && kodev build
@@ -26,6 +26,7 @@ build:
 build_deps:
   - bsd-compat-headers
   - libressl-dev
+  - audit-dev
 
 bin_deps:
   - libressl
