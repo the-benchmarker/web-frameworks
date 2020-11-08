@@ -351,8 +351,12 @@ namespace :ci do
       jobs: [{
         name: 'setup',
         commands: [
-          'checkout',
+          'git clone --no-checkout $SEMAPHORE_GIT_URL $SEMAPHORE_GIT_DIR',
+          'cd $SEMAPHORE_GIT_DIR',
+          'git sparse-checkout init --cone',
           'cache store $SEMAPHORE_GIT_SHA .',
+          'git sparse-checkout set tools Rakefile Gemfile shard.yml',
+          'checkout::switch_revision',
           'sudo snap install crystal --classic',
           'sudo apt-get -y install libyaml-dev libevent-dev',
           'shards build --static',
@@ -367,7 +371,11 @@ namespace :ci do
     Dir.glob('*/config.yaml').each do |path|
       language, = path.split(File::Separator)
       block = { name: language, dependencies: ['setup'], task: { prologue: { commands: [
+        'mkdir $SEMAPHORE_GIT_DIR',
+        'cd $SEMAPHORE_GIT_DIR',
         'cache restore $SEMAPHORE_GIT_SHA',
+        "git sparse-checkout set tools #{language}/ Rakefile Gemfile .spec",
+        'checkout::switch_revision',
         'cache restore bin',
         'cache restore built-in',
         'find bin -type f -exec chmod +x {} \\;',
