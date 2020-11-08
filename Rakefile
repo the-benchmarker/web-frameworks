@@ -377,11 +377,13 @@ namespace :ci do
         'sudo apt-get install jq',
         'bundle config path .cache',
         'bundle install',
-        'bundle exec rake config'
+        'bundle exec rake config',
+        'echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin'
+
       ] }, 'env_vars': [
         { name: 'CLEAN', value: 'off' },
         { name: 'COLLECT', 'value': 'off' }
-      ], jobs: [] } }
+      ], jobs: [], secrets: [{ name: 'BENCHMARKERS' }] } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
         block[:task][:jobs] << { name: framework, commands: [

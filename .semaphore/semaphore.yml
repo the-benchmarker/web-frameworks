@@ -45,6 +45,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -56,6 +57,8 @@ blocks:
       - mkdir -p .neph/pony/jennet
       - retry bin/neph pony/jennet --mode=CI
       - FRAMEWORK=pony/jennet bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: go
   dependencies:
   - setup
@@ -73,6 +76,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -214,6 +218,8 @@ blocks:
       - mkdir -p .neph/go/router
       - retry bin/neph go/router --mode=CI
       - FRAMEWORK=go/router bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: nim
   dependencies:
   - setup
@@ -231,6 +237,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -272,6 +279,8 @@ blocks:
       - mkdir -p .neph/nim/rosencrantz
       - retry bin/neph nim/rosencrantz --mode=CI
       - FRAMEWORK=nim/rosencrantz bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: python
   dependencies:
   - setup
@@ -289,6 +298,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -425,6 +435,8 @@ blocks:
       - mkdir -p .neph/python/bottle
       - retry bin/neph python/bottle --mode=CI
       - FRAMEWORK=python/bottle bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: clojure
   dependencies:
   - setup
@@ -442,6 +454,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -458,6 +471,8 @@ blocks:
       - mkdir -p .neph/clojure/luminus
       - retry bin/neph clojure/luminus --mode=CI
       - FRAMEWORK=clojure/luminus bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: elixir
   dependencies:
   - setup
@@ -475,6 +490,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -501,6 +517,8 @@ blocks:
       - mkdir -p .neph/elixir/plug
       - retry bin/neph elixir/plug --mode=CI
       - FRAMEWORK=elixir/plug bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: dart
   dependencies:
   - setup
@@ -518,6 +536,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -534,6 +553,8 @@ blocks:
       - mkdir -p .neph/dart/start
       - retry bin/neph dart/start --mode=CI
       - FRAMEWORK=dart/start bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: perl
   dependencies:
   - setup
@@ -551,6 +572,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -562,6 +584,8 @@ blocks:
       - mkdir -p .neph/perl/dancer2
       - retry bin/neph perl/dancer2 --mode=CI
       - FRAMEWORK=perl/dancer2 bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: rust
   dependencies:
   - setup
@@ -579,6 +603,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -605,6 +630,8 @@ blocks:
       - mkdir -p .neph/rust/actix
       - retry bin/neph rust/actix --mode=CI
       - FRAMEWORK=rust/actix bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: fsharp
   dependencies:
   - setup
@@ -622,6 +649,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -658,6 +686,8 @@ blocks:
       - mkdir -p .neph/fsharp/falco
       - retry bin/neph fsharp/falco --mode=CI
       - FRAMEWORK=fsharp/falco bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: r
   dependencies:
   - setup
@@ -675,6 +705,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -701,6 +732,8 @@ blocks:
       - mkdir -p .neph/r/httpuv
       - retry bin/neph r/httpuv --mode=CI
       - FRAMEWORK=r/httpuv bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: java
   dependencies:
   - setup
@@ -718,6 +751,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -774,6 +808,8 @@ blocks:
       - mkdir -p .neph/java/spring-boot
       - retry bin/neph java/spring-boot --mode=CI
       - FRAMEWORK=java/spring-boot bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: kotlin
   dependencies:
   - setup
@@ -791,6 +827,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -807,6 +844,8 @@ blocks:
       - mkdir -p .neph/kotlin/ktor
       - retry bin/neph kotlin/ktor --mode=CI
       - FRAMEWORK=kotlin/ktor bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: crystal
   dependencies:
   - setup
@@ -824,6 +863,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -885,6 +925,8 @@ blocks:
       - mkdir -p .neph/crystal/athena
       - retry bin/neph crystal/athena --mode=CI
       - FRAMEWORK=crystal/athena bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: haskell
   dependencies:
   - setup
@@ -902,6 +944,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -918,6 +961,8 @@ blocks:
       - mkdir -p .neph/haskell/servant
       - retry bin/neph haskell/servant --mode=CI
       - FRAMEWORK=haskell/servant bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: php
   dependencies:
   - setup
@@ -935,6 +980,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1141,6 +1187,8 @@ blocks:
       - mkdir -p .neph/php/hyperf
       - retry bin/neph php/hyperf --mode=CI
       - FRAMEWORK=php/hyperf bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: scala
   dependencies:
   - setup
@@ -1158,6 +1206,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1179,6 +1228,8 @@ blocks:
       - mkdir -p .neph/scala/http4s
       - retry bin/neph scala/http4s --mode=CI
       - FRAMEWORK=scala/http4s bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: cpp
   dependencies:
   - setup
@@ -1196,6 +1247,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1212,6 +1264,8 @@ blocks:
       - mkdir -p .neph/cpp/evhtp
       - retry bin/neph cpp/evhtp --mode=CI
       - FRAMEWORK=cpp/evhtp bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: swift
   dependencies:
   - setup
@@ -1229,6 +1283,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1260,6 +1315,8 @@ blocks:
       - mkdir -p .neph/swift/kitura
       - retry bin/neph swift/kitura --mode=CI
       - FRAMEWORK=swift/kitura bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: csharp
   dependencies:
   - setup
@@ -1277,6 +1334,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1298,6 +1356,8 @@ blocks:
       - mkdir -p .neph/csharp/simplify.web
       - retry bin/neph csharp/simplify.web --mode=CI
       - FRAMEWORK=csharp/simplify.web bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: julia
   dependencies:
   - setup
@@ -1315,6 +1375,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1326,6 +1387,8 @@ blocks:
       - mkdir -p .neph/julia/merly
       - retry bin/neph julia/merly --mode=CI
       - FRAMEWORK=julia/merly bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: javascript
   dependencies:
   - setup
@@ -1343,6 +1406,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1469,6 +1533,8 @@ blocks:
       - mkdir -p .neph/javascript/koa
       - retry bin/neph javascript/koa --mode=CI
       - FRAMEWORK=javascript/koa bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: c
   dependencies:
   - setup
@@ -1486,6 +1552,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1502,6 +1569,8 @@ blocks:
       - mkdir -p .neph/c/agoo-c
       - retry bin/neph c/agoo-c --mode=CI
       - FRAMEWORK=c/agoo-c bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: v
   dependencies:
   - setup
@@ -1519,6 +1588,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1530,6 +1600,8 @@ blocks:
       - mkdir -p .neph/v/vape
       - retry bin/neph v/vape --mode=CI
       - FRAMEWORK=v/vape bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
 - name: ruby
   dependencies:
   - setup
@@ -1547,6 +1619,7 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
     env_vars:
     - name: CLEAN
       value: 'off'
@@ -1623,3 +1696,5 @@ blocks:
       - mkdir -p .neph/ruby/rails
       - retry bin/neph ruby/rails --mode=CI
       - FRAMEWORK=ruby/rails bundle exec rspec .spec
+    secrets:
+    - name: BENCHMARKERS
