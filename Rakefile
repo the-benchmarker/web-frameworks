@@ -12,6 +12,8 @@ require "base64"
 
 environment = ENV.fetch("ENV") { "development" }
 
+MAKEFILE = 'benchmark.Makefile'
+
 default_environment = File.join(".env", "default")
 custom_environment = File.join(".env", environment)
 Dotenv.load(custom_environment, default_environment)
@@ -166,7 +168,7 @@ task :config do
 
     create_dockerfile(language, framework, provider: provider)
 
-    makefile = File.open(File.join(language, framework, 'Makefile'),'w')
+    makefile = File.open(File.join(language, framework, MAKEFILE),'w')
     
     makefile.write("build:\n")
 
@@ -377,7 +379,7 @@ namespace :ci do
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
         block[:task][:jobs] << { name: framework, commands: [
-          "cd #{language}/#{framework} && make build && cd -",
+          "cd #{language}/#{framework} && make build -f #{MAKEFILE} && cd -",
           "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec",
         ] }
       end
