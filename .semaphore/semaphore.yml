@@ -6,7 +6,9 @@ execution_time_limit:
 agent:
   machine:
     type: e1-standard-2
-    os_image: ubuntu1804
+  containers:
+    name: main
+    image: registry.semaphoreci.com/ruby:2.6
 blocks:
 - name: setup
   dependencies: []
@@ -16,8 +18,10 @@ blocks:
       commands:
       - checkout
       - cache store $SEMAPHORE_GIT_SHA .
-      - sudo snap install crystal --classic
-      - sudo apt-get -y install libyaml-dev libevent-dev
+      - curl -sL "https://keybase.io/crystal/pgp_keys.asc" | sudo apt-key add -
+      - echo "deb https://dist.crystal-lang.org/apt crystal main" | sudo tee /etc/apt/sources.list.d/crystal.list
+      - sudo apt-get update
+      - sudo apt-get -y install crystal jq
       - shards build --static
       - cache store bin bin
       - bundle config path .cache
