@@ -12,7 +12,11 @@ require "base64"
 
 environment = ENV.fetch("ENV") { "development" }
 
-MAKEFILE = 'benchmark.Makefile'
+MANIFESTS = {
+  container: '.Dockerfile',
+  build: '.Makefile',
+}.freeze
+
 
 default_environment = File.join(".env", "default")
 custom_environment = File.join(".env", environment)
@@ -53,7 +57,7 @@ def commands_for(language, framework, **options)
   # Compile first, only for non containers
 
   if app_config.key?("binaries") && !(options[:provider].start_with?("docker") || options[:provider].start_with?("podman"))
-    commands << "docker build -t #{language}.#{framework} ."
+    commands << "docker build -f #{MANIFESTS[:container]} -t #{language}.#{framework} ."
     commands << "docker run -td #{language}.#{framework} > cid.txt"
     app_config["binaries"].each do |out|
       if out.count(File::Separator).positive?
@@ -66,7 +70,7 @@ def commands_for(language, framework, **options)
   end
 
   config["providers"][options[:provider]]["build"].each do |cmd|
-    commands << Mustache.render(cmd, options).to_s
+    commands << Mustache.render(cmd, options.merge!(manifest: MANIFESTS[:container])).to_s
   end
 
   config["providers"][options[:provider]]["metadata"].each do |cmd|
@@ -138,9 +142,9 @@ def create_dockerfile(language, framework, **options)
 
   template = nil
   if options[:provider].start_with?("docker") || options[:provider].start_with?("podman")
-    template = File.join(directory, "..", "Dockerfile")
+    template = File.join(directory, "..", 'Dockerfile')
   elsif config.key?("binaries")
-    template = File.join(directory, "..", ".build", options[:provider], "Dockerfile")
+    template = File.join(directory, "..", ".build", options[:provider], 'Dockerfile')
   end
 
   if config.key?("environment")
@@ -151,7 +155,7 @@ def create_dockerfile(language, framework, **options)
     config["environment"] = environment
   end
 
-  File.open(File.join(directory, "Dockerfile"), "w") { |f| f.write(Mustache.render(File.read(template), config)) } if template
+  File.open(File.join(directory, MANIFESTS[:container]), "w") { |f| f.write(Mustache.render(File.read(template), config)) } if template
 end
 
 task :config do
@@ -168,7 +172,7 @@ task :config do
 
     create_dockerfile(language, framework, provider: provider)
 
-    makefile = File.open(File.join(language, framework, MAKEFILE),'w')
+    makefile = File.open(File.join(language, framework, MANIFESTS[:build]),'w')
     
     makefile.write("build:\n")
 
@@ -379,7 +383,7 @@ namespace :ci do
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
         block[:task][:jobs] << { name: framework, commands: [
-          "cd #{language}/#{framework} && make build -f #{MAKEFILE} && cd -",
+          "cd #{language}/#{framework} && make build  -f #{MANIFESTS[:build]}  && cd -",
           "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec",
         ] }
       end
