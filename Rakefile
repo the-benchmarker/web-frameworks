@@ -376,7 +376,6 @@ namespace :ci do
         'cache restore built-in',
         'find bin -type f -exec chmod +x {} \\;',
         'bundle config path .cache',
-        'bundle install',
         'bundle exec rake config'
       ] }, 'env_vars': [
         { name: 'CLEAN', value: 'off' },
