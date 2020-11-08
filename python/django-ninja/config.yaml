@@ -1,6 +1,6 @@
 framework:
   website: django-ninja.rest-framework.com
-  version: 0.8.2
+  version: 0.8
   
 command: >
   gunicorn \
