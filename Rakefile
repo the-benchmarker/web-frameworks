@@ -158,8 +158,7 @@ task :config do
 
   sieger_options = ENV.fetch("SIEGER_OPTIONS") { "-r GET:/ -c 10" }
   clean = ENV.fetch("CLEAN") { "on" }
-
-  config = { main: { depends_on: [] } }
+  
 
   Dir.glob("*/*/config.yaml").each do |path|
     directory = File.dirname(path)
