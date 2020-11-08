@@ -378,8 +378,7 @@ namespace :ci do
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
         block[:task][:jobs] << { name: framework, commands: [
-          "cd #{language}/#{framework}",
-          "make build",
+          "cd #{language}/#{framework} && make build && cd -",
           "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec",
         ] }
       end
