@@ -27,8 +27,8 @@ blocks:
 - name: pony
   dependencies:
   - setup
-  skip:
-    when: change_in('/pony/') !~ true
+  run:
+    when: "-change_in('/pony/')"
   task:
     prologue:
       commands:
@@ -52,8 +52,8 @@ blocks:
 - name: go
   dependencies:
   - setup
-  skip:
-    when: change_in('/go/') !~ true
+  run:
+    when: "-change_in('/go/')"
   task:
     prologue:
       commands:
@@ -181,8 +181,8 @@ blocks:
 - name: nim
   dependencies:
   - setup
-  skip:
-    when: change_in('/nim/') !~ true
+  run:
+    when: "-change_in('/nim/')"
   task:
     prologue:
       commands:
@@ -230,8 +230,8 @@ blocks:
 - name: python
   dependencies:
   - setup
-  skip:
-    when: change_in('/python/') !~ true
+  run:
+    when: "-change_in('/python/')"
   task:
     prologue:
       commands:
@@ -359,8 +359,8 @@ blocks:
 - name: clojure
   dependencies:
   - setup
-  skip:
-    when: change_in('/clojure/') !~ true
+  run:
+    when: "-change_in('/clojure/')"
   task:
     prologue:
       commands:
@@ -388,8 +388,8 @@ blocks:
 - name: elixir
   dependencies:
   - setup
-  skip:
-    when: change_in('/elixir/') !~ true
+  run:
+    when: "-change_in('/elixir/')"
   task:
     prologue:
       commands:
@@ -425,8 +425,8 @@ blocks:
 - name: dart
   dependencies:
   - setup
-  skip:
-    when: change_in('/dart/') !~ true
+  run:
+    when: "-change_in('/dart/')"
   task:
     prologue:
       commands:
@@ -454,8 +454,8 @@ blocks:
 - name: perl
   dependencies:
   - setup
-  skip:
-    when: change_in('/perl/') !~ true
+  run:
+    when: "-change_in('/perl/')"
   task:
     prologue:
       commands:
@@ -479,8 +479,8 @@ blocks:
 - name: rust
   dependencies:
   - setup
-  skip:
-    when: change_in('/rust/') !~ true
+  run:
+    when: "-change_in('/rust/')"
   task:
     prologue:
       commands:
@@ -516,8 +516,8 @@ blocks:
 - name: fsharp
   dependencies:
   - setup
-  skip:
-    when: change_in('/fsharp/') !~ true
+  run:
+    when: "-change_in('/fsharp/')"
   task:
     prologue:
       commands:
@@ -561,8 +561,8 @@ blocks:
 - name: r
   dependencies:
   - setup
-  skip:
-    when: change_in('/r/') !~ true
+  run:
+    when: "-change_in('/r/')"
   task:
     prologue:
       commands:
@@ -598,8 +598,8 @@ blocks:
 - name: java
   dependencies:
   - setup
-  skip:
-    when: change_in('/java/') !~ true
+  run:
+    when: "-change_in('/java/')"
   task:
     prologue:
       commands:
@@ -659,8 +659,8 @@ blocks:
 - name: kotlin
   dependencies:
   - setup
-  skip:
-    when: change_in('/kotlin/') !~ true
+  run:
+    when: "-change_in('/kotlin/')"
   task:
     prologue:
       commands:
@@ -688,8 +688,8 @@ blocks:
 - name: crystal
   dependencies:
   - setup
-  skip:
-    when: change_in('/crystal/') !~ true
+  run:
+    when: "-change_in('/crystal/')"
   task:
     prologue:
       commands:
@@ -753,8 +753,8 @@ blocks:
 - name: haskell
   dependencies:
   - setup
-  skip:
-    when: change_in('/haskell/') !~ true
+  run:
+    when: "-change_in('/haskell/')"
   task:
     prologue:
       commands:
@@ -782,8 +782,8 @@ blocks:
 - name: php
   dependencies:
   - setup
-  skip:
-    when: change_in('/php/') !~ true
+  run:
+    when: "-change_in('/php/')"
   task:
     prologue:
       commands:
@@ -963,8 +963,8 @@ blocks:
 - name: scala
   dependencies:
   - setup
-  skip:
-    when: change_in('/scala/') !~ true
+  run:
+    when: "-change_in('/scala/')"
   task:
     prologue:
       commands:
@@ -996,8 +996,8 @@ blocks:
 - name: cpp
   dependencies:
   - setup
-  skip:
-    when: change_in('/cpp/') !~ true
+  run:
+    when: "-change_in('/cpp/')"
   task:
     prologue:
       commands:
@@ -1025,8 +1025,8 @@ blocks:
 - name: swift
   dependencies:
   - setup
-  skip:
-    when: change_in('/swift/') !~ true
+  run:
+    when: "-change_in('/swift/')"
   task:
     prologue:
       commands:
@@ -1066,8 +1066,8 @@ blocks:
 - name: csharp
   dependencies:
   - setup
-  skip:
-    when: change_in('/csharp/') !~ true
+  run:
+    when: "-change_in('/csharp/')"
   task:
     prologue:
       commands:
@@ -1099,8 +1099,8 @@ blocks:
 - name: julia
   dependencies:
   - setup
-  skip:
-    when: change_in('/julia/') !~ true
+  run:
+    when: "-change_in('/julia/')"
   task:
     prologue:
       commands:
@@ -1124,8 +1124,8 @@ blocks:
 - name: javascript
   dependencies:
   - setup
-  skip:
-    when: change_in('/javascript/') !~ true
+  run:
+    when: "-change_in('/javascript/')"
   task:
     prologue:
       commands:
@@ -1241,8 +1241,8 @@ blocks:
 - name: c
   dependencies:
   - setup
-  skip:
-    when: change_in('/c/') !~ true
+  run:
+    when: "-change_in('/c/')"
   task:
     prologue:
       commands:
@@ -1270,8 +1270,8 @@ blocks:
 - name: v
   dependencies:
   - setup
-  skip:
-    when: change_in('/v/') !~ true
+  run:
+    when: "-change_in('/v/')"
   task:
     prologue:
       commands:
@@ -1295,8 +1295,8 @@ blocks:
 - name: ruby
   dependencies:
   - setup
-  skip:
-    when: change_in('/ruby/') !~ true
+  run:
+    when: "-change_in('/ruby/')"
   task:
     prologue:
       commands:
