@@ -90,9 +90,7 @@ def commands_for(language, framework, **options)
 
   commands << 'curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
 
-  unless options[:collect] == 'off'
-    commands << "DATABASE_URL=#{ENV['DATABASE_URL']} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`"
-  end
+  commands << "DATABASE_URL=#{ENV['DATABASE_URL']} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == 'off'
 
   unless options[:clean] == 'off'
     config['providers'][options[:provider]]['clean'].each do |cmd|
@@ -156,9 +154,7 @@ def create_dockerfile(language, framework, **options)
     config['environment'] = environment
   end
 
-  if template
-    File.open(File.join(directory, MANIFESTS[:container]), 'w') { |f| f.write(Mustache.render(File.read(template), config)) }
-  end
+  File.open(File.join(directory, MANIFESTS[:container]), 'w') { |f| f.write(Mustache.render(File.read(template), config)) } if template
 end
 
 task :config do
@@ -370,13 +366,13 @@ namespace :ci do
     } }]
     Dir.glob('*/config.yaml').each do |path|
       language, = path.split(File::Separator)
-      block = { name: language, dependencies: ['setup'],  task: { prologue: { commands: [
+      block = { name: language, dependencies: ['setup'], run: { when: format("change_in('/%<language>s/') = true", language: language) }, task: { prologue: { commands: [
         'cache restore $SEMAPHORE_GIT_SHA',
         'cache restore bin',
         'cache restore built-in',
         'find bin -type f -exec chmod +x {} \\;',
         'bundle config path .cache',
-        'bundle install',
+        'bundle install', 
         'bundle exec rake config'
       ] }, 'env_vars': [
         { name: 'CLEAN', value: 'off' },
