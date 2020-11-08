@@ -356,7 +356,7 @@ namespace :ci do
           'curl -sL "https://keybase.io/crystal/pgp_keys.asc" | sudo apt-key add -',
           'echo "deb https://dist.crystal-lang.org/apt crystal main" | sudo tee /etc/apt/sources.list.d/crystal.list',
           'sudo apt-get update',
-          'sudo apt-get -y install crystal jq',
+          'sudo apt-get -y install crystal',
           'shards build --static',
           'cache store bin bin',
           'bundle config path .cache',
@@ -373,6 +373,8 @@ namespace :ci do
         'cache restore bin',
         'cache restore built-in',
         'find bin -type f -exec chmod +x {} \\;',
+        'sudo apt-get update',
+        'sudo apt-get install jq',
         'bundle config path .cache',
         'bundle install',
         'bundle exec rake config'
