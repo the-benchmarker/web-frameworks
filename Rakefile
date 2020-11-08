@@ -391,7 +391,7 @@ namespace :ci do
       blocks << block
     end
 
-    config = { version: 'v1.0', name: 'Benchmarking suite', execution_time_limit: { hours: 3 }, agent: { machine: { type: 'e1-standard-2' }, containers: { name: 'main', image: 'registry.semaphoreci.com/ruby:2.6' } }, blocks: blocks }
+    config = { version: 'v1.0', name: 'Benchmarking suite', execution_time_limit: { hours: 3 }, agent: { machine: { type: 'e1-standard-2' }, containers: [{ name: 'main', image: 'registry.semaphoreci.com/ruby:2.6' }] }, blocks: blocks }
     File.write('.semaphore/semaphore.yml', JSON.parse(config.to_json).to_yaml)
   end
 end

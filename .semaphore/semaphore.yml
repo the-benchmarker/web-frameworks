@@ -7,7 +7,7 @@ agent:
   machine:
     type: e1-standard-2
   containers:
-    name: main
+  - name: main
     image: registry.semaphoreci.com/ruby:2.6
 blocks:
 - name: setup
