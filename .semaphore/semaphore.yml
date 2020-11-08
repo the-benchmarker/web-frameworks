@@ -45,8 +45,7 @@ blocks:
     jobs:
     - name: jennet
       commands:
-      - cd pony/jennet
-      - make build
+      - cd pony/jennet && make build && cd -
       - FRAMEWORK=pony/jennet bundle exec rspec .spec
 - name: go
   dependencies:
@@ -69,138 +68,111 @@ blocks:
     jobs:
     - name: chi
       commands:
-      - cd go/chi
-      - make build
+      - cd go/chi && make build && cd -
       - FRAMEWORK=go/chi bundle exec rspec .spec
     - name: violetear
       commands:
-      - cd go/violetear
-      - make build
+      - cd go/violetear && make build && cd -
       - FRAMEWORK=go/violetear bundle exec rspec .spec
     - name: httprouter
       commands:
-      - cd go/httprouter
-      - make build
+      - cd go/httprouter && make build && cd -
       - FRAMEWORK=go/httprouter bundle exec rspec .spec
     - name: macaron
       commands:
-      - cd go/macaron
-      - make build
+      - cd go/macaron && make build && cd -
       - FRAMEWORK=go/macaron bundle exec rspec .spec
     - name: gramework
       commands:
-      - cd go/gramework
-      - make build
+      - cd go/gramework && make build && cd -
       - FRAMEWORK=go/gramework bundle exec rspec .spec
     - name: gearbox
       commands:
-      - cd go/gearbox
-      - make build
+      - cd go/gearbox && make build && cd -
       - FRAMEWORK=go/gearbox bundle exec rspec .spec
     - name: fasthttp
       commands:
-      - cd go/fasthttp
-      - make build
+      - cd go/fasthttp && make build && cd -
       - FRAMEWORK=go/fasthttp bundle exec rspec .spec
     - name: gf
       commands:
-      - cd go/gf
-      - make build
+      - cd go/gf && make build && cd -
       - FRAMEWORK=go/gf bundle exec rspec .spec
     - name: echo
       commands:
-      - cd go/echo
-      - make build
+      - cd go/echo && make build && cd -
       - FRAMEWORK=go/echo bundle exec rspec .spec
     - name: gorouter
       commands:
-      - cd go/gorouter
-      - make build
+      - cd go/gorouter && make build && cd -
       - FRAMEWORK=go/gorouter bundle exec rspec .spec
     - name: goyave
       commands:
-      - cd go/goyave
-      - make build
+      - cd go/goyave && make build && cd -
       - FRAMEWORK=go/goyave bundle exec rspec .spec
     - name: atreugo
       commands:
-      - cd go/atreugo
-      - make build
+      - cd go/atreugo && make build && cd -
       - FRAMEWORK=go/atreugo bundle exec rspec .spec
     - name: kami
       commands:
-      - cd go/kami
-      - make build
+      - cd go/kami && make build && cd -
       - FRAMEWORK=go/kami bundle exec rspec .spec
     - name: aero
       commands:
-      - cd go/aero
-      - make build
+      - cd go/aero && make build && cd -
       - FRAMEWORK=go/aero bundle exec rspec .spec
     - name: air
       commands:
-      - cd go/air
-      - make build
+      - cd go/air && make build && cd -
       - FRAMEWORK=go/air bundle exec rspec .spec
     - name: tango
       commands:
-      - cd go/tango
-      - make build
+      - cd go/tango && make build && cd -
       - FRAMEWORK=go/tango bundle exec rspec .spec
     - name: goroute
       commands:
-      - cd go/goroute
-      - make build
+      - cd go/goroute && make build && cd -
       - FRAMEWORK=go/goroute bundle exec rspec .spec
     - name: beego
       commands:
-      - cd go/beego
-      - make build
+      - cd go/beego && make build && cd -
       - FRAMEWORK=go/beego bundle exec rspec .spec
     - name: gorouter-fasthttp
       commands:
-      - cd go/gorouter-fasthttp
-      - make build
+      - cd go/gorouter-fasthttp && make build && cd -
       - FRAMEWORK=go/gorouter-fasthttp bundle exec rspec .spec
     - name: fiber
       commands:
-      - cd go/fiber
-      - make build
+      - cd go/fiber && make build && cd -
       - FRAMEWORK=go/fiber bundle exec rspec .spec
     - name: rte
       commands:
-      - cd go/rte
-      - make build
+      - cd go/rte && make build && cd -
       - FRAMEWORK=go/rte bundle exec rspec .spec
     - name: clevergo
       commands:
-      - cd go/clevergo
-      - make build
+      - cd go/clevergo && make build && cd -
       - FRAMEWORK=go/clevergo bundle exec rspec .spec
     - name: gorilla-mux
       commands:
-      - cd go/gorilla-mux
-      - make build
+      - cd go/gorilla-mux && make build && cd -
       - FRAMEWORK=go/gorilla-mux bundle exec rspec .spec
     - name: mars
       commands:
-      - cd go/mars
-      - make build
+      - cd go/mars && make build && cd -
       - FRAMEWORK=go/mars bundle exec rspec .spec
     - name: gin
       commands:
-      - cd go/gin
-      - make build
+      - cd go/gin && make build && cd -
       - FRAMEWORK=go/gin bundle exec rspec .spec
     - name: webgo
       commands:
-      - cd go/webgo
-      - make build
+      - cd go/webgo && make build && cd -
       - FRAMEWORK=go/webgo bundle exec rspec .spec
     - name: router
       commands:
-      - cd go/router
-      - make build
+      - cd go/router && make build && cd -
       - FRAMEWORK=go/router bundle exec rspec .spec
 - name: nim
   dependencies:
@@ -223,38 +195,31 @@ blocks:
     jobs:
     - name: mike
       commands:
-      - cd nim/mike
-      - make build
+      - cd nim/mike && make build && cd -
       - FRAMEWORK=nim/mike bundle exec rspec .spec
     - name: basolato
       commands:
-      - cd nim/basolato
-      - make build
+      - cd nim/basolato && make build && cd -
       - FRAMEWORK=nim/basolato bundle exec rspec .spec
     - name: akane
       commands:
-      - cd nim/akane
-      - make build
+      - cd nim/akane && make build && cd -
       - FRAMEWORK=nim/akane bundle exec rspec .spec
     - name: httpbeast
       commands:
-      - cd nim/httpbeast
-      - make build
+      - cd nim/httpbeast && make build && cd -
       - FRAMEWORK=nim/httpbeast bundle exec rspec .spec
     - name: jester
       commands:
-      - cd nim/jester
-      - make build
+      - cd nim/jester && make build && cd -
       - FRAMEWORK=nim/jester bundle exec rspec .spec
     - name: whip
       commands:
-      - cd nim/whip
-      - make build
+      - cd nim/whip && make build && cd -
       - FRAMEWORK=nim/whip bundle exec rspec .spec
     - name: rosencrantz
       commands:
-      - cd nim/rosencrantz
-      - make build
+      - cd nim/rosencrantz && make build && cd -
       - FRAMEWORK=nim/rosencrantz bundle exec rspec .spec
 - name: python
   dependencies:
@@ -277,133 +242,107 @@ blocks:
     jobs:
     - name: flask
       commands:
-      - cd python/flask
-      - make build
+      - cd python/flask && make build && cd -
       - FRAMEWORK=python/flask bundle exec rspec .spec
     - name: aiohttp
       commands:
-      - cd python/aiohttp
-      - make build
+      - cd python/aiohttp && make build && cd -
       - FRAMEWORK=python/aiohttp bundle exec rspec .spec
     - name: apidaora
       commands:
-      - cd python/apidaora
-      - make build
+      - cd python/apidaora && make build && cd -
       - FRAMEWORK=python/apidaora bundle exec rspec .spec
     - name: masonite
       commands:
-      - cd python/masonite
-      - make build
+      - cd python/masonite && make build && cd -
       - FRAMEWORK=python/masonite bundle exec rspec .spec
     - name: clastic
       commands:
-      - cd python/clastic
-      - make build
+      - cd python/clastic && make build && cd -
       - FRAMEWORK=python/clastic bundle exec rspec .spec
     - name: index.py
       commands:
-      - cd python/index.py
-      - make build
+      - cd python/index.py && make build && cd -
       - FRAMEWORK=python/index.py bundle exec rspec .spec
     - name: quart
       commands:
-      - cd python/quart
-      - make build
+      - cd python/quart && make build && cd -
       - FRAMEWORK=python/quart bundle exec rspec .spec
     - name: pyramid
       commands:
-      - cd python/pyramid
-      - make build
+      - cd python/pyramid && make build && cd -
       - FRAMEWORK=python/pyramid bundle exec rspec .spec
     - name: starlette
       commands:
-      - cd python/starlette
-      - make build
+      - cd python/starlette && make build && cd -
       - FRAMEWORK=python/starlette bundle exec rspec .spec
     - name: cherrypy
       commands:
-      - cd python/cherrypy
-      - make build
+      - cd python/cherrypy && make build && cd -
       - FRAMEWORK=python/cherrypy bundle exec rspec .spec
     - name: emmett
       commands:
-      - cd python/emmett
-      - make build
+      - cd python/emmett && make build && cd -
       - FRAMEWORK=python/emmett bundle exec rspec .spec
     - name: hug
       commands:
-      - cd python/hug
-      - make build
+      - cd python/hug && make build && cd -
       - FRAMEWORK=python/hug bundle exec rspec .spec
     - name: blacksheep
       commands:
-      - cd python/blacksheep
-      - make build
+      - cd python/blacksheep && make build && cd -
       - FRAMEWORK=python/blacksheep bundle exec rspec .spec
     - name: molten
       commands:
-      - cd python/molten
-      - make build
+      - cd python/molten && make build && cd -
       - FRAMEWORK=python/molten bundle exec rspec .spec
     - name: tornado
       commands:
-      - cd python/tornado
-      - make build
+      - cd python/tornado && make build && cd -
       - FRAMEWORK=python/tornado bundle exec rspec .spec
     - name: tonberry
       commands:
-      - cd python/tonberry
-      - make build
+      - cd python/tonberry && make build && cd -
       - FRAMEWORK=python/tonberry bundle exec rspec .spec
     - name: nameko
       commands:
-      - cd python/nameko
-      - make build
+      - cd python/nameko && make build && cd -
       - FRAMEWORK=python/nameko bundle exec rspec .spec
     - name: fastapi
       commands:
-      - cd python/fastapi
-      - make build
+      - cd python/fastapi && make build && cd -
       - FRAMEWORK=python/fastapi bundle exec rspec .spec
     - name: klein
       commands:
-      - cd python/klein
-      - make build
+      - cd python/klein && make build && cd -
       - FRAMEWORK=python/klein bundle exec rspec .spec
     - name: sanic
       commands:
-      - cd python/sanic
-      - make build
+      - cd python/sanic && make build && cd -
       - FRAMEWORK=python/sanic bundle exec rspec .spec
     - name: responder
       commands:
-      - cd python/responder
-      - make build
+      - cd python/responder && make build && cd -
       - FRAMEWORK=python/responder bundle exec rspec .spec
     - name: asgineer
       commands:
-      - cd python/asgineer
-      - make build
+      - cd python/asgineer && make build && cd -
       - FRAMEWORK=python/asgineer bundle exec rspec .spec
     - name: cyclone
       commands:
-      - cd python/cyclone
-      - make build
+      - cd python/cyclone && make build && cd -
       - FRAMEWORK=python/cyclone bundle exec rspec .spec
     - name: django
       commands:
-      - cd python/django
-      - make build
+      - cd python/django && make build && cd -
       - FRAMEWORK=python/django bundle exec rspec .spec
     - name: falcon
       commands:
-      - cd python/falcon
-      - make build
+      - cd python/falcon && make build && cd -
       - FRAMEWORK=python/falcon bundle exec rspec .spec
     - name: bottle
       commands:
-      - cd python/bottle
-      - make build
+      - cd python/bottle && make build && cd -
       - FRAMEWORK=python/bottle bundle exec rspec .spec
 - name: clojure
   dependencies:
@@ -426,13 +365,11 @@ blocks:
     jobs:
     - name: coast
       commands:
-      - cd clojure/coast
-      - make build
+      - cd clojure/coast && make build && cd -
       - FRAMEWORK=clojure/coast bundle exec rspec .spec
     - name: luminus
       commands:
-      - cd clojure/luminus
-      - make build
+      - cd clojure/luminus && make build && cd -
       - FRAMEWORK=clojure/luminus bundle exec rspec .spec
 - name: elixir
   dependencies:
@@ -455,23 +392,19 @@ blocks:
     jobs:
     - name: cowboy
       commands:
-      - cd elixir/cowboy
-      - make build
+      - cd elixir/cowboy && make build && cd -
       - FRAMEWORK=elixir/cowboy bundle exec rspec .spec
     - name: cowboy_stream
       commands:
-      - cd elixir/cowboy_stream
-      - make build
+      - cd elixir/cowboy_stream && make build && cd -
       - FRAMEWORK=elixir/cowboy_stream bundle exec rspec .spec
     - name: phoenix
       commands:
-      - cd elixir/phoenix
-      - make build
+      - cd elixir/phoenix && make build && cd -
       - FRAMEWORK=elixir/phoenix bundle exec rspec .spec
     - name: plug
       commands:
-      - cd elixir/plug
-      - make build
+      - cd elixir/plug && make build && cd -
       - FRAMEWORK=elixir/plug bundle exec rspec .spec
 - name: dart
   dependencies:
@@ -494,13 +427,11 @@ blocks:
     jobs:
     - name: aqueduct
       commands:
-      - cd dart/aqueduct
-      - make build
+      - cd dart/aqueduct && make build && cd -
       - FRAMEWORK=dart/aqueduct bundle exec rspec .spec
     - name: start
       commands:
-      - cd dart/start
-      - make build
+      - cd dart/start && make build && cd -
       - FRAMEWORK=dart/start bundle exec rspec .spec
 - name: perl
   dependencies:
@@ -523,8 +454,7 @@ blocks:
     jobs:
     - name: dancer2
       commands:
-      - cd perl/dancer2
-      - make build
+      - cd perl/dancer2 && make build && cd -
       - FRAMEWORK=perl/dancer2 bundle exec rspec .spec
 - name: rust
   dependencies:
@@ -547,23 +477,19 @@ blocks:
     jobs:
     - name: gotham
       commands:
-      - cd rust/gotham
-      - make build
+      - cd rust/gotham && make build && cd -
       - FRAMEWORK=rust/gotham bundle exec rspec .spec
     - name: iron
       commands:
-      - cd rust/iron
-      - make build
+      - cd rust/iron && make build && cd -
       - FRAMEWORK=rust/iron bundle exec rspec .spec
     - name: nickel
       commands:
-      - cd rust/nickel
-      - make build
+      - cd rust/nickel && make build && cd -
       - FRAMEWORK=rust/nickel bundle exec rspec .spec
     - name: actix
       commands:
-      - cd rust/actix
-      - make build
+      - cd rust/actix && make build && cd -
       - FRAMEWORK=rust/actix bundle exec rspec .spec
 - name: fsharp
   dependencies:
@@ -586,33 +512,27 @@ blocks:
     jobs:
     - name: giraffe
       commands:
-      - cd fsharp/giraffe
-      - make build
+      - cd fsharp/giraffe && make build && cd -
       - FRAMEWORK=fsharp/giraffe bundle exec rspec .spec
     - name: websharper
       commands:
-      - cd fsharp/websharper
-      - make build
+      - cd fsharp/websharper && make build && cd -
       - FRAMEWORK=fsharp/websharper bundle exec rspec .spec
     - name: saturn
       commands:
-      - cd fsharp/saturn
-      - make build
+      - cd fsharp/saturn && make build && cd -
       - FRAMEWORK=fsharp/saturn bundle exec rspec .spec
     - name: frank
       commands:
-      - cd fsharp/frank
-      - make build
+      - cd fsharp/frank && make build && cd -
       - FRAMEWORK=fsharp/frank bundle exec rspec .spec
     - name: suave
       commands:
-      - cd fsharp/suave
-      - make build
+      - cd fsharp/suave && make build && cd -
       - FRAMEWORK=fsharp/suave bundle exec rspec .spec
     - name: falco
       commands:
-      - cd fsharp/falco
-      - make build
+      - cd fsharp/falco && make build && cd -
       - FRAMEWORK=fsharp/falco bundle exec rspec .spec
 - name: r
   dependencies:
@@ -635,23 +555,19 @@ blocks:
     jobs:
     - name: plumber
       commands:
-      - cd r/plumber
-      - make build
+      - cd r/plumber && make build && cd -
       - FRAMEWORK=r/plumber bundle exec rspec .spec
     - name: restrserve
       commands:
-      - cd r/restrserve
-      - make build
+      - cd r/restrserve && make build && cd -
       - FRAMEWORK=r/restrserve bundle exec rspec .spec
     - name: rserve
       commands:
-      - cd r/rserve
-      - make build
+      - cd r/rserve && make build && cd -
       - FRAMEWORK=r/rserve bundle exec rspec .spec
     - name: httpuv
       commands:
-      - cd r/httpuv
-      - make build
+      - cd r/httpuv && make build && cd -
       - FRAMEWORK=r/httpuv bundle exec rspec .spec
 - name: java
   dependencies:
@@ -674,53 +590,43 @@ blocks:
     jobs:
     - name: light-4j
       commands:
-      - cd java/light-4j
-      - make build
+      - cd java/light-4j && make build && cd -
       - FRAMEWORK=java/light-4j bundle exec rspec .spec
     - name: jooby
       commands:
-      - cd java/jooby
-      - make build
+      - cd java/jooby && make build && cd -
       - FRAMEWORK=java/jooby bundle exec rspec .spec
     - name: javalin
       commands:
-      - cd java/javalin
-      - make build
+      - cd java/javalin && make build && cd -
       - FRAMEWORK=java/javalin bundle exec rspec .spec
     - name: act
       commands:
-      - cd java/act
-      - make build
+      - cd java/act && make build && cd -
       - FRAMEWORK=java/act bundle exec rspec .spec
     - name: rapidoid
       commands:
-      - cd java/rapidoid
-      - make build
+      - cd java/rapidoid && make build && cd -
       - FRAMEWORK=java/rapidoid bundle exec rspec .spec
     - name: blade
       commands:
-      - cd java/blade
-      - make build
+      - cd java/blade && make build && cd -
       - FRAMEWORK=java/blade bundle exec rspec .spec
     - name: struts2
       commands:
-      - cd java/struts2
-      - make build
+      - cd java/struts2 && make build && cd -
       - FRAMEWORK=java/struts2 bundle exec rspec .spec
     - name: spring-framework
       commands:
-      - cd java/spring-framework
-      - make build
+      - cd java/spring-framework && make build && cd -
       - FRAMEWORK=java/spring-framework bundle exec rspec .spec
     - name: micronaut
       commands:
-      - cd java/micronaut
-      - make build
+      - cd java/micronaut && make build && cd -
       - FRAMEWORK=java/micronaut bundle exec rspec .spec
     - name: spring-boot
       commands:
-      - cd java/spring-boot
-      - make build
+      - cd java/spring-boot && make build && cd -
       - FRAMEWORK=java/spring-boot bundle exec rspec .spec
 - name: kotlin
   dependencies:
@@ -743,13 +649,11 @@ blocks:
     jobs:
     - name: kooby
       commands:
-      - cd kotlin/kooby
-      - make build
+      - cd kotlin/kooby && make build && cd -
       - FRAMEWORK=kotlin/kooby bundle exec rspec .spec
     - name: ktor
       commands:
-      - cd kotlin/ktor
-      - make build
+      - cd kotlin/ktor && make build && cd -
       - FRAMEWORK=kotlin/ktor bundle exec rspec .spec
 - name: crystal
   dependencies:
@@ -772,58 +676,47 @@ blocks:
     jobs:
     - name: shivneri
       commands:
-      - cd crystal/shivneri
-      - make build
+      - cd crystal/shivneri && make build && cd -
       - FRAMEWORK=crystal/shivneri bundle exec rspec .spec
     - name: lucky
       commands:
-      - cd crystal/lucky
-      - make build
+      - cd crystal/lucky && make build && cd -
       - FRAMEWORK=crystal/lucky bundle exec rspec .spec
     - name: orion
       commands:
-      - cd crystal/orion
-      - make build
+      - cd crystal/orion && make build && cd -
       - FRAMEWORK=crystal/orion bundle exec rspec .spec
     - name: amber
       commands:
-      - cd crystal/amber
-      - make build
+      - cd crystal/amber && make build && cd -
       - FRAMEWORK=crystal/amber bundle exec rspec .spec
     - name: router.cr
       commands:
-      - cd crystal/router.cr
-      - make build
+      - cd crystal/router.cr && make build && cd -
       - FRAMEWORK=crystal/router.cr bundle exec rspec .spec
     - name: runcobo
       commands:
-      - cd crystal/runcobo
-      - make build
+      - cd crystal/runcobo && make build && cd -
       - FRAMEWORK=crystal/runcobo bundle exec rspec .spec
     - name: toro
       commands:
-      - cd crystal/toro
-      - make build
+      - cd crystal/toro && make build && cd -
       - FRAMEWORK=crystal/toro bundle exec rspec .spec
     - name: spider-gazelle
       commands:
-      - cd crystal/spider-gazelle
-      - make build
+      - cd crystal/spider-gazelle && make build && cd -
       - FRAMEWORK=crystal/spider-gazelle bundle exec rspec .spec
     - name: grip
       commands:
-      - cd crystal/grip
-      - make build
+      - cd crystal/grip && make build && cd -
       - FRAMEWORK=crystal/grip bundle exec rspec .spec
     - name: kemal
       commands:
-      - cd crystal/kemal
-      - make build
+      - cd crystal/kemal && make build && cd -
       - FRAMEWORK=crystal/kemal bundle exec rspec .spec
     - name: athena
       commands:
-      - cd crystal/athena
-      - make build
+      - cd crystal/athena && make build && cd -
       - FRAMEWORK=crystal/athena bundle exec rspec .spec
 - name: haskell
   dependencies:
@@ -846,13 +739,11 @@ blocks:
     jobs:
     - name: scotty
       commands:
-      - cd haskell/scotty
-      - make build
+      - cd haskell/scotty && make build && cd -
       - FRAMEWORK=haskell/scotty bundle exec rspec .spec
     - name: servant
       commands:
-      - cd haskell/servant
-      - make build
+      - cd haskell/servant && make build && cd -
       - FRAMEWORK=haskell/servant bundle exec rspec .spec
 - name: php
   dependencies:
@@ -875,203 +766,163 @@ blocks:
     jobs:
     - name: slim-swoole
       commands:
-      - cd php/slim-swoole
-      - make build
+      - cd php/slim-swoole && make build && cd -
       - FRAMEWORK=php/slim-swoole bundle exec rspec .spec
     - name: chubbyphp-swoole
       commands:
-      - cd php/chubbyphp-swoole
-      - make build
+      - cd php/chubbyphp-swoole && make build && cd -
       - FRAMEWORK=php/chubbyphp-swoole bundle exec rspec .spec
     - name: sunrise-router-roadrunner
       commands:
-      - cd php/sunrise-router-roadrunner
-      - make build
+      - cd php/sunrise-router-roadrunner && make build && cd -
       - FRAMEWORK=php/sunrise-router-roadrunner bundle exec rspec .spec
     - name: slim-roadrunner
       commands:
-      - cd php/slim-roadrunner
-      - make build
+      - cd php/slim-roadrunner && make build && cd -
       - FRAMEWORK=php/slim-roadrunner bundle exec rspec .spec
     - name: swoft
       commands:
-      - cd php/swoft
-      - make build
+      - cd php/swoft && make build && cd -
       - FRAMEWORK=php/swoft bundle exec rspec .spec
     - name: simps
       commands:
-      - cd php/simps
-      - make build
+      - cd php/simps && make build && cd -
       - FRAMEWORK=php/simps bundle exec rspec .spec
     - name: nano
       commands:
-      - cd php/nano
-      - make build
+      - cd php/nano && make build && cd -
       - FRAMEWORK=php/nano bundle exec rspec .spec
     - name: codeigniter4
       commands:
-      - cd php/codeigniter4
-      - make build
+      - cd php/codeigniter4 && make build && cd -
       - FRAMEWORK=php/codeigniter4 bundle exec rspec .spec
     - name: yii
       commands:
-      - cd php/yii
-      - make build
+      - cd php/yii && make build && cd -
       - FRAMEWORK=php/yii bundle exec rspec .spec
     - name: phalcon
       commands:
-      - cd php/phalcon
-      - make build
+      - cd php/phalcon && make build && cd -
       - FRAMEWORK=php/phalcon bundle exec rspec .spec
     - name: one-fpm
       commands:
-      - cd php/one-fpm
-      - make build
+      - cd php/one-fpm && make build && cd -
       - FRAMEWORK=php/one-fpm bundle exec rspec .spec
     - name: ice
       commands:
-      - cd php/ice
-      - make build
+      - cd php/ice && make build && cd -
       - FRAMEWORK=php/ice bundle exec rspec .spec
     - name: spiral
       commands:
-      - cd php/spiral
-      - make build
+      - cd php/spiral && make build && cd -
       - FRAMEWORK=php/spiral bundle exec rspec .spec
     - name: mark
       commands:
-      - cd php/mark
-      - make build
+      - cd php/mark && make build && cd -
       - FRAMEWORK=php/mark bundle exec rspec .spec
     - name: siler-swoole
       commands:
-      - cd php/siler-swoole
-      - make build
+      - cd php/siler-swoole && make build && cd -
       - FRAMEWORK=php/siler-swoole bundle exec rspec .spec
     - name: workerman
       commands:
-      - cd php/workerman
-      - make build
+      - cd php/workerman && make build && cd -
       - FRAMEWORK=php/workerman bundle exec rspec .spec
     - name: chubbyphp-roadrunner
       commands:
-      - cd php/chubbyphp-roadrunner
-      - make build
+      - cd php/chubbyphp-roadrunner && make build && cd -
       - FRAMEWORK=php/chubbyphp-roadrunner bundle exec rspec .spec
     - name: nette
       commands:
-      - cd php/nette
-      - make build
+      - cd php/nette && make build && cd -
       - FRAMEWORK=php/nette bundle exec rspec .spec
     - name: sw-fw-less
       commands:
-      - cd php/sw-fw-less
-      - make build
+      - cd php/sw-fw-less && make build && cd -
       - FRAMEWORK=php/sw-fw-less bundle exec rspec .spec
     - name: laminas
       commands:
-      - cd php/laminas
-      - make build
+      - cd php/laminas && make build && cd -
       - FRAMEWORK=php/laminas bundle exec rspec .spec
     - name: chubbyphp
       commands:
-      - cd php/chubbyphp
-      - make build
+      - cd php/chubbyphp && make build && cd -
       - FRAMEWORK=php/chubbyphp bundle exec rspec .spec
     - name: imi
       commands:
-      - cd php/imi
-      - make build
+      - cd php/imi && make build && cd -
       - FRAMEWORK=php/imi bundle exec rspec .spec
     - name: basicphp
       commands:
-      - cd php/basicphp
-      - make build
+      - cd php/basicphp && make build && cd -
       - FRAMEWORK=php/basicphp bundle exec rspec .spec
     - name: comet
       commands:
-      - cd php/comet
-      - make build
+      - cd php/comet && make build && cd -
       - FRAMEWORK=php/comet bundle exec rspec .spec
     - name: sunrise-router
       commands:
-      - cd php/sunrise-router
-      - make build
+      - cd php/sunrise-router && make build && cd -
       - FRAMEWORK=php/sunrise-router bundle exec rspec .spec
     - name: ubiquity
       commands:
-      - cd php/ubiquity
-      - make build
+      - cd php/ubiquity && make build && cd -
       - FRAMEWORK=php/ubiquity bundle exec rspec .spec
     - name: one
       commands:
-      - cd php/one
-      - make build
+      - cd php/one && make build && cd -
       - FRAMEWORK=php/one bundle exec rspec .spec
     - name: mezzio
       commands:
-      - cd php/mezzio
-      - make build
+      - cd php/mezzio && make build && cd -
       - FRAMEWORK=php/mezzio bundle exec rspec .spec
     - name: lumen
       commands:
-      - cd php/lumen
-      - make build
+      - cd php/lumen && make build && cd -
       - FRAMEWORK=php/lumen bundle exec rspec .spec
     - name: siler
       commands:
-      - cd php/siler
-      - make build
+      - cd php/siler && make build && cd -
       - FRAMEWORK=php/siler bundle exec rspec .spec
     - name: fastsitephp
       commands:
-      - cd php/fastsitephp
-      - make build
+      - cd php/fastsitephp && make build && cd -
       - FRAMEWORK=php/fastsitephp bundle exec rspec .spec
     - name: bearframework
       commands:
-      - cd php/bearframework
-      - make build
+      - cd php/bearframework && make build && cd -
       - FRAMEWORK=php/bearframework bundle exec rspec .spec
     - name: hamlet
       commands:
-      - cd php/hamlet
-      - make build
+      - cd php/hamlet && make build && cd -
       - FRAMEWORK=php/hamlet bundle exec rspec .spec
     - name: symfony
       commands:
-      - cd php/symfony
-      - make build
+      - cd php/symfony && make build && cd -
       - FRAMEWORK=php/symfony bundle exec rspec .spec
     - name: slim
       commands:
-      - cd php/slim
-      - make build
+      - cd php/slim && make build && cd -
       - FRAMEWORK=php/slim bundle exec rspec .spec
     - name: chubbyphp-workerman
       commands:
-      - cd php/chubbyphp-workerman
-      - make build
+      - cd php/chubbyphp-workerman && make build && cd -
       - FRAMEWORK=php/chubbyphp-workerman bundle exec rspec .spec
     - name: sunrise-router-annotations
       commands:
-      - cd php/sunrise-router-annotations
-      - make build
+      - cd php/sunrise-router-annotations && make build && cd -
       - FRAMEWORK=php/sunrise-router-annotations bundle exec rspec .spec
     - name: yii-swoole
       commands:
-      - cd php/yii-swoole
-      - make build
+      - cd php/yii-swoole && make build && cd -
       - FRAMEWORK=php/yii-swoole bundle exec rspec .spec
     - name: laravel
       commands:
-      - cd php/laravel
-      - make build
+      - cd php/laravel && make build && cd -
       - FRAMEWORK=php/laravel bundle exec rspec .spec
     - name: hyperf
       commands:
-      - cd php/hyperf
-      - make build
+      - cd php/hyperf && make build && cd -
       - FRAMEWORK=php/hyperf bundle exec rspec .spec
 - name: scala
   dependencies:
@@ -1094,18 +945,15 @@ blocks:
     jobs:
     - name: akkahttp
       commands:
-      - cd scala/akkahttp
-      - make build
+      - cd scala/akkahttp && make build && cd -
       - FRAMEWORK=scala/akkahttp bundle exec rspec .spec
     - name: play
       commands:
-      - cd scala/play
-      - make build
+      - cd scala/play && make build && cd -
       - FRAMEWORK=scala/play bundle exec rspec .spec
     - name: http4s
       commands:
-      - cd scala/http4s
-      - make build
+      - cd scala/http4s && make build && cd -
       - FRAMEWORK=scala/http4s bundle exec rspec .spec
 - name: cpp
   dependencies:
@@ -1128,13 +976,11 @@ blocks:
     jobs:
     - name: drogon
       commands:
-      - cd cpp/drogon
-      - make build
+      - cd cpp/drogon && make build && cd -
       - FRAMEWORK=cpp/drogon bundle exec rspec .spec
     - name: evhtp
       commands:
-      - cd cpp/evhtp
-      - make build
+      - cd cpp/evhtp && make build && cd -
       - FRAMEWORK=cpp/evhtp bundle exec rspec .spec
 - name: swift
   dependencies:
@@ -1157,28 +1003,23 @@ blocks:
     jobs:
     - name: swifter-framework
       commands:
-      - cd swift/swifter-framework
-      - make build
+      - cd swift/swifter-framework && make build && cd -
       - FRAMEWORK=swift/swifter-framework bundle exec rspec .spec
     - name: perfect
       commands:
-      - cd swift/perfect
-      - make build
+      - cd swift/perfect && make build && cd -
       - FRAMEWORK=swift/perfect bundle exec rspec .spec
     - name: kitura-nio
       commands:
-      - cd swift/kitura-nio
-      - make build
+      - cd swift/kitura-nio && make build && cd -
       - FRAMEWORK=swift/kitura-nio bundle exec rspec .spec
     - name: vapor-framework
       commands:
-      - cd swift/vapor-framework
-      - make build
+      - cd swift/vapor-framework && make build && cd -
       - FRAMEWORK=swift/vapor-framework bundle exec rspec .spec
     - name: kitura
       commands:
-      - cd swift/kitura
-      - make build
+      - cd swift/kitura && make build && cd -
       - FRAMEWORK=swift/kitura bundle exec rspec .spec
 - name: csharp
   dependencies:
@@ -1201,18 +1042,15 @@ blocks:
     jobs:
     - name: aspnetcore
       commands:
-      - cd csharp/aspnetcore
-      - make build
+      - cd csharp/aspnetcore && make build && cd -
       - FRAMEWORK=csharp/aspnetcore bundle exec rspec .spec
     - name: carter
       commands:
-      - cd csharp/carter
-      - make build
+      - cd csharp/carter && make build && cd -
       - FRAMEWORK=csharp/carter bundle exec rspec .spec
     - name: simplify.web
       commands:
-      - cd csharp/simplify.web
-      - make build
+      - cd csharp/simplify.web && make build && cd -
       - FRAMEWORK=csharp/simplify.web bundle exec rspec .spec
 - name: julia
   dependencies:
@@ -1235,8 +1073,7 @@ blocks:
     jobs:
     - name: merly
       commands:
-      - cd julia/merly
-      - make build
+      - cd julia/merly && make build && cd -
       - FRAMEWORK=julia/merly bundle exec rspec .spec
 - name: javascript
   dependencies:
@@ -1259,123 +1096,99 @@ blocks:
     jobs:
     - name: moleculer
       commands:
-      - cd javascript/moleculer
-      - make build
+      - cd javascript/moleculer && make build && cd -
       - FRAMEWORK=javascript/moleculer bundle exec rspec .spec
     - name: polka
       commands:
-      - cd javascript/polka
-      - make build
+      - cd javascript/polka && make build && cd -
       - FRAMEWORK=javascript/polka bundle exec rspec .spec
     - name: foxify
       commands:
-      - cd javascript/foxify
-      - make build
+      - cd javascript/foxify && make build && cd -
       - FRAMEWORK=javascript/foxify bundle exec rspec .spec
     - name: 0http
       commands:
-      - cd javascript/0http
-      - make build
+      - cd javascript/0http && make build && cd -
       - FRAMEWORK=javascript/0http bundle exec rspec .spec
     - name: sifrr
       commands:
-      - cd javascript/sifrr
-      - make build
+      - cd javascript/sifrr && make build && cd -
       - FRAMEWORK=javascript/sifrr bundle exec rspec .spec
     - name: nestjs-fastify
       commands:
-      - cd javascript/nestjs-fastify
-      - make build
+      - cd javascript/nestjs-fastify && make build && cd -
       - FRAMEWORK=javascript/nestjs-fastify bundle exec rspec .spec
     - name: fyrejet-api
       commands:
-      - cd javascript/fyrejet-api
-      - make build
+      - cd javascript/fyrejet-api && make build && cd -
       - FRAMEWORK=javascript/fyrejet-api bundle exec rspec .spec
     - name: restana
       commands:
-      - cd javascript/restana
-      - make build
+      - cd javascript/restana && make build && cd -
       - FRAMEWORK=javascript/restana bundle exec rspec .spec
     - name: express
       commands:
-      - cd javascript/express
-      - make build
+      - cd javascript/express && make build && cd -
       - FRAMEWORK=javascript/express bundle exec rspec .spec
     - name: hapi
       commands:
-      - cd javascript/hapi
-      - make build
+      - cd javascript/hapi && make build && cd -
       - FRAMEWORK=javascript/hapi bundle exec rspec .spec
     - name: muneem
       commands:
-      - cd javascript/muneem
-      - make build
+      - cd javascript/muneem && make build && cd -
       - FRAMEWORK=javascript/muneem bundle exec rspec .spec
     - name: turbo_polka
       commands:
-      - cd javascript/turbo_polka
-      - make build
+      - cd javascript/turbo_polka && make build && cd -
       - FRAMEWORK=javascript/turbo_polka bundle exec rspec .spec
     - name: fyrejet-uwebsockets
       commands:
-      - cd javascript/fyrejet-uwebsockets
-      - make build
+      - cd javascript/fyrejet-uwebsockets && make build && cd -
       - FRAMEWORK=javascript/fyrejet-uwebsockets bundle exec rspec .spec
     - name: fyrejet
       commands:
-      - cd javascript/fyrejet
-      - make build
+      - cd javascript/fyrejet && make build && cd -
       - FRAMEWORK=javascript/fyrejet bundle exec rspec .spec
     - name: feathersjs
       commands:
-      - cd javascript/feathersjs
-      - make build
+      - cd javascript/feathersjs && make build && cd -
       - FRAMEWORK=javascript/feathersjs bundle exec rspec .spec
     - name: iotjs-express
       commands:
-      - cd javascript/iotjs-express
-      - make build
+      - cd javascript/iotjs-express && make build && cd -
       - FRAMEWORK=javascript/iotjs-express bundle exec rspec .spec
     - name: nestjs-express
       commands:
-      - cd javascript/nestjs-express
-      - make build
+      - cd javascript/nestjs-express && make build && cd -
       - FRAMEWORK=javascript/nestjs-express bundle exec rspec .spec
     - name: restify
       commands:
-      - cd javascript/restify
-      - make build
+      - cd javascript/restify && make build && cd -
       - FRAMEWORK=javascript/restify bundle exec rspec .spec
     - name: polkadot
       commands:
-      - cd javascript/polkadot
-      - make build
+      - cd javascript/polkadot && make build && cd -
       - FRAMEWORK=javascript/polkadot bundle exec rspec .spec
     - name: rayo
       commands:
-      - cd javascript/rayo
-      - make build
+      - cd javascript/rayo && make build && cd -
       - FRAMEWORK=javascript/rayo bundle exec rspec .spec
     - name: naturaljs-router
       commands:
-      - cd javascript/naturaljs-router
-      - make build
+      - cd javascript/naturaljs-router && make build && cd -
       - FRAMEWORK=javascript/naturaljs-router bundle exec rspec .spec
     - name: sails
       commands:
-      - cd javascript/sails
-      - make build
+      - cd javascript/sails && make build && cd -
       - FRAMEWORK=javascript/sails bundle exec rspec .spec
     - name: fastify
       commands:
-      - cd javascript/fastify
-      - make build
+      - cd javascript/fastify && make build && cd -
       - FRAMEWORK=javascript/fastify bundle exec rspec .spec
     - name: koa
       commands:
-      - cd javascript/koa
-      - make build
+      - cd javascript/koa && make build && cd -
       - FRAMEWORK=javascript/koa bundle exec rspec .spec
 - name: c
   dependencies:
@@ -1398,13 +1211,11 @@ blocks:
     jobs:
     - name: kore
       commands:
-      - cd c/kore
-      - make build
+      - cd c/kore && make build && cd -
       - FRAMEWORK=c/kore bundle exec rspec .spec
     - name: agoo-c
       commands:
-      - cd c/agoo-c
-      - make build
+      - cd c/agoo-c && make build && cd -
       - FRAMEWORK=c/agoo-c bundle exec rspec .spec
 - name: v
   dependencies:
@@ -1427,8 +1238,7 @@ blocks:
     jobs:
     - name: vape
       commands:
-      - cd v/vape
-      - make build
+      - cd v/vape && make build && cd -
       - FRAMEWORK=v/vape bundle exec rspec .spec
 - name: ruby
   dependencies:
@@ -1451,71 +1261,57 @@ blocks:
     jobs:
     - name: syro
       commands:
-      - cd ruby/syro
-      - make build
+      - cd ruby/syro && make build && cd -
       - FRAMEWORK=ruby/syro bundle exec rspec .spec
     - name: sinatra
       commands:
-      - cd ruby/sinatra
-      - make build
+      - cd ruby/sinatra && make build && cd -
       - FRAMEWORK=ruby/sinatra bundle exec rspec .spec
     - name: rack_app
       commands:
-      - cd ruby/rack_app
-      - make build
+      - cd ruby/rack_app && make build && cd -
       - FRAMEWORK=ruby/rack_app bundle exec rspec .spec
     - name: camping
       commands:
-      - cd ruby/camping
-      - make build
+      - cd ruby/camping && make build && cd -
       - FRAMEWORK=ruby/camping bundle exec rspec .spec
     - name: roda
       commands:
-      - cd ruby/roda
-      - make build
+      - cd ruby/roda && make build && cd -
       - FRAMEWORK=ruby/roda bundle exec rspec .spec
     - name: agoo
       commands:
-      - cd ruby/agoo
-      - make build
+      - cd ruby/agoo && make build && cd -
       - FRAMEWORK=ruby/agoo bundle exec rspec .spec
     - name: rack-routing
       commands:
-      - cd ruby/rack-routing
-      - make build
+      - cd ruby/rack-routing && make build && cd -
       - FRAMEWORK=ruby/rack-routing bundle exec rspec .spec
     - name: hanami
       commands:
-      - cd ruby/hanami
-      - make build
+      - cd ruby/hanami && make build && cd -
       - FRAMEWORK=ruby/hanami bundle exec rspec .spec
     - name: flame
       commands:
-      - cd ruby/flame
-      - make build
+      - cd ruby/flame && make build && cd -
       - FRAMEWORK=ruby/flame bundle exec rspec .spec
     - name: hanami-api
       commands:
-      - cd ruby/hanami-api
-      - make build
+      - cd ruby/hanami-api && make build && cd -
       - FRAMEWORK=ruby/hanami-api bundle exec rspec .spec
     - name: pakyow
       commands:
-      - cd ruby/pakyow
-      - make build
+      - cd ruby/pakyow && make build && cd -
       - FRAMEWORK=ruby/pakyow bundle exec rspec .spec
     - name: grape
       commands:
-      - cd ruby/grape
-      - make build
+      - cd ruby/grape && make build && cd -
       - FRAMEWORK=ruby/grape bundle exec rspec .spec
     - name: cuba
       commands:
-      - cd ruby/cuba
-      - make build
+      - cd ruby/cuba && make build && cd -
       - FRAMEWORK=ruby/cuba bundle exec rspec .spec
     - name: rails
       commands:
-      - cd ruby/rails
-      - make build
+      - cd ruby/rails && make build && cd -
       - FRAMEWORK=ruby/rails bundle exec rspec .spec
