@@ -27,6 +27,8 @@ blocks:
 - name: pony
   dependencies:
   - setup
+  run:
+    when: change_in(['/pony/'])
   task:
     prologue:
       commands:
@@ -50,6 +52,8 @@ blocks:
 - name: go
   dependencies:
   - setup
+  run:
+    when: change_in(['/go/'])
   task:
     prologue:
       commands:
@@ -177,6 +181,8 @@ blocks:
 - name: nim
   dependencies:
   - setup
+  run:
+    when: change_in(['/nim/'])
   task:
     prologue:
       commands:
@@ -197,10 +203,6 @@ blocks:
       commands:
       - cd nim/mike && make build  -f .Makefile  && cd -
       - FRAMEWORK=nim/mike bundle exec rspec .spec
-    - name: basolato
-      commands:
-      - cd nim/basolato && make build  -f .Makefile  && cd -
-      - FRAMEWORK=nim/basolato bundle exec rspec .spec
     - name: akane
       commands:
       - cd nim/akane && make build  -f .Makefile  && cd -
@@ -224,6 +226,8 @@ blocks:
 - name: python
   dependencies:
   - setup
+  run:
+    when: change_in(['/python/'])
   task:
     prologue:
       commands:
@@ -347,6 +351,8 @@ blocks:
 - name: clojure
   dependencies:
   - setup
+  run:
+    when: change_in(['/clojure/'])
   task:
     prologue:
       commands:
@@ -374,6 +380,8 @@ blocks:
 - name: elixir
   dependencies:
   - setup
+  run:
+    when: change_in(['/elixir/'])
   task:
     prologue:
       commands:
@@ -409,6 +417,8 @@ blocks:
 - name: dart
   dependencies:
   - setup
+  run:
+    when: change_in(['/dart/'])
   task:
     prologue:
       commands:
@@ -436,6 +446,8 @@ blocks:
 - name: perl
   dependencies:
   - setup
+  run:
+    when: change_in(['/perl/'])
   task:
     prologue:
       commands:
@@ -459,6 +471,8 @@ blocks:
 - name: rust
   dependencies:
   - setup
+  run:
+    when: change_in(['/rust/'])
   task:
     prologue:
       commands:
@@ -494,6 +508,8 @@ blocks:
 - name: fsharp
   dependencies:
   - setup
+  run:
+    when: change_in(['/fsharp/'])
   task:
     prologue:
       commands:
@@ -537,6 +553,8 @@ blocks:
 - name: r
   dependencies:
   - setup
+  run:
+    when: change_in(['/r/'])
   task:
     prologue:
       commands:
@@ -572,6 +590,8 @@ blocks:
 - name: java
   dependencies:
   - setup
+  run:
+    when: change_in(['/java/'])
   task:
     prologue:
       commands:
@@ -631,6 +651,8 @@ blocks:
 - name: kotlin
   dependencies:
   - setup
+  run:
+    when: change_in(['/kotlin/'])
   task:
     prologue:
       commands:
@@ -658,6 +680,8 @@ blocks:
 - name: crystal
   dependencies:
   - setup
+  run:
+    when: change_in(['/crystal/'])
   task:
     prologue:
       commands:
@@ -721,6 +745,8 @@ blocks:
 - name: haskell
   dependencies:
   - setup
+  run:
+    when: change_in(['/haskell/'])
   task:
     prologue:
       commands:
@@ -748,6 +774,8 @@ blocks:
 - name: php
   dependencies:
   - setup
+  run:
+    when: change_in(['/php/'])
   task:
     prologue:
       commands:
@@ -927,6 +955,8 @@ blocks:
 - name: scala
   dependencies:
   - setup
+  run:
+    when: change_in(['/scala/'])
   task:
     prologue:
       commands:
@@ -958,6 +988,8 @@ blocks:
 - name: cpp
   dependencies:
   - setup
+  run:
+    when: change_in(['/cpp/'])
   task:
     prologue:
       commands:
@@ -985,6 +1017,8 @@ blocks:
 - name: swift
   dependencies:
   - setup
+  run:
+    when: change_in(['/swift/'])
   task:
     prologue:
       commands:
@@ -1024,6 +1058,8 @@ blocks:
 - name: csharp
   dependencies:
   - setup
+  run:
+    when: change_in(['/csharp/'])
   task:
     prologue:
       commands:
@@ -1055,6 +1091,8 @@ blocks:
 - name: julia
   dependencies:
   - setup
+  run:
+    when: change_in(['/julia/'])
   task:
     prologue:
       commands:
@@ -1078,6 +1116,8 @@ blocks:
 - name: javascript
   dependencies:
   - setup
+  run:
+    when: change_in(['/javascript/'])
   task:
     prologue:
       commands:
@@ -1193,6 +1233,8 @@ blocks:
 - name: c
   dependencies:
   - setup
+  run:
+    when: change_in(['/c/'])
   task:
     prologue:
       commands:
@@ -1220,6 +1262,8 @@ blocks:
 - name: v
   dependencies:
   - setup
+  run:
+    when: change_in(['/v/'])
   task:
     prologue:
       commands:
@@ -1243,6 +1287,8 @@ blocks:
 - name: ruby
   dependencies:
   - setup
+  run:
+    when: change_in(['/ruby/'])
   task:
     prologue:
       commands:
