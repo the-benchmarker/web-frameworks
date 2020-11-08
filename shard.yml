@@ -7,8 +7,6 @@ authors:
   - Marwan Rabbâa <waghanza@gmail.com>
 
 dependencies:
-  neph:
-    github: tbrand/neph
   crustache:
     github: MakeNowJust/crustache
   admiral:
@@ -19,8 +17,6 @@ dependencies:
 targets:
   db:
     main: tools/src/db.cr
-  neph:
-    main: lib/neph/src/bin/neph_bin.cr
   client:
     main: tools/src/client.cr
   make:
