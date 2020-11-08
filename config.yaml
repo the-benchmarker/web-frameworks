@@ -32,7 +32,7 @@ service: |
 providers:
   docker:
     build:
-      - docker build -t {{{language}}}.{{{framework}}} .
+      - docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}} .
 
     metadata:
       - docker run -td {{{language}}}.{{{framework}}} > cid.txt
@@ -44,7 +44,7 @@ providers:
 
   docker-machine:
     build:
-      - docker build -t {{{language}}}.{{{framework}}} .
+      - docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}} .
 
     metadata:
       - docker run -p 3000:3000 -td {{{language}}}.{{{framework}}} > cid.txt
