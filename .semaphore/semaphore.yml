@@ -16,12 +16,8 @@ blocks:
     jobs:
     - name: setup
       commands:
-      - git clone --no-checkout $SEMAPHORE_GIT_URL $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
-      - git sparse-checkout init --cone
+      - checkout
       - cache store $SEMAPHORE_GIT_SHA .
-      - git sparse-checkout set tools Rakefile Gemfile shard.yml
-      - checkout::switch_revision
       - shards build --static
       - cache store bin bin
       - bundle config path .cache
@@ -33,11 +29,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools pony/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -60,11 +52,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools go/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -191,11 +179,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools nim/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -242,11 +226,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools python/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -373,11 +353,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools clojure/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -404,11 +380,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools elixir/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -443,11 +415,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools dart/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -474,11 +442,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools perl/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -501,11 +465,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools rust/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -540,11 +500,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools fsharp/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -587,11 +543,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools r/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -626,11 +578,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools java/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -689,11 +637,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools kotlin/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -720,11 +664,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools crystal/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -787,11 +727,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools haskell/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -818,11 +754,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools php/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1001,11 +933,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools scala/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1036,11 +964,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools cpp/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1067,11 +991,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools swift/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1110,11 +1030,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools csharp/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1145,11 +1061,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools julia/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1172,11 +1084,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools javascript/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1291,11 +1199,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools c/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1322,11 +1226,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools v/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1349,11 +1249,7 @@ blocks:
   task:
     prologue:
       commands:
-      - mkdir $SEMAPHORE_GIT_DIR
-      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
-      - git sparse-checkout set tools ruby/ Rakefile Gemfile .spec
-      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
