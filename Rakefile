@@ -357,8 +357,6 @@ namespace :ci do
           'cache store $SEMAPHORE_GIT_SHA .',
           'git sparse-checkout set tools Rakefile Gemfile shard.yml',
           'checkout::switch_revision',
-          'sudo snap install crystal --classic',
-          'sudo apt-get -y install libyaml-dev libevent-dev',
           'shards build --static',
           'cache store bin bin',
           'bundle config path .cache',
@@ -395,7 +393,7 @@ namespace :ci do
       blocks << block
     end
 
-    config = { version: 'v1.0', name: 'Benchmarking suite', execution_time_limit: { hours: 3 }, agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu1804' } }, blocks: blocks }
+    config = { version: 'v1.0', name: 'Benchmarking suite', execution_time_limit: { hours: 3 }, agent: { machine: { type: 'e1-standard-2' }, containers: [{ name: 'main', image: 'crystallang/crystal:latest-alpine' }] }, blocks: blocks }
     File.write('.semaphore/semaphore.yml', JSON.parse(config.to_json).to_yaml)
   end
 end
