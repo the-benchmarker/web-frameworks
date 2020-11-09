@@ -6,7 +6,9 @@ execution_time_limit:
 agent:
   machine:
     type: e1-standard-2
-    os_image: ubuntu1804
+  containers:
+  - name: main
+    image: crystallang/crystal:latest-alpine
 blocks:
 - name: setup
   dependencies: []
@@ -14,25 +16,28 @@ blocks:
     jobs:
     - name: setup
       commands:
-      - checkout
+      - git clone --no-checkout $SEMAPHORE_GIT_URL $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
+      - git sparse-checkout init --cone
       - cache store $SEMAPHORE_GIT_SHA .
-      - sudo snap install crystal --classic
-      - sudo apt-get -y install libyaml-dev libevent-dev
+      - git sparse-checkout set tools Rakefile Gemfile shard.yml
+      - checkout::switch_revision
       - shards build --static
       - cache store bin bin
       - bundle config path .cache
       - bundle install
       - cache store built-in .cache
-      - bundle exec rake config
 - name: pony
   dependencies:
   - setup
-  run:
-    when: change_in('/pony/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools pony/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -47,18 +52,19 @@ blocks:
     jobs:
     - name: jennet
       commands:
-      - mkdir -p .neph/pony/jennet
-      - retry bin/neph pony/jennet --mode=CI
+      - cd pony/jennet && make build  -f .Makefile  && cd -
       - FRAMEWORK=pony/jennet bundle exec rspec .spec
 - name: go
   dependencies:
   - setup
-  run:
-    when: change_in('/go/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools go/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -73,148 +79,123 @@ blocks:
     jobs:
     - name: chi
       commands:
-      - mkdir -p .neph/go/chi
-      - retry bin/neph go/chi --mode=CI
+      - cd go/chi && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/chi bundle exec rspec .spec
     - name: violetear
       commands:
-      - mkdir -p .neph/go/violetear
-      - retry bin/neph go/violetear --mode=CI
+      - cd go/violetear && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/violetear bundle exec rspec .spec
     - name: httprouter
       commands:
-      - mkdir -p .neph/go/httprouter
-      - retry bin/neph go/httprouter --mode=CI
+      - cd go/httprouter && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/httprouter bundle exec rspec .spec
     - name: macaron
       commands:
-      - mkdir -p .neph/go/macaron
-      - retry bin/neph go/macaron --mode=CI
+      - cd go/macaron && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/macaron bundle exec rspec .spec
     - name: gramework
       commands:
-      - mkdir -p .neph/go/gramework
-      - retry bin/neph go/gramework --mode=CI
+      - cd go/gramework && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/gramework bundle exec rspec .spec
     - name: gearbox
       commands:
-      - mkdir -p .neph/go/gearbox
-      - retry bin/neph go/gearbox --mode=CI
+      - cd go/gearbox && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/gearbox bundle exec rspec .spec
     - name: fasthttp
       commands:
-      - mkdir -p .neph/go/fasthttp
-      - retry bin/neph go/fasthttp --mode=CI
+      - cd go/fasthttp && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/fasthttp bundle exec rspec .spec
     - name: gf
       commands:
-      - mkdir -p .neph/go/gf
-      - retry bin/neph go/gf --mode=CI
+      - cd go/gf && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/gf bundle exec rspec .spec
     - name: echo
       commands:
-      - mkdir -p .neph/go/echo
-      - retry bin/neph go/echo --mode=CI
+      - cd go/echo && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/echo bundle exec rspec .spec
     - name: gorouter
       commands:
-      - mkdir -p .neph/go/gorouter
-      - retry bin/neph go/gorouter --mode=CI
+      - cd go/gorouter && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/gorouter bundle exec rspec .spec
     - name: goyave
       commands:
-      - mkdir -p .neph/go/goyave
-      - retry bin/neph go/goyave --mode=CI
+      - cd go/goyave && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/goyave bundle exec rspec .spec
     - name: atreugo
       commands:
-      - mkdir -p .neph/go/atreugo
-      - retry bin/neph go/atreugo --mode=CI
+      - cd go/atreugo && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/atreugo bundle exec rspec .spec
     - name: kami
       commands:
-      - mkdir -p .neph/go/kami
-      - retry bin/neph go/kami --mode=CI
+      - cd go/kami && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/kami bundle exec rspec .spec
     - name: aero
       commands:
-      - mkdir -p .neph/go/aero
-      - retry bin/neph go/aero --mode=CI
+      - cd go/aero && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/aero bundle exec rspec .spec
     - name: air
       commands:
-      - mkdir -p .neph/go/air
-      - retry bin/neph go/air --mode=CI
+      - cd go/air && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/air bundle exec rspec .spec
     - name: tango
       commands:
-      - mkdir -p .neph/go/tango
-      - retry bin/neph go/tango --mode=CI
+      - cd go/tango && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/tango bundle exec rspec .spec
     - name: goroute
       commands:
-      - mkdir -p .neph/go/goroute
-      - retry bin/neph go/goroute --mode=CI
+      - cd go/goroute && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/goroute bundle exec rspec .spec
     - name: beego
       commands:
-      - mkdir -p .neph/go/beego
-      - retry bin/neph go/beego --mode=CI
+      - cd go/beego && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/beego bundle exec rspec .spec
     - name: gorouter-fasthttp
       commands:
-      - mkdir -p .neph/go/gorouter-fasthttp
-      - retry bin/neph go/gorouter-fasthttp --mode=CI
+      - cd go/gorouter-fasthttp && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/gorouter-fasthttp bundle exec rspec .spec
     - name: fiber
       commands:
-      - mkdir -p .neph/go/fiber
-      - retry bin/neph go/fiber --mode=CI
+      - cd go/fiber && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/fiber bundle exec rspec .spec
     - name: rte
       commands:
-      - mkdir -p .neph/go/rte
-      - retry bin/neph go/rte --mode=CI
+      - cd go/rte && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/rte bundle exec rspec .spec
     - name: clevergo
       commands:
-      - mkdir -p .neph/go/clevergo
-      - retry bin/neph go/clevergo --mode=CI
+      - cd go/clevergo && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/clevergo bundle exec rspec .spec
     - name: gorilla-mux
       commands:
-      - mkdir -p .neph/go/gorilla-mux
-      - retry bin/neph go/gorilla-mux --mode=CI
+      - cd go/gorilla-mux && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/gorilla-mux bundle exec rspec .spec
     - name: mars
       commands:
-      - mkdir -p .neph/go/mars
-      - retry bin/neph go/mars --mode=CI
+      - cd go/mars && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/mars bundle exec rspec .spec
     - name: gin
       commands:
-      - mkdir -p .neph/go/gin
-      - retry bin/neph go/gin --mode=CI
+      - cd go/gin && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/gin bundle exec rspec .spec
     - name: webgo
       commands:
-      - mkdir -p .neph/go/webgo
-      - retry bin/neph go/webgo --mode=CI
+      - cd go/webgo && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/webgo bundle exec rspec .spec
     - name: router
       commands:
-      - mkdir -p .neph/go/router
-      - retry bin/neph go/router --mode=CI
+      - cd go/router && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/router bundle exec rspec .spec
 - name: nim
   dependencies:
   - setup
-  run:
-    when: change_in('/nim/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools nim/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -229,48 +210,43 @@ blocks:
     jobs:
     - name: mike
       commands:
-      - mkdir -p .neph/nim/mike
-      - retry bin/neph nim/mike --mode=CI
+      - cd nim/mike && make build  -f .Makefile  && cd -
       - FRAMEWORK=nim/mike bundle exec rspec .spec
     - name: basolato
       commands:
-      - mkdir -p .neph/nim/basolato
-      - retry bin/neph nim/basolato --mode=CI
+      - cd nim/basolato && make build  -f .Makefile  && cd -
       - FRAMEWORK=nim/basolato bundle exec rspec .spec
     - name: akane
       commands:
-      - mkdir -p .neph/nim/akane
-      - retry bin/neph nim/akane --mode=CI
+      - cd nim/akane && make build  -f .Makefile  && cd -
       - FRAMEWORK=nim/akane bundle exec rspec .spec
     - name: httpbeast
       commands:
-      - mkdir -p .neph/nim/httpbeast
-      - retry bin/neph nim/httpbeast --mode=CI
+      - cd nim/httpbeast && make build  -f .Makefile  && cd -
       - FRAMEWORK=nim/httpbeast bundle exec rspec .spec
     - name: jester
       commands:
-      - mkdir -p .neph/nim/jester
-      - retry bin/neph nim/jester --mode=CI
+      - cd nim/jester && make build  -f .Makefile  && cd -
       - FRAMEWORK=nim/jester bundle exec rspec .spec
     - name: whip
       commands:
-      - mkdir -p .neph/nim/whip
-      - retry bin/neph nim/whip --mode=CI
+      - cd nim/whip && make build  -f .Makefile  && cd -
       - FRAMEWORK=nim/whip bundle exec rspec .spec
     - name: rosencrantz
       commands:
-      - mkdir -p .neph/nim/rosencrantz
-      - retry bin/neph nim/rosencrantz --mode=CI
+      - cd nim/rosencrantz && make build  -f .Makefile  && cd -
       - FRAMEWORK=nim/rosencrantz bundle exec rspec .spec
 - name: python
   dependencies:
   - setup
-  run:
-    when: change_in('/python/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools python/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -285,143 +261,123 @@ blocks:
     jobs:
     - name: flask
       commands:
-      - mkdir -p .neph/python/flask
-      - retry bin/neph python/flask --mode=CI
+      - cd python/flask && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/flask bundle exec rspec .spec
     - name: aiohttp
       commands:
-      - mkdir -p .neph/python/aiohttp
-      - retry bin/neph python/aiohttp --mode=CI
+      - cd python/aiohttp && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/aiohttp bundle exec rspec .spec
     - name: apidaora
       commands:
-      - mkdir -p .neph/python/apidaora
-      - retry bin/neph python/apidaora --mode=CI
+      - cd python/apidaora && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/apidaora bundle exec rspec .spec
     - name: masonite
       commands:
-      - mkdir -p .neph/python/masonite
-      - retry bin/neph python/masonite --mode=CI
+      - cd python/masonite && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/masonite bundle exec rspec .spec
     - name: clastic
       commands:
-      - mkdir -p .neph/python/clastic
-      - retry bin/neph python/clastic --mode=CI
+      - cd python/clastic && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/clastic bundle exec rspec .spec
     - name: index.py
       commands:
-      - mkdir -p .neph/python/index.py
-      - retry bin/neph python/index.py --mode=CI
+      - cd python/index.py && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/index.py bundle exec rspec .spec
     - name: quart
       commands:
-      - mkdir -p .neph/python/quart
-      - retry bin/neph python/quart --mode=CI
+      - cd python/quart && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/quart bundle exec rspec .spec
     - name: pyramid
       commands:
-      - mkdir -p .neph/python/pyramid
-      - retry bin/neph python/pyramid --mode=CI
+      - cd python/pyramid && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/pyramid bundle exec rspec .spec
     - name: starlette
       commands:
-      - mkdir -p .neph/python/starlette
-      - retry bin/neph python/starlette --mode=CI
+      - cd python/starlette && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/starlette bundle exec rspec .spec
     - name: cherrypy
       commands:
-      - mkdir -p .neph/python/cherrypy
-      - retry bin/neph python/cherrypy --mode=CI
+      - cd python/cherrypy && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/cherrypy bundle exec rspec .spec
     - name: emmett
       commands:
-      - mkdir -p .neph/python/emmett
-      - retry bin/neph python/emmett --mode=CI
+      - cd python/emmett && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/emmett bundle exec rspec .spec
     - name: hug
       commands:
-      - mkdir -p .neph/python/hug
-      - retry bin/neph python/hug --mode=CI
+      - cd python/hug && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/hug bundle exec rspec .spec
     - name: blacksheep
       commands:
-      - mkdir -p .neph/python/blacksheep
-      - retry bin/neph python/blacksheep --mode=CI
+      - cd python/blacksheep && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/blacksheep bundle exec rspec .spec
     - name: molten
       commands:
-      - mkdir -p .neph/python/molten
-      - retry bin/neph python/molten --mode=CI
+      - cd python/molten && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/molten bundle exec rspec .spec
     - name: tornado
       commands:
-      - mkdir -p .neph/python/tornado
-      - retry bin/neph python/tornado --mode=CI
+      - cd python/tornado && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/tornado bundle exec rspec .spec
     - name: tonberry
       commands:
-      - mkdir -p .neph/python/tonberry
-      - retry bin/neph python/tonberry --mode=CI
+      - cd python/tonberry && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/tonberry bundle exec rspec .spec
     - name: nameko
       commands:
-      - mkdir -p .neph/python/nameko
-      - retry bin/neph python/nameko --mode=CI
+      - cd python/nameko && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/nameko bundle exec rspec .spec
     - name: fastapi
       commands:
-      - mkdir -p .neph/python/fastapi
-      - retry bin/neph python/fastapi --mode=CI
+      - cd python/fastapi && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/fastapi bundle exec rspec .spec
     - name: klein
       commands:
-      - mkdir -p .neph/python/klein
-      - retry bin/neph python/klein --mode=CI
+      - cd python/klein && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/klein bundle exec rspec .spec
     - name: sanic
       commands:
-      - mkdir -p .neph/python/sanic
-      - retry bin/neph python/sanic --mode=CI
+      - cd python/sanic && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/sanic bundle exec rspec .spec
     - name: responder
       commands:
-      - mkdir -p .neph/python/responder
-      - retry bin/neph python/responder --mode=CI
+      - cd python/responder && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/responder bundle exec rspec .spec
     - name: asgineer
       commands:
-      - mkdir -p .neph/python/asgineer
-      - retry bin/neph python/asgineer --mode=CI
+      - cd python/asgineer && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/asgineer bundle exec rspec .spec
+    - name: django-ninja
+      commands:
+      - cd python/django-ninja && make build  -f .Makefile  && cd -
+      - FRAMEWORK=python/django-ninja bundle exec rspec .spec
     - name: cyclone
       commands:
-      - mkdir -p .neph/python/cyclone
-      - retry bin/neph python/cyclone --mode=CI
+      - cd python/cyclone && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/cyclone bundle exec rspec .spec
     - name: django
       commands:
-      - mkdir -p .neph/python/django
-      - retry bin/neph python/django --mode=CI
+      - cd python/django && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/django bundle exec rspec .spec
     - name: falcon
       commands:
-      - mkdir -p .neph/python/falcon
-      - retry bin/neph python/falcon --mode=CI
+      - cd python/falcon && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/falcon bundle exec rspec .spec
     - name: bottle
       commands:
-      - mkdir -p .neph/python/bottle
-      - retry bin/neph python/bottle --mode=CI
+      - cd python/bottle && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/bottle bundle exec rspec .spec
 - name: clojure
   dependencies:
   - setup
-  run:
-    when: change_in('/clojure/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools clojure/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -436,23 +392,23 @@ blocks:
     jobs:
     - name: coast
       commands:
-      - mkdir -p .neph/clojure/coast
-      - retry bin/neph clojure/coast --mode=CI
+      - cd clojure/coast && make build  -f .Makefile  && cd -
       - FRAMEWORK=clojure/coast bundle exec rspec .spec
     - name: luminus
       commands:
-      - mkdir -p .neph/clojure/luminus
-      - retry bin/neph clojure/luminus --mode=CI
+      - cd clojure/luminus && make build  -f .Makefile  && cd -
       - FRAMEWORK=clojure/luminus bundle exec rspec .spec
 - name: elixir
   dependencies:
   - setup
-  run:
-    when: change_in('/elixir/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools elixir/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -467,33 +423,31 @@ blocks:
     jobs:
     - name: cowboy
       commands:
-      - mkdir -p .neph/elixir/cowboy
-      - retry bin/neph elixir/cowboy --mode=CI
+      - cd elixir/cowboy && make build  -f .Makefile  && cd -
       - FRAMEWORK=elixir/cowboy bundle exec rspec .spec
     - name: cowboy_stream
       commands:
-      - mkdir -p .neph/elixir/cowboy_stream
-      - retry bin/neph elixir/cowboy_stream --mode=CI
+      - cd elixir/cowboy_stream && make build  -f .Makefile  && cd -
       - FRAMEWORK=elixir/cowboy_stream bundle exec rspec .spec
     - name: phoenix
       commands:
-      - mkdir -p .neph/elixir/phoenix
-      - retry bin/neph elixir/phoenix --mode=CI
+      - cd elixir/phoenix && make build  -f .Makefile  && cd -
       - FRAMEWORK=elixir/phoenix bundle exec rspec .spec
     - name: plug
       commands:
-      - mkdir -p .neph/elixir/plug
-      - retry bin/neph elixir/plug --mode=CI
+      - cd elixir/plug && make build  -f .Makefile  && cd -
       - FRAMEWORK=elixir/plug bundle exec rspec .spec
 - name: dart
   dependencies:
   - setup
-  run:
-    when: change_in('/dart/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools dart/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -508,23 +462,23 @@ blocks:
     jobs:
     - name: aqueduct
       commands:
-      - mkdir -p .neph/dart/aqueduct
-      - retry bin/neph dart/aqueduct --mode=CI
+      - cd dart/aqueduct && make build  -f .Makefile  && cd -
       - FRAMEWORK=dart/aqueduct bundle exec rspec .spec
     - name: start
       commands:
-      - mkdir -p .neph/dart/start
-      - retry bin/neph dart/start --mode=CI
+      - cd dart/start && make build  -f .Makefile  && cd -
       - FRAMEWORK=dart/start bundle exec rspec .spec
 - name: perl
   dependencies:
   - setup
-  run:
-    when: change_in('/perl/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools perl/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -539,18 +493,19 @@ blocks:
     jobs:
     - name: dancer2
       commands:
-      - mkdir -p .neph/perl/dancer2
-      - retry bin/neph perl/dancer2 --mode=CI
+      - cd perl/dancer2 && make build  -f .Makefile  && cd -
       - FRAMEWORK=perl/dancer2 bundle exec rspec .spec
 - name: rust
   dependencies:
   - setup
-  run:
-    when: change_in('/rust/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools rust/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -565,33 +520,31 @@ blocks:
     jobs:
     - name: gotham
       commands:
-      - mkdir -p .neph/rust/gotham
-      - retry bin/neph rust/gotham --mode=CI
+      - cd rust/gotham && make build  -f .Makefile  && cd -
       - FRAMEWORK=rust/gotham bundle exec rspec .spec
     - name: iron
       commands:
-      - mkdir -p .neph/rust/iron
-      - retry bin/neph rust/iron --mode=CI
+      - cd rust/iron && make build  -f .Makefile  && cd -
       - FRAMEWORK=rust/iron bundle exec rspec .spec
     - name: nickel
       commands:
-      - mkdir -p .neph/rust/nickel
-      - retry bin/neph rust/nickel --mode=CI
+      - cd rust/nickel && make build  -f .Makefile  && cd -
       - FRAMEWORK=rust/nickel bundle exec rspec .spec
     - name: actix
       commands:
-      - mkdir -p .neph/rust/actix
-      - retry bin/neph rust/actix --mode=CI
+      - cd rust/actix && make build  -f .Makefile  && cd -
       - FRAMEWORK=rust/actix bundle exec rspec .spec
 - name: fsharp
   dependencies:
   - setup
-  run:
-    when: change_in('/fsharp/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools fsharp/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -606,43 +559,39 @@ blocks:
     jobs:
     - name: giraffe
       commands:
-      - mkdir -p .neph/fsharp/giraffe
-      - retry bin/neph fsharp/giraffe --mode=CI
+      - cd fsharp/giraffe && make build  -f .Makefile  && cd -
       - FRAMEWORK=fsharp/giraffe bundle exec rspec .spec
     - name: websharper
       commands:
-      - mkdir -p .neph/fsharp/websharper
-      - retry bin/neph fsharp/websharper --mode=CI
+      - cd fsharp/websharper && make build  -f .Makefile  && cd -
       - FRAMEWORK=fsharp/websharper bundle exec rspec .spec
     - name: saturn
       commands:
-      - mkdir -p .neph/fsharp/saturn
-      - retry bin/neph fsharp/saturn --mode=CI
+      - cd fsharp/saturn && make build  -f .Makefile  && cd -
       - FRAMEWORK=fsharp/saturn bundle exec rspec .spec
     - name: frank
       commands:
-      - mkdir -p .neph/fsharp/frank
-      - retry bin/neph fsharp/frank --mode=CI
+      - cd fsharp/frank && make build  -f .Makefile  && cd -
       - FRAMEWORK=fsharp/frank bundle exec rspec .spec
     - name: suave
       commands:
-      - mkdir -p .neph/fsharp/suave
-      - retry bin/neph fsharp/suave --mode=CI
+      - cd fsharp/suave && make build  -f .Makefile  && cd -
       - FRAMEWORK=fsharp/suave bundle exec rspec .spec
     - name: falco
       commands:
-      - mkdir -p .neph/fsharp/falco
-      - retry bin/neph fsharp/falco --mode=CI
+      - cd fsharp/falco && make build  -f .Makefile  && cd -
       - FRAMEWORK=fsharp/falco bundle exec rspec .spec
 - name: r
   dependencies:
   - setup
-  run:
-    when: change_in('/r/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools r/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -657,33 +606,31 @@ blocks:
     jobs:
     - name: plumber
       commands:
-      - mkdir -p .neph/r/plumber
-      - retry bin/neph r/plumber --mode=CI
+      - cd r/plumber && make build  -f .Makefile  && cd -
       - FRAMEWORK=r/plumber bundle exec rspec .spec
     - name: restrserve
       commands:
-      - mkdir -p .neph/r/restrserve
-      - retry bin/neph r/restrserve --mode=CI
+      - cd r/restrserve && make build  -f .Makefile  && cd -
       - FRAMEWORK=r/restrserve bundle exec rspec .spec
     - name: rserve
       commands:
-      - mkdir -p .neph/r/rserve
-      - retry bin/neph r/rserve --mode=CI
+      - cd r/rserve && make build  -f .Makefile  && cd -
       - FRAMEWORK=r/rserve bundle exec rspec .spec
     - name: httpuv
       commands:
-      - mkdir -p .neph/r/httpuv
-      - retry bin/neph r/httpuv --mode=CI
+      - cd r/httpuv && make build  -f .Makefile  && cd -
       - FRAMEWORK=r/httpuv bundle exec rspec .spec
 - name: java
   dependencies:
   - setup
-  run:
-    when: change_in('/java/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools java/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -698,63 +645,55 @@ blocks:
     jobs:
     - name: light-4j
       commands:
-      - mkdir -p .neph/java/light-4j
-      - retry bin/neph java/light-4j --mode=CI
+      - cd java/light-4j && make build  -f .Makefile  && cd -
       - FRAMEWORK=java/light-4j bundle exec rspec .spec
     - name: jooby
       commands:
-      - mkdir -p .neph/java/jooby
-      - retry bin/neph java/jooby --mode=CI
+      - cd java/jooby && make build  -f .Makefile  && cd -
       - FRAMEWORK=java/jooby bundle exec rspec .spec
     - name: javalin
       commands:
-      - mkdir -p .neph/java/javalin
-      - retry bin/neph java/javalin --mode=CI
+      - cd java/javalin && make build  -f .Makefile  && cd -
       - FRAMEWORK=java/javalin bundle exec rspec .spec
     - name: act
       commands:
-      - mkdir -p .neph/java/act
-      - retry bin/neph java/act --mode=CI
+      - cd java/act && make build  -f .Makefile  && cd -
       - FRAMEWORK=java/act bundle exec rspec .spec
     - name: rapidoid
       commands:
-      - mkdir -p .neph/java/rapidoid
-      - retry bin/neph java/rapidoid --mode=CI
+      - cd java/rapidoid && make build  -f .Makefile  && cd -
       - FRAMEWORK=java/rapidoid bundle exec rspec .spec
     - name: blade
       commands:
-      - mkdir -p .neph/java/blade
-      - retry bin/neph java/blade --mode=CI
+      - cd java/blade && make build  -f .Makefile  && cd -
       - FRAMEWORK=java/blade bundle exec rspec .spec
     - name: struts2
       commands:
-      - mkdir -p .neph/java/struts2
-      - retry bin/neph java/struts2 --mode=CI
+      - cd java/struts2 && make build  -f .Makefile  && cd -
       - FRAMEWORK=java/struts2 bundle exec rspec .spec
     - name: spring-framework
       commands:
-      - mkdir -p .neph/java/spring-framework
-      - retry bin/neph java/spring-framework --mode=CI
+      - cd java/spring-framework && make build  -f .Makefile  && cd -
       - FRAMEWORK=java/spring-framework bundle exec rspec .spec
     - name: micronaut
       commands:
-      - mkdir -p .neph/java/micronaut
-      - retry bin/neph java/micronaut --mode=CI
+      - cd java/micronaut && make build  -f .Makefile  && cd -
       - FRAMEWORK=java/micronaut bundle exec rspec .spec
     - name: spring-boot
       commands:
-      - mkdir -p .neph/java/spring-boot
-      - retry bin/neph java/spring-boot --mode=CI
+      - cd java/spring-boot && make build  -f .Makefile  && cd -
       - FRAMEWORK=java/spring-boot bundle exec rspec .spec
 - name: kotlin
   dependencies:
   - setup
-  run:
-    when: change_in('/kotlin/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools kotlin/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -769,23 +708,23 @@ blocks:
     jobs:
     - name: kooby
       commands:
-      - mkdir -p .neph/kotlin/kooby
-      - retry bin/neph kotlin/kooby --mode=CI
+      - cd kotlin/kooby && make build  -f .Makefile  && cd -
       - FRAMEWORK=kotlin/kooby bundle exec rspec .spec
     - name: ktor
       commands:
-      - mkdir -p .neph/kotlin/ktor
-      - retry bin/neph kotlin/ktor --mode=CI
+      - cd kotlin/ktor && make build  -f .Makefile  && cd -
       - FRAMEWORK=kotlin/ktor bundle exec rspec .spec
 - name: crystal
   dependencies:
   - setup
-  run:
-    when: change_in('/crystal/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools crystal/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -800,68 +739,59 @@ blocks:
     jobs:
     - name: shivneri
       commands:
-      - mkdir -p .neph/crystal/shivneri
-      - retry bin/neph crystal/shivneri --mode=CI
+      - cd crystal/shivneri && make build  -f .Makefile  && cd -
       - FRAMEWORK=crystal/shivneri bundle exec rspec .spec
     - name: lucky
       commands:
-      - mkdir -p .neph/crystal/lucky
-      - retry bin/neph crystal/lucky --mode=CI
+      - cd crystal/lucky && make build  -f .Makefile  && cd -
       - FRAMEWORK=crystal/lucky bundle exec rspec .spec
     - name: orion
       commands:
-      - mkdir -p .neph/crystal/orion
-      - retry bin/neph crystal/orion --mode=CI
+      - cd crystal/orion && make build  -f .Makefile  && cd -
       - FRAMEWORK=crystal/orion bundle exec rspec .spec
     - name: amber
       commands:
-      - mkdir -p .neph/crystal/amber
-      - retry bin/neph crystal/amber --mode=CI
+      - cd crystal/amber && make build  -f .Makefile  && cd -
       - FRAMEWORK=crystal/amber bundle exec rspec .spec
     - name: router.cr
       commands:
-      - mkdir -p .neph/crystal/router.cr
-      - retry bin/neph crystal/router.cr --mode=CI
+      - cd crystal/router.cr && make build  -f .Makefile  && cd -
       - FRAMEWORK=crystal/router.cr bundle exec rspec .spec
     - name: runcobo
       commands:
-      - mkdir -p .neph/crystal/runcobo
-      - retry bin/neph crystal/runcobo --mode=CI
+      - cd crystal/runcobo && make build  -f .Makefile  && cd -
       - FRAMEWORK=crystal/runcobo bundle exec rspec .spec
     - name: toro
       commands:
-      - mkdir -p .neph/crystal/toro
-      - retry bin/neph crystal/toro --mode=CI
+      - cd crystal/toro && make build  -f .Makefile  && cd -
       - FRAMEWORK=crystal/toro bundle exec rspec .spec
     - name: spider-gazelle
       commands:
-      - mkdir -p .neph/crystal/spider-gazelle
-      - retry bin/neph crystal/spider-gazelle --mode=CI
+      - cd crystal/spider-gazelle && make build  -f .Makefile  && cd -
       - FRAMEWORK=crystal/spider-gazelle bundle exec rspec .spec
     - name: grip
       commands:
-      - mkdir -p .neph/crystal/grip
-      - retry bin/neph crystal/grip --mode=CI
+      - cd crystal/grip && make build  -f .Makefile  && cd -
       - FRAMEWORK=crystal/grip bundle exec rspec .spec
     - name: kemal
       commands:
-      - mkdir -p .neph/crystal/kemal
-      - retry bin/neph crystal/kemal --mode=CI
+      - cd crystal/kemal && make build  -f .Makefile  && cd -
       - FRAMEWORK=crystal/kemal bundle exec rspec .spec
     - name: athena
       commands:
-      - mkdir -p .neph/crystal/athena
-      - retry bin/neph crystal/athena --mode=CI
+      - cd crystal/athena && make build  -f .Makefile  && cd -
       - FRAMEWORK=crystal/athena bundle exec rspec .spec
 - name: haskell
   dependencies:
   - setup
-  run:
-    when: change_in('/haskell/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools haskell/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -876,23 +806,23 @@ blocks:
     jobs:
     - name: scotty
       commands:
-      - mkdir -p .neph/haskell/scotty
-      - retry bin/neph haskell/scotty --mode=CI
+      - cd haskell/scotty && make build  -f .Makefile  && cd -
       - FRAMEWORK=haskell/scotty bundle exec rspec .spec
     - name: servant
       commands:
-      - mkdir -p .neph/haskell/servant
-      - retry bin/neph haskell/servant --mode=CI
+      - cd haskell/servant && make build  -f .Makefile  && cd -
       - FRAMEWORK=haskell/servant bundle exec rspec .spec
 - name: php
   dependencies:
   - setup
-  run:
-    when: change_in('/php/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools php/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -907,213 +837,175 @@ blocks:
     jobs:
     - name: slim-swoole
       commands:
-      - mkdir -p .neph/php/slim-swoole
-      - retry bin/neph php/slim-swoole --mode=CI
+      - cd php/slim-swoole && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/slim-swoole bundle exec rspec .spec
     - name: chubbyphp-swoole
       commands:
-      - mkdir -p .neph/php/chubbyphp-swoole
-      - retry bin/neph php/chubbyphp-swoole --mode=CI
+      - cd php/chubbyphp-swoole && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/chubbyphp-swoole bundle exec rspec .spec
     - name: sunrise-router-roadrunner
       commands:
-      - mkdir -p .neph/php/sunrise-router-roadrunner
-      - retry bin/neph php/sunrise-router-roadrunner --mode=CI
+      - cd php/sunrise-router-roadrunner && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/sunrise-router-roadrunner bundle exec rspec .spec
     - name: slim-roadrunner
       commands:
-      - mkdir -p .neph/php/slim-roadrunner
-      - retry bin/neph php/slim-roadrunner --mode=CI
+      - cd php/slim-roadrunner && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/slim-roadrunner bundle exec rspec .spec
     - name: swoft
       commands:
-      - mkdir -p .neph/php/swoft
-      - retry bin/neph php/swoft --mode=CI
+      - cd php/swoft && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/swoft bundle exec rspec .spec
     - name: simps
       commands:
-      - mkdir -p .neph/php/simps
-      - retry bin/neph php/simps --mode=CI
+      - cd php/simps && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/simps bundle exec rspec .spec
     - name: nano
       commands:
-      - mkdir -p .neph/php/nano
-      - retry bin/neph php/nano --mode=CI
+      - cd php/nano && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/nano bundle exec rspec .spec
     - name: codeigniter4
       commands:
-      - mkdir -p .neph/php/codeigniter4
-      - retry bin/neph php/codeigniter4 --mode=CI
+      - cd php/codeigniter4 && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/codeigniter4 bundle exec rspec .spec
     - name: yii
       commands:
-      - mkdir -p .neph/php/yii
-      - retry bin/neph php/yii --mode=CI
+      - cd php/yii && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/yii bundle exec rspec .spec
     - name: phalcon
       commands:
-      - mkdir -p .neph/php/phalcon
-      - retry bin/neph php/phalcon --mode=CI
+      - cd php/phalcon && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/phalcon bundle exec rspec .spec
     - name: one-fpm
       commands:
-      - mkdir -p .neph/php/one-fpm
-      - retry bin/neph php/one-fpm --mode=CI
+      - cd php/one-fpm && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/one-fpm bundle exec rspec .spec
     - name: ice
       commands:
-      - mkdir -p .neph/php/ice
-      - retry bin/neph php/ice --mode=CI
+      - cd php/ice && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/ice bundle exec rspec .spec
     - name: spiral
       commands:
-      - mkdir -p .neph/php/spiral
-      - retry bin/neph php/spiral --mode=CI
+      - cd php/spiral && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/spiral bundle exec rspec .spec
     - name: mark
       commands:
-      - mkdir -p .neph/php/mark
-      - retry bin/neph php/mark --mode=CI
+      - cd php/mark && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/mark bundle exec rspec .spec
     - name: siler-swoole
       commands:
-      - mkdir -p .neph/php/siler-swoole
-      - retry bin/neph php/siler-swoole --mode=CI
+      - cd php/siler-swoole && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/siler-swoole bundle exec rspec .spec
     - name: workerman
       commands:
-      - mkdir -p .neph/php/workerman
-      - retry bin/neph php/workerman --mode=CI
+      - cd php/workerman && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/workerman bundle exec rspec .spec
     - name: chubbyphp-roadrunner
       commands:
-      - mkdir -p .neph/php/chubbyphp-roadrunner
-      - retry bin/neph php/chubbyphp-roadrunner --mode=CI
+      - cd php/chubbyphp-roadrunner && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/chubbyphp-roadrunner bundle exec rspec .spec
     - name: nette
       commands:
-      - mkdir -p .neph/php/nette
-      - retry bin/neph php/nette --mode=CI
+      - cd php/nette && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/nette bundle exec rspec .spec
     - name: sw-fw-less
       commands:
-      - mkdir -p .neph/php/sw-fw-less
-      - retry bin/neph php/sw-fw-less --mode=CI
+      - cd php/sw-fw-less && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/sw-fw-less bundle exec rspec .spec
     - name: laminas
       commands:
-      - mkdir -p .neph/php/laminas
-      - retry bin/neph php/laminas --mode=CI
+      - cd php/laminas && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/laminas bundle exec rspec .spec
     - name: chubbyphp
       commands:
-      - mkdir -p .neph/php/chubbyphp
-      - retry bin/neph php/chubbyphp --mode=CI
+      - cd php/chubbyphp && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/chubbyphp bundle exec rspec .spec
     - name: imi
       commands:
-      - mkdir -p .neph/php/imi
-      - retry bin/neph php/imi --mode=CI
+      - cd php/imi && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/imi bundle exec rspec .spec
     - name: basicphp
       commands:
-      - mkdir -p .neph/php/basicphp
-      - retry bin/neph php/basicphp --mode=CI
+      - cd php/basicphp && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/basicphp bundle exec rspec .spec
     - name: comet
       commands:
-      - mkdir -p .neph/php/comet
-      - retry bin/neph php/comet --mode=CI
+      - cd php/comet && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/comet bundle exec rspec .spec
     - name: sunrise-router
       commands:
-      - mkdir -p .neph/php/sunrise-router
-      - retry bin/neph php/sunrise-router --mode=CI
+      - cd php/sunrise-router && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/sunrise-router bundle exec rspec .spec
     - name: ubiquity
       commands:
-      - mkdir -p .neph/php/ubiquity
-      - retry bin/neph php/ubiquity --mode=CI
+      - cd php/ubiquity && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/ubiquity bundle exec rspec .spec
     - name: one
       commands:
-      - mkdir -p .neph/php/one
-      - retry bin/neph php/one --mode=CI
+      - cd php/one && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/one bundle exec rspec .spec
     - name: mezzio
       commands:
-      - mkdir -p .neph/php/mezzio
-      - retry bin/neph php/mezzio --mode=CI
+      - cd php/mezzio && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/mezzio bundle exec rspec .spec
     - name: lumen
       commands:
-      - mkdir -p .neph/php/lumen
-      - retry bin/neph php/lumen --mode=CI
+      - cd php/lumen && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/lumen bundle exec rspec .spec
     - name: siler
       commands:
-      - mkdir -p .neph/php/siler
-      - retry bin/neph php/siler --mode=CI
+      - cd php/siler && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/siler bundle exec rspec .spec
     - name: fastsitephp
       commands:
-      - mkdir -p .neph/php/fastsitephp
-      - retry bin/neph php/fastsitephp --mode=CI
+      - cd php/fastsitephp && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/fastsitephp bundle exec rspec .spec
     - name: bearframework
       commands:
-      - mkdir -p .neph/php/bearframework
-      - retry bin/neph php/bearframework --mode=CI
+      - cd php/bearframework && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/bearframework bundle exec rspec .spec
     - name: hamlet
       commands:
-      - mkdir -p .neph/php/hamlet
-      - retry bin/neph php/hamlet --mode=CI
+      - cd php/hamlet && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/hamlet bundle exec rspec .spec
     - name: symfony
       commands:
-      - mkdir -p .neph/php/symfony
-      - retry bin/neph php/symfony --mode=CI
+      - cd php/symfony && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/symfony bundle exec rspec .spec
     - name: slim
       commands:
-      - mkdir -p .neph/php/slim
-      - retry bin/neph php/slim --mode=CI
+      - cd php/slim && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/slim bundle exec rspec .spec
     - name: chubbyphp-workerman
       commands:
-      - mkdir -p .neph/php/chubbyphp-workerman
-      - retry bin/neph php/chubbyphp-workerman --mode=CI
+      - cd php/chubbyphp-workerman && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/chubbyphp-workerman bundle exec rspec .spec
     - name: sunrise-router-annotations
       commands:
-      - mkdir -p .neph/php/sunrise-router-annotations
-      - retry bin/neph php/sunrise-router-annotations --mode=CI
+      - cd php/sunrise-router-annotations && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/sunrise-router-annotations bundle exec rspec .spec
     - name: yii-swoole
       commands:
-      - mkdir -p .neph/php/yii-swoole
-      - retry bin/neph php/yii-swoole --mode=CI
+      - cd php/yii-swoole && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/yii-swoole bundle exec rspec .spec
     - name: laravel
       commands:
-      - mkdir -p .neph/php/laravel
-      - retry bin/neph php/laravel --mode=CI
+      - cd php/laravel && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/laravel bundle exec rspec .spec
     - name: hyperf
       commands:
-      - mkdir -p .neph/php/hyperf
-      - retry bin/neph php/hyperf --mode=CI
+      - cd php/hyperf && make build  -f .Makefile  && cd -
       - FRAMEWORK=php/hyperf bundle exec rspec .spec
 - name: scala
   dependencies:
   - setup
-  run:
-    when: change_in('/scala/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools scala/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1128,28 +1020,27 @@ blocks:
     jobs:
     - name: akkahttp
       commands:
-      - mkdir -p .neph/scala/akkahttp
-      - retry bin/neph scala/akkahttp --mode=CI
+      - cd scala/akkahttp && make build  -f .Makefile  && cd -
       - FRAMEWORK=scala/akkahttp bundle exec rspec .spec
     - name: play
       commands:
-      - mkdir -p .neph/scala/play
-      - retry bin/neph scala/play --mode=CI
+      - cd scala/play && make build  -f .Makefile  && cd -
       - FRAMEWORK=scala/play bundle exec rspec .spec
     - name: http4s
       commands:
-      - mkdir -p .neph/scala/http4s
-      - retry bin/neph scala/http4s --mode=CI
+      - cd scala/http4s && make build  -f .Makefile  && cd -
       - FRAMEWORK=scala/http4s bundle exec rspec .spec
 - name: cpp
   dependencies:
   - setup
-  run:
-    when: change_in('/cpp/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools cpp/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1164,23 +1055,23 @@ blocks:
     jobs:
     - name: drogon
       commands:
-      - mkdir -p .neph/cpp/drogon
-      - retry bin/neph cpp/drogon --mode=CI
+      - cd cpp/drogon && make build  -f .Makefile  && cd -
       - FRAMEWORK=cpp/drogon bundle exec rspec .spec
     - name: evhtp
       commands:
-      - mkdir -p .neph/cpp/evhtp
-      - retry bin/neph cpp/evhtp --mode=CI
+      - cd cpp/evhtp && make build  -f .Makefile  && cd -
       - FRAMEWORK=cpp/evhtp bundle exec rspec .spec
 - name: swift
   dependencies:
   - setup
-  run:
-    when: change_in('/swift/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools swift/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1195,38 +1086,35 @@ blocks:
     jobs:
     - name: swifter-framework
       commands:
-      - mkdir -p .neph/swift/swifter-framework
-      - retry bin/neph swift/swifter-framework --mode=CI
+      - cd swift/swifter-framework && make build  -f .Makefile  && cd -
       - FRAMEWORK=swift/swifter-framework bundle exec rspec .spec
     - name: perfect
       commands:
-      - mkdir -p .neph/swift/perfect
-      - retry bin/neph swift/perfect --mode=CI
+      - cd swift/perfect && make build  -f .Makefile  && cd -
       - FRAMEWORK=swift/perfect bundle exec rspec .spec
     - name: kitura-nio
       commands:
-      - mkdir -p .neph/swift/kitura-nio
-      - retry bin/neph swift/kitura-nio --mode=CI
+      - cd swift/kitura-nio && make build  -f .Makefile  && cd -
       - FRAMEWORK=swift/kitura-nio bundle exec rspec .spec
     - name: vapor-framework
       commands:
-      - mkdir -p .neph/swift/vapor-framework
-      - retry bin/neph swift/vapor-framework --mode=CI
+      - cd swift/vapor-framework && make build  -f .Makefile  && cd -
       - FRAMEWORK=swift/vapor-framework bundle exec rspec .spec
     - name: kitura
       commands:
-      - mkdir -p .neph/swift/kitura
-      - retry bin/neph swift/kitura --mode=CI
+      - cd swift/kitura && make build  -f .Makefile  && cd -
       - FRAMEWORK=swift/kitura bundle exec rspec .spec
 - name: csharp
   dependencies:
   - setup
-  run:
-    when: change_in('/csharp/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools csharp/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1241,28 +1129,27 @@ blocks:
     jobs:
     - name: aspnetcore
       commands:
-      - mkdir -p .neph/csharp/aspnetcore
-      - retry bin/neph csharp/aspnetcore --mode=CI
+      - cd csharp/aspnetcore && make build  -f .Makefile  && cd -
       - FRAMEWORK=csharp/aspnetcore bundle exec rspec .spec
     - name: carter
       commands:
-      - mkdir -p .neph/csharp/carter
-      - retry bin/neph csharp/carter --mode=CI
+      - cd csharp/carter && make build  -f .Makefile  && cd -
       - FRAMEWORK=csharp/carter bundle exec rspec .spec
     - name: simplify.web
       commands:
-      - mkdir -p .neph/csharp/simplify.web
-      - retry bin/neph csharp/simplify.web --mode=CI
+      - cd csharp/simplify.web && make build  -f .Makefile  && cd -
       - FRAMEWORK=csharp/simplify.web bundle exec rspec .spec
 - name: julia
   dependencies:
   - setup
-  run:
-    when: change_in('/julia/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools julia/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1277,18 +1164,19 @@ blocks:
     jobs:
     - name: merly
       commands:
-      - mkdir -p .neph/julia/merly
-      - retry bin/neph julia/merly --mode=CI
+      - cd julia/merly && make build  -f .Makefile  && cd -
       - FRAMEWORK=julia/merly bundle exec rspec .spec
 - name: javascript
   dependencies:
   - setup
-  run:
-    when: change_in('/javascript/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools javascript/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1303,133 +1191,111 @@ blocks:
     jobs:
     - name: moleculer
       commands:
-      - mkdir -p .neph/javascript/moleculer
-      - retry bin/neph javascript/moleculer --mode=CI
+      - cd javascript/moleculer && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/moleculer bundle exec rspec .spec
     - name: polka
       commands:
-      - mkdir -p .neph/javascript/polka
-      - retry bin/neph javascript/polka --mode=CI
+      - cd javascript/polka && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/polka bundle exec rspec .spec
     - name: foxify
       commands:
-      - mkdir -p .neph/javascript/foxify
-      - retry bin/neph javascript/foxify --mode=CI
+      - cd javascript/foxify && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/foxify bundle exec rspec .spec
     - name: 0http
       commands:
-      - mkdir -p .neph/javascript/0http
-      - retry bin/neph javascript/0http --mode=CI
+      - cd javascript/0http && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/0http bundle exec rspec .spec
     - name: sifrr
       commands:
-      - mkdir -p .neph/javascript/sifrr
-      - retry bin/neph javascript/sifrr --mode=CI
+      - cd javascript/sifrr && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/sifrr bundle exec rspec .spec
     - name: nestjs-fastify
       commands:
-      - mkdir -p .neph/javascript/nestjs-fastify
-      - retry bin/neph javascript/nestjs-fastify --mode=CI
+      - cd javascript/nestjs-fastify && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/nestjs-fastify bundle exec rspec .spec
     - name: fyrejet-api
       commands:
-      - mkdir -p .neph/javascript/fyrejet-api
-      - retry bin/neph javascript/fyrejet-api --mode=CI
+      - cd javascript/fyrejet-api && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/fyrejet-api bundle exec rspec .spec
     - name: restana
       commands:
-      - mkdir -p .neph/javascript/restana
-      - retry bin/neph javascript/restana --mode=CI
+      - cd javascript/restana && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/restana bundle exec rspec .spec
     - name: express
       commands:
-      - mkdir -p .neph/javascript/express
-      - retry bin/neph javascript/express --mode=CI
+      - cd javascript/express && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/express bundle exec rspec .spec
     - name: hapi
       commands:
-      - mkdir -p .neph/javascript/hapi
-      - retry bin/neph javascript/hapi --mode=CI
+      - cd javascript/hapi && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/hapi bundle exec rspec .spec
     - name: muneem
       commands:
-      - mkdir -p .neph/javascript/muneem
-      - retry bin/neph javascript/muneem --mode=CI
+      - cd javascript/muneem && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/muneem bundle exec rspec .spec
     - name: turbo_polka
       commands:
-      - mkdir -p .neph/javascript/turbo_polka
-      - retry bin/neph javascript/turbo_polka --mode=CI
+      - cd javascript/turbo_polka && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/turbo_polka bundle exec rspec .spec
     - name: fyrejet-uwebsockets
       commands:
-      - mkdir -p .neph/javascript/fyrejet-uwebsockets
-      - retry bin/neph javascript/fyrejet-uwebsockets --mode=CI
+      - cd javascript/fyrejet-uwebsockets && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/fyrejet-uwebsockets bundle exec rspec .spec
     - name: fyrejet
       commands:
-      - mkdir -p .neph/javascript/fyrejet
-      - retry bin/neph javascript/fyrejet --mode=CI
+      - cd javascript/fyrejet && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/fyrejet bundle exec rspec .spec
     - name: feathersjs
       commands:
-      - mkdir -p .neph/javascript/feathersjs
-      - retry bin/neph javascript/feathersjs --mode=CI
+      - cd javascript/feathersjs && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/feathersjs bundle exec rspec .spec
     - name: iotjs-express
       commands:
-      - mkdir -p .neph/javascript/iotjs-express
-      - retry bin/neph javascript/iotjs-express --mode=CI
+      - cd javascript/iotjs-express && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/iotjs-express bundle exec rspec .spec
     - name: nestjs-express
       commands:
-      - mkdir -p .neph/javascript/nestjs-express
-      - retry bin/neph javascript/nestjs-express --mode=CI
+      - cd javascript/nestjs-express && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/nestjs-express bundle exec rspec .spec
     - name: restify
       commands:
-      - mkdir -p .neph/javascript/restify
-      - retry bin/neph javascript/restify --mode=CI
+      - cd javascript/restify && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/restify bundle exec rspec .spec
     - name: polkadot
       commands:
-      - mkdir -p .neph/javascript/polkadot
-      - retry bin/neph javascript/polkadot --mode=CI
+      - cd javascript/polkadot && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/polkadot bundle exec rspec .spec
     - name: rayo
       commands:
-      - mkdir -p .neph/javascript/rayo
-      - retry bin/neph javascript/rayo --mode=CI
+      - cd javascript/rayo && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/rayo bundle exec rspec .spec
     - name: naturaljs-router
       commands:
-      - mkdir -p .neph/javascript/naturaljs-router
-      - retry bin/neph javascript/naturaljs-router --mode=CI
+      - cd javascript/naturaljs-router && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/naturaljs-router bundle exec rspec .spec
     - name: sails
       commands:
-      - mkdir -p .neph/javascript/sails
-      - retry bin/neph javascript/sails --mode=CI
+      - cd javascript/sails && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/sails bundle exec rspec .spec
     - name: fastify
       commands:
-      - mkdir -p .neph/javascript/fastify
-      - retry bin/neph javascript/fastify --mode=CI
+      - cd javascript/fastify && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/fastify bundle exec rspec .spec
     - name: koa
       commands:
-      - mkdir -p .neph/javascript/koa
-      - retry bin/neph javascript/koa --mode=CI
+      - cd javascript/koa && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/koa bundle exec rspec .spec
 - name: c
   dependencies:
   - setup
-  run:
-    when: change_in('/c/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools c/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1444,23 +1310,23 @@ blocks:
     jobs:
     - name: kore
       commands:
-      - mkdir -p .neph/c/kore
-      - retry bin/neph c/kore --mode=CI
+      - cd c/kore && make build  -f .Makefile  && cd -
       - FRAMEWORK=c/kore bundle exec rspec .spec
     - name: agoo-c
       commands:
-      - mkdir -p .neph/c/agoo-c
-      - retry bin/neph c/agoo-c --mode=CI
+      - cd c/agoo-c && make build  -f .Makefile  && cd -
       - FRAMEWORK=c/agoo-c bundle exec rspec .spec
 - name: v
   dependencies:
   - setup
-  run:
-    when: change_in('/v/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools v/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1475,18 +1341,19 @@ blocks:
     jobs:
     - name: vape
       commands:
-      - mkdir -p .neph/v/vape
-      - retry bin/neph v/vape --mode=CI
+      - cd v/vape && make build  -f .Makefile  && cd -
       - FRAMEWORK=v/vape bundle exec rspec .spec
 - name: ruby
   dependencies:
   - setup
-  run:
-    when: change_in('/ruby/')
   task:
     prologue:
       commands:
+      - mkdir $SEMAPHORE_GIT_DIR
+      - cd $SEMAPHORE_GIT_DIR
       - cache restore $SEMAPHORE_GIT_SHA
+      - git sparse-checkout set tools ruby/ Rakefile Gemfile .spec
+      - checkout::switch_revision
       - cache restore bin
       - cache restore built-in
       - find bin -type f -exec chmod +x {} \;
@@ -1501,71 +1368,57 @@ blocks:
     jobs:
     - name: syro
       commands:
-      - mkdir -p .neph/ruby/syro
-      - retry bin/neph ruby/syro --mode=CI
+      - cd ruby/syro && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/syro bundle exec rspec .spec
     - name: sinatra
       commands:
-      - mkdir -p .neph/ruby/sinatra
-      - retry bin/neph ruby/sinatra --mode=CI
+      - cd ruby/sinatra && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/sinatra bundle exec rspec .spec
     - name: rack_app
       commands:
-      - mkdir -p .neph/ruby/rack_app
-      - retry bin/neph ruby/rack_app --mode=CI
+      - cd ruby/rack_app && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/rack_app bundle exec rspec .spec
     - name: camping
       commands:
-      - mkdir -p .neph/ruby/camping
-      - retry bin/neph ruby/camping --mode=CI
+      - cd ruby/camping && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/camping bundle exec rspec .spec
     - name: roda
       commands:
-      - mkdir -p .neph/ruby/roda
-      - retry bin/neph ruby/roda --mode=CI
+      - cd ruby/roda && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/roda bundle exec rspec .spec
     - name: agoo
       commands:
-      - mkdir -p .neph/ruby/agoo
-      - retry bin/neph ruby/agoo --mode=CI
+      - cd ruby/agoo && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/agoo bundle exec rspec .spec
     - name: rack-routing
       commands:
-      - mkdir -p .neph/ruby/rack-routing
-      - retry bin/neph ruby/rack-routing --mode=CI
+      - cd ruby/rack-routing && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/rack-routing bundle exec rspec .spec
     - name: hanami
       commands:
-      - mkdir -p .neph/ruby/hanami
-      - retry bin/neph ruby/hanami --mode=CI
+      - cd ruby/hanami && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/hanami bundle exec rspec .spec
     - name: flame
       commands:
-      - mkdir -p .neph/ruby/flame
-      - retry bin/neph ruby/flame --mode=CI
+      - cd ruby/flame && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/flame bundle exec rspec .spec
     - name: hanami-api
       commands:
-      - mkdir -p .neph/ruby/hanami-api
-      - retry bin/neph ruby/hanami-api --mode=CI
+      - cd ruby/hanami-api && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/hanami-api bundle exec rspec .spec
     - name: pakyow
       commands:
-      - mkdir -p .neph/ruby/pakyow
-      - retry bin/neph ruby/pakyow --mode=CI
+      - cd ruby/pakyow && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/pakyow bundle exec rspec .spec
     - name: grape
       commands:
-      - mkdir -p .neph/ruby/grape
-      - retry bin/neph ruby/grape --mode=CI
+      - cd ruby/grape && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/grape bundle exec rspec .spec
     - name: cuba
       commands:
-      - mkdir -p .neph/ruby/cuba
-      - retry bin/neph ruby/cuba --mode=CI
+      - cd ruby/cuba && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/cuba bundle exec rspec .spec
     - name: rails
       commands:
-      - mkdir -p .neph/ruby/rails
-      - retry bin/neph ruby/rails --mode=CI
+      - cd ruby/rails && make build  -f .Makefile  && cd -
       - FRAMEWORK=ruby/rails bundle exec rspec .spec
