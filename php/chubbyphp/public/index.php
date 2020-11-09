@@ -12,8 +12,8 @@ use Chubbyphp\Framework\RequestHandler\CallbackRequestHandler;
 use Chubbyphp\Framework\Router\FastRoute\Router;
 use Chubbyphp\Framework\Router\Route;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Psr7\Factory\ResponseFactory;
-use Slim\Psr7\Factory\ServerRequestFactory;
+use Sunrise\Http\Message\ResponseFactory;
+use Sunrise\Http\ServerRequest\ServerRequestFactory;
 
 $loader = require __DIR__.'/../vendor/autoload.php';
 

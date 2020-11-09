@@ -15,10 +15,10 @@ use Chubbyphp\SwooleRequestHandler\OnRequest;
 use Chubbyphp\SwooleRequestHandler\PsrRequestFactory;
 use Chubbyphp\SwooleRequestHandler\SwooleResponseEmitter;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Psr7\Factory\ResponseFactory;
-use Slim\Psr7\Factory\ServerRequestFactory;
-use Slim\Psr7\Factory\StreamFactory;
-use Slim\Psr7\Factory\UploadedFileFactory;
+use Sunrise\Http\Message\ResponseFactory;
+use Sunrise\Http\Message\StreamFactory;
+use Sunrise\Http\ServerRequest\ServerRequestFactory;
+use Sunrise\Http\ServerRequest\UploadedFileFactory;
 use Swoole\Http\Server;
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
