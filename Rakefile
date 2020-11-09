@@ -363,8 +363,7 @@ namespace :ci do
           'cache store bin bin',
           'bundle config path .cache',
           'bundle install',
-          'cache store built-in .cache',
-          'bundle exec rake config'
+          'cache store built-in .cache'
         ]
       }]
     } }]

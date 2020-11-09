@@ -27,7 +27,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - cache store built-in .cache
-      - bundle exec rake config
 - name: pony
   dependencies:
   - setup
