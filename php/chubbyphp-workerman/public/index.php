@@ -15,10 +15,10 @@ use Chubbyphp\WorkermanRequestHandler\OnMessage;
 use Chubbyphp\WorkermanRequestHandler\PsrRequestFactory;
 use Chubbyphp\WorkermanRequestHandler\WorkermanResponseEmitter;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Psr7\Factory\ResponseFactory;
-use Slim\Psr7\Factory\ServerRequestFactory;
-use Slim\Psr7\Factory\StreamFactory;
-use Slim\Psr7\Factory\UploadedFileFactory;
+use Sunrise\Http\Message\ResponseFactory;
+use Sunrise\Http\Message\StreamFactory;
+use Sunrise\Http\ServerRequest\ServerRequestFactory;
+use Sunrise\Http\ServerRequest\UploadedFileFactory;
 use Workerman\Worker;
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
