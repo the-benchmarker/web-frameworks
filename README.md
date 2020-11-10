@@ -60,7 +60,7 @@ shards build
 
 ~~~sh
 createdb -U postgres benchmark
-psql -U postgres -d benchmark < .ci/dump.sql
+psql -U postgres -d benchmark < dump.sql
 ~~~
 
 Docker can be used to set up the database:
@@ -77,7 +77,7 @@ docker run -it --rm -d \
 Wait several seconds for the container to start, then inject the dump:
 
 ~~~sh
-docker exec pg sh -c "echo \"$(cat .ci/dump.sql)\" | psql -U postgres -d benchmark"
+docker exec pg sh -c "echo \"$(cat dump.sql)\" | psql -U postgres -d benchmark"
 ~~~
 
 After creating the database, export its URL:
