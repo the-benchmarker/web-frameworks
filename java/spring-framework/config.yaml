@@ -7,9 +7,9 @@ build:
 
 binaries:
   - target/benchmark-1.0.0.war
-  - target/benchmark-1.0.0/WEB-INF/lib/jetty-runner-9.4.30.v20200611.jar
+  - target/benchmark-1.0.0/WEB-INF/lib/jetty-runner-9.4.34.v20201102.jar
 
 command: >
   java 
   -XX:+UseNUMA -XX:+UseParallelGC 
-  -jar target/benchmark-1.0.0/WEB-INF/lib/jetty-runner-9.4.30.v20200611.jar --port 3000 target/benchmark-1.0.0.war
+  -jar target/benchmark-1.0.0/WEB-INF/lib/jetty-runner-9.4.34.v20201102.jar --port 3000 target/benchmark-1.0.0.war

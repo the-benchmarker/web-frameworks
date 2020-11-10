@@ -1,4 +1,4 @@
-FROM fsharp:10.7-netcore AS build
+FROM fsharp:10.10-netcore AS build
 
 WORKDIR /usr/src/app
 

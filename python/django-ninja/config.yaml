@@ -1,0 +1,12 @@
+framework:
+  website: django-ninja.rest-framework.com
+  version: 0.8
+  
+command: >
+  gunicorn \
+    --log-level warning  \
+    --bind 0.0.0.0:3000  \
+    --reuse-port  \
+    --workers $(nproc)  \
+    --worker-class uvicorn.workers.UvicornWorker  \
+      app.asgi:application

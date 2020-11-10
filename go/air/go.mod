@@ -1,3 +1,3 @@
 module main
 
-require github.com/aofei/air v0.19.2
+require github.com/aofei/air v0.20.0
