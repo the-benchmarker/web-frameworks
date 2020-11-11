@@ -16,9 +16,9 @@ use Chubbyphp\SwooleRequestHandler\PsrRequestFactory;
 use Chubbyphp\SwooleRequestHandler\SwooleResponseEmitter;
 use Psr\Http\Message\ServerRequestInterface;
 use Sunrise\Http\Message\ResponseFactory;
-use Sunrise\Http\Message\StreamFactory;
 use Sunrise\Http\ServerRequest\ServerRequestFactory;
 use Sunrise\Http\ServerRequest\UploadedFileFactory;
+use Sunrise\Stream\StreamFactory;
 use Swoole\Http\Server;
 
 $loader = require __DIR__ . '/../vendor/autoload.php';

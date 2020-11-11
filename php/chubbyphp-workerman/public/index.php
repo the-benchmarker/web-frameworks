@@ -16,9 +16,9 @@ use Chubbyphp\WorkermanRequestHandler\PsrRequestFactory;
 use Chubbyphp\WorkermanRequestHandler\WorkermanResponseEmitter;
 use Psr\Http\Message\ServerRequestInterface;
 use Sunrise\Http\Message\ResponseFactory;
-use Sunrise\Http\Message\StreamFactory;
 use Sunrise\Http\ServerRequest\ServerRequestFactory;
 use Sunrise\Http\ServerRequest\UploadedFileFactory;
+use Sunrise\Stream\StreamFactory;
 use Workerman\Worker;
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
