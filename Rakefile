@@ -36,6 +36,7 @@ def default_provider
 end
 
 def commands_for(language, framework, **options)
+  commands = {build: [], collect: [], clean: []}
   config = YAML.safe_load(File.read('config.yaml'))
 
   directory = File.dirname(options[:path])
@@ -51,8 +52,6 @@ def commands_for(language, framework, **options)
     options[key] = value unless options.key?(key)
   end
 
-  commands = []
-
   # Compile first, only for non containers
 
   if app_config.key?('binaries') && !(options[:provider].start_with?('docker') || options[:provider].start_with?('podman'))
@@ -61,42 +60,41 @@ def commands_for(language, framework, **options)
     app_config['binaries'].each do |out|
       if out.count(File::Separator).positive?
         FileUtils.mkdir_p(File.join(directory, File.dirname(out)))
-        commands << "docker cp `cat cid.txt`:/opt/web/#{File.dirname(out)} ."
+        commands[:build] << "docker cp `cat cid.txt`:/opt/web/#{File.dirname(out)} ."
       else
-        commands << "docker cp `cat cid.txt`:/opt/web/#{out} #{out}"
+        commands[:build] << "docker cp `cat cid.txt`:/opt/web/#{out} #{out}"
       end
     end
   end
 
   config['providers'][options[:provider]]['build'].each do |cmd|
-    commands << Mustache.render(cmd, options.merge!(manifest: MANIFESTS[:container])).to_s
+    commands[:build] << Mustache.render(cmd, options.merge!(manifest: MANIFESTS[:container])).to_s
   end
 
   config['providers'][options[:provider]]['metadata'].each do |cmd|
-    commands << Mustache.render(cmd, options).to_s
+    commands[:build] << Mustache.render(cmd, options).to_s
   end
 
   if app_config.key?('bootstrap') && config['providers'][options[:provider]].key?('exec')
     remote_command = config['providers'][options[:provider]]['exec']
     app_config['bootstrap'].each do |cmd|
-      commands << Mustache.render(remote_command, options.merge!(command: cmd)).to_s
+      commands[:build] << Mustache.render(remote_command, options.merge!(command: cmd)).to_s
     end
   end
 
   if config['providers'][options[:provider]].key?('reboot')
     commands << config['providers'][options[:provider]].fetch('reboot')
-    commands << 'sleep 30'
+    commands[:build] << 'sleep 30'
   end
 
-  commands << 'curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
+  commands[:build] << 'curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
 
-  commands << "DATABASE_URL=#{ENV['DATABASE_URL']} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == 'off'
+  commands[:collect] << "DATABASE_URL=#{ENV['DATABASE_URL']} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == 'off'
 
-  unless options[:clean] == 'off'
     config['providers'][options[:provider]]['clean'].each do |cmd|
-      commands << Mustache.render(cmd, options).to_s
+      commands[:clean] << Mustache.render(cmd, options).to_s
     end
-  end
+    
 
   commands
 end
@@ -172,10 +170,14 @@ task :config do
 
     makefile = File.open(File.join(language, framework, MANIFESTS[:build]), 'w')
 
-    makefile.write("build:\n")
+   
 
-    commands_for(language, framework, provider: provider, clean: clean, sieger_options: sieger_options, path: path, collect: collect).each do |command|
+    commands_for(language, framework, provider: provider, clean: clean, sieger_options: sieger_options, path: path, collect: collect).each do |target, commands|
+      makefile.write("#{target}:\n")
+      commands.each do |command|
       makefile.write("\t #{command}\n")
+      end
+      makefile.write("\n")
     end
 
     makefile.close
@@ -374,14 +376,11 @@ namespace :ci do
         'bundle config path .cache',
         'bundle install',
         'bundle exec rake config'
-      ] }, 'env_vars': [
-        { name: 'CLEAN', value: 'off' },
-        { name: 'COLLECT', 'value': 'off' }
-      ], jobs: [] } }
+     ] ], jobs: [] } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
         block[:task][:jobs] << { name: framework, commands: [
-          "cd #{language}/#{framework} && make build  -f #{MANIFESTS[:build]}  && cd -",
+          "cd #{language}/#{framework} && make build -f #{MANIFESTS[:build]} && cd -",
           "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec"
         ] }
       end
