@@ -376,10 +376,7 @@ namespace :ci do
         'bundle config path .cache',
         'bundle install',
         'bundle exec rake config'
-      ] }, 'env_vars': [
-        { name: 'CLEAN', value: 'off' },
-        { name: 'COLLECT', 'value': 'off' }
-      ], jobs: [] } }
+      ] ], jobs: [] } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
         block[:task][:jobs] << { name: framework, commands: [
