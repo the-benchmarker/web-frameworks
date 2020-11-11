@@ -37,11 +37,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: jennet
       commands:
@@ -60,11 +55,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: chi
       commands:
@@ -187,11 +177,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: mike
       commands:
@@ -234,11 +219,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: flask
       commands:
@@ -361,11 +341,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: coast
       commands:
@@ -388,11 +363,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: cowboy
       commands:
@@ -423,11 +393,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: aqueduct
       commands:
@@ -450,11 +415,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: dancer2
       commands:
@@ -473,11 +433,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: gotham
       commands:
@@ -508,11 +463,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: giraffe
       commands:
@@ -551,11 +501,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: plumber
       commands:
@@ -586,11 +531,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: light-4j
       commands:
@@ -645,11 +585,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: kooby
       commands:
@@ -672,11 +607,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: shivneri
       commands:
@@ -735,11 +665,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: scotty
       commands:
@@ -762,11 +687,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: slim-swoole
       commands:
@@ -941,11 +861,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: akkahttp
       commands:
@@ -972,11 +887,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: drogon
       commands:
@@ -999,11 +909,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: swifter-framework
       commands:
@@ -1038,11 +943,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: aspnetcore
       commands:
@@ -1069,11 +969,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: merly
       commands:
@@ -1092,11 +987,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: moleculer
       commands:
@@ -1207,11 +1097,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: kore
       commands:
@@ -1234,11 +1119,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: vape
       commands:
@@ -1257,11 +1137,6 @@ blocks:
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
-    env_vars:
-    - name: CLEAN
-      value: 'off'
-    - name: COLLECT
-      value: 'off'
     jobs:
     - name: syro
       commands:
