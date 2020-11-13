@@ -1,29 +1,39 @@
 (ns server
   (:require
    [clojure.tools.logging :refer :all]
-   [yada.yada :refer [listener resource as-resource]]))
+   [yada.yada :as yada]))
+
+(def index
+  (yada/resource
+    {:methods
+     {:get
+      {:produces "text/plain"
+       :response ""}}}))
+
+(def user
+  (yada/resource
+    {:methods
+     {:post
+      {:produces "text/plain"
+       :response ""}}}))
+
+(def username
+  (yada/resource
+    {:methods
+     {:get
+      {:produces "text/plain"
+       :parameters {:path {:name String}}
+       :response
+       (fn [ctx]
+         (let [name (get-in ctx [:parameters :path :name])]
+           name))}}}))
 
 (def app
-  ["/" (resource
-        {:methods
-         {:get
-          {:produces "text/plain"
-           :response ""}}})
-   [["user" (resource
-             {:methods
-              {:post
-               {:produces "text/plain"
-                :response ""}}})
-     [[["/" :name] (resource
-                    {:parameters {:path {:name String}}
-                     :produces "text/plain"
-                     :methods
-                     {:get
-                      {:response
-                       (fn [ctx]
-                         (let [name (get-in ctx [:parameters :path :name])]
-                           name))}}})]]]
-    [true (as-resource nil)]]])
+  ["/"
+   [["" index]
+    [["/user"
+      [["" user]
+       ["/" :name] username]]]]]) 
 
 (defn -main [& [port]]
-  (listener app {:port port}))
+  (yada/listener app {:port port}))
