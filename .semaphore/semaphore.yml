@@ -375,6 +375,10 @@ blocks:
       commands:
       - cd clojure/luminus && make build  -f .Makefile  && cd -
       - FRAMEWORK=clojure/luminus bundle exec rspec .spec
+    - name: yada
+      commands:
+      - cd clojure/yada && make build  -f .Makefile  && cd -
+      - FRAMEWORK=clojure/yada bundle exec rspec .spec
 - name: elixir
   dependencies:
   - setup
