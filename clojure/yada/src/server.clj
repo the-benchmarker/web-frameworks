@@ -10,19 +10,19 @@
       {:produces "text/plain"
        :response ""}}}))
 
-(def user
+(def postuser
   (yada/resource
     {:methods
      {:post
       {:produces "text/plain"
        :response ""}}}))
 
-(def username
+(def getuser
   (yada/resource
-    {:methods
+    {:parameters {:path {:name String}}
+     :methods
      {:get
       {:produces "text/plain"
-       :parameters {:path {:name String}}
        :response
        (fn [ctx]
          (let [name (get-in ctx [:parameters :path :name])]
@@ -31,9 +31,9 @@
 (def app
   ["/"
    [["" index]
-    [["/user"
-      [["" user]
-       ["/" :name] username]]]]]) 
+    ["user"
+      [["" postuser]
+       ["/" :name] getuser]]]]) 
 
 (defn -main [& [port]]
   (yada/listener app {:port (Integer/parseInt port)}))
