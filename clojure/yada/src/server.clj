@@ -36,4 +36,4 @@
        ["/" :name] username]]]]]) 
 
 (defn -main [& [port]]
-  (yada/listener app {:port port}))
+  (yada/listener app {:port (Integer/parseInt port)}))
