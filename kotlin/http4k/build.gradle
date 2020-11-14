@@ -21,7 +21,7 @@ apply plugin: 'application'
 
 group 'benchmark'
 version '0.0.1'
-mainClassName = "org.http4k.benchmark.BenchmarkServer"
+mainClassName = "org.http4k.benchmark.BenchmarkServerKt"
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"
