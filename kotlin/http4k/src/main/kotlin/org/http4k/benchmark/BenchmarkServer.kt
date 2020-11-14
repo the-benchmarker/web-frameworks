@@ -11,7 +11,7 @@ import org.http4k.filter.ServerFilters.SetContentType
 import org.http4k.routing.bind
 import org.http4k.routing.path
 import org.http4k.routing.routes
-import org.http4k.server.Apache4Server
+import org.http4k.server.Undertow
 import org.http4k.server.asServer
 
 fun BenchmarkApp() = SetContentType(TEXT_PLAIN)
@@ -24,5 +24,5 @@ fun BenchmarkApp() = SetContentType(TEXT_PLAIN)
     )
 
 fun main() {
-    BenchmarkApp().asServer(Apache4Server(3000)).start()
+    BenchmarkApp().asServer(Undertow(3000)).start()
 }

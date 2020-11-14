@@ -27,7 +27,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"
     implementation platform("org.http4k:http4k-bom:${http4k_version}")
     implementation "org.http4k:http4k-core"
-    implementation "org.http4k:http4k-server-apache4"
+    implementation "org.http4k:http4k-server-undertow"
 }
 
 shadowJar {
