@@ -1,12 +1,13 @@
 {:paths ["src"]
 
  :deps {yada/lean {:mvn/version "1.2.15.1"}
-        aleph {:mvn/version "0.4.6"}
-        bidi {:mvn/version "2.0.12"}
+        aleph/aleph {:mvn/version "0.4.6"}
+        bidi/bidi {:mvn/version "2.0.12"}
         org.clojure/clojure {:mvn/version "1.10.1"}}
 
  :aliases {:uberjar {:main-opts  ["-m" "mach.pack.alpha.capsule"
+                                  "--application-id" "clojure.yada"
                                   "-m" "server"
                                   "yada.jar"]
                      :extra-deps {pack/pack.alpha {:git/url "https://github.com/juxt/pack.alpha.git"
-                                                   :sha     "2769a6224bfb938e777906ea311b3daf7d2220f5"}}}}}
+                                                   :sha     "e518d9b2b70f4292c9988d2792b8667d88a6f4df"}}}}}
