@@ -2,7 +2,7 @@ framework:
   website: juxt.pro/yada/
   version: 1.2
 
-files:
+binaries:
   - yada.jar
 
 command: java -jar yada.jar 3000
