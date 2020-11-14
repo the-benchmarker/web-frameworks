@@ -33,7 +33,7 @@
    [["" index]
     ["user"
       [["" postuser]
-       ["/" :name] getuser]]]]) 
+       [["/" :name] getuser]]]]]) 
 
 (defn -main [& [port]]
   (yada/listener app {:port (Integer/parseInt port)}))
