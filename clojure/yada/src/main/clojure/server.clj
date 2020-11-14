@@ -1,4 +1,5 @@
 (ns server
+  (:gen-class)
   (:require
    [clojure.tools.logging :refer :all]
    [yada.yada :as yada]))
