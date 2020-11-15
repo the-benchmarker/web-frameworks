@@ -655,6 +655,10 @@ blocks:
       commands:
       - cd kotlin/kooby && make build  -f .Makefile  && cd -
       - FRAMEWORK=kotlin/kooby bundle exec rspec .spec
+    - name: http4k
+      commands:
+      - cd kotlin/http4k && make build  -f .Makefile  && cd -
+      - FRAMEWORK=kotlin/http4k bundle exec rspec .spec
     - name: ktor
       commands:
       - cd kotlin/ktor && make build  -f .Makefile  && cd -
