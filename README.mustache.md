@@ -9,13 +9,13 @@ This project aims to be a load benchmarking suite, no more, no less
 
 
 <div align="center">
-  :warning::warning::warning::warning::warning::warning::warning::warning:
+:warning::warning::warning::warning::warning::warning::warning::warning:
 </div>
 
 <div align="center">Results are not <b>production-ready</b> <i>yet</i></div>
 
 <div align="center">
-  :warning::warning::warning::warning::warning::warning::warning::warning:
+:warning::warning::warning::warning::warning::warning::warning::warning:
 </div>
 
 ### Additional purposes :
@@ -61,24 +61,24 @@ shards build
 
 ~~~sh
 createdb -U postgres benchmark
-psql -U postgres -d benchmark < .ci/dump.sql
+psql -U postgres -d benchmark < dump.sql
 ~~~
 
 Docker can be used to set up the database:
 
 ~~~sh
 docker run -it --rm -d \
-  -p 5432:5432 \
-  -e POSTGRES_DB=benchmark \
-  -e POSTGRES_HOST_AUTH_METHOD=trust \
-  -v /tmp/pg-data:/var/lib/postgresql/data \
-  --name pg postgres:12-alpine
+-p 5432:5432 \
+-e POSTGRES_DB=benchmark \
+-e POSTGRES_HOST_AUTH_METHOD=trust \
+-v /tmp/pg-data:/var/lib/postgresql/data \
+--name pg postgres:12-alpine
 ~~~
 
 Wait several seconds for the container to start, then inject the dump:
 
 ~~~sh
-docker exec pg sh -c "echo \"$(cat .ci/dump.sql)\" | psql -U postgres -d benchmark"
+docker exec pg sh -c "echo \"$(cat dump.sql)\" | psql -U postgres -d benchmark"
 ~~~
 
 After creating the database, export its URL:
@@ -118,8 +118,10 @@ bin/db to_readme
 
 :information_source: Sorted by max `req/s` on concurrency **64** :information_source:
 
+|    | Language | Framework | Speed (64) | Speed (256) | Speed (512) |
+|----|----------|-----------|-----------:|------------:|------------:|
 {{#results}}
-{{.}}
+| {{id}} | {{language}} ({{language_language}})| [{{framework}}]({{framework_website}}) ({{framework_version}}) | {{concurrency_64}} | {{concurrency_256}} | {{concurrency_512}} |
 {{/results}}
 
 ## How to contribute ?

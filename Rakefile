@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
-require "yaml"
-require "mustache"
 require "dotenv"
-require "droplet_kit"
-require "net/ssh"
-require "net/scp"
-require "net/http"
-require "fileutils"
-require "base64"
 
-environment = ENV.fetch("ENV") { "development" }
+Dir.glob("lib/tasks/*.rake").each { |r| load r }
+
+environment = ENV.fetch("ENV", "development")
+
+MANIFESTS = {
+  container: ".Dockerfile",
+  build: ".Makefile",
+}.freeze
 
 default_environment = File.join(".env", "default")
 custom_environment = File.join(".env", environment)
@@ -18,7 +17,7 @@ Dotenv.load(custom_environment, default_environment)
 
 class ::Hash
   def recursive_merge(h)
-    merge!(h) { |_key, _old, _new| _old.class == Hash ? _old.recursive_merge(_new) : _new }
+    merge!(h) { |_key, _old, _new| _old.instance_of?(Hash) ? _old.recursive_merge(_new) : _new }
   end
 end
 
@@ -51,7 +50,7 @@ def commands_for(language, framework, **options)
   # Compile first, only for non containers
 
   if app_config.key?("binaries") && !(options[:provider].start_with?("docker") || options[:provider].start_with?("podman"))
-    commands << "docker build -t #{language}.#{framework} ."
+    commands << "docker build -f #{MANIFESTS[:container]} -t #{language}.#{framework} ."
     commands << "docker run -td #{language}.#{framework} > cid.txt"
     app_config["binaries"].each do |out|
       if out.count(File::Separator).positive?
@@ -64,7 +63,7 @@ def commands_for(language, framework, **options)
   end
 
   config["providers"][options[:provider]]["build"].each do |cmd|
-    commands << Mustache.render(cmd, options).to_s
+    commands << Mustache.render(cmd, options.merge!(manifest: MANIFESTS[:container])).to_s
   end
 
   config["providers"][options[:provider]]["metadata"].each do |cmd|
@@ -85,7 +84,9 @@ def commands_for(language, framework, **options)
 
   commands << "curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v"
 
-  commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == "off"
+  unless options[:collect] == "off"
+    commands << "DATABASE_URL=#{ENV["DATABASE_URL"]} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`"
+  end
 
   unless options[:clean] == "off"
     config["providers"][options[:provider]]["clean"].each do |cmd|
@@ -149,199 +150,33 @@ def create_dockerfile(language, framework, **options)
     config["environment"] = environment
   end
 
-  File.open(File.join(directory, "Dockerfile"), "w") { |f| f.write(Mustache.render(File.read(template), config)) } if template
+  if template
+    File.open(File.join(directory, MANIFESTS[:container]), "w") { |f| f.write(Mustache.render(File.read(template), config)) }
+  end
 end
 
 task :config do
   provider = ENV.fetch("PROVIDER") { default_provider }
-  collect = ENV.fetch("COLLECT") { "on" }
+  collect = ENV.fetch("COLLECT", "on")
 
-  sieger_options = ENV.fetch("SIEGER_OPTIONS") { "-r GET:/ -c 10" }
-  clean = ENV.fetch("CLEAN") { "on" }
-
-  config = { main: { depends_on: [] } }
+  sieger_options = ENV.fetch("SIEGER_OPTIONS", "-r GET:/ -c 10")
+  clean = ENV.fetch("CLEAN", "on")
 
   Dir.glob("*/*/config.yaml").each do |path|
     directory = File.dirname(path)
     language, framework = directory.split(File::Separator)
 
-    config[:main][:depends_on] << language unless config[:main][:depends_on].include?(language)
-
-    config[language] = { depends_on: [] } unless config.key?(language)
-
-    config[language][:depends_on] << "#{language}/#{framework}"
-
     create_dockerfile(language, framework, provider: provider)
 
-    config["#{language}/#{framework}"] = {
-      commands: commands_for(language, framework, provider: provider, clean: clean, sieger_options: sieger_options, path: path, collect: collect),
-      dir: File.join(language, File::SEPARATOR, framework),
-    }
-  end
+    makefile = File.open(File.join(language, framework, MANIFESTS[:build]), "w")
 
-  File.open("neph.yaml", "w") { |f| f.write(JSON.load(config.to_json).to_yaml) }
-end
+    makefile.write("build:\n")
 
-namespace :cloud do
-  task :config do
-    language = ENV.fetch("LANG")
-    framework = ENV.fetch("FRAMEWORK")
-
-    directory = File.join(Dir.pwd, language, framework)
-    main_config = YAML.safe_load(File.open(File.join(Dir.pwd, "config.yaml")))
-    language_config = YAML.safe_load(File.open(File.join(Dir.pwd, language, "config.yaml")))
-    framework_config = YAML.safe_load(File.open(File.join(directory, "config.yaml")))
-    config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-
-    config["cloud"]["config"]["write_files"] = if config.key?("service")
-        [{
-          "path" => "/usr/lib/systemd/system/web.service",
-          "permission" => "0644",
-          "content" => Mustache.render(config["service"], config),
-        }]
-      else
-        []
-      end
-
-    if config.key?("environment")
-      environment = config.fetch("environment")
-      stringified_environment = String.new
-      environment.map { |k, v| stringified_environment += "#{k}=#{v}\n" }
-      config["cloud"]["config"]["write_files"] << {
-        "path" => "/etc/web",
-        "permission" => "0644",
-        "content" => stringified_environment,
-      }
-    else
-      config["cloud"]["config"]["write_files"] << {
-        "path" => "/etc/web",
-        "permission" => "0644",
-        "content" => "",
-      }
+    commands_for(language, framework, provider: provider, clean: clean, sieger_options: sieger_options, path: path, collect: collect).each do |command|
+      makefile.write("\t #{command}\n")
     end
 
-    if config.key?("deps")
-      config["cloud"]["config"]["packages"] = [] unless config["cloud"]["config"].key?("packages")
-      config["deps"].each do |package|
-        config["cloud"]["config"]["packages"] << package
-      end
-    end
-
-    if config.key?("before_command")
-      commands = config["cloud"]["config"]["runcmd"] || []
-      config["cloud"]["config"]["runcmd"] = []
-      config["before_command"].each do |cmd|
-        config["cloud"]["config"]["runcmd"] << cmd
-      end
-      commands.each do |cmd|
-        config["cloud"]["config"]["runcmd"] << cmd
-      end
-    end
-
-    if config.key?("php_ext")
-      config["php_ext"].each do |deps|
-        config["cloud"]["config"]["runcmd"] << "pecl install #{deps}"
-        config["cloud"]["config"]["runcmd"] << "echo 'extension=#{deps}' > /etc/php.d/99-#{deps}.ini"
-      end
-    end
-
-    if config.key?("after_command")
-      config["after_command"].each do |cmd|
-        config["cloud"]["config"]["runcmd"] << cmd
-      end
-    end
-
-    if config.key?("files")
-      config["files"].each do |pattern|
-        path = File.join(directory, pattern)
-        files = Dir.glob(path)
-
-        files.each do |path|
-          remote_path = path.gsub(directory, "").gsub(%r{^/}, "").gsub(%r{^\.\./\.}, "")
-          remote_directory = File.dirname(remote_path)
-
-          config["cloud"]["config"]["write_files"] << {
-            "path" => "/opt/web/#{remote_path}",
-            "content" => File.read(path),
-            "permission" => "0644",
-          }
-
-          next if remote_directory.start_with?(".")
-        end
-      end
-    end
-
-    File.open(File.join(directory, "user_data.yml"), "w") do |f|
-      f.write("#cloud-config")
-      f.write("\n")
-      f.write(config["cloud"]["config"].to_yaml)
-    end
-  end
-
-  task :upload do
-    language = ENV.fetch("LANG")
-    framework = ENV.fetch("FRAMEWORK")
-
-    directory = File.join(Dir.pwd, language, framework)
-    main_config = YAML.safe_load(File.open(File.join(Dir.pwd, "config.yaml")))
-    language_config = YAML.safe_load(File.open(File.join(Dir.pwd, language, "config.yaml")))
-    framework_config = YAML.safe_load(File.open(File.join(directory, "config.yaml")))
-    config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-
-    if config.key?("binaries")
-      binaries = []
-      config["binaries"].each do |pattern|
-        Dir.glob(File.join(directory, pattern)).each do |binary|
-          binaries << binary
-        end
-      end
-
-      Net::SSH.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |ssh|
-        binaries.each do |binary|
-          remote_directory = File.dirname(binary).gsub!(directory, "/opt/web")
-          STDOUT.puts "Creating #{remote_directory}"
-          ssh.exec!("mkdir -p #{remote_directory}")
-        end
-      end
-
-      Net::SCP.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]]) do |scp|
-        config["binaries"].each do |pattern|
-          Dir.glob(File.join(directory, pattern)).each do |binary|
-            remote_directory = File.dirname(binary).gsub!(directory, "/opt/web")
-            STDOUT.puts "Uploading #{binary} to #{remote_directory}"
-            scp.upload!(binary, remote_directory, verbose: true, recursive: true)
-          end
-        end
-      end
-    end
-  end
-
-  task :wait do
-    while true
-      STDOUT.puts "Tring to connect"
-      begin
-        ssh = Net::SSH.start(ENV["HOST"], "root", keys: [ENV["SSH_KEY"]])
-      rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
-        sleep 5
-        next
-      else
-        break
-      end
-    end
-
-    loop do
-      output = ssh.exec!("cloud-init status")
-      _, status = output.split(":")
-
-      raise "Cloud-init have failed" if status.strip == "error"
-
-      break if status.strip == "done"
-
-      STDOUT.puts "Cloud-init is still running"
-      sleep 5
-    end
-
-    ssh.close
+    makefile.close
   end
 end
 
@@ -366,7 +201,7 @@ namespace :ci do
     } }]
     Dir.glob("*/config.yaml").each do |path|
       language, = path.split(File::Separator)
-      block = { name: language, dependencies: ["setup"], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
+      block = { name: language, dependencies: ["setup"], task: { prologue: { commands: [
         "cache restore $SEMAPHORE_GIT_SHA",
         "cache restore bin",
         "cache restore built-in",
@@ -381,8 +216,7 @@ namespace :ci do
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
         block[:task][:jobs] << { name: framework, commands: [
-          "mkdir -p .neph/#{language}/#{framework}",
-          "retry bin/neph #{language}/#{framework} --mode=CI",
+          "cd #{language}/#{framework} && make build  -f #{MANIFESTS[:build]}  && cd -",
           "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec",
         ] }
       end

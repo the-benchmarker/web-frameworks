@@ -2,13 +2,15 @@
 
 source "https://rubygems.org"
 
-gem "bcrypt_pbkdf"
-gem "dotenv"
-gem "droplet_kit"
-gem "ed25519"
-gem "mustache"
-gem "net-scp"
-gem "net-ssh"
-gem "rake"
-gem "rspec"
-gem "rubocop"
+group :procuction do
+  gem "mustache"
+  gem "pg"
+  gem "rake"
+  gem "dotenv"
+  gem 'activesupport'
+end
+
+group :development, :test do
+  gem "rspec"
+  gem "rubocop"
+end
