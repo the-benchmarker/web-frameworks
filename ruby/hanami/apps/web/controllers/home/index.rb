@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
-module Web::Controllers::Home
-  class Index
-    include Web::Action
+module Web
+  module Controllers
+    module Home
+      class Index
+        include Web::Action
 
-    def call(params); end
+        def call(params); end
+      end
+    end
   end
 end

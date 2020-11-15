@@ -18,7 +18,7 @@ FRAMEWORKS.yaml
 */*/Dockerfile
 */*/ip.txt
 
-/lib
+/lib/**/*.cr
 /bin
 
 # Rust build directories
