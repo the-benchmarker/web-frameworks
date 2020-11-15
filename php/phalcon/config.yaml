@@ -4,7 +4,7 @@ framework:
 
 php_ext:
   - psr
-  - phalcon-4.1.0
+  - phalcon
 
 nginx_conf:
   - |
