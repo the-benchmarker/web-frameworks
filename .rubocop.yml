@@ -1,16 +1,9 @@
-Documentation:
+AllCops:
+  NewCops: enable
+    
+Style/Documentation:
   Enabled: false
 
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/MixinUsage:
-  Enabled: false
-
-Metrics/LineLength:
-  Enabled: false
-
-# rack-routing use method name for route handling
 Naming/AccessorMethodName:
-  Exclude:
+  Exclude: 
     - ruby/rack-routing/app/route_handler.rb
