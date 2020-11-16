@@ -6,9 +6,6 @@ build_deps:
   - libffi-dev
   - openssl-dev
 
-fixes:
-  - pip install pendulum==2.0.5
-
 command: >
   gunicorn  \
     --log-level warning  \
