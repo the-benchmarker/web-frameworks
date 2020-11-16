@@ -367,6 +367,10 @@ blocks:
     - name: COLLECT
       value: 'off'
     jobs:
+    - name: yada
+      commands:
+      - cd clojure/yada && make build  -f .Makefile  && cd -
+      - FRAMEWORK=clojure/yada bundle exec rspec .spec
     - name: coast
       commands:
       - cd clojure/coast && make build  -f .Makefile  && cd -
@@ -592,6 +596,10 @@ blocks:
     - name: COLLECT
       value: 'off'
     jobs:
+    - name: restheart
+      commands:
+      - cd java/restheart && make build  -f .Makefile  && cd -
+      - FRAMEWORK=java/restheart bundle exec rspec .spec
     - name: light-4j
       commands:
       - cd java/light-4j && make build  -f .Makefile  && cd -
@@ -655,6 +663,10 @@ blocks:
       commands:
       - cd kotlin/kooby && make build  -f .Makefile  && cd -
       - FRAMEWORK=kotlin/kooby bundle exec rspec .spec
+    - name: http4k
+      commands:
+      - cd kotlin/http4k && make build  -f .Makefile  && cd -
+      - FRAMEWORK=kotlin/http4k bundle exec rspec .spec
     - name: ktor
       commands:
       - cd kotlin/ktor && make build  -f .Makefile  && cd -

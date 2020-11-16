@@ -118,8 +118,10 @@ bin/db to_readme
 
 :information_source: Sorted by max `req/s` on concurrency **64** :information_source:
 
+|    | Language | Framework | Speed (64) | Speed (256) | Speed (512) |
+|----|----------|-----------|-----------:|------------:|------------:|
 {{#results}}
-{{.}}
+| {{id}} | {{language}} ({{language_language}})| [{{framework}}]({{framework_website}}) ({{framework_version}}) | {{concurrency_64}} | {{concurrency_256}} | {{concurrency_512}} |
 {{/results}}
 
 ## How to contribute ?
