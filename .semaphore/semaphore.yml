@@ -367,6 +367,14 @@ blocks:
     - name: COLLECT
       value: 'off'
     jobs:
+    - name: yada
+      commands:
+      - cd clojure/yada && make build  -f .Makefile  && cd -
+      - FRAMEWORK=clojure/yada bundle exec rspec .spec
+    - name: coast
+      commands:
+      - cd clojure/coast && make build  -f .Makefile  && cd -
+      - FRAMEWORK=clojure/coast bundle exec rspec .spec
     - name: luminus
       commands:
       - cd clojure/luminus && make build  -f .Makefile  && cd -
