@@ -7,15 +7,11 @@ authors:
   - Marwan Rabbâa <waghanza@gmail.com>
 
 dependencies:
-  crustache:
-    github: MakeNowJust/crustache
   admiral:
     github: jwaldrip/admiral.cr
   pg:
     github: will/crystal-pg
 
 targets:
-  db:
-    main: tools/src/db.cr
   client:
     main: tools/src/client.cr
