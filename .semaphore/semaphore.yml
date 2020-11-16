@@ -588,6 +588,10 @@ blocks:
     - name: COLLECT
       value: 'off'
     jobs:
+    - name: restheart
+      commands:
+      - cd java/restheart && make build  -f .Makefile  && cd -
+      - FRAMEWORK=java/restheart bundle exec rspec .spec
     - name: light-4j
       commands:
       - cd java/light-4j && make build  -f .Makefile  && cd -

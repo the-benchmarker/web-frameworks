@@ -15,7 +15,7 @@ https-port: 4443
 
 http-listener: true
 http-host: 0.0.0.0
-http-port: 8080
+http-port: 3000
 
 ajp-listener: false
 ajp-host: 0.0.0.0
@@ -27,6 +27,17 @@ ajp-port: 8009
  # Displayed in log, also allows to implement instance specific custom code
 
 instance-name: restheart-benchmarker
+
+#### Performance Options
+
+# Number of I/O threads created for non-blocking tasks. at least 2. suggested value: core*2
+io-threads: 4
+
+ # Number of threads created for blocking tasks (such as ones involving db access). suggested value: core*16
+worker-threads: 32
+
+# Limit for the maximum number of concurrent requests being served
+requests-limit: 100000
 
 ### Security
 
@@ -65,49 +76,20 @@ plugins-directory: null
 # log-file-path: to specify the log file path (default value: restheart.log in system temporary directory)
 # log-level: to set the log level. Value can be OFF, ERROR, WARN, INFO, DEBUG, TRACE and ALL. (default value is INFO)
 # ansi-console: use Ansi console for logging. Default to 'true' if parameter missing, for backward compatibility
-# requests-log-level: log the request-response. 0 => no log, 1 => light log, 2 => detailed dump
-# requests-log-trace-headers: add the HTTP headers you want to be put on the MDC for logback. Use with %X{header-name} in logback.xml.
-#                             Useful for tracing support in the logs. Leave empty to deactivate this feature.
-# metrics-gathering-level: metrics gathering for which level? OFF => no gathering, ROOT => gathering at root level,
-#                          DATABASE => at db level, COLLECTION => at collection level
+# requests-log-level: log the request-response. 0 => no log, 1 => light log, 2 => detailed dump           DATABASE => at db level, COLLECTION => at collection level
 # WARNING: use requests-log-level level 2 only for development purposes, it logs user credentials (Authorization and Auth-Token headers)
 
 enable-log-file: false
 log-file-path: /usr/local/var/log/restheart.log
 enable-log-console: false
-log-level: INFO
-requests-log-level: 1
+log-level: "OFF"
+requests-log-level: 0
 ansi-console: true
-requests-log-trace-headers:
-#  - x-b3-traceid      # vv Zipkin headers, see https://github.com/openzipkin/b3-propagation
-#  - x-b3-spanid
-#  - x-b3-parentspanid
-#  - x-b3-sampled      # ^^
-#  - uber-trace-id     # jaeger header, see https://www.jaegertracing.io/docs/client-libraries/#trace-span-identity
-#  - traceparent       # vv opencensus.io headers, see https://github.com/w3c/distributed-tracing/blob/master/trace_context/HTTP_HEADER_FORMAT.md
-#  - tracestate        # ^^
 
 #### Performance Options
 
-## Limits
-
-# Limit for the maximum number of concurrent requests being served
-requests-limit: 1000
-
-# Time limit in milliseconds for processing queries on the server (without network latency). 0 means no time limit
-query-time-limit: 0
-
-# Time limit in milliseconds for processing aggregations on the server (without network latency). 0 means no time limit
-aggregation-time-limit: 0
-
  # In order to save bandwitdth RESTHeart Security can force requests to support the giz encoding (if not, requests will be rejected)
 force-gzip-encoding: false
-
- # Number of I/O threads created for non-blocking tasks. at least 2. suggested value: core*2
-io-threads: 8
-
- # Number of threads created for blocking tasks (such as ones involving db access). suggested value: core*16
-worker-threads: 64
 
  # Use 16k buffers for best performance - as in linux 16k is generally the default amount of data that can be sent in a single write() call
 buffer-size: 16384
@@ -178,4 +160,4 @@ connection-options:
   # The HTTP spec says this header should be added to all responses,
   # unless the server does not have an accurate clock.
   # Defaults to true
-  ALWAYS_SET_DATE: true
+  ALWAYS_SET_DATE: false

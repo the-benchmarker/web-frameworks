@@ -1,6 +1,6 @@
 framework:
   website: restheart.org
-  version: 5.1.6
+  version: 5.1
 
 build:
   - mvn package
@@ -8,4 +8,8 @@ build:
 files:
   - restheart.yml
 
-command: /usr/bin/java -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/restheart-benchmarker.jar /opt/web/restheart.yml
+binaries:
+  - target/benchmark.jar
+  - restheart.yml
+
+command: /usr/bin/java -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/benchmark.jar /opt/web/restheart.yml
