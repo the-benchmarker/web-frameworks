@@ -1,6 +1,6 @@
 framework:
   website: spring.io/projects/spring-framework
-  version: 5.2
+  version: 5.3
 
 build:
   - mvn clean package

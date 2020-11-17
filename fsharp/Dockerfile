@@ -1,4 +1,4 @@
-FROM fsharp:10.10-netcore AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
 
 WORKDIR /usr/src/app
 
@@ -10,7 +10,7 @@ RUN dotnet restore
 COPY . .
 RUN dotnet publish -c release -o out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine
 
 WORKDIR /usr/src/app
 
