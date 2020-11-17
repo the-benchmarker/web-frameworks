@@ -1,6 +1,6 @@
 framework:
   github: an-tao/drogon
-  version: 1.0
+  version: 1.1
 
 provider:
   default:
@@ -11,12 +11,14 @@ build_deps:
   - util-linux-dev
   - libressl-dev
   - zlib-dev
+  - brotli-dev
 
 bin_deps:
   - jsoncpp
   - libuuid
   - libressl
   - zlib
+  - brotli
 
 deps:
   - jsoncpp

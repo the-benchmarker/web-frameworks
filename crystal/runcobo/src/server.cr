@@ -1,4 +1,5 @@
 require "runcobo"
+ENV["SKIP_LOG"] = "true"
 
 class Index < BaseAction
   get "/"
