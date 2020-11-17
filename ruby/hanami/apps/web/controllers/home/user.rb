@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
-module Web::Controllers::Home
-  class User
-    include Web::Action
+module Web
+  module Controllers
+    module Home
+      class User
+        include Web::Action
 
-    def call(params)
-      self.body = params[:id]
+        def call(params)
+          self.body = params[:id]
+        end
+      end
     end
   end
 end
