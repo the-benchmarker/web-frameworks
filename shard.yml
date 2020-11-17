@@ -9,6 +9,8 @@ authors:
 dependencies:
   admiral:
     github: jwaldrip/admiral.cr
+  pg:
+    github: will/crystal-pg
 
 targets:
   client:
