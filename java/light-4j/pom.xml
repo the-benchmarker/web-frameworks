@@ -14,7 +14,7 @@
         <project.main.class>com.networknt.server.Server</project.main.class>
         <version.light-4j>[2.0,2.1)</version.light-4j>
         <version.jackson>[2.0.0,3.0.0-SNAPSHOT)</version.jackson>
-        <version.undertow>[2.1.0,2.2.0)</version.undertow>
+        <version.undertow>[2.2.2,2.2.3)</version.undertow>
         <version.json-schema-validator>[1.0.29,)</version.json-schema-validator>
         <version.fastscanner>[2.18,)</version.fastscanner>
     </properties>
