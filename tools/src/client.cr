@@ -54,7 +54,7 @@ class Client < Admiral::Command
 
     flags.routes.each do |route|
       method, uri = route.split(":")
-      url = "http://#{address}#{uri}"
+      url = "http://#{address}#{uri.gsub("%d", sprintf "%d", Random.rand(1000))}"
 
       flags.concurrencies.each do |concurrency|
         puts "Start @ #{concurrency}"
@@ -76,6 +76,7 @@ class Client < Admiral::Command
           params << "--#{key}"
           params << value.to_s
         end
+pp options
         params << url
 
         stdout = IO::Memory.new
