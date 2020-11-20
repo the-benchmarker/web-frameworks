@@ -24,6 +24,13 @@
   </properties>
 
   <dependencies>
+    <!-- Logging OFF. -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-nop</artifactId>
+      <version>[1.7,1.8)</version>
+    </dependency>
+
     <dependency>
       <groupId>io.jooby</groupId>
       <artifactId>jooby-utow</artifactId>
