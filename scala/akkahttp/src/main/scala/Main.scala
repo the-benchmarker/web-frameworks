@@ -19,6 +19,6 @@ object Main {
           complete(id)
         }
 
-    Http().bindAndHandle(route, "0.0.0.0", 3000)
+    Http().newServerAt(interface = "0.0.0.0", port = 3000).bind(route)
   }
 }
