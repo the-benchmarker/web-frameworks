@@ -1,5 +1,5 @@
 (defproject luminus "0.1.0-SNAPSHOT"
-
+  :luminus-version "3.87"
   :dependencies [[ch.qos.logback/logback-classic "1.2.3"]
                  [cheshire "5.10.0"]
                  [clojure.java-time "0.3.2"]
