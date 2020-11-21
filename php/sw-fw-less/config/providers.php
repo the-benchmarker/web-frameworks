@@ -10,6 +10,7 @@ return [
 //    \SwFwLess\components\chaos\ChaosProvider::class,
 
     //Worker Providers
+    \SwFwLess\components\pool\Provider::class,
     \SwFwLess\components\datetime\DatetimeProvider::class,
     \SwFwLess\components\event\EventProvider::class,
     \SwFwLess\components\log\LogProvider::class,
