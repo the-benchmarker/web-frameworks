@@ -6,5 +6,8 @@ return [
         \SwFwLess\middlewares\Route::class => [
             'pool_size' => envInt('ROUTER_POOL_SIZE', 5),
         ],
+        \App\services\TestService::class => [
+            'pool_size' => 5,
+        ],
     ],
 ];
