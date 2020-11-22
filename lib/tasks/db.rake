@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
-require 'pg'
-require 'mustache'
-require 'yaml'
-require 'active_support/number_helper'
+require "pg"
+require "mustache"
+require "yaml"
+require "active_support/number_helper"
+require "dotenv"
+
+Dotenv.load
 
 SQL = %(
     SELECT f.id, l.label AS language, f.label AS framework, c.level, sum(v.value)
@@ -17,48 +20,48 @@ SQL = %(
 
 namespace :db do
   task :export do
-    raise 'Please provide a database' unless ENV['DATABASE_URL']
+    raise "Please provide a database" unless ENV["DATABASE_URL"]
 
     frameworks = {}
-    db = PG.connect(ENV['DATABASE_URL'])
+    db = PG.connect(ENV["DATABASE_URL"])
     db.exec(SQL) do |result|
       result.each do |row|
-        id, framework, language = row.values_at('id', 'framework', 'language')
+        id, framework, language = row.values_at("id", "framework", "language")
         unless frameworks.key?(id)
           frameworks[id] = {
             language: language,
-            framework: framework
+            framework: framework,
           }
         end
-        framework_config = YAML.safe_load(File.read(File.join(language, framework, 'config.yaml')))
-        language_config = YAML.safe_load(File.read(File.join(language, 'config.yaml')))
+        framework_config = YAML.safe_load(File.read(File.join(language, framework, "config.yaml")))
+        language_config = YAML.safe_load(File.read(File.join(language, "config.yaml")))
 
-        key = "concurrency_#{row['level']}"
-        frameworks[id].merge!(key => row['sum'].to_f/3)
-        frameworks[id].merge!(framework_config['framework'].transform_keys!(&'framework_'.method(:+)))
-        frameworks[id].merge!(language_config['provider']['default'].transform_keys!(&'language_'.method(:+)))
+        key = "concurrency_#{row["level"]}"
+        frameworks[id].merge!(key => row["sum"].to_f / 3)
+        frameworks[id].merge!(framework_config["framework"].transform_keys!(&"framework_".method(:+)))
+        frameworks[id].merge!(language_config["provider"]["default"].transform_keys!(&"language_".method(:+)))
 
-        if framework_config['framework'].key?('framework_name')
-          frameworks[id].merge!(framework: framework_config['framework']['framework_name'])
+        if framework_config["framework"].key?("framework_name")
+          frameworks[id].merge!(framework: framework_config["framework"]["framework_name"])
         end
 
-        if framework_config['framework'].key?('framework_github')
-          frameworks[id].merge!(framework_website: "https://github.com/#{framework_config['framework']['framework_github']}")
+        if framework_config["framework"].key?("framework_github")
+          frameworks[id].merge!(framework_website: "https://github.com/#{framework_config["framework"]["framework_github"]}")
         else
-          frameworks[id].merge!(framework_website: "https://#{framework_config['framework']['framework_website']}")
+          frameworks[id].merge!(framework_website: "https://#{framework_config["framework"]["framework_website"]}")
         end
       end
     end
     db.close
-    template = File.read('README.mustache.md')
+    template = File.read("README.mustache.md")
     c = 0
-    frameworks.values.sort! { |x, y| y['concurrency_64'] <=> x['concurrency_64'] }.map do |row|
+    frameworks.values.sort! { |x, y| y["concurrency_64"] <=> x["concurrency_64"] }.map do |row|
       c += 1
       row.merge!(id: c)
-      row['concurrency_64'] = ActiveSupport::NumberHelper.number_to_delimited('%.2f'%row['concurrency_64'], delimiter: ' ')
-      row['concurrency_256'] =  ActiveSupport::NumberHelper.number_to_delimited('%.2f'%row['concurrency_256'], delimiter: ' ')
-      row['concurrency_512'] = ActiveSupport::NumberHelper.number_to_delimited('%.2f'%row['concurrency_512'], delimiter: ' ')
+      row["concurrency_64"] = ActiveSupport::NumberHelper.number_to_delimited("%.2f" % row["concurrency_64"], delimiter: " ")
+      row["concurrency_256"] = ActiveSupport::NumberHelper.number_to_delimited("%.2f" % row["concurrency_256"], delimiter: " ")
+      row["concurrency_512"] = ActiveSupport::NumberHelper.number_to_delimited("%.2f" % row["concurrency_512"], delimiter: " ")
     end
-    File.open('README.md', 'w') { |f| f.write(Mustache.render(template, { results: frameworks.values.sort! { |x, y| x[:id] <=> y[:id] }, date: Date.today })) }
+    File.open("README.md", "w") { |f| f.write(Mustache.render(template, { results: frameworks.values.sort! { |x, y| x[:id] <=> y[:id] }, date: Date.today })) }
   end
 end

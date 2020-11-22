@@ -3,15 +3,23 @@ wrk.body = ""
 wrk.headers["Content-Type"] = "application/x-www-form-urlencoded"
 
 -- duration in microseconds
--- errors (Non-2xx or 3xx responses)
--- success (2xx responses)
+-- requests
+-- connection errors
+-- read errors
+-- write errors
+-- status errors
+-- timeout errors
   
 done = function(summary, latency, requests)
 
   out = {
     summary.duration,
-    summary.errors.connect,
     summary.requests,
+    summary.errors.connect,
+    summary.errors.read,
+    summary.errors.write,
+    summary.errors.status,
+    summary.errors.timeout,
   }
 
   for key, value in pairs(out) do
