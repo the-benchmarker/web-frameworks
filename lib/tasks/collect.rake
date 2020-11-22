@@ -55,13 +55,21 @@ task :collect do
         lua_output = stderr.read
 
 
-        sieger_duration, _, requests_ok = lua_output.split(",")
-        pp "Requests => #{requests_ok}"
-        pp "Duration =>#{sieger_duration}"
-        requests_per_seconds = requests_ok.to_d / sieger_duration.to_d
-        requests = requests_per_seconds * (duration.to_d * 1000000)
+        info = lua_output.split(",")
+        sieger_duration = info.shift.to_d
+        requests = info.shift.to_d
+        requests_ko = info.map(&:to_d).reduce(:+)
+        requests_ko = info[3].to_d
+        requests_ok = requests - requests_ko
+        
+        pp wrk_output
+        pp "Requests => #{requests.to_f}"
+        pp "Duration =>#{sieger_duration.to_f}"
+        pp "Requests failures => #{requests_ko.to_f}"
+        requests_per_seconds = requests_ok.to_d / (sieger_duration.to_d / 1000000)
+        
 
-        insert(db, framework_id, "requests_per_seconds", requests, concurrency_level_id)
+        insert(db, framework_id, "requests_per_seconds", requests_per_seconds, concurrency_level_id)
       end
     end
   end
