@@ -9,7 +9,7 @@ require "dotenv"
 Dotenv.load
 
 SQL = %(
-    SELECT f.id, l.label AS language, f.label AS framework, c.level, sum(v.value)
+    SELECT f.id, l.label AS language, f.label AS framework, c.level, avg(v.value)
         FROM frameworks AS f
             JOIN metrics AS m ON f.id = m.framework_id
             JOIN values AS v ON v.id = m.value_id

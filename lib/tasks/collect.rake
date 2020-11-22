@@ -1,7 +1,7 @@
 require "open3"
 require "csv"
 require "etc"
-require 'bigdecimal/util'
+require "bigdecimal/util"
 
 PIPELINE = {
   GET: File.join(Dir.pwd, "pipeline.lua"),
@@ -48,26 +48,20 @@ task :collect do
 
       concurrency_level_id = res.first["id"]
 
-      command = format("wrk -H 'Connection: keep-alive' --connections %<concurrency>s --threads %<threads>s --duration %<duration>s --script %<pipeline>s http://%<hostname>s:3000", concurrency: concurrency, threads: threads, duration: duration, pipeline: PIPELINE[method.to_sym], hostname: hostname)
+      command = format("wrk -H 'Connection: keep-alive' --connections %<concurrency>s --threads %<threads>s --duration %<duration>s --timeout 1 --script %<pipeline>s http://%<hostname>s:3000", concurrency: concurrency, threads: threads, duration: duration, pipeline: PIPELINE[method.to_sym], hostname: hostname)
 
       Open3.popen3(command) do |_, stdout, stderr|
         wrk_output = stdout.read
         lua_output = stderr.read
 
-
         info = lua_output.split(",")
-        sieger_duration = info.shift.to_d
-        requests = info.shift.to_d
-        requests_ko = info.map(&:to_d).reduce(:+)
-        requests_ko = info[3].to_d
-        requests_ok = requests - requests_ko
-        
-        pp wrk_output
-        pp "Requests => #{requests.to_f}"
-        pp "Duration =>#{sieger_duration.to_f}"
-        pp "Requests failures => #{requests_ko.to_f}"
-        requests_per_seconds = requests_ok.to_d / (sieger_duration.to_d / 1000000)
-        
+        ["duration_ms", "total_requests", "total_requests_per_s", "total_bytes_received",
+         "socket_connection_errors", "socket_read_errors", "socket_write_errors",
+         "http_errors", "request_timeouts", "minimim_latency", "maximum_latency",
+         "average_latency", "standard_deviation", "percentile_50",
+         "percentile_75", "percentile_90", "percentile_99", "percentile_99.999"].each_with_index do |key, index|
+          insert(db, framework_id, key, info[index].to_d, concurrency_level_id)
+        end
 
         insert(db, framework_id, "requests_per_seconds", requests_per_seconds, concurrency_level_id)
       end
