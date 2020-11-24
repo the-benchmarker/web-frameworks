@@ -9,5 +9,8 @@ return [
         \App\services\TestService::class => [
             'pool_size' => 5,
         ],
+        \SwFwLess\components\http\Request::class => [
+            'pool_size' => 5,
+        ],
     ],
 ];
