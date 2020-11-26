@@ -1,7 +1,6 @@
 # Which is the fastest?
 
-[![Build Status](https://travis-ci.com/the-benchmarker/web-frameworks.svg?branch=master)](https://travis-ci.com/the-benchmarker/web-frameworks)
-[![Join the chat at https://gitter.im/which_is_the_fastest/Lobby](https://badges.gitter.im/which_is_the_fastest/Lobby.svg)](https://gitter.im/which_is_the_fastest/Lobby)
+[![Build Status](https://the-benchmarker.semaphoreci.com/badges/web-frameworks/branches/master.svg)](https://the-benchmarker.semaphoreci.com/projects/web-frameworks)
 
 This project aims to be a load benchmarking suite, no more, no less
 
@@ -118,8 +117,10 @@ bin/db to_readme
 
 :information_source: Sorted by max `req/s` on concurrency **64** :information_source:
 
+|    | Language | Framework | Speed (64) | Speed (256) | Speed (512) |
+|----|----------|-----------|-----------:|------------:|------------:|
 {{#results}}
-{{.}}
+| {{id}} | {{language}} ({{language_language}})| [{{framework}}]({{framework_website}}) ({{framework_version}}) | {{concurrency_64}} | {{concurrency_256}} | {{concurrency_512}} |
 {{/results}}
 
 ## How to contribute ?

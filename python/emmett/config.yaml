@@ -1,13 +1,10 @@
 framework:
-  website: github.com/emmett-framework/emmett
-  version: 2.0
+  website: emmett.sh
+  version: 2.1
 
 build_deps:
   - libffi-dev
   - openssl-dev
-
-fixes:
-  - pip install pendulum==2.0.5
 
 command: >
   gunicorn  \
