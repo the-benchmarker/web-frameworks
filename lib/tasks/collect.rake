@@ -63,7 +63,6 @@ task :collect do
           insert(db, framework_id, key, info[index].to_d, concurrency_level_id)
         end
 
-        insert(db, framework_id, "requests_per_seconds", requests_per_seconds, concurrency_level_id)
       end
     end
   end
