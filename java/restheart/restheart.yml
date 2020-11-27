@@ -31,13 +31,13 @@ instance-name: restheart-benchmarker
 #### Performance Options
 
 # Number of I/O threads created for non-blocking tasks. at least 2. suggested value: core*2
-io-threads: 4
+io-threads: 1
 
  # Number of threads created for blocking tasks (such as ones involving db access). suggested value: core*16
-worker-threads: 32
+worker-threads: 4
 
 # Limit for the maximum number of concurrent requests being served
-requests-limit: 100000
+requests-limit: 200000
 
 ### Security
 
@@ -45,7 +45,7 @@ requests-limit: 100000
 
  # Configure the keystore to enable the https listener.
 
- # RESTHeart Security comes with a self-signed certificate that makes
+ # RESTHeart Securitycomes with a self-signed certificate that makes
  # straightforward enabling https.
  # Specify use-embedded-keystore: true to use it (this is the default setting).
  # Using the self-signed certificate leads to issues with some clients;
@@ -68,6 +68,10 @@ allow-unescaped-characters-in-url: true
 # added to the classpath and registered.
 
 plugins-directory: null
+
+plugins-args:
+  ping:
+    enabled: false
 
 #### Logging
 
