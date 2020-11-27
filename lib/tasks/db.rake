@@ -38,21 +38,27 @@ namespace :db do
         frameworks[id].merge!(framework_config['framework'].transform_keys!(&'framework_'.method(:+)))
         frameworks[id].merge!(language_config['provider']['default'].transform_keys!(&'language_'.method(:+)))
 
-        if framework_config['framework'].key?('name')
-          frameworks[id].merge!(framework: framework_config['framework'].key?('name'))
+        if framework_config['framework'].key?('framework_name')
+          frameworks[id].merge!(framework: framework_config['framework']['framework_name'])
+        end
+
+        if framework_config['framework'].key?('framework_github')
+          frameworks[id].merge!(framework_website: "https://github.com/#{framework_config['framework']['framework_github']}")
+        else
+          frameworks[id].merge!(framework_website: "https://#{framework_config['framework']['framework_website']}")
         end
       end
     end
     db.close
     template = File.read('README.mustache.md')
     c = 0
-    frameworks.values.sort { |x, y| y['concurrency_64'] <=> x['concurrency_64'] }.map do |row|
+    frameworks.values.sort! { |x, y| y['concurrency_64'] <=> x['concurrency_64'] }.map do |row|
       c += 1
       row.merge!(id: c)
       row['concurrency_64'] = ActiveSupport::NumberHelper.number_to_delimited('%.2f'%row['concurrency_64'], delimiter: ' ')
       row['concurrency_256'] =  ActiveSupport::NumberHelper.number_to_delimited('%.2f'%row['concurrency_256'], delimiter: ' ')
       row['concurrency_512'] = ActiveSupport::NumberHelper.number_to_delimited('%.2f'%row['concurrency_512'], delimiter: ' ')
     end
-    File.open('README.md', 'w') { |f| f.write(Mustache.render(template, { results: frameworks.values })) }
+    File.open('README.md', 'w') { |f| f.write(Mustache.render(template, { results: frameworks.values.sort! { |x, y| x[:id] <=> y[:id] }, date: Date.today })) }
   end
 end
