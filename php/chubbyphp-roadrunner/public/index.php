@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use Chubbyphp\Framework\Application;
-use Chubbyphp\Framework\ErrorHandler;
 use Chubbyphp\Framework\Middleware\ExceptionMiddleware;
 use Chubbyphp\Framework\Middleware\RouterMiddleware;
 use Chubbyphp\Framework\RequestHandler\CallbackRequestHandler;
@@ -20,8 +19,6 @@ use Sunrise\Http\Message\ResponseFactory;
 ini_set('display_errors', 'stderr');
 
 $loader = require __DIR__.'/../vendor/autoload.php';
-
-set_error_handler([new ErrorHandler(), 'errorToException']);
 
 $responseFactory = new ResponseFactory();
 
