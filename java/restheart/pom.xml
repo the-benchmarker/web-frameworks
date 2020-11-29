@@ -15,13 +15,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.restheart</groupId>
-      <artifactId>restheart-commons</artifactId>
-      <version>${restheart.version}</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
         <groupId>org.restheart</groupId>
         <artifactId>restheart</artifactId>
         <version>${restheart.version}</version>
