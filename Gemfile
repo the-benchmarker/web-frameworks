@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "mustache"
-gem "pg"
-gem "rake"
-gem "dotenv"
-gem "activesupport"
+gem 'activesupport'
+gem 'dotenv'
+gem 'mustache'
+gem 'pg'
+gem 'rake'
 
-gem "open3"
-gem "bigdecimal"
+gem 'bigdecimal'
+gem 'open3'
 
 group :development, :test do
-  gem "rspec"
-  gem "rubocop"
+  gem 'rspec'
+  gem 'rubocop'
 end

@@ -24,14 +24,7 @@ def compute(data)
   duration = data["duration_ms"].to_d / 1000000
   requests = data["total_requests"].to_d
 
-  value = (requests - errors) / duration
-  begin
-    value.to_i
-  rescue FloatDomainError
-    value = 0
-  end
-
-  value
+  (requests - errors) / duration
 end
 
 namespace :db do
@@ -47,7 +40,7 @@ namespace :db do
           frameworks[id] = {
             language: language,
             framework: framework,
-            metrics: {"concurrency_64":{},"concurrency_256":{},"concurrency_512":{}},
+            metrics: { "concurrency_64": {}, "concurrency_256": {}, "concurrency_512": {} },
           }
         end
         framework_config = YAML.safe_load(File.read(File.join(language, framework, "config.yaml")))
@@ -72,24 +65,34 @@ namespace :db do
     db.close
     template = File.read("README.mustache.md")
     results = []
+
     frameworks.each do |id, row|
+      concurrency = compute(row[:metrics][:concurrency_64])
+      if concurrency.nan?
+        pp "Skipped #{row[:framework]} - Failure"
+        next
+      end
+      if concurrency == 0
+        pp "Skipped #{row[:framework]} - O requests OK"
+        next
+      end
       row.merge!(
         id: id.to_i,
         concurrency_64: compute(row[:metrics][:concurrency_64]),
         concurrency_256: compute(row[:metrics][:concurrency_256]),
-        concurrency_512: compute(row[:metrics][:concurrency_512])
+        concurrency_512: compute(row[:metrics][:concurrency_512]),
       )
       results << row
     end
-    c=0
-    results.sort! {|x,y| y[:concurrency_64].to_f <=> x[:concurrency_64].to_f}.map do |row|
+    c = 0
+    results.sort! { |x, y| y[:concurrency_64].to_f <=> x[:concurrency_64].to_f }.map do |row|
       c += 1
 
       row.merge!(
         id: c,
-        concurrency_64: ActiveSupport::NumberHelper.number_to_delimited('%.2f'% row[:concurrency_64], delimiter: ' '),
-        concurrency_256: ActiveSupport::NumberHelper.number_to_delimited('%.2f'% row[:concurrency_256], delimiter: ' '),
-        concurrency_512: ActiveSupport::NumberHelper.number_to_delimited('%.2f'% row[:concurrency_512], delimiter: ' ')
+        concurrency_64: ActiveSupport::NumberHelper.number_to_delimited("%.2f" % row[:concurrency_64], delimiter: " "),
+        concurrency_256: ActiveSupport::NumberHelper.number_to_delimited("%.2f" % row[:concurrency_256], delimiter: " "),
+        concurrency_512: ActiveSupport::NumberHelper.number_to_delimited("%.2f" % row[:concurrency_512], delimiter: " "),
       )
     end
     File.open("README.md", "w") { |f| f.write(Mustache.render(template, { results: results, date: Date.today })) }

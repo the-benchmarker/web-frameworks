@@ -61,7 +61,6 @@ task :collect do
          "percentile_75", "percentile_90", "percentile_99", "percentile_99.999"].each_with_index do |key, index|
           insert(db, framework_id, key, info[index].to_d, concurrency_level_id)
         end
-
       end
     end
   end

@@ -63,7 +63,7 @@ feel free to create an issue if you want to try this project
 |----|----------|-----------|-----------:|------------:|------------:|
 | 1 | php (7.4)| [workerman](https://github.com/walkor/Workerman) (4.0) | 148 892.84 | 182 506.75 | 184 165.88 |
 | 2 | go (1.15)| [gearbox](https://gogearbox.com) (1.1) | 121 014.97 | 123 207.24 | 122 678.78 |
-| 3 | go (1.15)| [fiber](https://gofiber.io) (2.2) | 120 719.74 | 130 021.45 | 128 951.49 |
+| 3 | go (1.15)| [fiber](https://gofiber.io) (2.2) | 120 592.35 | 129 242.82 | 128 377.30 |
 | 4 | nim (1.4)| [httpbeast](https://github.com/dom96/httpbeast) (0.2) | 118 147.54 | 146 225.13 | 149 207.73 |
 | 5 | go (1.15)| [atreugo](https://github.com/savsgio/atreugo/blob/master/docs/README.md) (11.5) | 116 513.77 | 128 600.17 | 128 104.90 |
 | 6 | go (1.15)| [fasthttp](https://pkg.go.dev/github.com/valyala/fasthttp) (1.17) | 116 509.44 | 130 307.01 | 130 195.03 |
@@ -267,8 +267,6 @@ feel free to create an issue if you want to try this project
 | 204 | crystal (0.35)| [lucky](https://luckyframework.org) (0.23) | 432.63 | 443.51 | 425.06 |
 | 205 | r (4.0)| [plumber](https://rplumber.io) (1.0) | 288.73 | 302.14 | -92.43 |
 | 206 | php (7.4)| [laravel](https://laravel.com) (7.27) | 119.70 | 27.38 | -0.00 |
-| 207 | java (11)| [spring-framework](https://spring.io/projects/spring-framework) (5.3) | 0.00 | 0.00 | 0.00 |
-| 208 | nim (1.4)| [basolato](https://github.com/itsumura-h/nim-basolato) (0.7) | 0.00 | 0.00 | 0.00 |
 
 ## How to contribute ?
 
