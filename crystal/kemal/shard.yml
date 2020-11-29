@@ -11,6 +11,6 @@ targets:
 dependencies:
   kemal:
     github: kemalcr/kemal
-    commit: a8c0f09
+    version: ~> 0.27.0
 
 license: MIT
