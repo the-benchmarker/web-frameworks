@@ -24,7 +24,14 @@ def compute(data)
   duration = data["duration_ms"].to_d / 1000000
   requests = data["total_requests"].to_d
 
-  (requests - errors) / duration
+  value = (requests - errors) / duration
+  begin
+    value.to_i
+  rescue FloatDomainError
+    value = 0
+  end
+
+  value
 end
 
 namespace :db do
