@@ -2,13 +2,14 @@
 
 source "https://rubygems.org"
 
-group :procuction do
-  gem "mustache"
-  gem "pg"
-  gem "rake"
-  gem "dotenv"
-  gem 'activesupport'
-end
+gem "mustache"
+gem "pg"
+gem "rake"
+gem "dotenv"
+gem "activesupport"
+
+gem "open3"
+gem "bigdecimal"
 
 group :development, :test do
   gem "rspec"
