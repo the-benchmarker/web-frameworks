@@ -21,10 +21,10 @@ end
 
 task :collect do
   threads = ENV.fetch("THREADS") { Etc.nprocessors }
-  duration = ENV.fetch("DURATION") { 15 }
+  duration = ENV.fetch("DURATION") { 10 }
   language = ENV.fetch("LANGUAGE") { raise "please provide the language" }
   framework = ENV.fetch("FRAMEWORK") { raise "please provide the target framework" }
-  concurrencies = ENV.fetch("CONCURRENCIES") { "64,256,512" }
+  concurrencies = ENV.fetch("CONCURRENCIES") { "10" }
   routes = ENV.fetch("ROUTES") { "GET:/" }
   database = ENV.fetch("DATABASE_URL") { raise "please provide a DATABASE_URL (pg only)" }
 
@@ -50,8 +50,7 @@ task :collect do
 
       command = format("wrk -H 'Connection: keep-alive' --connections %<concurrency>s --threads %<threads>s --duration %<duration>s --timeout 1 --script %<pipeline>s http://%<hostname>s:3000", concurrency: concurrency, threads: threads, duration: duration, pipeline: PIPELINE[method.to_sym], hostname: hostname)
 
-      Open3.popen3(command) do |_, stdout, stderr|
-        wrk_output = stdout.read
+      Open3.popen3(command) do |_, _, stderr|
         lua_output = stderr.read
 
         info = lua_output.split(",")
