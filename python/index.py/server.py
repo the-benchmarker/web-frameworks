@@ -1,6 +1,6 @@
 from indexpy import Index
 
-app = Index(try_html=False)
+app = Index()
 
 
 @app.router.http("/", method="get")
