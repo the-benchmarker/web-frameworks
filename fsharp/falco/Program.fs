@@ -1,12 +1,40 @@
 module Program 
 
 open Falco
+open Falco.HostBuilder
+open Falco.Routing
+open Microsoft.AspNetCore.Builder
+open Microsoft.AspNetCore.Hosting
+open Microsoft.Extensions.DependencyInjection
+open Microsoft.Extensions.Logging
+
+let configureLogging (log : ILoggingBuilder) =
+    log.ClearProviders()
+    |> ignore
+
+let configureServices (services : IServiceCollection) =
+    services.AddFalco() 
+    |> ignore
+
+let configure (endpoints : HttpEndpoint list) (app : IApplicationBuilder) = 
+    app.UseFalco(endpoints)       
+    |> ignore 
+    
+let configureWebHost (endpoints : HttpEndpoint list) (webHost : IWebHostBuilder) =    
+    webHost        
+        .UseKestrel(fun k -> k.AddServerHeader <- false)
+        .ConfigureLogging(configureLogging)
+        .ConfigureServices(configureServices)
+        .Configure(configure endpoints)        
 
 [<EntryPoint>]
 let main args =       
-    App.run [
-        get  "/user/{id}" (Request.mapRoute (fun m -> m.["id"]) Response.ofPlainText)
-        post "/user"      (Response.ofEmpty)
-        get  "/"          (Response.ofEmpty)
-    ]
+    webHost args {
+        configure configureWebHost
+        endpoints [
+            get  "/user/{id}" (Request.mapRoute (fun route -> route.Get "id" "") Response.ofPlainText)
+            post "/user"      (Response.ofEmpty)
+            get  "/"          (Response.ofEmpty)
+        ]
+    }    
     0
