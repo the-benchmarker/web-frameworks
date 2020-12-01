@@ -1,6 +1,162 @@
 ---
 version: 2
 updates:
+- package-ecosystem: npm
+  directory: "/javascript/moleculer"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/polka"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/foxify"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/0http"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/sifrr"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/nestjs-fastify"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/fyrejet-api"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/restana"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/express"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/hapi"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/muneem"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/turbo_polka"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/fyrejet-uwebsockets"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/fyrejet"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/feathersjs"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/iotjs-express"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/nestjs-express"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/restify"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/polkadot"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/rayo"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/naturaljs-router"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/sails"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/fastify"
+  schedule:
+    interval: daily
+- package-ecosystem: npm
+  directory: "/javascript/koa"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/."
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/syro"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/sinatra"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/rack_app"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/camping"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/roda"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/agoo"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/rack-routing"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/hanami"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/flame"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/hanami-api"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/pakyow"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/grape"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/cuba"
+  schedule:
+    interval: daily
+- package-ecosystem: bundler
+  directory: "/ruby/rails"
+  schedule:
+    interval: daily
 - package-ecosystem: cargo
   directory: "/rust/gotham"
   schedule:
@@ -491,5 +647,113 @@ updates:
     interval: daily
 - package-ecosystem: nuget
   directory: "/csharp/simplify.web"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/flask"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/aiohttp"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/apidaora"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/masonite"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/clastic"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/index.py"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/quart"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/pyramid"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/starlette"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/cherrypy"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/emmett"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/hug"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/blacksheep"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/molten"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/tornado"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/tonberry"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/nameko"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/fastapi"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/klein"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/sanic"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/responder"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/asgineer"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/django-ninja"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/cyclone"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/django"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/falcon"
+  schedule:
+    interval: daily
+- package-ecosystem: pip
+  directory: "/python/bottle"
   schedule:
     interval: daily
