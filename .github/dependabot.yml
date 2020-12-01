@@ -1,131 +1,339 @@
 ---
 version: 2
 updates:
-- package-ecosystem: npm
-  directory: "/javascript/moleculer"
+- package-ecosystem: cargo
+  directory: "/rust/gotham"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/polka"
+- package-ecosystem: cargo
+  directory: "/rust/iron"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/foxify"
+- package-ecosystem: cargo
+  directory: "/rust/nickel"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/0http"
+- package-ecosystem: cargo
+  directory: "/rust/actix"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/sifrr"
+- package-ecosystem: docker
+  directory: "/pony"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/nestjs-fastify"
+- package-ecosystem: docker
+  directory: "/go"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/fyrejet-api"
+- package-ecosystem: docker
+  directory: "/nim"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/restana"
+- package-ecosystem: docker
+  directory: "/python"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/express"
+- package-ecosystem: docker
+  directory: "/clojure"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/hapi"
+- package-ecosystem: docker
+  directory: "/elixir"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/muneem"
+- package-ecosystem: docker
+  directory: "/dart"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/turbo_polka"
+- package-ecosystem: docker
+  directory: "/perl"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/fyrejet-uwebsockets"
+- package-ecosystem: docker
+  directory: "/rust"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/fyrejet"
+- package-ecosystem: docker
+  directory: "/fsharp"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/feathersjs"
+- package-ecosystem: docker
+  directory: "/r"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/iotjs-express"
+- package-ecosystem: docker
+  directory: "/java"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/nestjs-express"
+- package-ecosystem: docker
+  directory: "/kotlin"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/restify"
+- package-ecosystem: docker
+  directory: "/crystal"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/polkadot"
+- package-ecosystem: docker
+  directory: "/haskell"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/rayo"
+- package-ecosystem: docker
+  directory: "/php"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/naturaljs-router"
+- package-ecosystem: docker
+  directory: "/scala"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/sails"
+- package-ecosystem: docker
+  directory: "/cpp"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/fastify"
+- package-ecosystem: docker
+  directory: "/swift"
   schedule:
     interval: daily
-- package-ecosystem: npm
-  directory: "/javascript/koa"
+- package-ecosystem: docker
+  directory: "/csharp"
   schedule:
     interval: daily
-- package-ecosystem: bundler
-  directory: "/."
+- package-ecosystem: docker
+  directory: "/julia"
   schedule:
     interval: daily
-- package-ecosystem: bundler
-  directory: "/ruby/syro"
+- package-ecosystem: docker
+  directory: "/javascript"
   schedule:
     interval: daily
-- package-ecosystem: bundler
-  directory: "/ruby/sinatra"
+- package-ecosystem: docker
+  directory: "/objc"
   schedule:
     interval: daily
-- package-ecosystem: bundler
-  directory: "/ruby/rack_app"
+- package-ecosystem: docker
+  directory: "/c"
   schedule:
     interval: daily
-- package-ecosystem: bundler
-  directory: "/ruby/camping"
+- package-ecosystem: docker
+  directory: "/v"
   schedule:
     interval: daily
-- package-ecosystem: bundler
-  directory: "/ruby/roda"
+- package-ecosystem: docker
+  directory: "/ruby"
   schedule:
     interval: daily
-- package-ecosystem: bundler
-  directory: "/ruby/agoo"
+- package-ecosystem: gomod
+  directory: "/go/chi"
   schedule:
     interval: daily
-- package-ecosystem: bundler
-  directory: "/ruby/rack-routing"
+- package-ecosystem: gomod
+  directory: "/go/violetear"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/httprouter"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/macaron"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/gramework"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/gearbox"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/fasthttp"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/gf"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/echo"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/gorouter"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/goyave"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/atreugo"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/kami"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/aero"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/air"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/tango"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/goroute"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/beego"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/gorouter-fasthttp"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/fiber"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/rte"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/clevergo"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/gorilla-mux"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/mars"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/gin"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/webgo"
+  schedule:
+    interval: daily
+- package-ecosystem: gomod
+  directory: "/go/router"
+  schedule:
+    interval: daily
+- package-ecosystem: gradle
+  directory: "/java/micronaut"
+  schedule:
+    interval: daily
+- package-ecosystem: gradle
+  directory: "/kotlin/kooby"
+  schedule:
+    interval: daily
+- package-ecosystem: gradle
+  directory: "/kotlin/http4k"
+  schedule:
+    interval: daily
+- package-ecosystem: gradle
+  directory: "/kotlin/ktor"
+  schedule:
+    interval: daily
+- package-ecosystem: maven
+  directory: "/java/restheart"
+  schedule:
+    interval: daily
+- package-ecosystem: maven
+  directory: "/java/light-4j"
+  schedule:
+    interval: daily
+- package-ecosystem: maven
+  directory: "/java/jooby"
+  schedule:
+    interval: daily
+- package-ecosystem: maven
+  directory: "/java/javalin"
+  schedule:
+    interval: daily
+- package-ecosystem: maven
+  directory: "/java/act"
+  schedule:
+    interval: daily
+- package-ecosystem: maven
+  directory: "/java/rapidoid"
+  schedule:
+    interval: daily
+- package-ecosystem: maven
+  directory: "/java/blade"
+  schedule:
+    interval: daily
+- package-ecosystem: maven
+  directory: "/java/struts2"
+  schedule:
+    interval: daily
+- package-ecosystem: maven
+  directory: "/java/spring-framework"
+  schedule:
+    interval: daily
+- package-ecosystem: maven
+  directory: "/java/spring-boot"
+  schedule:
+    interval: daily
+- package-ecosystem: mix
+  directory: "/elixir/cowboy"
+  schedule:
+    interval: daily
+- package-ecosystem: mix
+  directory: "/elixir/cowboy_stream"
+  schedule:
+    interval: daily
+- package-ecosystem: mix
+  directory: "/elixir/phoenix"
+  schedule:
+    interval: daily
+- package-ecosystem: mix
+  directory: "/elixir/plug"
+  schedule:
+    interval: daily
+- package-ecosystem: nuget
+  directory: "/fsharp/giraffe"
+  schedule:
+    interval: daily
+- package-ecosystem: nuget
+  directory: "/fsharp/websharper"
+  schedule:
+    interval: daily
+- package-ecosystem: nuget
+  directory: "/fsharp/saturn"
+  schedule:
+    interval: daily
+- package-ecosystem: nuget
+  directory: "/fsharp/frank"
+  schedule:
+    interval: daily
+- package-ecosystem: nuget
+  directory: "/fsharp/suave"
+  schedule:
+    interval: daily
+- package-ecosystem: nuget
+  directory: "/fsharp/falco"
+  schedule:
+    interval: daily
+- package-ecosystem: nuget
+  directory: "/csharp/aspnetcore"
+  schedule:
+    interval: daily
+- package-ecosystem: nuget
+  directory: "/csharp/carter"
+  schedule:
+    interval: daily
+- package-ecosystem: nuget
+  directory: "/csharp/simplify.web"
   schedule:
     interval: daily
