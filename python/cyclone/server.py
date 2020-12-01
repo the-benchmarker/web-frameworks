@@ -1,3 +1,8 @@
+# Disable all logging features
+import logging
+
+logging.disable()
+
 import cyclone.web
 from twisted.application import internet
 from twisted.application import service

@@ -1,3 +1,6 @@
 framework:
   github: runcobo/runcobo
   version: 1.0
+
+environment:
+  SKIP_LOG: true

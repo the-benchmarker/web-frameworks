@@ -1,3 +1,8 @@
+# Disable all logging features
+import logging
+
+logging.disable()
+
 """
 WSGI config for bl project.
 
