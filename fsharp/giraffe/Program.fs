@@ -30,7 +30,8 @@ let main args =
     Host.CreateDefaultBuilder(args)
         .ConfigureWebHost(fun webHost ->
             webHost.UseKestrel()
+                   .ConfigureServices(configureServices)
                    .Configure(Action<IApplicationBuilder> configureApp)
                    |> ignore)
-        .ConfigureServices(configureServices).Build().Run()
+        .Build().Run()
     0
