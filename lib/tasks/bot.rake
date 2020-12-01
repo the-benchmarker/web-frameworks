@@ -25,7 +25,7 @@ namespace :config do
           end
         end
       end
-      File.open('dependabot.yml', 'w') { |f| f.write(config.to_yaml) }
+      File.open('.github/dependabot.yml', 'w') { |f| f.write(config.to_yaml) }
     end
   end
 end
