@@ -57,6 +57,8 @@ namespace :db do
 
         if framework_config["framework"].key?("framework_github")
           frameworks[id].merge!(framework_website: "https://github.com/#{framework_config["framework"]["framework_github"]}")
+        elsif framework_config["framework"].key?("framework_gitlab")
+          frameworks[id].merge!(framework_website: "https://gitlab.com/#{framework_config["framework"]["framework_gitlab"]}")
         else
           frameworks[id].merge!(framework_website: "https://#{framework_config["framework"]["framework_website"]}")
         end
