@@ -1,0 +1,139 @@
+version: 2
+updates:
+- package-ecosystem: cargo
+  directory: "/rust/iron"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  rebase-strategy: disabled
+- package-ecosystem: cargo
+  directory: "/rust/nickel"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  rebase-strategy: disabled
+- package-ecosystem: cargo
+  directory: "/rust/gotham"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  rebase-strategy: disabled
+- package-ecosystem: nuget
+  directory: "/fsharp/websharper"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  labels:
+  - language:fsharp
+  rebase-strategy: disabled
+- package-ecosystem: nuget
+  directory: "/csharp/carter"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  labels:
+  - language:csharp
+  rebase-strategy: disabled
+- package-ecosystem: nuget
+  directory: "/fsharp/frank"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  labels:
+  - language:fsharp
+  rebase-strategy: disabled
+- package-ecosystem: nuget
+  directory: "/csharp/aspnetcore"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  labels:
+  - language:csharp
+  rebase-strategy: disabled
+- package-ecosystem: nuget
+  directory: "/csharp/simplify.web"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  labels:
+  - language:csharp
+  rebase-strategy: disabled
+- package-ecosystem: nuget
+  directory: "/fsharp/saturn"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  labels:
+  - language:fsharp
+  rebase-strategy: disabled
+- package-ecosystem: nuget
+  directory: "/fsharp/falco"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  labels:
+  - language:fsharp
+  rebase-strategy: disabled
+- package-ecosystem: nuget
+  directory: "/fsharp/giraffe"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  labels:
+  - language:fsharp
+  rebase-strategy: disabled
+- package-ecosystem: nuget
+  directory: "/fsharp/suave"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  labels:
+  - language:fsharp
+  rebase-strategy: disabled
+- package-ecosystem: mix
+  directory: "/elixir/cowboy"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  rebase-strategy: disabled
+- package-ecosystem: mix
+  directory: "/elixir/cowboy_stream"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  rebase-strategy: disabled
+- package-ecosystem: mix
+  directory: "/elixir/phoenix"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  rebase-strategy: disabled
+- package-ecosystem: cargo
+  directory: "/rust/actix"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  rebase-strategy: disabled
+- package-ecosystem: mix
+  directory: "/elixir/plug"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  rebase-strategy: disabled
