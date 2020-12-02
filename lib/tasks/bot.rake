@@ -7,11 +7,11 @@ namespace :config do
     desc 'Write dependabot config file'
     task :dependabot do
       manifests = {
-        npm: ['package.json'], bundler: ['Gemfile'],
-        cargo: ['Cargo.toml'], composer: ['composer.json'],
-        docker: ['Dockerfile'], gomod: ['go.mod'], gradle: ['build.gradle'],
-        maven: ['pom.xml'], mix: ['mix.exs'], nuget: ['web.fsproj', 'web.csproj'],
-        pip: ['requirements.txt']
+        # npm: ['package.json'], bundler: ['Gemfile'], composer: ['composer.json'],
+        cargo: ['Cargo.toml'],  docker: ['Dockerfile'], gomod: ['go.mod'], 
+        gradle: ['build.gradle'], maven: ['pom.xml'], mix: ['mix.exs'], 
+        nuget: ['web.fsproj', 'web.csproj'],
+        # pip: ['requirements.txt']
       }
       config = { 'version' => 2, 'updates' => [] }
       manifests.each do |manager, filenames|
