@@ -14,4 +14,6 @@ gem 'open3'
 group :development, :test do
   gem 'rspec'
   gem 'rubocop'
+  gem 'rubocop-rake'
+  gem 'rubocop-rspec'
 end
