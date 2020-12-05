@@ -61,10 +61,10 @@ feel free to create an issue if you want to try this project
 
 |    | Language | Framework | Speed (64) | Speed (256) | Speed (512) |
 |----|----------|-----------|-----------:|------------:|------------:|
-| 1 | java (11)| [spring-boot](https://spring.io/projects/spring-boot) (2.3) | 58 271.57 | 61 807.35 | 62 868.13 |
-| 2 | java (11)| [spring-framework](https://spring.io/projects/spring-framework) (5.3) | 46 117.68 | 50 040.77 | 51 112.71 |
-| 3 | java (11)| [quarkus](https://quarkus.io) (1.1) | 43 891.91 | 55 045.55 | 54 751.83 |
-| 4 | java (11)| [micronaut](https://micronaut.io) (1.2) | 43 842.52 | 50 514.87 | 51 037.89 |
+| 1 | java (11)| [spring-framework](https://spring.io/projects/spring-framework) (5.3) | 45 836.35 | 49 647.23 | 50 661.28 |
+| 2 | java (11)| [micronaut](https://micronaut.io) (1.2) | 43 339.78 | 50 924.29 | 51 559.86 |
+| 3 | java (11)| [quarkus](https://quarkus.io) (1.1) | 43 202.72 | 53 852.36 | 55 119.22 |
+| 4 | java (11)| [spring-boot](https://spring.io/projects/spring-boot) (2.3) | 41 837.55 | 60 622.01 | 60 804.02 |
 
 ## How to contribute ?
 
