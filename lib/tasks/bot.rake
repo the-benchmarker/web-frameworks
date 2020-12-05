@@ -20,8 +20,7 @@ namespace :config do
         filenames.each do |filename|
           Dir.glob("**/#{filename}").each do |file|
             c += 1
-
-            break if c == 100
+            next if c > 100
 
             directory = File.dirname(file)
             current = {
