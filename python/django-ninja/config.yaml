@@ -1,7 +1,7 @@
 framework:
   website: django-ninja.rest-framework.com
   version: 0.9
-  
+
 command: >
   gunicorn \
     --log-level warning  \
