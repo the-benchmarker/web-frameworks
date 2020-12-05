@@ -61,18 +61,10 @@ feel free to create an issue if you want to try this project
 
 |    | Language | Framework | Speed (64) | Speed (256) | Speed (512) |
 |----|----------|-----------|-----------:|------------:|------------:|
-| 1 | java (11)| [jooby](https://jooby.io) (2.8) | 111 061.29 | 140 339.31 | 144 452.81 |
-| 2 | java (11)| [rapidoid](https://rapidoid.org) (5.5) | 110 176.00 | 129 441.01 | 139 001.68 |
-| 3 | java (11)| [light-4j](https://doc.networknt.com) (2.0) | 107 112.05 | 133 804.26 | 138 606.62 |
-| 4 | java (11)| [act](https://actframework.org) (1.9) | 94 891.89 | 117 796.82 | 120 179.22 |
-| 5 | java (11)| [restheart](https://restheart.org) (5.1) | 69 883.68 | 69 746.55 | 65 821.38 |
-| 6 | java (11)| [spring-boot](https://spring.io/projects/spring-boot) (2.3) | 57 488.20 | 61 192.81 | 61 598.62 |
-| 7 | java (11)| [javalin](https://javalin.io) (3.9) | 54 101.19 | 57 302.30 | 58 255.04 |
-| 8 | java (11)| [spring-framework](https://spring.io/projects/spring-framework) (5.3) | 46 668.54 | 49 872.45 | 51 067.82 |
-| 9 | java (11)| [micronaut](https://micronaut.io) (1.2) | 44 984.51 | 50 590.85 | 51 191.25 |
-| 10 | java (11)| [quarkus](https://quarkus.io) (1.1) | 43 466.28 | 54 062.54 | 54 808.58 |
-| 11 | java (11)| [struts2](https://struts.apache.org) (2.5) | 13 925.68 | 14 234.78 | 14 275.05 |
-| 12 | java (11)| [blade](https://lets-blade.com) (2.0) | 12 987.31 | 16 141.92 | 14 701.63 |
+| 1 | java (11)| [spring-boot](https://spring.io/projects/spring-boot) (2.3) | 58 271.57 | 61 807.35 | 62 868.13 |
+| 2 | java (11)| [spring-framework](https://spring.io/projects/spring-framework) (5.3) | 46 117.68 | 50 040.77 | 51 112.71 |
+| 3 | java (11)| [quarkus](https://quarkus.io) (1.1) | 43 891.91 | 55 045.55 | 54 751.83 |
+| 4 | java (11)| [micronaut](https://micronaut.io) (1.2) | 43 842.52 | 50 514.87 | 51 037.89 |
 
 ## How to contribute ?
 
