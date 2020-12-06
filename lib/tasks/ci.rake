@@ -46,6 +46,6 @@ namespace :ci do
   end
   task :matrix do
     matrix = { include: [ { directory: 'ruby/rails', framework: 'ruby/rails'}]}
-    print matrix.to_json
+    print matrix.to_json.dump
   end
 end
