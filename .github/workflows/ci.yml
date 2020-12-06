@@ -11,7 +11,8 @@ jobs:
         - uses: actions/setup-ruby@v1
         - 
             id: set-matrix
-            run: echo "::set-output name=matrix::$(bundle exec rake ci:matrix)"
+            run: echo "::set-output name=matrix::{\"include\":[{\"framework\":\"ruby/rails\",\"directory\":\"ruby/rails\"},{\"framework\":\"ruby/sinatra\",\"directory\":\"ruby/sinatra\"}]}"
+
         outputs:
             matrix: ${{ steps.set-matrix.outputs.matrix }}
 
