@@ -206,6 +206,8 @@ updates:
   directory: "/go/tango/"
   schedule:
     interval: daily
+  reviewers:
+  - "@lunny"
 - package-ecosystem: gomod
   directory: "/go/goroute/"
   schedule:
