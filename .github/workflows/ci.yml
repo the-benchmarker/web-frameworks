@@ -23,7 +23,5 @@ jobs:
             matrix: ${{fromJson(needs.dynamic_matrix.outputs.matrix)}}
 
         steps:
-            - cd ${{ matrix.directory }}
-            - make build  -f .Makefile  
-            - cd -
-            - FRAMEWORK=${{ matrix.framework }} bundle exec rspec .spec
+            - name: Test
+              run: cd $DIRECTORY && make build  -f .Makefile && cd - && bundle exec rspec .spec
