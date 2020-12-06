@@ -1,0 +1,29 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+    dynamic_matrix:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-ruby@v1
+        - 
+            id: set-matrix
+            run: echo "::set-output name=matrix::$(bundle exec rake ci:matrix)"
+        outputs:
+            matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    test_implementations:
+        needs: dynamic_matrix
+
+        runs-on: ubuntu-latest
+        strategy:
+            matrix: ${{fromJson(needs.dynamic_matrix.outputs.matrix)}}
+
+        steps:
+            - cd ${{ matrix.directory }}
+            - make build  -f .Makefile  
+            - cd -
+            - FRAMEWORK=${{ matrix.framework }} bundle exec rspec .spec
