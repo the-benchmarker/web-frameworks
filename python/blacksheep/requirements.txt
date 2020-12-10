@@ -1,2 +1,4 @@
 blacksheep>=0.2.0,<0.3.0
-gunicorn
+gunicorn==20.0.4
+uvicorn==0.13.0
+uvloop==0.14.0; platform_system != "Windows"
