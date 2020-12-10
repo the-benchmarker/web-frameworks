@@ -29,8 +29,8 @@ namespace :config do
               'schedule' => { 'interval' => 'daily' }
             }
             framework, language = directory.split(File::SEPARATOR)
-            reviewers = REVIEWERS.dig(framework, language)
-            current.merge!('reviewers' => reviewers.map { |r| r.prepend('@') }) if reviewers
+            # reviewers = REVIEWERS.dig(framework, language)
+            # current.merge!('reviewers' => reviewers.map { |r| r.prepend('@') }) if reviewers
             config['updates'] << current
           end
         end
