@@ -11,14 +11,16 @@ PIPELINE = {
 }.freeze
 
 def insert(db, framework_id, metric, value, concurrency_level_id)
-  res = db.query('INSERT INTO keys (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id', [metric])
+  res = db.query('INSERT INTO keys (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id',
+                 [metric])
 
   metric_id = res.first['id']
 
   res = db.query('INSERT INTO values (key_id, value) VALUES ($1, $2) RETURNING id', [metric_id, value])
   value_id = res.first['id']
 
-  db.query('INSERT INTO metrics (value_id, framework_id, concurrency_id) VALUES ($1, $2, $3)', [value_id, framework_id, concurrency_level_id])
+  db.query('INSERT INTO metrics (value_id, framework_id, concurrency_id) VALUES ($1, $2, $3)',
+           [value_id, framework_id, concurrency_level_id])
 end
 
 task :collect do
@@ -36,21 +38,31 @@ task :collect do
 
   db = PG.connect(database)
 
-  res = db.query('INSERT INTO languages (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id', [language])
+  res = db.query(
+    'INSERT INTO languages (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id', [language]
+  )
   language_id = res.first['id']
 
-  res = db.query('INSERT INTO frameworks (language_id, label) VALUES ($1, $2) ON CONFLICT (language_id, label) DO UPDATE SET label = $2 RETURNING id', [language_id, framework])
+  res = db.query(
+    'INSERT INTO frameworks (language_id, label) VALUES ($1, $2) ON CONFLICT (language_id, label) DO UPDATE SET label = $2 RETURNING id', [
+      language_id, framework
+    ]
+  )
   framework_id = res.first['id']
 
   routes.split(',').each do |route|
     method, uri = route.split(':')
 
     concurrencies.split(',').each do |concurrency|
-      res = db.query('INSERT INTO concurrencies (level) VALUES ($1) ON CONFLICT (level) DO UPDATE SET level = $1 RETURNING id', [concurrency])
+      res = db.query(
+        'INSERT INTO concurrencies (level) VALUES ($1) ON CONFLICT (level) DO UPDATE SET level = $1 RETURNING id', [concurrency]
+      )
 
       concurrency_level_id = res.first['id']
 
-      command = format("wrk -H 'Connection: keep-alive' --connections %<concurrency>s --threads %<threads>s --duration %<duration>s --timeout 1 --script %<pipeline>s http://%<hostname>s:3000", concurrency: concurrency, threads: threads, duration: duration, pipeline: PIPELINE[method.to_sym], hostname: hostname)
+      command = format(
+        "wrk -H 'Connection: keep-alive' --connections %<concurrency>s --threads %<threads>s --duration %<duration>s --timeout 1 --script %<pipeline>s http://%<hostname>s:3000", concurrency: concurrency, threads: threads, duration: duration, pipeline: PIPELINE[method.to_sym], hostname: hostname
+      )
 
       Open3.popen3(command) do |_, _, stderr|
         lua_output = stderr.read
