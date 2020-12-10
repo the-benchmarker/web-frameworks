@@ -5,10 +5,6 @@ updates:
   directory: "/rust/gotham/"
   schedule:
     interval: daily
-  reviewers:
-  - "@sezna"
-  - "@msrd0"
-  - "@colinbankier"
 - package-ecosystem: cargo
   directory: "/rust/iron/"
   schedule:
@@ -21,9 +17,6 @@ updates:
   directory: "/rust/actix/"
   schedule:
     interval: daily
-  reviewers:
-  - "@robjtede"
-  - "@JohnTitor"
 - package-ecosystem: docker
   directory: "/pony/"
   schedule:
@@ -144,8 +137,6 @@ updates:
   directory: "/go/macaron/"
   schedule:
     interval: daily
-  reviewers:
-  - "@humaidq"
 - package-ecosystem: gomod
   directory: "/go/gramework/"
   schedule:
@@ -154,14 +145,10 @@ updates:
   directory: "/go/gearbox/"
   schedule:
     interval: daily
-  reviewers:
-  - "@muhammednagy"
 - package-ecosystem: gomod
   directory: "/go/fasthttp/"
   schedule:
     interval: daily
-  reviewers:
-  - "@savsgio"
 - package-ecosystem: gomod
   directory: "/go/gf/"
   schedule:
@@ -174,20 +161,14 @@ updates:
   directory: "/go/gorouter/"
   schedule:
     interval: daily
-  reviewers:
-  - "@vardius"
 - package-ecosystem: gomod
   directory: "/go/goyave/"
   schedule:
     interval: daily
-  reviewers:
-  - "@System-Glitch"
 - package-ecosystem: gomod
   directory: "/go/atreugo/"
   schedule:
     interval: daily
-  reviewers:
-  - "@savsgio"
 - package-ecosystem: gomod
   directory: "/go/kami/"
   schedule:
@@ -200,14 +181,10 @@ updates:
   directory: "/go/air/"
   schedule:
     interval: daily
-  reviewers:
-  - "@aofei"
 - package-ecosystem: gomod
   directory: "/go/tango/"
   schedule:
     interval: daily
-  reviewers:
-  - "@lunny"
 - package-ecosystem: gomod
   directory: "/go/goroute/"
   schedule:
@@ -220,14 +197,10 @@ updates:
   directory: "/go/gorouter-fasthttp/"
   schedule:
     interval: daily
-  reviewers:
-  - "@vardius"
 - package-ecosystem: gomod
   directory: "/go/fiber/"
   schedule:
     interval: daily
-  reviewers:
-  - "@Fenny"
 - package-ecosystem: gomod
   directory: "/go/rte/"
   schedule:
@@ -236,8 +209,6 @@ updates:
   directory: "/go/clevergo/"
   schedule:
     interval: daily
-  reviewers:
-  - "@razonyang"
 - package-ecosystem: gomod
   directory: "/go/gorilla-mux/"
   schedule:
@@ -246,8 +217,6 @@ updates:
   directory: "/go/mars/"
   schedule:
     interval: daily
-  reviewers:
-  - "@roblillack"
 - package-ecosystem: gomod
   directory: "/go/gin/"
   schedule:
@@ -256,14 +225,10 @@ updates:
   directory: "/go/webgo/"
   schedule:
     interval: daily
-  reviewers:
-  - "@bnkamalesh"
 - package-ecosystem: gomod
   directory: "/go/router/"
   schedule:
     interval: daily
-  reviewers:
-  - "@savsgio"
 - package-ecosystem: gradle
   directory: "/java/micronaut/"
   schedule:
@@ -272,8 +237,6 @@ updates:
   directory: "/kotlin/kooby/"
   schedule:
     interval: daily
-  reviewers:
-  - "@jknack"
 - package-ecosystem: gradle
   directory: "/kotlin/http4k/"
   schedule:
@@ -290,15 +253,10 @@ updates:
   directory: "/java/light-4j/"
   schedule:
     interval: daily
-  reviewers:
-  - "@tsuilouis"
-  - "@stevehu"
 - package-ecosystem: maven
   directory: "/java/jooby/"
   schedule:
     interval: daily
-  reviewers:
-  - "@jknack"
 - package-ecosystem: maven
   directory: "/java/javalin/"
   schedule:
@@ -319,8 +277,6 @@ updates:
   directory: "/java/struts2/"
   schedule:
     interval: daily
-  reviewers:
-  - "@lukaszlenart"
 - package-ecosystem: maven
   directory: "/java/spring-framework/"
   schedule:
@@ -357,8 +313,6 @@ updates:
   directory: "/fsharp/saturn/"
   schedule:
     interval: daily
-  reviewers:
-  - "@Krzysztof-Cieslak"
 - package-ecosystem: nuget
   directory: "/fsharp/frank/"
   schedule:
@@ -379,14 +333,10 @@ updates:
   directory: "/csharp/carter/"
   schedule:
     interval: daily
-  reviewers:
-  - "@jchannon"
 - package-ecosystem: nuget
   directory: "/csharp/simplify.web/"
   schedule:
     interval: daily
-  reviewers:
-  - "@i4004"
 - package-ecosystem: pip
   directory: "/python/flask/"
   schedule:
@@ -415,8 +365,6 @@ updates:
   directory: "/python/quart/"
   schedule:
     interval: daily
-  reviewers:
-  - "@pgjones"
 - package-ecosystem: pip
   directory: "/python/pyramid/"
   schedule:
@@ -433,8 +381,6 @@ updates:
   directory: "/python/emmett/"
   schedule:
     interval: daily
-  reviewers:
-  - "@gi0baro"
 - package-ecosystem: pip
   directory: "/python/hug/"
   schedule:
@@ -455,5 +401,3 @@ updates:
   directory: "/python/tonberry/"
   schedule:
     interval: daily
-  reviewers:
-  - "@Ayehavgunne"
