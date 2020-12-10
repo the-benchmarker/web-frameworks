@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'dotenv'
+require 'active_support'
 
 Dir.glob('lib/tasks/*.rake').each { |r| load r }
 
