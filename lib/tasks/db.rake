@@ -93,7 +93,8 @@ namespace :db do
       row.merge!(
         id: c,
         concurrency_64: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_64], delimiter: ' '),
-        concurrency_256: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_256], delimiter: ' '),
+        concurrency_256: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_256],
+                                                                         delimiter: ' '),
         concurrency_512: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_512], delimiter: ' ')
       )
     end
