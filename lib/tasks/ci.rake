@@ -9,9 +9,6 @@ namespace :ci do
         commands: [
           'checkout',
           'cache store $SEMAPHORE_GIT_SHA .',
-          'sudo snap install crystal --classic',
-          'sudo apt-get -y install libyaml-dev libevent-dev',
-          'shards build --static',
           'cache store bin bin',
           'bundle config path .cache',
           'bundle install',
