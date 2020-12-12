@@ -20,7 +20,7 @@
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <jetty.version>9.4.35.v20201120</jetty.version>
+        <jetty.version>11.0.0</jetty.version>
     </properties>
 
     <dependencies>
