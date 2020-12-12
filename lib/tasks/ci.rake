@@ -2,15 +2,13 @@
 
 namespace :ci do
   task :config do
+    ONLY_FOR = ENV['ONLY_FOR']
     blocks = [{ name: 'setup', dependencies: [], task: {
       jobs: [{
         name: 'setup',
         commands: [
           'checkout',
           'cache store $SEMAPHORE_GIT_SHA .',
-          'sudo snap install crystal --classic',
-          'sudo apt-get -y install libyaml-dev libevent-dev',
-          'shards build --static',
           'cache store bin bin',
           'bundle config path .cache',
           'bundle install',
@@ -21,6 +19,7 @@ namespace :ci do
     } }]
     Dir.glob('*/config.yaml').each do |path|
       language, = path.split(File::Separator)
+      next if ONLY_FOR && language != ONLY_FOR
 
       block = { name: language, dependencies: ['setup'], task: { prologue: { commands: [
         'cache restore $SEMAPHORE_GIT_SHA',
@@ -41,11 +40,12 @@ namespace :ci do
       blocks << block
     end
 
-    config = { version: 'v1.0', name: 'Benchmarking suite', execution_time_limit: { hours: 24 }, agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu1804' } }, blocks: blocks }
+    config = { version: 'v1.0', name: 'Benchmarking suite', execution_time_limit: { hours: 24 },
+               agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu1804' } }, blocks: blocks }
     File.write('.semaphore/semaphore.yml', JSON.parse(config.to_json).to_yaml)
   end
   task :matrix do
-    matrix = { include: [ { directory: 'ruby/rails', framework: 'ruby/rails'}]}
+    matrix = { include: [{ directory: 'ruby/rails', framework: 'ruby/rails' }] }
     puts matrix.to_json
   end
 end

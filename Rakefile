@@ -137,7 +137,9 @@ def create_dockerfile(language, framework, **options)
   end
 
   if template
-    File.open(File.join(directory, MANIFESTS[:container]), 'w') { |f| f.write(Mustache.render(File.read(template), config)) }
+    File.open(File.join(directory, MANIFESTS[:container]), 'w') do |f|
+      f.write(Mustache.render(File.read(template), config))
+    end
   end
 end
 
