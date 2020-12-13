@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine
+FROM php:8.0.0-fpm-alpine
 
 RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev {{#deps}} {{{.}}} {{/deps}}
 RUN docker-php-ext-install zip opcache
