@@ -3,18 +3,16 @@
 source 'https://rubygems.org'
 
 gem 'activesupport'
+gem 'bigdecimal'
 gem 'dotenv'
 gem 'mustache'
+gem 'open3'
 gem 'pg'
 gem 'rake'
-
-gem 'bigdecimal'
-gem 'open3'
 
 group :development, :test do
   gem 'rspec'
   gem 'rubocop'
   gem 'rubocop-rake'
   gem 'rubocop-rspec'
-  gem 'activesupport'
 end
