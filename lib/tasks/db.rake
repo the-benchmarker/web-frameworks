@@ -54,14 +54,16 @@ namespace :db do
         if framework_config['framework'].key?('framework_name')
           frameworks[id].merge!(framework: framework_config['framework']['framework_name'])
         end
-
-        if framework_config['framework'].key?('framework_github')
-          frameworks[id].merge!(framework_website: "https://github.com/#{framework_config['framework']['framework_github']}")
-        elsif framework_config['framework'].key?('framework_gitlab')
-          frameworks[id].merge!(framework_website: "https://gitlab.com/#{framework_config['framework']['framework_gitlab']}")
-        else
-          frameworks[id].merge!(framework_website: "https://#{framework_config['framework']['framework_website']}")
-        end
+        scheme = 'https'
+        scheme = 'http' if framework_config['framework'].key?('unsecure')
+        website = if framework_config['framework'].key?('framework_github')
+                    "github.com/#{framework_config['framework']['framework_github']}"
+                  elsif framework_config['framework'].key?('framework_gitlab')
+                    "gitlab.com/#{framework_config['framework']['framework_gitlab']}"
+                  else
+                    (framework_config['framework']['framework_website']).to_s
+                  end
+        frameworks[id].merge!(framework_website: "#{scheme}://#{website}")
       end
     end
     db.close
