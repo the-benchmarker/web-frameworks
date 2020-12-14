@@ -92,6 +92,12 @@ php:
     - l0gicgate
   slim:
     - l0gicgate
+  sunrise-router:
+    - fenric
+  sunrise-router-roadrunner:
+    - fenric
+  sunrise-router-annotations:
+    - fenric
   phalcon:
     - ruudboon
   ice:
