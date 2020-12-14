@@ -621,10 +621,6 @@ blocks:
       commands:
       - cd crystal/shivneri && make build  -f .Makefile  && cd -
       - FRAMEWORK=crystal/shivneri bundle exec rspec .spec
-    - name: lucky
-      commands:
-      - cd crystal/lucky && make build  -f .Makefile  && cd -
-      - FRAMEWORK=crystal/lucky bundle exec rspec .spec
     - name: orion
       commands:
       - cd crystal/orion && make build  -f .Makefile  && cd -
