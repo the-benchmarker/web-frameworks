@@ -21,7 +21,7 @@ namespace :ci do
       language, = path.split(File::Separator)
       next if ONLY_FOR && language != ONLY_FOR
 
-      block = { name: language, dependencies: ['setup'], task: { prologue: { commands: [
+      block = { name: language, dependencies: ['setup'], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
         'cache restore $SEMAPHORE_GIT_SHA',
         'cache restore bin',
         'cache restore built-in',
