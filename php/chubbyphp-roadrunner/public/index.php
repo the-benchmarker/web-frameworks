@@ -26,7 +26,7 @@ $app = new Application([
     new ExceptionMiddleware($responseFactory, true),
     new RouterMiddleware(new Router([
         Route::get('/', 'home', new CallbackRequestHandler(
-            function () use ($responseFactory) {
+            static function () use ($responseFactory) {
                 $response = $responseFactory->createResponse();
                 $response->getBody()->write('');
 
@@ -34,7 +34,7 @@ $app = new Application([
             }
         )),
         Route::get('/user/{id}', 'user_view', new CallbackRequestHandler(
-            function (ServerRequestInterface $request) use ($responseFactory) {
+            static function (ServerRequestInterface $request) use ($responseFactory) {
                 $response = $responseFactory->createResponse();
                 $response->getBody()->write($request->getAttribute('id'));
 
@@ -42,7 +42,7 @@ $app = new Application([
             }
         )),
         Route::post('/user', 'user_list', new CallbackRequestHandler(
-            function () use ($responseFactory) {
+            static function () use ($responseFactory) {
                 $response = $responseFactory->createResponse();
                 $response->getBody()->write('');
 
