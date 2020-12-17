@@ -1,4 +1,4 @@
-blacksheep>=0.2.0,<0.3.0
+blacksheep>=0.2.0,<0.4.0
 gunicorn
 uvicorn[standard]
 uvloop; platform_system != "Windows"
