@@ -245,6 +245,10 @@ blocks:
       commands:
       - cd python/clastic && make build  -f .Makefile  && cd -
       - FRAMEWORK=python/clastic bundle exec rspec .spec
+    - name: guillotina
+      commands:
+      - cd python/guillotina && make build  -f .Makefile  && cd -
+      - FRAMEWORK=python/guillotina bundle exec rspec .spec
     - name: index.py
       commands:
       - cd python/index.py && make build  -f .Makefile  && cd -
