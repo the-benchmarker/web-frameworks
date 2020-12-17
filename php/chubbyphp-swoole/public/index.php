@@ -14,10 +14,10 @@ use Chubbyphp\SwooleRequestHandler\OnRequest;
 use Chubbyphp\SwooleRequestHandler\PsrRequestFactory;
 use Chubbyphp\SwooleRequestHandler\SwooleResponseEmitter;
 use Psr\Http\Message\ServerRequestInterface;
-use Sunrise\Http\Message\ResponseFactory;
-use Sunrise\Http\ServerRequest\ServerRequestFactory;
-use Sunrise\Http\ServerRequest\UploadedFileFactory;
-use Sunrise\Stream\StreamFactory;
+use Slim\Psr7\Factory\ResponseFactory;
+use Slim\Psr7\Factory\ServerRequestFactory;
+use Slim\Psr7\Factory\StreamFactory;
+use Slim\Psr7\Factory\UploadedFileFactory;
 use Swoole\Http\Server;
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
@@ -28,7 +28,7 @@ $app = new Application([
     new ExceptionMiddleware($responseFactory, true),
     new RouterMiddleware(new Router([
         Route::get('/', 'home', new CallbackRequestHandler(
-            static function () use ($responseFactory) {
+            function () use ($responseFactory) {
                 $response = $responseFactory->createResponse();
                 $response->getBody()->write('');
 
@@ -36,7 +36,7 @@ $app = new Application([
             }
         )),
         Route::get('/user/{id}', 'user_view', new CallbackRequestHandler(
-            static function (ServerRequestInterface $request) use ($responseFactory) {
+            function (ServerRequestInterface $request) use ($responseFactory) {
                 $response = $responseFactory->createResponse();
                 $response->getBody()->write($request->getAttribute('id'));
 
@@ -44,7 +44,7 @@ $app = new Application([
             }
         )),
         Route::post('/user', 'user_list', new CallbackRequestHandler(
-            static function () use ($responseFactory) {
+            function () use ($responseFactory) {
                 $response = $responseFactory->createResponse();
                 $response->getBody()->write('');
 

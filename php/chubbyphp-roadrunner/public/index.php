@@ -11,10 +11,10 @@ use Chubbyphp\Framework\RequestHandler\CallbackRequestHandler;
 use Chubbyphp\Framework\Router\FastRoute\Router;
 use Chubbyphp\Framework\Router\Route;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Psr7\Factory\ResponseFactory;
 use Spiral\Goridge\StreamRelay;
-use Spiral\RoadRunner\PSR7Client;
 use Spiral\RoadRunner\Worker;
-use Sunrise\Http\Message\ResponseFactory;
+use Spiral\RoadRunner\PSR7Client;
 
 ini_set('display_errors', 'stderr');
 
@@ -26,7 +26,7 @@ $app = new Application([
     new ExceptionMiddleware($responseFactory, true),
     new RouterMiddleware(new Router([
         Route::get('/', 'home', new CallbackRequestHandler(
-            static function () use ($responseFactory) {
+            function () use ($responseFactory) {
                 $response = $responseFactory->createResponse();
                 $response->getBody()->write('');
 
@@ -34,7 +34,7 @@ $app = new Application([
             }
         )),
         Route::get('/user/{id}', 'user_view', new CallbackRequestHandler(
-            static function (ServerRequestInterface $request) use ($responseFactory) {
+            function (ServerRequestInterface $request) use ($responseFactory) {
                 $response = $responseFactory->createResponse();
                 $response->getBody()->write($request->getAttribute('id'));
 
@@ -42,7 +42,7 @@ $app = new Application([
             }
         )),
         Route::post('/user', 'user_list', new CallbackRequestHandler(
-            static function () use ($responseFactory) {
+            function () use ($responseFactory) {
                 $response = $responseFactory->createResponse();
                 $response->getBody()->write('');
 
