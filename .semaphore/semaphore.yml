@@ -597,10 +597,10 @@ blocks:
       commands:
       - cd java/micronaut && make build  -f .Makefile  && cd -
       - FRAMEWORK=java/micronaut bundle exec rspec .spec
-    - name: spring-boot
+    - name: spring
       commands:
-      - cd java/spring-boot && make build  -f .Makefile  && cd -
-      - FRAMEWORK=java/spring-boot bundle exec rspec .spec
+      - cd java/spring && make build  -f .Makefile  && cd -
+      - FRAMEWORK=java/spring bundle exec rspec .spec
 - name: kotlin
   dependencies:
   - setup
