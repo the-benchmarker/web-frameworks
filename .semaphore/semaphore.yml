@@ -593,10 +593,6 @@ blocks:
       commands:
       - cd java/struts2 && make build  -f .Makefile  && cd -
       - FRAMEWORK=java/struts2 bundle exec rspec .spec
-    - name: spring-framework
-      commands:
-      - cd java/spring-framework && make build  -f .Makefile  && cd -
-      - FRAMEWORK=java/spring-framework bundle exec rspec .spec
     - name: micronaut
       commands:
       - cd java/micronaut && make build  -f .Makefile  && cd -
