@@ -1,6 +1,6 @@
 framework:
   github: RobertoPrevato/BlackSheep
-  version: 0.2
+  version: 0.3
 
 command: >
   gunicorn  \ 
