@@ -1,12 +1,15 @@
 framework:
-  website: hug.rest
+  website: www.hug.rest
   version: 2.6
 
+files:
+  - server.py
+  - requirements.txt
+  - ../.config/gunicorn.py
+
+environment:
+  WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker
+
 command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class meinheld.gmeinheld.MeinheldWorker \
-      server:__hug_wsgi__
+  /usr/bin/python3 /usr/local/bin/gunicorn --log-level warning --reuse-port
+  --log-syslog --chdir /opt/web -c /opt/web/config/gunicorn.py server:__hug_wsgi__

@@ -6,7 +6,7 @@ build:
   - mvn clean package
 
 binaries:
-  - target/benchmark.jar
+  - target/server.jar
 
 command: >
   /usr/bin/java -server

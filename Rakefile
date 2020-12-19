@@ -1,20 +1,32 @@
 # frozen_string_literal: true
 
-require 'dotenv'
+require 'bundler'
+require 'yaml'
 require 'active_support'
+require 'pg'
 
-Dir.glob('lib/tasks/*.rake').each { |r| load r }
+Bundler.require(:development, :production, :test)
+
+Dir.glob('lib/tasks/**/*.rake').each { |r| load r }
+
+Dotenv.load
 
 MANIFESTS = {
   container: '.Dockerfile',
   build: '.Makefile'
 }.freeze
 
-Dotenv.load
-
 class ::Hash
   def recursive_merge(h)
     merge!(h) { |_key, _old, _new| _old.instance_of?(Hash) ? _old.recursive_merge(_new) : _new }
+  end
+end
+
+def default_provider
+  if RbConfig::CONFIG['host_os'] =~ /linux/
+    'docker'
+  else
+    'docker-machine'
   end
 end
 
@@ -136,11 +148,7 @@ def create_dockerfile(language, framework, **options)
     config['environment'] = environment
   end
 
-  if template
-    File.open(File.join(directory, MANIFESTS[:container]), 'w') do |f|
-      f.write(Mustache.render(File.read(template), config))
-    end
-  end
+  File.open(File.join(directory, MANIFESTS[:container]), 'w') { |f| f.write(Mustache.render(File.read(template), config)) } if template
 end
 
 task :config do
@@ -166,6 +174,217 @@ task :config do
     end
 
     makefile.close
+  end
+end
+
+namespace :cloud do
+  task :config do
+    language = ENV.fetch('LANG')
+    framework = ENV.fetch('FRAMEWORK')
+
+    directory = File.join(Dir.pwd, language, framework)
+    main_config = YAML.safe_load(File.open(File.join(Dir.pwd, 'config.yaml')))
+    language_config = YAML.safe_load(File.open(File.join(Dir.pwd, language, 'config.yaml')))
+    framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
+    config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
+
+    config['cloud']['config']['write_files'] = if config.key?('service')
+                                                 [{
+                                                   'path' => '/usr/lib/systemd/system/web.service',
+                                                   'permission' => '0644',
+                                                   'content' => Mustache.render(config['service'], config)
+                                                 }]
+                                               else
+                                                 []
+                                               end
+
+    if config.key?('environment')
+      environment = config.fetch('environment')
+      stringified_environment = String.new
+      environment.map { |k, v| stringified_environment += "#{k}=#{v}\n" }
+      config['cloud']['config']['write_files'] << {
+        'path' => '/etc/web',
+        'permission' => '0644',
+        'content' => stringified_environment
+      }
+    else
+      config['cloud']['config']['write_files'] << {
+        'path' => '/etc/web',
+        'permission' => '0644',
+        'content' => ''
+      }
+    end
+
+    if config.key?('deps')
+      config['cloud']['config']['packages'] = [] unless config['cloud']['config'].key?('packages')
+      config['deps'].each do |package|
+        config['cloud']['config']['packages'] << package
+      end
+    end
+
+    if config.key?('before_command')
+      commands = config['cloud']['config']['runcmd'] || []
+      config['cloud']['config']['runcmd'] = []
+      config['before_command'].each do |cmd|
+        config['cloud']['config']['runcmd'] << cmd
+      end
+      commands.each do |cmd|
+        config['cloud']['config']['runcmd'] << cmd
+      end
+    end
+
+    if config.key?('php_ext')
+      config['php_ext'].each do |deps|
+        config['cloud']['config']['runcmd'] << "pecl install #{deps}"
+        config['cloud']['config']['runcmd'] << "echo 'extension=#{deps}' > /etc/php.d/99-#{deps}.ini"
+      end
+    end
+
+    if config.key?('after_command')
+      config['after_command'].each do |cmd|
+        config['cloud']['config']['runcmd'] << cmd
+      end
+    end
+
+    if config.key?('files')
+      config['files'].each do |pattern|
+        path = File.join(directory, pattern)
+        files = Dir.glob(path)
+
+        files.each do |path|
+          remote_path = path.gsub(directory, '').gsub(%r{^/}, '').gsub(%r{^\.\./\.}, '')
+          remote_directory = File.dirname(remote_path)
+
+          config['cloud']['config']['write_files'] << {
+            'path' => "/opt/web/#{remote_path}",
+            'content' => File.read(path),
+            'permission' => '0644'
+          }
+
+          next if remote_directory.start_with?('.')
+        end
+      end
+    end
+
+    File.open(File.join(directory, 'user_data.yml'), 'w') do |f|
+      f.write('#cloud-config')
+      f.write("\n")
+      f.write(config['cloud']['config'].to_yaml)
+    end
+  end
+
+  task :upload do
+    language = ENV.fetch('LANG')
+    framework = ENV.fetch('FRAMEWORK')
+
+    directory = File.join(Dir.pwd, language, framework)
+    main_config = YAML.safe_load(File.open(File.join(Dir.pwd, 'config.yaml')))
+    language_config = YAML.safe_load(File.open(File.join(Dir.pwd, language, 'config.yaml')))
+    framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
+    config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
+
+    if config.key?('binaries')
+      binaries = []
+      config['binaries'].each do |pattern|
+        Dir.glob(File.join(directory, pattern)).each do |binary|
+          binaries << binary
+        end
+      end
+
+      Net::SSH.start(ENV['HOST'], 'root', keys: [ENV['SSH_KEY']]) do |ssh|
+        binaries.each do |binary|
+          remote_directory = File.dirname(binary).gsub!(directory, '/opt/web')
+          $stdout.puts "Creating #{remote_directory}"
+          ssh.exec!("mkdir -p #{remote_directory}")
+        end
+      end
+
+      Net::SCP.start(ENV['HOST'], 'root', keys: [ENV['SSH_KEY']]) do |scp|
+        config['binaries'].each do |pattern|
+          Dir.glob(File.join(directory, pattern)).each do |binary|
+            remote_directory = File.dirname(binary).gsub!(directory, '/opt/web')
+            $stdout.puts "Uploading #{binary} to #{remote_directory}"
+            scp.upload!(binary, remote_directory, verbose: true, recursive: true)
+          end
+        end
+      end
+    end
+  end
+
+  task :wait do
+    while true
+      $stdout.puts 'Tring to connect'
+      begin
+        ssh = Net::SSH.start(ENV['HOST'], 'root', keys: [ENV['SSH_KEY']])
+      rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+        sleep 5
+        next
+      else
+        break
+      end
+    end
+
+    loop do
+      output = ssh.exec!('cloud-init status')
+      _, status = output.split(':')
+
+      raise 'Cloud-init have failed' if status.strip == 'error'
+
+      break if status.strip == 'done'
+
+      $stdout.puts 'Cloud-init is still running'
+      sleep 5
+    end
+
+    ssh.close
+  end
+end
+
+namespace :ci do
+  task :config do
+    blocks = [{ name: 'setup', dependencies: [], task: {
+      jobs: [{
+        name: 'setup',
+        commands: [
+          'checkout',
+          'cache store $SEMAPHORE_GIT_SHA .',
+          'sudo snap install crystal --classic',
+          'sudo apt-get -y install libyaml-dev libevent-dev',
+          'shards build --static',
+          'cache store bin bin',
+          'bundle config path .cache',
+          'bundle install',
+          'cache store built-in .cache',
+          'bundle exec rake config'
+        ]
+      }]
+    } }]
+    Dir.glob('*/config.yaml').each do |path|
+      language, = path.split(File::Separator)
+      block = { name: language, dependencies: ['setup'], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
+        'cache restore $SEMAPHORE_GIT_SHA',
+        'cache restore bin',
+        'cache restore built-in',
+        'find bin -type f -exec chmod +x {} \\;',
+        'bundle config path .cache',
+        'bundle exec rake config'
+      ] }, 'env_vars': [
+        { name: 'CLEAN', value: 'off' },
+        { name: 'COLLECT', 'value': 'off' }
+      ], jobs: [] } }
+      Dir.glob("#{language}/*/config.yaml") do |file|
+        _, framework, = file.split(File::Separator)
+        block[:task][:jobs] << { name: framework, commands: [
+          "mkdir -p .neph/#{language}/#{framework}",
+          "retry bin/neph #{language}/#{framework} --mode=CI",
+          "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec"
+        ] }
+      end
+      blocks << block
+    end
+
+    config = { version: 'v1.0', name: 'Benchmarking suite', execution_time_limit: { hours: 2 }, agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu1804' } }, blocks: blocks }
+    File.write('.semaphore/semaphore.yml', JSON.parse(config.to_json).to_yaml)
   end
 end
 

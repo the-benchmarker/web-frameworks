@@ -51,9 +51,7 @@ namespace :db do
         frameworks[id].merge!(framework_config['framework'].transform_keys!(&'framework_'.method(:+)))
         frameworks[id].merge!(language_config['provider']['default'].transform_keys!(&'language_'.method(:+)))
 
-        if framework_config['framework'].key?('framework_name')
-          frameworks[id].merge!(framework: framework_config['framework']['framework_name'])
-        end
+        frameworks[id].merge!(framework: framework_config['framework']['framework_name']) if framework_config['framework'].key?('framework_name')
         scheme = 'https'
         scheme = 'http' if framework_config['framework'].key?('unsecure')
         website = if framework_config['framework'].key?('framework_github')

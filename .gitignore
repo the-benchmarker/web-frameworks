@@ -2,6 +2,7 @@
 
 .DS_Store
 *.swp
+*.lock
 
 .neph
 neph.yaml
@@ -12,14 +13,6 @@ shard.lock
 
 # GoLand IDE
 .idea
-
-# Temporary files
-FRAMEWORKS.yaml
-*/*/Dockerfile
-*/*/ip.txt
-
-/lib/**/*.cr
-/bin
 
 # Rust build directories
 rust/*/target

@@ -8,7 +8,9 @@
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
 {{#build}}
   RUN {{{.}}}
@@ -20,7 +22,7 @@ COPY . ./
 
 FROM openjdk:11-jre-slim-buster
 
-WORKDIR /opt/bin
+WORKDIR /opt/web
 
 {{#environment}}
   ENV {{{.}}}
@@ -32,6 +34,4 @@ WORKDIR /opt/bin
 
 RUN ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+CMD {{{command}}}

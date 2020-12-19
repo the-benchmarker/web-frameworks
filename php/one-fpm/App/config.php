@@ -7,5 +7,4 @@
 \One\Exceptions\Handler::setConfig(config('exception', true));
 
 
-// 解析路由
 \One\Http\Router::loadRouter();

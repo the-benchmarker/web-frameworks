@@ -5,8 +5,9 @@ RUN apt -y install libssl-dev zlib1g-dev libcurl4-openssl-dev uuid-dev
 
 WORKDIR /usr/src/app
 
-COPY Package.swift ./
-COPY Sources/ ./Sources/
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
 RUN swift build -c release
 
@@ -14,5 +15,15 @@ FROM swift:5.3-slim
 {{#environment}}
 ENV {{{.}}}
 {{/environment}}
-COPY --from=0 /usr/src/app/.build/release/server /usr/src/app/.build/release/server
-CMD /usr/src/app/.build/release/server {{options}}
+
+WORKDIR /opt/web
+
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
+
+{{#binaries}}
+  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+{{/binaries}}
+
+CMD {{{command}}}

@@ -1,3 +1,19 @@
 provider:
   default:
     language: 8.0
+
+sources:
+  - "**/*.cs"
+
+binaries:
+  - out/web.dll
+  - out/web.runtimeconfig.json
+
+environment:
+  ASPNETCORE_URLS: http://*:3000
+  COMPlus_TieredCompilation: 1
+
+deps:
+  - aspnetcore-runtime-3.1
+
+command: /usr/bin/dotnet /opt/web/out/web.dll

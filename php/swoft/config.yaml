@@ -6,4 +6,4 @@ php_ext:
   - redis
   - swoole
 
-command: php bin/swoft http:start
+command: /usr/bin/php /opt/web/bin/swoft.php http:start

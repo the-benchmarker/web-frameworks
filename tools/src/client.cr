@@ -46,18 +46,20 @@ class Client < Admiral::Command
 
     process = Process.new("wrk", ["-H", "Connection: keep-alive", "-d", "5s", "-c", "8", "--timeout", "8", "-t", flags.threads.to_s, "http://#{address}"])
     process.wait
+    STDERR.puts "Warmup"
 
     # Run a 15-second warmup at 256 client-concurrency to allow lazy-initialization to execute and just-in-time compilation to run. These results are not captured.
 
     process = Process.new("wrk", ["-H", "Connection: keep-alive", "-d", "#{flags.duration}s", "-c", "256", "--timeout", "8", "-t", flags.threads.to_s, "http://#{address}"])
     process.wait
+    STDERR.puts "Lazy-initialization"
 
     flags.routes.each do |route|
       method, uri = route.split(":")
       url = "http://#{address}#{uri}"
 
       flags.concurrencies.each do |concurrency|
-        puts "Start @ #{concurrency}"
+        STDERR.puts "Sieging at concurrency level => #{concurrency}"
         row = db.query("INSERT INTO concurrencies (level) VALUES ($1) ON CONFLICT (level) DO UPDATE SET level = $1 RETURNING id", concurrency)
         row.move_next
         concurrency_level_id = row.read(Int)

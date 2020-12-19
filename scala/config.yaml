@@ -2,4 +2,18 @@ provider:
   default:
     language: 2.13
 
-command: target/universal/root-0.1.0-SNAPSHOT.tgz
+sources:
+  - "src/**/*.scala"
+  - "**/*.sbt"
+  - "**/*.properties"
+
+deps:
+  - java-11-openjdk
+
+binaries:
+  - target/universal/server-0.1.0-SNAPSHOT.tgz
+
+bootstrap:
+  - tar -xvzf target/universal/server-0.1.0-SNAPSHOT.tgz
+
+command: /opt/web/server-0.1.0-SNAPSHOT/bin/server

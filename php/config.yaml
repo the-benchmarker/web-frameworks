@@ -1,3 +1,20 @@
 provider:
   default:
     language: 7.4
+  digitalocean:
+    language: 7.4
+
+deps:
+  - php
+  - composer
+  - "@development-tools"
+  - php-pear
+  - php-devel
+
+files:
+  - "**/*.php"
+  - composer.json
+
+bootstrap:
+  - composer install --no-dev --prefer-dist --classmap-authoritative
+  - composer dumpautoload -o

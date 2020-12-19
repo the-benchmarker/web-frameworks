@@ -1,9 +1,13 @@
 FROM julia:1.5
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
-COPY server.jl Project.toml deps.jl ./
+{{#files}}
+  COPY {{{.}}} {{{.}}}
+{{/files}}
 
 RUN julia deps.jl
 
-CMD julia server.jl
+RUN ln -sfv /usr/local/julia/bin/julia /usr/bin/julia
+
+CMD {{{command}}}

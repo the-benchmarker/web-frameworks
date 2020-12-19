@@ -16,3 +16,10 @@ group :development, :test do
   gem 'rubocop-rake'
   gem 'rubocop-rspec'
 end
+
+gem 'bcrypt_pbkdf'
+gem 'droplet_kit'
+gem 'ed25519'
+
+gem 'net-scp'
+gem 'net-ssh'

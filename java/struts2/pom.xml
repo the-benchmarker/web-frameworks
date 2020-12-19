@@ -42,7 +42,11 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-jsp</artifactId>
+<<<<<<< HEAD
             <version>${jetty-jsp.version}</version>
+=======
+            <version>9.2.30.v20200428</version>
+>>>>>>> d419b9cc... chore(struts2): Use standard file name
         </dependency>
 
     </dependencies>

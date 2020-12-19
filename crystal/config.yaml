@@ -1,3 +1,14 @@
 provider:
   default:
     language: 0.35
+  digitalocean:
+    language: 0.35
+
+sources:
+  - shard.yml
+  - "**/*.cr"
+
+binaries:
+  - bin/server
+
+command: /opt/web/bin/server

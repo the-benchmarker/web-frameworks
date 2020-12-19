@@ -2,15 +2,21 @@ framework:
   website: emmett.sh
   version: 2.1
 
-build_deps:
+deps:
+  - "@development-tools"
+  - python3
+  - python3-devel
+  - python3-pip
+  - libffi-devel
+
+alpine-deps:
   - libffi-dev
   - openssl-dev
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class emmett.asgi.workers.EmmettWorker  \
-      server:app
+files:
+  - server.py
+  - requirements.txt
+  - ../.config/gunicorn.py
+
+environment:
+  WORKER_CLASS: emmett.asgi.workers.EmmettWorker

@@ -1,3 +1,9 @@
 framework:
   website: roda.jeremyevans.net
   version: 3.39
+
+files:
+  - Gemfile
+  - "**/*.rb"
+  - "**/*.ru"
+  - ../.config/puma.rb

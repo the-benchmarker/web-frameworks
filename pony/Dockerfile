@@ -2,29 +2,30 @@ FROM ponylang/ponyc:0.38.1
 
 RUN apt-get -y update && apt-get -y install clang libssl-dev
 
-WORKDIR /src/main
+WORKDIR /src/web
 
 COPY bundle.json .
+
 RUN stable fetch
 
-COPY . ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
-{{#before_command}}
-  RUN {{{.}}}
-{{/before_command}}
-
 RUN stable env ponyc -Dopenssl_1.1.x -Dstatic
 
-FROM ubuntu
+FROM ubuntu 
 
 RUN apt-get -y update && apt-get -y install openssl libatomic1
 
-WORKDIR /opt
+WORKDIR /opt/web
 
-COPY --from=0 /src/main/main main
+{{#binaries}}
+  COPY --from=0 /src/web/{{{.}}} {{{.}}}
+{{/binaries}}
 
-CMD ./main
+CMD {{{command}}}

@@ -15,4 +15,5 @@ class Root:
     async def user(self, user_id: int) -> TextPlain:
         return user_id
 
+
 app = create_app(root=Root)

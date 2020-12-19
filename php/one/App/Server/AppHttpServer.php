@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tanszhe
- * Date: 2018/8/24
- * Time: 下午4:26
- */
 
 namespace App\Server;
 

@@ -2,8 +2,11 @@ framework:
   website: sifrr.github.io/sifrr/#/./packages/server/sifrr-server/
   version: 0.0
 
-build_deps:
+deps:
   - git
+  - "@development-tools"
+  - nodejs
 
-bin_deps:
+alpine-deps:
   - gcompat # required by uWebSocket
+  - git

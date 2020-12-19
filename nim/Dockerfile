@@ -1,8 +1,10 @@
-FROM nimlang/nim:1.4.2-alpine
+FROM nimlang/nim:1.4.2-alpine AS build
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
 {{#deps}}
   RUN apk --no-cache add {{{.}}}
@@ -24,6 +26,10 @@ RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
 
 FROM alpine
 
-COPY --from=0 /usr/src/app/server /usr/src/app/server
+WORKDIR /opt/web
 
-CMD /usr/src/app/server
+{{#binaries}}
+  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+{{/binaries}}
+
+CMD {{{command}}}

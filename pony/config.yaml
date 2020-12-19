@@ -1,3 +1,15 @@
 provider:
   default:
     language: 0.38
+
+deps:
+  - libssl1.1
+  - libatomic1
+
+sources:
+  - "**/*.pony"
+
+binaries:
+  - web
+
+command: /opt/web/web

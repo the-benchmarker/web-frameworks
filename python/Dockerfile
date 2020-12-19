@@ -1,14 +1,19 @@
 FROM python:3.8-alpine
 
+RUN ln -sfv /usr/local/bin/python /usr/bin/python3
+RUN ln -sfv /usr/local/bin/pip /usr/bin/pip
+
 RUN apk add build-base
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
-{{#build_deps}}
+{{#alpine-deps}}
   RUN apk add {{{.}}}
-{{/build_deps}}
+{{/alpine-deps}}
 
-COPY . ./
+{{#files}}
+  COPY {{{.}}} {{{.}}}
+{{/files}}
 
 {{#fixes}}
   RUN {{{.}}}
@@ -18,6 +23,8 @@ COPY . ./
   ENV {{{.}}}
 {{/environment}}
 
-RUN pip install -r requirements.txt
+{{#bootstrap}}
+  RUN {{{.}}}
+{{/bootstrap}}
 
-CMD {{command}}
+CMD {{{command}}}

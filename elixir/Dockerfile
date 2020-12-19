@@ -11,7 +11,9 @@ RUN mix local.hex --force
 WORKDIR /usr/src/app
 
 # Copy source code
-COPY . ./
+{{#files}}
+  COPY {{{.}}} {{{.}}}
+{{/files}}
 
 ENV MIX_ENV="prod"
 ENV ERL_COMPILER_OPTIONS="[native, {hipe, [verbose, o3]}]"
@@ -31,16 +33,10 @@ FROM alpine:latest AS app
 RUN apk add --update bash openssl
 
 # Application folder
-RUN mkdir /app
-WORKDIR /app
+WORKDIR /opt/web
 
 # Copy release from build container
-COPY --from=build /usr/src/app/release ./
-
-# User
-RUN chown -R nobody: /app
-USER nobody
-ENV HOME /app
+COPY --from=build /usr/src/app/release release
 
 # Start release
-CMD bin/server start
+CMD {{{command}}}

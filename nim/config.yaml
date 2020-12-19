@@ -1,3 +1,12 @@
 provider:
   default:
     language: 1.4
+
+sources:
+  - "**/*.nim"
+  - "**/*.nimble"
+
+binaries:
+  - server
+
+command: /opt/web/server

@@ -6,6 +6,9 @@ build:
   - mvn package
   - mv target/dist/benchmark-1.0.0-*.tar.gz target/dist/benchmark-1.0.0.tar.gz
 
+alpine-deps:
+  - bash
+
 binaries:
   - target/dist/benchmark-1.0.0.tar.gz
 
