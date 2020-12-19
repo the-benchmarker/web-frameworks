@@ -1,20 +1,24 @@
 # frozen_string_literal: true
 
+require 'bundler'
 require 'yaml'
-require 'mustache'
-require 'dotenv'
-require 'droplet_kit'
-require 'net/ssh'
-require 'net/scp'
-require 'net/http'
-require 'fileutils'
-require 'base64'
+require 'active_support'
+require 'pg'
+
+Bundler.require(:development, :production, :test)
+
+Dir.glob('lib/tasks/**/*.rake').each { |r| load r }
 
 Dotenv.load
 
+MANIFESTS = {
+  container: '.Dockerfile',
+  build: '.Makefile'
+}.freeze
+
 class ::Hash
   def recursive_merge(h)
-    merge!(h) { |_key, _old, _new| _old.class == Hash ? _old.recursive_merge(_new) : _new }
+    merge!(h) { |_key, _old, _new| _old.instance_of?(Hash) ? _old.recursive_merge(_new) : _new }
   end
 end
 
@@ -26,67 +30,66 @@ def default_provider
   end
 end
 
-def commands_for(language, framework, **options)
+def default_provider
+  if RbConfig::CONFIG['host_os'] =~ /linux/
+    'docker'
+  else
+    'docker-machine'
+  end
+end
+
+def commands_for(language, framework, provider)
   config = YAML.safe_load(File.read('config.yaml'))
 
-  directory = File.dirname(options[:path])
-  main_config = YAML.safe_load(File.open(File.join(directory, '..', '..', 'config.yaml')))
-  language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
-  framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
+  directory = Dir.pwd
+  main_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
+  language_config = YAML.safe_load(File.open(File.join(directory, language, 'config.yaml')))
+  framework_config = YAML.safe_load(File.open(File.join(directory, language, framework, 'config.yaml')))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-
-  options[:framework] = framework
-  options[:language] = language
-
-  ENV.each do |key, value|
-    options[key] = value unless options.key?(key)
-  end
-
-  commands = []
+  options = { language: language, framework: framework }
+  commands = { build: [], collect: [], clean: [] }
 
   # Compile first, only for non containers
 
-  if app_config.key?('binaries') && !(options[:provider].start_with?('docker') || options[:provider].start_with?('podman'))
-    commands << "docker build -t #{language}.#{framework} ."
+  if app_config.key?('binaries') && !(provider.start_with?('docker') || provider.start_with?('podman'))
+    commands << "docker build -f #{MANIFESTS[:container]} -t #{language}.#{framework} ."
     commands << "docker run -td #{language}.#{framework} > cid.txt"
     app_config['binaries'].each do |out|
-      if out.count(File::Separator) > 0
+      if out.count(File::Separator).positive?
         FileUtils.mkdir_p(File.join(directory, File.dirname(out)))
-        commands << "docker cp `cat cid.txt`:/opt/web/#{File.dirname(out)} ."
+        commands[:build] << "docker cp `cat cid.txt`:/opt/web/#{File.dirname(out)} ."
       else
-        commands << "docker cp `cat cid.txt`:/opt/web/#{out} #{out}"
+        commands[:build] << "docker cp `cat cid.txt`:/opt/web/#{out} #{out}"
       end
     end
   end
 
-  config['providers'][options[:provider]]['build'].each do |cmd|
-    commands << Mustache.render(cmd, options).to_s
+  config['providers'][provider]['build'].each do |cmd|
+    commands[:build] << Mustache.render(cmd, options.merge!(manifest: MANIFESTS[:container])).to_s
   end
 
-  config['providers'][options[:provider]]['metadata'].each do |cmd|
-    commands << Mustache.render(cmd, options).to_s
+  config['providers'][provider]['metadata'].each do |cmd|
+    commands[:build] << Mustache.render(cmd, options).to_s
   end
 
-  if app_config.key?('bootstrap') && config['providers'][options[:provider]].key?('exec')
-    remote_command = config['providers'][options[:provider]]['exec']
+  if app_config.key?('bootstrap') && config['providers'][provider].key?('exec')
+    remote_command = config['providers'][[provider]]['exec']
     app_config['bootstrap'].each do |cmd|
-      commands << Mustache.render(remote_command, options.merge!(command: cmd)).to_s
+      commands[:build] << Mustache.render(remote_command, options.merge!(command: cmd)).to_s
     end
   end
 
-  if config['providers'][options[:provider]].key?('reboot')
-    commands << config['providers'][options[:provider]].fetch('reboot')
-    commands << 'sleep 30'
+  if config.dig('providers', provider).key?('reboot')
+    commands[:build] << config.dig('providers', provider, 'reboot')
+    commands[:build] << 'sleep 30'
   end
 
-  commands << 'curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
+  commands[:build] << 'curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
 
-  commands << "DATABASE_URL=#{ENV['DATABASE_URL']} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`" unless options[:collect] == 'off'
+  commands[:collect] << "LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
 
-  unless options[:clean] == 'off'
-    config['providers'][options[:provider]]['clean'].each do |cmd|
-      commands << Mustache.render(cmd, options).to_s
-    end
+  config.dig('providers', provider, 'clean').each do |cmd|
+    commands[:clean] << Mustache.render(cmd, options).to_s
   end
 
   commands
@@ -145,37 +148,33 @@ def create_dockerfile(language, framework, **options)
     config['environment'] = environment
   end
 
-  File.open(File.join(directory, 'Dockerfile'), 'w') { |f| f.write(Mustache.render(File.read(template), config)) } if template
+  File.open(File.join(directory, MANIFESTS[:container]), 'w') { |f| f.write(Mustache.render(File.read(template), config)) } if template
 end
 
 task :config do
   provider = ENV.fetch('PROVIDER') { default_provider }
-  collect = ENV.fetch('COLLECT') { 'on' }
+  collect = ENV.fetch('COLLECT', 'on')
 
-  sieger_options = ENV.fetch('SIEGER_OPTIONS') { '-r GET:/ -c 10' }
-  clean = ENV.fetch('CLEAN') { 'on' }
-
-  config = { main: { depends_on: [] } }
+  sieger_options = ENV.fetch('SIEGER_OPTIONS', '-r GET:/ -c 10')
+  clean = ENV.fetch('CLEAN', 'on')
 
   Dir.glob('*/*/config.yaml').each do |path|
     directory = File.dirname(path)
     language, framework = directory.split(File::Separator)
 
-    config[:main][:depends_on] << language unless config[:main][:depends_on].include?(language)
-
-    config[language] = { depends_on: [] } unless config.key?(language)
-
-    config[language][:depends_on] << "#{language}/#{framework}"
-
     create_dockerfile(language, framework, provider: provider)
 
-    config["#{language}/#{framework}"] = {
-      commands: commands_for(language, framework, provider: provider, clean: clean, sieger_options: sieger_options, path: path, collect: collect),
-      dir: File.join(language, File::SEPARATOR, framework)
-    }
-  end
+    makefile = File.open(File.join(language, framework, MANIFESTS[:build]), 'w')
 
-  File.open('neph.yaml', 'w') { |f| f.write(JSON.load(config.to_json).to_yaml) }
+    commands_for(language, framework, provider).each do |target, commands|
+      makefile.write("#{target}:\n")
+      commands.each do |command|
+        makefile.write("\t #{command}\n")
+      end
+    end
+
+    makefile.close
+  end
 end
 
 namespace :cloud do
@@ -197,7 +196,7 @@ namespace :cloud do
                                                  }]
                                                else
                                                  []
-      end
+                                               end
 
     if config.key?('environment')
       environment = config.fetch('environment')
@@ -295,7 +294,7 @@ namespace :cloud do
       Net::SSH.start(ENV['HOST'], 'root', keys: [ENV['SSH_KEY']]) do |ssh|
         binaries.each do |binary|
           remote_directory = File.dirname(binary).gsub!(directory, '/opt/web')
-          STDOUT.puts "Creating #{remote_directory}"
+          $stdout.puts "Creating #{remote_directory}"
           ssh.exec!("mkdir -p #{remote_directory}")
         end
       end
@@ -304,7 +303,7 @@ namespace :cloud do
         config['binaries'].each do |pattern|
           Dir.glob(File.join(directory, pattern)).each do |binary|
             remote_directory = File.dirname(binary).gsub!(directory, '/opt/web')
-            STDOUT.puts "Uploading #{binary} to #{remote_directory}"
+            $stdout.puts "Uploading #{binary} to #{remote_directory}"
             scp.upload!(binary, remote_directory, verbose: true, recursive: true)
           end
         end
@@ -314,7 +313,7 @@ namespace :cloud do
 
   task :wait do
     while true
-      STDOUT.puts 'Tring to connect'
+      $stdout.puts 'Tring to connect'
       begin
         ssh = Net::SSH.start(ENV['HOST'], 'root', keys: [ENV['SSH_KEY']])
       rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
@@ -333,7 +332,7 @@ namespace :cloud do
 
       break if status.strip == 'done'
 
-      STDOUT.puts 'Cloud-init is still running'
+      $stdout.puts 'Cloud-init is still running'
       sleep 5
     end
 
