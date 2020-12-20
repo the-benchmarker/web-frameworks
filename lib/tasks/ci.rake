@@ -9,6 +9,9 @@ namespace :ci do
         commands: [
           'checkout',
           'cache store $SEMAPHORE_GIT_SHA .',
+          'apt-get update',
+          'apt-get -y install wrk',
+          'cache store wrk /usr/bin/wrk',
           'cache store bin bin',
           'bundle config path .cache',
           'bundle install',
@@ -23,6 +26,7 @@ namespace :ci do
 
       block = { name: language, dependencies: ['setup'], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
         'cache restore $SEMAPHORE_GIT_SHA',
+        'cache restore wrk',
         'cache restore bin',
         'cache restore built-in',
         'find bin -type f -exec chmod +x {} \\;',
@@ -34,14 +38,19 @@ namespace :ci do
         _, framework, = file.split(File::Separator)
         block[:task][:jobs] << { name: framework, commands: [
           "cd #{language}/#{framework} && make build  -f #{MANIFESTS[:build]}  && cd -",
-          "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec"
+          "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec",
+          "make build  -f #{language}/#{framework}/#{MANIFESTS[:build]} collect"
+        ], env_vars: [
+          { name: 'DURATION', value: '10' },
+          { name: 'CONCURRENCIES', value: '64' },
+          { name: 'ROUTES', value: 'GET:/' }
         ] }
       end
       blocks << block
     end
 
     config = { version: 'v1.0', name: 'Benchmarking suite', execution_time_limit: { hours: 24 },
-               agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu1804' } }, blocks: blocks }
+               agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu1604' } }, blocks: blocks }
     File.write('.semaphore/semaphore.yml', JSON.parse(config.to_json).to_yaml)
   end
   task :matrix do
