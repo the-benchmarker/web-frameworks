@@ -7,8 +7,14 @@ namespace :ci do
       jobs: [{
         name: 'setup',
         commands: [
+          'cache clear',
           'checkout',
           'cache store $SEMAPHORE_GIT_SHA .',
+          'sudo apt-get update',
+          'sudo apt-get install build-essential libssl-dev git -y',
+          'git clone https://github.com/wg/wrk.git wrk',
+          'cd wrk && make',
+          'cache store wrk wrk',
           'cache store bin bin',
           'bundle config path .cache',
           'bundle install',
@@ -23,8 +29,12 @@ namespace :ci do
 
       block = { name: language, dependencies: ['setup'], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
         'cache restore $SEMAPHORE_GIT_SHA',
+        'cache restore wrk',
+        'sudo install wrk /usr/local/bin',
         'cache restore bin',
         'cache restore built-in',
+        'sem-service start postgres',
+        'createdb -U postgres -h 0.0.0.0 benchmark',
         'find bin -type f -exec chmod +x {} \\;',
         'bundle config path .cache',
         'bundle install',
@@ -34,7 +44,13 @@ namespace :ci do
         _, framework, = file.split(File::Separator)
         block[:task][:jobs] << { name: framework, commands: [
           "cd #{language}/#{framework} && make build  -f #{MANIFESTS[:build]}  && cd -",
-          "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec"
+          "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec",
+          "make  -f #{language}/#{framework}/#{MANIFESTS[:build]} collect"
+        ], env_vars: [
+          { name: 'DATABASE_URL', value: 'postgresql://postgres@0.0.0.0/benchmark' },
+          { name: 'DURATION', value: '10' },
+          { name: 'CONCURRENCIES', value: '64' },
+          { name: 'ROUTES', value: 'GET:/' }
         ] }
       end
       blocks << block
