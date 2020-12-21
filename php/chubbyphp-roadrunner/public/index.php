@@ -11,10 +11,10 @@ use Chubbyphp\Framework\RequestHandler\CallbackRequestHandler;
 use Chubbyphp\Framework\Router\FastRoute\Router;
 use Chubbyphp\Framework\Router\Route;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Psr7\Factory\ResponseFactory;
 use Spiral\Goridge\StreamRelay;
-use Spiral\RoadRunner\PSR7Client;
 use Spiral\RoadRunner\Worker;
-use Sunrise\Http\Message\ResponseFactory;
+use Spiral\RoadRunner\PSR7Client;
 
 ini_set('display_errors', 'stderr');
 

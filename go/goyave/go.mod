@@ -1,5 +1,3 @@
 module main
 
-require (
-	github.com/System-Glitch/goyave/v3 v3.4.0
-)
+require github.com/System-Glitch/goyave/v3 v3.5.0
