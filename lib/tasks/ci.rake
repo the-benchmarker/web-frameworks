@@ -43,7 +43,8 @@ namespace :ci do
         block[:task][:jobs] << { name: framework, commands: [
           "cd #{language}/#{framework} && make build  -f #{MANIFESTS[:build]}  && cd -",
           "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec",
-          "make  -f #{language}/#{framework}/#{MANIFESTS[:build]} collect"
+          "make  -f #{language}/#{framework}/#{MANIFESTS[:build]} collect",
+          'bundle exec rake db:export',
         ], env_vars: [
           { name: 'DATABASE_URL', value: 'postgresql://postgres@0.0.0.0/benchmark' },
           { name: 'DURATION', value: '10' },
