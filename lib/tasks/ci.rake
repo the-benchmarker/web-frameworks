@@ -25,7 +25,6 @@ namespace :ci do
         'cache restore $SEMAPHORE_GIT_SHA',
         'cache restore bin',
         'cache restore built-in',
-        'find bin -type f -exec chmod +x {} \\;',
         'bundle config path .cache',
         'bundle install',
         'bundle exec rake config'
