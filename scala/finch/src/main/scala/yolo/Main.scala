@@ -9,12 +9,14 @@ import io.finch._
 
 object Main extends App with Endpoint.Module[IO] {
 
+  val okEmpty: Output[String] = Ok("")
+
   val root = get(zero) {
-    Ok("")
+    okEmpty
   }
 
   val postUser = post("user") {
-    Ok("")
+    okEmpty
   }
 
   val getUserName = get("user" :: path[String]) { name: String => Ok(name) }
