@@ -1,0 +1,35 @@
+framework:
+  github: jatofg/nawa
+  version: 0.6
+
+build_deps:
+  - libssl-dev
+  - libboost-dev
+  - libcurl4-dev
+  - libboost-system-dev
+  - libboost-thread-dev
+
+bin_deps:
+  - libcurl4
+  - libboost-system1.65.1
+  - libboost-thread1.65.1
+
+deps:
+  - openssl
+
+binaries:
+  - build/nawa_benchmark
+
+download:
+  - git clone --branch v0.6.0 https://github.com/jatofg/nawa
+  - cd nawa && git submodule update --init
+
+build:
+  - mkdir build
+  - cd build && cmake -DCMAKE_BUILD_TYPE=release ..
+  - cd build && make
+
+files:
+  - config.ini
+
+command: /opt/web/build/nawa_benchmark /opt/web/config.ini
