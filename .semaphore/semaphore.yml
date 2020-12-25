@@ -1031,6 +1031,10 @@ blocks:
       commands:
       - cd javascript/0http && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/0http bundle exec rspec .spec
+    - name: nanoexpress
+      commands:
+      - cd javascript/nanoexpress && make build  -f .Makefile  && cd -
+      - FRAMEWORK=javascript/nanoexpress bundle exec rspec .spec
     - name: sifrr
       commands:
       - cd javascript/sifrr && make build  -f .Makefile  && cd -
