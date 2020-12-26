@@ -7,4 +7,3 @@ php_ext:
   - redis
 
 command: php vendor/bin/imi server/start
-  

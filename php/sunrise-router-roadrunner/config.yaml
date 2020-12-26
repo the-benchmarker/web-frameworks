@@ -1,0 +1,8 @@
+framework:
+  github: sunrise-php/http-router
+  version: 2.4
+
+before_command:
+  - ./vendor/bin/rr get-binary
+
+command: ./rr serve

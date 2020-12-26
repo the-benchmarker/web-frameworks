@@ -4,9 +4,9 @@ version = "0.1.0"
 authors = ["Isaac Whitfield <iw@whitfin.io>"]
 
 [dependencies]
-gotham = "~0.4"
-gotham_derive = "*"
-hyper = "0.12"
+gotham = "~0.5"
+gotham_derive = "~0.5"
+hyper = "*"
 serde = "*"
 serde_derive = "*"
 

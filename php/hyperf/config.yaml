@@ -1,6 +1,6 @@
 framework:
-  website: www.hyperf.io
-  version: 1.1
+  website: hyperf.io
+  version: 2.0
 
 php_ext:
   - redis
@@ -8,5 +8,6 @@ php_ext:
 
 before_command:
   - echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
+  - php sbin/hyperf.php
 
 command: php sbin/hyperf.php start

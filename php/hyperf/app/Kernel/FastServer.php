@@ -19,6 +19,7 @@ use Hyperf\Dispatcher\HttpDispatcher;
 use Hyperf\ExceptionHandler\ExceptionHandlerDispatcher;
 use Hyperf\HttpMessage\Server\Response as Psr7Response;
 use Hyperf\HttpMessage\Stream\SwooleStream;
+use Hyperf\HttpServer\ResponseEmitter;
 use Hyperf\HttpServer\Router\Dispatched;
 use Hyperf\HttpServer\Router\DispatcherFactory;
 use Hyperf\HttpServer\Server;
@@ -43,9 +44,9 @@ class FastServer extends Server
      */
     protected $normalizer;
 
-    public function __construct(ContainerInterface $container, HttpDispatcher $dispatcher, ExceptionHandlerDispatcher $exceptionHandlerDispatcher)
+    public function __construct(ContainerInterface $container, HttpDispatcher $dispatcher, ExceptionHandlerDispatcher $exceptionHandlerDispatcher, ResponseEmitter $responseEmitter)
     {
-        parent::__construct($container, $dispatcher, $exceptionHandlerDispatcher);
+        parent::__construct($container, $dispatcher, $exceptionHandlerDispatcher, $responseEmitter);
         $this->methodDefinitionCollector = $container->get(MethodDefinitionCollectorInterface::class);
         $this->normalizer = $this->container->get(NormalizerInterface::class);
     }
@@ -59,7 +60,7 @@ class FastServer extends Server
     public function onRequest(SwooleRequest $request, SwooleResponse $response): void
     {
         try {
-            CoordinatorManager::get(Constants::ON_WORKER_START)->yield();
+            CoordinatorManager::until(Constants::WORKER_START)->yield();
 
             Context::set(ResponseInterface::class, $psr7Response = new Psr7Response($response));
             $dispatched = new Dispatched(
@@ -75,7 +76,7 @@ class FastServer extends Server
             // Delegate the exception to exception handler.
             $psr7Response = $this->exceptionHandlerDispatcher->dispatch($throwable, $this->exceptionHandlers);
         } finally {
-            $psr7Response->send(true);
+            $this->responseEmitter->emit($psr7Response, $response, true);
         }
     }
 

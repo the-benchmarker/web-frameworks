@@ -1,4 +1,4 @@
-FROM swift:5.2
+FROM swift:5.3
 
 RUN apt -y update
 RUN apt -y install libssl-dev zlib1g-dev libcurl4-openssl-dev uuid-dev
@@ -10,7 +10,7 @@ COPY Sources/ ./Sources/
 
 RUN swift build -c release
 
-FROM swift:5.2-slim
+FROM swift:5.3-slim
 {{#environment}}
 ENV {{{.}}}
 {{/environment}}

@@ -1,10 +1,10 @@
 framework:
   website: vapor.codes
-  version: 4.14
+  version: 4.36
   name: vapor
 
 options: serve
 environment:
-   SERVER_HOSTNAME: 0.0.0.0
-   SERVER_PORT: 3000
-   VAPOR_ENV: production
+  SERVER_HOSTNAME: 0.0.0.0
+  SERVER_PORT: 3000
+  VAPOR_ENV: production
