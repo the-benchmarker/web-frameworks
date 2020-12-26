@@ -4,7 +4,7 @@
                  [cheshire "5.10.0"]
                  [clojure.java-time "0.3.2"]
                  [cprop "0.1.17"]
-                 [expound "0.8.6"]
+                 [expound "0.8.7"]
                  [funcool/struct "1.4.0"]
                  [luminus-jetty "0.2.1"]
                  [luminus-transit "0.1.2"]
@@ -52,7 +52,7 @@
                                  [ring/ring-devel "1.8.2"]
                                  [ring/ring-mock "0.4.0"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.24.1"]
-                                 [jonase/eastwood "0.3.11"]] 
+                                 [jonase/eastwood "0.3.12"]] 
                   
                   :source-paths ["env/dev/clj" ]
                   :resource-paths ["env/dev/resources"]
