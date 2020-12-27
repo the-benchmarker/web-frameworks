@@ -43,6 +43,8 @@ ruby:
     - bryanp
   grape:
     - dblock
+  rack_app:
+    - adamluzsi
 python:
   quart:
     - pgjones
