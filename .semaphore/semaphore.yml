@@ -460,6 +460,10 @@ blocks:
       commands:
       - cd rust/nickel && make build  -f .Makefile  && cd -
       - FRAMEWORK=rust/nickel bundle exec rspec .spec
+    - name: salvo
+      commands:
+      - cd rust/salvo && make build  -f .Makefile  && cd -
+      - FRAMEWORK=rust/salvo bundle exec rspec .spec
     - name: actix
       commands:
       - cd rust/actix && make build  -f .Makefile  && cd -

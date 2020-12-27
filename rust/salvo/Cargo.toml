@@ -1,0 +1,9 @@
+[package]
+name = "server"
+version = "0.1.0"
+edition = "2018"
+authors = ["Chrislearn Young <chrislearn@hotmail.com>"]
+
+[dependencies]
+salvo = { version = "~0.3" }
+tokio = { version = "1.0", features = ["full"] }
