@@ -1067,6 +1067,10 @@ blocks:
       commands:
       - cd javascript/fyrejet-uwebsockets && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/fyrejet-uwebsockets bundle exec rspec .spec
+    - name: nanoexpress
+      commands:
+      - cd javascript/nanoexpress && make build  -f .Makefile  && cd -
+      - FRAMEWORK=javascript/nanoexpress bundle exec rspec .spec
     - name: fyrejet
       commands:
       - cd javascript/fyrejet && make build  -f .Makefile  && cd -
