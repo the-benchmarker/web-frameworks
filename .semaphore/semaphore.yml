@@ -915,6 +915,10 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
+    - name: nawa
+      commands:
+      - cd cpp/nawa && make build  -f .Makefile  && cd -
+      - FRAMEWORK=cpp/nawa bundle exec rspec .spec
     - name: drogon
       commands:
       - cd cpp/drogon && make build  -f .Makefile  && cd -
@@ -923,9 +927,6 @@ blocks:
       commands:
       - cd cpp/evhtp && make build  -f .Makefile  && cd -
       - FRAMEWORK=cpp/evhtp bundle exec rspec .spec
-    - name: nawa
-      commands:
-      - cd cpp/nawa && make build  -f .Makefile  && cd -
 - name: swift
   dependencies:
   - setup
