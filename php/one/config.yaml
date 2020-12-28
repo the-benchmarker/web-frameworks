@@ -2,6 +2,9 @@ framework:
   github: lizhichao/one
   version: 2.1
 
+php_mod:
+  - bcmath
+
 php_ext:
   - swoole
 
