@@ -29,6 +29,6 @@ object Main extends App with Endpoint.Module[IO] {
       .toService
 
   Await.ready(
-    Http.serve("localhost:3000", api)
+    Http.serve("0.0.0.0:3000", api)
   )
 }
