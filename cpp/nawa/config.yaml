@@ -17,7 +17,7 @@ binaries:
   - build/nawa_benchmark
 
 download:
-  - git clone --branch v0.6.0 https://github.com/jatofg/nawa
+  - git clone --branch v0.6.1 https://github.com/jatofg/nawa
   - cd nawa && git submodule update --init
 
 build:
