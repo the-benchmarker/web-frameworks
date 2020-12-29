@@ -7,9 +7,10 @@ build_deps:
   - openssl-dev
   - doxygen
   - graphviz
+  - curl-dev
 
 bin_deps:
-  - libcurl
+  - curl
   - boost
   - openssl
 
