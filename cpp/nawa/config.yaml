@@ -8,11 +8,13 @@ build_deps:
   - doxygen
   - graphviz
   - curl-dev
+  - argon2-dev
 
 bin_deps:
   - curl
   - boost
   - openssl
+  - argon2
 
 binaries:
   - build/nawa_benchmark
