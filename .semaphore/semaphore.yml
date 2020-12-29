@@ -32,7 +32,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -52,7 +51,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -176,7 +174,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -220,7 +217,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -348,7 +344,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -376,7 +371,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -408,7 +402,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -432,7 +425,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -452,7 +444,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -469,6 +460,10 @@ blocks:
       commands:
       - cd rust/nickel && make build  -f .Makefile  && cd -
       - FRAMEWORK=rust/nickel bundle exec rspec .spec
+    - name: salvo
+      commands:
+      - cd rust/salvo && make build  -f .Makefile  && cd -
+      - FRAMEWORK=rust/salvo bundle exec rspec .spec
     - name: actix
       commands:
       - cd rust/actix && make build  -f .Makefile  && cd -
@@ -484,7 +479,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -524,7 +518,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -556,7 +549,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -612,7 +604,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -640,7 +631,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -696,7 +686,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -720,7 +709,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -896,7 +884,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -924,7 +911,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -948,7 +934,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -984,7 +969,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -1012,7 +996,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -1032,7 +1015,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -1089,6 +1071,10 @@ blocks:
       commands:
       - cd javascript/fyrejet-uwebsockets && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/fyrejet-uwebsockets bundle exec rspec .spec
+    - name: nanoexpress
+      commands:
+      - cd javascript/nanoexpress && make build  -f .Makefile  && cd -
+      - FRAMEWORK=javascript/nanoexpress bundle exec rspec .spec
     - name: fyrejet
       commands:
       - cd javascript/fyrejet && make build  -f .Makefile  && cd -
@@ -1148,7 +1134,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -1172,7 +1157,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config
@@ -1192,7 +1176,6 @@ blocks:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore bin
       - cache restore built-in
-      - find bin -type f -exec chmod +x {} \;
       - bundle config path .cache
       - bundle install
       - bundle exec rake config

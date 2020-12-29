@@ -27,7 +27,6 @@ return [
         ],
     ],
     'settings' => [
-        'coroutine' => false,
         'worker_num' => swoole_cpu_num() * 2,
         'enable_coroutine' => false,
         'pid_file' => BASE_PATH . '/runtime/hyperf.pid',
