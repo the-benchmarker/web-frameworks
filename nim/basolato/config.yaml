@@ -1,6 +1,6 @@
 framework:
   github: itsumura-h/nim-basolato
-  version: 0.7
+  version: 0.8
 
 files:
   - /usr/src/app/server
@@ -11,4 +11,4 @@ deps:
 alpine-deps:
   - pcre-dev
 
-build_opts: '--threadAnalysis:off'
+build_opts: '--threadAnalysis:off --define: usePcreHeader --passL: "/usr/lib/libpcre.a"'
