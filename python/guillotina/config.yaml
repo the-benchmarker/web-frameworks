@@ -15,7 +15,7 @@ fixes:
 
 environment:
   RUSTFLAGS: -C target-feature=-crt-static
-  
+
 command: >
   gunicorn \
     --log-level warning \
