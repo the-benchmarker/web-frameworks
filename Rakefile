@@ -1,19 +1,16 @@
 # frozen_string_literal: true
 
 require 'dotenv'
+require 'active_support'
 
 Dir.glob('lib/tasks/*.rake').each { |r| load r }
-
-environment = ENV.fetch('ENV', 'development')
 
 MANIFESTS = {
   container: '.Dockerfile',
   build: '.Makefile'
 }.freeze
 
-default_environment = File.join('.env', 'default')
-custom_environment = File.join('.env', environment)
-Dotenv.load(custom_environment, default_environment)
+Dotenv.load
 
 class ::Hash
   def recursive_merge(h)
@@ -29,27 +26,20 @@ def default_provider
   end
 end
 
-def commands_for(language, framework, **options)
+def commands_for(language, framework, provider)
   config = YAML.safe_load(File.read('config.yaml'))
 
-  directory = File.dirname(options[:path])
-  main_config = YAML.safe_load(File.open(File.join(directory, '..', '..', 'config.yaml')))
-  language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
-  framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
+  directory = Dir.pwd
+  main_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
+  language_config = YAML.safe_load(File.open(File.join(directory, language, 'config.yaml')))
+  framework_config = YAML.safe_load(File.open(File.join(directory, language, framework, 'config.yaml')))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-
-  options[:framework] = framework
-  options[:language] = language
-
-  ENV.each do |key, value|
-    options[key] = value unless options.key?(key)
-  end
-
+  options = { language: language, framework: framework }
   commands = { build: [], collect: [], clean: [] }
 
   # Compile first, only for non containers
 
-  if app_config.key?('binaries') && !(options[:provider].start_with?('docker') || options[:provider].start_with?('podman'))
+  if app_config.key?('binaries') && !(provider.start_with?('docker') || provider.start_with?('podman'))
     commands << "docker build -f #{MANIFESTS[:container]} -t #{language}.#{framework} ."
     commands << "docker run -td #{language}.#{framework} > cid.txt"
     app_config['binaries'].each do |out|
@@ -62,36 +52,32 @@ def commands_for(language, framework, **options)
     end
   end
 
-  config['providers'][options[:provider]]['build'].each do |cmd|
+  config['providers'][provider]['build'].each do |cmd|
     commands[:build] << Mustache.render(cmd, options.merge!(manifest: MANIFESTS[:container])).to_s
   end
 
-  config['providers'][options[:provider]]['metadata'].each do |cmd|
+  config['providers'][provider]['metadata'].each do |cmd|
     commands[:build] << Mustache.render(cmd, options).to_s
   end
 
-  if app_config.key?('bootstrap') && config['providers'][options[:provider]].key?('exec')
-    remote_command = config['providers'][options[:provider]]['exec']
+  if app_config.key?('bootstrap') && config['providers'][provider].key?('exec')
+    remote_command = config['providers'][[provider]]['exec']
     app_config['bootstrap'].each do |cmd|
       commands[:build] << Mustache.render(remote_command, options.merge!(command: cmd)).to_s
     end
   end
 
-  if config['providers'][options[:provider]].key?('reboot')
-    commands[:build] << config['providers'][options[:provider]].fetch('reboot')
+  if config.dig('providers', provider).key?('reboot')
+    commands[:build] << config.dig('providers', provider, 'reboot')
     commands[:build] << 'sleep 30'
   end
 
   commands[:build] << 'curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
 
-  unless options[:collect] == 'off'
-    commands[:collect] << "DATABASE_URL=#{ENV['DATABASE_URL']} ../../bin/client --language #{language} --framework #{framework} #{options[:sieger_options]} -h `cat ip.txt`"
-  end
+  commands[:collect] << "LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
 
-  unless options[:clean] == 'off'
-    config['providers'][options[:provider]]['clean'].each do |cmd|
-      commands[:clean] << Mustache.render(cmd, options).to_s
-    end
+  config.dig('providers', provider, 'clean').each do |cmd|
+    commands[:clean] << Mustache.render(cmd, options).to_s
   end
 
   commands
@@ -151,7 +137,9 @@ def create_dockerfile(language, framework, **options)
   end
 
   if template
-    File.open(File.join(directory, MANIFESTS[:container]), 'w') { |f| f.write(Mustache.render(File.read(template), config)) }
+    File.open(File.join(directory, MANIFESTS[:container]), 'w') do |f|
+      f.write(Mustache.render(File.read(template), config))
+    end
   end
 end
 
@@ -170,7 +158,7 @@ task :config do
 
     makefile = File.open(File.join(language, framework, MANIFESTS[:build]), 'w')
 
-    commands_for(language, framework, provider: provider, clean: clean, sieger_options: sieger_options, path: path, collect: collect).each do |target, commands|
+    commands_for(language, framework, provider).each do |target, commands|
       makefile.write("#{target}:\n")
       commands.each do |command|
         makefile.write("\t #{command}\n")
@@ -178,51 +166,6 @@ task :config do
     end
 
     makefile.close
-  end
-end
-
-namespace :ci do
-  task :config do
-    blocks = [{ name: 'setup', dependencies: [], task: {
-      jobs: [{
-        name: 'setup',
-        commands: [
-          'checkout',
-          'cache store $SEMAPHORE_GIT_SHA .',
-          'sudo snap install crystal --classic',
-          'sudo apt-get -y install libyaml-dev libevent-dev',
-          'shards build --static',
-          'cache store bin bin',
-          'bundle config path .cache',
-          'bundle install',
-          'cache store built-in .cache',
-          'bundle exec rake config'
-        ]
-      }]
-    } }]
-    Dir.glob('*/config.yaml').each do |path|
-      language, = path.split(File::Separator)
-      block = { name: language, dependencies: ['setup'], task: { prologue: { commands: [
-        'cache restore $SEMAPHORE_GIT_SHA',
-        'cache restore bin',
-        'cache restore built-in',
-        'find bin -type f -exec chmod +x {} \\;',
-        'bundle config path .cache',
-        'bundle install',
-        'bundle exec rake config'
-      ] }, jobs: [] } }
-      Dir.glob("#{language}/*/config.yaml") do |file|
-        _, framework, = file.split(File::Separator)
-        block[:task][:jobs] << { name: framework, commands: [
-          "cd #{language}/#{framework} && make build  -f #{MANIFESTS[:build]}  && cd -",
-          "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec"
-        ] }
-      end
-      blocks << block
-    end
-
-    config = { version: 'v1.0', name: 'Benchmarking suite', execution_time_limit: { hours: 3 }, agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu1804' } }, blocks: blocks }
-    File.write('.semaphore/semaphore.yml', JSON.parse(config.to_json).to_yaml)
   end
 end
 
