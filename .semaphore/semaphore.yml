@@ -1645,6 +1645,21 @@ blocks:
         value: '64'
       - name: ROUTES
         value: GET:/
+    - name: jersey-grizzly2
+      commands:
+      - cd java/jersey-grizzly2 && make build  -f .Makefile  && cd -
+      - FRAMEWORK=java/jersey-grizzly2 bundle exec rspec .spec
+      - make  -f java/jersey-grizzly2/.Makefile collect
+      - bundle exec rake db:export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
     - name: javalin
       commands:
       - cd java/javalin && make build  -f .Makefile  && cd -
