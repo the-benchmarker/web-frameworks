@@ -2,6 +2,8 @@
 
 [![Build Status](https://the-benchmarker.semaphoreci.com/badges/web-frameworks/branches/master.svg)](https://the-benchmarker.semaphoreci.com/projects/web-frameworks)
 
+[![Chat with US](https://img.shields.io/badge/slack-Chat_with_us-blueviolet)](https://thebenchmarker.slack.com)
+
 This project aims to be a load benchmarking suite, no more, no less
 
 > Measuring response times (routing times) for each framework (middleware).
