@@ -1,14 +1,21 @@
-
 import os
-# Logging
-putEnv("LOG_IS_DISPLAY", "true")
-putEnv("LOG_IS_FILE", "true")
-putEnv("LOG_DIR", "/root/project/examples/example/logs")
+
 # Security
-putEnv("SECRET_KEY", "QPyp/t^KTtw;xrN/Hzl&/AIr") # 24 length
-putEnv("CSRF_TIME", "525600") # minutes of 1 year
+
+putEnv("SECRET_KEY", "QPyp/t^KTtw;xrN/Hzl&/AIr")
+
+# Logging
+
+putEnv("LOG_IS_DISPLAY", "false")
+putEnv("LOG_IS_FILE", "false")
+putEnv("LOG_IS_ERROR_FILE", "false")
+putEnv("LOG_DIR", "/opt/web/log")
+
+# Session
 putEnv("SESSION_TIME", "20160") # minutes of 2 weeks
-putEnv("SESSION_DB", "/root/project/examples/example/session.db")
-putEnv("IS_SESSION_MEMORY", "false")
+putEnv("SESSION_DB_PATH", "/opt/web/session.db")
+putEnv("SESSION_TYPE", "file")
+putEnv("REDIS_PORT", "6379")
+putEnv("COOKIE_DOMAINS", "")
 
 putEnv("port", "3000")
