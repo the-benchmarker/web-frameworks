@@ -9,7 +9,7 @@ proc index*(request:Request, params:Params):Future[Response] {.async.} =
   return render("", header)
 
 proc show*(request:Request, params:Params):Future[Response] {.async.} =
-  let id = params.urlParams["id"].getInt
+  let id = params.getInt("id")
   return render($id)
 
 proc store*(request:Request, params:Params):Future[Response] {.async.} =
