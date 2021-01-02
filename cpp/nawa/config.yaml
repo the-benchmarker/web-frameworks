@@ -18,6 +18,10 @@ bin_deps:
 
 binaries:
   - build/nawa_benchmark
+  - build/nawa/libnawa.so
+
+environment:
+  LD_LIBRARY_PATH: /opt/web/build/nawa
 
 download:
   - git clone --branch v0.6.2 https://github.com/jatofg/nawa
