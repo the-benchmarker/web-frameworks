@@ -64,7 +64,9 @@ task :collect do
         "wrk -H 'Connection: keep-alive' --connections %<concurrency>s --threads %<threads>s --duration %<duration>s --timeout 1 --script %<pipeline>s http://%<hostname>s:3000", concurrency: concurrency, threads: threads, duration: duration, pipeline: PIPELINE[method.to_sym], hostname: hostname
       )
 
-      Open3.popen3(command) do |_, _, stderr|
+      Open3.popen3(command) do |_, stdout, stderr|
+        wrk_output = stdout.read
+        warn wrk_output
         lua_output = stderr.read
 
         info = lua_output.split(',')
