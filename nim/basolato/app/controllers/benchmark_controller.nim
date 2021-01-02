@@ -1,5 +1,3 @@
-import json
-# framework
 import basolato/controller
 
 
