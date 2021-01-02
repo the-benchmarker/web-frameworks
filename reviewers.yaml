@@ -92,12 +92,14 @@ php:
   spiral:
     - wolfy-j
     - 48d90782
-  slim-roadrunner:
-    - l0gicgate
-  slim-swoole:
-    - l0gicgate
   slim:
     - l0gicgate
+  sunrise-router:
+    - fenric
+  sunrise-router-roadrunner:
+    - fenric
+  sunrise-router-annotations:
+    - fenric
   phalcon:
     - ruudboon
   ice:
