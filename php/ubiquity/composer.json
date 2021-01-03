@@ -1,6 +1,7 @@
 {
-	"require" : {
+  "require": {
     "phpmv/ubiquity": "~2.4.0",
-    "phpmv/ubiquity-devtools": "*"
-	}
+    "phpmv/ubiquity-devtools": "*",
+    "ubiquity-annotations": "*"
+  }
 }
