@@ -7,6 +7,8 @@ javascript:
     - jkyberneees
   fastify:
     - mcollina
+  nanoexpress:
+    - dalisoft
 go:
   router:
     - savsgio
@@ -36,6 +38,8 @@ go:
     - humaidq
   tango:
     - lunny
+  gf:
+    - gqcn
 ruby:
   roda:
     - jeremyevans
@@ -43,6 +47,8 @@ ruby:
     - bryanp
   grape:
     - dblock
+  rack_app:
+    - adamluzsi
 python:
   quart:
     - pgjones
@@ -62,6 +68,8 @@ swift:
   swifter-framework:
     - Vkt0r
 php:
+  nette:
+    - dg
   siler:
     - leocavalcante
   siler-swoole:
@@ -138,3 +146,6 @@ csharp:
 cpp:
   drogon:
     - an-tao
+clojure:
+  coast:
+    - swlkr
