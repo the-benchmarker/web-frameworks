@@ -12,4 +12,4 @@ backend       = "c"
 # Dependencies
 
 requires "nim >= 1.2.4"
-requires "https://github.com/itsumura-h/nim-basolato >= 0.7.0 & < 0.8.0"
+requires "https://github.com/itsumura-h/nim-basolato >= 0.8.0 & < 0.9.0"
