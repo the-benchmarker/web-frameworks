@@ -1,7 +1,6 @@
 extern crate gotham;
 #[macro_use]
 extern crate gotham_derive;
-extern crate hyper;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
@@ -9,7 +8,7 @@ extern crate serde_derive;
 use gotham::helpers::http::response;
 use gotham::router::builder::*;
 use gotham::state::*;
-use hyper::{Body, Response, StatusCode};
+use gotham::hyper::{Body, Response, StatusCode};
 
 fn main() {
     let addr = "0.0.0.0:3000";
