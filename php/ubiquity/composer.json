@@ -1,16 +1,7 @@
 {
   "require": {
-    "php": "^7.1",
     "phpmv/ubiquity": "~2.4.0",
-    "phpmv/ubiquity-devtools": "~1.2.10"
-  },
-  "require-dev": {
-    "mindplay/annotations": "*",
-    "phpmv/ubiquity-dev": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "": "app/"
-    }
+    "phpmv/ubiquity-devtools": "*",
+    "ubiquity-annotations": "*"
   }
 }
