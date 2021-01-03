@@ -1,12 +1,11 @@
 {
-    "require": {
-        "sunrise/http-router": "~2.5.0",
-        "sunrise/http-factory": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "src/"
-        }
+  "require": {
+    "sunrise/http-router": "~2.5.0",
+    "sunrise/http-factory": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
     }
   }
 }
