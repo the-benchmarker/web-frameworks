@@ -22,6 +22,10 @@ WORKDIR /usr/src/app
 
 FROM alpine
 
+{{#environment}}
+ENV {{{.}}}
+{{/environment}}
+
 WORKDIR /opt/web
 
 {{#bin_deps}}
