@@ -23,9 +23,7 @@ object Main extends App with Endpoint.Module[IO] {
 
   val api: Service[Request, Response] =
     Bootstrap
-      .serve[Text.Plain](root)
-      .serve[Text.Plain](postUser)
-      .serve[Text.Plain](getUserName)
+      .serve[Text.Plain](postUser :+: getUserName :+: root)
       .toService
 
   Await.ready(
