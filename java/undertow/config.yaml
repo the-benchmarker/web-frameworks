@@ -1,6 +1,6 @@
 framework:
   website: undertow.io
-  version: 2.0.33.Final
+  version: 2.0
 
 build:
   - mvn package
