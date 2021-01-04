@@ -2641,6 +2641,21 @@ blocks:
         value: '64'
       - name: ROUTES
         value: GET:/
+    - name: finch
+      commands:
+      - cd scala/finch && make build  -f .Makefile  && cd -
+      - FRAMEWORK=scala/finch bundle exec rspec .spec
+      - make  -f scala/finch/.Makefile collect
+      - bundle exec rake db:export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
     - name: play
       commands:
       - cd scala/play && make build  -f .Makefile  && cd -
