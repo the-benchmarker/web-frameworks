@@ -3,7 +3,7 @@ framework:
   version: 2.3
 
 before_command:
-  - composer update
+  - rm -fr vendor composer.lock && composer install
   - vendor/bin/Ubiquity bootstrap prod
 
 docroot: /usr/src/app
