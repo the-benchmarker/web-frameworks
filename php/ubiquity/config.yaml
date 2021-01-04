@@ -3,12 +3,8 @@ framework:
   version: 2.3
 
 before_command:
-  - composer update
-  - chmod +x vendor/bin/Ubiquity
-  - mkdir .ubiquity
-  - mkdir app/cache -p
-  - ./vendor/bin/Ubiquity bootstrap prod
-  - mkdir -p public
+  - rm -fr vendor composer.lock && composer install
+  - vendor/bin/Ubiquity bootstrap prod
 
 docroot: /usr/src/app
 
