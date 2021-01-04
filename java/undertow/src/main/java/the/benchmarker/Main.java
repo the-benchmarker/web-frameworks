@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(final String[] args) {
         Undertow server = Undertow.builder()
-                .addHttpListener(3000, "localhost")
+                .addHttpListener(3000, "0.0.0.0")
                 .setHandler(new RoutingHandler()
                         .get("/", new HttpHandler() {
                             @Override
