@@ -1606,6 +1606,21 @@ blocks:
         value: '64'
       - name: ROUTES
         value: GET:/
+    - name: activej
+      commands:
+      - cd java/activej && make build  -f .Makefile  && cd -
+      - FRAMEWORK=java/activej bundle exec rspec .spec
+      - make  -f java/activej/.Makefile collect
+      - bundle exec rake db:export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
     - name: javalin
       commands:
       - cd java/javalin && make build  -f .Makefile  && cd -
