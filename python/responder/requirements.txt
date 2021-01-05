@@ -1,2 +1,3 @@
-responder>=2.0.0,<2.1.0
+-e git+https://github.com/taoufik07/responder.git#egg=responder
 gunicorn
+uvicorn[standard]
