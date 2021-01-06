@@ -1,11 +1,9 @@
 <?php
 use Ubiquity\controllers\Router;
 
-/**
- * **************************
- * Ubiquity micro application
- * **************************
- */
+\Ubiquity\cache\CacheManager::startProd($config);
+
+Router::start();
 
 Router::get('_default', function () {
     echo '';
