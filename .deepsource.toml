@@ -11,9 +11,6 @@ enabled = true
 name = "go"
 enabled = true
 
-  [analyzers.meta]
-  import_paths = ["github.com/the-benchmarker/web-frameworks"]
-
 [[analyzers]]
 name = "ruby"
 enabled = true
