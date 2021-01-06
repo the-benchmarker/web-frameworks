@@ -8,10 +8,6 @@ enabled = true
   runtime_version = "3.x.x"
 
 [[analyzers]]
-name = "go"
-enabled = true
-
-[[analyzers]]
 name = "ruby"
 enabled = true
 
