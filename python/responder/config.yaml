@@ -2,6 +2,9 @@ framework:
   website: python-responder.org
   version: 2.0
 
+build_deps:
+  - git
+
 command: >
   gunicorn  \
     --log-level warning  \
