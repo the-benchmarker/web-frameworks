@@ -29,15 +29,18 @@ public class Main {
                                 exchange.getResponseSender().send("");
                             }
                         })
-                        .get("/user/{name}", new HttpHandler() {
+                        .get("/user/{id}", new HttpHandler() {
                             @Override
                             public void handleRequest(HttpServerExchange exchange) throws Exception {
                                 exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
-                                var x = Optional.ofNullable(exchange.getQueryParameters().get("name"))
-                                        .map(Deque::getFirst);
-                                exchange.getResponseSender().send(x.get());
+                                String id = exchange.getQueryParameters().get("id").peekFirst();
+                                if(id == null){
+                                    exchange.getResponseSender().send("");
+                                } else {
+                                    exchange.getResponseSender().send(id);
+                                }
                             }
-                        })  
+                        })
                 ).build();
         server.start();
     }
