@@ -63,7 +63,7 @@ feel free to create an issue if you want to try this project
 
 |    | Language | Framework | Speed (64) | Speed (256) | Speed (512) |
 |----|----------|-----------|-----------:|------------:|------------:|
-| 1 | java (11)| [activej](https://activej.io) (3.0.2) | 172 823.60 | 214 761.39 | 219 580.40 |
+| 1 | java (11)| [activej](https://activej.io) (3.0) | 172 823.60 | 214 761.39 | 219 580.40 |
 | 2 | php (7.4)| [workerman](https://github.com/walkor/Workerman) (4.0) | 151 426.03 | 185 090.43 | 187 087.70 |
 | 3 | php (7.4)| [mark](https://github.com/passwalls/mark) (1.1) | 122 800.57 | 136 559.21 | 137 956.15 |
 | 4 | go (1.15)| [fiber](https://gofiber.io) (2.3) | 122 579.51 | 129 700.78 | 129 155.02 |
