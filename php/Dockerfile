@@ -5,22 +5,22 @@ RUN docker-php-ext-install zip opcache
 
 WORKDIR /usr/src/app
 
+{{#build_deps}}
+  RUN apk add {{{.}}}
+{{/build_deps}}
+
+{{#php_mod}}
+  RUN docker-php-ext-install {{{.}}}
+{{/php_mod}}
+
 {{#php_ext}}
   RUN pecl install {{{.}}}
   RUN docker-php-ext-enable {{{.}}}
 {{/php_ext}}
 
-{{#build_deps}}
-  RUN apk add {{{.}}}
-{{/build_deps}}
-
 {{#before_build}}
   RUN {{{.}}}
 {{/before_build}}
-
-{{#php_mod}}
-  RUN docker-php-ext-install {{{.}}}
-{{/php_mod}}
 
 COPY . ./
 
