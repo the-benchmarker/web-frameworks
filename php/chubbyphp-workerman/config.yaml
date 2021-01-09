@@ -2,8 +2,15 @@ framework:
   github: chubbyphp/chubbyphp-framework
   version: 3.2
 
+build_deps:
+  - libevent-dev
+
 php_mod:
   - pcntl
   - posix
+  - sockets
+
+php_ext:
+  - event
 
 command: php public/index.php start
