@@ -1,4 +1,4 @@
-FROM julia:1.5
+FROM julia:1.6
 
 WORKDIR /usr/src/app
 
