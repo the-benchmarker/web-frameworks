@@ -63,6 +63,8 @@ namespace :ci do
     File.write('.semaphore/schedule.yml', JSON.parse(config.to_json).to_yaml)
   end
   task :matrix do
+  $stderr.puts "We have modified"
+  $stderr.puts `git diff master.. --name-only`
     matrix = { include: [{ directory: 'ruby/rails', framework: 'ruby/rails' }] }
     puts matrix.to_json
   end
