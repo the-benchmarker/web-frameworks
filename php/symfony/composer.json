@@ -1,9 +1,9 @@
 {
   "require": {
-    "symfony/framework-bundle": "~5.1.0",
+    "symfony/framework-bundle": "^5.2",
     "symfony/console": "*",
-    "symfony/yaml": "*",
-    "doctrine/annotations": "*"
+    "symfony/dotenv": "*",
+    "symfony/yaml": "*"
   },
   "autoload": {
     "psr-4": {

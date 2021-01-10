@@ -1,14 +1,11 @@
 framework:
   website: symfony.com
-  version: 5.1
+  version: 5.2
 
 deps:
   - nginx
 
-environment:
-  APP_ENV: prod
-
 before_command:
   - mkdir -p var/log && chown www-data var/log
   - mkdir -p var/cache && chown www-data var/cache
-  - php bin/console cache:warmup
+  - php bin/console cache:warmup --no-debug
