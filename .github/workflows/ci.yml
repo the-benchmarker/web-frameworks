@@ -9,6 +9,9 @@ jobs:
         steps:
         - uses: actions/checkout@v2
         - uses: actions/setup-ruby@v1
+        - name: Install deps
+          run: bundle install --jobs 4 --retry 3
+        - run: bundle exec rake ci:matrix
         - 
             id: set-matrix
             run: echo "::set-output name=matrix::$(bundle exec rake ci:matrix)"
@@ -23,7 +26,15 @@ jobs:
             matrix: ${{fromJson(needs.dynamic_matrix.outputs.matrix)}}
 
         steps:
-            - cd ${{ matrix.directory }}
-            - make build  -f .Makefile  
-            - cd -
-            - FRAMEWORK=${{ matrix.framework }} bundle exec rspec .spec
+            - uses: actions/checkout@v2
+            - uses: actions/setup-ruby@v1
+            - name: Install deps
+              run: bundle install --jobs 4 --retry 3
+
+            - name: Build
+              run: |
+                cd ${{ matrix.directory }} && make build  -f .Makefile  && cd -
+                echo "Run some prepare steps?"
+
+            - name: Test
+              run: FRAMEWORK=${{ matrix.framework }} bundle exec rspec .spec
