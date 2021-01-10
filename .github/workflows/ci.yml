@@ -31,10 +31,14 @@ jobs:
             - name: Install deps
               run: bundle install --jobs 4 --retry 3
 
+            - name: Configure
+              run: bundle exec rake config
+
             - name: Build
               run: |
-                cd ${{ matrix.directory }} && make build  -f .Makefile  && cd -
-                echo "Run some prepare steps?"
+                cd ${{ matrix.directory }}
+                make build  -f .Makefile
+                cd -
 
             - name: Test
               run: FRAMEWORK=${{ matrix.framework }} bundle exec rspec .spec
