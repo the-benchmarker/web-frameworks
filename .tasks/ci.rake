@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'git'
+
 namespace :ci do
   task :config do
     ONLY_FOR = ENV['ONLY_FOR']
@@ -44,7 +46,7 @@ namespace :ci do
           "cd #{language}/#{framework} && make build  -f #{MANIFESTS[:build]}  && cd -",
           "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec",
           "make  -f #{language}/#{framework}/#{MANIFESTS[:build]} collect",
-          'bundle exec rake db:export',
+          'bundle exec rake db:export'
         ], env_vars: [
           { name: 'DATABASE_URL', value: 'postgresql://postgres@0.0.0.0/benchmark' },
           { name: 'DURATION', value: '10' },
@@ -59,11 +61,30 @@ namespace :ci do
                agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu1804' } }, blocks: blocks }
     File.write('.semaphore/semaphore.yml', JSON.parse(config.to_json).to_yaml)
     # remvoe conditional run
-    config[:blocks].map {|block| block.except!(:run)}
+    config[:blocks].map { |block| block.except!(:run) }
     File.write('.semaphore/schedule.yml', JSON.parse(config.to_json).to_yaml)
   end
   task :matrix do
-    matrix = { include: [{ directory: 'ruby/rails', framework: 'ruby/rails' }] }
+    base = ENV['BASE_COMMIT']
+    last = ENV['LAST_COMMIT']
+    workdir = ENV.fetch('GITHUB_WORKSPACE') { Dir.pwd }
+    warn "Checking for modification from #{base} to #{last}"
+    git = Git.open(Dir.pwd)
+    files = []
+    diff = git.gtree(last).diff(base).each { |diff| files << diff.path }
+    warn "Detected modified files - #{files.join(',')}"
+    frameworks = []
+    files.each do |file|
+      if file.match(File::SEPARATOR) && !file.start_with?('.')
+        parts = file.split(File::SEPARATOR)
+        frameworks << parts[0..1].join(File::SEPARATOR)
+      end
+    end
+    matrix = {include: []}
+    frameworks.uniq.each do |framework|
+      matrix[:include] << { directory: framework, framework: framework }
+    end
+    $stderr.puts matrix.to_json
     puts matrix.to_json
   end
 end

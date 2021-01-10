@@ -73,11 +73,11 @@ namespace :db do
     frameworks.each do |id, row|
       concurrency = compute(row[:metrics][:concurrency_64])
       if concurrency.nan?
-        $stderr.puts "Skipped #{row[:framework]} - Failure"
+        warn "Skipped #{row[:framework]} - Failure"
         next
       end
       if concurrency.zero?
-        $stderr.puts "Skipped #{row[:framework]} - O requests OK"
+        warn "Skipped #{row[:framework]} - O requests OK"
         next
       end
       row.merge!(

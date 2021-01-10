@@ -66,7 +66,7 @@ task :collect do
 
       Open3.popen3(command) do |_, stdout, stderr|
         wrk_output = stdout.read
-        $stderr.puts wrk_output
+        warn wrk_output
         lua_output = stderr.read
 
         info = lua_output.split(',')
