@@ -1,6 +1,6 @@
 # Which is the fastest?
 
-[![Build Status](https://the-benchmarker.semaphoreci.com/badges/web-frameworks/branches/master.svg)](https://the-benchmarker.semaphoreci.com/projects/web-frameworks)
+![CI](https://github.com/the-benchmarker/web-frameworks/workflows/CI/badge.svg)
 
 [![Chat with US](https://img.shields.io/badge/slack-Chat_with_us-blueviolet)](https://thebenchmarker.slack.com)
 
