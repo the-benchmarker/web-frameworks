@@ -1,11 +1,11 @@
 ping:
-    path: /
-    controller: App\Controller\ApplicationController::ping
+  path: /
+  controller: App\Controller\ApplicationController::ping
 
 user:
-    path: /user/{id}
-    controller: App\Controller\ApplicationController::user
+  path: /user/{id}
+  controller: App\Controller\ApplicationController::user
 
 create:
-    path: /user
-    controller: App\Controller\ApplicationController::create
+  path: /user
+  controller: App\Controller\ApplicationController::create
