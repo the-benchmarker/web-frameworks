@@ -1,14 +1,12 @@
 framework:
   website: iceframework.org
-  version: 1.5
+  version: 1.7
 
 build_deps:
   - bash
 
-before_build:
-  - wget -O /tmp/framework-1.5.1.tar.gz https://github.com/ice/framework/archive/1.5.1.tar.gz
-  - cd /tmp/ && tar -xzf framework-1.5.1.tar.gz && cd framework-1.5.1 && bash install
-  - echo "extension=ice.so" >> /usr/local/etc/php/conf.d/docker-php-ext-ice.ini
+php_ext:
+  - ice
 
 nginx_conf:
   - |
