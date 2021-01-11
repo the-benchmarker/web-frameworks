@@ -27,6 +27,7 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix: ${{fromJson(needs.dynamic_matrix.outputs.matrix)}}
 
     steps:
