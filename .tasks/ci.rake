@@ -23,6 +23,7 @@ namespace :ci do
         frameworks << parts[0..1].join(File::SEPARATOR)
       end
       next unless file.end_with?('Dockerfile')
+      frameworks.pop
 
       language, = file.split(File::SEPARATOR)
       Dir.glob("#{language}/*/config.yaml").each do |path|
