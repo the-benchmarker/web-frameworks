@@ -1,6 +1,6 @@
 framework:
   github: chubbyphp/chubbyphp-framework
-  version: 3.1
+  version: 3.3
 
 before_command:
   - vendor/bin/rr get-binary

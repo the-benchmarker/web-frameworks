@@ -1,7 +1,8 @@
 # Which is the fastest?
 
-[![Build Status](https://travis-ci.com/the-benchmarker/web-frameworks.svg?branch=master)](https://travis-ci.com/the-benchmarker/web-frameworks)
-[![Join the chat at https://gitter.im/which_is_the_fastest/Lobby](https://badges.gitter.im/which_is_the_fastest/Lobby.svg)](https://gitter.im/which_is_the_fastest/Lobby)
+![CI](https://github.com/the-benchmarker/web-frameworks/workflows/CI/badge.svg)
+
+[![Chat with US](https://img.shields.io/badge/slack-Chat_with_us-blueviolet)](https://thebenchmarker.slack.com)
 
 This project aims to be a load benchmarking suite, no more, no less
 
@@ -9,13 +10,13 @@ This project aims to be a load benchmarking suite, no more, no less
 
 
 <div align="center">
-  :warning::warning::warning::warning::warning::warning::warning::warning:
+:warning::warning::warning::warning::warning::warning::warning::warning:
 </div>
 
 <div align="center">Results are not <b>production-ready</b> <i>yet</i></div>
 
 <div align="center">
-  :warning::warning::warning::warning::warning::warning::warning::warning:
+:warning::warning::warning::warning::warning::warning::warning::warning:
 </div>
 
 ### Additional purposes :
@@ -26,7 +27,7 @@ This project aims to be a load benchmarking suite, no more, no less
 
 ## Requirements
 
-+ [Crystal](https://crystal-lang.org) as `built-in` tools are made in this language
++ [Ruby](https://ruby-lang.org) as `built-in` tools are made in this language
 + [Docker](https://www.docker.com) as **frameworks** are `isolated` into _containers_
 + [wrk](https://github.com/wg/wrk) as benchmarking tool, `>= 4.1.0`
 + [postgresql](https://www.postgresql.org) to store data, `>= 10`
@@ -45,67 +46,9 @@ eval $(docker-machine env default)
 
 ## Usage
 
-+ Install all dependencies
+... to be documented ...
 
-~~~sh
-shards install
-~~~
-
-+ Build internal tools
-
-~~~sh
-shards build
-~~~
-
-+ Create and initialize the database
-
-~~~sh
-createdb -U postgres benchmark
-psql -U postgres -d benchmark < .ci/dump.sql
-~~~
-
-Docker can be used to set up the database:
-
-~~~sh
-docker run -it --rm -d \
-  -p 5432:5432 \
-  -e POSTGRES_DB=benchmark \
-  -e POSTGRES_HOST_AUTH_METHOD=trust \
-  -v /tmp/pg-data:/var/lib/postgresql/data \
-  --name pg postgres:12-alpine
-~~~
-
-Wait several seconds for the container to start, then inject the dump:
-
-~~~sh
-docker exec pg sh -c "echo \"$(cat .ci/dump.sql)\" | psql -U postgres -d benchmark"
-~~~
-
-After creating the database, export its URL:
-
-~~~sh
-export DATABASE_URL="postgresql://postgres@localhost/benchmark"
-~~~
-
-+ Make configuration
-
-~~~sh
-bin/make config
-~~~
-
-+ Build containers
-
-> jobs are either languages (example : crystal) or frameworks (example : router.cr)
-
-~~~sh
-bin/neph [job1] [job2] [job3] ...
-~~~
-
-+ Export all results readme
-
-~~~sh
-bin/db to_readme
-~~~
+feel free to create an issue if you want to try this project
 
 ## Results
 
@@ -118,8 +61,10 @@ bin/db to_readme
 
 :information_source: Sorted by max `req/s` on concurrency **64** :information_source:
 
+|    | Language | Framework | Speed (64) | Speed (256) | Speed (512) |
+|----|----------|-----------|-----------:|------------:|------------:|
 {{#results}}
-{{.}}
+| {{id}} | {{language}} ({{language_language}})| [{{framework}}]({{framework_website}}) ({{framework_version}}) | {{concurrency_64}} | {{concurrency_256}} | {{concurrency_512}} |
 {{/results}}
 
 ## How to contribute ?

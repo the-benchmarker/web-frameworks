@@ -6,4 +6,4 @@ build_deps:
   - git
 
 bin_deps:
-  -  gcompat # required by uWebSocket
+  - gcompat # required by uWebSocket

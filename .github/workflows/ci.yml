@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+  schedule:
+    - cron: 0 0 * * 3
+jobs:
+  dynamic_matrix:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:  
+          fetch-depth: 2
+      - uses: actions/setup-ruby@v1
+      - name: Install deps
+        run: bundle install --jobs 4 --retry 3
+      - id: set-matrix
+        run: echo "::set-output name=matrix::$(bundle exec rake ci:matrix)"
+        env:
+          BASE_COMMIT: ${{ github.event.pull_request.base.sha }}
+          LAST_COMMIT: ${{ github.event.pull_request.head.sha }}
+
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+  test_implementations:
+    needs: dynamic_matrix
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.dynamic_matrix.outputs.matrix)}}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-ruby@v1
+      - name: Install deps
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Configure
+        run: bundle exec rake config
+
+      - name: Build
+        run: |
+          cd ${{ matrix.directory }}
+          make build  -f .Makefile
+          cd -
+
+      - name: Test
+        run: FRAMEWORK=${{ matrix.framework }} bundle exec rspec .spec
