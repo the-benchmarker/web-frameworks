@@ -17,16 +17,16 @@ class IndexController
 {
     public function index($server, $fd)
     {
-        $server->send($fd, SimpleResponse::build(""));
+        $server->send($fd, SimpleResponse::build(''));
     }
 
     public function get($server, $fd, $data)
     {
-        $server->send($fd, SimpleResponse::build((string)$data["id"] ?? ""));
+        $server->send($fd, SimpleResponse::build((string)$data['id'] ?? ''));
     }
 
     public function create($server, $fd)
     {
-        $server->send($fd, SimpleResponse::build(""));
+        $server->send($fd, SimpleResponse::build(''));
     }
 }

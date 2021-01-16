@@ -15,6 +15,8 @@ $serverConfig = [
     'open_tcp_nodelay' => envBool('SERVER_OPEN_TCP_NODELAY', true),
     'max_coroutine' => envInt('SERVER_MAX_COROUTINE', 1000000),
     'socket_buffer_size' => envInt('SERVER_SOCKET_BUFFER_SIZE', 2 * 1024 * 1024),
+    'log_file' => '/dev/null',
+    'log_level' => SWOOLE_LOG_ERROR,
 ];
 
 $pidFile = env('SERVER_PID_FILE', '');

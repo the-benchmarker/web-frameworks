@@ -35,6 +35,8 @@ return [
         'open_http2_protocol' => true,
         'max_request' => 0,
         'socket_buffer_size' => 2 * 1024 * 1024,
+        'log_file' => '/dev/null',
+        'log_level' => SWOOLE_LOG_ERROR,
     ],
     'callbacks' => [
         SwooleEvent::ON_BEFORE_START => [Hyperf\Framework\Bootstrap\ServerStartCallback::class, 'beforeStart'],
