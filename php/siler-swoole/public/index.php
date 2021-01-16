@@ -25,5 +25,7 @@ $server = http($handler, 3000);
 $server->set([
     'worker_num'       => swoole_cpu_num() * 2,
     'enable_coroutine' => false,
+    'log_file' => '/dev/null',
+    'log_level' => SWOOLE_LOG_ERROR,
 ]);
 $server->start();
