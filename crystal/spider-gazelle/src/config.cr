@@ -1,5 +1,6 @@
 # Application dependencies
 require "action-controller"
+require "log"
 
 # Application code
 require "./controllers/application"
@@ -17,3 +18,5 @@ end
 
 APP_NAME = "Spider-Gazelle"
 VERSION  = "1.0.0"
+
+Log.setup(:none)
