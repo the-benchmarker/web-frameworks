@@ -1,0 +1,20 @@
+services:
+  App\Handler\Home:
+  App\Handler\User:
+  App\Handler\UserId:
+
+  some.command:
+    class: App\Application\Command\SomeCommandExample
+    tags:
+      - { name: 'console.command', command: 'my:custom:command' }
+
+parameters:
+  debug: false
+  config_cache_enabled: true
+  monolog:
+    handlers:
+      default:
+        type: 'stream'
+        options:
+          stream: 'var/log/%date%-default.log'
+          level: 400

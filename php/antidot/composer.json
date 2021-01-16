@@ -1,0 +1,87 @@
+{
+  "name": "antidot-fw/reactive-starter",
+  "description": "Reactive Antidot Framework Apllication Starter",
+  "type": "project",
+  "license": "BSD-2-Clause",
+  "authors": [
+    {
+      "name": "kpicaza"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/kpicaza/psr11-monolog.git"
+    }
+  ],
+  "require": {
+    "php": "^7.4|^8.0",
+    "ext-json": "*",
+    "antidot-fw/react-framework": "^1.0.0",
+    "antidot-fw/fast-router-adapter": "^0.1.0",
+    "antidot-fw/cli": "^1.1.0",
+    "antidot-fw/container": "^0.1.0",
+    "antidot-fw/dev-tools": "^0.1.2",
+    "antidot-fw/event-dispatcher": "^2.0.3",
+    "antidot-fw/framework": "^0.1.1",
+    "antidot-fw/logger": "^1.1.0",
+    "antidot-fw/symfony-config-translator": "^1.1.0",
+    "antidot-fw/yaml-config-provider": "^0.1.0",
+    "webmozart/assert": "^1.7.0",
+    "wshafer/psr11-monolog": "^3.0.0|@dev"
+  },
+  "require-dev": {
+    "franzl/whoops-middleware": "^2.0",
+    "phpro/grumphp": "^1.0",
+    "phpstan/phpstan": "^0.12",
+    "phpunit/phpunit": "^8.0|^9.0",
+    "roave/security-advisories": "dev-master",
+    "squizlabs/php_codesniffer": "^3.4",
+    "symfony/var-dumper": "^5.2",
+    "laminas/laminas-component-installer": "^2.1.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AppTest\\": "test"
+    }
+  },
+  "scripts": {
+    "check-all": [
+      "@cs-check",
+      "@test",
+      "@inspect"
+    ],
+    "cs-check": "phpcs src --colors",
+    "cs-fix": "phpcbf src --colors",
+    "inspect": "phpstan analyse src -l7 --ansi",
+    "test": "phpunit --colors=always"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "zf": {
+      "component-whitelist": [
+        "antidot-fw/framework",
+        "antidot-fw/logger",
+        "antidot-fw/dev-tools",
+        "antidot-fw/doctrine",
+        "antidot-fw/dbal-adapter",
+        "antidot-fw/tactician-adapter",
+        "antidot-fw/message-queue",
+        "antidot-fw/cli",
+        "antidot-fw/fast-router-adapter",
+        "antidot-fw/event-dispatcher",
+        "antidot-fw/symfony-config-translator",
+        "wshafer/psr11-monolog",
+        "antidot-fw/antidot-react-http",
+        "antidot-fw/antidot-react-psr15"
+      ]
+    }
+  }
+}
