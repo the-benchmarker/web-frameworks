@@ -38,7 +38,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>benchmark.vertx4.BenchmarkApplication</mainClass>
+                            <mainClass>benchmark.vertx4web.BenchmarkApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
