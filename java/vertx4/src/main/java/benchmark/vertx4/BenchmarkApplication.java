@@ -1,4 +1,4 @@
-package benchmark.vertx4web;
+package benchmark.vertx4;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpMethod;
