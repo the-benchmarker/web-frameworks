@@ -58,10 +58,6 @@ call_user_func(static function () {
         }
     );
 
-    $server->on('error', function ($err) {
-        dump($err);
-    });
-
     $socket = new Socket('0.0.0.0:3000', $loop);
     $server->listen($socket);
 
