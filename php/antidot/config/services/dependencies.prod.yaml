@@ -18,3 +18,5 @@ parameters:
         options:
           stream: 'var/log/%date%-default.log'
           level: 400
+  server:
+    port: '3000'
