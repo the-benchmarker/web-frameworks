@@ -1,9 +1,7 @@
 use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
 
 #[get("/user/{id}")]
-async fn get_user(web::Path(id): web::Path<String>) -> impl Responder {
-    id.to_string()
-}
+async fn get_user(web::Path(id): web::Path<String>) -> impl Responder { id }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
