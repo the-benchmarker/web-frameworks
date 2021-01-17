@@ -17,6 +17,6 @@ public class BenchmarkApplication {
 
         vertx.createHttpServer(new HttpServerOptions().setSsl(false))
                 .requestHandler(router)
-                .listen();
+                .listen(3000);
     }
 }

@@ -13,7 +13,7 @@ public class BenchmarkApplication {
 
         vertx.createHttpServer(new HttpServerOptions().setSsl(false))
                 .requestHandler(BenchmarkApplication::handleRequests)
-                .listen();
+                .listen(3000);
     }
 
     private static void handleRequests(HttpServerRequest request) {
