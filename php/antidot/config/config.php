@@ -15,24 +15,9 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
-    \WShafer\PSR11MonoLog\ConfigProvider::class,
-    \Antidot\Event\Container\Config\ConfigProvider::class,
-    \Antidot\Logger\Container\Config\ConfigProvider::class,
-    \Antidot\Cli\Container\Config\ConfigProvider::class,
     \Antidot\Fast\Router\Container\Config\ConfigProvider::class,
     \Antidot\Container\Config\ConfigProvider::class,
     \Antidot\React\Container\Config\ConfigProvider::class,
-    class_exists(DevToolsConfigProvider::class) ? DevToolsConfigProvider::class : fn() => [],
-    // Load application config in a pre-defined order in such a way that local settings
-    // overwrite global settings. (Loaded as first to last):
-    //   - `*.php`
-    //   - `*.global.php`
-    //   - `*.local.php`
-    //   - `*.dev.php`
-    //   - `*.yaml`
-    //   - `*.global.yaml`
-    //   - `*.local.yaml`
-    //   - `*.dev.yaml`
     new PhpFileProvider(realpath(__DIR__).'/services/{{,*.}prod,{,*.}local,{,*.}dev}.php'),
     new YamlConfigProvider(realpath(__DIR__).'/services/{{,*.}prod,{,*.}local,{,*.}dev}.yaml'),
     new ArrayProvider($cacheConfig),

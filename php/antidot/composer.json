@@ -8,27 +8,16 @@
       "name": "kpicaza"
     }
   ],
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/antidot-framework/psr11-monolog.git"
-    }
-  ],
   "require": {
     "php": "^7.4|^8.0",
     "ext-json": "*",
-    "antidot-fw/react-framework": "^1.0.3",
-    "antidot-fw/fast-router-adapter": "^0.1.0",
-    "antidot-fw/cli": "^1.1.0",
-    "antidot-fw/container": "^0.1.0",
-    "antidot-fw/dev-tools": "^0.1.2",
-    "antidot-fw/event-dispatcher": "^2.0.3",
-    "antidot-fw/framework": "^0.1.1",
-    "antidot-fw/logger": "^1.1.0",
-    "antidot-fw/symfony-config-translator": "^1.1.0",
-    "antidot-fw/yaml-config-provider": "^0.1.0",
-    "webmozart/assert": "^1.7.0",
-    "wshafer/psr11-monolog": "^3.0.0|@dev"
+    "antidot-fw/react-framework": "~1.0",
+    "antidot-fw/fast-router-adapter": "~0.1",
+    "antidot-fw/container": "~0.1",
+    "antidot-fw/framework": "~0.1",
+    "antidot-fw/symfony-config-translator": "~1.1",
+    "antidot-fw/yaml-config-provider": "~0.1",
+    "webmozart/assert": "~1.7"
   },
   "autoload": {
     "psr-4": {
@@ -37,25 +26,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "extra": {
-    "laminas": {
-      "component-whitelist": [
-        "antidot-fw/framework",
-        "antidot-fw/logger",
-        "antidot-fw/dev-tools",
-        "antidot-fw/doctrine",
-        "antidot-fw/dbal-adapter",
-        "antidot-fw/tactician-adapter",
-        "antidot-fw/message-queue",
-        "antidot-fw/cli",
-        "antidot-fw/fast-router-adapter",
-        "antidot-fw/event-dispatcher",
-        "antidot-fw/symfony-config-translator",
-        "wshafer/psr11-monolog",
-        "antidot-fw/antidot-react-http",
-        "antidot-fw/antidot-react-psr15"
-      ]
-    }
   }
 }

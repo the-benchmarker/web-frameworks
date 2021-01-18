@@ -11,8 +11,6 @@ use Antidot\Logger\Application\Http\Middleware\RequestLoggerMiddleware;
 
 return static function (Application $app): void {
     $app->pipe(ErrorMiddleware::class);
-    $app->pipe(ExceptionLoggerMiddleware::class);
-    $app->pipe(RequestLoggerMiddleware::class);
     $app->pipe(RouteDispatcherMiddleware::class);
     $app->pipe(RouteNotFoundMiddleware::class);
 };

@@ -1,6 +1,6 @@
 framework:
   website: antidotfw.io
-  version: 0.1.3
+  version: 0.1
 
 before_command:
   - mkdir -p var/log && chmod 777 var/log
