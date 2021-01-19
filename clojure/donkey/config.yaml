@@ -1,0 +1,13 @@
+framework:
+  website: https://github.com/AppsFlyer/donkey
+  version: 0.4.0
+
+image: clojure:openjdk-11-lein-slim-buster
+
+build:
+  - lein uberjar
+
+binaries:
+  - target/uberjar/donkey.jar
+
+command: java -jar target/uberjar/donkey.jar 3000
