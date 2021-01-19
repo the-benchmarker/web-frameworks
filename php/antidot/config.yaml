@@ -1,0 +1,9 @@
+framework:
+  website: antidotfw.io
+  version: 0.1
+
+before_command:
+  - mkdir -p var/log && chmod 777 var/log
+  - mkdir -p var/cache && chmod 777 var/cache
+
+command: php public/index.php
