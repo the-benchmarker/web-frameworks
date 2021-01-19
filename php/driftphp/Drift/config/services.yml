@@ -1,0 +1,26 @@
+parameters:
+    kernel.secret: yoursecretshouldbehere
+    app_path: "../.."
+
+framework:
+    form: false
+    assets: false
+    session: false
+    translator: false
+    php_errors:
+        log: false
+
+# config/services.yaml
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    #
+    # Controllers
+    #
+    App\Controller\:
+        resource : "%app_path%/src/Controller/*"
+        tags:
+            - {name: controller.service_arguments}
