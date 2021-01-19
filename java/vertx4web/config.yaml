@@ -1,6 +1,6 @@
 framework:
-  website: https://vertx.io/docs/vertx-web/java/
-  version: 4.0.0
+  website: vertx.io/docs/vertx-web/java/
+  version: 4.0
 
 build:
   - mvn package
