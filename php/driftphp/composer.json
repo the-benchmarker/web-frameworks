@@ -1,0 +1,22 @@
+{
+    "name": "drift/skeleton",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marc Morera",
+            "email": "yuhu@mmoreram.com"
+        }
+    ],
+    "require": {
+        "php": "~7.4.0|~8.0.0",
+        "symfony/framework-bundle": "^5.0.0",
+        "drift/http-kernel": "^0.1.7",
+        "drift/server": "^0.1.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Drift\\": "Drift/"
+        }
+    }
+}
