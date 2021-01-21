@@ -3,11 +3,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="App.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>  
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="5.0.*" />
-    <PackageReference Include="Falco" Version="2.1.*" />
+    <PackageReference Include="Falco" Version="3.0.*" />
   </ItemGroup>
 </Project>

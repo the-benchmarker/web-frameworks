@@ -1,17 +1,18 @@
 (defproject luminus "0.1.0-SNAPSHOT"
 
-  :dependencies [[ch.qos.logback/logback-classic "1.2.3"]
+  :dependencies [[luminus/lein-template "3.91"]
+                 [ch.qos.logback/logback-classic "1.2.3"]
                  [cheshire "5.10.0"]
                  [clojure.java-time "0.3.2"]
                  [cprop "0.1.17"]
-                 [expound "0.8.6"]
+                 [expound "0.8.7"]
                  [funcool/struct "1.4.0"]
                  [luminus-jetty "0.2.1"]
                  [luminus-transit "0.1.2"]
                  [luminus/ring-ttl-session "0.3.3"]
                  [markdown-clj "1.10.5"]
                  [metosin/muuntaja "0.6.6"]
-                 [metosin/reitit "0.5.6"]
+                 [metosin/reitit "0.5.11"]
                  [metosin/ring-http-response "0.9.1"]
                  [mount "0.1.16"]
                  [nrepl "0.8.3"]
@@ -24,7 +25,7 @@
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.8.2"]
                  [ring/ring-defaults "0.3.2"]
-                 [selmer "1.12.31"]]
+                 [com.fasterxml.jackson.core/jackson-core "2.12.1"]]
 
   :min-lein-version "2.0.0"
   
@@ -52,7 +53,7 @@
                                  [ring/ring-devel "1.8.2"]
                                  [ring/ring-mock "0.4.0"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.24.1"]
-                                 [jonase/eastwood "0.3.11"]] 
+                                 [jonase/eastwood "0.3.13"]] 
                   
                   :source-paths ["env/dev/clj" ]
                   :resource-paths ["env/dev/resources"]

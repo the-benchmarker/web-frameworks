@@ -8,12 +8,9 @@ enabled = true
   runtime_version = "3.x.x"
 
 [[analyzers]]
-name = "go"
+name = "ruby"
 enabled = true
 
-  [analyzers.meta]
-  import_path = "github.com/the-benchmarker/web-frameworks"
-
 [[analyzers]]
-name = "ruby"
+name = "javascript"
 enabled = true

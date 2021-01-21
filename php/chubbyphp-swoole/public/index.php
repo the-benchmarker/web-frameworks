@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use Chubbyphp\Framework\Application;
-use Chubbyphp\Framework\ErrorHandler;
 use Chubbyphp\Framework\Middleware\ExceptionMiddleware;
 use Chubbyphp\Framework\Middleware\RouterMiddleware;
 use Chubbyphp\Framework\RequestHandler\CallbackRequestHandler;
@@ -15,15 +14,13 @@ use Chubbyphp\SwooleRequestHandler\OnRequest;
 use Chubbyphp\SwooleRequestHandler\PsrRequestFactory;
 use Chubbyphp\SwooleRequestHandler\SwooleResponseEmitter;
 use Psr\Http\Message\ServerRequestInterface;
-use Sunrise\Http\Message\ResponseFactory;
-use Sunrise\Http\ServerRequest\ServerRequestFactory;
-use Sunrise\Http\ServerRequest\UploadedFileFactory;
-use Sunrise\Stream\StreamFactory;
+use Slim\Psr7\Factory\ResponseFactory;
+use Slim\Psr7\Factory\ServerRequestFactory;
+use Slim\Psr7\Factory\StreamFactory;
+use Slim\Psr7\Factory\UploadedFileFactory;
 use Swoole\Http\Server;
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
-
-set_error_handler([new ErrorHandler(), 'errorToException']);
 
 $responseFactory = new ResponseFactory();
 
@@ -62,6 +59,8 @@ $server = new Server('localhost', 3000);
 $server->set([
     'worker_num' => swoole_cpu_num() * 2,
     'enable_coroutine' => false,
+    'log_file' => '/dev/null',
+    'log_level' => SWOOLE_LOG_ERROR,
 ]);
 
 $server->on('request', new OnRequest(

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use Chubbyphp\Framework\Application;
-use Chubbyphp\Framework\ErrorHandler;
 use Chubbyphp\Framework\Middleware\ExceptionMiddleware;
 use Chubbyphp\Framework\Middleware\RouterMiddleware;
 use Chubbyphp\Framework\RequestHandler\CallbackRequestHandler;
@@ -15,15 +14,13 @@ use Chubbyphp\WorkermanRequestHandler\OnMessage;
 use Chubbyphp\WorkermanRequestHandler\PsrRequestFactory;
 use Chubbyphp\WorkermanRequestHandler\WorkermanResponseEmitter;
 use Psr\Http\Message\ServerRequestInterface;
-use Sunrise\Http\Message\ResponseFactory;
-use Sunrise\Http\ServerRequest\ServerRequestFactory;
-use Sunrise\Http\ServerRequest\UploadedFileFactory;
-use Sunrise\Stream\StreamFactory;
+use Slim\Psr7\Factory\ResponseFactory;
+use Slim\Psr7\Factory\ServerRequestFactory;
+use Slim\Psr7\Factory\StreamFactory;
+use Slim\Psr7\Factory\UploadedFileFactory;
 use Workerman\Worker;
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
-
-set_error_handler([new ErrorHandler(), 'errorToException']);
 
 $responseFactory = new ResponseFactory();
 

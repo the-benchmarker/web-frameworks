@@ -14,9 +14,9 @@ files:
   - "**/hello.conf"
 
 download:
-  - wget -c https://kore.io/releases/kore-3.3.1.tar.gz
-  - tar -xvf kore-3.3.1.tar.gz
-  - cd kore-3.3.1 && TASKS=1 NOTLS=1 make && make install
+  - wget -c https://github.com/jorisvink/kore/archive/3.3.1-release.tar.gz
+  - tar -xvf 3.3.1-release.tar.gz
+  - cd kore-3.3.1-release && TASKS=1 NOTLS=1 make && make install
 
 build:
   - cd hello && kodev build
