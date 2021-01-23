@@ -10,7 +10,7 @@ files:
 
 environment:
   RH_IO_THREADS: 1
-  RH_WORKER_THREADS: 4
+  RH_WORKER_THREADS: 2
 
 binaries:
   - target/benchmark.jar
