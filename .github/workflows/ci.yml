@@ -9,7 +9,7 @@ on:
   schedule:
     - cron: 0 0 * * 3
 jobs:
-  dynamic_matrix:
+  matrix:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,13 +28,30 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
-  test_implementations:
-    needs: dynamic_matrix
+  test:
+    needs: matrix
 
     runs-on: ubuntu-latest
+
+    
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+          
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.dynamic_matrix.outputs.matrix)}}
+      matrix: ${{fromJson(needs.matrix.outputs.matrix)}}
 
     steps:
       - uses: actions/checkout@v2
@@ -45,11 +62,23 @@ jobs:
       - name: Configure
         run: bundle exec rake config
 
-      - name: Build
+      - name: Setup
         run: |
-          cd ${{ matrix.directory }}
+          cd ${{ matrix.directory }} 
           make build  -f .Makefile
-          cd -
 
       - name: Test
-        run: FRAMEWORK=${{ matrix.framework }} bundle exec rspec .spec
+        run: bundle exec rspec .spec
+        env:
+          FRAMEWORK: ${{ matrix.framework }}
+
+      - name: Collect
+        run: |
+          sudo apt-get install wrk
+          make -f ${FRAMEWORK}/.Makefile collect
+        env:
+          FRAMEWORK: ${{ matrix.framework }}
+          DATABASE_URL: postgresql://postgres@localhost/postgres
+          DURATION: 5
+          CONCURRENCIES: 10
+          ROUTES: GET:/
