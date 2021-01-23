@@ -1,11 +1,11 @@
 FROM php:8.0-fpm-alpine
 
-RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev php8-pear {{#deps}} {{{.}}} {{/deps}}
+RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev php-pear {{#deps}} {{{.}}} {{/deps}}
 RUN docker-php-ext-install zip opcache
 
 WORKDIR /usr/src/app
 
-RUN ln -sfv /usr/bin/pecl8 /usr/bin/pecl
+RUN ln -sfv /usr/bin/pecl8 /usr/local/bin/pecl
 
 {{#build_deps}}
   RUN apk add {{{.}}}
@@ -16,8 +16,9 @@ RUN ln -sfv /usr/bin/pecl8 /usr/bin/pecl
 {{/php_mod}}
 
 {{#php_ext}}
-  RUN pecl install {{{.}}}
-  RUN docker-php-ext-enable {{{.}}}
+  RUN mkdir -p /usr/src/php/ext/{{{.}}} && \
+    curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
+  RUN docker-php-ext-install {{{.}}}
 {{/php_ext}}
 
 {{#before_build}}
@@ -27,9 +28,9 @@ RUN ln -sfv /usr/bin/pecl8 /usr/bin/pecl
 COPY . ./
 
 {{^standalone}}
-RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-dev --prefer-dist --classmap-authoritative
-RUN composer dumpautoload -o
+  RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+  RUN composer install --no-dev --prefer-dist --classmap-authoritative
+  RUN composer dumpautoload -o
 {{/standalone}}
 
 {{#environment}}
