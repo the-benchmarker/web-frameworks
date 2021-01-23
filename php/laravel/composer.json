@@ -1,8 +1,6 @@
 {
   "require": {
-    "fideloper/proxy": "*",
-    "laravel/framework": "~7.27.0",
-    "laravel/tinker": "*"
+    "laravel/framework": "~8.24.0"
   },
   "autoload": {
     "psr-4": {

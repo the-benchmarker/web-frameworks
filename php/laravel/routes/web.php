@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', 'ApplicationController@index');
 Route::get('/user/{id}', 'UserController@show');
 Route::post('/user', 'UserController@create');

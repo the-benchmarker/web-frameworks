@@ -1,6 +1,6 @@
 framework:
   website: laravel.com
-  version: 7.27
+  version: 8.24
 
 environment:
   APP_ENV: production
@@ -17,3 +17,6 @@ before_command:
   - find /usr/src/app -type f -exec chmod 644 {} \;
   - find /usr/src/app -type d -exec chmod 755 {} \;
   - chmod -R ug+rwx storage /usr/src/app/bootstrap/cache
+
+  - php artisan config:cache
+  - php artisan route:cache
