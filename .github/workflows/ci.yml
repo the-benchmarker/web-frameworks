@@ -47,9 +47,10 @@ jobs:
         run: bundle exec rake config
 
       - name: Setup
-        run: |
-          cd ${{ matrix.directory }} 
-          make build  -f .Makefile
+        uses: nick-invision/retry@v2
+        with:
+          max_attempts: 3
+          command: cd ${{ matrix.directory }} && make build  -f .Makefile
 
       - name: Test
         run: bundle exec rspec .spec
