@@ -49,7 +49,7 @@ jobs:
       - name: Setup
         uses: nick-invision/retry@v2
         with:
-          timeout_minutes: 5
+          timeout_minutes: 30
           max_attempts: 3
           command: cd ${{ matrix.directory }} && make build  -f .Makefile
 
