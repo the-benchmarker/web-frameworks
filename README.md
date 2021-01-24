@@ -52,7 +52,7 @@ feel free to create an issue if you want to try this project
 
 ## Results
 
-:information_source:  Updated on **2021-01-23** :information_source:
+:information_source:  Updated on **2021-01-24** :information_source:
 
 > Benchmarking with [wrk](https://github.com/wg/wrk)
    + Threads : 8
@@ -257,7 +257,7 @@ feel free to create an issue if you want to try this project
 | 192 | v (0.1)| [vape](https://github.com/exastencil/vape) (0.3) | 4 164.45 | 2 268.26 | 2 267.63 |
 | 193 | php (7.4)| [bearframework](https://github.com/bearframework/bearframework) (1.3) | 3 956.47 | 3 899.55 | 3 886.76 |
 | 194 | php (7.4)| [nette](https://nette.org/en/) (3.1) | 3 862.24 | 3 853.15 | 3 866.96 |
-| 195 | php (7.4)| [lumen](https://lumen.laravel.com) (8.1) | 3 827.48 | 3 836.92 | 3 863.93 |
+| 195 | php (7.4)| [lumen](https://lumen.laravel.com) (8.2) | 3 830.03 | 3 837.93 | 3 859.82 |
 | 196 | julia (1.6)| [merly](https://github.com/codeneomatrix/Merly.jl) (0.2) | 3 791.22 | 6 792.09 | 5 757.87 |
 | 197 | php (7.4)| [sunrise-router](https://github.com/sunrise-php/http-router) (2.5) | 3 780.90 | 3 722.21 | 3 722.77 |
 | 198 | php (7.4)| [chubbyphp](https://github.com/chubbyphp/chubbyphp-framework) (3.4) | 3 423.68 | 3 396.54 | 3 386.92 |
