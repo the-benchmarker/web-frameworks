@@ -1,60 +1,92 @@
-# Which is the fastest?
+# Which is the fastest ?
+----------
+#### Simple framework comparison
+----------
+<p align="center">
+   <a href="https://github.com/the-benchmarker/web-frameworks/actions?query=workflow%3ACI" target="_blank">
+      <img src="https://github.com/the-benchmarker/web-frameworks/workflows/CI/badge.svg" alt="Test">
+   </a>
+   <a href="https://join.slack.com/t/thebenchmarker/shared_invite/zt-fcyy1ybq-A7T1SedewiVMEtJQGEyQYw" target="_blank">
+      <img src="https://img.shields.io/badge/slack-chat_with_us-green" alt="Chat with us">
+   </a>
+   <a href="https://github.com/the-benchmarker/web-frameworks/blob/master/LICENSE" target="_blank">
+      <img src="https://img.shields.io/github/license/the-benchmarker/web-frameworks" alt="License">
+   </a>
+</p>
 
-![CI](https://github.com/the-benchmarker/web-frameworks/workflows/CI/badge.svg)
+## Motivation
 
-[![Chat with US](https://img.shields.io/badge/slack-Chat_with_us-blueviolet)](https://thebenchmarker.slack.com)
+There are many frameworks, each one comes with its own advantages and drawbacks. The purpose of this project is to identify them and attempt to measure their differences (performance is only one metric).
 
-This project aims to be a load benchmarking suite, no more, no less
+#### What is a framework ?
 
-> Measuring response times (routing times) for each framework (middleware).
+A framework is a set of components working together. The main intention behind a framework is to faciliate (app or service) creation. The way a framework help any developer could vary from one to an other.
 
+A majority of frameworks could be splitted in 2 parts :
 
-<div align="center">
-:warning::warning::warning::warning::warning::warning::warning::warning:
-</div>
-
-<div align="center">Results are not <b>production-ready</b> <i>yet</i></div>
-
-<div align="center">
-:warning::warning::warning::warning::warning::warning::warning::warning:
-</div>
-
-### Additional purposes :
-
-+ Helping decide between languages, depending on use case
-+ Learning languages, best practices, devops culture ...
-+ Having fun :heart:
++ **full-stack** meaning it provides all aspects (-stacks-) from data layer to sometimes deployment
++ **micro** meaning it provides only the routing part, and let the developer choose any other component for the others
 
 ## Requirements
 
-+ [Ruby](https://ruby-lang.org) as `built-in` tools are made in this language
-+ [Docker](https://www.docker.com) as **frameworks** are `isolated` into _containers_
-+ [wrk](https://github.com/wg/wrk) as benchmarking tool, `>= 4.1.0`
-+ [postgresql](https://www.postgresql.org) to store data, `>= 10`
-
-:information_source::information_source::information_source::information_source::information_source:
-
-:warning: On `OSX` you need `docker-machine` to use `docker` containerization
-
-~~~
-brew install docker-machine
-docker-machine create default
-eval $(docker-machine env default)
-~~~
-
-:information_source::information_source::information_source::information_source::information_source:
++ `ruby`, all tools are made in `ruby`
++ `wrk`, results are collected using `wrk`
++ `postgresql`, results are stored in `postgresql`
++ `docker`, each implementation is implemented in an isolated **container**
++ `docker-machine` if you are on `macos`
 
 ## Usage
 
-... to be documented ...
++ Setup
 
-feel free to create an issue if you want to try this project
+```
+bundle install
+bundle exec rake config
+```
 
-## Results
++ Build
 
-:information_source:  Updated on **2021-01-24** :information_source:
+:warning: On `macos`, you need to use `docker-machine` to allow `docker` usage for each framework :warning:
 
-> Benchmarking with [wrk](https://github.com/wg/wrk)
+```
+docker-machine rm default --force
+docker-machine create default
+eval $(docker-machine env default)
+```
+
+```
+export FRAMEWORK=php/lumen
+cd ${FRAMEWORK} 
+make -f .Makefile build 
+```
+
++ Run
+
+```
+make -f ${FRAMEWORK}/.Makefile collect
+```
+
+:warning: You need to be on the project main directory :warning:
+
+## Results (2021-01-25)
+
+
+
+<details>
+  <summary><strong>Technical details</strong></summary>
+  <ul>
+   <li>CPU : 8 Cores (AMD FX-8320E Eight-Core Processor)</li>
+   <li>RAM : 16 Gb</li>
+   <li>OS : Fedora</li>
+   <li><pre>Docker version 20.10.0-rc1, build 5cc2396
+</pre></li>
+  </ul>
+</details>
+
+<details>
+  <summary><strong>Datatable</strong></summary>
+
+> Computed with [wrk](https://github.com/wg/wrk)
    + Threads : 8
    + Timeout : 8
    + Duration : 15s (seconds)
@@ -131,7 +163,7 @@ feel free to create an issue if you want to try this project
 | 66 | javascript (14.15)| [polka](https://github.com/lukeed/polka) (0.5) | 57 803.42 | 62 332.73 | 61 211.39 |
 | 67 | javascript (14.15)| [restana](https://github.com/jkyberneees/ana) (4.7) | 56 573.82 | 63 578.67 | 64 693.22 |
 | 68 | javascript (14.15)| [rayo](https://rayo.js.org) (1.3) | 55 855.37 | 60 789.16 | 59 451.39 |
-| 69 | javascript (14.15)| [fastify](https://fastify.io) (3.10) | 54 731.78 | 59 228.80 | 58 120.92 |
+| 69 | javascript (14.15)| [fastify](https://fastify.io) (3.11) | 54 731.78 | 59 228.80 | 58 120.92 |
 | 70 | php (7.4)| [one](https://github.com/lizhichao/one) (2.2) | 54 003.54 | 60 155.67 | 69 861.95 |
 | 71 | javascript (14.15)| [muneem](https://github.com/node-muneem/muneem) (2.4) | 53 393.32 | 58 881.06 | 57 055.15 |
 | 72 | python (3.9)| [pyramid](https://trypyramid.com) (1.1) | 53 301.53 | 58 303.62 | 58 930.98 |
@@ -153,7 +185,7 @@ feel free to create an issue if you want to try this project
 | 88 | python (3.9)| [asgineer](https://asgineer.readthedocs.io) (0.8) | 45 006.13 | 51 096.95 | 52 889.91 |
 | 89 | javascript (14.15)| [iotjs-express](https://github.com/SamsungInternet/iotjs-express) (0.0) | 44 812.19 | 48 789.49 | 48 371.21 |
 | 90 | clojure (1.1)| [coast](https://coastonclojure.com) (1.0) | 44 756.53 | 45 810.95 | 46 040.69 |
-| 91 | php (7.4)| [comet](https://github.com/gotzmann/comet) (0.8) | 44 480.60 | 47 996.07 | 48 941.23 |
+| 91 | php (7.4)| [comet](https://github.com/gotzmann/comet) (1.1) | 44 480.60 | 47 996.07 | 48 941.23 |
 | 92 | r (4.0)| [rserve](https://rforge.net/Rserve/) (1.7) | 43 058.04 | 32 304.72 | 30 842.56 |
 | 93 | python (3.9)| [bottle](https://bottlepy.org) (0.12) | 42 853.26 | 44 964.34 | 46 232.34 |
 | 94 | javascript (14.15)| [koa](https://koajs.com) (2.13) | 40 242.52 | 44 044.32 | 42 876.92 |
@@ -166,7 +198,7 @@ feel free to create an issue if you want to try this project
 | 101 | javascript (14.15)| [moleculer](https://moleculer.services) (0.14) | 34 736.54 | 35 772.06 | 34 686.40 |
 | 102 | php (7.4)| [chubbyphp-workerman](https://github.com/chubbyphp/chubbyphp-framework) (3.4) | 34 562.47 | 37 068.64 | 36 744.62 |
 | 103 | php (7.4)| [siler-swoole](https://siler.leocavalcante.dev) (1.7) | 34 512.95 | 50 012.16 | 53 663.66 |
-| 104 | swift (5.3)| [vapor](https://vapor.codes) (4.38) | 34 199.88 | 36 411.15 | 36 050.07 |
+| 104 | swift (5.3)| [vapor](https://vapor.codes) (4.39) | 34 199.88 | 36 411.15 | 36 050.07 |
 | 105 | rust (1.49)| [nickel](https://nickel-org.github.io) (0.11) | 34 100.96 | 34 514.93 | 33 340.84 |
 | 106 | cpp (11)| [evhtp](https://criticalstack.com) (1.2) | 33 883.69 | 34 798.06 | 33 191.16 |
 | 107 | python (3.9)| [hug](https://hug.rest) (2.6) | 33 272.32 | 35 299.08 | 35 586.93 |
@@ -231,7 +263,7 @@ feel free to create an issue if you want to try this project
 | 166 | go (1.15)| [gramework](https://github.com/gramework/gramework) (1.7) | 9 810.75 | 9 996.68 | 9 937.54 |
 | 167 | python (3.9)| [cherrypy](https://github.com/cherrypy/cherrypy) (18.6) | 9 789.74 | 9 651.19 | 9 507.05 |
 | 168 | php (7.4)| [slim-roadrunner](https://slimframework.com) (4.7) | 9 783.73 | 10 013.59 | 10 080.87 |
-| 169 | python (3.9)| [masonite](https://masoniteproject.com) (2.3) | 9 729.40 | 20 279.31 | 20 208.65 |
+| 169 | python (3.9)| [masonite](https://masoniteproject.com) (3.0) | 9 729.40 | 20 279.31 | 20 208.65 |
 | 170 | php (7.4)| [spiral](https://github.com/spiral/framework) (2.7) | 9 614.24 | 9 727.76 | 9 873.65 |
 | 171 | python (3.9)| [guillotina](https://guillotina.io) (6.1) | 9 225.95 | 9 579.87 | 8 847.15 |
 | 172 | ruby (2.7)| [sinatra](https://sinatrarb.com) (2.1) | 9 091.10 | 8 854.24 | 8 818.27 |
@@ -257,7 +289,7 @@ feel free to create an issue if you want to try this project
 | 192 | v (0.1)| [vape](https://github.com/exastencil/vape) (0.3) | 4 164.45 | 2 268.26 | 2 267.63 |
 | 193 | php (7.4)| [bearframework](https://github.com/bearframework/bearframework) (1.3) | 3 956.47 | 3 899.55 | 3 886.76 |
 | 194 | php (7.4)| [nette](https://nette.org/en/) (3.1) | 3 862.24 | 3 853.15 | 3 866.96 |
-| 195 | php (7.4)| [lumen](https://lumen.laravel.com) (8.2) | 3 830.03 | 3 837.93 | 3 859.82 |
+| 195 | php (7.4)| [lumen](https://lumen.laravel.com) (8.2) | 3 840.68 | 3 861.45 | 3 886.13 |
 | 196 | julia (1.6)| [merly](https://github.com/codeneomatrix/Merly.jl) (0.2) | 3 791.22 | 6 792.09 | 5 757.87 |
 | 197 | php (7.4)| [sunrise-router](https://github.com/sunrise-php/http-router) (2.5) | 3 780.90 | 3 722.21 | 3 722.77 |
 | 198 | php (7.4)| [chubbyphp](https://github.com/chubbyphp/chubbyphp-framework) (3.4) | 3 423.68 | 3 396.54 | 3 386.92 |
@@ -271,7 +303,7 @@ feel free to create an issue if you want to try this project
 | 206 | r (4.0)| [restrserve](https://restrserve.org) (0.3) | 1 934.74 | 1 850.81 | 1 854.20 |
 | 207 | r (4.0)| [httpuv](https://github.com/rstudio/httpuv) (1.5) | 1 931.24 | 1 837.16 | 1 761.46 |
 | 208 | crystal (0.35)| [runcobo](https://github.com/runcobo/runcobo) (1.0) | 1 898.41 | 1 956.18 | 1 944.38 |
-| 209 | php (7.4)| [mezzio](https://docs.mezzio.dev) (3.2) | 1 859.32 | 1 856.95 | 1 862.77 |
+| 209 | php (7.4)| [mezzio](https://docs.mezzio.dev) (3.3) | 1 859.32 | 1 856.95 | 1 862.77 |
 | 210 | php (7.4)| [driftphp](https://github.com/driftphp/driftphp) (0.1) | 1 825.75 | 1 787.27 | 1 393.16 |
 | 211 | python (3.9)| [klein](https://github.com/twisted/klein) (20.6) | 1 662.78 | 1 661.79 | 1 627.73 |
 | 212 | python (3.9)| [cyclone](https://cyclone.io) (1.3) | 1 659.70 | 1 657.21 | 1 631.34 |
@@ -284,19 +316,4 @@ feel free to create an issue if you want to try this project
 | 219 | r (4.0)| [plumber](https://rplumber.io) (1.0) | 287.60 | 302.64 | -86.01 |
 | 220 | cpp (11)| [nawa](https://github.com/jatofg/nawa) (0.6) | 265.70 | NaN | NaN |
 
-## How to contribute ?
-
-In any way you want ...
-
-+ Request a framework addition
-+ Report a bug (on any implementation)
-+ Suggest an idea
-+ ...
-
-Any kind of idea is :heart:
-
-## Contributors
-
-- [Taichiro Suzuki](https://github.com/tbrand) - Author | Maintainer
-- [OvermindDL1](https://github.com/OvermindDL1) - Maintainer
-- [Marwan Rabbâa](https://github.com/waghanza) - Maintainer
+</details>
