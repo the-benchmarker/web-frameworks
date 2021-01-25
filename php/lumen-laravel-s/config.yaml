@@ -2,8 +2,11 @@ framework:
   github: hhxsv5/laravel-s
   version: 3.7
 
-php_ext:
+php_mod:
   - pcntl
+  - posix
+  -
+php_ext:
   - swoole
 
 environment:
