@@ -12,6 +12,5 @@ environment:
 
 before_command:
   - mkdir -p storage/logs
-  - php artisan optimize
 
 command: php bin/laravels start
