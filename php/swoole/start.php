@@ -6,13 +6,7 @@ use Swoole\Http\Response;
 
 $server = new Server('0.0.0.0', 3000);
 $server->set([
-    'daemonize'         => false,
-    'reactor_num'       => swoole_cpu_num(),
-    'worker_num'        => swoole_cpu_num(),
-    'open_tcp_nodelay'  => true,
-    'tcp_fastopen'      => true,
-    'enable_reuse_port' => true,
-    'http_compression'  => false,
+    'daemonize' => false,
 ]);
 $server->on('request', function (Request $request, Response $response) {
     $uri = $request->server['request_uri'] ?? '/';
