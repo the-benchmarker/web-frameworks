@@ -58,23 +58,3 @@ STATICFILES = {
     "storage/uploads": "static/",
     "storage/public": "/",
 }
-
-"""SASS Settings
-These settings is what Masonite will use to compile SASS into CSS.
-
-importFrom should contain a list of all folders where your main SASS
-files live. Masonite will search in this folder for any .scss files
-that do not start with an underscore and compile them.
-
-includePaths should contain a list of directories of any .scss files
-that you plan to @import.
-
-compileTo should contain a string with the directory you want your sass
-compiled to.
-"""
-
-SASSFILES = {
-    "importFrom": ["storage/static"],
-    "includePaths": ["storage/static/sass"],
-    "compileTo": "storage/compiled",
-}

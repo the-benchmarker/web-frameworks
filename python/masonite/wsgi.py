@@ -1,28 +1,27 @@
-# Disable all logging features
-import logging
-
-logging.disable()
-
-
 """First Entry For The WSGI Server."""
 
-from masonite.app import App
+from masonite.environment import LoadEnvironment
 
-from bootstrap.start import app
-from config import providers
+LoadEnvironment()
+
+from masonite.app import App
+from masonite.helpers import config
+from masonite.wsgi import response_handler
 
 """Instantiate Container And Perform Important Bindings
 Some Service providers need important bindings like the WSGI application
 and the application configuration file before they boot.
 """
 
-container = App(remember=True)
 
-container.bind("WSGI", app)
-container.bind("Container", container)
 
-container.bind("Providers", [])
-container.bind("WSGIProviders", [])
+container = App()
+
+container.bind('WSGI', response_handler)
+container.bind('Container', container)
+
+container.bind('Providers', [])
+container.bind('WSGIProviders', [])
 
 """Bind all service providers
 Let's register everything into the Service Container. Once everything is
@@ -32,15 +31,15 @@ only run once when the server is started. Providers will be ran
 once if the wsgi attribute on a provider is False.
 """
 
-for provider in providers.PROVIDERS:
+for provider in config('providers.providers'):
     located_provider = provider()
     located_provider.load_app(container).register()
     if located_provider.wsgi:
-        container.make("WSGIProviders").append(located_provider)
+        container.make('WSGIProviders').append(located_provider)
     else:
-        container.make("Providers").append(located_provider)
+        container.make('Providers').append(located_provider)
 
-for provider in container.make("Providers"):
+for provider in container.make('Providers'):
     container.resolve(provider.boot)
 
 """Get the application from the container
@@ -50,4 +49,4 @@ from the container and pass it to the application variable. This
 will allow WSGI servers to pick it up from the command line
 """
 
-application = container.make("WSGI")
+application = container.make('WSGI')
