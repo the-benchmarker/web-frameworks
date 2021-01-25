@@ -1,0 +1,16 @@
+{
+  "require": {
+    "hhxsv5/laravel-s": "^3.7",
+    "laravel/framework": "^8.12"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}
