@@ -13,8 +13,6 @@ Some Service providers need important bindings like the WSGI application
 and the application configuration file before they boot.
 """
 
-
-
 container = App()
 
 container.bind('WSGI', response_handler)
