@@ -5,7 +5,7 @@ framework:
 php_mod:
   - pcntl
   - posix
-  -
+
 php_ext:
   - swoole
 
