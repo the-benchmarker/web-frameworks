@@ -1,20 +1,8 @@
 framework:
-  github: hhxsv5/laravel-s
-  version: 3.7
-
-php_mod:
-  - pcntl
-  - posix
+  github: swoole/swoole-src
+  version: 4.6
 
 php_ext:
   - swoole
-
-environment:
-  APP_ENV: production
-  APP_DEBUG: false
-  APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
-
-before_command:
-  - mkdir -p storage/logs
 
 command: php bin/laravels start
