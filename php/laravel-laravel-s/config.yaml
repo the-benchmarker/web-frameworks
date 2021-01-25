@@ -3,6 +3,7 @@ framework:
   version: 3.7
 
 php_ext:
+  - pcntl
   - swoole
 
 environment:
