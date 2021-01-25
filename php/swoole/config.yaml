@@ -5,4 +5,4 @@ framework:
 php_ext:
   - swoole
 
-command: php bin/laravels start
+command: php start.php
