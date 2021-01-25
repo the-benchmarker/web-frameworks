@@ -16,11 +16,11 @@
 
 ## Motivation
 
-It exists plenty of frameworks. Each one has its advantages, and drawbacks. The idea of this project is to list those frameworks and to expose metrics for each one listed `here` (performance is only the first one)
+There are many frameworks, each one comes with its own advantages and drawbacks. The purpose of this project is to identify them and attempt to measure their differences (performance is only one metric).
 
-#### What is a framewok ?
+#### What is a framework ?
 
-A framework is a set of components working together. There is a **huge** variety of frameworks, from full-stack (when deling with multiple layers) to micro (when providing only routing part)
+A framework is a set of components working together. There is a **huge** variety of frameworks, from full-stack (when delaing with multiple layers) to micro (when providing only routing part)
 
 ## Requirements
 
