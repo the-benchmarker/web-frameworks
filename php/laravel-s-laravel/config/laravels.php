@@ -301,6 +301,6 @@ return [
         'log_level'          => SWOOLE_LOG_ERROR,
         'log_file'           => '/dev/null',
         'enable_coroutine'   => false,
-        'buffer_output_size' => 2 * 1024 * 1024,
+        'buffer_output_size' => 2 * 1024 * 1024, // required by laravel-s
     ],
 ];
