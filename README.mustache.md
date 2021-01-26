@@ -84,8 +84,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 
 <details>
   <summary><strong>Datatable</strong></summary>
-
-> Computed with [wrk](https://github.com/wg/wrk)
+<a id="results"> Computed with [wrk](https://github.com/wg/wrk)
    + Threads : 8
    + Timeout : 8
    + Duration : 15s (seconds)
@@ -97,5 +96,6 @@ make -f ${FRAMEWORK}/.Makefile collect
 {{#results}}
 | {{id}} | {{language}} ({{language_language}})| [{{framework}}]({{framework_website}}) ({{framework_version}}) | {{concurrency_64}} | {{concurrency_256}} | {{concurrency_512}} |
 {{/results}}
+</a>
 
 </details>
