@@ -85,8 +85,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 
 <details>
   <summary><strong>Datatable</strong></summary>
-<div id="results"
-> Computed with [wrk](https://github.com/wg/wrk)
+<a id="results"> Computed with [wrk](https://github.com/wg/wrk)
    + Threads : 8
    + Timeout : 8
    + Duration : 15s (seconds)
@@ -318,6 +317,6 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 221 | php (7.4)| [laravel](https://laravel.com) (8.24) | 905.66 | 912.23 | 909.09 |
 | 222 | r (4.0)| [plumber](https://rplumber.io) (1.0) | 287.80 | 302.39 | -86.12 |
 | 223 | cpp (11)| [nawa](https://github.com/jatofg/nawa) (0.6) | 260.63 | NaN | NaN |
-</div>
+</a>
 
 </details>
