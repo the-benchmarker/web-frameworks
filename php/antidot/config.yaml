@@ -2,6 +2,12 @@ framework:
   website: antidotfw.io
   version: 0.1
 
+php_mod:
+  - intl
+  - pcntl
+  - posix
+  - sockets
+
 before_command:
   - mkdir -p var/log && chmod 777 var/log
   - mkdir -p var/cache && chmod 777 var/cache

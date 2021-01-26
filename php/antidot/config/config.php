@@ -18,6 +18,7 @@ $aggregator = new ConfigAggregator([
     \Antidot\Fast\Router\Container\Config\ConfigProvider::class,
     \Antidot\Container\Config\ConfigProvider::class,
     \Antidot\React\Container\Config\ConfigProvider::class,
+    \Antidot\React\PSR15\Container\Config\ConfigProvider::class,
     new PhpFileProvider(realpath(__DIR__).'/services/{{,*.}prod,{,*.}local,{,*.}dev}.php'),
     new YamlConfigProvider(realpath(__DIR__).'/services/{{,*.}prod,{,*.}local,{,*.}dev}.yaml'),
     new ArrayProvider($cacheConfig),
