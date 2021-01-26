@@ -15,6 +15,6 @@ environment:
   APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
 
 before_command:
-  - mkdir -p storage/logs
+  - mkdir storage
 
 command: php bin/laravels start

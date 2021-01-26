@@ -16,7 +16,8 @@ environment:
 
 before_command:
   - mkdir bootstrap/cache
-  - mkdir -p storage/logs
-  - php artisan optimize
+  - mkdir storage
+  - php artisan config:cache
+  - php artisan route:cache
 
 command: php bin/laravels start
