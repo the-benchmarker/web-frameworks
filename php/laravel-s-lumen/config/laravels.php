@@ -295,8 +295,7 @@ return [
     */
 
     'swoole' => [
-        'daemonize'          => env('LARAVELS_DAEMONIZE', false),
-        'worker_num'         => env('LARAVELS_WORKER_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8),
+        'worker_num'         => swoole_cpu_num() * 2,
         'pid_file'           => storage_path('laravels.pid'),
         'log_level'          => SWOOLE_LOG_ERROR,
         'log_file'           => '/dev/null',
