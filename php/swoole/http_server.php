@@ -14,12 +14,12 @@ $server->set(
     ]
 );
 $server->on('request', function (Request $request, Response $response) {
-        $uri = $request->server['request_uri'] ?? '/';
-        if (strpos($uri, '/user/') === 0 && isset($uri[6])) {
-            $response->end(substr($uri, 6));
-            return;
-        }
-        $response->end();
+    $uri = $request->server['request_uri'] ?? '/';
+    if (strpos($uri, '/user/') === 0 && isset($uri[6])) {
+        $response->end(substr($uri, 6));
+        return;
+    }
+    $response->end();
 });
 
 $server->start();
