@@ -1,8 +1,9 @@
 from masonite.request import Request
+from masonite.controllers import Controller
 
 
-class PageController:
-    def index(self, request: Request):
+class PageController(Controller):
+    def index(self):
         return ""
 
     def show_user(self, request: Request):
