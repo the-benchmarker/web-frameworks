@@ -298,11 +298,9 @@ return [
         'daemonize'          => env('LARAVELS_DAEMONIZE', false),
         'worker_num'         => env('LARAVELS_WORKER_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8),
         'pid_file'           => storage_path('laravels.pid'),
-        'log_level'          => 4,
+        'log_level'          => SWOOLE_LOG_ERROR,
         'log_file'           => '/dev/null',
         'enable_coroutine'   => false,
-        'open_tcp_nodelay'   => true,
-        'tcp_fastopen'       => true,
         'buffer_output_size' => 2 * 1024 * 1024,
     ],
 ];
