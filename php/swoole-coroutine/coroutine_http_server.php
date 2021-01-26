@@ -4,7 +4,7 @@ use Swoole\Coroutine;
 use Swoole\Coroutine\Http\Server;
 
 Coroutine\run(function () {
-    $server = new Server('127.0.0.1', 3000);
+    $server = new Server('0.0.0.0', 3000);
     $server->handle('/', function ($request, $response) {
         $response->end('');
     });
