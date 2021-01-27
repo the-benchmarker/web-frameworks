@@ -17,12 +17,7 @@ $pool->on('workerStart', function ($pool, $id) {
         $response->end('');
     });
     $server->handle('/user', function ($request, $response) {
-        $uri = $request->server['request_uri'] ?? '/';
-        if (strpos($uri, '/user/') === 0 && isset($uri[6])) {
-            $response->end(substr($uri, 6));
-            return;
-        }
-        $response->end();
+        $response->end(substr($request->server['request_uri'], 6));
     });
     $server->start();
 });
