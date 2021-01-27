@@ -127,7 +127,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 31 | crystal (0.35)| [kemal](https://kemalcr.com) (0.27) | 92 472.38 | 111 869.50 | 111 382.76 |
 | 32 | crystal (0.35)| [amber](https://amberframework.org) (0.35) | 89 004.19 | 105 895.82 | 105 380.70 |
 | 33 | php (7.4)| [swoole-process-coroutine](https://github.com/swoole/swoole-src) (4.6) | 88 827.54 | 126 018.57 | 137 100.44 |
-| 34 | java (11)| [quarkus](https://quarkus.io) (1.11) | 86 334.47 | 105 028.79 | 107 973.49 |
+| 34 | java (11)| [quarkus](https://quarkus.io) (1.11) | 86 897.92 | 105 604.16 | 108 452.17 |
 | 35 | php (7.4)| [simps](https://github.com/simple-swoole/simps) (1.0) | 84 790.18 | 107 102.87 | 113 462.53 |
 | 36 | crystal (0.35)| [athena](https://github.com/athena-framework/athena) (0.12) | 83 167.28 | 93 706.89 | 89 079.25 |
 | 37 | scala (2.13)| [akkahttp](https://akka.io) (10.2) | 82 236.16 | 94 492.64 | 92 946.60 |
@@ -203,9 +203,9 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 107 | swift (5.3)| [vapor](https://vapor.codes) (4.39) | 34 644.00 | 36 854.85 | 36 512.11 |
 | 108 | php (7.4)| [siler-swoole](https://siler.leocavalcante.dev) (1.7) | 34 551.16 | 49 411.99 | 52 044.82 |
 | 109 | rust (1.49)| [nickel](https://nickel-org.github.io) (0.11) | 34 295.36 | 34 288.89 | 33 981.04 |
-| 110 | cpp (11)| [evhtp](https://criticalstack.com) (1.2) | 33 885.45 | 34 797.56 | 33 330.33 |
-| 111 | scala (2.13)| [http4s](https://http4s.org) (0.21) | 33 533.38 | 37 973.77 | 38 485.53 |
-| 112 | java (11)| [jersey3-grizzly2](https://eclipse-ee4j.github.io/jersey) (3) | 33 444.54 | 38 372.11 | 37 643.27 |
+| 110 | java (11)| [jersey3-grizzly2](https://eclipse-ee4j.github.io/jersey) (3) | 33 912.84 | 39 059.86 | 38 373.08 |
+| 111 | cpp (11)| [evhtp](https://criticalstack.com) (1.2) | 33 885.45 | 34 797.56 | 33 330.33 |
+| 112 | scala (2.13)| [http4s](https://http4s.org) (0.21) | 33 533.38 | 37 973.77 | 38 485.53 |
 | 113 | java (11)| [jersey-grizzly2](https://eclipse-ee4j.github.io/jersey) (2.33) | 33 283.68 | 38 211.83 | 37 878.50 |
 | 114 | python (3.9)| [apidaora](https://github.com/dutradda/apidaora) (0.28) | 33 079.31 | 38 426.14 | 39 141.90 |
 | 115 | python (3.9)| [hug](https://hug.rest) (2.6) | 32 630.20 | 35 642.97 | 35 671.58 |
