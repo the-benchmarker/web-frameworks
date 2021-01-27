@@ -72,7 +72,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 
 
 
-<details>
+<details open>
   <summary><strong>Technical details</strong></summary>
   <ul>
    <li>CPU : 8 Cores (AMD FX-8320E Eight-Core Processor)</li>
@@ -82,7 +82,7 @@ make -f ${FRAMEWORK}/.Makefile collect
   </ul>
 </details>
 
-<details>
+<details open>
   <summary><strong>Datatable</strong></summary>
 <a id="results"> Computed with [wrk](https://github.com/wg/wrk)
    + Threads : 8
