@@ -131,7 +131,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 35 | crystal (0.35)| [athena](https://github.com/athena-framework/athena) (0.12) | 83 167.28 | 93 706.89 | 89 079.25 |
 | 36 | scala (2.13)| [akkahttp](https://akka.io) (10.2) | 82 236.16 | 94 492.64 | 92 946.60 |
 | 37 | javascript (14.15)| [naturaljs-router](https://github.com/jesusvilla/natural) (0.1.1) | 81 862.86 | 97 805.46 | 99 196.81 |
-| 38 | go (1.15)| [gf](https://goframe.org) (1.15) | 81 307.83 | 88 874.08 | 91 427.15 |
+| 38 | go (1.15)| [gf](https://goframe.org) (1.15) | 81 680.10 | 89 154.88 | 91 620.14 |
 | 39 | go (1.15)| [clevergo](https://clevergo.tech) (0.5) | 81 042.52 | 82 335.86 | 84 200.85 |
 | 40 | go (1.15)| [rte](https://github.com/jwilner/rte) (0.0) | 80 834.19 | 81 841.27 | 83 998.10 |
 | 41 | go (1.15)| [echo](https://echo.labstack.com) (4.1) | 79 961.35 | 81 131.55 | 82 992.19 |
