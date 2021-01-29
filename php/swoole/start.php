@@ -4,7 +4,7 @@ use Swoole\Http\Server;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 
-$server = new Server('0.0.0.0', 3000);
+$server = new Server('0.0.0.0', 3000, SWOOLE_BASE);
 $server->set([
     'worker_num'       => swoole_cpu_num() * 2,
     'log_level'        => SWOOLE_LOG_ERROR,
