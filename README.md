@@ -85,7 +85,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 
 <details open>
   <summary><strong>Datatable</strong></summary>
-<a id="results"> Computed with [wrk](https://github.com/wg/wrk)
+<a id="results"> Computed with https://github.com/wg/wrk
    + Threads : 8
    + Timeout : 8
    + Duration : 15s (seconds)
@@ -181,11 +181,11 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 85 | java (11)| [spark](https://sparkjava.com) (2.9) | 50 093.82 | 54 710.98 | 55 788.62 |
 | 86 | fsharp (5.0)| [websharper](https://websharper.com) (4.7) | 49 956.01 | 56 325.57 | 56 614.73 |
 | 87 | javascript (14.15)| [nestjs-fastify](https://nestjs.com) (7.6) | 48 550.94 | 51 914.97 | 50 777.31 |
-| 88 | java (11)| [restheart](https://restheart.org) (5.1) | 47 151.61 | 47 941.85 | 48 384.54 |
-| 89 | rust (1.49)| [actix](https://actix.rs) (3.3) | 46 455.86 | 48 790.64 | 50 260.57 |
-| 90 | go (1.15)| [mars](https://github.com/roblillack/mars) (1.0) | 45 901.30 | 46 407.73 | 49 420.69 |
-| 91 | haskell (8.8)| [scotty](https://hackage.haskell.org/package/scotty) (0.12) | 45 595.63 | 48 886.98 | 51 140.12 |
-| 92 | javascript (14.15)| [foxify](https://foxify.js.org) (0.1) | 45 319.32 | 49 052.73 | 47 794.71 |
+| 88 | rust (1.49)| [actix](https://actix.rs) (3.3) | 46 455.86 | 48 790.64 | 50 260.57 |
+| 89 | go (1.15)| [mars](https://github.com/roblillack/mars) (1.0) | 45 901.30 | 46 407.73 | 49 420.69 |
+| 90 | haskell (8.8)| [scotty](https://hackage.haskell.org/package/scotty) (0.12) | 45 595.63 | 48 886.98 | 51 140.12 |
+| 91 | javascript (14.15)| [foxify](https://foxify.js.org) (0.1) | 45 319.32 | 49 052.73 | 47 794.71 |
+| 92 | java (11)| [restheart](https://restheart.org) (5.3) | 45 008.21 | 45 715.75 | 46 061.25 |
 | 93 | javascript (14.15)| [iotjs-express](https://github.com/SamsungInternet/iotjs-express) (0.0) | 44 953.41 | 48 506.45 | 48 220.18 |
 | 94 | php (7.4)| [comet](https://github.com/gotzmann/comet) (1.1) | 44 481.58 | 48 370.37 | 49 292.96 |
 | 95 | clojure (1.1)| [coast](https://coastonclojure.com) (1.0) | 44 366.98 | 45 388.56 | 45 578.59 |
