@@ -1,4 +1,4 @@
-FROM gladmo/vlang:0.1.27-alpine
+FROM gladmo/vlang:0.2.2-alpine
 
 WORKDIR /usr/src/app
 
