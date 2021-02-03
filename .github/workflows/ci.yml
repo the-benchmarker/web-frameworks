@@ -48,8 +48,12 @@ jobs:
 
       - name: Setup
         run: |
+          echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
           cd ${{ matrix.directory }} 
           make build  -f .Makefile
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Test
         run: bundle exec rspec .spec
