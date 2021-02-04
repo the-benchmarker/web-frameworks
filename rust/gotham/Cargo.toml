@@ -4,11 +4,10 @@ version = "0.1.0"
 authors = ["Isaac Whitfield <iw@whitfin.io>"]
 
 [dependencies]
-gotham = "~0.4"
-gotham_derive = "*"
-hyper = "0.12"
-serde = "*"
-serde_derive = "*"
+gotham = "~0.5"
+gotham_derive = "~0.5"
+serde = "1.0"
+serde_derive = "1.0"
 
 [profile.release]
 codegen-units = 1

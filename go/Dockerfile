@@ -7,6 +7,10 @@ ENV GOARCH=amd64
 WORKDIR /go/src/app
 COPY . ./
 
+{{#build_deps}}
+  RUN apk add {{{.}}}
+{{/build_deps}}
+
 {{#before_command}}
   RUN {{{.}}}
 {{/before_command}}

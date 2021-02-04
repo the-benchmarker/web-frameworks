@@ -1,7 +1,7 @@
 framework:
   github: mahmoud/clastic
   version: 19.9
-  
+
 command: >
   gunicorn  \
     --log-level warning  \

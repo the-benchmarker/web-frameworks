@@ -1,0 +1,19 @@
+framework:
+  website: restheart.org
+  version: 5.3
+
+build:
+  - mvn package
+
+files:
+  - restheart.yml
+
+environment:
+  RH_IO_THREADS: 1
+  RH_WORKER_THREADS: 2
+
+binaries:
+  - target/benchmark.jar
+  - restheart.yml
+
+command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/benchmark.jar /opt/web/restheart.yml

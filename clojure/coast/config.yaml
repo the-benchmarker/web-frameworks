@@ -5,7 +5,10 @@ framework:
 environment:
   COAST_ENV: prod
 
-files:
+build:
+  - mkdir classes && clj -e "(compile 'server)" && clojure -Auberjar --main-class server
+
+binaries:
   - coast.jar
 
 command: java -jar coast.jar 3000

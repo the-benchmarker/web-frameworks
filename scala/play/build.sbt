@@ -1,13 +1,13 @@
 organization := "the-benchmarker"
 
 name := "server"
-scalaVersion := "2.13.3"
+scalaVersion := "2.13.4"
 
 lazy val root = (project.in(file("."))
   .settings(
     libraryDependencies ++= Seq(
       guice,
-      "com.typesafe.play" %% "play-json" % "[2.8,2.9)"
+      "com.typesafe.play" %% "play-json" % "[2.9,2.10)"
     )
   )
   .enablePlugins(PlayScala)

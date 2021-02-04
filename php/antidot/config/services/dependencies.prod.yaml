@@ -1,0 +1,12 @@
+services:
+  App\Handler\Home:
+  App\Handler\User:
+  App\Handler\UserId:
+
+parameters:
+  debug: false
+  config_cache_enabled: true
+  server:
+    port: 3000
+    max_concurrency: 512
+    workers: 16
