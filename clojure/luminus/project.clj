@@ -23,7 +23,7 @@
                  [org.webjars.npm/material-icons "0.3.1"]
                  [org.webjars/webjars-locator "0.40"]
                  [ring-webjars "0.2.0"]
-                 [ring/ring-core "1.8.2"]
+                 [ring/ring-core "1.9.0"]
                  [ring/ring-defaults "0.3.2"]
                  [com.fasterxml.jackson.core/jackson-core "2.12.1"]]
 
@@ -50,7 +50,7 @@
    :project/dev  {:jvm-opts ["-Dconf=dev-config.edn" ]
                   :dependencies [[pjstadig/humane-test-output "0.10.0"]
                                  [prone "2020-01-17"]
-                                 [ring/ring-devel "1.8.2"]
+                                 [ring/ring-devel "1.9.0"]
                                  [ring/ring-mock "0.4.0"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.24.1"]
                                  [jonase/eastwood "0.3.13"]] 
