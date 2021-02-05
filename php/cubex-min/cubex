@@ -1,0 +1,4 @@
+#!/usr/bin/env php
+<?php
+$loader = require_once('vendor/autoload.php');
+exit((new Cubex\Cubex(__DIR__, $loader))->cli());
