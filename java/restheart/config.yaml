@@ -1,6 +1,6 @@
 framework:
   website: restheart.org
-  version: 5.1
+  version: 5.3
 
 build:
   - mvn package

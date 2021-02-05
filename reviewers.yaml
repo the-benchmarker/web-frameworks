@@ -127,6 +127,8 @@ java:
     - stevehu
   jooby:
     - jknack
+  restheart:
+    - ujibang
 kotlin:
   kooby:
     - jknack
@@ -152,3 +154,6 @@ clojure:
 julia:
   merly:
     - codeneomatrix
+scala:
+  finatra:
+    - cacoco

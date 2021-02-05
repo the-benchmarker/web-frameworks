@@ -5,6 +5,10 @@ use Swoole\Coroutine\Http\Server;
 
 $worker_num = swoole_cpu_num() * 2;
 
+/**
+ * The Coroutine\Http\Server does not automatically create multiple processes,
+ * needs to be used with the Process\Pool module to take advantage of multiple cores.
+ */
 $pool = new Pool($worker_num);
 $pool->set(['enable_coroutine' => true]);
 $pool->on('workerStart', function ($pool, $id) {
@@ -13,12 +17,7 @@ $pool->on('workerStart', function ($pool, $id) {
         $response->end('');
     });
     $server->handle('/user', function ($request, $response) {
-        $uri = $request->server['request_uri'] ?? '/';
-        if (strpos($uri, '/user/') === 0 && isset($uri[6])) {
-            $response->end(substr($uri, 6));
-            return;
-        }
-        $response->end();
+        $response->end(substr($request->server['request_uri'], 6));
     });
     $server->start();
 });

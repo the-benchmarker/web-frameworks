@@ -1,8 +1,0 @@
-framework:
-  github: swoole/swoole-src
-  version: 4.6
-
-php_ext:
-  - swoole
-
-command: php coroutine_http_server.php

@@ -20,7 +20,7 @@ There are many frameworks, each one comes with its own advantages and drawbacks.
 
 #### What is a framework ?
 
-A framework is a set of components working together. The main intention behind a framework is to faciliate (app or service) creation. The way a framework help any developer could vary from one to an other.
+A framework is a set of components working together. The main intention behind a framework is to facilitate (app or service) creation. The way a framework help any developer could vary from one to an other.
 
 A majority of frameworks could be splitted in 2 parts :
 
@@ -72,7 +72,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 
 
 
-<details>
+<details open>
   <summary><strong>Technical details</strong></summary>
   <ul>
    <li>CPU : 8 Cores (AMD FX-8320E Eight-Core Processor)</li>
@@ -82,9 +82,9 @@ make -f ${FRAMEWORK}/.Makefile collect
   </ul>
 </details>
 
-<details>
+<details open>
   <summary><strong>Datatable</strong></summary>
-<a id="results"> Computed with [wrk](https://github.com/wg/wrk)
+<a id="results"> Computed with https://github.com/wg/wrk
    + Threads : 8
    + Timeout : 8
    + Duration : 15s (seconds)
