@@ -48,7 +48,6 @@ jobs:
 
       - name: Setup
         run: |
-          echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
           cd ${{ matrix.directory }} 
           make build  -f .Makefile
         env:
