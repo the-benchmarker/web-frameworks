@@ -1,46 +1,57 @@
 package benchmark.vertx;
 
-import io.vertx.core.Vertx;
+import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Promise;
+import io.vertx.core.VertxOptions;
 import io.vertx.core.http.HttpMethod;
-import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 
-public class BenchmarkApplication {
-    public static void main( String [] args )
-    {
-        Vertx vertx = Vertx.vertx();
+import static io.vertx.core.http.HttpMethod.GET;
 
-        vertx.createHttpServer(new HttpServerOptions().setSsl(false))
-                .requestHandler(BenchmarkApplication::handleRequests)
-                .listen(3000);
+public class BenchmarkApplication extends AbstractVerticle {
+    @Override
+    public void start(Promise<Void> onReady) {
+
+//        System.out.println("Event Loop Size: " + VertxOptions.DEFAULT_EVENT_LOOP_POOL_SIZE);
+//        System.out.println("Native transport : " + vertx.isNativeTransportEnabled());
+
+        vertx
+                .createHttpServer()
+                .requestHandler(this::handleRequests)
+                .listen(3000)
+                .onFailure(onReady::fail)
+                .onSuccess(server -> onReady.complete());
     }
 
-    private static void handleRequests(HttpServerRequest request) {
+    private void handleRequests(HttpServerRequest request) {
         // GET requests:
-        if( request.method() == HttpMethod.GET ) {
-            if (request.path().equals("/"))
-                request.response().setStatusCode(200).end();
-            else if(request.path().startsWith("/user/"))
-                request.response().setStatusCode(200).end(request.path().replaceFirst("/user/", ""));
-            else
+        if (request.method() == GET) {
+            if (request.path().equals("/")) {
+                request
+                        .response()
+                        .end();
+            } else if (request.path().startsWith("/user/")) {
+                request
+                        .response()
+                        .end(request.path().substring(6));
+            } else {
                 errorResponse(request.response(), "Invalid path: " + request.path());
-        }
-        else if(request.method() == HttpMethod.POST )
-        {
-            if(request.path().equals("/user"))
-                request.response().setStatusCode(200).end();
-            else
+            }
+        } else if (request.method() == HttpMethod.POST) {
+            if (request.path().equals("/user")) {
+                request
+                        .response()
+                        .end();
+            } else {
                 errorResponse(request.response(), "Invalid path: " + request.path());
-        }
-        else
-        {
-            errorResponse(request.response(), "Invalid method " + request.method() );
+            }
+        } else {
+            errorResponse(request.response(), "Invalid method " + request.method());
         }
     }
 
-    private static void errorResponse(HttpServerResponse response, String msg)
-    {
+    private static void errorResponse(HttpServerResponse response, String msg) {
         response.setStatusCode(500).end("Incorrect HTTP call: " + msg);
     }
 }

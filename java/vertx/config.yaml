@@ -10,5 +10,6 @@ files:
 
 binaries:
   - target/server.jar
+  - vertx.json
 
-command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/server.jar
+command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/server.jar -instances 8 -options /opt/web/vertx.json
