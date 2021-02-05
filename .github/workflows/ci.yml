@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
+        required: false
         description: Run it
   pull_request:
     types:
