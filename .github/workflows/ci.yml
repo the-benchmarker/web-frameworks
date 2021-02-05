@@ -1,6 +1,10 @@
 name: CI
 
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Run it
   pull_request:
     types:
       - opened
@@ -31,7 +35,7 @@ jobs:
   test:
     needs: matrix
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
           
     strategy:
       fail-fast: false
