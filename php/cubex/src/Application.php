@@ -2,6 +2,7 @@
 namespace CubexMin;
 
 use Cubex\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class Application extends Controller
 {
@@ -19,7 +20,7 @@ class Application extends Controller
 
   public function getUser()
   {
-    return $this->routeData()->get('id');
+    return Response::create($this->routeData()->getInt('id'));
   }
 
   public function getHome()
