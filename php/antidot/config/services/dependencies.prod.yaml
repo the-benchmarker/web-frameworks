@@ -7,6 +7,8 @@ parameters:
   debug: false
   config_cache_enabled: true
   server:
+    host: "0.0.0.0"
     port: 3000
-    max_concurrency: 512
-    workers: 16
+    max_concurrency: 4096
+    buffer_size: 2048
+    workers: -1

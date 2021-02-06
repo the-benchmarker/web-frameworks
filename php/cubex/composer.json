@@ -1,0 +1,14 @@
+{
+  "name": "bajb/cubex-min",
+  "license": "MIT",
+  "type": "project",
+  "prefer-stable": true,
+  "require": {
+    "cubex/framework": "~4.15.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "CubexMin\\": "src/"
+    }
+  }
+}

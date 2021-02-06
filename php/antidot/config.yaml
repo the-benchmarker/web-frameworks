@@ -1,6 +1,10 @@
 framework:
   website: antidotfw.io
-  version: 0.1
+  github: antidot-framework/react-framework
+  version: 0.2
+
+build_deps:
+  - libevent-dev
 
 php_mod:
   - intl
@@ -9,7 +13,7 @@ php_mod:
   - sockets
 
 before_command:
-  - mkdir -p var/log && chmod 777 var/log
   - mkdir -p var/cache && chmod 777 var/cache
+  - mkdir -p var/log && chmod 777 var/log
 
-command: php public/index.php
+command: bin/console server:run --quiet
