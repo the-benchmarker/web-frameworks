@@ -14,5 +14,6 @@ php_mod:
 
 before_command:
   - mkdir -p var/cache && chmod 777 var/cache
+  - mkdir -p var/log && chmod 777 var/log
 
 command: bin/console server:run --quiet
