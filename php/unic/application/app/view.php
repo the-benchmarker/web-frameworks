@@ -8,11 +8,11 @@ class view extends Views {
     return $this->response('');
   }
 
-  function create(Request $req) {
-    return $this->response('');
+  function get_user(Request $req) {
+    return $this->response($req->params->id);
   }
 
-  function user(Request $req) {
-    return $this->response($req->params->id);
+  function create_user(Request $req) {
+    return $this->response('');
   }
 }

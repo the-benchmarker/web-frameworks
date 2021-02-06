@@ -6,9 +6,7 @@ $debug = true;
 $allowed_hosts = [];
 
 //Set templates directory
-$templates = [
-  '/template'
-];
+$templates = [];
 
 //Global middlewares
 $middlewares = [];
@@ -26,10 +24,10 @@ $db['db'] = [
 ];
 
 //Static URL
-$static_url = '/';
+$static_url = '';
 
 //Static files DIR
-$static_dir = '/static';
+$static_dir = '';
 
 //Ignore trailing slashes
 $ignore_trailing_slash = true;
