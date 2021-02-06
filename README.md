@@ -33,6 +33,7 @@ A majority of frameworks could be splitted in 2 parts :
 + `wrk`, results are collected using `wrk`
 + `postgresql`, results are stored in `postgresql`
 + `docker`, each implementation is implemented in an isolated **container**
++ `jq`, processing `docker` metadata
 + `docker-machine` if you are on `macos`
 
 ## Usage
