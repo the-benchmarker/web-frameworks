@@ -2,16 +2,9 @@
   "name": "bajb/cubex-min",
   "license": "MIT",
   "type": "project",
-  "config": {
-    "optimize-autoloader": true,
-    "preferred-install": "dist",
-    "sort-packages": true
-  },
   "prefer-stable": true,
   "require": {
-    "cubex/framework": "^4.0"
-  },
-  "require-dev": {
+    "cubex/framework": "~4.15.0"
   },
   "autoload": {
     "psr-4": {
