@@ -14,7 +14,7 @@ class Application extends Controller
 
   public function postUser()
   {
-    return "OK";
+    return "";
   }
 
   public function getUser()
@@ -24,6 +24,6 @@ class Application extends Controller
 
   public function getHome()
   {
-    return "OK";
+    return "";
   }
 }
