@@ -100,6 +100,8 @@ namespace :db do
         concurrency_512: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_512], delimiter: ' ')
       )
     end
-    File.open('README.md', 'w') { |f| f.write(Mustache.render(template, { results: results, date: Date.today, docker_version: `docker --version` })) }
+    File.open('README.md', 'w') do |f|
+      f.write(Mustache.render(template, { results: results, date: Date.today, docker_version: `docker --version` }))
+    end
   end
 end
