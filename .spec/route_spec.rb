@@ -15,7 +15,7 @@ RSpec.describe "routes" do
     end
 
     it "returns an empty string" do
-      expect(response.body).to be_empty
+      expect(response.body.to_s).to be_empty
     end
   end
 
@@ -27,7 +27,7 @@ RSpec.describe "routes" do
     end
 
     it "returns the expected param" do
-      expect(response.body).to eq('0')
+      expect(response.body.to_s).to eq('0')
     end
   end
 
@@ -39,7 +39,7 @@ RSpec.describe "routes" do
     end
 
     it "returns an empty string" do
-      expect(response.body).to be_empty
+      expect(response.body.to_s).to be_empty
     end
   end
 end
