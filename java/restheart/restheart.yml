@@ -2,12 +2,12 @@
 ---
 #### Listeners
 
- # Listeners allow to specify the protocol, ip, port and to use.
- # The supported protocols are: http and https.
- # You can setup a listener per protocol (up to 2).
+# Listeners allow to specify the protocol, ip, port and to use.
+# The supported protocols are: http and https.
+# You can setup a listener per protocol (up to 2).
 
- # WARNING: Using the http listener is not secure with basic authentication:
- # credentials can be sniffed by a man-in-the-middle attack.
+# WARNING: Using the http listener is not secure with basic authentication:
+# credentials can be sniffed by a man-in-the-middle attack.
 
 https-listener: false
 https-host: 0.0.0.0
@@ -23,17 +23,17 @@ ajp-port: 8009
 
 #### Instance name
 
- # The name of this instance.
- # Displayed in log, also allows to implement instance specific custom code
+# The name of this instance.
+# Displayed in log, also allows to implement instance specific custom code
 
 instance-name: restheart-benchmarker
 
 #### Performance Options
 
 # Number of I/O threads created for non-blocking tasks. at least 2. suggested value: core*2
-io-threads: 1
-
- # Number of threads created for blocking tasks (such as ones involving db access). suggested value: core*16
+io-threads:
+  1
+  # Number of threads created for blocking tasks (such as ones involving db access). suggested value: core*16
 worker-threads: 4
 
 # Limit for the maximum number of concurrent requests being served
@@ -43,13 +43,13 @@ requests-limit: 200000
 
 ## SSL Configuration
 
- # Configure the keystore to enable the https listener.
+# Configure the keystore to enable the https listener.
 
- # RESTHeart Securitycomes with a self-signed certificate that makes
- # straightforward enabling https.
- # Specify use-embedded-keystore: true to use it (this is the default setting).
- # Using the self-signed certificate leads to issues with some clients;
- # for instance, with curl you need to specify the "--insecure" option or you'll get an error message.
+# RESTHeart Securitycomes with a self-signed certificate that makes
+# straightforward enabling https.
+# Specify use-embedded-keystore: true to use it (this is the default setting).
+# Using the self-signed certificate leads to issues with some clients;
+# for instance, with curl you need to specify the "--insecure" option or you'll get an error message.
 
 use-embedded-keystore: true
 
@@ -92,13 +92,14 @@ ansi-console: true
 
 #### Performance Options
 
- # In order to save bandwitdth RESTHeart Security can force requests to support the giz encoding (if not, requests will be rejected)
-force-gzip-encoding: false
-
- # Use 16k buffers for best performance - as in linux 16k is generally the default amount of data that can be sent in a single write() call
+# In order to save bandwitdth RESTHeart Security can force requests to support the giz encoding (if not, requests will be rejected)
+force-gzip-encoding:
+  false
+  # Use 16k buffers for best performance - as in linux 16k is generally the default amount of data that can be sent in a single write() call
 buffer-size: 16384
-buffers-per-region: 20
- # Should the buffer pool use direct buffers, this instructs the JVM to use native (if possible) I/O operations on the buffers
+buffers-per-region:
+  20
+  # Should the buffer pool use direct buffers, this instructs the JVM to use native (if possible) I/O operations on the buffers
 direct-buffers: true
 
 #### Connetction Options
