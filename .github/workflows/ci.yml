@@ -31,7 +31,7 @@ jobs:
   test:
     needs: matrix
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
           
     strategy:
       fail-fast: false
@@ -45,6 +45,9 @@ jobs:
 
       - name: Configure
         run: bundle exec rake config
+
+      - name: Get docker version
+        run: docker --version
 
       - name: Setup
         run: |
