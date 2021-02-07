@@ -5,7 +5,7 @@ require "net/http"
 require_relative "spec_helper"
 
 RSpec.describe "routes" do
-  let!(:http) { Net::HTTP.new(ip(ENV["FRAMEWORK"]), 3000) }
+let!(:http) { address(ENV["FRAMEWORK"]) }
 
   context "GET : /" do
     subject(:response) { http.request(Net::HTTP::Get.new("/")) }
@@ -32,7 +32,12 @@ RSpec.describe "routes" do
   end
 
   context "POST : /user" do
-    subject(:response) { http.request(Net::HTTP::Post.new("/user")) }
+let!(:request) { Net::HTTP::Post.new("/user") } 
+
+
+before { request["Content-Type"] = "text/plain" }
+
+    subject(:response) { http.request(request) }
 
     it "returns successfully" do
       expect(response).to be_a(Net::HTTPSuccess)
