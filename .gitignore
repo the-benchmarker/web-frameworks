@@ -6,6 +6,7 @@
 .neph
 neph.yaml
 shard.lock
+Gemfile.lock
 
 # git temporary files
 *.orig
@@ -15,10 +16,15 @@ shard.lock
 
 # Temporary files
 FRAMEWORKS.yaml
+*/*/.Dockerfile
 */*/Dockerfile
+*/*/.Makefile
 */*/ip.txt
+*/*/cid.txt
 
 /lib/**/*.cr
+/vendor
+.bundle
 /bin
 
 # Rust build directories
