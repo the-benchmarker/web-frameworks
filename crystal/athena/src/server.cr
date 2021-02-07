@@ -4,11 +4,13 @@ Log.setup :none
 
 class BenchmarkController < ART::Controller
   @[ARTA::Get("/")]
-  def root_get : Nil
+  def root_get : String
+    ""
   end
 
   @[ARTA::Post("/user")]
-  def root_post : Nil
+  def root_post : String
+    ""
   end
 
   @[ARTA::Get("/user/:id", constraints: {id: /\d+/})]
