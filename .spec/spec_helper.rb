@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "net/http"
-require "yaml"
+require 'net/http'
+require 'yaml'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -15,7 +15,8 @@ RSpec.configure do |config|
   config.shared_context_metadata_behavior = :apply_to_host_groups
 end
 
-def ip(name)
-  language, framework = name.split("/")
-  File.read(File.join(language, framework, "ip.txt")).strip
+def address(name)
+  language, framework = name.split('/')
+  ip = File.read(File.join(language, framework, 'ip.txt')).strip
+  Net::HTTP.new(ip, 3000)
 end
