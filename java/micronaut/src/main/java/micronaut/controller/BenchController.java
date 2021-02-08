@@ -20,7 +20,7 @@ public class BenchController {
     return id;
   }
 
-  @Post("/user")
+  @Post("/user", consumes = MediaType.TEXT_PLAIN)
   public String post() {
     return "";
   }
