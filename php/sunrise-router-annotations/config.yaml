@@ -1,3 +1,6 @@
 framework:
   github: sunrise-php/http-router
   version: 2.6
+
+php_ext:
+  - apcu
