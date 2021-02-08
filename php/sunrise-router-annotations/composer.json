@@ -2,7 +2,7 @@
   "require": {
     "sunrise/http-router": "~2.6.0",
     "sunrise/http-factory": "*",
-    "symfony/cache": "^5.0"
+    "symfony/cache": "*"
   },
   "autoload": {
     "psr-4": {
