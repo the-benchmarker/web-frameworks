@@ -42,11 +42,7 @@ RSpec.describe 'routes' do
       expect(response).to be_a(Net::HTTPSuccess)
     end
 
-<<<<<<< HEAD
     it 'returns an empty string' do
-=======
-    it "returns an empty string" do
->>>>>>> 87f9e441 ([Crystal] Update Athena to 0.13 (#3926))
       expect(response.body.to_s).to be_empty
     end
   end
