@@ -10,7 +10,7 @@ on:
     - cron: 0 0 * * 3
 jobs:
   matrix:
-    runs-on: ubuntu-latest
+    runs-on:	ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
@@ -31,11 +31,12 @@ jobs:
   test:
     needs: matrix
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
           
     strategy:
       fail-fast: false
       matrix: ${{fromJson(needs.matrix.outputs.matrix)}}
+      max-parallel: 4
 
     steps:
       - uses: actions/checkout@v2
@@ -45,6 +46,9 @@ jobs:
 
       - name: Configure
         run: bundle exec rake config
+
+      - name: Get docker version
+        run: docker --version
 
       - name: Setup
         run: |

@@ -40,7 +40,7 @@ namespace :db do
           frameworks[id] = {
             language: language,
             framework: framework,
-            metrics: { "concurrency_64": {}, "concurrency_256": {}, "concurrency_512": {} }
+            metrics: { concurrency_64: {}, concurrency_256: {}, concurrency_512: {} }
           }
         end
         framework_config = YAML.safe_load(File.read(File.join(language, framework, 'config.yaml')))
