@@ -9,6 +9,13 @@ namespace :ci do
     workdir = ENV.fetch('GITHUB_WORKSPACE') { Dir.pwd }
     frameworks = []
     files = []
+
+    if base.empty? || last.empty?
+      Dir.glob('*/*/config.yaml').each do |path|
+        parts = path.split(File::SEPARATOR)
+        frameworks << parts[0..1].join(File::SEPARATOR)
+      end
+    else
     git = Git.open(Dir.pwd)
 
     diff = git.gtree(last).diff(base).each { |diff| files << diff.path }
@@ -29,12 +36,7 @@ namespace :ci do
       end
     end
 
-    if base.empty? || last.empty?
-      Dir.glob('*/*/config.yaml').each do |path|
-        parts = path.split(File::SEPARATOR)
-        frameworks << parts[0..1].join(File::SEPARATOR)
-      end
-    end
+    
 
     matrix = { include: [] }
     frameworks.uniq.each do |framework|
