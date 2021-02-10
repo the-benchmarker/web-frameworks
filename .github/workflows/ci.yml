@@ -7,10 +7,10 @@ on:
       - edited
       - synchronize
   schedule:
-    - cron: 0 0 * * 3
+    - cron: 0 10 * * 3
 jobs:
   matrix:
-    runs-on:	ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
   test:
     needs: matrix
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
           
     strategy:
       fail-fast: false
