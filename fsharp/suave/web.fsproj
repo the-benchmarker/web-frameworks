@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="5.0.0" />
+    <PackageReference Update="FSharp.Core" Version="5.0.*" />
     <PackageReference Include="Suave" Version="2.6.*" />
   </ItemGroup>
 
