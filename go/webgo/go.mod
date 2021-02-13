@@ -1,3 +1,3 @@
 module main
 
-require github.com/bnkamalesh/webgo/v4 v4.1.3
+require github.com/bnkamalesh/webgo/v4 v4.1.9
