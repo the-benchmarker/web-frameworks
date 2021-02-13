@@ -19,6 +19,8 @@
     "lizhichao/one": "~2.2.0"
   },
   "autoload": {
-    "App\\": "App/"
+    "psr-4": {
+      "App\\": "App/"
+    }
   }
 }
