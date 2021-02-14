@@ -122,7 +122,7 @@ task :config do
 
   main_config = YAML.safe_load(File.open(File.join(Dir.pwd, 'config.yaml')))
 
-  Dir.glob('ruby/*/config.yaml').each do |path|
+  Dir.glob('ruby/rails/config.yaml').each do |path|
     directory = File.dirname(path)
     language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
 
