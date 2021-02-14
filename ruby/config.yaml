@@ -13,6 +13,9 @@ framework:
     - config.ru
 
   variants:
-    puma: bundle exec puma -p 3000 -w $(nproc)
-    falcon: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
-    iodine: bundle exec iodine -p 3000 -w $(nproc)
+    puma:
+      command: bundle exec puma -p 3000 -w $(nproc)
+    falcon:
+      command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
+    iodine:
+      command: bundle exec iodine -p 3000 -w $(nproc)

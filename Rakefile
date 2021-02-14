@@ -26,7 +26,7 @@ def default_provider
   end
 end
 
-def commands_for(language, framework, provider)
+def commands_for(language, framework, provider = default_provider)
   config = YAML.safe_load(File.read('config.yaml'))
 
   directory = Dir.pwd
@@ -39,7 +39,7 @@ def commands_for(language, framework, provider)
 
   # Compile first, only for non containers
 
-  if app_config.key?('binaries') && !(provider.start_with?('docker') || provider.start_with?('podman'))
+  if app_config.key?('binaries')
     commands << "docker build -f #{MANIFESTS[:container]} -t #{language}.#{framework} ."
     commands << "docker run -td #{language}.#{framework} > cid.txt"
     app_config['binaries'].each do |out|
@@ -83,18 +83,8 @@ def commands_for(language, framework, provider)
   commands
 end
 
-def create_dockerfile(language, framework, **_options)
-  directory = File.join(Dir.pwd, language, framework)
-  main_config = YAML.safe_load(File.open(File.join(Dir.pwd, 'config.yaml')))
-  language_config = YAML.safe_load(File.open(File.join(Dir.pwd, language, 'config.yaml')))
-  framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
-
-  config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-  variants = config.dig('framework', 'variants') || ['default']
-
-  variants.each do |variant, command|
-    next unless language == 'ruby'
-
+def create_dockerfile(directory, config, template)
+  config.dig('framework', 'variants').each do |variant, metadata|
     files = []
     config.dig('framework', 'files').each do |pattern|
       Dir.glob(File.join(directory, pattern)).each do |file|
@@ -111,15 +101,13 @@ def create_dockerfile(language, framework, **_options)
       end
     end
 
-    template = File.join(directory, '..', 'Dockerfile')
-
     File.open(File.join(directory, ".Dockerfile.#{variant}"), 'w') do |f|
       f.write(Mustache.render(File.read(template), {
                                 files: files,
                                 environment: config.dig('framework', 'environment')&.map do |k, v|
                                                { key: k, value: v }
                                              end,
-                                command: command
+                                command: metadata['command']
                               }))
     end
   end
@@ -132,11 +120,34 @@ task :config do
   sieger_options = ENV.fetch('SIEGER_OPTIONS', '-r GET:/ -c 10')
   clean = ENV.fetch('CLEAN', 'on')
 
-  Dir.glob('*/*/config.yaml').each do |path|
-    directory = File.dirname(path)
-    language, framework = directory.split(File::Separator)
+  main_config = YAML.safe_load(File.open(File.join(Dir.pwd, 'config.yaml')))
 
-    create_dockerfile(language, framework, provider: provider)
+  Dir.glob('ruby/*/config.yaml').each do |path|
+    directory = File.dirname(path)
+    language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
+
+    framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
+
+    config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
+
+    create_dockerfile(directory, config, File.join(directory, '..', 'Dockerfile'))
+
+    language, framework = directory.split(File::SEPARATOR)
+
+    makefile = File.open(File.join(language, framework, MANIFESTS[:build]), 'w')
+
+    commands_for(language, framework).each do |target, commands|
+      config.dig('framework', 'variants').each do |variant, _|
+        makefile.write("#{target}.#{variant}:\n")
+        commands.each do |command|
+          makefile.write("\t #{command}\n")
+        end
+      end
+      values = config.dig('framework', 'variants').keys.map { |variant| "#{target}.#{variant}" }.to_a
+      makefile.write("#{target} : #{values.join(' ')}\n")
+    end
+
+    makefile.close
   end
 end
 
