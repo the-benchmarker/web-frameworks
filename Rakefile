@@ -83,62 +83,44 @@ def commands_for(language, framework, provider)
   commands
 end
 
-def create_dockerfile(language, framework, **options)
+def create_dockerfile(language, framework, **_options)
   directory = File.join(Dir.pwd, language, framework)
   main_config = YAML.safe_load(File.open(File.join(Dir.pwd, 'config.yaml')))
   language_config = YAML.safe_load(File.open(File.join(Dir.pwd, language, 'config.yaml')))
   framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
+
   config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
+  variants = config.dig('framework', 'variants') || ['default']
 
-  if config.key?('sources')
+  variants.each do |variant, command|
+    next unless language == 'ruby'
+
     files = []
-    config['sources'].each do |path|
-      Dir.glob(File.join(directory, path)).each do |f|
-        if f =~ /^*\.\./
-          filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
-          File.open(File.join(directory, filename), 'w') { |stream| stream.write(File.read(f)) }
-          files << filename
-        else
-          files << f.gsub!(directory, '').gsub!(%r{^/}, '')
-        end
+    config.dig('framework', 'files').each do |pattern|
+      Dir.glob(File.join(directory, pattern)).each do |file|
+        path = Pathname.new(file)
+        relative_path = path.relative_path_from(Pathname.new(directory))
+        variant_path = File.join(".#{variant}", relative_path)
+
+        source = if File.exist?(File.join(directory, variant_path))
+                   variant_path.to_s
+                 else
+                   relative_path.to_s
+                 end
+        files << { source: source, target: relative_path.to_s }
       end
     end
-    config['sources'] = files
-  end
-  if config.key?('files')
-    files = []
-    config['files'].each do |path|
-      Dir.glob(File.join(directory, path)).each do |f|
-        if f =~ /^*\.\./
-          filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
-          File.open(File.join(directory, filename), 'w') { |stream| stream.write(File.read(f)) }
-          files << filename
-        else
-          files << f.gsub!(directory, '').gsub!(%r{^/}, '')
-        end
-      end
-    end
-    config['files'] = files
-  end
 
-  template = nil
-  if options[:provider].start_with?('docker') || options[:provider].start_with?('podman')
     template = File.join(directory, '..', 'Dockerfile')
-  elsif config.key?('binaries')
-    template = File.join(directory, '..', '.build', options[:provider], 'Dockerfile')
-  end
 
-  if config.key?('environment')
-    environment = []
-    config.fetch('environment').each do |key, value|
-      environment << "#{key} #{value}"
-    end
-    config['environment'] = environment
-  end
-
-  if template
-    File.open(File.join(directory, MANIFESTS[:container]), 'w') do |f|
-      f.write(Mustache.render(File.read(template), config))
+    File.open(File.join(directory, ".Dockerfile.#{variant}"), 'w') do |f|
+      f.write(Mustache.render(File.read(template), {
+                                files: files,
+                                environment: config.dig('framework', 'environment')&.map do |k, v|
+                                               { key: k, value: v }
+                                             end,
+                                command: command
+                              }))
     end
   end
 end
@@ -155,17 +137,6 @@ task :config do
     language, framework = directory.split(File::Separator)
 
     create_dockerfile(language, framework, provider: provider)
-
-    makefile = File.open(File.join(language, framework, MANIFESTS[:build]), 'w')
-
-    commands_for(language, framework, provider).each do |target, commands|
-      makefile.write("#{target}:\n")
-      commands.each do |command|
-        makefile.write("\t #{command}\n")
-      end
-    end
-
-    makefile.close
   end
 end
 
