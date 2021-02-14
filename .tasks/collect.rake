@@ -31,8 +31,8 @@ task :collect do
   concurrencies = ENV.fetch('CONCURRENCIES', '10')
   routes = ENV.fetch('ROUTES', 'GET:/')
   database = ENV.fetch('DATABASE_URL') { raise 'please provide a DATABASE_URL (pg only)' }
+  hostname = ENV.fetch('HOSTNAME') { raise 'please provide a HOSTNAME' }
 
-  hostname = File.read(File.join(Dir.pwd, language, framework, 'ip.txt')).strip
   `wrk -H 'Connection: keep-alive' -d 5s -c 8 --timeout 8 -t #{threads} http://#{hostname}:3000`
   `wrk -H 'Connection: keep-alive' -d #{duration}s -c 256 --timeout 8 -t #{threads} http://#{hostname}:3000`
 
