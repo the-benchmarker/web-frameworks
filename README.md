@@ -119,9 +119,9 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 23 | clojure (1.1)| [donkey](https://github.com/AppsFlyer/donkey) (0.4) | 106 572.60 | 113 280.59 | 114 252.75 |
 | 24 | java (11)| [vertx4web](https://vertx.io/docs/vertx-web/java/) (4.0) | 104 974.24 | 121 914.99 | 125 386.69 |
 | 25 | crystal (0.35)| [toro](https://github.com/soveran/toro) (0.4) | 99 834.14 | 121 597.45 | 122 243.75 |
-| 26 | crystal (0.35)| [router.cr](https://github.com/tbrand/router.cr) (0.2) | 98 678.85 | 121 119.54 | 121 367.05 |
-| 27 | php (7.4)| [swoole](https://github.com/swoole/swoole-src) (4.6) | 98 587.35 | 117 862.22 | 132 587.63 |
-| 28 | crystal (0.35)| [spider-gazelle](https://spider-gazelle.net) (3.4) | 97 982.25 | 119 065.39 | 119 112.84 |
+| 26 | crystal (0.35)| [spider-gazelle](https://spider-gazelle.net) (4.0) | 99 039.55 | 120 013.17 | 120 646.91 |
+| 27 | crystal (0.35)| [router.cr](https://github.com/tbrand/router.cr) (0.2) | 98 678.85 | 121 119.54 | 121 367.05 |
+| 28 | php (7.4)| [swoole](https://github.com/swoole/swoole-src) (4.6) | 98 587.35 | 117 862.22 | 132 587.63 |
 | 29 | php (7.4)| [nano](https://gitlab.com/x.laylatichy.x/nano) (0.0.9) | 95 148.79 | 139 767.48 | 150 612.01 |
 | 30 | java (11)| [act](https://github.com/actframework/actframework) (1.9) | 94 741.69 | 117 796.64 | 120 345.53 |
 | 31 | crystal (0.35)| [grip](https://github.com/grip-framework/grip) (4.0) | 94 500.70 | 113 655.41 | 113 198.86 |
