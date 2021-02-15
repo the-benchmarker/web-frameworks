@@ -119,7 +119,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 23 | clojure (1.1)| [donkey](https://github.com/AppsFlyer/donkey) (0.4) | 106 572.60 | 113 280.59 | 114 252.75 |
 | 24 | java (11)| [vertx4web](https://vertx.io/docs/vertx-web/java/) (4.0) | 104 974.24 | 121 914.99 | 125 386.69 |
 | 25 | crystal (0.35)| [toro](https://github.com/soveran/toro) (0.4) | 99 834.14 | 121 597.45 | 122 243.75 |
-| 26 | crystal (0.35)| [spider-gazelle](https://spider-gazelle.net) (4.0) | 99 039.55 | 120 013.17 | 120 646.91 |
+| 26 | crystal (0.35)| [spider-gazelle](https://spider-gazelle.net) (4.0) | 99 551.17 | 121 764.51 | 122 386.08 |
 | 27 | crystal (0.35)| [router.cr](https://github.com/tbrand/router.cr) (0.2) | 98 678.85 | 121 119.54 | 121 367.05 |
 | 28 | php (7.4)| [swoole](https://github.com/swoole/swoole-src) (4.6) | 98 587.35 | 117 862.22 | 132 587.63 |
 | 29 | php (7.4)| [nano](https://gitlab.com/x.laylatichy.x/nano) (0.0.9) | 95 148.79 | 139 767.48 | 150 612.01 |
@@ -222,7 +222,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 126 | javascript (14.15)| [fyrejet-uwebsockets](https://github.com/fyrejet/fyrejet) (2.1) | 27 722.10 | 44 363.80 | 45 054.78 |
 | 127 | php (7.4)| [yii-swoole](https://yiiframework.com) (2.0) | 27 578.90 | 30 741.78 | 32 059.84 |
 | 128 | python (3.9)| [starlette](https://starlette.io) (0.14) | 27 463.43 | 31 584.09 | 32 577.36 |
-| 129 | php (7.4)| [comet](https://github.com/gotzmann/comet) (1.1) | 27 412.74 | 27 481.72 | 26 793.75 |
+| 129 | php (7.4)| [comet](https://github.com/gotzmann/comet) (1.2) | 27 412.74 | 27 481.72 | 26 793.75 |
 | 130 | elixir (1.11)| [plug](https://hexdocs.pm/plug) (1.11) | 27 133.79 | 29 128.93 | 28 863.09 |
 | 131 | python (3.9)| [index.py](https://index-py.abersheeran.com) (0.16) | 26 435.13 | 29 737.53 | 30 385.91 |
 | 132 | rust (1.50)| [gotham](https://gotham.rs) (0.5) | 26 131.24 | 29 711.44 | 31 038.90 |
