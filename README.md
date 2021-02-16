@@ -68,7 +68,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 
 :warning: You need to be on the project main directory :warning:
 
-## Results (2021-02-15)
+## Results (2021-02-16)
 
 
 
@@ -119,7 +119,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 23 | clojure (1.1)| [donkey](https://github.com/AppsFlyer/donkey) (0.4) | 106 572.60 | 113 280.59 | 114 252.75 |
 | 24 | java (11)| [vertx4web](https://vertx.io/docs/vertx-web/java/) (4.0) | 104 974.24 | 121 914.99 | 125 386.69 |
 | 25 | crystal (0.35)| [toro](https://github.com/soveran/toro) (0.4) | 99 834.14 | 121 597.45 | 122 243.75 |
-| 26 | crystal (0.35)| [spider-gazelle](https://spider-gazelle.net) (4.0) | 99 551.17 | 121 764.51 | 122 386.08 |
+| 26 | crystal (0.35)| [spider-gazelle](https://spider-gazelle.net) (4.1) | 98 956.47 | 121 089.22 | 121 918.32 |
 | 27 | crystal (0.35)| [router.cr](https://github.com/tbrand/router.cr) (0.2) | 98 678.85 | 121 119.54 | 121 367.05 |
 | 28 | php (7.4)| [swoole](https://github.com/swoole/swoole-src) (4.6) | 98 587.35 | 117 862.22 | 132 587.63 |
 | 29 | php (7.4)| [nano](https://gitlab.com/x.laylatichy.x/nano) (0.0.9) | 95 148.79 | 139 767.48 | 150 612.01 |
