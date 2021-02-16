@@ -7,9 +7,9 @@ on:
       - edited
       - synchronize
   schedule:
-    - cron: 0 0 * * 3
+    - cron: 0 10 * * 3
 jobs:
-  dynamic_matrix:
+  matrix:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,13 +28,15 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
-  test_implementations:
-    needs: dynamic_matrix
+  test:
+    needs: matrix
 
     runs-on: ubuntu-latest
+          
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.dynamic_matrix.outputs.matrix)}}
+      matrix: ${{fromJson(needs.matrix.outputs.matrix)}}
+      max-parallel: 4
 
     steps:
       - uses: actions/checkout@v2
@@ -45,11 +47,18 @@ jobs:
       - name: Configure
         run: bundle exec rake config
 
-      - name: Build
+      - name: Get docker version
+        run: docker --version
+
+      - name: Setup
         run: |
-          cd ${{ matrix.directory }}
+          cd ${{ matrix.directory }} 
           make build  -f .Makefile
-          cd -
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Test
-        run: FRAMEWORK=${{ matrix.framework }} bundle exec rspec .spec
+        run: bundle exec rspec .spec
+        env:
+          FRAMEWORK: ${{ matrix.framework }}

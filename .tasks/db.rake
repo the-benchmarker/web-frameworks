@@ -40,7 +40,7 @@ namespace :db do
           frameworks[id] = {
             language: language,
             framework: framework,
-            metrics: { "concurrency_64": {}, "concurrency_256": {}, "concurrency_512": {} }
+            metrics: { concurrency_64: {}, concurrency_256: {}, concurrency_512: {} }
           }
         end
         framework_config = YAML.safe_load(File.read(File.join(language, framework, 'config.yaml')))
@@ -100,6 +100,8 @@ namespace :db do
         concurrency_512: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_512], delimiter: ' ')
       )
     end
-    File.open('README.md', 'w') { |f| f.write(Mustache.render(template, { results: results, date: Date.today })) }
+    File.open('README.md', 'w') do |f|
+      f.write(Mustache.render(template, { results: results, date: Date.today, docker_version: `docker --version` }))
+    end
   end
 end

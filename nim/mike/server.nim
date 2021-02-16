@@ -1,12 +1,12 @@
 import mike
 
 get "/":
-  send "ok"
+  send ""
 
 get "/user/{id}":
   send(id) 
 
 post "/user":
-  send "ok"
+  send ""
 
 startServer(3000)

@@ -1,11 +1,3 @@
 {
-  "extends": ["config:base", ":preserveSemverRanges"],
-  "node": {
-    "major": {
-      "enabled": true
-    }
-  },
-  "gradle": {
-    "enabled": true
-  }
+  "extends": ["config:base", ":preserveSemverRanges"]
 }

@@ -3,11 +3,9 @@
 declare(strict_types=1);
 
 use Antidot\Application\Http\Application;
-use Antidot\Application\Http\Middleware\ErrorMiddleware;
-use Antidot\Application\Http\Middleware\RouteDispatcherMiddleware;
-use Antidot\Application\Http\Middleware\RouteNotFoundMiddleware;
-use Antidot\Logger\Application\Http\Middleware\ExceptionLoggerMiddleware;
-use Antidot\Logger\Application\Http\Middleware\RequestLoggerMiddleware;
+use Antidot\React\PSR15\Middleware\ErrorMiddleware;
+use Antidot\React\PSR15\Middleware\RouteDispatcherMiddleware;
+use Antidot\React\PSR15\Middleware\RouteNotFoundMiddleware;
 
 return static function (Application $app): void {
     $app->pipe(ErrorMiddleware::class);
