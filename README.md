@@ -68,7 +68,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 
 :warning: You need to be on the project main directory :warning:
 
-## Results (2021-02-15)
+## Results (2021-02-16)
 
 
 
@@ -119,7 +119,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 23 | clojure (1.1)| [donkey](https://github.com/AppsFlyer/donkey) (0.4) | 106 572.60 | 113 280.59 | 114 252.75 |
 | 24 | java (11)| [vertx4web](https://vertx.io/docs/vertx-web/java/) (4.0) | 104 974.24 | 121 914.99 | 125 386.69 |
 | 25 | crystal (0.35)| [toro](https://github.com/soveran/toro) (0.4) | 99 834.14 | 121 597.45 | 122 243.75 |
-| 26 | crystal (0.35)| [spider-gazelle](https://spider-gazelle.net) (4.0) | 99 551.17 | 121 764.51 | 122 386.08 |
+| 26 | crystal (0.35)| [spider-gazelle](https://spider-gazelle.net) (4.0) | 98 956.47 | 121 089.22 | 121 918.32 |
 | 27 | crystal (0.35)| [router.cr](https://github.com/tbrand/router.cr) (0.2) | 98 678.85 | 121 119.54 | 121 367.05 |
 | 28 | php (7.4)| [swoole](https://github.com/swoole/swoole-src) (4.6) | 98 587.35 | 117 862.22 | 132 587.63 |
 | 29 | php (7.4)| [nano](https://gitlab.com/x.laylatichy.x/nano) (0.0.9) | 95 148.79 | 139 767.48 | 150 612.01 |
@@ -176,9 +176,9 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 80 | php (7.4)| [one](https://github.com/lizhichao/one) (2.2) | 52 702.96 | 62 257.04 | 67 396.97 |
 | 81 | kotlin (1.4)| [ktor](https://ktor.io) (1.4) | 52 074.60 | 67 382.51 | 70 071.76 |
 | 82 | php (7.4)| [hyperf](https://hyperf.io) (2.1) | 52 065.40 | 58 649.34 | 67 453.60 |
-| 83 | swift (5.3)| [perfect](https://perfect.org) (3.1) | 51 537.77 | 56 529.91 | 63 772.80 |
-| 84 | java (11)| [javalin](https://javalin.io) (3.9) | 51 332.32 | 54 630.04 | 54 502.62 |
-| 85 | ruby (2.7)| [agoo](https://github.com/ohler55/agoo) (2.14) | 51 140.25 | 73 295.70 | 81 570.04 |
+| 83 | ruby (3.0)| [agoo](https://github.com/ohler55/agoo) (2.14) | 51 627.40 | 72 479.55 | 80 582.44 |
+| 84 | swift (5.3)| [perfect](https://perfect.org) (3.1) | 51 537.77 | 56 529.91 | 63 772.80 |
+| 85 | java (11)| [javalin](https://javalin.io) (3.9) | 51 332.32 | 54 630.04 | 54 502.62 |
 | 86 | java (11)| [micronaut](https://micronaut.io) (1.2) | 50 945.35 | 57 504.64 | 57 792.70 |
 | 87 | fsharp (5.0)| [websharper](https://websharper.com) (4.7) | 50 630.42 | 57 269.90 | 57 711.63 |
 | 88 | java (11)| [spark](https://sparkjava.com) (2.9) | 50 162.16 | 54 960.32 | 55 636.09 |
@@ -241,26 +241,26 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 145 | python (3.9)| [molten](https://moltenframework.com) (1.0) | 19 135.94 | 22 461.23 | 22 070.08 |
 | 146 | python (3.9)| [fastapi](https://fastapi.tiangolo.com) (0.63) | 18 345.04 | 21 573.15 | 22 034.75 |
 | 147 | nim (1.4)| [akane](https://github.com/Ethosa/akane) (0.1) | 17 653.29 | 15 626.06 | 14 671.92 |
-| 148 | ruby (2.7)| [hanami-api](https://hanamirb.org) (0.1) | 16 933.05 | 16 432.73 | 16 108.10 |
-| 149 | php (7.4)| [swoft](https://swoft.org) (2.0) | 16 925.53 | 20 437.57 | 20 881.86 |
-| 150 | ruby (2.7)| [syro](https://github.com/soveran/syro) (3.2) | 16 341.80 | 16 049.45 | 15 601.61 |
-| 151 | rust (1.50)| [iron](https://ironframework.io) (0.6) | 16 319.57 | 16 760.16 | 16 641.30 |
+| 148 | php (7.4)| [swoft](https://swoft.org) (2.0) | 16 925.53 | 20 437.57 | 20 881.86 |
+| 149 | ruby (3.0)| [hanami-api](https://hanamirb.org) (0.1) | 16 713.42 | 16 227.05 | 15 950.25 |
+| 150 | rust (1.50)| [iron](https://ironframework.io) (0.6) | 16 319.57 | 16 760.16 | 16 641.30 |
+| 151 | ruby (3.0)| [syro](https://github.com/soveran/syro) (3.2) | 16 150.17 | 15 666.83 | 15 420.68 |
 | 152 | nim (1.4)| [rosencrantz](https://github.com/andreaferretti/rosencrantz) (0.4) | 16 021.26 | 14 098.69 | 13 140.25 |
 | 153 | php (7.4)| [chubbyphp-swoole](https://github.com/chubbyphp/chubbyphp-framework) (3.4) | 15 813.92 | 18 376.06 | 18 823.08 |
-| 154 | ruby (2.7)| [roda](https://roda.jeremyevans.net) (3.40) | 15 801.08 | 15 569.84 | 15 081.73 |
-| 155 | javascript (14.15)| [express](https://expressjs.com) (4.17) | 15 651.74 | 17 531.59 | 17 552.71 |
+| 154 | javascript (14.15)| [express](https://expressjs.com) (4.17) | 15 651.74 | 17 531.59 | 17 552.71 |
+| 155 | ruby (3.0)| [roda](https://roda.jeremyevans.net) (3.40) | 15 641.86 | 15 136.37 | 14 896.59 |
 | 156 | go (1.15)| [macaron](https://go-macaron.com) (1.4) | 15 344.47 | 16 935.43 | 16 900.17 |
 | 157 | php (7.4)| [sw-fw-less](https://github.com/luoxiaojun1992/sw-fw-less) (preview) | 15 254.52 | 17 525.11 | 17 871.74 |
 | 158 | php (7.4)| [slim-swoole](https://slimframework.com) (4.7) | 15 230.83 | 17 534.42 | 17 514.91 |
-| 159 | ruby (2.7)| [cuba](https://cuba.is) (3.9) | 15 117.15 | 14 646.28 | 14 385.67 |
-| 160 | javascript (14.15)| [feathersjs](https://feathersjs.com) (4.5) | 14 514.49 | 17 793.39 | 17 232.49 |
+| 159 | javascript (14.15)| [feathersjs](https://feathersjs.com) (4.5) | 14 514.49 | 17 793.39 | 17 232.49 |
+| 160 | ruby (3.0)| [cuba](https://cuba.is) (3.9) | 14 004.80 | 13 608.42 | 13 422.96 |
 | 161 | swift (5.3)| [swifter](https://github.com/httpswift/swifter) (1.5) | 14 001.06 | 15 009.98 | 22 727.56 |
 | 162 | python (3.9)| [flask](https://flask.pocoo.org) (1.1) | 13 946.52 | 15 659.24 | 17 535.44 |
-| 163 | ruby (2.7)| [rack-routing](https://github.com/georgeu2000/rack-routing) (0.0) | 13 908.06 | 13 457.53 | 13 256.83 |
-| 164 | java (11)| [struts2](https://struts.apache.org) (2.5) | 13 852.11 | 14 114.82 | 14 170.55 |
-| 165 | ruby (2.7)| [rack_app](https://rack-app.com) (7.7) | 13 504.08 | 13 202.99 | 12 888.37 |
-| 166 | java (11)| [blade](https://lets-blade.com) (2.0) | 13 064.51 | 16 546.59 | 14 731.85 |
-| 167 | ruby (2.7)| [camping](https://github.com/camping/camping) (2.1) | 12 975.16 | 12 554.96 | 12 395.95 |
+| 163 | java (11)| [struts2](https://struts.apache.org) (2.5) | 13 852.11 | 14 114.82 | 14 170.55 |
+| 164 | ruby (3.0)| [rack-routing](https://github.com/georgeu2000/rack-routing) (0.0) | 13 744.40 | 13 411.05 | 13 158.88 |
+| 165 | java (11)| [blade](https://lets-blade.com) (2.0) | 13 064.51 | 16 546.59 | 14 731.85 |
+| 166 | ruby (3.0)| [camping](https://github.com/camping/camping) (2.1) | 13 020.83 | 12 477.14 | 12 360.34 |
+| 167 | ruby (3.0)| [rack_app](https://rack-app.com) (7.7) | 12 618.00 | 12 030.99 | 11 717.24 |
 | 168 | javascript (14.15)| [nestjs-express](https://nestjs.com) (7.6) | 12 535.89 | 12 047.74 | 11 350.48 |
 | 169 | dart (2.10)| [start](https://github.com/lvivski/start) (0.4) | 11 391.52 | 11 183.64 | 10 856.94 |
 | 170 | go (1.15)| [tango](https://gitea.com/lunny/tango) (0.6) | 11 387.51 | 11 648.93 | 11 682.49 |
@@ -272,9 +272,9 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 176 | php (7.4)| [spiral](https://github.com/spiral/framework) (2.7) | 9 669.92 | 9 705.88 | 9 860.14 |
 | 177 | php (7.4)| [laravel-s-lumen](https://github.com/hhxsv5/laravel-s) (3.7) | 9 356.55 | 9 411.18 | 9 928.16 |
 | 178 | python (3.9)| [guillotina](https://guillotina.io) (6.1) | 9 134.40 | 9 278.07 | 8 762.42 |
-| 179 | ruby (2.7)| [sinatra](https://sinatrarb.com) (2.1) | 8 866.79 | 8 611.72 | 8 622.20 |
-| 180 | pony (0.38)| [jennet](https://github.com/Theodus/jennet) (0.1) | 8 762.22 | 13 409.30 | 12 600.07 |
-| 181 | ruby (2.7)| [grape](https://ruby-grape.org) (1.5) | 8 623.69 | 8 361.67 | 8 341.94 |
+| 179 | pony (0.38)| [jennet](https://github.com/Theodus/jennet) (0.1) | 8 762.22 | 13 409.30 | 12 600.07 |
+| 180 | ruby (3.0)| [sinatra](https://sinatrarb.com) (2.1) | 8 746.82 | 8 515.88 | 8 501.82 |
+| 181 | ruby (3.0)| [grape](https://ruby-grape.org) (1.5) | 7 833.41 | 7 598.22 | 7 569.55 |
 | 182 | python (3.9)| [tonberry](https://github.com/Ayehavgunne/Tonberry) (0.2) | 7 458.45 | 6 991.37 | 6 458.88 |
 | 183 | php (7.4)| [phalcon](https://phalcon.io) (4.1) | 7 149.94 | 7 542.49 | 7 448.73 |
 | 184 | php (7.4)| [basicphp](https://github.com/ray-ang/basicphp) (0.9) | 7 082.55 | 7 489.28 | 7 443.82 |
@@ -285,42 +285,41 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 189 | php (7.4)| [ice](https://iceframework.org) (1.5) | 6 356.21 | 6 725.26 | 6 731.73 |
 | 190 | python (3.9)| [tornado](https://tornadoweb.org) (6.1) | 5 879.46 | 5 729.83 | 5 660.77 |
 | 191 | php (7.4)| [ubiquity](https://ubiquity.kobject.net) (2.3) | 5 765.54 | 6 014.82 | 5 932.65 |
-| 192 | ruby (2.7)| [flame](https://github.com/AlexWayfer/flame) (4.18) | 5 699.77 | 5 598.99 | 5 565.19 |
-| 193 | python (3.9)| [django](https://djangoproject.com) (3.1) | 5 518.69 | 5 391.43 | 5 296.88 |
-| 194 | php (7.4)| [one-fpm](https://github.com/lizhichao/one) (2.2) | 5 087.01 | 5 286.00 | 5 257.08 |
-| 195 | php (7.4)| [fatfree](https://fatfreeframework.com) (3.7) | 5 053.31 | 5 216.02 | 5 120.10 |
-| 196 | php (7.4)| [hamlet](https://github.com/vasily-kartashov/hamlet-core) (3.2) | 4 721.78 | 4 927.63 | 4 834.73 |
-| 197 | php (7.4)| [cubex](https://cubex.io) (4.16) | 4 479.04 | 4 597.18 | 4 593.00 |
-| 198 | php (7.4)| [slim](https://slimframework.com) (4.7) | 4 335.53 | 4 456.01 | 4 461.07 |
-| 199 | javascript (14.15)| [sails](https://sailsjs.com) (1.4) | 4 233.90 | 4 219.64 | 4 186.98 |
-| 200 | php (7.4)| [bearframework](https://github.com/bearframework/bearframework) (1.3) | 4 191.84 | 4 284.99 | 4 268.12 |
-| 201 | julia (1.6)| [merly](https://github.com/codeneomatrix/Merly.jl) (1.0) | 3 964.76 | 6 211.35 | 3 940.54 |
-| 202 | php (7.4)| [sunrise-router](https://github.com/sunrise-php/http-router) (2.6) | 3 854.20 | 3 940.23 | 3 963.87 |
-| 203 | php (7.4)| [lumen](https://lumen.laravel.com) (8.2) | 3 833.50 | 3 912.23 | 3 898.04 |
-| 204 | php (7.4)| [nette](https://nette.org/en/) (3.1) | 3 827.03 | 3 954.46 | 3 971.17 |
-| 205 | php (7.4)| [chubbyphp](https://github.com/chubbyphp/chubbyphp-framework) (3.4) | 3 472.10 | 3 503.11 | 3 532.72 |
-| 206 | php (7.4)| [symfony](https://symfony.com) (5.2) | 3 011.15 | 3 047.88 | 3 039.44 |
-| 207 | php (7.4)| [sunrise-router-annotations](https://github.com/sunrise-php/http-router) (2.6) | 2 961.57 | 3 024.32 | 3 025.42 |
-| 208 | ruby (2.7)| [rails](https://rubyonrails.org) (6.1) | 2 742.44 | 2 719.52 | 2 716.41 |
-| 209 | php (7.4)| [yii](https://yiiframework.com) (2.0) | 2 543.49 | 2 583.79 | 2 579.92 |
-| 210 | python (3.9)| [masonite](https://masoniteproject.com) (3.0) | 2 464.96 | 2 480.94 | 2 474.40 |
-| 211 | php (7.4)| [driftphp](https://github.com/driftphp/driftphp) (0.1) | 2 003.75 | 660.09 | 1 382.79 |
-| 212 | r (4.0)| [restrserve](https://restrserve.org) (0.3) | 1 917.34 | 1 853.31 | 1 869.32 |
-| 213 | r (4.0)| [httpuv](https://github.com/rstudio/httpuv) (1.5) | 1 911.31 | 1 842.64 | 1 750.22 |
-| 214 | php (7.4)| [antidot](https://github.com/antidot-framework/react-framework) (0.2) | 1 869.34 | 671.16 | 1 995.39 |
-| 215 | crystal (0.35)| [runcobo](https://github.com/runcobo/runcobo) (1.0) | 1 839.53 | 1 867.67 | 1 843.67 |
-| 216 | php (7.4)| [mezzio](https://docs.mezzio.dev) (3.3) | 1 833.63 | 1 842.54 | 1 841.11 |
-| 217 | php (7.4)| [laminas](https://getlaminas.org) (3.2) | 1 708.65 | 1 731.95 | 1 733.92 |
-| 218 | python (3.9)| [cyclone](https://cyclone.io) (1.3) | 1 596.92 | 1 591.19 | 1 579.76 |
-| 219 | python (3.9)| [klein](https://github.com/twisted/klein) (20.6) | 1 562.67 | 1 580.48 | 1 553.40 |
-| 220 | python (3.9)| [django-ninja](https://django-ninja.rest-framework.com) (0.10) | 1 372.91 | 1 627.83 | 1 687.91 |
-| 221 | python (3.9)| [nameko](https://github.com/nameko/nameko) (2.13) | 1 230.96 | 1 163.81 | 1 149.61 |
-| 222 | php (7.4)| [codeigniter4](https://codeigniter.com) (4.1) | 1 173.49 | 1 191.94 | 1 204.33 |
-| 223 | php (7.4)| [laravel](https://laravel.com) (8.27) | 994.11 | 995.73 | 994.10 |
-| 224 | perl (5.32)| [dancer2](https://perldancer.org) (0.3) | 984.74 | 508.02 | 663.40 |
-| 225 | php (7.4)| [unic](https://unicframework.github.io/docs) (1.0) | 544.42 | 480.32 | 155.48 |
-| 226 | r (4.0)| [plumber](https://rplumber.io) (1.0) | 283.83 | 304.14 | -95.37 |
-| 227 | cpp (11)| [nawa](https://github.com/jatofg/nawa) (0.6) | 262.99 | NaN | NaN |
+| 192 | python (3.9)| [django](https://djangoproject.com) (3.1) | 5 518.69 | 5 391.43 | 5 296.88 |
+| 193 | php (7.4)| [one-fpm](https://github.com/lizhichao/one) (2.2) | 5 087.01 | 5 286.00 | 5 257.08 |
+| 194 | php (7.4)| [fatfree](https://fatfreeframework.com) (3.7) | 5 053.31 | 5 216.02 | 5 120.10 |
+| 195 | php (7.4)| [hamlet](https://github.com/vasily-kartashov/hamlet-core) (3.2) | 4 721.78 | 4 927.63 | 4 834.73 |
+| 196 | php (7.4)| [cubex](https://cubex.io) (4.16) | 4 479.04 | 4 597.18 | 4 593.00 |
+| 197 | php (7.4)| [slim](https://slimframework.com) (4.7) | 4 335.53 | 4 456.01 | 4 461.07 |
+| 198 | javascript (14.15)| [sails](https://sailsjs.com) (1.4) | 4 233.90 | 4 219.64 | 4 186.98 |
+| 199 | php (7.4)| [bearframework](https://github.com/bearframework/bearframework) (1.3) | 4 191.84 | 4 284.99 | 4 268.12 |
+| 200 | julia (1.6)| [merly](https://github.com/codeneomatrix/Merly.jl) (1.0) | 3 964.76 | 6 211.35 | 3 940.54 |
+| 201 | php (7.4)| [sunrise-router](https://github.com/sunrise-php/http-router) (2.6) | 3 854.20 | 3 940.23 | 3 963.87 |
+| 202 | php (7.4)| [lumen](https://lumen.laravel.com) (8.2) | 3 833.50 | 3 912.23 | 3 898.04 |
+| 203 | php (7.4)| [nette](https://nette.org/en/) (3.1) | 3 827.03 | 3 954.46 | 3 971.17 |
+| 204 | php (7.4)| [chubbyphp](https://github.com/chubbyphp/chubbyphp-framework) (3.4) | 3 472.10 | 3 503.11 | 3 532.72 |
+| 205 | php (7.4)| [symfony](https://symfony.com) (5.2) | 3 011.15 | 3 047.88 | 3 039.44 |
+| 206 | php (7.4)| [sunrise-router-annotations](https://github.com/sunrise-php/http-router) (2.6) | 2 961.57 | 3 024.32 | 3 025.42 |
+| 207 | ruby (3.0)| [rails](https://rubyonrails.org) (6.1) | 2 767.91 | 2 764.08 | 2 765.71 |
+| 208 | php (7.4)| [yii](https://yiiframework.com) (2.0) | 2 543.49 | 2 583.79 | 2 579.92 |
+| 209 | python (3.9)| [masonite](https://masoniteproject.com) (3.0) | 2 464.96 | 2 480.94 | 2 474.40 |
+| 210 | php (7.4)| [driftphp](https://github.com/driftphp/driftphp) (0.1) | 2 003.75 | 660.09 | 1 382.79 |
+| 211 | r (4.0)| [restrserve](https://restrserve.org) (0.3) | 1 917.34 | 1 853.31 | 1 869.32 |
+| 212 | r (4.0)| [httpuv](https://github.com/rstudio/httpuv) (1.5) | 1 911.31 | 1 842.64 | 1 750.22 |
+| 213 | php (7.4)| [antidot](https://github.com/antidot-framework/react-framework) (0.2) | 1 869.34 | 671.16 | 1 995.39 |
+| 214 | crystal (0.35)| [runcobo](https://github.com/runcobo/runcobo) (1.0) | 1 839.53 | 1 867.67 | 1 843.67 |
+| 215 | php (7.4)| [mezzio](https://docs.mezzio.dev) (3.3) | 1 833.63 | 1 842.54 | 1 841.11 |
+| 216 | php (7.4)| [laminas](https://getlaminas.org) (3.2) | 1 708.65 | 1 731.95 | 1 733.92 |
+| 217 | python (3.9)| [cyclone](https://cyclone.io) (1.3) | 1 596.92 | 1 591.19 | 1 579.76 |
+| 218 | python (3.9)| [klein](https://github.com/twisted/klein) (20.6) | 1 562.67 | 1 580.48 | 1 553.40 |
+| 219 | python (3.9)| [django-ninja](https://django-ninja.rest-framework.com) (0.10) | 1 372.91 | 1 627.83 | 1 687.91 |
+| 220 | python (3.9)| [nameko](https://github.com/nameko/nameko) (2.13) | 1 230.96 | 1 163.81 | 1 149.61 |
+| 221 | php (7.4)| [codeigniter4](https://codeigniter.com) (4.1) | 1 173.49 | 1 191.94 | 1 204.33 |
+| 222 | php (7.4)| [laravel](https://laravel.com) (8.27) | 994.11 | 995.73 | 994.10 |
+| 223 | perl (5.32)| [dancer2](https://perldancer.org) (0.3) | 984.74 | 508.02 | 663.40 |
+| 224 | php (7.4)| [unic](https://unicframework.github.io/docs) (1.0) | 544.42 | 480.32 | 155.48 |
+| 225 | r (4.0)| [plumber](https://rplumber.io) (1.0) | 283.83 | 304.14 | -95.37 |
+| 226 | cpp (11)| [nawa](https://github.com/jatofg/nawa) (0.6) | 262.99 | NaN | NaN |
 </a>
 
 </details>
