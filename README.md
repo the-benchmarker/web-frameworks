@@ -315,8 +315,8 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 219 | python (3.9)| [django-ninja](https://django-ninja.rest-framework.com) (0.10) | 1 372.91 | 1 627.83 | 1 687.91 |
 | 220 | python (3.9)| [nameko](https://github.com/nameko/nameko) (2.13) | 1 230.96 | 1 163.81 | 1 149.61 |
 | 221 | php (7.4)| [codeigniter4](https://codeigniter.com) (4.1) | 1 173.49 | 1 191.94 | 1 204.33 |
-| 222 | php (7.4)| [laravel](https://laravel.com) (8.27) | 994.11 | 995.73 | 994.10 |
-| 223 | perl (5.32)| [dancer2](https://perldancer.org) (0.3) | 984.74 | 508.02 | 663.40 |
+| 222 | perl (5.32)| [dancer2](https://perldancer.org) (0.3) | 984.74 | 508.02 | 663.40 |
+| 223 | php (7.4)| [laravel](https://laravel.com) (8.28) | 982.32 | 984.47 | 982.39 |
 | 224 | php (7.4)| [unic](https://unicframework.github.io/docs) (1.0) | 544.42 | 480.32 | 155.48 |
 | 225 | r (4.0)| [plumber](https://rplumber.io) (1.0) | 283.83 | 304.14 | -95.37 |
 | 226 | cpp (11)| [nawa](https://github.com/jatofg/nawa) (0.6) | 262.99 | NaN | NaN |
