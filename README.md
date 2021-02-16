@@ -99,7 +99,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 3 | php (7.4)| [workerman](https://github.com/walkor/Workerman) (4.0) | 150 794.34 | 186 318.22 | 186 651.14 |
 | 4 | php (7.4)| [mark](https://github.com/passwalls/mark) (1.1) | 123 887.12 | 136 537.47 | 138 175.82 |
 | 5 | go (1.15)| [fiber](https://gofiber.io) (2.5) | 121 724.16 | 130 491.66 | 129 377.71 |
-| 6 | go (1.15)| [gearbox](https://gogearbox.com) (1.1) | 121 545.29 | 124 240.64 | 123 798.47 |
+| 6 | go (1.15)| [gearbox](https://gogearbox.com) (1.2) | 120 695.44 | 123 499.54 | 123 196.20 |
 | 7 | nim (1.4)| [httpbeast](https://github.com/dom96/httpbeast) (0.2) | 118 508.87 | 147 144.25 | 150 071.98 |
 | 8 | go (1.15)| [gorouter-fasthttp](https://github.com/vardius/gorouter/wiki) (4.4) | 118 427.29 | 127 755.80 | 126 616.99 |
 | 9 | go (1.15)| [atreugo](https://github.com/savsgio/atreugo/blob/master/docs/README.md) (11.6) | 117 634.31 | 128 254.80 | 127 407.35 |
