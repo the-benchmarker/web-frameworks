@@ -31,9 +31,9 @@ instance-name: restheart-benchmarker
 #### Performance Options
 
 # Number of I/O threads created for non-blocking tasks. at least 2. suggested value: core*2
-io-threads:
-  1
-  # Number of threads created for blocking tasks (such as ones involving db access). suggested value: core*16
+io-threads: 1
+
+# Number of threads created for blocking tasks (such as ones involving db access). suggested value: core*16
 worker-threads: 4
 
 # Limit for the maximum number of concurrent requests being served
