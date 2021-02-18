@@ -26,7 +26,7 @@ def default_provider
   end
 end
 
-def commands_for(language, framework, provider = default_provider)
+def commands_for(language, framework, variant, provider = default_provider)
   config = YAML.safe_load(File.read('config.yaml'))
 
   directory = Dir.pwd
@@ -34,7 +34,8 @@ def commands_for(language, framework, provider = default_provider)
   language_config = YAML.safe_load(File.open(File.join(directory, language, 'config.yaml')))
   framework_config = YAML.safe_load(File.open(File.join(directory, language, framework, 'config.yaml')))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-  options = { language: language, framework: framework }
+  options = { language: language, framework: framework, variant: variant,
+              manifest: "#{MANIFESTS[:container]}.#{variant}" }
   commands = { build: [], collect: [], clean: [] }
 
   # Compile first, only for non containers
@@ -53,7 +54,7 @@ def commands_for(language, framework, provider = default_provider)
   end
 
   config['providers'][provider]['build'].each do |cmd|
-    commands[:build] << Mustache.render(cmd, options.merge!(manifest: MANIFESTS[:container])).to_s
+    commands[:build] << Mustache.render(cmd, options).to_s
   end
 
   config['providers'][provider]['metadata'].each do |cmd|
@@ -72,9 +73,9 @@ def commands_for(language, framework, provider = default_provider)
     commands[:build] << 'sleep 30'
   end
 
-  commands[:build] << 'curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
+  commands[:build] << "curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip-#{variant}.txt`:3000 -v"
 
-  commands[:collect] << "LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
+  commands[:collect] << "HOSTNAME=`cat #{language}/#{framework}/ip-#{variant}.txt` LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
 
   config.dig('providers', provider, 'clean').each do |cmd|
     commands[:clean] << Mustache.render(cmd, options).to_s
@@ -136,15 +137,13 @@ task :config do
 
     makefile = File.open(File.join(language, framework, MANIFESTS[:build]), 'w')
 
-    commands_for(language, framework).each do |target, commands|
-      config.dig('framework', 'variants').each do |variant, _|
+    config.dig('framework', 'variants').each do |variant, _|
+      commands_for(language, framework, variant).each do |target, commands|
         makefile.write("#{target}.#{variant}:\n")
         commands.each do |command|
           makefile.write("\t #{command}\n")
         end
       end
-      values = config.dig('framework', 'variants').keys.map { |variant| "#{target}.#{variant}" }.to_a
-      makefile.write("#{target} : #{values.join(' ')}\n")
     end
 
     makefile.close

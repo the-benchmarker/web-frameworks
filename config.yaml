@@ -35,8 +35,8 @@ providers:
       - docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}} .
 
     metadata:
-      - docker run -td {{{language}}}.{{{framework}}} > cid.txt
-      - docker inspect `cat cid.txt` | jq -r '.[0].NetworkSettings.IPAddress' > ip.txt
+      - docker run -td {{{language}}}.{{{framework}}} > cid-{{{variant}}}.txt
+      - docker inspect `cat cid-{{{variant}}}.txt` | jq -r '.[0].NetworkSettings.IPAddress' > ip-{{{variant}}}.txt
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker
@@ -48,7 +48,7 @@ providers:
 
     metadata:
       - docker run -p 3000:3000 -td {{{language}}}.{{{framework}}} > cid.txt
-      - docker-machine ip default > ip.txt
+      - docker-machine ip default > ip-{{{variant}}}.txt
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker
@@ -66,10 +66,10 @@ providers:
       - doctl compute droplet list {{{language}}}.{{{framework}}} --format ID --no-header
         > id.txt
       - doctl compute droplet list {{{language}}}.{{{framework}}} --format {{{DO_ATTRIBUTE}}}
-        --no-header > ip.txt
-      - rake cloud:wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt`
+        --no-header > ip-{{{variant}}}.txt
+      - rake cloud:wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip-{{{variant}}}.txt`
         SSH_KEY={{{DO_KEY}}}
-      - rake cloud:upload LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt`
+      - rake cloud:upload LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip-{{{variant}}}.txt`
         SSH_KEY={{{DO_KEY}}}
 
     exec: doctl compute ssh {{{language}}}.{{{framework}}} --ssh-key-path {{{DO_KEY}}} --ssh-command "cd /opt/web && {{{command}}}"
