@@ -97,3 +97,53 @@ blocks:
           env_vars:
             - name: VARIANT
               value: iodine
+  - name: Sinatra
+    dependencies:
+      - Ruby
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: ruby
+        - name: FRAMEWORK
+          value: sinatra
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: puma
+          commands:
+            - cd ruby/sinatra && make build.puma  -f .Makefile  && cd -
+            - bundle exec rspec .spec
+            - make  -f ruby/sinatra/.Makefile collect.puma
+            - bundle exec rake db:export
+          env_vars:
+            - name: VARIANT
+              value: puma
+        - name: falcon
+          commands:
+            - cd ruby/sinatra && make build.sinatra  -f .Makefile  && cd -
+            - bundle exec rspec .spec
+            - make  -f ruby/sinatra/.Makefile collect.falcon
+            - bundle exec rake db:export
+          env_vars:
+            - name: VARIANT
+              value: falcon
+        - name: iodine
+          commands:
+            - cd ruby/sinatra && make build.iodine  -f .Makefile  && cd -
+            - bundle exec rspec .spec
+            - make  -f ruby/sinatra/.Makefile collect.iodine
+            - bundle exec rake db:export
+          env_vars:
+            - name: VARIANT
+              value: iodine
