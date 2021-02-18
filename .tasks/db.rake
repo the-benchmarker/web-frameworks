@@ -8,6 +8,12 @@ require 'dotenv'
 
 Dotenv.load
 
+class ::Hash
+  def recursive_merge(h)
+    merge!(h) { |_key, _old, _new| _old.instance_of?(Hash) ? _old.recursive_merge(_new) : _new }
+  end
+end
+
 SQL = %(
     SELECT f.id, l.label AS language, f.label AS framework, c.level, k.label, avg(v.value) AS value
         FROM frameworks AS f
@@ -45,24 +51,29 @@ namespace :db do
         end
         framework_config = YAML.safe_load(File.read(File.join(language, framework, 'config.yaml')))
         language_config = YAML.safe_load(File.read(File.join(language, 'config.yaml')))
+        config = {}.recursive_merge(language_config).recursive_merge(framework_config)
+
 
         key = "concurrency_#{row['level']}".to_sym
         frameworks[id][:metrics][key].merge!(row['label'] => row['value'])
-        frameworks[id].merge!(framework_config['framework'].transform_keys!(&'framework_'.method(:+)))
-        frameworks[id].merge!(language_config['provider']['default'].transform_keys!(&'language_'.method(:+)))
 
-        if framework_config['framework'].key?('framework_name')
-          frameworks[id].merge!(framework: framework_config['framework']['framework_name'])
+        frameworks[id].merge!(language_version: config.dig('language','version'))
+        frameworks[id].merge!(framework_version: config.dig('framework','version'))
+      
+        if config.dig('framework', 'name')
+          frameworks[id].merge!(framework: config.dig('framework', 'name'))
         end
         scheme = 'https'
-        scheme = 'http' if framework_config['framework'].key?('unsecure')
-        website = if framework_config['framework'].key?('framework_github')
-                    "github.com/#{framework_config['framework']['framework_github']}"
-                  elsif framework_config['framework'].key?('framework_gitlab')
-                    "gitlab.com/#{framework_config['framework']['framework_gitlab']}"
+        scheme = 'http' if config.dig('framework','unsecure')
+        
+        if config.dig('framework','github')
+          website = "github.com/#{config.dig('framework','github')}"
+        elsif config.dig('framework','gitlab')
+          website = "gitlab.com/#{config.dig('framework','gitlab')}"
                   else
-                    (framework_config['framework']['framework_website']).to_s
+                    website = config.dig('framework','website')
                   end
+                  
         frameworks[id].merge!(framework_website: "#{scheme}://#{website}")
       end
     end
