@@ -9,6 +9,12 @@ require 'etc'
 
 Dotenv.load
 
+class ::Hash
+  def recursive_merge(h)
+    merge!(h) { |_key, _old, _new| _old.instance_of?(Hash) ? _old.recursive_merge(_new) : _new }
+  end
+end
+
 SQL = %(
     SELECT f.id, l.label AS language, f.label AS framework, c.level, k.label, avg(v.value) AS value
         FROM frameworks AS f
