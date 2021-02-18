@@ -147,3 +147,53 @@ blocks:
           env_vars:
             - name: VARIANT
               value: iodine
+  - name: Grape
+    dependencies:
+      - Ruby
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: ruby
+        - name: FRAMEWORK
+          value: grape
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: puma
+          commands:
+            - cd ruby/grape && make build.puma  -f .Makefile  && cd -
+            - bundle exec rspec .spec
+            - make  -f ruby/grape/.Makefile collect.puma
+            - bundle exec rake db:export
+          env_vars:
+            - name: VARIANT
+              value: puma
+        - name: falcon
+          commands:
+            - cd ruby/grape && make build.sinatra  -f .Makefile  && cd -
+            - bundle exec rspec .spec
+            - make  -f ruby/grape/.Makefile collect.falcon
+            - bundle exec rake db:export
+          env_vars:
+            - name: VARIANT
+              value: falcon
+        - name: iodine
+          commands:
+            - cd ruby/grape && make build.iodine  -f .Makefile  && cd -
+            - bundle exec rspec .spec
+            - make  -f ruby/grape/.Makefile collect.iodine
+            - bundle exec rake db:export
+          env_vars:
+            - name: VARIANT
+              value: iodine
