@@ -26,9 +26,11 @@ WORKDIR /opt/bin
   ENV {{{.}}}
 {{/environment}}
 
-{{#files}}
+{{#binaries}}
   COPY --from=0 /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
-{{/files}}
+{{/binaries}}
+
+RUN ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
 
 {{#command}}
   CMD {{{.}}}

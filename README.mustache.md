@@ -1,140 +1,101 @@
-# Which is the fastest?
+# Which is the fastest ?
+----------
+#### Simple framework comparison
+----------
+<p align="center">
+   <a href="https://github.com/the-benchmarker/web-frameworks/actions?query=workflow%3ACI" target="_blank">
+      <img src="https://github.com/the-benchmarker/web-frameworks/workflows/CI/badge.svg" alt="Test">
+   </a>
+   <a href="https://join.slack.com/t/thebenchmarker/shared_invite/zt-fcyy1ybq-A7T1SedewiVMEtJQGEyQYw" target="_blank">
+      <img src="https://img.shields.io/badge/slack-chat_with_us-green" alt="Chat with us">
+   </a>
+   <a href="https://github.com/the-benchmarker/web-frameworks/blob/master/LICENSE" target="_blank">
+      <img src="https://img.shields.io/github/license/the-benchmarker/web-frameworks" alt="License">
+   </a>
+</p>
 
-[![Build Status](https://travis-ci.com/the-benchmarker/web-frameworks.svg?branch=master)](https://travis-ci.com/the-benchmarker/web-frameworks)
-[![Join the chat at https://gitter.im/which_is_the_fastest/Lobby](https://badges.gitter.im/which_is_the_fastest/Lobby.svg)](https://gitter.im/which_is_the_fastest/Lobby)
+## Motivation
 
-This project aims to be a load benchmarking suite, no more, no less
+There are many frameworks, each one comes with its own advantages and drawbacks. The purpose of this project is to identify them and attempt to measure their differences (performance is only one metric).
 
-> Measuring response times (routing times) for each framework (middleware).
+#### What is a framework ?
 
+A framework is a set of components working together. The main intention behind a framework is to facilitate (app or service) creation. The way a framework help any developer could vary from one to an other.
 
-<div align="center">
-  :warning::warning::warning::warning::warning::warning::warning::warning:
-</div>
+A majority of frameworks could be splitted in 2 parts :
 
-<div align="center">Results are not <b>production-ready</b> <i>yet</i></div>
-
-<div align="center">
-  :warning::warning::warning::warning::warning::warning::warning::warning:
-</div>
-
-### Additional purposes :
-
-+ Helping decide between languages, depending on use case
-+ Learning languages, best practices, devops culture ...
-+ Having fun :heart:
++ **full-stack** meaning it provides all aspects (-stacks-) from data layer to sometimes deployment
++ **micro** meaning it provides only the routing part, and let the developer choose any other component for the others
 
 ## Requirements
 
-+ [Crystal](https://crystal-lang.org) as `built-in` tools are made in this language
-+ [Docker](https://www.docker.com) as **frameworks** are `isolated` into _containers_
-+ [wrk](https://github.com/wg/wrk) as benchmarking tool, `>= 4.1.0`
-+ [postgresql](https://www.postgresql.org) to store data, `>= 10`
-
-:information_source::information_source::information_source::information_source::information_source:
-
-:warning: On `OSX` you need `docker-machine` to use `docker` containerization
-
-~~~
-brew install docker-machine
-docker-machine create default
-eval $(docker-machine env default)
-~~~
-
-:information_source::information_source::information_source::information_source::information_source:
++ `ruby`, all tools are made in `ruby`
++ `wrk`, results are collected using `wrk`
++ `postgresql`, results are stored in `postgresql`
++ `docker`, each implementation is implemented in an isolated **container**
++ `docker-machine` if you are on `macos`
 
 ## Usage
 
-+ Install all dependencies
++ Setup
 
-~~~sh
-shards install
-~~~
+```
+bundle install
+bundle exec rake config
+```
 
-+ Build internal tools
++ Build
 
-~~~sh
-shards build
-~~~
+:warning: On `macos`, you need to use `docker-machine` to allow `docker` usage for each framework :warning:
 
-+ Create and initialize the database
+```
+docker-machine rm default --force
+docker-machine create default
+eval $(docker-machine env default)
+```
 
-~~~sh
-createdb -U postgres benchmark
-psql -U postgres -d benchmark < .ci/dump.sql
-~~~
+```
+export FRAMEWORK=php/lumen
+cd ${FRAMEWORK} 
+make -f .Makefile build 
+```
 
-Docker can be used to set up the database:
++ Run
 
-~~~sh
-docker run -it --rm -d \
-  -p 5432:5432 \
-  -e POSTGRES_DB=benchmark \
-  -e POSTGRES_HOST_AUTH_METHOD=trust \
-  -v /tmp/pg-data:/var/lib/postgresql/data \
-  --name pg postgres:12-alpine
-~~~
+```
+make -f ${FRAMEWORK}/.Makefile collect
+```
 
-Wait several seconds for the container to start, then inject the dump:
+:warning: You need to be on the project main directory :warning:
 
-~~~sh
-docker exec pg sh -c "echo \"$(cat .ci/dump.sql)\" | psql -U postgres -d benchmark"
-~~~
+## Results ({{date}})
 
-After creating the database, export its URL:
 
-~~~sh
-export DATABASE_URL="postgresql://postgres@localhost/benchmark"
-~~~
 
-+ Make configuration
+<details open>
+  <summary><strong>Technical details</strong></summary>
+  <ul>
+   <li>CPU : 8 Cores (AMD FX-8320E Eight-Core Processor)</li>
+   <li>RAM : 16 Gb</li>
+   <li>OS : Fedora</li>
+   <li><pre>{{{docker_version}}}</pre></li>
+  </ul>
+</details>
 
-~~~sh
-bin/make config
-~~~
-
-+ Build containers
-
-> jobs are either languages (example : crystal) or frameworks (example : router.cr)
-
-~~~sh
-bin/neph [job1] [job2] [job3] ...
-~~~
-
-+ Export all results readme
-
-~~~sh
-bin/db to_readme
-~~~
-
-## Results
-
-:information_source:  Updated on **{{date}}** :information_source:
-
-> Benchmarking with [wrk](https://github.com/wg/wrk)
+<details open>
+  <summary><strong>Datatable</strong></summary>
+<a id="results"> Computed with https://github.com/wg/wrk
    + Threads : 8
    + Timeout : 8
    + Duration : 15s (seconds)
 
 :information_source: Sorted by max `req/s` on concurrency **64** :information_source:
 
+|    | Language | Framework | Speed (64) | Speed (256) | Speed (512) |
+|----|----------|-----------|-----------:|------------:|------------:|
 {{#results}}
-{{.}}
+| {{id}} | {{language}} ({{language_language}})| [{{framework}}]({{framework_website}}) ({{framework_version}}) | {{concurrency_64}} | {{concurrency_256}} | {{concurrency_512}} |
 {{/results}}
+</a>
 
-## How to contribute ?
-
-In any way you want ...
-
-+ Request a framework addition
-+ Report a bug (on any implementation)
-+ Suggest an idea
-+ ...
-
-Any kind of idea is :heart:
-
-## Contributors
-
-- [Taichiro Suzuki](https://github.com/tbrand) - Author | Maintainer
-- [OvermindDL1](https://github.com/OvermindDL1) - Maintainer
-- [Marwan Rabbâa](https://github.com/waghanza) - Maintainer
+</details>

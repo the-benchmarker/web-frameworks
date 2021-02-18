@@ -57,11 +57,9 @@ class FastServer extends Server
         $this->routerDispatcher = $this->createDispatcher($serverName);
     }
 
-    public function onRequest(SwooleRequest $request, SwooleResponse $response): void
+    public function onRequest($request, $response): void
     {
         try {
-            CoordinatorManager::until(Constants::WORKER_START)->yield();
-
             Context::set(ResponseInterface::class, $psr7Response = new Psr7Response($response));
             $dispatched = new Dispatched(
                 $this->routerDispatcher->dispatch(...$this->initMethodAndPath($request))

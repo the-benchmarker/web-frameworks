@@ -1,13 +1,17 @@
 framework:
   website: masoniteproject.com
-  version: 2.3
- 
+  version: 3.0
+
 build_deps:
   - libffi-dev
   - openssl-dev
+  - curl
 
 fixes:
-  - pip install pendulum==2.0.5
+  - curl https://sh.rustup.rs > init.sh
+  - sh init.sh -y
+  - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
+  - rustup default nightly
 
 command: >
   gunicorn  \

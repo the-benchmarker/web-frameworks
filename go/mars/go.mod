@@ -1,3 +1,3 @@
 module main
 
-require github.com/roblillack/mars v1.0.2
+require github.com/roblillack/mars v1.0.4

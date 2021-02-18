@@ -1,44 +1,40 @@
 module Program 
 
 open Falco
+open Falco.HostBuilder
+open Falco.Routing
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Logging
 
-let configureWebHost 
-    (routes : HttpEndpoint list)
-    (webHost : IWebHostBuilder) =
-    let configureLogging (log : ILoggingBuilder) =
-        log.ClearProviders()
-        |> ignore
+let configureLogging (log : ILoggingBuilder) =
+    log.ClearProviders()
+    |> ignore
 
-    let configureServices (services : IServiceCollection) =
-        services.AddRouting() 
-        |> ignore
+let configureServices (services : IServiceCollection) =
+    services.AddFalco() 
+    |> ignore
 
-    let configure (routes : HttpEndpoint list) (app : IApplicationBuilder) = 
-        app.UseRouting()
-            .UseHttpEndPoints(routes)       
-            |> ignore 
-
-    webHost
-        .UseKestrel()
+let configure (endpoints : HttpEndpoint list) (app : IApplicationBuilder) = 
+    app.UseFalco(endpoints)       
+    |> ignore 
+    
+let configureWebHost (endpoints : HttpEndpoint list) (webHost : IWebHostBuilder) =    
+    webHost        
+        .UseKestrel(fun k -> k.AddServerHeader <- false)
         .ConfigureLogging(configureLogging)
         .ConfigureServices(configureServices)
-        .Configure(configure routes)
-        |> ignore
+        .Configure(configure endpoints)        
 
 [<EntryPoint>]
-let main args =   
-    let message = ""
-
-    Host.startWebHost 
-        args 
-        configureWebHost
-        [
-            get  "/user/{id}" (fun ctx -> Response.ofPlainText (Request.tryGetRouteValue "id" ctx |> Option.defaultValue "") ctx)
-            post "/user"      (Response.ofPlainText message)
-            get  "/"          (Response.ofPlainText message)
+let main args =       
+    webHost args {
+        configure configureWebHost
+        endpoints [
+            get  "/user/{id}" (Request.mapRoute (fun route -> route.Get "id" "") Response.ofPlainText)
+            post "/user"      (Response.ofEmpty)
+            get  "/"          (Response.ofEmpty)
         ]
+    }    
     0

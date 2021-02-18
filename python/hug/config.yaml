@@ -10,4 +10,3 @@ command: >
     --workers $(nproc)  \
     --worker-class meinheld.gmeinheld.MeinheldWorker \
       server:__hug_wsgi__
-  

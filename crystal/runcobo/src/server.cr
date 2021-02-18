@@ -1,4 +1,5 @@
 require "runcobo"
+ENV["SKIP_LOG"] = "true"
 
 class Index < BaseAction
   get "/"
@@ -7,6 +8,7 @@ class Index < BaseAction
     render_plain ""
   end
 end
+
 class CreateUser < BaseAction
   post "/user"
 
@@ -14,6 +16,7 @@ class CreateUser < BaseAction
     render_plain ""
   end
 end
+
 class ShowUser < BaseAction
   get "/user/:id"
   url NamedTuple(id: Int32)
@@ -23,4 +26,10 @@ class ShowUser < BaseAction
   end
 end
 
-Runcobo.start
+System.cpu_count.times do |_|
+  Process.fork do
+    Runcobo.start(reuse_port: true)
+  end
+end
+
+sleep
