@@ -181,7 +181,7 @@ blocks:
               value: puma
         - name: falcon
           commands:
-            - cd ruby/grape && make build.sinatra  -f .Makefile  && cd -
+            - cd ruby/grape && make build.falcon  -f .Makefile  && cd -
             - bundle exec rspec .spec
             - make  -f ruby/grape/.Makefile collect.falcon
             - bundle exec rake db:export
