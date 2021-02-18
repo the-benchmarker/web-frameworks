@@ -5,7 +5,6 @@ require 'net/http'
 require_relative 'spec_helper'
 
 RSpec.describe 'routes' do
-  let!(:http) { address(ENV['FRAMEWORK']) }
 
   context 'GET : /' do
     subject(:response) { http.request(Net::HTTP::Get.new('/')) }
