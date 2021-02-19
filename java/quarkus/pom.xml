@@ -15,9 +15,9 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 
-    <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
+    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>1.11.2.Final</quarkus.platform.version>
+    <quarkus.platform.version>1.12.0.Final</quarkus.platform.version>
 
   </properties>
   <dependencyManagement>
