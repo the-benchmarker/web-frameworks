@@ -62,27 +62,4 @@ namespace :ci do
     config[:blocks].map { |block| block.except!(:run) }
     File.write('.semaphore/schedule.yml', JSON.parse(config.to_json).to_yaml)
   end
-  task :matrix do
-    base = ENV['BASE_COMMIT']
-    last = ENV['LAST_COMMIT']
-    workdir = ENV.fetch('GITHUB_WORKSPACE') { Dir.pwd }
-    warn "Checking for modification from #{base} to #{last}"
-    git = Git.open(Dir.pwd)
-    files = []
-    diff = git.gtree(last).diff(base).each { |diff| files << diff.path }
-    warn "Detected modified files - #{files.join(',')}"
-    frameworks = []
-    files.each do |file|
-      if file.match(File::SEPARATOR) && !file.start_with?('.')
-        parts = file.split(File::SEPARATOR)
-        frameworks << parts[0..1].join(File::SEPARATOR)
-      end
-    end
-    matrix = { include: [] }
-    frameworks.uniq.each do |framework|
-      matrix[:include] << { directory: framework, framework: framework }
-    end
-    warn matrix.to_json
-    puts matrix.to_json
-  end
 end
