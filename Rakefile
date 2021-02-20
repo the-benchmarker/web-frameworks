@@ -73,9 +73,9 @@ def commands_for(language, framework, variant, provider = default_provider)
     commands[:build] << 'sleep 30'
   end
 
-  commands[:build] << "curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip-#{variant}.txt`:3000 -v"
+  commands[:build] << "curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat #{language}/#{framework}/ip-#{variant}.txt`:3000 -v"
 
-  commands[:collect] << "HOSTNAME=`cat #{language}/#{framework}/ip-#{variant}.txt` LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
+  commands[:collect] << "HOSTNAME=`cat #{language}/#{framework}/ip-#{variant}.txt` VARIANT=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
 
   config.dig('providers', provider, 'clean').each do |cmd|
     commands[:clean] << Mustache.render(cmd, options).to_s
