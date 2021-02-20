@@ -32,26 +32,26 @@ service: |
 providers:
   docker:
     build:
-      - docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}} .
+      - cd {{{language}}}/{{{framework}}} && docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}} . && cd -
 
     metadata:
-      - docker run -td {{{language}}}.{{{framework}}} > cid-{{{variant}}}.txt
+      - docker run -td {{{language}}}.{{{framework}}}.{{{variant}}} > cid-{{{variant}}}.txt
       - docker inspect `cat cid-{{{variant}}}.txt` | jq -r '.[0].NetworkSettings.IPAddress' > ip-{{{variant}}}.txt
 
     clean:
-      - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker
+      - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}.{{{variant}}} | xargs docker
         rm -f
 
   docker-machine:
     build:
-      - docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}} .
+      - cd {{{language}}}/{{{framework}}} && docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}}.{{{variant}}} .&& cd -
 
     metadata:
-      - docker run -p 3000:3000 -td {{{language}}}.{{{framework}}} > cid.txt
+      - docker run -p 3000:3000 -td {{{language}}}.{{{framework}}}.{{{variant}}} > cid.txt
       - docker-machine ip default > ip-{{{variant}}}.txt
 
     clean:
-      - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker
+      - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}.{{{variant}}}  | xargs docker
         rm -f
 
   digitalocean:
