@@ -146,6 +146,10 @@ task :config do
       end
     end
 
+    command = config.dig('framework', 'variants').map { |v, _| ["build.#{v}", "collect.#{v}", "clean.#{v}"] }.join(' ')
+
+    makefile.write("run-all : #{command}\n")
+
     makefile.close
   end
 end
