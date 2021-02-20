@@ -15,14 +15,19 @@ class ::Hash
 end
 
 SQL = %(
-    SELECT f.id, l.label AS language, f.label AS framework, c.level, k.label, avg(v.value) AS value
+    SELECT CONCAT(f.id, vr.id) AS id, l.label AS language, f.label AS framework, c.level, k.label, vr.label AS variant, avg(v.value) AS value
         FROM frameworks AS f
             JOIN metrics AS m ON f.id = m.framework_id
+            JOIN variants AS vr ON vr.id = variant_id
             JOIN values AS v ON v.id = m.value_id
             JOIN concurrencies AS c on c.id = m.concurrency_id
             JOIN languages AS l on l.id = f.language_id
             JOIN keys AS k ON k.id = v.key_id
+<<<<<<< HEAD
                 GROUP BY 1,2,3,4,5
+=======
+                GROUP BY 1,2,3,4,5,6;
+>>>>>>> 74729ec2 (display mutliple variants on README)
 )
 
 def compute(data)
@@ -41,11 +46,12 @@ namespace :db do
     db = PG.connect(ENV['DATABASE_URL'])
     db.exec(SQL) do |result|
       result.each do |row|
-        id, framework, language = row.values_at('id', 'framework', 'language')
+        id, framework, language, variant = row.values_at('id', 'framework', 'language', 'variant')
         unless frameworks.key?(id)
           frameworks[id] = {
             language: language,
             framework: framework,
+            variant: variant,
             metrics: { concurrency_64: {}, concurrency_256: {}, concurrency_512: {} }
           }
         end
@@ -80,14 +86,6 @@ namespace :db do
 
     frameworks.each do |id, row|
       concurrency = compute(row[:metrics][:concurrency_64])
-      if concurrency.nan?
-        warn "Skipped #{row[:framework]} - Failure"
-        next
-      end
-      if concurrency.zero?
-        warn "Skipped #{row[:framework]} - O requests OK"
-        next
-      end
       row.merge!(
         id: id.to_i,
         concurrency_64: compute(row[:metrics][:concurrency_64]),
@@ -105,7 +103,8 @@ namespace :db do
         concurrency_64: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_64], delimiter: ' '),
         concurrency_256: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_256],
                                                                          delimiter: ' '),
-        concurrency_512: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_512], delimiter: ' ')
+        concurrency_512: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_512],
+                                                                         delimiter: ' ')
       )
     end
     File.open('README.md', 'w') do |f|
