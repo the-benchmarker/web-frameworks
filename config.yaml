@@ -32,11 +32,11 @@ service: |
 providers:
   docker:
     build:
-      - cd {{{language}}}/{{{framework}}} && docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}} . && cd -
+      - cd {{{language}}}/{{{framework}}} && docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}}.{{{variant}}} . && cd -
 
     metadata:
-      - docker run -td {{{language}}}.{{{framework}}}.{{{variant}}} > cid-{{{variant}}}.txt
-      - docker inspect `cat cid-{{{variant}}}.txt` | jq -r '.[0].NetworkSettings.IPAddress' > ip-{{{variant}}}.txt
+      - docker run -td {{{language}}}.{{{framework}}}.{{{variant}}} > {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt
+      - docker inspect `cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt` | jq -r '.[0].NetworkSettings.IPAddress' > {{{language}}}/{{{framework}}}/ip-{{{variant}}}.txt
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}.{{{variant}}} | xargs docker
@@ -47,8 +47,8 @@ providers:
       - cd {{{language}}}/{{{framework}}} && docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}}.{{{variant}}} .&& cd -
 
     metadata:
-      - docker run -p 3000:3000 -td {{{language}}}.{{{framework}}}.{{{variant}}} > cid.txt
-      - docker-machine ip default > ip-{{{variant}}}.txt
+      - docker run -p 3000:3000 -td {{{language}}}.{{{framework}}}.{{{variant}}}
+      - docker-machine ip default > {{{language}}}/{{{framework}}}/ip-{{{variant}}}.txt
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}.{{{variant}}}  | xargs docker
