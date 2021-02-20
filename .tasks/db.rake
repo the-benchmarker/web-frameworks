@@ -53,27 +53,24 @@ namespace :db do
         language_config = YAML.safe_load(File.read(File.join(language, 'config.yaml')))
         config = {}.recursive_merge(language_config).recursive_merge(framework_config)
 
-
         key = "concurrency_#{row['level']}".to_sym
         frameworks[id][:metrics][key].merge!(row['label'] => row['value'])
 
-        frameworks[id].merge!(language_version: config.dig('language','version'))
-        frameworks[id].merge!(framework_version: config.dig('framework','version'))
-      
-        if config.dig('framework', 'name')
-          frameworks[id].merge!(framework: config.dig('framework', 'name'))
-        end
+        frameworks[id].merge!(language_version: config.dig('language', 'version'))
+        frameworks[id].merge!(framework_version: config.dig('framework', 'version'))
+
+        frameworks[id].merge!(framework: config.dig('framework', 'name')) if config.dig('framework', 'name')
         scheme = 'https'
-        scheme = 'http' if config.dig('framework','unsecure')
-        
-        if config.dig('framework','github')
-          website = "github.com/#{config.dig('framework','github')}"
-        elsif config.dig('framework','gitlab')
-          website = "gitlab.com/#{config.dig('framework','gitlab')}"
+        scheme = 'http' if config.dig('framework', 'unsecure')
+
+        website = if config.dig('framework', 'github')
+                    "github.com/#{config.dig('framework', 'github')}"
+                  elsif config.dig('framework', 'gitlab')
+                    "gitlab.com/#{config.dig('framework', 'gitlab')}"
                   else
-                    website = config.dig('framework','website')
+                    config.dig('framework', 'website')
                   end
-                  
+
         frameworks[id].merge!(framework_website: "#{scheme}://#{website}")
       end
     end
