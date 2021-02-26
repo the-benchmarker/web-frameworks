@@ -2,10 +2,12 @@
 ----------
 #### Simple framework comparison 
 ----------
+
 <p align="center">
   <img src="https://img.shields.io/badge/status-beta-green?style=for-the-badge">
 </p>
-----------
+
+<hr/>
 
 <p align="center">
    <a href="https://the-benchmarker.semaphoreci.com/badges/web-frameworks/branches/master.svg">
@@ -115,12 +117,12 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 13 | java (11)| [restheart](https://restheart.org) (5.3) | 113 099.17 | 117 858.80 | 117 869.91 |
 | 14 | java (11)| [undertow](https://undertow.io) (2.2) | 112 863.31 | 138 577.68 | 141 191.80 |
 | 15 | clojure (1.1)| [donkey](https://github.com/AppsFlyer/donkey) (0.5) | 111 383.61 | 113 278.31 | 115 082.74 |
-| 16 | javascript (14.15)| [nanoexpress](https://github.com/nanoexpress/nanoexpress) (2.4) | 110 898.09 | 142 690.41 | 146 477.05 |
+| 16 | javascript (14.16)| [nanoexpress](https://github.com/nanoexpress/nanoexpress) (2.4) | 110 898.09 | 142 690.41 | 146 477.05 |
 | 17 | java (11)| [jooby](https://jooby.io) (2.9) | 110 042.44 | 138 025.94 | 142 591.07 |
 | 18 | java (11)| [rapidoid](https://rapidoid.org) (5.5) | 109 406.91 | 135 338.42 | 138 417.13 |
 | 19 | kotlin (1.4)| [kooby](https://jooby.io) (2.9) | 108 489.40 | 136 618.96 | 141 864.22 |
 | 20 | go (1.16)| [gorilla-mux](https://www.gorillatoolkit.org/pkg/mux) (1.8) | 108 359.73 | 105 144.65 | 109 497.64 |
-| 21 | javascript (14.15)| [sifrr](https://sifrr.github.io/sifrr/#/./packages/server/sifrr-server/) (0.0) | 107 654.11 | 138 006.94 | 140 536.21 |
+| 21 | javascript (14.16)| [sifrr](https://sifrr.github.io/sifrr/#/./packages/server/sifrr-server/) (0.0) | 107 654.11 | 138 006.94 | 140 536.21 |
 | 22 | java (11)| [vertx](https://vertx.io/docs/vertx-core/java/) (4.0) | 107 183.68 | 127 548.37 | 129 127.96 |
 | 23 | java (11)| [light-4j](https://doc.networknt.com) (2.0) | 105 616.44 | 133 578.33 | 138 085.97 |
 | 24 | nim (1.4)| [jester](https://github.com/dom96/jester) (0.5) | 105 511.31 | 131 003.04 | 134 575.15 |
@@ -139,7 +141,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 37 | crystal (0.36)| [amber](https://amberframework.org) (0.36) | 90 533.64 | 108 261.78 | 107 835.95 |
 | 38 | php (7.4)| [swoole-coroutine](https://github.com/swoole/swoole-src) (4.6) | 89 995.88 | 124 776.23 | 138 491.94 |
 | 39 | java (11)| [quarkus](https://quarkus.io) (1.12) | 85 850.34 | 103 608.89 | 106 385.23 |
-| 40 | javascript (14.15)| [naturaljs-router](https://github.com/jesusvilla/natural) (0.1.1) | 84 376.10 | 98 441.84 | 99 928.89 |
+| 40 | javascript (14.16)| [naturaljs-router](https://github.com/jesusvilla/natural) (0.1.1) | 84 376.10 | 98 441.84 | 99 928.89 |
 | 41 | scala (2.13)| [akkahttp](https://akka.io) (10.2) | 83 165.01 | 98 525.68 | 95 508.30 |
 | 42 | go (1.16)| [gf](https://goframe.org) (1.15) | 82 571.79 | 90 593.71 | 92 414.73 |
 | 43 | go (1.16)| [rte](https://github.com/jwilner/rte) (0.0) | 81 283.67 | 82 390.72 | 84 465.53 |
@@ -162,24 +164,24 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 60 | fsharp (5.0)| [frank](https://github.com/frank-fs/frank) (6.2) | 72 597.33 | 84 100.01 | 86 619.77 |
 | 61 | go (1.16)| [beego](https://beego.me) (1.12) | 72 468.90 | 75 320.85 | 77 350.30 |
 | 62 | csharp (8.0)| [aspnetcore](https://docs.microsoft.com/en-us/aspnet/index) (5.0) | 71 878.00 | 83 573.73 | 85 914.19 |
-| 63 | javascript (14.15)| [low-http-server](https://github.com/jkyberneees/low-http-server) (2.1) | 71 767.92 | 79 511.64 | 80 530.78 |
+| 63 | javascript (14.16)| [low-http-server](https://github.com/jkyberneees/low-http-server) (2.1) | 71 767.92 | 79 511.64 | 80 530.78 |
 | 64 | fsharp (5.0)| [falco](https://falcoframework.com) (3.0) | 69 703.20 | 82 514.10 | 81 521.95 |
 | 65 | go (1.16)| [air](https://github.com/aofei/air) (0.21) | 65 384.25 | 63 964.08 | 66 199.69 |
 | 66 | go (1.16)| [goyave](https://github.com/System-Glitch/goyave) (3.6) | 65 065.45 | 64 469.48 | 67 424.37 |
 | 67 | csharp (8.0)| [carter](https://github.com/CarterCommunity/Carter) (5.2) | 65 055.24 | 72 702.35 | 73 109.70 |
-| 68 | javascript (14.15)| [polkadot](https://github.com/lukeed/polkadot) (1.0) | 64 706.10 | 69 168.05 | 70 475.07 |
+| 68 | javascript (14.16)| [polkadot](https://github.com/lukeed/polkadot) (1.0) | 64 706.10 | 69 168.05 | 70 475.07 |
 | 69 | fsharp (5.0)| [saturn](https://saturnframework.org) (0.14) | 61 964.18 | 67 778.98 | 67 244.76 |
 | 70 | scala (2.13)| [finch](https://finagle.github.io/finch/) (0.32) | 60 829.20 | 67 938.78 | 67 785.91 |
 | 71 | java (11)| [spring](https://spring.io/projects/spring-boot) (2.4) | 59 094.68 | 62 032.98 | 63 238.02 |
-| 72 | javascript (14.15)| [0http](https://github.com/jkyberneees/0http) (3.0) | 58 888.05 | 66 119.91 | 67 734.10 |
+| 72 | javascript (14.16)| [0http](https://github.com/jkyberneees/0http) (3.0) | 58 888.05 | 66 119.91 | 67 734.10 |
 | 73 | rust (1.50)| [salvo](https://github.com/kenorld/salvo) (0.5) | 58 506.95 | 62 529.03 | 63 861.81 |
-| 74 | javascript (14.15)| [polka](https://github.com/lukeed/polka) (0.5) | 57 603.42 | 62 395.90 | 61 273.30 |
-| 75 | javascript (14.15)| [restana](https://github.com/jkyberneees/ana) (4.7) | 56 017.94 | 63 672.97 | 64 307.77 |
-| 76 | javascript (14.15)| [fastify](https://fastify.io) (3.12) | 55 701.86 | 60 689.01 | 59 607.01 |
-| 77 | javascript (14.15)| [rayo](https://rayo.js.org) (1.3) | 55 573.99 | 60 652.88 | 59 393.02 |
+| 74 | javascript (14.16)| [polka](https://github.com/lukeed/polka) (0.5) | 57 603.42 | 62 395.90 | 61 273.30 |
+| 75 | javascript (14.16)| [restana](https://github.com/jkyberneees/ana) (4.7) | 56 017.94 | 63 672.97 | 64 307.77 |
+| 76 | javascript (14.16)| [fastify](https://fastify.io) (3.12) | 55 701.86 | 60 689.01 | 59 607.01 |
+| 77 | javascript (14.16)| [rayo](https://rayo.js.org) (1.3) | 55 573.99 | 60 652.88 | 59 393.02 |
 | 78 | elixir (1.11)| [cowboy_stream](https://ninenines.eu/docs/en/cowboy/2.8/guide/streams/) (2.8) | 54 583.04 | 57 577.54 | 56 138.32 |
 | 79 | python (3.9)| [pyramid](https://trypyramid.com) (1.1) | 53 635.79 | 57 631.66 | 57 916.76 |
-| 80 | javascript (14.15)| [muneem](https://github.com/node-muneem/muneem) (2.4) | 53 410.26 | 58 011.98 | 57 324.26 |
+| 80 | javascript (14.16)| [muneem](https://github.com/node-muneem/muneem) (2.4) | 53 410.26 | 58 011.98 | 57 324.26 |
 | 81 | kotlin (1.4)| [http4k](https://http4k.org) (3.275) | 52 915.65 | 61 269.29 | 63 724.36 |
 | 82 | php (7.4)| [one](https://github.com/lizhichao/one) (2.2) | 51 836.03 | 60 335.11 | 67 146.27 |
 | 83 | java (11)| [javalin](https://javalin.io) (3.9) | 51 758.29 | 54 678.45 | 54 893.17 |
@@ -190,23 +192,23 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 88 | ruby (3.0)| [agoo](https://github.com/ohler55/agoo) (2.14) | 51 009.14 | 73 137.85 | 79 873.23 |
 | 89 | fsharp (5.0)| [websharper](https://websharper.com) (4.7) | 49 920.39 | 56 387.53 | 56 776.38 |
 | 90 | java (11)| [spark](https://sparkjava.com) (2.9) | 49 824.59 | 54 186.73 | 55 242.14 |
-| 91 | javascript (14.15)| [nestjs-fastify](https://nestjs.com) (7.6) | 48 543.16 | 52 979.76 | 51 360.02 |
+| 91 | javascript (14.16)| [nestjs-fastify](https://nestjs.com) (7.6) | 48 543.16 | 52 979.76 | 51 360.02 |
 | 92 | go (1.16)| [mars](https://github.com/roblillack/mars) (1.0) | 46 388.51 | 46 470.19 | 49 709.25 |
 | 93 | rust (1.50)| [actix](https://actix.rs) (3.3) | 46 321.11 | 45 826.22 | 46 902.84 |
 | 94 | haskell (8.8)| [scotty](https://hackage.haskell.org/package/scotty) (0.12) | 45 430.47 | 48 853.20 | 51 347.95 |
-| 95 | javascript (14.15)| [iotjs-express](https://github.com/SamsungInternet/iotjs-express) (0.0) | 44 654.63 | 47 736.89 | 47 299.99 |
-| 96 | javascript (14.15)| [foxify](https://foxify.js.org) (0.1) | 44 632.03 | 48 865.63 | 47 726.29 |
+| 95 | javascript (14.16)| [iotjs-express](https://github.com/SamsungInternet/iotjs-express) (0.0) | 44 654.63 | 47 736.89 | 47 299.99 |
+| 96 | javascript (14.16)| [foxify](https://foxify.js.org) (0.1) | 44 632.03 | 48 865.63 | 47 726.29 |
 | 97 | clojure (1.1)| [coast](https://coastonclojure.com) (1.0) | 44 278.03 | 44 969.19 | 45 441.67 |
 | 98 | r (4.0)| [rserve](https://rforge.net/Rserve/) (1.7) | 42 946.91 | 33 030.47 | 32 748.95 |
-| 99 | javascript (14.15)| [koa](https://koajs.com) (2.13) | 41 440.89 | 44 010.31 | 43 201.19 |
+| 99 | javascript (14.16)| [koa](https://koajs.com) (2.13) | 41 440.89 | 44 010.31 | 43 201.19 |
 | 100 | python (3.9)| [asgineer](https://asgineer.readthedocs.io) (0.8) | 41 064.63 | 45 853.50 | 46 913.63 |
 | 101 | python (3.9)| [bottle](https://bottlepy.org) (0.12) | 39 764.87 | 43 347.35 | 43 930.87 |
 | 102 | elixir (1.11)| [cowboy](https://ninenines.eu/docs/en/cowboy/2.8/guide/) (2.8) | 36 692.01 | 37 650.39 | 38 391.20 |
-| 103 | javascript (14.15)| [fyrejet-api](https://github.com/fyrejet/fyrejet) (2.1) | 36 437.91 | 39 796.40 | 38 876.88 |
+| 103 | javascript (14.16)| [fyrejet-api](https://github.com/fyrejet/fyrejet) (2.1) | 36 437.91 | 39 796.40 | 38 876.88 |
 | 104 | swift (5.3)| [vapor](https://vapor.codes) (4.41) | 36 119.34 | 37 703.40 | 37 643.25 |
 | 105 | php (7.4)| [chubbyphp-workerman](https://github.com/chubbyphp/chubbyphp-framework) (3.4) | 35 125.82 | 37 383.53 | 37 621.82 |
-| 106 | javascript (14.15)| [moleculer](https://moleculer.services) (0.14) | 35 113.79 | 35 901.22 | 35 478.47 |
-| 107 | javascript (14.15)| [hapi](https://hapijs.com) (20.1) | 34 652.36 | 35 692.14 | 34 485.67 |
+| 106 | javascript (14.16)| [moleculer](https://moleculer.services) (0.14) | 35 113.79 | 35 901.22 | 35 478.47 |
+| 107 | javascript (14.16)| [hapi](https://hapijs.com) (20.1) | 34 652.36 | 35 692.14 | 34 485.67 |
 | 108 | swift (5.3)| [kitura](https://kitura.dev) (2.9) | 34 493.95 | 33 816.26 | 33 730.06 |
 | 109 | python (3.9)| [emmett](https://emmett.sh) (2.1) | 34 313.42 | 40 940.23 | 42 074.16 |
 | 110 | swift (5.3)| [kitura-nio](https://kitura.dev) (2.9) | 34 203.67 | 35 375.54 | 35 230.13 |
@@ -221,10 +223,10 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 119 | fsharp (5.0)| [suave](https://suave.io) (2.6) | 31 730.19 | 27 153.91 | 22 439.42 |
 | 120 | python (3.9)| [sanic](https://github.com/huge-success/sanic) (20.12) | 31 590.00 | 34 682.58 | 34 614.61 |
 | 121 | dart (2.10)| [aqueduct](https://aqueduct.io) (3.3) | 30 936.47 | 31 217.71 | 30 848.79 |
-| 122 | javascript (14.15)| [restify](https://restify.com) (8.5) | 29 425.67 | 31 541.30 | 30 118.94 |
+| 122 | javascript (14.16)| [restify](https://restify.com) (8.5) | 29 425.67 | 31 541.30 | 30 118.94 |
 | 123 | csharp (8.0)| [simplify.web](https://web.simplifynet.dev) (4.2) | 29 269.45 | 32 139.91 | 32 039.49 |
 | 124 | php (7.4)| [imi](https://imiphp.com) (1.2) | 29 224.51 | 33 310.75 | 33 532.05 |
-| 125 | javascript (14.15)| [fyrejet-uwebsockets](https://github.com/fyrejet/fyrejet) (2.1) | 28 639.30 | 46 428.74 | 46 855.54 |
+| 125 | javascript (14.16)| [fyrejet-uwebsockets](https://github.com/fyrejet/fyrejet) (2.1) | 28 639.30 | 46 428.74 | 46 855.54 |
 | 126 | python (3.9)| [blacksheep](https://github.com/Neoteroi/BlackSheep) (1.0) | 28 192.58 | 32 269.66 | 33 763.60 |
 | 127 | scala (2.13)| [play](https://playframework.com) (2.8) | 28 021.88 | 30 108.78 | 29 919.90 |
 | 128 | php (7.4)| [yii-swoole](https://yiiframework.com) (2.0) | 27 973.33 | 30 624.94 | 33 253.67 |
@@ -242,9 +244,9 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 140 | python (3.9)| [aiohttp](https://aiohttp.readthedocs.io) (3.7) | 22 262.14 | 23 553.55 | 24 218.13 |
 | 141 | crystal (0.36)| [shivneri](https://github.com/ujjwalguptaofficial/shivneri) (0.17) | 22 044.45 | 21 608.66 | 19 990.75 |
 | 142 | fsharp (5.0)| [giraffe](https://github.com/giraffe-fsharp/Giraffe) (4.1) | 21 551.00 | 21 387.73 | 20 979.76 |
-| 143 | javascript (14.15)| [fyrejet](https://github.com/fyrejet/fyrejet) (2.1) | 20 342.05 | 22 746.69 | 22 343.68 |
+| 143 | javascript (14.16)| [fyrejet](https://github.com/fyrejet/fyrejet) (2.1) | 20 342.05 | 22 746.69 | 22 343.68 |
 | 144 | nim (1.4)| [mike](https://github.com/ire4ever1190/mike) (0.5) | 20 241.40 | 19 668.77 | 20 223.23 |
-| 145 | javascript (14.15)| [turbo_polka](https://github.com/mafintosh/turbo-http) (0.3) | 19 268.55 | 18 567.02 | 16 933.06 |
+| 145 | javascript (14.16)| [turbo_polka](https://github.com/mafintosh/turbo-http) (0.3) | 19 268.55 | 18 567.02 | 16 933.06 |
 | 146 | nim (1.4)| [akane](https://github.com/Ethosa/akane) (0.1) | 17 577.09 | 15 870.15 | 14 615.97 |
 | 147 | python (3.9)| [molten](https://moltenframework.com) (1.0) | 17 209.13 | 21 195.42 | 21 014.77 |
 | 148 | python (3.9)| [fastapi](https://fastapi.tiangolo.com) (0.63) | 17 171.32 | 21 933.53 | 22 084.97 |
@@ -259,8 +261,8 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 157 | ruby (3.0)| [roda](https://roda.jeremyevans.net) (3.41) | 15 264.83 | 14 801.64 | 14 621.89 |
 | 158 | php (7.4)| [slim-swoole](https://slimframework.com) (4.7) | 15 149.29 | 17 390.24 | 17 760.09 |
 | 159 | ruby (3.0)| [cuba](https://cuba.is) (3.9) | 14 139.62 | 13 681.12 | 13 444.57 |
-| 160 | javascript (14.15)| [express](https://expressjs.com) (4.17) | 14 030.20 | 17 828.85 | 18 052.15 |
-| 161 | javascript (14.15)| [feathersjs](https://feathersjs.com) (4.5) | 13 941.57 | 17 447.36 | 17 473.24 |
+| 160 | javascript (14.16)| [express](https://expressjs.com) (4.17) | 14 030.20 | 17 828.85 | 18 052.15 |
+| 161 | javascript (14.16)| [feathersjs](https://feathersjs.com) (4.5) | 13 941.57 | 17 447.36 | 17 473.24 |
 | 162 | python (3.9)| [flask](https://flask.pocoo.org) (1.1) | 13 930.81 | 17 770.44 | 16 999.08 |
 | 163 | java (11)| [struts2](https://struts.apache.org) (2.5) | 13 700.13 | 14 049.11 | 14 074.01 |
 | 164 | ruby (3.0)| [rack-routing](https://github.com/georgeu2000/rack-routing) (0.0) | 13 634.25 | 13 466.82 | 13 139.95 |
@@ -268,7 +270,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 166 | ruby (3.0)| [camping](https://github.com/camping/camping) (2.1) | 12 937.34 | 12 594.66 | 12 315.47 |
 | 167 | java (11)| [blade](https://lets-blade.com) (2.0) | 12 852.14 | 16 281.59 | 14 858.85 |
 | 168 | ruby (3.0)| [rack_app](https://rack-app.com) (7.7) | 12 779.48 | 12 070.98 | 11 797.93 |
-| 169 | javascript (14.15)| [nestjs-express](https://nestjs.com) (7.6) | 11 506.52 | 12 948.64 | 11 291.49 |
+| 169 | javascript (14.16)| [nestjs-express](https://nestjs.com) (7.6) | 11 506.52 | 12 948.64 | 11 291.49 |
 | 170 | go (1.16)| [tango](https://gitea.com/lunny/tango) (0.6) | 11 374.06 | 11 674.64 | 11 707.86 |
 | 171 | dart (2.10)| [start](https://github.com/lvivski/start) (0.4) | 10 925.31 | 10 770.56 | 10 415.61 |
 | 172 | php (7.4)| [chubbyphp-roadrunner](https://github.com/chubbyphp/chubbyphp-framework) (3.4) | 10 103.33 | 10 310.67 | 10 425.07 |
@@ -299,7 +301,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 197 | php (7.4)| [hamlet](https://github.com/vasily-kartashov/hamlet-core) (3.2) | 4 716.48 | 4 911.46 | 4 862.17 |
 | 198 | php (7.4)| [cubex](https://cubex.io) (4.16) | 4 620.98 | 4 805.96 | 4 795.51 |
 | 199 | php (7.4)| [slim](https://slimframework.com) (4.7) | 4 392.84 | 4 545.55 | 4 521.30 |
-| 200 | javascript (14.15)| [sails](https://sailsjs.com) (1.4) | 4 211.73 | 4 265.63 | 4 174.04 |
+| 200 | javascript (14.16)| [sails](https://sailsjs.com) (1.4) | 4 211.73 | 4 265.63 | 4 174.04 |
 | 201 | php (7.4)| [bearframework](https://github.com/bearframework/bearframework) (1.3) | 4 143.64 | 4 233.82 | 4 272.96 |
 | 202 | julia (1.6)| [merly](https://github.com/codeneomatrix/Merly.jl) (1.0) | 4 132.34 | 6 641.57 | 4 307.84 |
 | 203 | php (7.4)| [sunrise-router](https://github.com/sunrise-php/http-router) (2.6) | 3 867.35 | 3 938.01 | 3 952.57 |
