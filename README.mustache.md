@@ -1,10 +1,17 @@
 # Which is the fastest ?
 ----------
-#### Simple framework comparison
+#### Simple framework comparison 
 ----------
+
 <p align="center">
-   <a href="https://github.com/the-benchmarker/web-frameworks/actions?query=workflow%3ACI" target="_blank">
-      <img src="https://github.com/the-benchmarker/web-frameworks/workflows/CI/badge.svg" alt="Test">
+  <img src="https://img.shields.io/badge/status-beta-green?style=for-the-badge">
+</p>
+
+<hr/>
+
+<p align="center">
+   <a href="https://the-benchmarker.semaphoreci.com/badges/web-frameworks/branches/master.svg">
+      <img src="https://the-benchmarker.semaphoreci.com/badges/web-frameworks/branches/master.svg" alt="Build Status">
    </a>
    <a href="https://join.slack.com/t/thebenchmarker/shared_invite/zt-fcyy1ybq-A7T1SedewiVMEtJQGEyQYw" target="_blank">
       <img src="https://img.shields.io/badge/slack-chat_with_us-green" alt="Chat with us">
