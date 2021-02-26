@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/status-beta-green?style=for-the-badge">
 </p>
 
-----------
+<hr/>
 
 <p align="center">
    <a href="https://the-benchmarker.semaphoreci.com/badges/web-frameworks/branches/master.svg">
