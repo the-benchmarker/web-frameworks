@@ -18,6 +18,20 @@ class ::Hash
   end
 end
 
+def get_config_from(main_config, directory)
+  language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
+
+  framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
+
+  config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
+
+  %w[engines files environment].each do |item|
+    config['framework'][item] = language_config.dig('default', item) unless framework_config[item]
+  end
+
+  config
+end
+
 def default_provider
   if RbConfig::CONFIG['host_os'] =~ /linux/
     'docker'
@@ -85,7 +99,7 @@ def commands_for(language, framework, variant, provider = default_provider)
 end
 
 def create_dockerfile(directory, config, template)
-  config.dig('framework', 'variants').each do |variant, metadata|
+  config.dig('framework', 'engines').each do |variant, metadata|
     files = []
     config.dig('framework', 'files').each do |pattern|
       Dir.glob(File.join(directory, pattern)).each do |file|
@@ -125,11 +139,7 @@ task :config do
 
   Dir.glob('ruby/*/config.yaml').each do |path|
     directory = File.dirname(path)
-    language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
-
-    framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
-
-    config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
+    config = get_config_from(main_config, directory)
 
     create_dockerfile(directory, config, File.join(directory, '..', 'Dockerfile'))
 
@@ -137,7 +147,7 @@ task :config do
 
     makefile = File.open(File.join(language, framework, MANIFESTS[:build]), 'w')
 
-    config.dig('framework', 'variants').each do |variant, _|
+    config.dig('framework', 'engines').each do |variant, _|
       commands_for(language, framework, variant).each do |target, commands|
         makefile.write("#{target}.#{variant}:\n")
         commands.each do |command|
@@ -146,7 +156,7 @@ task :config do
       end
     end
 
-    command = config.dig('framework', 'variants').map { |v, _| ["build.#{v}", "collect.#{v}", "clean.#{v}"] }.join(' ')
+    command = config.dig('framework', 'engines').map { |v, _| ["build.#{v}", "collect.#{v}", "clean.#{v}"] }.join(' ')
 
     makefile.write("run-all : #{command}\n")
 
