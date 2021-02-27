@@ -1,3 +1,4 @@
+---
 version: v1.0
 name: Benchmarking suite
 agent:
@@ -7,193 +8,575 @@ agent:
 execution_time_limit:
   hours: 24
 blocks:
-  - name: Setup
-    dependencies: []
-    task:
-      jobs:
-        - name: setup
-          commands:
-            - checkout
-            - cache store $SEMAPHORE_GIT_SHA .
-            - sudo apt-get update
-            - sudo apt-get install build-essential libssl-dev git -y
-            - "git clone https://github.com/wg/wrk.git wrk"
-            - cd wrk && make
-            - cache store wrk wrk
-            - bundle config path .cache
-            - bundle install
-            - cache store built-in .cache
-            - bundle exec rake config
-  - name: Ruby
-    dependencies:
-      - Setup
-    run:
-      when: change_in('/ruby/')
-    task:
-      prologue:
-        commands:
-          - cache restore $SEMAPHORE_GIT_SHA
-          - cache restore wrk
-          - sudo install wrk /usr/local/bin
-          - cache restore bin
-          - cache restore built-in
-          - sem-service start postgres
-          - createdb -U postgres -h 0.0.0.0 benchmark
-          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-          - bundle config path .cache
-          - bundle install
-          - bundle exec rake config
-      jobs:
-        - name: setup
-          commands:
-            - checkout
-  - name: Rails
-    dependencies:
-      - Ruby
-    task:
+- name: setup
+  dependencies: []
+  task:
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+      - cache store $SEMAPHORE_GIT_SHA .
+      - sudo apt-get update
+      - sudo apt-get install build-essential libssl-dev git -y
+      - git clone https://github.com/wg/wrk.git wrk
+      - cd wrk && make
+      - cache store wrk wrk
+      - bundle config path .cache
+      - bundle install
+      - cache store built-in .cache
+      - bundle exec rake config
+- name: ruby
+  dependencies:
+  - setup
+  run:
+    when: change_in('/ruby/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: agoo
+  dependencies:
+  - ruby
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: agoo
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: default
+      commands:
+      - make  -f ruby/agoo/.Makefile build.default
+      - bundle exec rspec .spec
+      - make  -f ruby/agoo/.Makefile collect.default
+      - bundle exec rake db:export
       env_vars:
-        - name: LANGUAGE
-          value: ruby
-        - name: FRAMEWORK
-          value: rails
-      prologue:
-        commands:
-          - cache restore $SEMAPHORE_GIT_SHA
-          - cache restore wrk
-          - sudo install wrk /usr/local/bin
-          - cache restore bin
-          - cache restore built-in
-          - sem-service start postgres
-          - createdb -U postgres -h 0.0.0.0 benchmark
-          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-          - bundle config path .cache
-          - bundle install
-          - bundle exec rake config
-      jobs:
-        - name: puma
-          commands:
-            - cd ruby/rails && make build.puma  -f .Makefile  && cd -
-            - bundle exec rspec .spec
-            - make  -f ruby/rails/.Makefile collect.puma
-            - bundle exec rake db:export
-          env_vars:
-            - name: VARIANT
-              value: puma
-        - name: falcon
-          commands:
-            - cd ruby/rails && make build.falcon  -f .Makefile  && cd -
-            - bundle exec rspec .spec
-            - make  -f ruby/rails/.Makefile collect.falcon
-            - bundle exec rake db:export
-          env_vars:
-            - name: VARIANT
-              value: falcon
-        - name: iodine
-          commands:
-            - cd ruby/rails && make build.iodine  -f .Makefile  && cd -
-            - bundle exec rspec .spec
-            - make  -f ruby/rails/.Makefile collect.iodine
-            - bundle exec rake db:export
-          env_vars:
-            - name: VARIANT
-              value: iodine
-  - name: Sinatra
-    dependencies:
-      - Ruby
-    task:
+      - name: VARIANT
+        value: default
+- name: camping
+  dependencies:
+  - ruby
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: camping
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/camping/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/camping/.Makefile collect.puma
+      - bundle exec rake db:export
       env_vars:
-        - name: LANGUAGE
-          value: ruby
-        - name: FRAMEWORK
-          value: sinatra
-      prologue:
-        commands:
-          - cache restore $SEMAPHORE_GIT_SHA
-          - cache restore wrk
-          - sudo install wrk /usr/local/bin
-          - cache restore bin
-          - cache restore built-in
-          - sem-service start postgres
-          - createdb -U postgres -h 0.0.0.0 benchmark
-          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-          - bundle config path .cache
-          - bundle install
-          - bundle exec rake config
-      jobs:
-        - name: puma
-          commands:
-            - cd ruby/sinatra && make build.puma  -f .Makefile  && cd -
-            - bundle exec rspec .spec
-            - make  -f ruby/sinatra/.Makefile collect.puma
-            - bundle exec rake db:export
-          env_vars:
-            - name: VARIANT
-              value: puma
-        - name: falcon
-          commands:
-            - cd ruby/sinatra && make build.falcon  -f .Makefile  && cd -
-            - bundle exec rspec .spec
-            - make  -f ruby/sinatra/.Makefile collect.falcon
-            - bundle exec rake db:export
-          env_vars:
-            - name: VARIANT
-              value: falcon
-        - name: iodine
-          commands:
-            - cd ruby/sinatra && make build.iodine  -f .Makefile  && cd -
-            - bundle exec rspec .spec
-            - make  -f ruby/sinatra/.Makefile collect.iodine
-            - bundle exec rake db:export
-          env_vars:
-            - name: VARIANT
-              value: iodine
-  - name: Grape
-    dependencies:
-      - Ruby
-    task:
+      - name: VARIANT
+        value: puma
+    - name: falcon
+      commands:
+      - make  -f ruby/camping/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/camping/.Makefile collect.falcon
+      - bundle exec rake db:export
       env_vars:
-        - name: LANGUAGE
-          value: ruby
-        - name: FRAMEWORK
-          value: grape
-      prologue:
-        commands:
-          - cache restore $SEMAPHORE_GIT_SHA
-          - cache restore wrk
-          - sudo install wrk /usr/local/bin
-          - cache restore bin
-          - cache restore built-in
-          - sem-service start postgres
-          - createdb -U postgres -h 0.0.0.0 benchmark
-          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-          - bundle config path .cache
-          - bundle install
-          - bundle exec rake config
-      jobs:
-        - name: puma
-          commands:
-            - cd ruby/grape && make build.puma  -f .Makefile  && cd -
-            - bundle exec rspec .spec
-            - make  -f ruby/grape/.Makefile collect.puma
-            - bundle exec rake db:export
-          env_vars:
-            - name: VARIANT
-              value: puma
-        - name: falcon
-          commands:
-            - cd ruby/grape && make build.falcon  -f .Makefile  && cd -
-            - bundle exec rspec .spec
-            - make  -f ruby/grape/.Makefile collect.falcon
-            - bundle exec rake db:export
-          env_vars:
-            - name: VARIANT
-              value: falcon
-        - name: iodine
-          commands:
-            - cd ruby/grape && make build.iodine  -f .Makefile  && cd -
-            - bundle exec rspec .spec
-            - make  -f ruby/grape/.Makefile collect.iodine
-            - bundle exec rake db:export
-          env_vars:
-            - name: VARIANT
-              value: iodine
+      - name: VARIANT
+        value: falcon
+    - name: iodine
+      commands:
+      - make  -f ruby/camping/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/camping/.Makefile collect.iodine
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: iodine
+- name: cuba
+  dependencies:
+  - ruby
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: cuba
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/cuba/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/cuba/.Makefile collect.puma
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: puma
+    - name: falcon
+      commands:
+      - make  -f ruby/cuba/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/cuba/.Makefile collect.falcon
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: falcon
+    - name: iodine
+      commands:
+      - make  -f ruby/cuba/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/cuba/.Makefile collect.iodine
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: iodine
+- name: grape
+  dependencies:
+  - ruby
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: grape
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/grape/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/grape/.Makefile collect.puma
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: puma
+    - name: falcon
+      commands:
+      - make  -f ruby/grape/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/grape/.Makefile collect.falcon
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: falcon
+    - name: iodine
+      commands:
+      - make  -f ruby/grape/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/grape/.Makefile collect.iodine
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: iodine
+- name: hanami-api
+  dependencies:
+  - ruby
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: hanami-api
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/hanami-api/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/hanami-api/.Makefile collect.puma
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: puma
+    - name: falcon
+      commands:
+      - make  -f ruby/hanami-api/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/hanami-api/.Makefile collect.falcon
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: falcon
+    - name: iodine
+      commands:
+      - make  -f ruby/hanami-api/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/hanami-api/.Makefile collect.iodine
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: iodine
+- name: rack-routing
+  dependencies:
+  - ruby
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: rack-routing
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/rack-routing/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/rack-routing/.Makefile collect.puma
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: puma
+    - name: falcon
+      commands:
+      - make  -f ruby/rack-routing/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/rack-routing/.Makefile collect.falcon
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: falcon
+    - name: iodine
+      commands:
+      - make  -f ruby/rack-routing/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/rack-routing/.Makefile collect.iodine
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: iodine
+- name: rack_app
+  dependencies:
+  - ruby
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: rack_app
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/rack_app/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/rack_app/.Makefile collect.puma
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: puma
+    - name: falcon
+      commands:
+      - make  -f ruby/rack_app/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/rack_app/.Makefile collect.falcon
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: falcon
+    - name: iodine
+      commands:
+      - make  -f ruby/rack_app/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/rack_app/.Makefile collect.iodine
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: iodine
+- name: rails
+  dependencies:
+  - ruby
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: rails
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/rails/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/rails/.Makefile collect.puma
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: puma
+    - name: falcon
+      commands:
+      - make  -f ruby/rails/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/rails/.Makefile collect.falcon
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: falcon
+    - name: iodine
+      commands:
+      - make  -f ruby/rails/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/rails/.Makefile collect.iodine
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: iodine
+- name: roda
+  dependencies:
+  - ruby
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: roda
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/roda/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/roda/.Makefile collect.puma
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: puma
+    - name: falcon
+      commands:
+      - make  -f ruby/roda/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/roda/.Makefile collect.falcon
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: falcon
+    - name: iodine
+      commands:
+      - make  -f ruby/roda/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/roda/.Makefile collect.iodine
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: iodine
+- name: sinatra
+  dependencies:
+  - ruby
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: sinatra
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/sinatra/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/sinatra/.Makefile collect.puma
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: puma
+    - name: falcon
+      commands:
+      - make  -f ruby/sinatra/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/sinatra/.Makefile collect.falcon
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: falcon
+    - name: iodine
+      commands:
+      - make  -f ruby/sinatra/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/sinatra/.Makefile collect.iodine
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: iodine
+- name: syro
+  dependencies:
+  - ruby
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: syro
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/syro/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/syro/.Makefile collect.puma
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: puma
+    - name: falcon
+      commands:
+      - make  -f ruby/syro/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/syro/.Makefile collect.falcon
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: falcon
+    - name: iodine
+      commands:
+      - make  -f ruby/syro/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/syro/.Makefile collect.iodine
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: iodine
