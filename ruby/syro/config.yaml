@@ -1,3 +1,11 @@
 framework:
   github: soveran/syro
   version: 3.2
+
+  variants:
+    puma:
+      command: bundle exec puma -p 3000 -w $(nproc)
+    falcon:
+      command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
+    iodine:
+      command: bundle exec iodine -p 3000 -w $(nproc)
