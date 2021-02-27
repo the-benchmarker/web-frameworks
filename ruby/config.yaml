@@ -1,10 +1,7 @@
 language:
   version: 3.0
 
-framework:
-  environment:
-    RACK_ENV: production
-
+default:
   files:
     - "**/*.rb"
     - config/*.yml
@@ -12,7 +9,10 @@ framework:
     - Rakefile
     - config.ru
 
-  variants:
+  environment:
+    RACK_ENV: production
+
+  engines:
     puma:
       command: bundle exec puma -p 3000 -w $(nproc)
     falcon:
