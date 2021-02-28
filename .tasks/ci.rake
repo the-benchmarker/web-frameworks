@@ -8,8 +8,8 @@ namespace :ci do
       agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu1804' } },
       execution_time_limit: { hours: 24 },
       blocks: [{
-        'name' => 'setup',
-        'dependencies' => [],
+        name: 'setup',
+        dependencies: [],
         'task' => {
           'jobs' => [{
             'name' => 'setup',
@@ -31,6 +31,7 @@ namespace :ci do
         block = {
           name: framework,
           dependencies: [language],
+          run: { when: "change_in('/#{language}/#{framework}')" },
           task: {
             env_vars: [{ name: 'LANGUAGE', value: language }, { name: 'FRAMEWORK', value: framework }],
             prologue: { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk',
