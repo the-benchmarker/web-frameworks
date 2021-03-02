@@ -1,6 +1,6 @@
 framework:
   website: trypyramid.com
-  version: 1.10
+  version: 2.0
 
 command: >
   gunicorn  \
