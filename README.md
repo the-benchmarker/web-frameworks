@@ -151,7 +151,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 47 | go (1.16)| [gorouter](https://github.com/vardius/gorouter/wiki) (4.5) | 78 780.30 | 83 354.72 | 84 235.71 |
 | 48 | go (1.16)| [gin](https://gin-gonic.com) (1.6) | 78 754.86 | 82 694.49 | 84 051.33 |
 | 49 | go (1.16)| [violetear](https://violetear.org) (7.0) | 77 537.06 | 77 629.71 | 79 943.49 |
-| 50 | go (1.16)| [chi](https://github.com/go-chi/chi) (1.5) | 76 758.91 | 76 142.33 | 78 482.15 |
+| 50 | go (1.16)| [chi](https://github.com/go-chi/chi) (1.5) | 76 763.48 | 76 333.57 | 78 765.28 |
 | 51 | go (1.16)| [aero](https://github.com/aerogo/aero) (1.3) | 76 680.27 | 77 450.03 | 79 721.36 |
 | 52 | go (1.16)| [webgo](https://github.com/bnkamalesh/webgo) (4.1) | 76 187.69 | 75 726.64 | 77 875.23 |
 | 53 | crystal (0.36)| [athena](https://github.com/athena-framework/athena) (0.13) | 75 848.60 | 85 883.06 | 81 410.20 |
@@ -167,7 +167,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 63 | fsharp (5.0)| [falco](https://falcoframework.com) (3.0) | 71 445.26 | 82 575.63 | 84 975.74 |
 | 64 | csharp (8.0)| [carter](https://github.com/CarterCommunity/Carter) (5.2) | 66 297.46 | 73 246.53 | 73 993.74 |
 | 65 | go (1.16)| [air](https://github.com/aofei/air) (0.21) | 65 540.73 | 64 436.85 | 66 726.18 |
-| 66 | go (1.16)| [goyave](https://github.com/System-Glitch/goyave) (3.6) | 64 611.88 | 64 019.07 | 67 107.20 |
+| 66 | go (1.16)| [goyave](https://github.com/go-goyave/goyave) (3.7) | 64 660.91 | 64 252.73 | 67 524.91 |
 | 67 | fsharp (5.0)| [saturn](https://saturnframework.org) (0.14) | 62 023.31 | 67 461.67 | 65 954.30 |
 | 68 | javascript (14.16)| [polkadot](https://github.com/lukeed/polkadot) (1.0) | 61 445.07 | 67 364.14 | 69 373.03 |
 | 69 | scala (2.13)| [finch](https://finagle.github.io/finch/) (0.32) | 61 432.80 | 68 727.71 | 68 573.58 |
@@ -182,7 +182,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 78 | php (7.4)| [one](https://github.com/lizhichao/one) (2.2) | 53 571.25 | 62 629.62 | 66 371.74 |
 | 79 | python (3.9)| [pyramid](https://trypyramid.com) (1.1) | 53 475.64 | 57 267.42 | 57 907.39 |
 | 80 | javascript (14.16)| [muneem](https://github.com/node-muneem/muneem) (2.4) | 53 394.63 | 58 591.90 | 57 943.92 |
-| 81 | rust (1.50)| [salvo](https://github.com/kenorld/salvo) (0.6) | 53 297.04 | 56 860.35 | 57 643.63 |
+| 81 | rust (1.50)| [salvo](https://github.com/kenorld/salvo) (0.6) | 52 958.61 | 56 924.98 | 57 831.90 |
 | 82 | kotlin (1.4)| [http4k](https://http4k.org) (3.275) | 52 344.77 | 60 491.36 | 62 380.15 |
 | 83 | kotlin (1.4)| [ktor](https://ktor.io) (1.4) | 51 912.54 | 68 199.85 | 70 721.59 |
 | 84 | swift (5.3)| [perfect](https://perfect.org) (3.1) | 51 758.74 | 57 197.94 | 63 979.69 |
