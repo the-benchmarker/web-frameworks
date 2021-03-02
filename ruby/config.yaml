@@ -1,3 +1,13 @@
-provider:
-  default:
-    language: 3.0
+language:
+  version: 3.0
+
+framework:
+  environment:
+    RACK_ENV: production
+
+  files:
+    - "**/*.rb"
+    - config/*.yml
+    - Gemfile
+    - Rakefile
+    - config.ru

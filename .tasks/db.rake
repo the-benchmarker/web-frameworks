@@ -8,15 +8,22 @@ require 'dotenv'
 
 Dotenv.load
 
+class ::Hash
+  def recursive_merge(h)
+    merge!(h) { |_key, _old, _new| _old.instance_of?(Hash) ? _old.recursive_merge(_new) : _new }
+  end
+end
+
 SQL = %(
-    SELECT f.id, l.label AS language, f.label AS framework, c.level, k.label, avg(v.value) AS value
+    SELECT CONCAT(f.id, vr.id) AS id, l.label AS language, f.label AS framework, c.level, k.label, vr.label AS variant, avg(v.value) AS value
         FROM frameworks AS f
             JOIN metrics AS m ON f.id = m.framework_id
+            JOIN variants AS vr ON vr.id = variant_id
             JOIN values AS v ON v.id = m.value_id
             JOIN concurrencies AS c on c.id = m.concurrency_id
             JOIN languages AS l on l.id = f.language_id
             JOIN keys AS k ON k.id = v.key_id
-                GROUP BY 1,2,3,4,5;
+                GROUP BY 1,2,3,4,5,6;
 )
 
 def compute(data)
@@ -35,34 +42,37 @@ namespace :db do
     db = PG.connect(ENV['DATABASE_URL'])
     db.exec(SQL) do |result|
       result.each do |row|
-        id, framework, language = row.values_at('id', 'framework', 'language')
+        id, framework, language, variant = row.values_at('id', 'framework', 'language', 'variant')
         unless frameworks.key?(id)
           frameworks[id] = {
             language: language,
             framework: framework,
+            variant: variant,
             metrics: { concurrency_64: {}, concurrency_256: {}, concurrency_512: {} }
           }
         end
         framework_config = YAML.safe_load(File.read(File.join(language, framework, 'config.yaml')))
         language_config = YAML.safe_load(File.read(File.join(language, 'config.yaml')))
+        config = {}.recursive_merge(language_config).recursive_merge(framework_config)
 
         key = "concurrency_#{row['level']}".to_sym
         frameworks[id][:metrics][key].merge!(row['label'] => row['value'])
-        frameworks[id].merge!(framework_config['framework'].transform_keys!(&'framework_'.method(:+)))
-        frameworks[id].merge!(language_config['provider']['default'].transform_keys!(&'language_'.method(:+)))
 
-        if framework_config['framework'].key?('framework_name')
-          frameworks[id].merge!(framework: framework_config['framework']['framework_name'])
-        end
+        frameworks[id].merge!(language_version: config.dig('language', 'version'))
+        frameworks[id].merge!(framework_version: config.dig('framework', 'version'))
+
+        frameworks[id].merge!(framework: config.dig('framework', 'name')) if config.dig('framework', 'name')
         scheme = 'https'
-        scheme = 'http' if framework_config['framework'].key?('unsecure')
-        website = if framework_config['framework'].key?('framework_github')
-                    "github.com/#{framework_config['framework']['framework_github']}"
-                  elsif framework_config['framework'].key?('framework_gitlab')
-                    "gitlab.com/#{framework_config['framework']['framework_gitlab']}"
+        scheme = 'http' if config.dig('framework', 'unsecure')
+
+        website = if config.dig('framework', 'github')
+                    "github.com/#{config.dig('framework', 'github')}"
+                  elsif config.dig('framework', 'gitlab')
+                    "gitlab.com/#{config.dig('framework', 'gitlab')}"
                   else
-                    (framework_config['framework']['framework_website']).to_s
+                    config.dig('framework', 'website')
                   end
+
         frameworks[id].merge!(framework_website: "#{scheme}://#{website}")
       end
     end
@@ -72,14 +82,6 @@ namespace :db do
 
     frameworks.each do |id, row|
       concurrency = compute(row[:metrics][:concurrency_64])
-      if concurrency.nan?
-        warn "Skipped #{row[:framework]} - Failure"
-        next
-      end
-      if concurrency.zero?
-        warn "Skipped #{row[:framework]} - O requests OK"
-        next
-      end
       row.merge!(
         id: id.to_i,
         concurrency_64: compute(row[:metrics][:concurrency_64]),
@@ -97,7 +99,8 @@ namespace :db do
         concurrency_64: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_64], delimiter: ' '),
         concurrency_256: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_256],
                                                                          delimiter: ' '),
-        concurrency_512: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_512], delimiter: ' ')
+        concurrency_512: ActiveSupport::NumberHelper.number_to_delimited('%.2f' % row[:concurrency_512],
+                                                                         delimiter: ' ')
       )
     end
     File.open('README.md', 'w') do |f|

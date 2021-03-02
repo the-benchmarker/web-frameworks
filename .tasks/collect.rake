@@ -10,7 +10,7 @@ PIPELINE = {
   POST: File.join(Dir.pwd, 'pipeline_post.lua')
 }.freeze
 
-def insert(db, framework_id, metric, value, concurrency_level_id)
+def insert(db, framework_id, metric, value, concurrency_level_id, variant_id)
   res = db.query('INSERT INTO keys (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id',
                  [metric])
 
@@ -19,8 +19,8 @@ def insert(db, framework_id, metric, value, concurrency_level_id)
   res = db.query('INSERT INTO values (key_id, value) VALUES ($1, $2) RETURNING id', [metric_id, value])
   value_id = res.first['id']
 
-  db.query('INSERT INTO metrics (value_id, framework_id, concurrency_id) VALUES ($1, $2, $3)',
-           [value_id, framework_id, concurrency_level_id])
+  db.query('INSERT INTO metrics (value_id, framework_id, concurrency_id, variant_id) VALUES ($1, $2, $3, $4)',
+           [value_id, framework_id, concurrency_level_id, variant_id])
 end
 
 task :collect do
@@ -31,8 +31,9 @@ task :collect do
   concurrencies = ENV.fetch('CONCURRENCIES', '10')
   routes = ENV.fetch('ROUTES', 'GET:/')
   database = ENV.fetch('DATABASE_URL') { raise 'please provide a DATABASE_URL (pg only)' }
+  hostname = ENV.fetch('HOSTNAME') { raise 'please provide a HOSTNAME' }
+  variant = ENV.fetch('VARIANT') { raise 'please provide a VARIANT' }
 
-  hostname = File.read(File.join(Dir.pwd, language, framework, 'ip.txt')).strip
   `wrk -H 'Connection: keep-alive' -d 5s -c 8 --timeout 8 -t #{threads} http://#{hostname}:3000`
   `wrk -H 'Connection: keep-alive' -d #{duration}s -c 256 --timeout 8 -t #{threads} http://#{hostname}:3000`
 
@@ -49,6 +50,12 @@ task :collect do
     ]
   )
   framework_id = res.first['id']
+
+  res = db.query(
+    'INSERT INTO variants (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id', [variant]
+  )
+
+  variant_id = res.first['id']
 
   routes.split(',').each do |route|
     method, uri = route.split(':')
@@ -75,7 +82,7 @@ task :collect do
          'http_errors', 'request_timeouts', 'minimim_latency', 'maximum_latency',
          'average_latency', 'standard_deviation', 'percentile_50',
          'percentile_75', 'percentile_90', 'percentile_99', 'percentile_99.999'].each_with_index do |key, index|
-          insert(db, framework_id, key, info[index].to_d, concurrency_level_id)
+          insert(db, framework_id, key, info[index].to_d, concurrency_level_id, variant_id)
         end
       end
     end
