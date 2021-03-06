@@ -1,0 +1,11 @@
+{
+  "require": {
+    "laravel/framework": "~8.31.0",
+    "gregorip02/servel": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}
