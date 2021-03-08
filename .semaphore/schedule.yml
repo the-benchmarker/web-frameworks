@@ -3346,21 +3346,6 @@ blocks:
         value: '64'
       - name: ROUTES
         value: GET:/
-    - name: fyrejet-api
-      commands:
-      - cd javascript/fyrejet-api && make build  -f .Makefile  && cd -
-      - FRAMEWORK=javascript/fyrejet-api bundle exec rspec .spec
-      - make  -f javascript/fyrejet-api/.Makefile collect
-      - bundle exec rake db:export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
     - name: restana
       commands:
       - cd javascript/restana && make build  -f .Makefile  && cd -
@@ -3436,6 +3421,21 @@ blocks:
         value: '64'
       - name: ROUTES
         value: GET:/
+    - name: fyrejet
+      commands:
+      - cd javascript/fyrejet && make build  -f .Makefile  && cd -
+      - FRAMEWORK=javascript/fyrejet bundle exec rspec .spec
+      - make  -f javascript/fyrejet/.Makefile collect
+      - bundle exec rake db:export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
     - name: fyrejet-uwebsockets
       commands:
       - cd javascript/fyrejet-uwebsockets && make build  -f .Makefile  && cd -
@@ -3456,21 +3456,6 @@ blocks:
       - cd javascript/nanoexpress && make build  -f .Makefile  && cd -
       - FRAMEWORK=javascript/nanoexpress bundle exec rspec .spec
       - make  -f javascript/nanoexpress/.Makefile collect
-      - bundle exec rake db:export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-    - name: fyrejet
-      commands:
-      - cd javascript/fyrejet && make build  -f .Makefile  && cd -
-      - FRAMEWORK=javascript/fyrejet bundle exec rspec .spec
-      - make  -f javascript/fyrejet/.Makefile collect
       - bundle exec rake db:export
       env_vars:
       - name: DATABASE_URL
