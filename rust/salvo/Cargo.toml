@@ -5,5 +5,5 @@ edition = "2018"
 authors = ["Chrislearn Young <chrislearn@hotmail.com>"]
 
 [dependencies]
-salvo = { version = "~0.6" }
+salvo = { version = "~0.7" }
 tokio = { version = "1.2", features = ["full"] }
