@@ -16,7 +16,7 @@
                  [metosin/ring-http-response "0.9.2"]
                  [mount "0.1.16"]
                  [nrepl "0.8.3"]
-                 [org.clojure/clojure "1.10.2"]
+                 [org.clojure/clojure "1.10.3"]
                  [org.clojure/tools.cli "1.0.206"]
                  [org.clojure/tools.logging "1.1.0"]
                  [org.webjars.npm/bulma "0.9.1"]
@@ -25,7 +25,7 @@
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.9.1"]
                  [ring/ring-defaults "0.3.2"]
-                 [com.fasterxml.jackson.core/jackson-core "2.12.1"]]
+                 [com.fasterxml.jackson.core/jackson-core "2.12.2"]]
 
   :min-lein-version "2.0.0"
   
