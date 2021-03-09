@@ -9,7 +9,6 @@
     }
   ],
   "require": {
-    "php": "^7.4|^8.0",
     "ext-intl": "*",
     "ext-json": "*",
     "antidot-fw/antidot-react-psr15": "~0.0.1",
@@ -20,7 +19,7 @@
     "antidot-fw/react-framework": "~1.1.1",
     "antidot-fw/symfony-config-translator": "~1.1.2",
     "antidot-fw/yaml-config-provider": "~0.1.2",
-    "webmozart/assert": "~1.9.0"
+    "webmozart/assert": "*"
   },
   "autoload": {
     "psr-4": {
