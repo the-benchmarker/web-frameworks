@@ -11,14 +11,14 @@
   "require": {
     "ext-intl": "*",
     "ext-json": "*",
-    "antidot-fw/antidot-react-psr15": "~0.0.1",
-    "antidot-fw/cli": "~1.1.3",
-    "antidot-fw/container": "~0.1.4",
-    "antidot-fw/fast-router-adapter": "~0.2.0",
     "antidot-fw/framework": "~0.2.1",
-    "antidot-fw/react-framework": "~1.1.1",
-    "antidot-fw/symfony-config-translator": "~1.1.2",
-    "antidot-fw/yaml-config-provider": "~0.1.2",
+    "antidot-fw/antidot-react-psr15": "*",
+    "antidot-fw/cli": "*",
+    "antidot-fw/container": "*",
+    "antidot-fw/fast-router-adapter": "*",
+    "antidot-fw/react-framework": "*",
+    "antidot-fw/symfony-config-translator": "*",
+    "antidot-fw/yaml-config-provider": "*",
     "webmozart/assert": "*"
   },
   "autoload": {
