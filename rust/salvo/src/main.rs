@@ -16,5 +16,5 @@ fn main() {
             .post(index)
             .push(Router::new().path("<id>").get(get_user)),
     );
-    Server::new(router).start(([0, 0, 0, 0], 3000));
+    salvo::start(Server::new(router).bind(([0, 0, 0, 0], 3000)));
 }
