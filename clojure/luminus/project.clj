@@ -48,7 +48,7 @@
    :test          [:project/dev :project/test :profiles/test]
 
    :project/dev  {:jvm-opts ["-Dconf=dev-config.edn" ]
-                  :dependencies [[pjstadig/humane-test-output "0.10.0"]
+                  :dependencies [[pjstadig/humane-test-output "0.11.0"]
                                  [prone "2020-01-17"]
                                  [ring/ring-devel "1.9.1"]
                                  [ring/ring-mock "0.4.0"]]
