@@ -3,6 +3,7 @@ framework:
   version: 2.14
 
   environment:
+    RACK_ENV: production
     AGOO_WORKER_COUNT: $(nproc)
 
   engines:
