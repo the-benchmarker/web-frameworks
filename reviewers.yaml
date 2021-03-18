@@ -9,6 +9,10 @@ javascript:
     - mcollina
   nanoexpress:
     - dalisoft
+  fyrejet:
+    - schamberg97
+  fyrejet-uwebsockets:
+    - schamberg97
 go:
   router:
     - savsgio
@@ -64,8 +68,7 @@ python:
     - gi0baro
   index.py:
     - abersheeran
-  blacksheep:
-    RobertoPrevato
+  blacksheep: RobertoPrevato
 swift:
   vapor-framework:
     - 0xTim
