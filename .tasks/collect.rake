@@ -52,7 +52,7 @@ task :collect do
   framework_id = res.first['id']
 
   res = db.query(
-    'INSERT INTO variants (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id', [variant]
+    'INSERT INTO engines (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id', [variant]
   )
 
   variant_id = res.first['id']
