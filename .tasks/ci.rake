@@ -22,7 +22,7 @@ end
 
 namespace :ci do
   task :config do
-    main_config = YAML.load(File.read('config.yaml'))
+    main_config = YAML.safe_load(File.read('config.yaml'))
     definition = {
       version: 'v1.0',
       name: 'Benchmarking suite',
@@ -60,7 +60,6 @@ namespace :ci do
             jobs: []
           }
         }
-        
 
         config = get_config_from(main_config, File.join(Dir.pwd, language, framework))
 
