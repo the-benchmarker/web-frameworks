@@ -67,10 +67,10 @@ ALTER TABLE public.concurrencies_id_seq OWNER TO postgres;
 ALTER SEQUENCE public.concurrencies_id_seq OWNED BY public.concurrencies.id;
 
 --
--- Name: variants; Type: TABLE; Schema: public; Owner: postgres
+-- Name: engines; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.variants (
+CREATE TABLE public.engines (
     id SERIAL PRIMARY KEY,
     label character varying UNIQUE
 );
