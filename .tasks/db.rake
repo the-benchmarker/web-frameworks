@@ -18,7 +18,7 @@ SQL = %(
     SELECT CONCAT(f.id, vr.id) AS id, l.label AS language, f.label AS framework, c.level, k.label, vr.label AS variant, avg(v.value) AS value
         FROM frameworks AS f
             JOIN metrics AS m ON f.id = m.framework_id
-            JOIN variants AS vr ON vr.id = variant_id
+            JOIN engines AS vr ON vr.id = variant_id
             JOIN values AS v ON v.id = m.value_id
             JOIN concurrencies AS c on c.id = m.concurrency_id
             JOIN languages AS l on l.id = f.language_id
