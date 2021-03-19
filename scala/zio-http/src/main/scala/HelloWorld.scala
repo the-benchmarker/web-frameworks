@@ -5,10 +5,10 @@ import zio._
 object HelloWorld extends App {
 
   val app = Http.collect[Request] {
-    case Method.GET -> Root => Response.text("")
-    case Method.POST -> Root / "user" => Response.text("")
-    case req @ Method.GET -> Root / "user" / _ => {
-      Response.text(req.route._2.asString.split('/').last)
+    case Method.GET -> Root => Response.ok
+    case Method.POST -> Root / "user" => Response.ok
+    case Method.GET -> Root / "user" / id => {
+      Response.text(id)
     }
   }
 
