@@ -1,7 +1,9 @@
-#[macro_use]
-extern crate nickel;
+#![warn(rust_2018_idioms)]
 
-use nickel::{HttpRouter, Nickel};
+// nickel macros are declarative macros that use private macros
+// from the nickel namespace without specifying a path, therefore
+// assuming that we import private stuff from nickel
+use nickel::*;
 
 fn main() {
     let mut server = Nickel::new();
