@@ -10,13 +10,16 @@ def get_config_from(main_config, directory)
   language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
 
   framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
-
+  
+  
   config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
   %w[engines files environment].each do |item|
-    config['framework'][item] = language_config.dig('default', item) unless framework_config[item]
+  
+    config['framework'][item] = framework_config.dig('framework', item)|| language_config.dig('default', item) 
+    
   end
-
+  
   config
 end
 
