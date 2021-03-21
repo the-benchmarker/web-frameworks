@@ -73,33 +73,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name: default
       commands:
-      - make  -f ruby/agoo/.Makefile build.puma
+      - make  -f ruby/agoo/.Makefile build.default
       - bundle exec rspec .spec
-      - make  -f ruby/agoo/.Makefile collect.puma
+      - make  -f ruby/agoo/.Makefile collect.default
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: puma
-    - name: falcon
-      commands:
-      - make  -f ruby/agoo/.Makefile build.falcon
-      - bundle exec rspec .spec
-      - make  -f ruby/agoo/.Makefile collect.falcon
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: falcon
-    - name: iodine
-      commands:
-      - make  -f ruby/agoo/.Makefile build.iodine
-      - bundle exec rspec .spec
-      - make  -f ruby/agoo/.Makefile collect.iodine
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: iodine
+        value: default
 - name: camping
   dependencies:
   - ruby
