@@ -22,13 +22,16 @@ def get_config_from(main_config, directory)
   language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
 
   framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
-
+  
+  
   config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
   %w[engines files environment].each do |item|
-    config['framework'][item] = language_config.dig('default', item) unless framework_config[item]
+  
+    config['framework'][item] = framework_config.dig('framework', item)|| language_config.dig('default', item) 
+    
   end
-
+  
   config
 end
 
@@ -129,22 +132,18 @@ def create_dockerfile(directory, config, template)
 end
 
 task :config do
-  provider = ENV.fetch('PROVIDER') { default_provider }
-  collect = ENV.fetch('COLLECT', 'on')
-
-  sieger_options = ENV.fetch('SIEGER_OPTIONS', '-r GET:/ -c 10')
-  clean = ENV.fetch('CLEAN', 'on')
+  
 
   main_config = YAML.safe_load(File.open(File.join(Dir.pwd, 'config.yaml')))
 
-  Dir.glob('ruby/*/config.yaml').each do |path|
+  Dir.glob('ruby/agoo/config.yaml').each do |path|
     directory = File.dirname(path)
     config = get_config_from(main_config, directory)
-
+    
     create_dockerfile(directory, config, File.join(directory, '..', 'Dockerfile'))
 
     language, framework = directory.split(File::SEPARATOR)
-
+    
     makefile = File.open(File.join(language, framework, MANIFESTS[:build]), 'w')
 
     config.dig('framework', 'engines').each do |variant, _|
