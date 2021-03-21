@@ -2,6 +2,9 @@ framework:
   website: laravel.com
   version: 8.33
 
+  files:
+    - artisan
+
   environment:
     APP_ENV: production
     APP_DEBUG: false
@@ -16,26 +19,39 @@ framework:
     - chown -R www-data:www-data /usr/src/app
     - find /usr/src/app -type f -exec chmod 644 {} \;
     - find /usr/src/app -type d -exec chmod 755 {} \;
-    - chmod -R ug+rwx storage /usr/src/app/bootstrap/cache
+    # - chmod -R ug+rwx storage /usr/src/app/bootstrap/cache
 
-    - php artisan config:cache
-    - php artisan route:cache
-
-  build_deps:
-    - libevent-dev
-
-  modules:
-    - pcntl
-    - posix
-    - sockets
-    
-  extensions:
-    - event
-
-  extensions_fix:
-    - rm -fr /usr/local/etc/php/conf.d/docker-php-ext-event.ini
-    - echo 'extension=event.so' >> /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini
+    - /usr/local/bin/php artisan config:cache
+    # - /usr/local/bin/php artisan route:cache
 
   engines:
     workerman:
+      build_deps:
+        - libevent-dev
+
+      modules:
+        - pcntl
+        - posix
+        - sockets
+
+      extensions:
+        - event
+
+      extensions_fix:
+        - rm -fr /usr/local/etc/php/conf.d/docker-php-ext-event.ini
+        - echo 'extension=event.so' >> /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini
+
       command: php artisan servel start
+
+    swoole:
+      modules:
+        - pcntl
+        - posix
+
+      extensions:
+        - swoole
+
+      files:
+        - bin/laravels
+
+      command: php bin/laravels start
