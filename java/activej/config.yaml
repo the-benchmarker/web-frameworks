@@ -1,6 +1,6 @@
 framework:
   website: activej.io
-  version: 4.0
+  version: 4.1
 
 build:
   - mvn clean package
