@@ -102,7 +102,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 
 |    | Language | Framework | Speed (64) | Speed (256) | Speed (512) |
 |----|----------|-----------|-----------:|------------:|------------:|
-| 1 | java (11)| [activej](https://activej.io) (4.1) | 173 571.75 | 210 147.77 | 214 321.15 |
+| 1 | java (11)| [activej](https://activej.io) (4.1) | 175 575.37 | 214 314.96 | 219 282.93 |
 | 2 | php (7.4)| [webman](https://github.com/walkor/webman) (1.0) | 157 939.75 | 168 675.71 | 171 454.01 |
 | 3 | php (7.4)| [workerman](https://github.com/walkor/Workerman) (4.0) | 151 503.96 | 181 214.83 | 184 745.52 |
 | 4 | go (1.16)| [gearbox](https://gogearbox.com) (1.2) | 120 900.31 | 125 485.16 | 124 791.06 |
