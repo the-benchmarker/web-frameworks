@@ -333,6 +333,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
+    - name: php-fpm
+      commands:
+      - make  -f php/comet/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/comet/.Makefile collect.php-fpm
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: php-fpm
 - name: cubex
   dependencies:
   - php
@@ -394,6 +403,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
+    - name: php-fpm
+      commands:
+      - make  -f php/cubex/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/cubex/.Makefile collect.php-fpm
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: php-fpm
 - name: driftphp
   dependencies:
   - php
@@ -455,6 +473,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
+    - name: php-fpm
+      commands:
+      - make  -f php/driftphp/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/driftphp/.Makefile collect.php-fpm
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: php-fpm
 - name: fastsitephp
   dependencies:
   - php
@@ -516,6 +543,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
+    - name: php-fpm
+      commands:
+      - make  -f php/fastsitephp/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/fastsitephp/.Makefile collect.php-fpm
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: php-fpm
 - name: fatfree
   dependencies:
   - php
@@ -577,6 +613,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
+    - name: php-fpm
+      commands:
+      - make  -f php/fatfree/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/fatfree/.Makefile collect.php-fpm
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: php-fpm
 - name: hamlet
   dependencies:
   - php
@@ -638,6 +683,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
+    - name: php-fpm
+      commands:
+      - make  -f php/hamlet/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/hamlet/.Makefile collect.php-fpm
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: php-fpm
 - name: hyperf
   dependencies:
   - php
@@ -699,15 +753,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/hyperf/.Makefile build.command
+      - make  -f php/hyperf/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/hyperf/.Makefile collect.command
+      - make  -f php/hyperf/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: ice
   dependencies:
   - php
@@ -769,15 +823,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/ice/.Makefile build.command
+      - make  -f php/ice/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/ice/.Makefile collect.command
+      - make  -f php/ice/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: imi
   dependencies:
   - php
@@ -839,15 +893,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/imi/.Makefile build.command
+      - make  -f php/imi/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/imi/.Makefile collect.command
+      - make  -f php/imi/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: laminas
   dependencies:
   - php
@@ -909,15 +963,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/laminas/.Makefile build.command
+      - make  -f php/laminas/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/laminas/.Makefile collect.command
+      - make  -f php/laminas/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: laravel
   dependencies:
   - php
@@ -979,15 +1033,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/laravel/.Makefile build.command
+      - make  -f php/laravel/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/laravel/.Makefile collect.command
+      - make  -f php/laravel/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: lumen
   dependencies:
   - php
@@ -1049,15 +1103,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/lumen/.Makefile build.command
+      - make  -f php/lumen/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/lumen/.Makefile collect.command
+      - make  -f php/lumen/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: mark
   dependencies:
   - php
@@ -1119,15 +1173,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/mark/.Makefile build.command
+      - make  -f php/mark/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/mark/.Makefile collect.command
+      - make  -f php/mark/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: mezzio
   dependencies:
   - php
@@ -1189,15 +1243,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/mezzio/.Makefile build.command
+      - make  -f php/mezzio/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/mezzio/.Makefile collect.command
+      - make  -f php/mezzio/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: nano
   dependencies:
   - php
@@ -1259,15 +1313,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/nano/.Makefile build.command
+      - make  -f php/nano/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/nano/.Makefile collect.command
+      - make  -f php/nano/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: nette
   dependencies:
   - php
@@ -1329,15 +1383,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/nette/.Makefile build.command
+      - make  -f php/nette/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/nette/.Makefile collect.command
+      - make  -f php/nette/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: one
   dependencies:
   - php
@@ -1399,15 +1453,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/one/.Makefile build.command
+      - make  -f php/one/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/one/.Makefile collect.command
+      - make  -f php/one/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: one-fpm
   dependencies:
   - php
@@ -1469,15 +1523,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/one-fpm/.Makefile build.command
+      - make  -f php/one-fpm/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/one-fpm/.Makefile collect.command
+      - make  -f php/one-fpm/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: phalcon
   dependencies:
   - php
@@ -1539,15 +1593,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/phalcon/.Makefile build.command
+      - make  -f php/phalcon/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/phalcon/.Makefile collect.command
+      - make  -f php/phalcon/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: siler
   dependencies:
   - php
@@ -1609,15 +1663,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/siler/.Makefile build.command
+      - make  -f php/siler/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/siler/.Makefile collect.command
+      - make  -f php/siler/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: siler-swoole
   dependencies:
   - php
@@ -1679,15 +1733,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/siler-swoole/.Makefile build.command
+      - make  -f php/siler-swoole/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/siler-swoole/.Makefile collect.command
+      - make  -f php/siler-swoole/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: simps
   dependencies:
   - php
@@ -1749,15 +1803,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/simps/.Makefile build.command
+      - make  -f php/simps/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/simps/.Makefile collect.command
+      - make  -f php/simps/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: slim
   dependencies:
   - php
@@ -1819,15 +1873,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/slim/.Makefile build.command
+      - make  -f php/slim/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.command
+      - make  -f php/slim/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: slim-roadrunner
   dependencies:
   - php
@@ -1889,15 +1943,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/slim-roadrunner/.Makefile build.command
+      - make  -f php/slim-roadrunner/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/slim-roadrunner/.Makefile collect.command
+      - make  -f php/slim-roadrunner/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: slim-swoole
   dependencies:
   - php
@@ -1959,15 +2013,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/slim-swoole/.Makefile build.command
+      - make  -f php/slim-swoole/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/slim-swoole/.Makefile collect.command
+      - make  -f php/slim-swoole/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: spiral
   dependencies:
   - php
@@ -2029,15 +2083,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/spiral/.Makefile build.command
+      - make  -f php/spiral/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/spiral/.Makefile collect.command
+      - make  -f php/spiral/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: sunrise-router
   dependencies:
   - php
@@ -2099,15 +2153,15 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
+    - name: php-fpm
       commands:
-      - make  -f php/sunrise-router/.Makefile build.command
+      - make  -f php/sunrise-router/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/sunrise-router/.Makefile collect.command
+      - make  -f php/sunrise-router/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: command
+        value: php-fpm
 - name: sunrise-router-annotations
   dependencies:
   - php
@@ -2169,15 +2223,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/sunrise-router-annotations/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-annotations/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/sunrise-router-annotations/.Makefile build.php-fpm
@@ -2248,15 +2293,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/sunrise-router-roadrunner/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-roadrunner/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/sunrise-router-roadrunner/.Makefile build.php-fpm
@@ -2327,15 +2363,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/sw-fw-less/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/sw-fw-less/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/sw-fw-less/.Makefile build.php-fpm
@@ -2406,15 +2433,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/swoft/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/swoft/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/swoft/.Makefile build.php-fpm
@@ -2485,15 +2503,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/swoole/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/swoole/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/swoole/.Makefile build.php-fpm
@@ -2564,15 +2573,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/swoole-coroutine/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/swoole-coroutine/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/swoole-coroutine/.Makefile build.php-fpm
@@ -2643,15 +2643,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/symfony/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/symfony/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/symfony/.Makefile build.php-fpm
@@ -2722,15 +2713,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/ubiquity/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/ubiquity/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/ubiquity/.Makefile build.php-fpm
@@ -2801,15 +2783,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/unic/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/unic/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/unic/.Makefile build.php-fpm
@@ -2880,15 +2853,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/webman/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/webman/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/webman/.Makefile build.php-fpm
@@ -2959,15 +2923,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/workerman/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/workerman/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/workerman/.Makefile build.php-fpm
@@ -3038,15 +2993,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/yii/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/yii/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/yii/.Makefile build.php-fpm
@@ -3117,15 +3063,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f php/yii-swoole/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f php/yii-swoole/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f php/yii-swoole/.Makefile build.php-fpm
@@ -3219,15 +3156,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f ruby/agoo/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f ruby/agoo/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f ruby/agoo/.Makefile build.php-fpm
@@ -3307,15 +3235,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f ruby/camping/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f ruby/camping/.Makefile build.php-fpm
@@ -3395,15 +3314,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f ruby/cuba/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f ruby/cuba/.Makefile build.php-fpm
@@ -3483,15 +3393,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f ruby/grape/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f ruby/grape/.Makefile build.php-fpm
@@ -3571,15 +3472,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f ruby/hanami-api/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f ruby/hanami-api/.Makefile build.php-fpm
@@ -3659,15 +3551,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f ruby/rack-routing/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f ruby/rack-routing/.Makefile build.php-fpm
@@ -3747,15 +3630,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f ruby/rack_app/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f ruby/rack_app/.Makefile build.php-fpm
@@ -3835,15 +3709,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f ruby/rails/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f ruby/rails/.Makefile build.php-fpm
@@ -3923,15 +3788,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f ruby/roda/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f ruby/roda/.Makefile build.php-fpm
@@ -4011,15 +3867,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f ruby/sinatra/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f ruby/sinatra/.Makefile build.php-fpm
@@ -4099,15 +3946,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-    - name: command
-      commands:
-      - make  -f ruby/syro/.Makefile build.command
-      - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.command
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: command
     - name: php-fpm
       commands:
       - make  -f ruby/syro/.Makefile build.php-fpm
