@@ -19,13 +19,21 @@ def get_config_from(main_config, directory)
   keys << language_config['default'].keys if language_config['default']
   keys << framework_config['framework'].keys if framework_config['framework']
 
-  keys.flatten!.each do |key|
+  keys.flatten!.uniq.each do |key|
     default = language_config.dig('default', key)
 
-    if default
-      # TODO: merge arrays and hashes
-      framework_config['framework'][key] = default
+    next unless default
+
+    base = framework_config.dig('framework', key)
+    if base
+      case base
+      when Array
+        default.push(*base)
+      when Hash
+        default.merge!(base)
+      end
     end
+    framework_config['framework'][key] = default
   end
 
   config
@@ -74,7 +82,7 @@ namespace :ci do
         }
 
         config = get_config_from(main_config, File.join(Dir.pwd, language, framework))
-        pp framework
+
         config.dig('framework', 'engines').each do |variant, _|
           block[:task][:jobs] << {
             name: variant,
