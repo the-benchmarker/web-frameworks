@@ -7,22 +7,22 @@ class ::Hash
 end
 
 def get_config_from(main_config, directory)
-  language_config = YAML.safe_load(File.open(File.join(directory, "..", "config.yaml")))
+  language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
 
-  framework_config = YAML.safe_load(File.open(File.join(directory, "config.yaml")))
+  framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
 
   config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
   keys = []
-  keys << language_config["default"].keys if language_config["default"]
-  keys << framework_config["framework"].keys if framework_config["framework"]
+  keys << language_config['default'].keys if language_config['default']
+  keys << framework_config['framework'].keys if framework_config['framework']
 
   keys.flatten!.each do |key|
-    default = language_config.dig("default", key)
+    default = language_config.dig('default', key)
 
     if default
       # TODO: merge arrays and hashes
-      framework_config["framework"][key] = default
+      framework_config['framework'][key] = default
     end
   end
 
@@ -52,14 +52,14 @@ namespace :ci do
 
     Dir.glob('*/config.yaml').each do |path|
       language, = path.split(File::Separator)
-      next unless language == 'php' || language == 'ruby'
+      next unless %w[php ruby].include?(language)
 
       definition[:blocks] << { 'name' => language, 'dependencies' => ['setup'],
                                'run' => { 'when' => "change_in('/#{language}/')" }, 'task' => { 'prologue' => { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk', 'sudo install wrk /usr/local/bin', 'cache restore bin', 'cache restore built-in', 'sem-service start postgres', 'createdb -U postgres -h 0.0.0.0 benchmark', 'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql', 'bundle config path .cache', 'bundle install', 'bundle exec rake config'] }, 'jobs' => [{ 'name' => 'setup', 'commands' => ['checkout'] }] } }
       Dir.glob("#{language}/*/config.yaml") do |file|
-        
-        _, framework, = file.split(File::Separator) 
+        _, framework, = file.split(File::Separator)
         next unless framework == 'laravel'
+
         block = {
           name: framework,
           dependencies: [language],
