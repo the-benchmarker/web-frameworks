@@ -48,17 +48,17 @@ blocks:
     - name: setup
       commands:
       - checkout
-- name: chubbyphp
+- name: laravel
   dependencies:
   - php
   run:
-    when: change_in('/php/chubbyphp')
+    when: change_in('/php/laravel')
   task:
     env_vars:
     - name: LANGUAGE
       value: php
     - name: FRAMEWORK
-      value: chubbyphp
+      value: laravel
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -75,31 +75,22 @@ blocks:
     jobs:
     - name: workerman
       commands:
-      - make  -f php/chubbyphp/.Makefile build.workerman
+      - make  -f php/laravel/.Makefile build.workerman
       - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.workerman
+      - make  -f php/laravel/.Makefile collect.workerman
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
         value: workerman
     - name: swoole
       commands:
-      - make  -f php/chubbyphp/.Makefile build.swoole
+      - make  -f php/laravel/.Makefile build.swoole
       - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.swoole
+      - make  -f php/laravel/.Makefile collect.swoole
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
         value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
 - name: ruby
   dependencies:
   - setup
