@@ -2,7 +2,8 @@ framework:
   website: yiiframework.com
   version: 2.0
 
-php_ext:
-  - swoole
-
-command: php server/bootstrap.php
+  engines:
+    swoole:
+      extensions:
+        - swoole
+      command: php server/bootstrap.php
