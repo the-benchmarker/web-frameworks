@@ -1,88 +1,95 @@
 # frozen_string_literal: true
 
-require 'git'
+class ::Hash
+  def recursive_merge(h)
+    merge!(h) { |_key, _old, _new| _old.instance_of?(Hash) ? _old.recursive_merge(_new) : _new }
+  end
+end
+
+def get_config_from(main_config, directory)
+  language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
+
+  framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
+
+  config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
+
+  keys = []
+  keys << language_config['default'].keys if language_config['default']
+  keys << framework_config['framework'].keys if framework_config['framework']
+
+  keys.flatten!.each do |key|
+    default = language_config.dig('default', key)
+
+    if default
+      # TODO: merge arrays and hashes
+      framework_config['framework'][key] = default
+    end
+  end
+
+  config
+end
 
 namespace :ci do
   task :config do
-    blocks = [{ name: 'setup', dependencies: [], task: {
-      jobs: [{
+    main_config = YAML.safe_load(File.read('config.yaml'))
+    definition = {
+      version: 'v1.0',
+      name: 'Benchmarking suite',
+      agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu1804' } },
+      execution_time_limit: { hours: 24 },
+      blocks: [{
         name: 'setup',
-        commands: [
-          'checkout',
-          'cache store $SEMAPHORE_GIT_SHA .',
-          'sudo apt-get update',
-          'sudo apt-get install build-essential libssl-dev git -y',
-          'git clone https://github.com/wg/wrk.git wrk',
-          'cd wrk && make',
-          'cache store wrk wrk',
-          'bundle config path .cache',
-          'bundle install',
-          'cache store built-in .cache',
-          'bundle exec rake config'
-        ]
+        dependencies: [],
+        'task' => {
+          'jobs' => [{
+            'name' => 'setup',
+            'commands' => ['checkout', 'cache store $SEMAPHORE_GIT_SHA .', 'sudo apt-get update',
+                           'sudo apt-get install build-essential libssl-dev git -y', 'git clone https://github.com/wg/wrk.git wrk', 'cd wrk && make', 'cache store wrk wrk', 'bundle config path .cache', 'bundle install', 'cache store built-in .cache', 'bundle exec rake config']
+          }]
+        }
       }]
-    } }]
+    }
+
     Dir.glob('*/config.yaml').each do |path|
       language, = path.split(File::Separator)
+      next unless %w[php ruby].include?(language)
 
-      block = { name: language, dependencies: ['setup'], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
-        'cache restore $SEMAPHORE_GIT_SHA',
-        'cache restore wrk',
-        'sudo install wrk /usr/local/bin',
-        'cache restore bin',
-        'cache restore built-in',
-        'sem-service start postgres',
-        'createdb -U postgres -h 0.0.0.0 benchmark',
-        'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql',
-        'bundle config path .cache',
-        'bundle install',
-        'bundle exec rake config'
-      ] }, jobs: [] } }
+      definition[:blocks] << { 'name' => language, 'dependencies' => ['setup'],
+                               'run' => { 'when' => "change_in('/#{language}/')" }, 'task' => { 'prologue' => { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk', 'sudo install wrk /usr/local/bin', 'cache restore bin', 'cache restore built-in', 'sem-service start postgres', 'createdb -U postgres -h 0.0.0.0 benchmark', 'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql', 'bundle config path .cache', 'bundle install', 'bundle exec rake config'] }, 'jobs' => [{ 'name' => 'setup', 'commands' => ['checkout'] }] } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
-        block[:task][:jobs] << { name: framework, commands: [
-          "cd #{language}/#{framework} && make build  -f #{MANIFESTS[:build]}  && cd -",
-          "FRAMEWORK=#{language}/#{framework} bundle exec rspec .spec",
-          "make  -f #{language}/#{framework}/#{MANIFESTS[:build]} collect",
-          'bundle exec rake db:export'
-        ], env_vars: [
-          { name: 'DATABASE_URL', value: 'postgresql://postgres@0.0.0.0/benchmark' },
-          { name: 'DURATION', value: '10' },
-          { name: 'CONCURRENCIES', value: '64' },
-          { name: 'ROUTES', value: 'GET:/' }
-        ] }
+        next unless framework == 'laravel'
+
+        block = {
+          name: framework,
+          dependencies: [language],
+          run: { when: "change_in('/#{language}/#{framework}')" },
+          task: {
+            env_vars: [{ name: 'LANGUAGE', value: language }, { name: 'FRAMEWORK', value: framework }],
+            prologue: { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk',
+                                       'sudo install wrk /usr/local/bin', 'cache restore bin', 'cache restore built-in', 'sem-service start postgres', 'createdb -U postgres -h 0.0.0.0 benchmark', 'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql', 'bundle config path .cache', 'bundle install', 'bundle exec rake config'] },
+            jobs: []
+          }
+        }
+
+        config = get_config_from(main_config, File.join(Dir.pwd, language, framework))
+
+        config.dig('framework', 'engines').each do |variant, _|
+          block[:task][:jobs] << {
+            name: variant,
+            commands: [
+              "make  -f #{language}/#{framework}/.Makefile build.#{variant}",
+              'bundle exec rspec .spec',
+              "make  -f #{language}/#{framework}/.Makefile collect.#{variant}",
+              'bundle exec rake db:export'
+            ],
+            env_vars: [{ name: 'VARIANT', value: variant }]
+          }
+        end
+        definition[:blocks] << block
       end
-      blocks << block
     end
 
-    config = { version: 'v1.0', name: 'Benchmarking suite', execution_time_limit: { hours: 24 },
-               agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu1804' } }, blocks: blocks }
-    File.write('.semaphore/semaphore.yml', JSON.parse(config.to_json).to_yaml)
-    # remvoe conditional run
-    config[:blocks].map { |block| block.except!(:run) }
-    File.write('.semaphore/schedule.yml', JSON.parse(config.to_json).to_yaml)
-  end
-  task :matrix do
-    base = ENV['BASE_COMMIT']
-    last = ENV['LAST_COMMIT']
-    workdir = ENV.fetch('GITHUB_WORKSPACE') { Dir.pwd }
-    warn "Checking for modification from #{base} to #{last}"
-    git = Git.open(Dir.pwd)
-    files = []
-    diff = git.gtree(last).diff(base).each { |diff| files << diff.path }
-    warn "Detected modified files - #{files.join(',')}"
-    frameworks = []
-    files.each do |file|
-      if file.match(File::SEPARATOR) && !file.start_with?('.')
-        parts = file.split(File::SEPARATOR)
-        frameworks << parts[0..1].join(File::SEPARATOR)
-      end
-    end
-    matrix = { include: [] }
-    frameworks.uniq.each do |framework|
-      matrix[:include] << { directory: framework, framework: framework }
-    end
-    warn matrix.to_json
-    puts matrix.to_json
+    File.write('.semaphore/semaphore.yml', JSON.parse(definition.to_json).to_yaml)
   end
 end
