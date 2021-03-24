@@ -25,6 +25,374 @@ blocks:
       - bundle install
       - cache store built-in .cache
       - bundle exec rake config
+- name: c
+  dependencies:
+  - setup
+  run:
+    when: change_in('/c/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: clojure
+  dependencies:
+  - setup
+  run:
+    when: change_in('/clojure/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: cpp
+  dependencies:
+  - setup
+  run:
+    when: change_in('/cpp/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: crystal
+  dependencies:
+  - setup
+  run:
+    when: change_in('/crystal/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: csharp
+  dependencies:
+  - setup
+  run:
+    when: change_in('/csharp/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: dart
+  dependencies:
+  - setup
+  run:
+    when: change_in('/dart/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: elixir
+  dependencies:
+  - setup
+  run:
+    when: change_in('/elixir/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: fsharp
+  dependencies:
+  - setup
+  run:
+    when: change_in('/fsharp/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: go
+  dependencies:
+  - setup
+  run:
+    when: change_in('/go/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: haskell
+  dependencies:
+  - setup
+  run:
+    when: change_in('/haskell/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: java
+  dependencies:
+  - setup
+  run:
+    when: change_in('/java/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: javascript
+  dependencies:
+  - setup
+  run:
+    when: change_in('/javascript/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: julia
+  dependencies:
+  - setup
+  run:
+    when: change_in('/julia/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: kotlin
+  dependencies:
+  - setup
+  run:
+    when: change_in('/kotlin/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: nim
+  dependencies:
+  - setup
+  run:
+    when: change_in('/nim/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: perl
+  dependencies:
+  - setup
+  run:
+    when: change_in('/perl/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
 - name: php
   dependencies:
   - setup
@@ -48,6 +416,58 @@ blocks:
     - name: setup
       commands:
       - checkout
+- name: chubbyphp
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/chubbyphp')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: chubbyphp
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f php/chubbyphp/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f php/chubbyphp/.Makefile collect.workerman
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: workerman
+    - name: swoole
+      commands:
+      - make  -f php/chubbyphp/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/chubbyphp/.Makefile collect.swoole
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f php/chubbyphp/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f php/chubbyphp/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
 - name: laravel
   dependencies:
   - php
@@ -91,11 +511,829 @@ blocks:
       env_vars:
       - name: VARIANT
         value: swoole
+    - name: road-runner
+      commands:
+      - make  -f php/laravel/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f php/laravel/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
+- name: pony
+  dependencies:
+  - setup
+  run:
+    when: change_in('/pony/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: python
+  dependencies:
+  - setup
+  run:
+    when: change_in('/python/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: r
+  dependencies:
+  - setup
+  run:
+    when: change_in('/r/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
 - name: ruby
   dependencies:
   - setup
   run:
     when: change_in('/ruby/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: agoo
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/agoo')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: agoo
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f ruby/agoo/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f ruby/agoo/.Makefile collect.workerman
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: workerman
+    - name: swoole
+      commands:
+      - make  -f ruby/agoo/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f ruby/agoo/.Makefile collect.swoole
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f ruby/agoo/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f ruby/agoo/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
+    - name: default
+      commands:
+      - make  -f ruby/agoo/.Makefile build.default
+      - bundle exec rspec .spec
+      - make  -f ruby/agoo/.Makefile collect.default
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: default
+- name: camping
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/camping')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: camping
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f ruby/camping/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f ruby/camping/.Makefile collect.workerman
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: workerman
+    - name: swoole
+      commands:
+      - make  -f ruby/camping/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f ruby/camping/.Makefile collect.swoole
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f ruby/camping/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f ruby/camping/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
+    - name: default
+      commands:
+      - make  -f ruby/camping/.Makefile build.default
+      - bundle exec rspec .spec
+      - make  -f ruby/camping/.Makefile collect.default
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: default
+- name: cuba
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/cuba')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: cuba
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f ruby/cuba/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f ruby/cuba/.Makefile collect.workerman
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: workerman
+    - name: swoole
+      commands:
+      - make  -f ruby/cuba/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f ruby/cuba/.Makefile collect.swoole
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f ruby/cuba/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f ruby/cuba/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
+    - name: default
+      commands:
+      - make  -f ruby/cuba/.Makefile build.default
+      - bundle exec rspec .spec
+      - make  -f ruby/cuba/.Makefile collect.default
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: default
+- name: grape
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/grape')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: grape
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f ruby/grape/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f ruby/grape/.Makefile collect.workerman
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: workerman
+    - name: swoole
+      commands:
+      - make  -f ruby/grape/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f ruby/grape/.Makefile collect.swoole
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f ruby/grape/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f ruby/grape/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
+    - name: default
+      commands:
+      - make  -f ruby/grape/.Makefile build.default
+      - bundle exec rspec .spec
+      - make  -f ruby/grape/.Makefile collect.default
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: default
+- name: hanami-api
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/hanami-api')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: hanami-api
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f ruby/hanami-api/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f ruby/hanami-api/.Makefile collect.workerman
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: workerman
+    - name: swoole
+      commands:
+      - make  -f ruby/hanami-api/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f ruby/hanami-api/.Makefile collect.swoole
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f ruby/hanami-api/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f ruby/hanami-api/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
+    - name: default
+      commands:
+      - make  -f ruby/hanami-api/.Makefile build.default
+      - bundle exec rspec .spec
+      - make  -f ruby/hanami-api/.Makefile collect.default
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: default
+- name: rack-routing
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/rack-routing')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: rack-routing
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f ruby/rack-routing/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f ruby/rack-routing/.Makefile collect.workerman
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: workerman
+    - name: swoole
+      commands:
+      - make  -f ruby/rack-routing/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f ruby/rack-routing/.Makefile collect.swoole
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f ruby/rack-routing/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f ruby/rack-routing/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
+    - name: default
+      commands:
+      - make  -f ruby/rack-routing/.Makefile build.default
+      - bundle exec rspec .spec
+      - make  -f ruby/rack-routing/.Makefile collect.default
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: default
+- name: rack_app
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/rack_app')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: rack_app
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f ruby/rack_app/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f ruby/rack_app/.Makefile collect.workerman
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: workerman
+    - name: swoole
+      commands:
+      - make  -f ruby/rack_app/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f ruby/rack_app/.Makefile collect.swoole
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f ruby/rack_app/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f ruby/rack_app/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
+    - name: default
+      commands:
+      - make  -f ruby/rack_app/.Makefile build.default
+      - bundle exec rspec .spec
+      - make  -f ruby/rack_app/.Makefile collect.default
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: default
+- name: rails
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/rails')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: rails
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f ruby/rails/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f ruby/rails/.Makefile collect.workerman
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: workerman
+    - name: swoole
+      commands:
+      - make  -f ruby/rails/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f ruby/rails/.Makefile collect.swoole
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f ruby/rails/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f ruby/rails/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
+    - name: default
+      commands:
+      - make  -f ruby/rails/.Makefile build.default
+      - bundle exec rspec .spec
+      - make  -f ruby/rails/.Makefile collect.default
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: default
+- name: roda
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/roda')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: roda
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f ruby/roda/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f ruby/roda/.Makefile collect.workerman
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: workerman
+    - name: swoole
+      commands:
+      - make  -f ruby/roda/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f ruby/roda/.Makefile collect.swoole
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f ruby/roda/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f ruby/roda/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
+    - name: default
+      commands:
+      - make  -f ruby/roda/.Makefile build.default
+      - bundle exec rspec .spec
+      - make  -f ruby/roda/.Makefile collect.default
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: default
+- name: sinatra
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/sinatra')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: sinatra
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f ruby/sinatra/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f ruby/sinatra/.Makefile collect.workerman
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: workerman
+    - name: swoole
+      commands:
+      - make  -f ruby/sinatra/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f ruby/sinatra/.Makefile collect.swoole
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f ruby/sinatra/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f ruby/sinatra/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
+    - name: default
+      commands:
+      - make  -f ruby/sinatra/.Makefile build.default
+      - bundle exec rspec .spec
+      - make  -f ruby/sinatra/.Makefile collect.default
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: default
+- name: syro
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/syro')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: syro
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f ruby/syro/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f ruby/syro/.Makefile collect.workerman
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: workerman
+    - name: swoole
+      commands:
+      - make  -f ruby/syro/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f ruby/syro/.Makefile collect.swoole
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f ruby/syro/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f ruby/syro/.Makefile collect.road-runner
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: road-runner
+    - name: default
+      commands:
+      - make  -f ruby/syro/.Makefile build.default
+      - bundle exec rspec .spec
+      - make  -f ruby/syro/.Makefile collect.default
+      - bundle exec rake db:export
+      env_vars:
+      - name: VARIANT
+        value: default
+- name: rust
+  dependencies:
+  - setup
+  run:
+    when: change_in('/rust/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: scala
+  dependencies:
+  - setup
+  run:
+    when: change_in('/scala/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: swift
+  dependencies:
+  - setup
+  run:
+    when: change_in('/swift/')
   task:
     prologue:
       commands:

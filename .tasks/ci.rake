@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+CI_READY_FRAMEWORKS = %w[
+  camping cuba hanami-api rack-routing rails sinatra
+  agoo grape rack_app roda syro laravel chubbyphp
+].freeze
+
 class ::Hash
   def recursive_merge(h)
     merge!(h) { |_key, _old, _new| _old.instance_of?(Hash) ? _old.recursive_merge(_new) : _new }
@@ -52,13 +57,12 @@ namespace :ci do
 
     Dir.glob('*/config.yaml').each do |path|
       language, = path.split(File::Separator)
-      next unless %w[php ruby].include?(language)
 
       definition[:blocks] << { 'name' => language, 'dependencies' => ['setup'],
                                'run' => { 'when' => "change_in('/#{language}/')" }, 'task' => { 'prologue' => { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk', 'sudo install wrk /usr/local/bin', 'cache restore bin', 'cache restore built-in', 'sem-service start postgres', 'createdb -U postgres -h 0.0.0.0 benchmark', 'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql', 'bundle config path .cache', 'bundle install', 'bundle exec rake config'] }, 'jobs' => [{ 'name' => 'setup', 'commands' => ['checkout'] }] } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
-        next unless framework == 'laravel'
+        next unless CI_READY_FRAMEWORKS.include?(framework)
 
         block = {
           name: framework,
