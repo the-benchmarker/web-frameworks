@@ -20,8 +20,7 @@ framework:
     - find /usr/src/app -type f -exec chmod 644 {} \;
     - find /usr/src/app -type d -exec chmod 755 {} \;
     # - chmod -R ug+rwx storage /usr/src/app/bootstrap/cache
-
-    - /usr/local/bin/php artisan config:cache
+    # - /usr/local/bin/php artisan config:cache
     # - /usr/local/bin/php artisan route:cache
 
   engines:
