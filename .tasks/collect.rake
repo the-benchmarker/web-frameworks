@@ -61,13 +61,19 @@ task :collect do
       concurrency_level_id = res.first['id']
 
       command = format(
-        "wrk -H 'Connection: keep-alive' --connections %<concurrency>s --threads %<threads>s --duration %<duration>s --timeout 1 --script %<pipeline>s http://%<hostname>s:3000", concurrency: concurrency, threads: threads, duration: duration, pipeline: PIPELINE[method.to_sym], hostname: hostname
+        "wrk -H 'Connection: keep-alive' --connections %<concurrency>s --threads %<threads>s --duration %<duration>s --timeout 1 --script %<pipeline>s http://%<hostname>s:3000#{uri}", concurrency: concurrency, threads: threads, duration: duration, pipeline: PIPELINE[method.to_sym], hostname: hostname
       )
 
       Open3.popen3(command) do |_, stdout, stderr|
         wrk_output = stdout.read
-        warn wrk_output
         lua_output = stderr.read
+
+        pp "================"
+        pp "CMD : #{command}"
+        pp "================"
+        pp "OUT : #{wrk_output}"
+        pp "================"
+        pp "LUA : #{lua_output}"
 
         info = lua_output.split(',')
         ['duration_ms', 'total_requests', 'total_requests_per_s', 'total_bytes_received',
