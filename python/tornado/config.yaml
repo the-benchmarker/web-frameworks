@@ -2,6 +2,9 @@ framework:
   website: tornadoweb.org
   version: 6.1
 
+build_deps:
+  - git
+
 command: >
   gunicorn  \
     --log-level warning  \
