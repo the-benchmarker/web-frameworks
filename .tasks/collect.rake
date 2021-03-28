@@ -67,20 +67,21 @@ task :collect do
       Open3.popen3(command) do |_, stdout, stderr|
         wrk_output = stdout.read
         lua_output = stderr.read
+        lua_keys = ['duration_ms', 'total_requests', 'total_requests_per_s', 'total_bytes_received',
+         'socket_connection_errors', 'socket_read_errors', 'socket_write_errors',
+         'http_errors', 'request_timeouts', 'minimim_latency', 'maximum_latency',
+         'average_latency', 'standard_deviation', 'percentile_50',
+         'percentile_75', 'percentile_90', 'percentile_99', 'percentile_99.999']
 
         pp "================"
         pp "CMD : #{command}"
         pp "================"
         pp "OUT : #{wrk_output}"
         pp "================"
-        pp "LUA : #{lua_output}"
+        pp "LUA : #{lua_keys.join(',')}"
 
         info = lua_output.split(',')
-        ['duration_ms', 'total_requests', 'total_requests_per_s', 'total_bytes_received',
-         'socket_connection_errors', 'socket_read_errors', 'socket_write_errors',
-         'http_errors', 'request_timeouts', 'minimim_latency', 'maximum_latency',
-         'average_latency', 'standard_deviation', 'percentile_50',
-         'percentile_75', 'percentile_90', 'percentile_99', 'percentile_99.999'].each_with_index do |key, index|
+        lua_keys.each_with_index do |key, index|
           insert(db, framework_id, key, info[index].to_d, concurrency_level_id)
         end
       end
