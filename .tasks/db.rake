@@ -20,7 +20,13 @@ SQL = %(
 )
 
 def compute(data)
-  errors = data['socket_connection_errors'].to_d + data['http_errors'].to_d + data['request_timeouts'].to_d
+  errors_keys = [
+    'socket_connection_errors', 'socket_read_errors', 'socket_write_errors',
+    'http_errors', 'request_timeouts'
+  ]
+
+  errors = data.values_at(*errors_keys).map(&:to_d).sum
+
   duration = data['duration_ms'].to_d / 1_000_000
   requests = data['total_requests'].to_d
 
