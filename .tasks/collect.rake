@@ -66,8 +66,14 @@ task :collect do
 
       Open3.popen3(command) do |_, stdout, stderr|
         wrk_output = stdout.read
-        warn wrk_output
         lua_output = stderr.read
+
+        pp "================"
+        pp "CMD : #{command}"
+        pp "================"
+        pp "OUT : #{wrk_output}"
+        pp "================"
+        pp "LUA : #{lua_output}"
 
         info = lua_output.split(',')
         ['duration_ms', 'total_requests', 'total_requests_per_s', 'total_bytes_received',
