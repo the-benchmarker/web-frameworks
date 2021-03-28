@@ -79,6 +79,7 @@ task :collect do
         pp "OUT : #{wrk_output}"
         pp "================"
         pp "LUA : #{lua_keys.join(',')}"
+        pp "LUA : #{lua_output}"
 
         info = lua_output.split(',')
         lua_keys.each_with_index do |key, index|
