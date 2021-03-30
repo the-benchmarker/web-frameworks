@@ -1,2 +1,2 @@
 tornado>=6.1,<6.2
-gunicorn
+-e git+https://github.com/waghanza/gunicorn@remove_outdated_condition#egg=gunicorn
