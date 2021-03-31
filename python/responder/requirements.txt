@@ -1,2 +1,2 @@
 responder>=2.0,<2.1
-gunicorn
+-e git+https://github.com/waghanza/gunicorn.git@remove_outdated_condition#egg=gunicorn
