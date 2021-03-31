@@ -1,6 +1,6 @@
 FROM python:3.9-alpine
 
-RUN apk add build-base
+RUN apk add build-base git
 
 WORKDIR /usr/src/app
 
