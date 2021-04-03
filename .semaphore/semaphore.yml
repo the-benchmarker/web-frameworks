@@ -25,6 +25,374 @@ blocks:
       - bundle install
       - cache store built-in .cache
       - bundle exec rake config
+- name: c
+  dependencies:
+  - setup
+  run:
+    when: change_in('/c/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: clojure
+  dependencies:
+  - setup
+  run:
+    when: change_in('/clojure/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: cpp
+  dependencies:
+  - setup
+  run:
+    when: change_in('/cpp/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: crystal
+  dependencies:
+  - setup
+  run:
+    when: change_in('/crystal/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: csharp
+  dependencies:
+  - setup
+  run:
+    when: change_in('/csharp/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: dart
+  dependencies:
+  - setup
+  run:
+    when: change_in('/dart/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: elixir
+  dependencies:
+  - setup
+  run:
+    when: change_in('/elixir/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: fsharp
+  dependencies:
+  - setup
+  run:
+    when: change_in('/fsharp/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: go
+  dependencies:
+  - setup
+  run:
+    when: change_in('/go/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: haskell
+  dependencies:
+  - setup
+  run:
+    when: change_in('/haskell/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: java
+  dependencies:
+  - setup
+  run:
+    when: change_in('/java/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: javascript
+  dependencies:
+  - setup
+  run:
+    when: change_in('/javascript/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: julia
+  dependencies:
+  - setup
+  run:
+    when: change_in('/julia/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: kotlin
+  dependencies:
+  - setup
+  run:
+    when: change_in('/kotlin/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: nim
+  dependencies:
+  - setup
+  run:
+    when: change_in('/nim/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: perl
+  dependencies:
+  - setup
+  run:
+    when: change_in('/perl/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
 - name: php
   dependencies:
   - setup
@@ -82,74 +450,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: reactphp
-- name: basicphp
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/basicphp')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: basicphp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/basicphp/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/basicphp/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-- name: bearframework
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/bearframework')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: bearframework
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/bearframework/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/bearframework/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
 - name: chubbyphp
   dependencies:
   - php
@@ -175,15 +475,6 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
     - name: workerman
       commands:
       - make  -f php/chubbyphp/.Makefile build.workerman
@@ -211,487 +502,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: road-runner
-- name: codeigniter4
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/codeigniter4')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: codeigniter4
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/codeigniter4/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/codeigniter4/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/codeigniter4/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/codeigniter4/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/codeigniter4/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/codeigniter4/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/codeigniter4/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/codeigniter4/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-- name: comet
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/comet')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: comet
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/comet/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/comet/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/comet/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/comet/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/comet/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/comet/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/comet/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/comet/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/comet/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/comet/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: cubex
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/cubex')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: cubex
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/cubex/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/cubex/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/cubex/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/cubex/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/cubex/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/cubex/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/cubex/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/cubex/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/cubex/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/cubex/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: driftphp
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/driftphp')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: driftphp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/driftphp/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/driftphp/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/driftphp/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/driftphp/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/driftphp/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/driftphp/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/driftphp/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/driftphp/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/driftphp/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/driftphp/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: fastsitephp
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/fastsitephp')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: fastsitephp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/fastsitephp/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/fastsitephp/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/fastsitephp/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/fastsitephp/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/fastsitephp/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/fastsitephp/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/fastsitephp/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/fastsitephp/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/fastsitephp/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/fastsitephp/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: fatfree
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/fatfree')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: fatfree
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/fatfree/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/fatfree/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/fatfree/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/fatfree/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/fatfree/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/fatfree/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/fatfree/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/fatfree/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/fatfree/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/fatfree/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: hamlet
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/hamlet')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: hamlet
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/hamlet/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/hamlet/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/hamlet/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/hamlet/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/hamlet/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/hamlet/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/hamlet/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/hamlet/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/hamlet/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/hamlet/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
 - name: hyperf
   dependencies:
   - php
@@ -717,24 +527,6 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/hyperf/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/hyperf/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/hyperf/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/hyperf/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
     - name: swoole
       commands:
       - make  -f php/hyperf/.Makefile build.swoole
@@ -744,234 +536,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/hyperf/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/hyperf/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/hyperf/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/hyperf/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: ice
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/ice')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: ice
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/ice/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/ice/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/ice/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/ice/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/ice/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/ice/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/ice/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/ice/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/ice/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/ice/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: imi
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/imi')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: imi
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/imi/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/imi/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/imi/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/imi/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/imi/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/imi/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/imi/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/imi/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/imi/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/imi/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: laminas
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/laminas')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: laminas
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/laminas/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/laminas/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/laminas/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/laminas/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/laminas/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/laminas/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/laminas/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/laminas/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/laminas/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/laminas/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
 - name: laravel
   dependencies:
   - php
@@ -997,15 +561,6 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/laravel/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/laravel/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
     - name: workerman
       commands:
       - make  -f php/laravel/.Makefile build.workerman
@@ -1024,24 +579,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/laravel/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/laravel/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/laravel/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/laravel/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
 - name: lumen
   dependencies:
   - php
@@ -1067,24 +604,6 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/lumen/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/lumen/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/lumen/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/lumen/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
     - name: swoole
       commands:
       - make  -f php/lumen/.Makefile build.swoole
@@ -1094,1074 +613,6 @@ blocks:
       env_vars:
       - name: VARIANT
         value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/lumen/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/lumen/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/lumen/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/lumen/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: mark
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/mark')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: mark
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/mark/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/mark/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/mark/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/mark/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/mark/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/mark/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/mark/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/mark/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/mark/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/mark/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: mezzio
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/mezzio')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: mezzio
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/mezzio/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/mezzio/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/mezzio/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/mezzio/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/mezzio/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/mezzio/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/mezzio/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/mezzio/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/mezzio/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/mezzio/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: nano
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/nano')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: nano
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/nano/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/nano/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/nano/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/nano/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/nano/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/nano/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/nano/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/nano/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/nano/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/nano/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: nette
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/nette')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: nette
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/nette/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/nette/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/nette/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/nette/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/nette/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/nette/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/nette/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/nette/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/nette/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/nette/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: one
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/one')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: one
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/one/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/one/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/one/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/one/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/one/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/one/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/one/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/one/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/one/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/one/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: one-fpm
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/one-fpm')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: one-fpm
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/one-fpm/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/one-fpm/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/one-fpm/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/one-fpm/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/one-fpm/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/one-fpm/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/one-fpm/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/one-fpm/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/one-fpm/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/one-fpm/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: phalcon
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/phalcon')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: phalcon
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/phalcon/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/phalcon/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/phalcon/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/phalcon/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/phalcon/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/phalcon/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/phalcon/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/phalcon/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/phalcon/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/phalcon/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: siler
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/siler')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: siler
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/siler/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/siler/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/siler/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/siler/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/siler/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/siler/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/siler/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/siler/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/siler/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/siler/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: siler-swoole
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/siler-swoole')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: siler-swoole
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/siler-swoole/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/siler-swoole/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/siler-swoole/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/siler-swoole/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/siler-swoole/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/siler-swoole/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/siler-swoole/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/siler-swoole/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/siler-swoole/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/siler-swoole/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: simps
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/simps')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: simps
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/simps/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/simps/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/simps/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/simps/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/simps/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/simps/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/simps/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/simps/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/simps/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/simps/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: slim
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/slim')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: slim
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/slim/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/slim/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/slim/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/slim/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/slim/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: slim-roadrunner
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/slim-roadrunner')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: slim-roadrunner
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/slim-roadrunner/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/slim-roadrunner/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/slim-roadrunner/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/slim-roadrunner/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/slim-roadrunner/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/slim-roadrunner/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/slim-roadrunner/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/slim-roadrunner/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/slim-roadrunner/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/slim-roadrunner/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: slim-swoole
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/slim-swoole')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: slim-swoole
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/slim-swoole/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/slim-swoole/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/slim-swoole/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/slim-swoole/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/slim-swoole/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/slim-swoole/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/slim-swoole/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/slim-swoole/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/slim-swoole/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/slim-swoole/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: spiral
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/spiral')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: spiral
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/spiral/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/spiral/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/spiral/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/spiral/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/spiral/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/spiral/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/spiral/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/spiral/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/spiral/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/spiral/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: sunrise-router
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/sunrise-router')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: sunrise-router
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/sunrise-router/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/sunrise-router/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/sunrise-router/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/sunrise-router/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/sunrise-router/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
 - name: sunrise-router-annotations
   dependencies:
   - php
@@ -2187,817 +638,11 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/sunrise-router-annotations/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-annotations/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/sunrise-router-annotations/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-annotations/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/sunrise-router-annotations/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-annotations/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/sunrise-router-annotations/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-annotations/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
     - name: php-fpm
       commands:
       - make  -f php/sunrise-router-annotations/.Makefile build.php-fpm
       - bundle exec rspec .spec
       - make  -f php/sunrise-router-annotations/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: sunrise-router-roadrunner
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/sunrise-router-roadrunner')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: sunrise-router-roadrunner
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/sunrise-router-roadrunner/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-roadrunner/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/sunrise-router-roadrunner/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-roadrunner/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/sunrise-router-roadrunner/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-roadrunner/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/sunrise-router-roadrunner/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-roadrunner/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/sunrise-router-roadrunner/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-roadrunner/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: sw-fw-less
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/sw-fw-less')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: sw-fw-less
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/sw-fw-less/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/sw-fw-less/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/sw-fw-less/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/sw-fw-less/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/sw-fw-less/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/sw-fw-less/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/sw-fw-less/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/sw-fw-less/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/sw-fw-less/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/sw-fw-less/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: swoft
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/swoft')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: swoft
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/swoft/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/swoft/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/swoft/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/swoft/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/swoft/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/swoft/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/swoft/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/swoft/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/swoft/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/swoft/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: swoole
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/swoole')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: swoole
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/swoole/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/swoole/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/swoole/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/swoole/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/swoole/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/swoole/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/swoole/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/swoole/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/swoole/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/swoole/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: swoole-coroutine
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/swoole-coroutine')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: swoole-coroutine
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/swoole-coroutine/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/swoole-coroutine/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/swoole-coroutine/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/swoole-coroutine/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/swoole-coroutine/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/swoole-coroutine/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/swoole-coroutine/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/swoole-coroutine/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/swoole-coroutine/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/swoole-coroutine/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: symfony
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/symfony')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: symfony
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/symfony/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/symfony/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/symfony/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/symfony/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/symfony/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/symfony/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/symfony/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/symfony/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/symfony/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/symfony/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: ubiquity
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/ubiquity')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: ubiquity
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/ubiquity/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/ubiquity/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/ubiquity/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/ubiquity/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/ubiquity/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/ubiquity/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/ubiquity/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/ubiquity/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/ubiquity/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/ubiquity/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: unic
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/unic')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: unic
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/unic/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/unic/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/unic/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/unic/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/unic/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/unic/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/unic/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/unic/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/unic/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/unic/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: webman
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/webman')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: webman
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/webman/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/webman/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/webman/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/webman/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/webman/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/webman/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/webman/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/webman/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/webman/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/webman/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: workerman
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/workerman')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: workerman
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/workerman/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/workerman/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/workerman/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/workerman/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/workerman/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/workerman/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/workerman/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/workerman/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/workerman/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/workerman/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: yii
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/yii')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: yii
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/yii/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/yii/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/yii/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/yii/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/yii/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/yii/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/yii/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/yii/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f php/yii/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/yii/.Makefile collect.php-fpm
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
@@ -3027,24 +672,6 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/yii-swoole/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/yii-swoole/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-    - name: workerman
-      commands:
-      - make  -f php/yii-swoole/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/yii-swoole/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
     - name: swoole
       commands:
       - make  -f php/yii-swoole/.Makefile build.swoole
@@ -3054,24 +681,75 @@ blocks:
       env_vars:
       - name: VARIANT
         value: swoole
-    - name: road-runner
+- name: pony
+  dependencies:
+  - setup
+  run:
+    when: change_in('/pony/')
+  task:
+    prologue:
       commands:
-      - make  -f php/yii-swoole/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/yii-swoole/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
       commands:
-      - make  -f php/yii-swoole/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/yii-swoole/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
+      - checkout
+- name: python
+  dependencies:
+  - setup
+  run:
+    when: change_in('/python/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: r
+  dependencies:
+  - setup
+  run:
+    when: change_in('/r/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
 - name: ruby
   dependencies:
   - setup
@@ -3120,51 +798,33 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
+    - name: puma
       commands:
-      - make  -f ruby/agoo/.Makefile build.reactphp
+      - make  -f ruby/agoo/.Makefile build.puma
       - bundle exec rspec .spec
-      - make  -f ruby/agoo/.Makefile collect.reactphp
+      - make  -f ruby/agoo/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: reactphp
-    - name: workerman
+        value: puma
+    - name: falcon
       commands:
-      - make  -f ruby/agoo/.Makefile build.workerman
+      - make  -f ruby/agoo/.Makefile build.falcon
       - bundle exec rspec .spec
-      - make  -f ruby/agoo/.Makefile collect.workerman
+      - make  -f ruby/agoo/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: workerman
-    - name: swoole
+        value: falcon
+    - name: iodine
       commands:
-      - make  -f ruby/agoo/.Makefile build.swoole
+      - make  -f ruby/agoo/.Makefile build.iodine
       - bundle exec rspec .spec
-      - make  -f ruby/agoo/.Makefile collect.swoole
+      - make  -f ruby/agoo/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f ruby/agoo/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f ruby/agoo/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f ruby/agoo/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f ruby/agoo/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
+        value: iodine
     - name: default
       commands:
       - make  -f ruby/agoo/.Makefile build.default
@@ -3199,60 +859,33 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
+    - name: puma
       commands:
-      - make  -f ruby/camping/.Makefile build.reactphp
+      - make  -f ruby/camping/.Makefile build.puma
       - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.reactphp
+      - make  -f ruby/camping/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: reactphp
-    - name: workerman
+        value: puma
+    - name: falcon
       commands:
-      - make  -f ruby/camping/.Makefile build.workerman
+      - make  -f ruby/camping/.Makefile build.falcon
       - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.workerman
+      - make  -f ruby/camping/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: workerman
-    - name: swoole
+        value: falcon
+    - name: iodine
       commands:
-      - make  -f ruby/camping/.Makefile build.swoole
+      - make  -f ruby/camping/.Makefile build.iodine
       - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.swoole
+      - make  -f ruby/camping/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f ruby/camping/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f ruby/camping/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-    - name: default
-      commands:
-      - make  -f ruby/camping/.Makefile build.default
-      - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.default
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: default
+        value: iodine
 - name: cuba
   dependencies:
   - ruby
@@ -3278,60 +911,33 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
+    - name: puma
       commands:
-      - make  -f ruby/cuba/.Makefile build.reactphp
+      - make  -f ruby/cuba/.Makefile build.puma
       - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.reactphp
+      - make  -f ruby/cuba/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: reactphp
-    - name: workerman
+        value: puma
+    - name: falcon
       commands:
-      - make  -f ruby/cuba/.Makefile build.workerman
+      - make  -f ruby/cuba/.Makefile build.falcon
       - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.workerman
+      - make  -f ruby/cuba/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: workerman
-    - name: swoole
+        value: falcon
+    - name: iodine
       commands:
-      - make  -f ruby/cuba/.Makefile build.swoole
+      - make  -f ruby/cuba/.Makefile build.iodine
       - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.swoole
+      - make  -f ruby/cuba/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f ruby/cuba/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f ruby/cuba/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-    - name: default
-      commands:
-      - make  -f ruby/cuba/.Makefile build.default
-      - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.default
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: default
+        value: iodine
 - name: grape
   dependencies:
   - ruby
@@ -3357,60 +963,33 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
+    - name: puma
       commands:
-      - make  -f ruby/grape/.Makefile build.reactphp
+      - make  -f ruby/grape/.Makefile build.puma
       - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.reactphp
+      - make  -f ruby/grape/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: reactphp
-    - name: workerman
+        value: puma
+    - name: falcon
       commands:
-      - make  -f ruby/grape/.Makefile build.workerman
+      - make  -f ruby/grape/.Makefile build.falcon
       - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.workerman
+      - make  -f ruby/grape/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: workerman
-    - name: swoole
+        value: falcon
+    - name: iodine
       commands:
-      - make  -f ruby/grape/.Makefile build.swoole
+      - make  -f ruby/grape/.Makefile build.iodine
       - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.swoole
+      - make  -f ruby/grape/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f ruby/grape/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f ruby/grape/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-    - name: default
-      commands:
-      - make  -f ruby/grape/.Makefile build.default
-      - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.default
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: default
+        value: iodine
 - name: hanami-api
   dependencies:
   - ruby
@@ -3436,60 +1015,33 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
+    - name: puma
       commands:
-      - make  -f ruby/hanami-api/.Makefile build.reactphp
+      - make  -f ruby/hanami-api/.Makefile build.puma
       - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.reactphp
+      - make  -f ruby/hanami-api/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: reactphp
-    - name: workerman
+        value: puma
+    - name: falcon
       commands:
-      - make  -f ruby/hanami-api/.Makefile build.workerman
+      - make  -f ruby/hanami-api/.Makefile build.falcon
       - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.workerman
+      - make  -f ruby/hanami-api/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: workerman
-    - name: swoole
+        value: falcon
+    - name: iodine
       commands:
-      - make  -f ruby/hanami-api/.Makefile build.swoole
+      - make  -f ruby/hanami-api/.Makefile build.iodine
       - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.swoole
+      - make  -f ruby/hanami-api/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f ruby/hanami-api/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f ruby/hanami-api/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-    - name: default
-      commands:
-      - make  -f ruby/hanami-api/.Makefile build.default
-      - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.default
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: default
+        value: iodine
 - name: rack-routing
   dependencies:
   - ruby
@@ -3515,60 +1067,33 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
+    - name: puma
       commands:
-      - make  -f ruby/rack-routing/.Makefile build.reactphp
+      - make  -f ruby/rack-routing/.Makefile build.puma
       - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.reactphp
+      - make  -f ruby/rack-routing/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: reactphp
-    - name: workerman
+        value: puma
+    - name: falcon
       commands:
-      - make  -f ruby/rack-routing/.Makefile build.workerman
+      - make  -f ruby/rack-routing/.Makefile build.falcon
       - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.workerman
+      - make  -f ruby/rack-routing/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: workerman
-    - name: swoole
+        value: falcon
+    - name: iodine
       commands:
-      - make  -f ruby/rack-routing/.Makefile build.swoole
+      - make  -f ruby/rack-routing/.Makefile build.iodine
       - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.swoole
+      - make  -f ruby/rack-routing/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f ruby/rack-routing/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f ruby/rack-routing/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-    - name: default
-      commands:
-      - make  -f ruby/rack-routing/.Makefile build.default
-      - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.default
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: default
+        value: iodine
 - name: rack_app
   dependencies:
   - ruby
@@ -3594,60 +1119,33 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
+    - name: puma
       commands:
-      - make  -f ruby/rack_app/.Makefile build.reactphp
+      - make  -f ruby/rack_app/.Makefile build.puma
       - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.reactphp
+      - make  -f ruby/rack_app/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: reactphp
-    - name: workerman
+        value: puma
+    - name: falcon
       commands:
-      - make  -f ruby/rack_app/.Makefile build.workerman
+      - make  -f ruby/rack_app/.Makefile build.falcon
       - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.workerman
+      - make  -f ruby/rack_app/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: workerman
-    - name: swoole
+        value: falcon
+    - name: iodine
       commands:
-      - make  -f ruby/rack_app/.Makefile build.swoole
+      - make  -f ruby/rack_app/.Makefile build.iodine
       - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.swoole
+      - make  -f ruby/rack_app/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f ruby/rack_app/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f ruby/rack_app/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-    - name: default
-      commands:
-      - make  -f ruby/rack_app/.Makefile build.default
-      - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.default
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: default
+        value: iodine
 - name: rails
   dependencies:
   - ruby
@@ -3673,60 +1171,33 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
+    - name: puma
       commands:
-      - make  -f ruby/rails/.Makefile build.reactphp
+      - make  -f ruby/rails/.Makefile build.puma
       - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.reactphp
+      - make  -f ruby/rails/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: reactphp
-    - name: workerman
+        value: puma
+    - name: falcon
       commands:
-      - make  -f ruby/rails/.Makefile build.workerman
+      - make  -f ruby/rails/.Makefile build.falcon
       - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.workerman
+      - make  -f ruby/rails/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: workerman
-    - name: swoole
+        value: falcon
+    - name: iodine
       commands:
-      - make  -f ruby/rails/.Makefile build.swoole
+      - make  -f ruby/rails/.Makefile build.iodine
       - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.swoole
+      - make  -f ruby/rails/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f ruby/rails/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f ruby/rails/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-    - name: default
-      commands:
-      - make  -f ruby/rails/.Makefile build.default
-      - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.default
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: default
+        value: iodine
 - name: roda
   dependencies:
   - ruby
@@ -3752,60 +1223,33 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
+    - name: puma
       commands:
-      - make  -f ruby/roda/.Makefile build.reactphp
+      - make  -f ruby/roda/.Makefile build.puma
       - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.reactphp
+      - make  -f ruby/roda/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: reactphp
-    - name: workerman
+        value: puma
+    - name: falcon
       commands:
-      - make  -f ruby/roda/.Makefile build.workerman
+      - make  -f ruby/roda/.Makefile build.falcon
       - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.workerman
+      - make  -f ruby/roda/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: workerman
-    - name: swoole
+        value: falcon
+    - name: iodine
       commands:
-      - make  -f ruby/roda/.Makefile build.swoole
+      - make  -f ruby/roda/.Makefile build.iodine
       - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.swoole
+      - make  -f ruby/roda/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f ruby/roda/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f ruby/roda/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-    - name: default
-      commands:
-      - make  -f ruby/roda/.Makefile build.default
-      - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.default
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: default
+        value: iodine
 - name: sinatra
   dependencies:
   - ruby
@@ -3831,60 +1275,33 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
+    - name: puma
       commands:
-      - make  -f ruby/sinatra/.Makefile build.reactphp
+      - make  -f ruby/sinatra/.Makefile build.puma
       - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.reactphp
+      - make  -f ruby/sinatra/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: reactphp
-    - name: workerman
+        value: puma
+    - name: falcon
       commands:
-      - make  -f ruby/sinatra/.Makefile build.workerman
+      - make  -f ruby/sinatra/.Makefile build.falcon
       - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.workerman
+      - make  -f ruby/sinatra/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: workerman
-    - name: swoole
+        value: falcon
+    - name: iodine
       commands:
-      - make  -f ruby/sinatra/.Makefile build.swoole
+      - make  -f ruby/sinatra/.Makefile build.iodine
       - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.swoole
+      - make  -f ruby/sinatra/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f ruby/sinatra/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
-      commands:
-      - make  -f ruby/sinatra/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-    - name: default
-      commands:
-      - make  -f ruby/sinatra/.Makefile build.default
-      - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.default
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: default
+        value: iodine
 - name: syro
   dependencies:
   - ruby
@@ -3910,57 +1327,99 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: reactphp
+    - name: puma
       commands:
-      - make  -f ruby/syro/.Makefile build.reactphp
+      - make  -f ruby/syro/.Makefile build.puma
       - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.reactphp
+      - make  -f ruby/syro/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: reactphp
-    - name: workerman
+        value: puma
+    - name: falcon
       commands:
-      - make  -f ruby/syro/.Makefile build.workerman
+      - make  -f ruby/syro/.Makefile build.falcon
       - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.workerman
+      - make  -f ruby/syro/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: workerman
-    - name: swoole
+        value: falcon
+    - name: iodine
       commands:
-      - make  -f ruby/syro/.Makefile build.swoole
+      - make  -f ruby/syro/.Makefile build.iodine
       - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.swoole
+      - make  -f ruby/syro/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: swoole
-    - name: road-runner
+        value: iodine
+- name: rust
+  dependencies:
+  - setup
+  run:
+    when: change_in('/rust/')
+  task:
+    prologue:
       commands:
-      - make  -f ruby/syro/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-    - name: php-fpm
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
       commands:
-      - make  -f ruby/syro/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-    - name: default
+      - checkout
+- name: scala
+  dependencies:
+  - setup
+  run:
+    when: change_in('/scala/')
+  task:
+    prologue:
       commands:
-      - make  -f ruby/syro/.Makefile build.default
-      - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.default
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: default
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: swift
+  dependencies:
+  - setup
+  run:
+    when: change_in('/swift/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
