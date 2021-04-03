@@ -1,12 +1,13 @@
 name: app
 version: 1.0.0
+crystal: ">= 1.0.0"
 
 licence: MIT
 
 dependencies:
   action-controller:
     github: spider-gazelle/action-controller
-    version: ~> 4.2.0
+    version: ~> 4.3.0
 
 targets:
   server:
