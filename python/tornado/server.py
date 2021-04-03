@@ -24,10 +24,16 @@ class UserInfoHandler(tornado.web.RequestHandler):
         self.write(id)
 
 
-app = tornado.web.Application(
-    handlers=[
-        (r"/", MainHandler),
-        (r"/user", UserHandler),
-        (r"/user/(\d+)", UserInfoHandler),
-    ]
-)
+def main():
+    app = tornado.web.Application(
+        handlers=[
+            (r"/", MainHandler),
+            (r"/user", UserHandler),
+            (r"/user/(\d+)", UserInfoHandler),
+        ]
+    )
+    app.listen(3000)
+    tornado.ioloop.IOLoop.current().start()
+
+if __name__ == '__main__':
+    main()
