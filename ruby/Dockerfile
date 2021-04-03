@@ -12,7 +12,7 @@ RUN bundle config set without 'development test'
 RUN bundle install
 
 {{#environment}}
-  ENV {{key}}={{value}}
+  ENV {{{.}}}
 {{/environment}}
 
 CMD {{{command}}}
