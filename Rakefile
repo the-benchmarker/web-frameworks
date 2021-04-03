@@ -178,10 +178,8 @@ task :config do
 end
 
 task :clean do
-  Dir.glob('**/.gitignore').each do |ignore_file|
+  Dir.glob('*/*/.gitignore').each do |ignore_file|
     directory = File.dirname(ignore_file)
-    next if directory.start_with?('lib')
-    next if directory.start_with?('bin')
 
     File.foreach(ignore_file) do |line|
       line.strip!
@@ -190,14 +188,14 @@ task :clean do
       next if line.start_with?('.env')
       next if line.empty?
 
-      Dir.glob(File.join(directory, line)).each do |file|
-        if File.exist?(file)
-          if File.file?(file)
-            warn "Delting file #{file}"
-            File.delete(file)
-          elsif File.directory?(file)
-            warn "Deleting directory #{file}"
-            FileUtils.rm_rf(file)
+      Dir.glob(File.join(directory, line)).each do |path|
+        if File.exist?(path)
+          if File.file?(path)
+            warn "Delting file #{path}"
+            File.delete(path)
+          elsif File.directory?(path)
+            warn "Deleting directory #{path}"
+            FileUtils.rm_rf(path)
           end
         end
       end
