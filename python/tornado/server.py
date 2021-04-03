@@ -32,7 +32,9 @@ def main():
             (r"/user/(\d+)", UserInfoHandler),
         ]
     )
-    app.listen(3000)
+    server = tornado.httpserver.HTTPServer(app)
+    server.bind(3000)
+    server.start(0)
     tornado.ioloop.IOLoop.current().start()
 
 if __name__ == '__main__':
