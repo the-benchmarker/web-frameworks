@@ -1,44 +1,5 @@
 # frozen_string_literal: true
 
-LANGUAGES_READY = %w[php ruby].freeze
-
-class ::Hash
-  def recursive_merge(h)
-    merge!(h) { |_key, _old, _new| _old.instance_of?(Hash) ? _old.recursive_merge(_new) : _new }
-  end
-end
-
-def get_config_from(main_config, directory)
-  language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
-
-  framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
-
-  config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-
-  keys = []
-  keys << language_config['default'].keys if language_config['default']
-  keys << framework_config['framework'].keys if framework_config['framework']
-
-  keys.flatten!.uniq.each do |key|
-    default = language_config.dig('default', key)
-
-    next unless default
-
-    base = framework_config.dig('framework', key)
-    if base
-      case base
-      when Array
-        default.push(*base)
-      when Hash
-        default.merge!(base)
-      end
-    end
-    framework_config['framework'][key] = default
-  end
-
-  config
-end
-
 namespace :ci do
   task :config do
     main_config = YAML.safe_load(File.read('config.yaml'))
@@ -62,7 +23,6 @@ namespace :ci do
 
     Dir.glob('*/config.yaml').each do |path|
       language, = path.split(File::Separator)
-      next unless LANGUAGES_READY.include?(language)
 
       definition[:blocks] << { 'name' => language, 'dependencies' => ['setup'],
                                'run' => { 'when' => "change_in('/#{language}/')" }, 'task' => { 'prologue' => { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk', 'sudo install wrk /usr/local/bin', 'cache restore bin', 'cache restore built-in', 'sem-service start postgres', 'createdb -U postgres -h 0.0.0.0 benchmark', 'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql', 'bundle config path .cache', 'bundle install', 'bundle exec rake config'] }, 'jobs' => [{ 'name' => 'setup', 'commands' => ['checkout'] }] } }
@@ -81,8 +41,8 @@ namespace :ci do
           }
         }
 
-        config = get_config_from(main_config, File.join(Dir.pwd, language, framework))
-
+        config = get_config_from( File.join(Dir.pwd, language, framework))
+        next unless config.dig('framework','engines')
         config.dig('framework', 'engines').each do |variant, _|
           block[:task][:jobs] << {
             name: variant,
