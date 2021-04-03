@@ -13,7 +13,7 @@ namespace :ci do
         'task' => {
           'jobs' => [{
             'name' => 'setup',
-            'commands' => ['checkout', 'cache store $SEMAPHORE_GIT_SHA .', 'sem-version ruby 3.0.0', 'sudo apt-get update',
+            'commands' => ['checkout', 'cache store $SEMAPHORE_GIT_SHA .', 'sem-version ruby 3.0', 'sudo apt-get update',
                            'sudo apt-get install build-essential libssl-dev git -y', 'git clone https://github.com/wg/wrk.git wrk', 'cd wrk && make', 'cache store wrk wrk', 'bundle config path .cache', 'bundle install', 'cache store built-in .cache', 'bundle exec rake config']
           }]
         }
@@ -24,7 +24,7 @@ namespace :ci do
       language, = path.split(File::Separator)
 
       definition[:blocks] << { 'name' => language, 'dependencies' => ['setup'],
-                               'run' => { 'when' => "change_in('/#{language}/')" }, 'task' => { 'prologue' => { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk', 'sem-version ruby 3.0.0', 'sudo install wrk /usr/local/bin', 'cache restore bin', 'cache restore built-in', 'sem-service start postgres', 'createdb -U postgres -h 0.0.0.0 benchmark', 'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql', 'bundle config path .cache', 'bundle install', 'bundle exec rake config'] }, 'jobs' => [{ 'name' => 'setup', 'commands' => ['checkout'] }] } }
+                               'run' => { 'when' => "change_in('/#{language}/')" }, 'task' => { 'prologue' => { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk', 'sem-version ruby 3.0', 'sudo install wrk /usr/local/bin', 'cache restore bin', 'cache restore built-in', 'sem-service start postgres', 'createdb -U postgres -h 0.0.0.0 benchmark', 'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql', 'bundle config path .cache', 'bundle install', 'bundle exec rake config'] }, 'jobs' => [{ 'name' => 'setup', 'commands' => ['checkout'] }] } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
 
