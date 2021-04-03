@@ -2,11 +2,10 @@ FROM crystallang/crystal:1.0.0-alpine
 
 WORKDIR /usr/src/app
 
-COPY . ./
+COPY src src/
+COPY shard.yml ./
 
-RUN apk add --update yaml-static
-
-RUN shards install
+RUN shards install --ignore-crystal-version
 RUN shards build --release --no-debug --static {{#build_opts}} {{{.}}} {{/build_opts}}
 
 FROM alpine
