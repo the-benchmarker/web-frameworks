@@ -3,8 +3,6 @@
 require 'dotenv'
 require 'active_support'
 
-Dir.glob('.tasks/*.rake').each { |r| load r }
-
 MANIFESTS = {
   container: '.Dockerfile',
   build: '.Makefile'
@@ -18,7 +16,9 @@ class ::Hash
   end
 end
 
-def get_config_from(main_config, directory)
+def get_config_from(directory)
+  main_config = YAML.safe_load(File.open(File.join(directory, '..', '..', 'config.yaml')))
+
   language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
 
   framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
@@ -43,6 +43,7 @@ def get_config_from(main_config, directory)
         default.merge!(base)
       end
     end
+
     framework_config['framework'][key] = default
   end
 
@@ -120,6 +121,7 @@ def create_dockerfile(directory, config, template)
     files = []
     paths = config.dig('framework', 'files')
     paths.push(*metadata['files']) if metadata['files']
+
     paths.each do |pattern|
       Dir.glob(File.join(directory, pattern)).each do |file|
         path = Pathname.new(file)
@@ -139,20 +141,21 @@ def create_dockerfile(directory, config, template)
     File.open(File.join(directory, ".Dockerfile.#{variant}"), 'w') do |f|
       f.write(Mustache.render(File.read(template),
                               config['framework']
-        .merge(metadata)
-        .merge('files' => files)
-        .merge('environment' => config.dig('framework', 'environment')&.map { |k, v| "#{k}=#{v}" })))
+                                .merge(metadata)
+                                .merge('files' => files)
+                                .merge('environment' => config.dig('framework', 'environment')&.map do |k, v|
+                                                          "#{k}=#{v}"
+                                                        end)))
     end
   end
 end
 
 task :config do
-  main_config = YAML.safe_load(File.open(File.join(Dir.pwd, 'config.yaml')))
-
   # Dir.glob(['php/chubbyphp/config.yaml', 'php/laravel/config.yaml', 'ruby/*/config.yaml']).each do |path|
-  Dir.glob(['php/laravel/config.yaml']).each do |path|
+  Dir.glob('*/*/config.yaml').each do |path|
     directory = File.dirname(path)
-    config = get_config_from(main_config, directory)
+    config = get_config_from(directory)
+    next unless config.dig('framework', 'engines')
 
     create_dockerfile(directory, config, File.join(directory, '..', 'Dockerfile'))
 
@@ -202,3 +205,5 @@ task :clean do
     end
   end
 end
+
+Dir.glob('.tasks/*.rake').each { |r| load r }
