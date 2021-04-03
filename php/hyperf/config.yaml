@@ -12,4 +12,4 @@ framework:
         - redis
         - swoole
 
-    command: php sbin/hyperf.php start
+      command: php sbin/hyperf.php start
