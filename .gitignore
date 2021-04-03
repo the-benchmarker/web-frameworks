@@ -3,8 +3,8 @@
 .DS_Store
 *.swp
 
-**/.Dockerfile*
 **/.Dockerfile.*
+**/.Makefile
 
 Gemfile.lock
 
