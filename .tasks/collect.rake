@@ -83,7 +83,7 @@ task :collect do
 
         info = lua_output.split(',')
         lua_keys.each_with_index do |key, index|
-          insert(db, framework_id, key, info[index].to_d, concurrency_level_id)
+          insert(db, framework_id, key, info[index].to_d, concurrency_level_id, variant_id)
         end
       end
     end
