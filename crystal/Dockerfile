@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY src src/
 COPY shard.yml ./
 
-RUN shards install --ignore-crystal-version
+RUN shards install
 RUN shards build --release --no-debug --static {{#build_opts}} {{{.}}} {{/build_opts}}
 
 FROM alpine
