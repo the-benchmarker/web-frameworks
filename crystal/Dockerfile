@@ -2,6 +2,8 @@ FROM crystallang/crystal:1.0.0-alpine
 
 WORKDIR /usr/src/app
 
+RUN apk add --update yaml-static
+
 COPY src src/
 COPY shard.yml ./
 
