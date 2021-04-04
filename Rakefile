@@ -23,7 +23,7 @@ def get_config_from(directory)
 
   framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
 
-  config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
+  config = main_config.recursive_merge(language_config).merge!('framework' => {})
 
   keys = []
   keys << language_config['default'].keys if language_config['default']
@@ -31,20 +31,8 @@ def get_config_from(directory)
 
   keys.flatten!.uniq.each do |key|
     default = language_config.dig('default', key)
-
-    next unless default
-
     base = framework_config.dig('framework', key)
-    if base
-      case base
-      when Array
-        default.push(*base)
-      when Hash
-        default.merge!(base)
-      end
-    end
-
-    framework_config['framework'][key] = default
+    config['framework'].merge!(key => (base || default))
   end
 
   config
