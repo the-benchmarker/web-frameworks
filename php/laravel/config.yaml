@@ -7,6 +7,13 @@ framework:
     APP_DEBUG: false
     APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
 
+  files:
+    - "**/*.php"
+    - composer.json
+    - artisan
+  excluded_files:
+    - config/laravels.php
+
   bootstrap:
     - mkdir bootstrap/cache
     - mkdir storage/framework/sessions -p
@@ -23,7 +30,7 @@ framework:
   engines:
     workerman:
       files:
-        - artisan
+        - config/laravels.php
       build_deps:
         - libevent-dev
 
@@ -39,7 +46,7 @@ framework:
         - rm -fr /usr/local/etc/php/conf.d/docker-php-ext-event.ini
         - echo 'extension=event.so' >> /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini
 
-      command: rm -fr config/laravels.php && php artisan servel start
+      command: php artisan servel start
 
     swoole:
       modules:
@@ -50,6 +57,7 @@ framework:
         - swoole
 
       files:
+        - config/laravels.php
         - bin/laravels
 
       command: php bin/laravels start
