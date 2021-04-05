@@ -3,5 +3,5 @@ language:
 
 default:
   files:
-    - "**/{[!laravels]*}.php"
+    - "**/*.php"
     - composer.json
