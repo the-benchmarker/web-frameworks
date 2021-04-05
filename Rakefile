@@ -3,8 +3,6 @@
 require 'dotenv'
 require 'active_support'
 
-Dir.glob('.tasks/*.rake').each { |r| load r }
-
 MANIFESTS = {
   container: '.Dockerfile',
   build: '.Makefile'
@@ -18,6 +16,28 @@ class ::Hash
   end
 end
 
+def get_config_from(directory)
+  main_config = YAML.safe_load(File.open(File.join(directory, '..', '..', 'config.yaml')))
+
+  language_config = YAML.safe_load(File.open(File.join(directory, '..', 'config.yaml')))
+
+  framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
+
+  config = main_config.recursive_merge(language_config).merge!('framework' => {})
+
+  keys = []
+  keys << language_config['default'].keys if language_config['default']
+  keys << framework_config['framework'].keys if framework_config['framework']
+
+  keys.flatten!.uniq.each do |key|
+    default = language_config.dig('default', key)
+    base = framework_config.dig('framework', key)
+    config['framework'].merge!(key => (base || default))
+  end
+
+  config
+end
+
 def default_provider
   if RbConfig::CONFIG['host_os'] =~ /linux/
     'docker'
@@ -26,7 +46,7 @@ def default_provider
   end
 end
 
-def commands_for(language, framework, provider)
+def commands_for(language, framework, variant, provider = default_provider)
   config = YAML.safe_load(File.read('config.yaml'))
 
   directory = Dir.pwd
@@ -34,12 +54,13 @@ def commands_for(language, framework, provider)
   language_config = YAML.safe_load(File.open(File.join(directory, language, 'config.yaml')))
   framework_config = YAML.safe_load(File.open(File.join(directory, language, framework, 'config.yaml')))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-  options = { language: language, framework: framework }
+  options = { language: language, framework: framework, variant: variant,
+              manifest: "#{MANIFESTS[:container]}.#{variant}" }
   commands = { build: [], collect: [], clean: [] }
 
   # Compile first, only for non containers
 
-  if app_config.key?('binaries') && !(provider.start_with?('docker') || provider.start_with?('podman'))
+  if app_config.key?('binaries')
     commands << "docker build -f #{MANIFESTS[:container]} -t #{language}.#{framework} ."
     commands << "docker run -td #{language}.#{framework} > cid.txt"
     app_config['binaries'].each do |out|
@@ -53,7 +74,7 @@ def commands_for(language, framework, provider)
   end
 
   config['providers'][provider]['build'].each do |cmd|
-    commands[:build] << Mustache.render(cmd, options.merge!(manifest: MANIFESTS[:container])).to_s
+    commands[:build] << Mustache.render(cmd, options).to_s
   end
 
   config['providers'][provider]['metadata'].each do |cmd|
@@ -72,9 +93,9 @@ def commands_for(language, framework, provider)
     commands[:build] << 'sleep 30'
   end
 
-  commands[:build] << 'curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
+  commands[:build] << "curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat #{language}/#{framework}/ip-#{variant}.txt`:3000 -v"
 
-  commands[:collect] << "LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
+  commands[:collect] << "HOSTNAME=`cat #{language}/#{framework}/ip-#{variant}.txt` VARIANT=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
 
   config.dig('providers', provider, 'clean').each do |cmd|
     commands[:clean] << Mustache.render(cmd, options).to_s
@@ -83,97 +104,78 @@ def commands_for(language, framework, provider)
   commands
 end
 
-def create_dockerfile(language, framework, **options)
-  directory = File.join(Dir.pwd, language, framework)
-  main_config = YAML.safe_load(File.open(File.join(Dir.pwd, 'config.yaml')))
-  language_config = YAML.safe_load(File.open(File.join(Dir.pwd, language, 'config.yaml')))
-  framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
-  config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-
-  if config.key?('sources')
+def create_dockerfile(directory, config, template)
+  config.dig('framework', 'engines').each do |variant, metadata|
     files = []
-    config['sources'].each do |path|
-      Dir.glob(File.join(directory, path)).each do |f|
-        if f =~ /^*\.\./
-          filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
-          File.open(File.join(directory, filename), 'w') { |stream| stream.write(File.read(f)) }
-          files << filename
-        else
-          files << f.gsub!(directory, '').gsub!(%r{^/}, '')
-        end
-      end
-    end
-    config['sources'] = files
-  end
-  if config.key?('files')
-    files = []
-    config['files'].each do |path|
-      Dir.glob(File.join(directory, path)).each do |f|
-        if f =~ /^*\.\./
-          filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
-          File.open(File.join(directory, filename), 'w') { |stream| stream.write(File.read(f)) }
-          files << filename
-        else
-          files << f.gsub!(directory, '').gsub!(%r{^/}, '')
-        end
-      end
-    end
-    config['files'] = files
-  end
+    paths = config.dig('framework', 'files')
+    paths.push(*metadata['files']) if metadata['files']
+    excluded_paths = config.dig('framework', 'excluded_files')
 
-  template = nil
-  if options[:provider].start_with?('docker') || options[:provider].start_with?('podman')
-    template = File.join(directory, '..', 'Dockerfile')
-  elsif config.key?('binaries')
-    template = File.join(directory, '..', '.build', options[:provider], 'Dockerfile')
-  end
+    paths.map { |path| path.prepend(directory, File::SEPARATOR) }
+    excluded_paths&.map { |path| path.prepend(directory, File::SEPARATOR) }
 
-  if config.key?('environment')
-    environment = []
-    config.fetch('environment').each do |key, value|
-      environment << "#{key} #{value}"
+    patterns = Dir.glob(paths)
+    patterns -= Dir.glob(excluded_paths) if excluded_paths
+
+    patterns.each do |file|
+      path = Pathname.new(file)
+      relative_path = path.relative_path_from(Pathname.new(directory))
+      variant_path = File.join(".#{variant}", relative_path)
+
+      source = if File.exist?(File.join(directory, variant_path))
+                 variant_path.to_s
+               else
+                 relative_path.to_s
+               end
+
+      files << { source: source, target: relative_path.to_s }
     end
-    config['environment'] = environment
-  end
 
-  if template
-    File.open(File.join(directory, MANIFESTS[:container]), 'w') do |f|
-      f.write(Mustache.render(File.read(template), config))
+    File.open(File.join(directory, ".Dockerfile.#{variant}"), 'w') do |f|
+      f.write(Mustache.render(File.read(template),
+                              config['framework']
+                                .merge(metadata)
+                                .merge('files' => files)
+                                .merge('environment' => config.dig('framework', 'environment')&.map do |k, v|
+                                                          "#{k}=#{v}"
+                                                        end)))
     end
   end
 end
 
 task :config do
-  provider = ENV.fetch('PROVIDER') { default_provider }
-  collect = ENV.fetch('COLLECT', 'on')
-
-  sieger_options = ENV.fetch('SIEGER_OPTIONS', '-r GET:/ -c 10')
-  clean = ENV.fetch('CLEAN', 'on')
-
+  # Dir.glob(['php/chubbyphp/config.yaml', 'php/laravel/config.yaml', 'ruby/*/config.yaml']).each do |path|
   Dir.glob('*/*/config.yaml').each do |path|
     directory = File.dirname(path)
-    language, framework = directory.split(File::Separator)
+    config = get_config_from(directory)
+    next unless config.dig('framework', 'engines')
 
-    create_dockerfile(language, framework, provider: provider)
+    create_dockerfile(directory, config, File.join(directory, '..', 'Dockerfile'))
+
+    language, framework = directory.split(File::SEPARATOR)
 
     makefile = File.open(File.join(language, framework, MANIFESTS[:build]), 'w')
 
-    commands_for(language, framework, provider).each do |target, commands|
-      makefile.write("#{target}:\n")
-      commands.each do |command|
-        makefile.write("\t #{command}\n")
+    config.dig('framework', 'engines').each do |variant, _|
+      commands_for(language, framework, variant).each do |target, commands|
+        makefile.write("#{target}.#{variant}:\n")
+        commands.each do |command|
+          makefile.write("\t #{command}\n")
+        end
       end
     end
+
+    command = config.dig('framework', 'engines').map { |v, _| ["build.#{v}", "collect.#{v}", "clean.#{v}"] }.join(' ')
+
+    makefile.write("run-all : #{command}\n")
 
     makefile.close
   end
 end
 
 task :clean do
-  Dir.glob('**/.gitignore').each do |ignore_file|
+  Dir.glob('*/*/.gitignore').each do |ignore_file|
     directory = File.dirname(ignore_file)
-    next if directory.start_with?('lib')
-    next if directory.start_with?('bin')
 
     File.foreach(ignore_file) do |line|
       line.strip!
@@ -182,17 +184,19 @@ task :clean do
       next if line.start_with?('.env')
       next if line.empty?
 
-      Dir.glob(File.join(directory, line)).each do |file|
-        if File.exist?(file)
-          if File.file?(file)
-            warn "Delting file #{file}"
-            File.delete(file)
-          elsif File.directory?(file)
-            warn "Deleting directory #{file}"
-            FileUtils.rm_rf(file)
+      Dir.glob(File.join(directory, line)).each do |path|
+        if File.exist?(path)
+          if File.file?(path)
+            warn "Delting file #{path}"
+            File.delete(path)
+          elsif File.directory?(path)
+            warn "Deleting directory #{path}"
+            FileUtils.rm_rf(path)
           end
         end
       end
     end
   end
 end
+
+Dir.glob('.tasks/*.rake').each { |r| load r }
