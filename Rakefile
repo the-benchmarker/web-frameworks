@@ -109,21 +109,26 @@ def create_dockerfile(directory, config, template)
     files = []
     paths = config.dig('framework', 'files')
     paths.push(*metadata['files']) if metadata['files']
+    excluded_paths = config.dig('framework', 'excluded_files')
 
-    paths.each do |pattern|
-      Dir.glob(File.join(directory, pattern)).each do |file|
-        path = Pathname.new(file)
-        relative_path = path.relative_path_from(Pathname.new(directory))
-        variant_path = File.join(".#{variant}", relative_path)
+    paths.map { |path| path.prepend(directory, File::SEPARATOR) }
+    excluded_paths&.map { |path| path.prepend(directory, File::SEPARATOR) }
 
-        source = if File.exist?(File.join(directory, variant_path))
-                   variant_path.to_s
-                 else
-                   relative_path.to_s
-                 end
+    patterns = Dir.glob(paths)
+    patterns -= Dir.glob(excluded_paths) if excluded_paths
 
-        files << { source: source, target: relative_path.to_s }
-      end
+    patterns.each do |file|
+      path = Pathname.new(file)
+      relative_path = path.relative_path_from(Pathname.new(directory))
+      variant_path = File.join(".#{variant}", relative_path)
+
+      source = if File.exist?(File.join(directory, variant_path))
+                 variant_path.to_s
+               else
+                 relative_path.to_s
+               end
+
+      files << { source: source, target: relative_path.to_s }
     end
 
     File.open(File.join(directory, ".Dockerfile.#{variant}"), 'w') do |f|
