@@ -1,3 +1,17 @@
 framework:
   website: lumen.laravel.com
   version: 8.2
+
+  engines:
+    swoole:
+      modules:
+        - pcntl
+        - posix
+
+      extensions:
+        - swoole
+
+      files:
+        - bin/laravels
+
+      command: rm -fr config/laravels.php && php artisan servel start
