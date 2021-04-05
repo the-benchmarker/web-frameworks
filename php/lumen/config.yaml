@@ -14,4 +14,4 @@ framework:
       files:
         - bin/laravels
 
-      command: php bin/laravels start
+      command: rm -fr config/laravels.php && php artisan servel start
