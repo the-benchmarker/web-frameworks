@@ -2,9 +2,6 @@ framework:
   website: laravel.com
   version: 8.35
 
-  files:
-    - artisan
-
   environment:
     APP_ENV: production
     APP_DEBUG: false
@@ -17,14 +14,16 @@ framework:
     - mkdir storage/framework/cache -p
 
     - chown -R www-data:www-data /usr/src/app
-    - find /usr/src/app -type f -exec chmod 644 {} \;
-    - find /usr/src/app -type d -exec chmod 755 {} \;
+    # - find /usr/src/app -type f -exec chmod 644 {} \;
+    # - find /usr/src/app -type d -exec chmod 755 {} \;
     # - chmod -R ug+rwx storage /usr/src/app/bootstrap/cache
     # - /usr/local/bin/php artisan config:cache
     # - /usr/local/bin/php artisan route:cache
 
   engines:
     workerman:
+      files:
+        - artisan
       build_deps:
         - libevent-dev
 
@@ -40,7 +39,7 @@ framework:
         - rm -fr /usr/local/etc/php/conf.d/docker-php-ext-event.ini
         - echo 'extension=event.so' >> /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini
 
-      command: php artisan servel start
+      command: rm -fr config/laravels.php && php artisan servel start
 
     swoole:
       modules:
