@@ -1,3 +1,28 @@
 framework:
   github: chubbyphp/chubbyphp-framework
   version: 3.4
+
+  engines:
+    workerman:
+      build_deps:
+        - libevent-dev
+      modules:
+        - pcntl
+        - posix
+        - sockets
+      extensions:
+        - event
+      extensions_fix:
+        - rm -fr /usr/local/etc/php/conf.d/docker-php-ext-event.ini
+        - echo 'extension=event.so' >> /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini
+      command: php public/index.php start
+    swoole:
+      extensions:
+        - swoole
+      command: php public/index.php
+    road-runner:
+      bootstrap:
+        - vendor/bin/rr get-binary
+      files:
+        - .rr.yaml
+      command: ./rr serve
