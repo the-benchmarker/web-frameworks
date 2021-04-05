@@ -5,6 +5,8 @@ framework:
 
   engines:
     reactphp:
+      files:
+        - bin/console
       build_deps:
         - libevent-dev
       modules:
@@ -15,4 +17,4 @@ framework:
       bootstrap:
         - mkdir -p var/cache && chmod 777 var/cache
         - mkdir -p var/log && chmod 777 var/log
-      command: bin/console server:run --quiet
+      command: bin/console server:run 0.0.0.0:3000 --quiet
