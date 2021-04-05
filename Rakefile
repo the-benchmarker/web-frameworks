@@ -105,18 +105,19 @@ def commands_for(language, framework, variant, provider = default_provider)
 end
 
 def create_dockerfile(directory, config, template)
+  paths = config.dig('framework', 'files')
+
+  excluded_paths = config.dig('framework', 'excluded_files')
+
+  paths.map { |path| path.prepend(directory, File::SEPARATOR) }
+  excluded_paths&.map { |path| path.prepend(directory, File::SEPARATOR) }
+
+  patterns = Dir.glob(paths)
+  patterns -= Dir.glob(excluded_paths) if excluded_paths
   config.dig('framework', 'engines').each do |variant, metadata|
+    patterns += Dir.glob(metadata['files'].map { |path| path.prepend(directory, File::SEPARATOR) }) if metadata['files']
+
     files = []
-    paths = config.dig('framework', 'files')
-    paths.push(*metadata['files']) if metadata['files']
-    excluded_paths = config.dig('framework', 'excluded_files')
-
-    paths.map { |path| path.prepend(directory, File::SEPARATOR) }
-    excluded_paths&.map { |path| path.prepend(directory, File::SEPARATOR) }
-
-    patterns = Dir.glob(paths)
-    patterns -= Dir.glob(excluded_paths) if excluded_paths
-
     patterns.each do |file|
       path = Pathname.new(file)
       relative_path = path.relative_path_from(Pathname.new(directory))
@@ -134,11 +135,11 @@ def create_dockerfile(directory, config, template)
     File.open(File.join(directory, ".Dockerfile.#{variant}"), 'w') do |f|
       f.write(Mustache.render(File.read(template),
                               config['framework']
-                                .merge(metadata)
-                                .merge('files' => files)
-                                .merge('environment' => config.dig('framework', 'environment')&.map do |k, v|
-                                                          "#{k}=#{v}"
-                                                        end)))
+        .merge(metadata)
+        .merge('files' => files)
+        .merge('environment' => config.dig('framework', 'environment')&.map do |k, v|
+                                  "#{k}=#{v}"
+                                end)))
     end
   end
 end
