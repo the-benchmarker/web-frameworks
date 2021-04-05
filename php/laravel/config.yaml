@@ -13,6 +13,7 @@ framework:
     - artisan
   excluded_files:
     - config/laravels.php
+    - config/servel.php
 
   bootstrap:
     - mkdir bootstrap/cache
@@ -30,7 +31,7 @@ framework:
   engines:
     workerman:
       files:
-        - config/laravels.php
+        - config/servel.php
       build_deps:
         - libevent-dev
 
