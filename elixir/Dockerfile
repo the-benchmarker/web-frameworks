@@ -1,4 +1,4 @@
-FROM elixir:1.11-alpine AS build
+FROM elixir:1.12-alpine AS build
 
 # Update system deps
 RUN apk add --update git build-base
