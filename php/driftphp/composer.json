@@ -11,7 +11,8 @@
     "symfony/framework-bundle": "*",
     "symfony/yaml": "*",
     "drift/http-kernel": "~0.1.7",
-    "drift/server": "~0.1.17"
+    "drift/server": "~0.1.23",
+    "react/http": "dev-master#7aa08f01583c765261d08d1191f0239324f18012 as 1.2.1"
   },
   "autoload": {
     "psr-4": {
