@@ -10,7 +10,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Lib
   build-depends:       base >= 4.7 && < 5
-                     , servant >= 0.17 && < 0.18
+                     , servant >= 0.18 && < 0.19
                      , servant-server
                      , wai
                      , warp
