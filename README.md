@@ -198,7 +198,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 94 | javascript (14.16)| [muneem](https://github.com/node-muneem/muneem) (2.4) | 56 882.00 | 64 025.68 | 63 193.92 |
 | 95 | javascript (14.16)| [foxify](https://foxify.js.org) (0.1) | 53 206.87 | 59 264.32 | 58 973.89 |
 | 96 | clojure (1.1)| [coast](https://coastonclojure.com) (1.0) | 52 784.29 | 53 927.21 | 53 733.39 |
-| 97 | swift (5.3)| [vapor](https://vapor.codes) (4.43) | 49 945.17 | 52 270.39 | 52 133.94 |
+| 97 | swift (5.3)| [vapor](https://vapor.codes) (4.44) | 49 945.17 | 52 270.39 | 52 133.94 |
 | 98 | php (7.4)| [chubbyphp-workerman](https://github.com/chubbyphp/chubbyphp-framework) (3.4) | 49 550.41 | 53 141.74 | 53 783.54 |
 | 99 | python (3.9)| [apidaora](https://github.com/dutradda/apidaora) (0.28) | 49 159.57 | 55 680.73 | 56 136.82 |
 | 100 | swift (5.3)| [kitura-nio](https://kitura.dev) (2.9) | 48 727.99 | 48 343.75 | 47 945.49 |
@@ -227,15 +227,15 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 123 | php (7.4)| [comet](https://github.com/gotzmann/comet) (1.2) | 36 210.20 | 37 140.07 | 36 835.13 |
 | 124 | scala (2.13)| [play](https://playframework.com) (2.8) | 35 915.92 | 39 389.06 | 38 892.59 |
 | 125 | javascript (14.16)| [moleculer](https://moleculer.services) (0.14) | 35 805.74 | 38 994.40 | 38 199.33 |
-| 126 | crystal (0.36)| [orion](https://github.com/obsidian/orion) (3.0) | 34 954.74 | 35 362.67 | 31 837.74 |
-| 127 | dart (2.12)| [aqueduct](https://aqueduct.io) (3.3) | 34 631.08 | 34 577.60 | 34 248.84 |
-| 128 | clojure (1.1)| [luminus](https://luminusweb.com) (4.0) | 33 806.41 | 36 538.59 | 36 348.60 |
+| 126 | clojure (1.1)| [luminus](https://luminusweb.com) (4.0) | 35 410.16 | 37 449.94 | 37 376.46 |
+| 127 | crystal (0.36)| [orion](https://github.com/obsidian/orion) (3.0) | 34 954.74 | 35 362.67 | 31 837.74 |
+| 128 | dart (2.12)| [aqueduct](https://aqueduct.io) (3.3) | 34 631.08 | 34 577.60 | 34 248.84 |
 | 129 | javascript (14.16)| [fyrejet-uwebsockets](https://github.com/fyrejet/fyrejet) (3.1) | 33 710.12 | 35 616.21 | 35 582.18 |
 | 130 | r (4.0)| [rserve](https://rforge.net/Rserve/) (1.7) | 32 923.37 | 24 123.66 | 25 732.92 |
 | 131 | python (3.9)| [index.py](https://index-py.abersheeran.com) (0.17) | 32 892.74 | 31 839.42 | 30 637.71 |
 | 132 | python (3.9)| [emmett](https://emmett.sh) (2.2) | 32 632.01 | 39 464.96 | 37 371.58 |
 | 133 | elixir (1.12)| [phoenix](https://phoenixframework.org) (1.5) | 32 184.54 | 34 945.19 | 34 907.13 |
-| 134 | haskell (8.8)| [servant](https://servant.dev) (0.17) | 32 031.60 | 29 984.80 | 28 618.47 |
+| 134 | haskell (8.8)| [servant](https://docs.servant.dev) (0.18) | 32 031.60 | 29 984.80 | 28 618.47 |
 | 135 | javascript (14.16)| [restify](https://restify.com) (8.5) | 31 487.68 | 34 384.67 | 34 088.69 |
 | 136 | fsharp (5.0)| [giraffe](https://github.com/giraffe-fsharp/Giraffe) (4.1) | 29 657.39 | 29 563.18 | 29 059.56 |
 | 137 | crystal (0.36)| [shivneri](https://github.com/ujjwalguptaofficial/shivneri) (0.17) | 29 501.80 | 28 178.90 | 22 664.88 |
@@ -254,11 +254,11 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 150 | java (11)| [jersey3-grizzly2](https://eclipse-ee4j.github.io/jersey) (3) | 23 033.75 | 32 045.91 | 31 882.71 |
 | 151 | java (11)| [jersey-grizzly2](https://eclipse-ee4j.github.io/jersey) (2.33) | 22 893.81 | 30 753.54 | 30 641.14 |
 | 152 | python (3.9)| [flask](https://flask.pocoo.org) (1.1) | 22 602.40 | 25 350.25 | 24 415.15 |
-| 153 | php (7.4)| [slim-swoole](https://slimframework.com) (4.7) | 21 691.18 | 25 602.80 | 25 385.42 |
-| 154 | ruby (3.0)| [syro](https://github.com/soveran/syro) (3.2) | 21 549.33 | 20 730.14 | 20 911.76 |
-| 155 | nim (1.4)| [rosencrantz](https://github.com/andreaferretti/rosencrantz) (0.4) | 21 480.32 | 18 782.16 | 17 456.16 |
-| 156 | ruby (3.0)| [hanami-api](https://hanamirb.org) (0.1) | 21 364.36 | 20 501.10 | 20 534.54 |
-| 157 | ruby (3.0)| [roda](https://roda.jeremyevans.net) (3.42) | 20 376.59 | 19 764.07 | 19 533.11 |
+| 153 | ruby (3.0)| [roda](https://roda.jeremyevans.net) (3.43) | 22 190.69 | 21 640.45 | 21 341.36 |
+| 154 | php (7.4)| [slim-swoole](https://slimframework.com) (4.7) | 21 691.18 | 25 602.80 | 25 385.42 |
+| 155 | ruby (3.0)| [syro](https://github.com/soveran/syro) (3.2) | 21 549.33 | 20 730.14 | 20 911.76 |
+| 156 | nim (1.4)| [rosencrantz](https://github.com/andreaferretti/rosencrantz) (0.4) | 21 480.32 | 18 782.16 | 17 456.16 |
+| 157 | ruby (3.0)| [hanami-api](https://hanamirb.org) (0.1) | 21 364.36 | 20 501.10 | 20 534.54 |
 | 158 | javascript (14.16)| [feathersjs](https://feathersjs.com) (4.5) | 19 622.62 | 19 618.15 | 19 412.10 |
 | 159 | nim (1.4)| [akane](https://github.com/Ethosa/akane) (0.1) | 19 278.22 | 17 247.14 | 16 095.88 |
 | 160 | javascript (14.16)| [express](https://expressjs.com) (4.17) | 19 117.54 | 19 059.48 | 18 661.69 |
@@ -318,11 +318,11 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 214 | python (3.9)| [cyclone](https://cyclone.io) (1.3) | 2 338.34 | 2 315.88 | 2 297.83 |
 | 215 | perl (5.32)| [dancer2](https://perldancer.org) (0.3) | 2 001.81 | 1 993.11 | 853.75 |
 | 216 | python (3.9)| [django-ninja](https://django-ninja.rest-framework.com) (0.12) | 1 961.98 | 2 599.55 | 2 511.67 |
-| 217 | r (4.0)| [restrserve](https://restrserve.org) (0.3) | 1 820.13 | 1 775.33 | 1 784.65 |
+| 217 | r (4.0)| [restrserve](https://restrserve.org) (0.4) | 1 820.13 | 1 775.33 | 1 784.65 |
 | 218 | r (4.0)| [httpuv](https://github.com/rstudio/httpuv) (1.5) | 1 810.73 | 1 741.67 | 1 684.50 |
 | 219 | php (7.4)| [laminas](https://getlaminas.org) (3.2) | 1 741.32 | 1 763.24 | 1 765.97 |
 | 220 | python (3.9)| [nameko](https://github.com/nameko/nameko) (2.13) | 1 693.27 | 1 633.58 | 1 615.32 |
-| 221 | php (7.4)| [laravel](https://laravel.com) (8.36) | 1 489.24 | 1 490.85 | 1 498.22 |
+| 221 | php (7.4)| [laravel](https://laravel.com) (8.37) | 1 494.34 | 1 503.23 | 1 504.42 |
 | 222 | python (3.9)| [klein](https://github.com/twisted/klein) (20.6) | 1 478.95 | 1 511.37 | 1 496.63 |
 | 223 | php (7.4)| [codeigniter4](https://codeigniter.com) (4.1) | 1 206.07 | 1 228.74 | 1 227.87 |
 | 224 | php (7.4)| [unic](https://unicframework.github.io/docs) (1.0) | 466.73 | 495.17 | 425.34 |
