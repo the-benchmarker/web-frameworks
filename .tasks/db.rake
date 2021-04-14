@@ -144,6 +144,6 @@ namespace :db do
       end
     end
     File.open('data.json','w').write(JSON.pretty_generate(data))
-    File.open('data.min.json','w').write(data)
+    File.open('data.min.json','w').write(data.to_json)
   end
 end
