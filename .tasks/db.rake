@@ -129,6 +129,7 @@ namespace :db do
           data[:frameworks] << {
             id: framework_id,
             version: framework_config.dig('framework', 'version'),
+            label: framework, 
             language: language,
             website: website
           }
