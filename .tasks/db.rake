@@ -143,6 +143,7 @@ namespace :db do
         next
       end
     end
+    data.merge!(updated_at: Time.now.utc)
     File.open('data.json','w').write(JSON.pretty_generate(data))
     File.open('data.min.json','w').write(data.to_json)
   end
