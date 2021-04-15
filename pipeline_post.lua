@@ -11,7 +11,7 @@ wrk.headers["Content-Type"] = "application/x-www-form-urlencoded"
 -- total socket write errors
 -- total http errors (status > 399)
 -- total request timeouts
--- minimim latency
+-- minimum latency
 -- maximum latency
 -- average latency
 -- standard deviation
