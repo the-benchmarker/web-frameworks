@@ -69,7 +69,7 @@ task :collect do
         lua_output = stderr.read
         lua_keys = ['duration_ms', 'total_requests', 'total_requests_per_s', 'total_bytes_received',
          'socket_connection_errors', 'socket_read_errors', 'socket_write_errors',
-         'http_errors', 'request_timeouts', 'minimim_latency', 'maximum_latency',
+         'http_errors', 'request_timeouts', 'minimum_latency', 'maximum_latency',
          'average_latency', 'standard_deviation', 'percentile_50',
          'percentile_75', 'percentile_90', 'percentile_99', 'percentile_99.999']
 
