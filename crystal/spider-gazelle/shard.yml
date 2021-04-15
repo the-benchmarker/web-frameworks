@@ -6,8 +6,8 @@ licence: MIT
 dependencies:
   action-controller:
     github: spider-gazelle/action-controller
-    version: ~> 1.6.0
+    version: ~> 4.2.0
 
 targets:
-  app:
+  server:
     main: src/app.cr

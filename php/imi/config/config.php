@@ -20,10 +20,28 @@ return [
         'type'      =>  Imi\Server\Type::HTTP,
         'host'      =>  '0.0.0.0',
         'port'      =>  3000,
+        'mode'      =>  SWOOLE_BASE,
         'configs'   =>  [
             'worker_num'        => swoole_cpu_num() * 2,
+            'enable_coroutine' => true,
             'open_tcp_nodelay'  => true,
             'tcp_fastopen'      => true,
+            'log_file' => '/dev/null',
+            'log_level' => SWOOLE_LOG_ERROR,
+        ],
+    ],
+
+    'imi'   =>  [
+        'beanScan'  =>  [
+            'Imi\Config',
+            'Imi\Bean',
+            'Imi\Aop',
+            'Imi\Annotation',
+            'Imi\Server',
+            'Imi\Log',
+            'Imi\Listener',
+            'Imi\Tool',
+            'Imi\Process',
         ],
     ],
 ];

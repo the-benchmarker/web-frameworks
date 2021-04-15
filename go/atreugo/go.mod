@@ -1,4 +1,3 @@
 module main
 
-
-require github.com/savsgio/atreugo/v8 v8.2.1
+require github.com/savsgio/atreugo/v11 v11.6.4

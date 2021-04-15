@@ -1,15 +1,13 @@
-extern crate gotham;
-#[macro_use]
-extern crate gotham_derive;
-extern crate hyper;
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
+#![warn(rust_2018_idioms)]
 
-use gotham::helpers::http::response;
-use gotham::router::builder::*;
-use gotham::state::*;
-use hyper::{Body, Response, StatusCode};
+use gotham::{
+    helpers::http::response,
+    hyper::{Body, Response, StatusCode},
+    router::builder::*,
+    state::*,
+};
+use gotham_derive::{StateData, StaticResponseExtender};
+use serde::Deserialize;
 
 fn main() {
     let addr = "0.0.0.0:3000";

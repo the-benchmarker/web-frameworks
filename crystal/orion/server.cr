@@ -14,12 +14,5 @@ router MyApplication do
   end
 end
 
-puts MyApplication.visualize
 
-System.cpu_count.times do |i|
-  Process.fork do
-    MyApplication.listen(host: "0.0.0.0", port: 3000, reuse_port: true)
-  end
-end
-
-sleep
+MyApplication.start(workers: System.cpu_count, host: "0.0.0.0", port: 3000, reuse_port: true)

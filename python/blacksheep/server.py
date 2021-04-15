@@ -1,5 +1,9 @@
+# Disable all logging features
+import logging
+
+logging.disable()
+
 from blacksheep.server import Application
-import multiprocessing
 from blacksheep.server.responses import text
 
 

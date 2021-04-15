@@ -1,0 +1,11 @@
+framework:
+  github: sunrise-php/http-router
+  version: 2.6
+
+php_ext:
+  - apcu
+
+before_command:
+  - ./vendor/bin/rr get-binary
+
+command: ./rr serve

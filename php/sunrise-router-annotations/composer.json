@@ -1,0 +1,12 @@
+{
+  "require": {
+    "sunrise/http-router": "~2.6.0",
+    "sunrise/http-factory": "*",
+    "symfony/cache": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}

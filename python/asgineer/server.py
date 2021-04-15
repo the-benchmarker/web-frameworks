@@ -1,3 +1,8 @@
+# Disable all logging features
+import logging
+
+logging.disable()
+
 import asgineer
 
 
@@ -13,6 +18,7 @@ async def app(request):
         return ""
     else:
         return 404, {}, f"404 not found {request.path}"
+
 
 async def output_second_param(path):
     params = path.split("/")

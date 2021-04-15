@@ -1,0 +1,23 @@
+{
+  "name": "bajb/cubex-min",
+  "license": "MIT",
+  "type": "project",
+  "prefer-stable": true,
+  "require": {
+    "cubex/framework": "~4.16.0",
+    "packaged/polyfill-ctype": "*",
+    "packaged/polyfill-mbstring": "*",
+    "packaged/polyfill-intl": "*",
+    "packaged/polyfill-php71": "*",
+    "packaged/polyfill-php72": "*",
+    "packaged/polyfill-php73": "*",
+    "packaged/polyfill-php74": "*",
+    "packaged/polyfill-php80": "*",
+    "packaged/polyfill-php81": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "CubexMin\\": "src/"
+    }
+  }
+}

@@ -16,9 +16,9 @@ Agoo::Log.configure(dir: '',
                       push: false
                     })
 
-worker_count = 4
-worker_count = ENV['AGOO_WORKER_COUNT'].to_i if ENV.key?('AGOO_WORKER_COUNT')
-Agoo::Server.init(3000, '.', thread_count: 0, worker_count: worker_count)
+worker_count = `nproc`.to_i
+worker_count = 1 if worker_count < 1
+Agoo::Server.init(3000, '.', thread_count: 0, worker_count: worker_count, poll_timeout: 0.1)
 
 # Empty response.
 class Empty

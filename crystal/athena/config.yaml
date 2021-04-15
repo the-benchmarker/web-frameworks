@@ -1,3 +1,6 @@
 framework:
-  github: blacksmoke16/athena
-  version: 0.7
+  github: athena-framework/athena
+  version: 0.13
+
+environment:
+  ATHENA_ENV: production

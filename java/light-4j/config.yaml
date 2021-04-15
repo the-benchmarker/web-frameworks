@@ -1,0 +1,19 @@
+framework:
+  website: doc.networknt.com
+  version: 2.0
+
+build:
+  - mvn clean package -Prelease
+
+sources:
+  - src/**/*.java
+  - src/**/*.yml
+  - pom.xml
+
+files:
+  - target/benchmark-1.0.0.jar
+
+command: >
+  /usr/bin/java
+  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts
+  -jar target/benchmark-1.0.0.jar

@@ -16,7 +16,7 @@ static void empty_handler(agooReq req) {
     emptyResp = agoo_respond(200, NULL, 0, NULL);
     agoo_text_ref(emptyResp);
   }
-  agoo_res_set_message(req->res, emptyResp);
+  agoo_res_message_push(req->res, emptyResp);
 }
 
 static int user_off = 6;
@@ -25,7 +25,7 @@ static void user_handler(agooReq req) {
   agooText t = agoo_respond(200, req->path.start + user_off,
                             req->path.len - user_off, NULL);
 
-  agoo_res_set_message(req->res, t);
+  agoo_res_message_push(req->res, t);
 }
 
 int main(int argc, char **argv) {
@@ -36,7 +36,8 @@ int main(int argc, char **argv) {
   // to work pretty well on a 4 core (8 processor) machine. It is the ratio of
   // thread to processors.
   agoo_io_loop_ratio = 1.0;
-
+  agoo_poll_wait = 0.01;
+  
   if (AGOO_ERR_OK != agoo_init(&err, "simple")) {
     printf("Failed to initialize Agoo. %s\n", err.msg);
     return err.code;

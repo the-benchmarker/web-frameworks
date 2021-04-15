@@ -7,11 +7,10 @@ authors:
 license: MIT
 
 targets:
-
   server:
     main: src/amber.cr
 
 dependencies:
   amber:
     github: amberframework/amber
-    version: ~> 0.30.0
+    version: ~> 0.36.0

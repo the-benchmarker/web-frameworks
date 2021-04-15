@@ -6,9 +6,9 @@ use Laravel\Lumen\Routing\Controller;
 
 class UserController extends Controller
 {
-    public function show(int $userId)
+    public function show(int $id)
     {
-        return $userId;
+        return $id;
     }
 
     public function create()
