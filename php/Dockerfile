@@ -24,6 +24,10 @@ WORKDIR /usr/src/app
 
 COPY . ./
 
+{{#docker_fix}}
+  RUN {{{.}}}
+{{/docker_fix}}
+
 {{^standalone}}
 RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev --prefer-dist --classmap-authoritative
