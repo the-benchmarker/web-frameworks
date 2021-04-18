@@ -4,6 +4,5 @@ framework:
 
 php_mod:
   - pcntl
-  - posix
 
 command: php index.php start
