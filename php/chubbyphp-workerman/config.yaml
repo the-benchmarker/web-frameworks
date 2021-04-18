@@ -13,9 +13,4 @@ php_mod:
 php_ext:
   - event
 
-docker_fix:
-  - rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini
-  - sed -e '1i extension=sockets' /usr/local/etc/php/conf.d/docker-php-ext-event.ini > /tmp/file
-  - mv /tmp/file /usr/local/etc/php/conf.d/docker-php-ext-event.ini
-
 command: php public/index.php start
