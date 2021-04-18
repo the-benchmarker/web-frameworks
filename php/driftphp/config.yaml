@@ -7,7 +7,6 @@ build_deps:
 
 php_mod:
   - pcntl
-  - posix
   - sockets
 
 command: php vendor/bin/server run 0.0.0.0:3000 --env=prod --quiet --workers=-1
