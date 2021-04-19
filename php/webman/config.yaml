@@ -7,7 +7,6 @@ build_deps:
 
 php_mod:
   - pcntl
-  - posix
   - sockets
 
 php_ext:

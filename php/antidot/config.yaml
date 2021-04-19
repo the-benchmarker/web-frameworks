@@ -9,7 +9,6 @@ build_deps:
 php_mod:
   - intl
   - pcntl
-  - posix
   - sockets
 
 before_command:
