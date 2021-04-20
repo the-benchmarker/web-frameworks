@@ -322,7 +322,7 @@ make -f ${FRAMEWORK}/.Makefile collect
 | 218 | r (4.0)| [httpuv](https://github.com/rstudio/httpuv) (1.5) | 1 810.87 | 1 758.78 | 1 685.29 |
 | 219 | python (3.9)| [nameko](https://github.com/nameko/nameko) (2.13) | 1 757.45 | 1 685.17 | 1 699.55 |
 | 220 | php (7.4)| [laminas](https://getlaminas.org) (3.2) | 1 736.57 | 1 767.20 | 1 768.44 |
-| 221 | php (7.4)| [laravel](https://laravel.com) (8.38) | 1 481.82 | 1 501.48 | 1 488.41 |
+| 221 | php (7.4)| [laravel](https://laravel.com) (8.38) | 1 501.13 | 1 515.37 | 1 516.46 |
 | 222 | python (3.9)| [klein](https://github.com/twisted/klein) (20.6) | 1 321.71 | 1 346.57 | 1 334.38 |
 | 223 | php (7.4)| [codeigniter4](https://codeigniter.com) (4.1) | 1 210.84 | 1 230.40 | 1 231.24 |
 | 224 | php (7.4)| [unic](https://unicframework.github.io/docs) (1.0) | 494.08 | 477.95 | 385.74 |
