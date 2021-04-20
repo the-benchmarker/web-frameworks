@@ -118,6 +118,8 @@ namespace :db do
         framework = info.delete :framework
         framework_config = YAML.safe_load(File.read(File.join(language, framework, 'config.yaml')))
         language_config = YAML.safe_load(File.read(File.join(language, 'config.yaml')))
+        scheme = 'https'
+        scheme = 'http' if framework_config['framework'].key?('unsecure')
         website = if framework_config['framework'].key?('github')
                     "github.com/#{framework_config['framework']['github']}"
                   elsif framework_config['framework'].key?('gitlab')
@@ -129,12 +131,12 @@ namespace :db do
           data[:frameworks] << {
             id: framework_id,
             version: framework_config.dig('framework', 'version'),
-            label: framework, 
+            label: framework,
             language: language,
-            website: website
+            website:  scheme + "://" + website
           }
         end
-        unless data[:languages].map{|row|row[:label]}.to_a.include?(language) 
+        unless data[:languages].map{|row|row[:label]}.to_a.include?(language)
           data[:languages] << {
             label: language,
             version: language_config.dig('provider', 'default', 'language')
