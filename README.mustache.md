@@ -27,9 +27,9 @@ There are many frameworks, each one comes with its own advantages and drawbacks.
 
 #### What is a framework ?
 
-A framework is a set of components working together. The main intention behind a framework is to facilitate (app or service) creation. The way a framework help any developer could vary from one to an other.
+A framework is a set of components working together. The main intention behind a framework is to facilitate (app or service) creation. The way a framework helps any developer may vary from one to another.
 
-A majority of frameworks could be splitted in 2 parts :
+A majority of frameworks could be split in 2 parts :
 
 + **full-stack** meaning it provides all aspects (-stacks-) from data layer to sometimes deployment
 + **micro** meaning it provides only the routing part, and let the developer choose any other component for the others
