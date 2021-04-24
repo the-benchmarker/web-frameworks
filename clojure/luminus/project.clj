@@ -12,7 +12,7 @@
                  [luminus/ring-ttl-session "0.3.3"]
                  [markdown-clj "1.10.5"]
                  [metosin/muuntaja "0.6.8"]
-                 [metosin/reitit "0.5.12"]
+                 [metosin/reitit "0.5.13"]
                  [metosin/ring-http-response "0.9.2"]
                  [mount "0.1.16"]
                  [nrepl "0.8.3"]
@@ -49,7 +49,7 @@
 
    :project/dev  {:jvm-opts ["-Dconf=dev-config.edn" ]
                   :dependencies [[pjstadig/humane-test-output "0.11.0"]
-                                 [prone "2020-01-17"]
+                                 [prone "2021-04-23"]
                                  [ring/ring-devel "1.9.2"]
                                  [ring/ring-mock "0.4.0"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.24.1"]
