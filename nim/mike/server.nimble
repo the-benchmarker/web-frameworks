@@ -8,4 +8,4 @@ license = "MIT"
 # Dependencies
 
 requires "nim >= 1.4.2"
-requires "https://github.com/ire4ever1190/mike.git == 1.1.0"
+requires "https://github.com/ire4ever1190/mike.git >= 1.1 & < 1.2"
