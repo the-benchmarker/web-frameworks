@@ -19,7 +19,6 @@ RUN nimble install -y
 RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
     --excessiveStackTrace:off \
     -d:release \
-    -d:danger \
     --passC:-flto \
     --passL:-flto \
     --threads:on \
