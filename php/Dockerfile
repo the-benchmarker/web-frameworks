@@ -7,6 +7,10 @@ WORKDIR /usr/src/app
 
 RUN ln -sfv /usr/bin/pecl8 /usr/local/bin/pecl
 
+{{#environment}}
+ENV {{{.}}}
+{{/environment}}
+
 {{#build_deps}}
   RUN apk add {{{.}}}
 {{/build_deps}}
@@ -38,10 +42,6 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
   RUN composer install --no-dev --prefer-dist --classmap-authoritative
   RUN composer dumpautoload -o
 {{/standalone}}
-
-{{#environment}}
-ENV {{{.}}}
-{{/environment}}
 
 {{#before_command}}
   RUN {{{.}}}
