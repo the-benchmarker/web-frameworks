@@ -1,6 +1,6 @@
 import Hummingbird
 
-func runApp() {
+func runApp() throws {
     let env = HBEnvironment()
     let serverHostName = env.get("SERVER_HOSTNAME") ?? "127.0.0.1"
     let serverPort = env.get("SERVER_PORT", as: Int.self) ?? 8080
@@ -18,8 +18,8 @@ func runApp() {
         return HBResponse(status: .ok)
     }
     
-    app.start()
+    try app.start()
     app.wait()
 }
 
-runApp()
+try runApp()
