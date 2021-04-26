@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY Package.swift ./
 COPY Sources/ ./Sources/
 
-RUN swift build -c release
+RUN swift build -c release -Xswiftc -enforce-exclusivity=unchecked
 
 FROM swift:5.3-slim
 {{#environment}}
