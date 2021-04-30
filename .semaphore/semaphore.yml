@@ -975,6 +975,36 @@ blocks:
         value: '64'
       - name: ROUTES
         value: GET:/
+    - name: baize(asgi)
+      commands:
+      - cd python/baize(asgi) && make build  -f .Makefile  && cd -
+      - FRAMEWORK=python/baize(asgi) bundle exec rspec .spec
+      - make  -f python/baize(asgi)/.Makefile collect
+      - bundle exec rake db:export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+    - name: baize(wsgi)
+      commands:
+      - cd python/baize(wsgi) && make build  -f .Makefile  && cd -
+      - FRAMEWORK=python/baize(wsgi) bundle exec rspec .spec
+      - make  -f python/baize(wsgi)/.Makefile collect
+      - bundle exec rake db:export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
     - name: quart
       commands:
       - cd python/quart && make build  -f .Makefile  && cd -
