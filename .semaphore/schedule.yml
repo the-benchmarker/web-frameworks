@@ -961,11 +961,11 @@ blocks:
         value: '64'
       - name: ROUTES
         value: GET:/
-    - name: baize(asgi)
+    - name: baize-asgi
       commands:
-      - cd python/baize(asgi) && make build  -f .Makefile  && cd -
-      - FRAMEWORK=python/baize(asgi) bundle exec rspec .spec
-      - make  -f python/baize(asgi)/.Makefile collect
+      - cd python/baize-asgi && make build  -f .Makefile  && cd -
+      - FRAMEWORK=python/baize-asgi bundle exec rspec .spec
+      - make  -f python/baize-asgi/.Makefile collect
       - bundle exec rake db:export
       env_vars:
       - name: DATABASE_URL
@@ -976,11 +976,11 @@ blocks:
         value: '64'
       - name: ROUTES
         value: GET:/
-    - name: baize(wsgi)
+    - name: baize-wsgi
       commands:
-      - cd python/baize(wsgi) && make build  -f .Makefile  && cd -
-      - FRAMEWORK=python/baize(wsgi) bundle exec rspec .spec
-      - make  -f python/baize(wsgi)/.Makefile collect
+      - cd python/baize-wsgi && make build  -f .Makefile  && cd -
+      - FRAMEWORK=python/baize-wsgi bundle exec rspec .spec
+      - make  -f python/baize-wsgi/.Makefile collect
       - bundle exec rake db:export
       env_vars:
       - name: DATABASE_URL
