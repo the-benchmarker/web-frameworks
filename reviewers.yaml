@@ -68,6 +68,10 @@ python:
     - gi0baro
   index.py:
     - abersheeran
+  baize-wsgi:
+    - abersheeran
+  baize-asgi:
+    - abersheeran
   blacksheep: RobertoPrevato
 swift:
   vapor-framework:
