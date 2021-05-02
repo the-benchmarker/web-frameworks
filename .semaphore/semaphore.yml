@@ -16,7 +16,6 @@ blocks:
       commands:
       - checkout
       - cache store $SEMAPHORE_GIT_SHA .
-      - sem-version ruby 3.0.0
       - sudo apt-get update
       - sudo apt-get install build-essential libssl-dev git -y
       - git clone https://github.com/wg/wrk.git wrk
@@ -36,7 +35,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -60,7 +58,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -84,7 +81,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -108,7 +104,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -132,7 +127,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -156,7 +150,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -180,7 +173,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -204,7 +196,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -228,7 +219,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -252,7 +242,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -276,7 +265,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -300,7 +288,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -324,7 +311,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -348,7 +334,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -372,7 +357,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -396,7 +380,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -420,7 +403,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -709,7 +691,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -733,7 +714,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -757,7 +737,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -781,7 +760,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -1359,7 +1337,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -1383,7 +1360,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
@@ -1407,7 +1383,6 @@ blocks:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
-      - sem-version ruby 3.0.0
       - sudo install wrk /usr/local/bin
       - cache restore bin
       - cache restore built-in
