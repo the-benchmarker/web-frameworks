@@ -1,3 +1,24 @@
 framework:
   website: lumen.laravel.com
   version: 8.2
+
+  files:
+    - "**/*.php"
+    - composer.json
+    - artisan
+  excluded_files:
+    - config/laravels.php
+
+  engines:
+    swoole:
+      modules:
+        - pcntl
+        - posix
+
+      extensions:
+        - swoole
+
+      files:
+        - bin/laravels
+
+      command: php artisan servel start
