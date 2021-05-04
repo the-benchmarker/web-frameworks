@@ -76231,5 +76231,17 @@
       "version": 14.16
     }
   ],
-  "updated_at": "2021-05-04 05:22:51 UTC"
+  "updated_at": "2021-05-04 05:47:44 UTC",
+  "hardware": {
+    "cpus": 8,
+    "memory": 16282676,
+    "cpu_name": "AMD FX-8320E Eight-Core Processor",
+    "os": {
+      "sysname": "Linux",
+      "nodename": "localhost.localdomain",
+      "release": "5.11.11-200.fc33.x86_64",
+      "version": "#1 SMP Tue Mar 30 16:53:32 UTC 2021",
+      "machine": "x86_64"
+    }
+  }
 }
