@@ -1920,6 +1920,21 @@ blocks:
         value: '64'
       - name: ROUTES
         value: GET:/
+    - name: cubex-workerman
+      commands:
+        - cd php/cubex-workerman && make build  -f .Makefile  && cd -
+        - FRAMEWORK=php/cubex-workerman bundle exec rspec .spec
+        - make  -f php/cubex-workerman/.Makefile collect
+        - bundle exec rake db:raw_export
+      env_vars:
+        - name: DATABASE_URL
+          value: postgresql://postgres@0.0.0.0/benchmark
+        - name: DURATION
+          value: '10'
+        - name: CONCURRENCIES
+          value: '64'
+        - name: ROUTES
+          value: GET:/
     - name: spiral
       commands:
       - cd php/spiral && make build  -f .Makefile  && cd -
