@@ -15,12 +15,12 @@ namespace web
                {
                    services.UseBeetlexHttp(o =>
                    {
-                       o.LogToConsole = true;
+                       o.LogToConsole = false;
                        o.ManageApiEnabled = false;
                        o.WriteLog = false;
-                       o.Port = 80;
+                       o.Port = 3000;
                        o.SetDebug();
-                       o.LogLevel = BeetleX.EventArgs.LogType.Warring;
+                       o.LogLevel = BeetleX.EventArgs.LogType.Off;
                    },
                    typeof(Program).Assembly);
                });
