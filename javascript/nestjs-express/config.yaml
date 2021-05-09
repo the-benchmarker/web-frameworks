@@ -8,7 +8,9 @@ files:
   - tsconfig.build.json
   - tsconfig.json
 
-before_command:
+bootstrap:
+  - npm -g install pm2
+  - npm install
   - npm -g install @nestjs/cli
   - nest build
 

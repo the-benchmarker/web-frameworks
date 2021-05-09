@@ -2,7 +2,10 @@ framework:
   github: spiral/framework
   version: 2.7
 
-before_command:
+  eninges:
+    - road-runner
+
+boostrap:
   - vendor/bin/spiral get
   - php app.php configure
 

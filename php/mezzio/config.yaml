@@ -2,6 +2,9 @@ framework:
   website: docs.mezzio.dev
   version: 3.4
 
+  engines:
+    - php-fpm
+
 before_command:
   - mkdir /usr/src/app/data
   - chmod 777 -R /usr/src/app/data

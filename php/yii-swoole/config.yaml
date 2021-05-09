@@ -3,7 +3,4 @@ framework:
   version: 2.0
 
   engines:
-    swoole:
-      extensions:
-        - swoole
-      command: php server/bootstrap.php
+    - swoole
