@@ -2,10 +2,8 @@ framework:
   github: sunrise-php/http-router
   version: 2.7
 
-php_ext:
+  engines:
+    - road-runner
+
+extensions:
   - apcu
-
-before_command:
-  - ./vendor/bin/rr get-binary
-
-command: ./rr serve
