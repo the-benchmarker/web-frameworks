@@ -25,14 +25,15 @@ def get_config_from(directory, engines_as_list: true)
 
   config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
-  config['framework']['engines'] = config.dig('framework', 'engines').map do |row|
-    if row.is_a?(String) && config.dig('language', 'engines', row)
-      { row => config.dig('language', 'engines', row) }
-    else
-      row
+  unless engines_as_list
+    config['framework']['engines'] = config.dig('framework', 'engines').map do |row|
+      if row.is_a?(String) && config.dig('language', 'engines', row)
+        { row => config.dig('language', 'engines', row) }
+      else
+        row
+      end
     end
   end
-
   config
 end
 
