@@ -2,6 +2,8 @@ framework:
   website: iceframework.org
   version: 1.5
 
+  engines:
+    - swoole
 build_deps:
   - bash
 
