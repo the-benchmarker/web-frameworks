@@ -1,3 +1,6 @@
 framework:
   website: fatfreeframework.com
   version: 3.7
+
+  engines:
+    - php-fpm

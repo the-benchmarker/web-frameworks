@@ -2,6 +2,9 @@ framework:
   website: phalcon.io
   version: 4.1
 
+  engines:
+    - php-fpm
+
 php_ext:
   - psr
   - phalcon

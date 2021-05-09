@@ -3,16 +3,5 @@ framework:
   github: antidot-framework/react-framework
   version: 0.2
 
-build_deps:
-  - libevent-dev
-
-php_mod:
-  - intl
-  - pcntl
-  - sockets
-
-before_command:
-  - mkdir -p var/cache && chmod 777 var/cache
-  - mkdir -p var/log && chmod 777 var/log
-
-command: bin/console server:run --quiet
+  engines:
+    - reactphp

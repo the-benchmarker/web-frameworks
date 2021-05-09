@@ -9,15 +9,22 @@ require 'etc'
 
 Dotenv.load
 
+class ::Hash
+  def recursive_merge(h)
+    merge!(h) { |_key, _old, _new| _old.instance_of?(Hash) ? _old.recursive_merge(_new) : _new }
+  end
+end
+
 SQL = %(
-    SELECT f.id, l.label AS language, f.label AS framework, c.level, k.label, avg(v.value) AS value
+    SELECT CONCAT(f.id, e.id) AS id, l.label AS language, f.label AS framework, c.level, k.label, e.label AS engine, avg(v.value) AS value
         FROM frameworks AS f
             JOIN metrics AS m ON f.id = m.framework_id
+            JOIN engines AS e ON e.id = m.engine_id
             JOIN values AS v ON v.id = m.value_id
             JOIN concurrencies AS c on c.id = m.concurrency_id
             JOIN languages AS l on l.id = f.language_id
             JOIN keys AS k ON k.id = v.key_id
-                GROUP BY 1,2,3,4,5
+                GROUP BY 1,2,3,4,5,6
 )
 
 def compute(data)
@@ -32,7 +39,7 @@ namespace :db do
   task :raw_export do
     raise 'Please provide a database' unless ENV['DATABASE_URL']
 
-    data = {metrics: [], frameworks: [], languages: [] }
+    data = { metrics: [], frameworks: [], languages: [] }
     db = PG.connect(ENV['DATABASE_URL'])
     db.exec("select row_to_json(t) from (#{SQL}) as t") do |result|
       result.each do |row|
@@ -52,19 +59,20 @@ namespace :db do
                   else
                     (framework_config['framework']['website']).to_s
                   end
-        unless data[:frameworks].map{|row|row[:id]}.to_a.include?(framework_id)
+        unless data[:frameworks].map { |row| row[:id] }.to_a.include?(framework_id)
           data[:frameworks] << {
             id: framework_id,
             version: framework_config.dig('framework', 'version'),
             label: framework,
+            engine: info[:engine],
             language: language,
-            website:  scheme + "://" + website
+            website: "#{scheme}://#{website}"
           }
         end
-        unless data[:languages].map{|row|row[:label]}.to_a.include?(language)
+        unless data[:languages].map { |row| row[:label] }.to_a.include?(language)
           data[:languages] << {
             label: language,
-            version: language_config.dig('provider', 'default', 'language')
+            version: language_config.dig('language', 'version'),
           }
         end
         data[:metrics] << info
@@ -72,8 +80,9 @@ namespace :db do
       end
     end
     data.merge!(updated_at: Time.now.utc)
-    data.merge!(hardware: {cpus: Etc.nprocessors, memory: 16282676, cpu_name: 'AMD FX-8320E Eight-Core Processor', os: Etc.uname})
-    File.open('data.json','w').write(JSON.pretty_generate(data))
-    File.open('data.min.json','w').write(data.to_json)
+    data.merge!(hardware: { cpus: Etc.nprocessors, memory: 16_282_676, cpu_name: 'AMD FX-8320E Eight-Core Processor',
+                            os: Etc.uname })
+    File.open('data.json', 'w').write(JSON.pretty_generate(data))
+    File.open('data.min.json', 'w').write(data.to_json)
   end
 end
