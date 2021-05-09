@@ -43,17 +43,17 @@ namespace :ci do
 
         config = get_config_from(File.join(Dir.pwd, language, framework))
         next unless config.dig('framework', 'engines')
-
-        config.dig('framework', 'engines').each do |variant, _|
+        
+        config.dig('framework', 'engines').each do |engine|
           block[:task][:jobs] << {
-            name: variant,
+            name: engine,
             commands: [
-              "make  -f #{language}/#{framework}/.Makefile build.#{variant}",
+              "make  -f #{language}/#{framework}/.Makefile build.#{engine}",
               'bundle exec rspec .spec',
-              "make  -f #{language}/#{framework}/.Makefile collect.#{variant}",
+              "make  -f #{language}/#{framework}/.Makefile collect.#{engine}",
               'bundle exec rake db:export'
             ],
-            env_vars: [{ name: 'VARIANT', value: variant }]
+            env_vars: [{ name: 'ENGINE', value: engine }]
           }
         end
         definition[:blocks] << block
