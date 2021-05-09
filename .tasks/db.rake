@@ -64,6 +64,7 @@ namespace :db do
             id: framework_id,
             version: framework_config.dig('framework', 'version'),
             label: framework,
+            engine: info[:engine],
             language: language,
             website: "#{scheme}://#{website}"
           }
@@ -71,7 +72,7 @@ namespace :db do
         unless data[:languages].map { |row| row[:label] }.to_a.include?(language)
           data[:languages] << {
             label: language,
-            version: language_config.dig('provider', 'default', 'language')
+            version: language_config.dig('language', 'version'),
           }
         end
         data[:metrics] << info
