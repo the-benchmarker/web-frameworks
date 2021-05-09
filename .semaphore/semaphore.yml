@@ -80,7 +80,7 @@ blocks:
       - make  -f ruby/agoo/.Makefile collect.agoo
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: agoo
 - name: camping
   dependencies:
@@ -114,7 +114,7 @@ blocks:
       - make  -f ruby/camping/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: puma
     - name: iodine
       commands:
@@ -123,7 +123,7 @@ blocks:
       - make  -f ruby/camping/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: iodine
     - name: falcon
       commands:
@@ -132,7 +132,7 @@ blocks:
       - make  -f ruby/camping/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: falcon
 - name: cuba
   dependencies:
@@ -166,7 +166,7 @@ blocks:
       - make  -f ruby/cuba/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: puma
     - name: iodine
       commands:
@@ -175,7 +175,7 @@ blocks:
       - make  -f ruby/cuba/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: iodine
     - name: falcon
       commands:
@@ -184,7 +184,7 @@ blocks:
       - make  -f ruby/cuba/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: falcon
 - name: grape
   dependencies:
@@ -218,7 +218,7 @@ blocks:
       - make  -f ruby/grape/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: puma
     - name: iodine
       commands:
@@ -227,7 +227,7 @@ blocks:
       - make  -f ruby/grape/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: iodine
     - name: falcon
       commands:
@@ -236,7 +236,7 @@ blocks:
       - make  -f ruby/grape/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: falcon
 - name: hanami-api
   dependencies:
@@ -270,7 +270,7 @@ blocks:
       - make  -f ruby/hanami-api/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: puma
     - name: iodine
       commands:
@@ -279,7 +279,7 @@ blocks:
       - make  -f ruby/hanami-api/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: iodine
     - name: falcon
       commands:
@@ -288,7 +288,7 @@ blocks:
       - make  -f ruby/hanami-api/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: falcon
 - name: rack-routing
   dependencies:
@@ -322,7 +322,7 @@ blocks:
       - make  -f ruby/rack-routing/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: puma
     - name: iodine
       commands:
@@ -331,7 +331,7 @@ blocks:
       - make  -f ruby/rack-routing/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: iodine
     - name: falcon
       commands:
@@ -340,7 +340,7 @@ blocks:
       - make  -f ruby/rack-routing/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: falcon
 - name: rack_app
   dependencies:
@@ -374,7 +374,7 @@ blocks:
       - make  -f ruby/rack_app/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: puma
     - name: iodine
       commands:
@@ -383,7 +383,7 @@ blocks:
       - make  -f ruby/rack_app/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: iodine
     - name: falcon
       commands:
@@ -392,7 +392,7 @@ blocks:
       - make  -f ruby/rack_app/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: falcon
 - name: rails
   dependencies:
@@ -426,7 +426,7 @@ blocks:
       - make  -f ruby/rails/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: puma
     - name: iodine
       commands:
@@ -435,7 +435,7 @@ blocks:
       - make  -f ruby/rails/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: iodine
     - name: falcon
       commands:
@@ -444,7 +444,7 @@ blocks:
       - make  -f ruby/rails/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: falcon
 - name: roda
   dependencies:
@@ -478,7 +478,7 @@ blocks:
       - make  -f ruby/roda/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: puma
     - name: iodine
       commands:
@@ -487,7 +487,7 @@ blocks:
       - make  -f ruby/roda/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: iodine
     - name: falcon
       commands:
@@ -496,7 +496,7 @@ blocks:
       - make  -f ruby/roda/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: falcon
 - name: sinatra
   dependencies:
@@ -530,7 +530,7 @@ blocks:
       - make  -f ruby/sinatra/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: puma
     - name: iodine
       commands:
@@ -539,7 +539,7 @@ blocks:
       - make  -f ruby/sinatra/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: iodine
     - name: falcon
       commands:
@@ -548,7 +548,7 @@ blocks:
       - make  -f ruby/sinatra/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: falcon
 - name: syro
   dependencies:
@@ -582,7 +582,7 @@ blocks:
       - make  -f ruby/syro/.Makefile collect.puma
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: puma
     - name: iodine
       commands:
@@ -591,7 +591,7 @@ blocks:
       - make  -f ruby/syro/.Makefile collect.iodine
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: iodine
     - name: falcon
       commands:
@@ -600,5 +600,5 @@ blocks:
       - make  -f ruby/syro/.Makefile collect.falcon
       - bundle exec rake db:export
       env_vars:
-      - name: VARIANT
+      - name: ENGINE
         value: falcon
