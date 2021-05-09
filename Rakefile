@@ -34,7 +34,6 @@ def get_config_from(directory, engines_as_list: true)
       end
     end
   end
-
   config
 end
 
