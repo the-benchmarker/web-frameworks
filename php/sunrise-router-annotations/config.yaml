@@ -3,6 +3,8 @@ framework:
   version: 2.7
 
   engines:
-    php-fpm:
-      extensions:
-        - apcu
+    - php-fpm
+    - road-runner
+
+extensions:
+  - apcu
