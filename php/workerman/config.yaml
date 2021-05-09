@@ -2,14 +2,5 @@ framework:
   github: walkor/Workerman
   version: 4.0
 
-build_deps:
-  - libevent-dev
-
-php_mod:
-  - pcntl
-  - sockets
-
-php_ext:
-  - event
-
-command: php start.php start
+  engines:
+    - workerman
