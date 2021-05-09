@@ -25,731 +25,6 @@ blocks:
       - bundle install
       - cache store built-in .cache
       - bundle exec rake config
-- name: c
-  dependencies:
-  - setup
-  run:
-    when: change_in('/c/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: clojure
-  dependencies:
-  - setup
-  run:
-    when: change_in('/clojure/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: cpp
-  dependencies:
-  - setup
-  run:
-    when: change_in('/cpp/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: crystal
-  dependencies:
-  - setup
-  run:
-    when: change_in('/crystal/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: csharp
-  dependencies:
-  - setup
-  run:
-    when: change_in('/csharp/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: dart
-  dependencies:
-  - setup
-  run:
-    when: change_in('/dart/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: elixir
-  dependencies:
-  - setup
-  run:
-    when: change_in('/elixir/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: fsharp
-  dependencies:
-  - setup
-  run:
-    when: change_in('/fsharp/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: go
-  dependencies:
-  - setup
-  run:
-    when: change_in('/go/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: haskell
-  dependencies:
-  - setup
-  run:
-    when: change_in('/haskell/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: java
-  dependencies:
-  - setup
-  run:
-    when: change_in('/java/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: javascript
-  dependencies:
-  - setup
-  run:
-    when: change_in('/javascript/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: julia
-  dependencies:
-  - setup
-  run:
-    when: change_in('/julia/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: kotlin
-  dependencies:
-  - setup
-  run:
-    when: change_in('/kotlin/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: nim
-  dependencies:
-  - setup
-  run:
-    when: change_in('/nim/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: perl
-  dependencies:
-  - setup
-  run:
-    when: change_in('/perl/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: php
-  dependencies:
-  - setup
-  run:
-    when: change_in('/php/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: antidot
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/antidot')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: antidot
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/antidot/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/antidot/.Makefile collect.reactphp
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: reactphp
-- name: chubbyphp
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/chubbyphp')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: chubbyphp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.road-runner
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: road-runner
-- name: hyperf
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/hyperf')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: hyperf
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/hyperf/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/hyperf/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-- name: laravel
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/laravel')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: laravel
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/laravel/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/laravel/.Makefile collect.workerman
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: workerman
-    - name: swoole
-      commands:
-      - make  -f php/laravel/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/laravel/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-- name: lumen
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/lumen')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: lumen
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/lumen/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/lumen/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-- name: sunrise-router-annotations
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/sunrise-router-annotations')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: sunrise-router-annotations
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/sunrise-router-annotations/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-annotations/.Makefile collect.php-fpm
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: php-fpm
-- name: yii-swoole
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/yii-swoole')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: yii-swoole
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/yii-swoole/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/yii-swoole/.Makefile collect.swoole
-      - bundle exec rake db:export
-      env_vars:
-      - name: VARIANT
-        value: swoole
-- name: pony
-  dependencies:
-  - setup
-  run:
-    when: change_in('/pony/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: python
-  dependencies:
-  - setup
-  run:
-    when: change_in('/python/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: r
-  dependencies:
-  - setup
-  run:
-    when: change_in('/r/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
 - name: ruby
   dependencies:
   - setup
@@ -798,15 +73,21 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: default
+    - name:
+        agoo:
+          command: bundler exec ruby app.rb
       commands:
-      - make  -f ruby/agoo/.Makefile build.default
+      - make  -f ruby/agoo/.Makefile build.{"agoo"=>{"command"=>"bundler exec ruby
+        app.rb"}}
       - bundle exec rspec .spec
-      - make  -f ruby/agoo/.Makefile collect.default
+      - make  -f ruby/agoo/.Makefile collect.{"agoo"=>{"command"=>"bundler exec ruby
+        app.rb"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: default
+        value:
+          agoo:
+            command: bundler exec ruby app.rb
 - name: camping
   dependencies:
   - ruby
@@ -832,33 +113,51 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name:
+        puma:
+          command: bundle exec puma -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/camping/.Makefile build.puma
+      - make  -f ruby/camping/.Makefile build.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.puma
+      - make  -f ruby/camping/.Makefile collect.{"puma"=>{"command"=>"bundle exec
+        puma -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: puma
-    - name: falcon
+        value:
+          puma:
+            command: bundle exec puma -p 3000 -w $(nproc)
+    - name:
+        iodine:
+          command: bundle exec iodine -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/camping/.Makefile build.falcon
+      - make  -f ruby/camping/.Makefile build.{"iodine"=>{"command"=>"bundle exec
+        iodine -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.falcon
+      - make  -f ruby/camping/.Makefile collect.{"iodine"=>{"command"=>"bundle exec
+        iodine -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: falcon
-    - name: iodine
+        value:
+          iodine:
+            command: bundle exec iodine -p 3000 -w $(nproc)
+    - name:
+        falcon:
+          command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
       commands:
-      - make  -f ruby/camping/.Makefile build.iodine
+      - make  -f ruby/camping/.Makefile build.{"falcon"=>{"command"=>"bundle exec
+        falcon serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.iodine
+      - make  -f ruby/camping/.Makefile collect.{"falcon"=>{"command"=>"bundle exec
+        falcon serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: iodine
+        value:
+          falcon:
+            command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
 - name: cuba
   dependencies:
   - ruby
@@ -884,33 +183,51 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name:
+        puma:
+          command: bundle exec puma -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/cuba/.Makefile build.puma
+      - make  -f ruby/cuba/.Makefile build.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.puma
+      - make  -f ruby/cuba/.Makefile collect.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: puma
-    - name: falcon
+        value:
+          puma:
+            command: bundle exec puma -p 3000 -w $(nproc)
+    - name:
+        iodine:
+          command: bundle exec iodine -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/cuba/.Makefile build.falcon
+      - make  -f ruby/cuba/.Makefile build.{"iodine"=>{"command"=>"bundle exec iodine
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.falcon
+      - make  -f ruby/cuba/.Makefile collect.{"iodine"=>{"command"=>"bundle exec iodine
+        -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: falcon
-    - name: iodine
+        value:
+          iodine:
+            command: bundle exec iodine -p 3000 -w $(nproc)
+    - name:
+        falcon:
+          command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
       commands:
-      - make  -f ruby/cuba/.Makefile build.iodine
+      - make  -f ruby/cuba/.Makefile build.{"falcon"=>{"command"=>"bundle exec falcon
+        serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.iodine
+      - make  -f ruby/cuba/.Makefile collect.{"falcon"=>{"command"=>"bundle exec falcon
+        serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: iodine
+        value:
+          falcon:
+            command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
 - name: grape
   dependencies:
   - ruby
@@ -936,33 +253,51 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name:
+        puma:
+          command: bundle exec puma -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/grape/.Makefile build.puma
+      - make  -f ruby/grape/.Makefile build.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.puma
+      - make  -f ruby/grape/.Makefile collect.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: puma
-    - name: falcon
+        value:
+          puma:
+            command: bundle exec puma -p 3000 -w $(nproc)
+    - name:
+        iodine:
+          command: bundle exec iodine -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/grape/.Makefile build.falcon
+      - make  -f ruby/grape/.Makefile build.{"iodine"=>{"command"=>"bundle exec iodine
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.falcon
+      - make  -f ruby/grape/.Makefile collect.{"iodine"=>{"command"=>"bundle exec
+        iodine -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: falcon
-    - name: iodine
+        value:
+          iodine:
+            command: bundle exec iodine -p 3000 -w $(nproc)
+    - name:
+        falcon:
+          command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
       commands:
-      - make  -f ruby/grape/.Makefile build.iodine
+      - make  -f ruby/grape/.Makefile build.{"falcon"=>{"command"=>"bundle exec falcon
+        serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.iodine
+      - make  -f ruby/grape/.Makefile collect.{"falcon"=>{"command"=>"bundle exec
+        falcon serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: iodine
+        value:
+          falcon:
+            command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
 - name: hanami-api
   dependencies:
   - ruby
@@ -988,33 +323,51 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name:
+        puma:
+          command: bundle exec puma -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/hanami-api/.Makefile build.puma
+      - make  -f ruby/hanami-api/.Makefile build.{"puma"=>{"command"=>"bundle exec
+        puma -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.puma
+      - make  -f ruby/hanami-api/.Makefile collect.{"puma"=>{"command"=>"bundle exec
+        puma -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: puma
-    - name: falcon
+        value:
+          puma:
+            command: bundle exec puma -p 3000 -w $(nproc)
+    - name:
+        iodine:
+          command: bundle exec iodine -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/hanami-api/.Makefile build.falcon
+      - make  -f ruby/hanami-api/.Makefile build.{"iodine"=>{"command"=>"bundle exec
+        iodine -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.falcon
+      - make  -f ruby/hanami-api/.Makefile collect.{"iodine"=>{"command"=>"bundle
+        exec iodine -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: falcon
-    - name: iodine
+        value:
+          iodine:
+            command: bundle exec iodine -p 3000 -w $(nproc)
+    - name:
+        falcon:
+          command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
       commands:
-      - make  -f ruby/hanami-api/.Makefile build.iodine
+      - make  -f ruby/hanami-api/.Makefile build.{"falcon"=>{"command"=>"bundle exec
+        falcon serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.iodine
+      - make  -f ruby/hanami-api/.Makefile collect.{"falcon"=>{"command"=>"bundle
+        exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: iodine
+        value:
+          falcon:
+            command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
 - name: rack-routing
   dependencies:
   - ruby
@@ -1040,33 +393,51 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name:
+        puma:
+          command: bundle exec puma -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/rack-routing/.Makefile build.puma
+      - make  -f ruby/rack-routing/.Makefile build.{"puma"=>{"command"=>"bundle exec
+        puma -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.puma
+      - make  -f ruby/rack-routing/.Makefile collect.{"puma"=>{"command"=>"bundle
+        exec puma -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: puma
-    - name: falcon
+        value:
+          puma:
+            command: bundle exec puma -p 3000 -w $(nproc)
+    - name:
+        iodine:
+          command: bundle exec iodine -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/rack-routing/.Makefile build.falcon
+      - make  -f ruby/rack-routing/.Makefile build.{"iodine"=>{"command"=>"bundle
+        exec iodine -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.falcon
+      - make  -f ruby/rack-routing/.Makefile collect.{"iodine"=>{"command"=>"bundle
+        exec iodine -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: falcon
-    - name: iodine
+        value:
+          iodine:
+            command: bundle exec iodine -p 3000 -w $(nproc)
+    - name:
+        falcon:
+          command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
       commands:
-      - make  -f ruby/rack-routing/.Makefile build.iodine
+      - make  -f ruby/rack-routing/.Makefile build.{"falcon"=>{"command"=>"bundle
+        exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.iodine
+      - make  -f ruby/rack-routing/.Makefile collect.{"falcon"=>{"command"=>"bundle
+        exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: iodine
+        value:
+          falcon:
+            command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
 - name: rack_app
   dependencies:
   - ruby
@@ -1092,33 +463,51 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name:
+        puma:
+          command: bundle exec puma -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/rack_app/.Makefile build.puma
+      - make  -f ruby/rack_app/.Makefile build.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.puma
+      - make  -f ruby/rack_app/.Makefile collect.{"puma"=>{"command"=>"bundle exec
+        puma -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: puma
-    - name: falcon
+        value:
+          puma:
+            command: bundle exec puma -p 3000 -w $(nproc)
+    - name:
+        iodine:
+          command: bundle exec iodine -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/rack_app/.Makefile build.falcon
+      - make  -f ruby/rack_app/.Makefile build.{"iodine"=>{"command"=>"bundle exec
+        iodine -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.falcon
+      - make  -f ruby/rack_app/.Makefile collect.{"iodine"=>{"command"=>"bundle exec
+        iodine -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: falcon
-    - name: iodine
+        value:
+          iodine:
+            command: bundle exec iodine -p 3000 -w $(nproc)
+    - name:
+        falcon:
+          command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
       commands:
-      - make  -f ruby/rack_app/.Makefile build.iodine
+      - make  -f ruby/rack_app/.Makefile build.{"falcon"=>{"command"=>"bundle exec
+        falcon serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.iodine
+      - make  -f ruby/rack_app/.Makefile collect.{"falcon"=>{"command"=>"bundle exec
+        falcon serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: iodine
+        value:
+          falcon:
+            command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
 - name: rails
   dependencies:
   - ruby
@@ -1144,33 +533,51 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name:
+        puma:
+          command: bundle exec puma -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/rails/.Makefile build.puma
+      - make  -f ruby/rails/.Makefile build.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.puma
+      - make  -f ruby/rails/.Makefile collect.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: puma
-    - name: falcon
+        value:
+          puma:
+            command: bundle exec puma -p 3000 -w $(nproc)
+    - name:
+        iodine:
+          command: bundle exec iodine -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/rails/.Makefile build.falcon
+      - make  -f ruby/rails/.Makefile build.{"iodine"=>{"command"=>"bundle exec iodine
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.falcon
+      - make  -f ruby/rails/.Makefile collect.{"iodine"=>{"command"=>"bundle exec
+        iodine -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: falcon
-    - name: iodine
+        value:
+          iodine:
+            command: bundle exec iodine -p 3000 -w $(nproc)
+    - name:
+        falcon:
+          command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
       commands:
-      - make  -f ruby/rails/.Makefile build.iodine
+      - make  -f ruby/rails/.Makefile build.{"falcon"=>{"command"=>"bundle exec falcon
+        serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.iodine
+      - make  -f ruby/rails/.Makefile collect.{"falcon"=>{"command"=>"bundle exec
+        falcon serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: iodine
+        value:
+          falcon:
+            command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
 - name: roda
   dependencies:
   - ruby
@@ -1196,33 +603,51 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name:
+        puma:
+          command: bundle exec puma -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/roda/.Makefile build.puma
+      - make  -f ruby/roda/.Makefile build.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.puma
+      - make  -f ruby/roda/.Makefile collect.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: puma
-    - name: falcon
+        value:
+          puma:
+            command: bundle exec puma -p 3000 -w $(nproc)
+    - name:
+        iodine:
+          command: bundle exec iodine -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/roda/.Makefile build.falcon
+      - make  -f ruby/roda/.Makefile build.{"iodine"=>{"command"=>"bundle exec iodine
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.falcon
+      - make  -f ruby/roda/.Makefile collect.{"iodine"=>{"command"=>"bundle exec iodine
+        -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: falcon
-    - name: iodine
+        value:
+          iodine:
+            command: bundle exec iodine -p 3000 -w $(nproc)
+    - name:
+        falcon:
+          command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
       commands:
-      - make  -f ruby/roda/.Makefile build.iodine
+      - make  -f ruby/roda/.Makefile build.{"falcon"=>{"command"=>"bundle exec falcon
+        serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.iodine
+      - make  -f ruby/roda/.Makefile collect.{"falcon"=>{"command"=>"bundle exec falcon
+        serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: iodine
+        value:
+          falcon:
+            command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
 - name: sinatra
   dependencies:
   - ruby
@@ -1248,33 +673,51 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name:
+        puma:
+          command: bundle exec puma -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/sinatra/.Makefile build.puma
+      - make  -f ruby/sinatra/.Makefile build.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.puma
+      - make  -f ruby/sinatra/.Makefile collect.{"puma"=>{"command"=>"bundle exec
+        puma -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: puma
-    - name: falcon
+        value:
+          puma:
+            command: bundle exec puma -p 3000 -w $(nproc)
+    - name:
+        iodine:
+          command: bundle exec iodine -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/sinatra/.Makefile build.falcon
+      - make  -f ruby/sinatra/.Makefile build.{"iodine"=>{"command"=>"bundle exec
+        iodine -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.falcon
+      - make  -f ruby/sinatra/.Makefile collect.{"iodine"=>{"command"=>"bundle exec
+        iodine -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: falcon
-    - name: iodine
+        value:
+          iodine:
+            command: bundle exec iodine -p 3000 -w $(nproc)
+    - name:
+        falcon:
+          command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
       commands:
-      - make  -f ruby/sinatra/.Makefile build.iodine
+      - make  -f ruby/sinatra/.Makefile build.{"falcon"=>{"command"=>"bundle exec
+        falcon serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.iodine
+      - make  -f ruby/sinatra/.Makefile collect.{"falcon"=>{"command"=>"bundle exec
+        falcon serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: iodine
+        value:
+          falcon:
+            command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
 - name: syro
   dependencies:
   - ruby
@@ -1300,99 +743,48 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name:
+        puma:
+          command: bundle exec puma -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/syro/.Makefile build.puma
+      - make  -f ruby/syro/.Makefile build.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.puma
+      - make  -f ruby/syro/.Makefile collect.{"puma"=>{"command"=>"bundle exec puma
+        -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: puma
-    - name: falcon
+        value:
+          puma:
+            command: bundle exec puma -p 3000 -w $(nproc)
+    - name:
+        iodine:
+          command: bundle exec iodine -p 3000 -w $(nproc)
       commands:
-      - make  -f ruby/syro/.Makefile build.falcon
+      - make  -f ruby/syro/.Makefile build.{"iodine"=>{"command"=>"bundle exec iodine
+        -p 3000 -w $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.falcon
+      - make  -f ruby/syro/.Makefile collect.{"iodine"=>{"command"=>"bundle exec iodine
+        -p 3000 -w $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: falcon
-    - name: iodine
+        value:
+          iodine:
+            command: bundle exec iodine -p 3000 -w $(nproc)
+    - name:
+        falcon:
+          command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
       commands:
-      - make  -f ruby/syro/.Makefile build.iodine
+      - make  -f ruby/syro/.Makefile build.{"falcon"=>{"command"=>"bundle exec falcon
+        serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.iodine
+      - make  -f ruby/syro/.Makefile collect.{"falcon"=>{"command"=>"bundle exec falcon
+        serve --bind http://0.0.0.0:3000 --count $(nproc)"}}
       - bundle exec rake db:export
       env_vars:
       - name: VARIANT
-        value: iodine
-- name: rust
-  dependencies:
-  - setup
-  run:
-    when: change_in('/rust/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: scala
-  dependencies:
-  - setup
-  run:
-    when: change_in('/scala/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: swift
-  dependencies:
-  - setup
-  run:
-    when: change_in('/swift/')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
+        value:
+          falcon:
+            command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
