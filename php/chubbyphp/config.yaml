@@ -1,3 +1,8 @@
 framework:
   github: chubbyphp/chubbyphp-framework
   version: 3.4
+
+  engines:
+    - swoole
+    - workerman
+    - road-runner
