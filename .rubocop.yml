@@ -5,13 +5,16 @@ require:
 AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
-    
-Style/Documentation:
-  Enabled: false
 
 Naming/AccessorMethodName:
   Exclude: 
     - ruby/rack-routing/app/route_handler.rb
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
 
 Layout/LineLength:
   Enabled: false
@@ -19,20 +22,11 @@ Layout/LineLength:
 Metrics/MethodLength:
   Enabled: false
 
+Metrics/CyclomaticComplexity: 
+  Enabled: false
+
 Metrics/PerceivedComplexity:
   Enabled: false
 
-Metrics/CyclomaticComplexity:
-  Enabled: false
-
 Metrics/AbcSize:
-  Enabled: false
-
-Lint/UnderscorePrefixedVariableName:
-  Enabled: false
-
-Naming/MethodParameterName:
-  Enabled: false
-
-Metrics/BlockLength:
   Enabled: false
