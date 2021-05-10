@@ -51,7 +51,7 @@ namespace :ci do
               "make  -f #{language}/#{framework}/.Makefile build.#{engine}",
               'bundle exec rspec .spec',
               "make  -f #{language}/#{framework}/.Makefile collect.#{engine}",
-              'bundle exec rake db:export'
+              'bundle exec rake db:raw_export'
             ],
             env_vars: [{ name: 'ENGINE', value: engine }]
           }
