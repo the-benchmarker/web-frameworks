@@ -3,8 +3,6 @@
 .DS_Store
 *.swp
 
-.neph
-neph.yaml
 shard.lock
 Gemfile.lock
 
@@ -13,30 +11,4 @@ Gemfile.lock
 
 # GoLand IDE
 .idea
-
-# Temporary files
-FRAMEWORKS.yaml
-*/*/.Dockerfile
-*/*/Dockerfile
-*/*/.Makefile
-*/*/ip.txt
-*/*/cid.txt
-
-/lib/**/*.cr
-/vendor
-.bundle
-/bin
-
-# Rust build directories
-rust/*/target
-
-#fsharp
-launchSettings.json
-.vs
-obj
-[Bb]in/
-[Oo]bj/
-[Dd]ebug/
-[Rr]elease/
-*.fsproj
-*.fsproj.user
+.env.custom
