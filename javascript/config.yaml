@@ -1,21 +1,3 @@
-language:
-  version: 14.16
-
-  engines:
-    node:
-      command: pm2-runtime start app.js -i $(nproc)
-
-      bootstrap:
-        - npm -g install pm2
-        - npm install
-
-      environment:
-        NODE_ENV: production
-
-framework:
-  engines:
-    - node
-
-  files:
-    - "*.js"
-    - "package.json"
+provider:
+  default:
+    language: 14.16

@@ -2,9 +2,6 @@ framework:
   github: driftphp/driftphp
   version: 0.1
 
-  engines:
-    - reactphp
-
 build_deps:
   - libevent-dev
 

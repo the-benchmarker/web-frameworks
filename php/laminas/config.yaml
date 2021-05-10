@@ -2,9 +2,6 @@ framework:
   website: getlaminas.org
   version: 3.2
 
-  engines:
-    - php-fpm
-
 before_command:
   - mkdir /usr/src/app/data
   - chmod 777 -R /usr/src/app/data
