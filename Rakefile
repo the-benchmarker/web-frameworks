@@ -11,8 +11,8 @@ MANIFESTS = {
 Dotenv.load
 
 class ::Hash
-  def recursive_merge(h)
-    merge!(h) { |_key, _old, _new| _old.instance_of?(Hash) ? _old.recursive_merge(_new) : _new }
+  def recursive_merge(hash)
+    merge!(hash) { |_, old, new| old.instance_of?(Hash) ? old.recursive_merge(new) : new }
   end
 end
 
@@ -134,12 +134,12 @@ end
 
 desc 'Create Dockerfiles'
 task :config do
-  Dir.glob(['ruby/*/config.yaml', 'php/*/config.yaml', 'javascript/*/config.yaml']).each do |path|
+  Dir.glob(['ruby/*/config.yaml']).each do |path|
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
     raise "missing engine for #{directory}" unless config.dig('framework', 'engines')
 
-    config.dig('framework', 'files').map { |path| path.prepend(directory, File::SEPARATOR) }
+    config.dig('framework', 'files').map { |f| f.prepend(directory, File::SEPARATOR) }
 
     config.dig('framework', 'engines').each do |engine|
       engine.each do |name, data|
