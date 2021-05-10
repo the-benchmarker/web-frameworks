@@ -2,11 +2,10 @@ framework:
   github: lizhichao/one
   version: 2.2
 
-  engines:
-    - php-fpm
-    - swoole
-
-modules:
+php_mod:
   - bcmath
+
+php_ext:
+  - swoole
 
 command: php App/swoole.php

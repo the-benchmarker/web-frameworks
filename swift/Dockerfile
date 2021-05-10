@@ -5,9 +5,8 @@ RUN apt -y install libssl-dev zlib1g-dev libcurl4-openssl-dev uuid-dev
 
 WORKDIR /usr/src/app
 
-{{#files}}
-  COPY {{source}} {{target}}
-{{/files}}
+COPY Package.swift ./
+COPY Sources/ ./Sources/
 
 RUN swift build -c release -Xswiftc -enforce-exclusivity=unchecked
 
