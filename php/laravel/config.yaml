@@ -1,13 +1,17 @@
 framework:
   website: laravel.com
-  version: '8.40'
+  version: "8.40"
+
+  engines:
+    - swoole
+    - php-fpm
 
 environment:
   APP_ENV: production
   APP_DEBUG: false
   APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
 
-before_command:
+bootstrap:
   - mkdir bootstrap/cache
   - mkdir storage/framework/sessions -p
   - mkdir storage/framework/views -p
