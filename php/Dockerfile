@@ -9,22 +9,20 @@ WORKDIR /usr/src/app
   RUN apk add {{{.}}}
 {{/build_deps}}
 
-{{#modules}}
+{{#php_mod}}
   RUN docker-php-ext-install {{{.}}}
-{{/modules}}
+{{/php_mod}}
 
-{{#extensions}}
+{{#php_ext}}
   RUN pecl install {{{.}}}
   RUN docker-php-ext-enable {{{.}}}
-{{/extensions}}
+{{/php_ext}}
 
-{{#extensions_fix}}
+{{#before_build}}
   RUN {{{.}}}
-{{/extensions_fix}}
+{{/before_build}}
 
-{{#files}}
-  COPY {{source}} {{target}}
-{{/files}}
+COPY . ./
 
 ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
 RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
@@ -33,18 +31,18 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
   mv /tmp/file /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
 
 {{^standalone}}
-  RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-  RUN composer install --no-dev --prefer-dist --classmap-authoritative
-  RUN composer dumpautoload -o
+RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install --no-dev --prefer-dist --classmap-authoritative
+RUN composer dumpautoload -o
 {{/standalone}}
 
 {{#environment}}
-  ENV {{{.}}}
+ENV {{{.}}}
 {{/environment}}
 
-{{#bootstrap}}
+{{#before_command}}
   RUN {{{.}}}
-{{/bootstrap}}
+{{/before_command}}
 
 {{#command}}
   CMD {{{.}}}

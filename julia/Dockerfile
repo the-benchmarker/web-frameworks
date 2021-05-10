@@ -2,9 +2,7 @@ FROM julia:1.6
 
 WORKDIR /usr/src/app
 
-{{#files}}
-  COPY {{source}} {{target}}
-{{/files}}
+COPY server.jl Project.toml deps.jl ./
 
 RUN julia deps.jl
 
