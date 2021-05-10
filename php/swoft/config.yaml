@@ -2,8 +2,10 @@ framework:
   website: swoft.org
   version: 2.0
 
-php_ext:
+  engines:
+    - swoole
+
+exxtensions:
   - redis
-  - swoole
 
 command: php bin/swoft http:start
