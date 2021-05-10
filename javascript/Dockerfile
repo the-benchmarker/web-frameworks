@@ -4,10 +4,14 @@ FROM node:14.16-alpine
   RUN apk add {{{.}}}
 {{/build_deps}}
 
+RUN npm -g install pm2
+
 WORKDIR /usr/src/app
 
+COPY app.js package.json ./
+
 {{#files}}
-  COPY {{source}} {{target}}
+  COPY {{{.}}} {{{.}}}
 {{/files}}
 
 {{#bin_deps}}
@@ -18,16 +22,23 @@ WORKDIR /usr/src/app
   RUN {{{.}}}
 {{/fixes}}
 
-{{#bootstrap}}
-  RUN {{{.}}}
-{{/bootstrap}}
+RUN npm install
 
 {{#before_command}}
   RUN {{{.}}}
 {{/before_command}}
 
+
+ENV NODE_ENV production
+
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
-CMD {{{command}}}
+{{#command}}
+  CMD {{{.}}}
+{{/command}}
+
+{{^command}}
+  CMD pm2-runtime start app.js -i $(nproc)
+{{/command}}

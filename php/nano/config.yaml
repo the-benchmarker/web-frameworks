@@ -2,9 +2,6 @@ framework:
   gitlab: x.laylatichy.x/nano
   version: 0.0.9
 
-  engines:
-    - php-fpm
-
 php_mod:
   - pcntl
 
