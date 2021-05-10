@@ -1,12 +1,14 @@
-.env.custom
+# Developer content
 
 .DS_Store
 *.swp
 
-**/.Dockerfile.*
-**/.Makefile
-*/*/ip-*.txt
-*/*/cid-*.txt
-
+shard.lock
 Gemfile.lock
 
+# git temporary files
+*.orig
+
+# GoLand IDE
+.idea
+.env.custom
