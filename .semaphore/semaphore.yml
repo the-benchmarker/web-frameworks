@@ -82,6 +82,15 @@ blocks:
       env_vars:
       - name: ENGINE
         value: node
+    - name: uwebsockets
+      commands:
+      - make  -f javascript/0http/.Makefile build.uwebsockets
+      - bundle exec rspec .spec
+      - make  -f javascript/0http/.Makefile collect.uwebsockets
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uwebsockets
 - name: express
   dependencies:
   - javascript
@@ -252,40 +261,15 @@ blocks:
       env_vars:
       - name: ENGINE
         value: node
-- name: fyrejet-uwebsockets
-  dependencies:
-  - javascript
-  run:
-    when: change_in('/javascript/fyrejet-uwebsockets')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: fyrejet-uwebsockets
-    prologue:
+    - name: uwebsockets
       commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
-      commands:
-      - make  -f javascript/fyrejet-uwebsockets/.Makefile build.node
+      - make  -f javascript/fyrejet/.Makefile build.uwebsockets
       - bundle exec rspec .spec
-      - make  -f javascript/fyrejet-uwebsockets/.Makefile collect.node
+      - make  -f javascript/fyrejet/.Makefile collect.uwebsockets
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: uwebsockets
 - name: hapi
   dependencies:
   - javascript
@@ -855,15 +839,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: uwebsockets
       commands:
-      - make  -f javascript/sifrr/.Makefile build.node
+      - make  -f javascript/sifrr/.Makefile build.uwebsockets
       - bundle exec rspec .spec
-      - make  -f javascript/sifrr/.Makefile collect.node
+      - make  -f javascript/sifrr/.Makefile collect.uwebsockets
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: uwebsockets
 - name: tinyhttp
   dependencies:
   - javascript

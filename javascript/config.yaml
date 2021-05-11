@@ -20,7 +20,6 @@ language:
         - npm install
       command: pm2-runtime start app.js -i $(nproc)
 
-
 framework:
   engines:
     - node
@@ -28,4 +27,3 @@ framework:
   files:
     - "**/*.js"
     - package.json
-

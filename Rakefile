@@ -134,7 +134,7 @@ end
 
 desc 'Create Dockerfiles'
 task :config do
-  Dir.glob(['ruby/*/config.yaml','javascript/*/config.yaml']).each do |path|
+  Dir.glob(['ruby/*/config.yaml', 'javascript/*/config.yaml']).each do |path|
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
     raise "missing engine for #{directory}" unless config.dig('framework', 'engines')
@@ -142,7 +142,7 @@ task :config do
     config.dig('framework', 'files').map { |f| f.prepend(directory, File::SEPARATOR) }
 
     config.dig('framework', 'engines').each do |engine|
-    pp engine
+      pp engine
       engine.each do |name, data|
         create_dockerfile(directory, name, config['framework'].merge(data))
       end
