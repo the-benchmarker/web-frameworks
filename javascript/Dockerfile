@@ -2,11 +2,15 @@ FROM node:14.16-alpine
 
 WORKDIR /usr/src/app
 
+RUN apk add build-base
+
+{{#deps}}
+  RUN apk add {{{.}}}
+{{/deps}}
+
 {{#files}}
   COPY {{source}} {{target}}
 {{/files}}
-
-RUN apk add build-base
 
 {{#bootstrap}}
   RUN {{{.}}}
@@ -15,5 +19,9 @@ RUN apk add build-base
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
+
+{{#fixes}}
+  RUN {{{.}}}
+{{/fixes}}
 
 CMD {{{command}}}

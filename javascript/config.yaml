@@ -9,6 +9,16 @@ language:
         - npm -g install pm2
         - npm install
       command: pm2-runtime start app.js -i $(nproc)
+    uwebsockets:
+      deps:
+        - git
+        - gcompat # required by uWebSocket
+      environment:
+        NODE_ENV: production
+      bootstrap:
+        - npm -g install pm2
+        - npm install
+      command: pm2-runtime start app.js -i $(nproc)
 
 
 framework:
