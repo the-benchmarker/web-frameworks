@@ -9,6 +9,13 @@ language:
         - npm -g install pm2
         - npm install
       command: pm2-runtime start app.js -i $(nproc)
+    turbo-net:
+      environment:
+        NODE_ENV: production
+      bootstrap:
+        - npm -g install pm2
+        - npm install
+      command: pm2-runtime start app.js -i $(nproc)
     uwebsockets:
       deps:
         - git
