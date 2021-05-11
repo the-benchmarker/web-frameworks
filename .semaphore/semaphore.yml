@@ -25,6 +25,913 @@ blocks:
       - bundle install
       - cache store built-in .cache
       - bundle exec rake config
+- name: javascript
+  dependencies:
+  - setup
+  run:
+    when: change_in('/javascript/')
+  task:
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: setup
+      commands:
+      - checkout
+- name: 0http
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/0http')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: 0http
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/0http/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/0http/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: express
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/express')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: express
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/express/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/express/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: fastify
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/fastify')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: fastify
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/fastify/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/fastify/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: feathersjs
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/feathersjs')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: feathersjs
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/feathersjs/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/feathersjs/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: foxify
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/foxify')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: foxify
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/foxify/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/foxify/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: fyrejet
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/fyrejet')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: fyrejet
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/fyrejet/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/fyrejet/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: fyrejet-uwebsockets
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/fyrejet-uwebsockets')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: fyrejet-uwebsockets
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/fyrejet-uwebsockets/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/fyrejet-uwebsockets/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: hapi
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/hapi')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: hapi
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/hapi/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/hapi/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: iotjs-express
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/iotjs-express')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: iotjs-express
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/iotjs-express/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/iotjs-express/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: koa
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/koa')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: koa
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/koa/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/koa/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: low-http-server
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/low-http-server')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: low-http-server
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/low-http-server/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/low-http-server/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: moleculer
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/moleculer')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: moleculer
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/moleculer/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/moleculer/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: muneem
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/muneem')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: muneem
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/muneem/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/muneem/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: nanoexpress
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/nanoexpress')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: nanoexpress
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/nanoexpress/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/nanoexpress/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: naturaljs-router
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/naturaljs-router')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: naturaljs-router
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/naturaljs-router/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/naturaljs-router/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: nestjs-express
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/nestjs-express')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: nestjs-express
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/nestjs-express/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/nestjs-express/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: nestjs-fastify
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/nestjs-fastify')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: nestjs-fastify
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/nestjs-fastify/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/nestjs-fastify/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: polka
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/polka')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: polka
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/polka/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/polka/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: polkadot
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/polkadot')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: polkadot
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/polkadot/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/polkadot/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: rayo
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/rayo')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: rayo
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/rayo/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/rayo/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: restana
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/restana')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: restana
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/restana/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/restana/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: restify
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/restify')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: restify
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/restify/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/restify/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: sails
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/sails')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: sails
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/sails/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/sails/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: sifrr
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/sifrr')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: sifrr
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/sifrr/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/sifrr/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: tinyhttp
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/tinyhttp')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: tinyhttp
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/tinyhttp/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/tinyhttp/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+- name: turbo_polka
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/turbo_polka')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: turbo_polka
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/turbo_polka/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/turbo_polka/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
 - name: ruby
   dependencies:
   - setup
