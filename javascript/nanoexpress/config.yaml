@@ -2,6 +2,9 @@ framework:
   github: nanoexpress/nanoexpress
   version: 3.0
 
+  engines:
+    - uwebsockets
+
 environment:
   EXPERIMENTAL_FASTCALL: 1
 

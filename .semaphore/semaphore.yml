@@ -422,15 +422,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: uwebsockets
       commands:
-      - make  -f javascript/nanoexpress/.Makefile build.node
+      - make  -f javascript/nanoexpress/.Makefile build.uwebsockets
       - bundle exec rspec .spec
-      - make  -f javascript/nanoexpress/.Makefile collect.node
+      - make  -f javascript/nanoexpress/.Makefile collect.uwebsockets
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: uwebsockets
 - name: fyrejet
   dependencies:
   - javascript
@@ -703,15 +703,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: uwebsockets
       commands:
-      - make  -f javascript/naturaljs-router/.Makefile build.node
+      - make  -f javascript/naturaljs-router/.Makefile build.uwebsockets
       - bundle exec rspec .spec
-      - make  -f javascript/naturaljs-router/.Makefile collect.node
+      - make  -f javascript/naturaljs-router/.Makefile collect.uwebsockets
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: uwebsockets
 - name: tinyhttp
   dependencies:
   - javascript
