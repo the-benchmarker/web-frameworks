@@ -3,7 +3,7 @@ framework:
   version: 7.6
 
   bootstrap:
+    - npm -g install @nestjs/cli
     - npm -g install pm2
     - npm install
-    - npm -g install @nestjs/cli
     - nest build
