@@ -7,3 +7,5 @@ framework:
     - npm install
     - npm -g install @nestjs/cli
     - nest build
+
+  command: pm2-runtime start dist/app.js -i $(nproc)
