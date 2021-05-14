@@ -142,6 +142,7 @@ task :config do
 
     config.dig('framework', 'engines').each do |engine|
       engine.each do |name, data|
+        data['bootstrap'] = config['language']['bootstrap'].append(data['bootstrap']).flatten! if data['bootstrap']
         create_dockerfile(directory, name, config['framework'].merge(data))
       end
     end

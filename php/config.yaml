@@ -1,6 +1,11 @@
 language:
   version: 3.0
 
+  bootstrap:
+    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
+
   engines:
     php-fpm:
       deps:
@@ -15,7 +20,7 @@ language:
         - sockets
       command: php public/index.php start
     road-runner:
-      before_command:
+      bootstrap:
         - vendor/bin/rr get-binary
       command: ./rr serve
     swoole:

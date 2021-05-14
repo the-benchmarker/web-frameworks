@@ -18,16 +18,9 @@ WORKDIR /usr/src/app
   COPY {{source}} {{target}}
 {{/files}}
 
-{{^standalone}}
-   RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-   RUN composer install --no-dev --prefer-dist --classmap-authoritative
-   RUN composer dumpautoload -o
-{{/standalone}}
-
 {{#bootstrap}}
   RUN {{{.}}}
 {{/bootstrap}}
-
 
 ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
 RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
