@@ -26,10 +26,20 @@ namespace web
                });
             builder.Build().Run();
         }
-        [Get(Route = "{id}")]
+        [Get(Route = "/")]
+        public object index()
+        {
+            return new TextResult(null);
+        }
+        [Get(Route = "/user/{id}")]
         public object user(string id)
         {
             return new TextResult(id);
+        }
+        [Post(Route = "/user")]
+        public object create()
+        {
+            return new TextResult(null);
         }
     }
 }
