@@ -134,7 +134,7 @@ end
 
 desc 'Create Dockerfiles'
 task :config do
-  Dir.glob(['php/*/config.yaml']).each do |path|
+  Dir.glob(['php/chubbyphp/config.yaml']).each do |path|
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
     raise "missing engine for #{directory}" unless config.dig('framework', 'engines')

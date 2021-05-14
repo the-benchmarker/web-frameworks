@@ -1,3 +1,34 @@
-provider:
-  default:
-    language: 7.4
+language:
+  version: 3.0
+
+  engines:
+    php-fpm:
+      deps:
+        - nginx
+    workerman:
+      extensions:
+        - event
+      deps:
+        - libevent-dev
+      modules:
+        - pcntl
+        - sockets
+      command: php public/index.php start
+    road-runner:
+      before_command:
+        - vendor/bin/rr get-binary
+      files:
+        - .rr.yaml
+      command: ./rr serve
+    swoole:
+      extensions:
+        - swoole
+      command: php public/index.php
+
+framework:
+  engines:
+    - php-fpm
+
+  files:
+    - "**/*.php"
+    - composer.json
