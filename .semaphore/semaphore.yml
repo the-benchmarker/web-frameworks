@@ -109,3 +109,46 @@ blocks:
       env_vars:
       - name: ENGINE
         value: road-runner
+- name: cubex
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/cubex')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: cubex
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f php/cubex/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f php/cubex/.Makefile collect.workerman
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: workerman
+    - name: php-fpm
+      commands:
+      - make  -f php/cubex/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/cubex/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
