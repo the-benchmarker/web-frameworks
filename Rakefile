@@ -112,7 +112,6 @@ def create_dockerfile(directory, engine, config)
                generic_template
              end
   files = []
-
   Dir.glob(config['files']).each do |file|
     variant_file = file.gsub(directory, File.join(directory, ".#{engine}"))
 

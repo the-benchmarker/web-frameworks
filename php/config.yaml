@@ -17,8 +17,6 @@ language:
     road-runner:
       before_command:
         - vendor/bin/rr get-binary
-      files:
-        - .rr.yaml
       command: ./rr serve
     swoole:
       extensions:
@@ -32,3 +30,4 @@ framework:
   files:
     - "**/*.php"
     - composer.json
+    - .rr.yaml
