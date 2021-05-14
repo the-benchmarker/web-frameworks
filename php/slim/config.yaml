@@ -4,5 +4,5 @@ framework:
 
   engines:
     - php-fpm
-    - road-runner
     - swoole
+    - road-runner
