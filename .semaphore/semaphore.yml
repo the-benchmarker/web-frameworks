@@ -48,17 +48,17 @@ blocks:
     - name: setup
       commands:
       - checkout
-- name: chubbyphp
+- name: sunrise-router
   dependencies:
   - php
   run:
-    when: change_in('/php/chubbyphp')
+    when: change_in('/php/sunrise-router')
   task:
     env_vars:
     - name: LANGUAGE
       value: php
     - name: FRAMEWORK
-      value: chubbyphp
+      value: sunrise-router
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -75,132 +75,19 @@ blocks:
     jobs:
     - name: php-fpm
       commands:
-      - make  -f php/chubbyphp/.Makefile build.php-fpm
+      - make  -f php/sunrise-router/.Makefile build.php-fpm
       - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    - name: workerman
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    - name: road-runner
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.road-runner
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: road-runner
-- name: cubex
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/cubex')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: cubex
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/cubex/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/cubex/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    - name: php-fpm
-      commands:
-      - make  -f php/cubex/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/cubex/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-- name: slim
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/slim')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: slim
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/slim/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.php-fpm
+      - make  -f php/sunrise-router/.Makefile collect.php-fpm
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
         value: php-fpm
     - name: road-runner
       commands:
-      - make  -f php/slim/.Makefile build.road-runner
+      - make  -f php/sunrise-router/.Makefile build.road-runner
       - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.road-runner
+      - make  -f php/sunrise-router/.Makefile collect.road-runner
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
         value: road-runner
-    - name: swoole
-      commands:
-      - make  -f php/slim/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
