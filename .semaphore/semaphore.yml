@@ -2124,15 +2124,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: swoole
       commands:
-      - make  -f php/swoft/.Makefile build.php-fpm
+      - make  -f php/swoft/.Makefile build.swoole
       - bundle exec rspec .spec
-      - make  -f php/swoft/.Makefile collect.php-fpm
+      - make  -f php/swoft/.Makefile collect.swoole
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: swoole
 - name: swoole
   dependencies:
   - php
@@ -2158,15 +2158,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: swoole
       commands:
-      - make  -f php/swoole/.Makefile build.php-fpm
+      - make  -f php/swoole/.Makefile build.swoole
       - bundle exec rspec .spec
-      - make  -f php/swoole/.Makefile collect.php-fpm
+      - make  -f php/swoole/.Makefile collect.swoole
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: swoole
 - name: swoole-coroutine
   dependencies:
   - php
@@ -2192,15 +2192,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: swoole
       commands:
-      - make  -f php/swoole-coroutine/.Makefile build.php-fpm
+      - make  -f php/swoole-coroutine/.Makefile build.swoole
       - bundle exec rspec .spec
-      - make  -f php/swoole-coroutine/.Makefile collect.php-fpm
+      - make  -f php/swoole-coroutine/.Makefile collect.swoole
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: swoole
 - name: symfony
   dependencies:
   - php
