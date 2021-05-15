@@ -112,7 +112,6 @@ def create_dockerfile(directory, engine, config)
                generic_template
              end
   files = []
-
   Dir.glob(config['files']).each do |file|
     variant_file = file.gsub(directory, File.join(directory, ".#{engine}"))
 
@@ -134,17 +133,21 @@ end
 
 desc 'Create Dockerfiles'
 task :config do
-  Dir.glob(['ruby/*/config.yaml', 'javascript/*/config.yaml']).each do |path|
+  Dir.glob(['php/*/config.yaml']).each do |path|
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
-
     raise "missing engine for #{directory}" unless config.dig('framework', 'engines')
 
     config.dig('framework', 'files').map { |f| f.prepend(directory, File::SEPARATOR) }
 
     config.dig('framework', 'engines').each do |engine|
       engine.each do |name, data|
-        create_dockerfile(directory, name, data.merge!(config['framework']))
+        data['bootstrap'] = if data['bootstrap']
+                              config['language']['bootstrap'].append(data['bootstrap']).flatten!
+                            else
+                              config['language']['bootstrap']
+                            end
+        create_dockerfile(directory, name, config['framework'].merge(data))
       end
     end
 
