@@ -45,6 +45,47 @@ def default_provider
   end
 end
 
+def custom_config(dict1, dict2, dict3)
+  keys = dict1.keys << dict2.keys << dict3.keys
+  data = {}
+  keys.flatten!.uniq.each do |key|
+    next if %w[version engines website github].include?(key)
+
+    data[key] = override_or_merge(dict3[key], dict2[key], dict1[key])
+  end
+  data
+end
+
+def override_or_merge(value3, value2, value1)
+  value = value3
+  if value
+    if value2
+      case value2
+      when Array
+        value.unshift(*value2)
+      when String
+        value = value2
+      end
+    end
+  else
+    value = value2
+  end
+  if value
+    if value1
+      case value1
+      when Array
+        value.unshift(*value1)
+      when String
+        value = value1
+      end
+    end
+  else
+    value = value1
+  end
+
+  value
+end
+
 def commands_for(language, framework, variant, provider = default_provider)
   config = YAML.safe_load(File.read('config.yaml'))
 
@@ -138,16 +179,12 @@ task :config do
     config = get_config_from(directory, engines_as_list: false)
     raise "missing engine for #{directory}" unless config.dig('framework', 'engines')
 
-    config.dig('framework', 'files').map { |f| f.prepend(directory, File::SEPARATOR) }
-
     config.dig('framework', 'engines').each do |engine|
       engine.each do |name, data|
-        data['bootstrap'] = if data['bootstrap']
-                              config['language']['bootstrap'].append(data['bootstrap']).flatten!
-                            else
-                              config['language']['bootstrap']
-                            end
-        create_dockerfile(directory, name, config['framework'].merge(data))
+        variables = custom_config(config['language'], config['framework'], data)
+        variables['files'].each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }
+
+        create_dockerfile(directory, name, variables)
       end
     end
 
