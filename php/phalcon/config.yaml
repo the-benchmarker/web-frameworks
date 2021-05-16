@@ -2,9 +2,9 @@ framework:
   website: phalcon.io
   version: 4.1
 
-php_ext:
-  - psr
-  - phalcon
+  extensions:
+    - psr
+    - phalcon
 
 nginx_conf:
   - |
