@@ -1480,15 +1480,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: workerman
       commands:
-      - make  -f php/webman/.Makefile build.php-fpm
+      - make  -f php/webman/.Makefile build.workerman
       - bundle exec rspec .spec
-      - make  -f php/webman/.Makefile collect.php-fpm
+      - make  -f php/webman/.Makefile collect.workerman
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: workerman
 - name: workerman
   dependencies:
   - php
@@ -1514,15 +1514,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: workerman
       commands:
-      - make  -f php/workerman/.Makefile build.php-fpm
+      - make  -f php/workerman/.Makefile build.workerman
       - bundle exec rspec .spec
-      - make  -f php/workerman/.Makefile collect.php-fpm
+      - make  -f php/workerman/.Makefile collect.workerman
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: workerman
 - name: yii
   dependencies:
   - php
