@@ -2,13 +2,8 @@ framework:
   website: iceframework.org
   version: 1.5
 
-build_deps:
-  - bash
-
-before_build:
-  - wget -O /tmp/framework-1.5.1.tar.gz https://github.com/ice/framework/archive/1.5.1.tar.gz
-  - cd /tmp/ && tar -xzf framework-1.5.1.tar.gz && cd framework-1.5.1 && bash install
-  - echo "extension=ice.so" >> /usr/local/etc/php/conf.d/docker-php-ext-ice.ini
+  deps:
+    - bash
 
 nginx_conf:
   - |
@@ -21,3 +16,12 @@ nginx_conf:
       fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
       include fastcgi_params;\n\
     }\n\
+
+language:
+  bootstrap:
+    - wget -O /tmp/framework-1.5.1.tar.gz https://github.com/ice/framework/archive/1.5.1.tar.gz
+    - cd /tmp/ && tar -xzf framework-1.5.1.tar.gz && cd framework-1.5.1 && bash install
+    - echo "extension=ice.so" >> /usr/local/etc/php/conf.d/docker-php-ext-ice.ini
+    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o

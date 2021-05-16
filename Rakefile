@@ -153,8 +153,15 @@ def create_dockerfile(directory, engine, config)
                generic_template
              end
   files = []
+
   Dir.glob(config['files']).each do |file|
     variant_file = file.gsub(directory, File.join(directory, ".#{engine}"))
+
+    target = if file.include?('/.')
+               file.gsub(%r{/\.[a-z-]+}, '').gsub("#{directory}/", '')
+             else
+               file.gsub("#{directory}/", '')
+             end
 
     source = if File.exist?(variant_file)
                variant_file
@@ -162,7 +169,7 @@ def create_dockerfile(directory, engine, config)
                file
              end
 
-    files << { source: source.gsub("#{directory}/", ''), target: file.gsub("#{directory}/", '') }
+    files << { source: source.gsub("#{directory}/", ''), target: target }
   end
 
   File.open(File.join(directory, ".Dockerfile.#{engine}"), 'w') do |f|

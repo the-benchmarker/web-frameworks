@@ -33,6 +33,13 @@ language:
       extensions:
         - swoole
       command: php public/index.php
+    reactphp:
+      deps:
+        - libevent-dev
+      modules:
+        - intl
+        - pcntl
+        - sockets
 
 framework:
   engines:

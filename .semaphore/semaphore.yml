@@ -73,15 +73,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: reactphp
       commands:
-      - make  -f php/antidot/.Makefile build.php-fpm
+      - make  -f php/antidot/.Makefile build.reactphp
       - bundle exec rspec .spec
-      - make  -f php/antidot/.Makefile collect.php-fpm
+      - make  -f php/antidot/.Makefile collect.reactphp
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: reactphp
 - name: basicphp
   dependencies:
   - php
@@ -270,15 +270,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: workerman
       commands:
-      - make  -f php/comet/.Makefile build.php-fpm
+      - make  -f php/comet/.Makefile build.workerman
       - bundle exec rspec .spec
-      - make  -f php/comet/.Makefile collect.php-fpm
+      - make  -f php/comet/.Makefile collect.workerman
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: workerman
 - name: cubex
   dependencies:
   - php
@@ -347,15 +347,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: reactphp
       commands:
-      - make  -f php/driftphp/.Makefile build.php-fpm
+      - make  -f php/driftphp/.Makefile build.reactphp
       - bundle exec rspec .spec
-      - make  -f php/driftphp/.Makefile collect.php-fpm
+      - make  -f php/driftphp/.Makefile collect.reactphp
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: reactphp
 - name: fastsitephp
   dependencies:
   - php
@@ -909,40 +909,15 @@ blocks:
       env_vars:
       - name: ENGINE
         value: php-fpm
-- name: one-fpm
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/one-fpm')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: one-fpm
-    prologue:
+    - name: swoole
       commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/one-fpm/.Makefile build.php-fpm
+      - make  -f php/one/.Makefile build.swoole
       - bundle exec rspec .spec
-      - make  -f php/one-fpm/.Makefile collect.php-fpm
+      - make  -f php/one/.Makefile collect.swoole
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: swoole
 - name: phalcon
   dependencies:
   - php
@@ -1070,15 +1045,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: swoole
       commands:
-      - make  -f php/simps/.Makefile build.php-fpm
+      - make  -f php/simps/.Makefile build.swoole
       - bundle exec rspec .spec
-      - make  -f php/simps/.Makefile collect.php-fpm
+      - make  -f php/simps/.Makefile collect.swoole
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: swoole
 - name: slim
   dependencies:
   - php
@@ -1582,37 +1557,12 @@ blocks:
       env_vars:
       - name: ENGINE
         value: php-fpm
-- name: yii-swoole
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/yii-swoole')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: yii-swoole
-    prologue:
+    - name: swoole
       commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/yii-swoole/.Makefile build.php-fpm
+      - make  -f php/yii/.Makefile build.swoole
       - bundle exec rspec .spec
-      - make  -f php/yii-swoole/.Makefile collect.php-fpm
+      - make  -f php/yii/.Makefile collect.swoole
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: swoole
