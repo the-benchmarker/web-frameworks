@@ -157,8 +157,8 @@ def create_dockerfile(directory, engine, config)
   Dir.glob(config['files']).each do |file|
     variant_file = file.gsub(directory, File.join(directory, ".#{engine}"))
 
-    target = if file.include?('/.')
-               file.gsub(%r{/\.[a-z-]+}, '').gsub("#{directory}/", '')
+    target = if file.include?(".#{engine}")
+               file.gsub(".#{engine}/", '').gsub("#{directory}/", '')
              else
                file.gsub("#{directory}/", '')
              end

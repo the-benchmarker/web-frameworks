@@ -25,7 +25,7 @@ language:
       command: php public/index.php start
     road-runner:
       files:
-        - .rr.yaml
+        - .road-runner/.rr.yaml
       bootstrap:
         - vendor/bin/rr get-binary
       command: ./rr serve
