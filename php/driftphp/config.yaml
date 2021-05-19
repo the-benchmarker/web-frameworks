@@ -4,6 +4,7 @@ framework:
 
   files:
     - bin/server
+    - Drift/config/**/*.yml
 
   engines:
     - reactphp
