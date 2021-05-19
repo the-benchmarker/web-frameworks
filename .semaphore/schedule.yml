@@ -343,7 +343,26 @@ blocks:
         value: '64'
       - name: ROUTES
         value: GET:/
+<<<<<<< HEAD
+    - name: beetlex
+      commands:
+      - cd csharp/beetlex && make build  -f .Makefile  && cd -
+      - FRAMEWORK=csharp/beetlex bundle exec rspec .spec
+      - make  -f csharp/beetlex/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+    - name: carter
+=======
     - name: tango
+>>>>>>> 07784711 (reduce PR size)
       commands:
       - cd go/tango && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/tango bundle exec rspec .spec
@@ -375,9 +394,29 @@ blocks:
         value: GET:/
     - name: gf
       commands:
+<<<<<<< HEAD
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: start
+      commands:
+      - cd dart/start && make build  -f .Makefile  && cd -
+      - FRAMEWORK=dart/start bundle exec rspec .spec
+      - make  -f dart/start/.Makefile collect
+=======
       - cd go/gf && make build  -f .Makefile  && cd -
       - FRAMEWORK=go/gf bundle exec rspec .spec
       - make  -f go/gf/.Makefile collect
+>>>>>>> 07784711 (reduce PR size)
       - bundle exec rake db:raw_export
       env_vars:
       - name: DATABASE_URL
@@ -1660,6 +1699,9 @@ blocks:
         value: '64'
       - name: ROUTES
         value: GET:/
+<<<<<<< HEAD
+    - name: polka
+=======
     - name: micronaut
       commands:
       - cd java/micronaut && make build  -f .Makefile  && cd -
@@ -1680,6 +1722,7 @@ blocks:
   - setup
   task:
     prologue:
+>>>>>>> 07784711 (reduce PR size)
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
       - cache restore wrk
