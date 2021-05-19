@@ -5,6 +5,10 @@ RUN docker-php-ext-install zip opcache
 
 WORKDIR /usr/src/app
 
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
+
 {{#modules}}
   RUN docker-php-ext-install {{{.}}}
 {{/modules}}
@@ -30,9 +34,7 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
 
 
 
-{{#environment}}
-  ENV {{{.}}}
-{{/environment}}
+
 
 {{#command}}
   CMD {{{.}}}

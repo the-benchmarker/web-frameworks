@@ -5,7 +5,7 @@ framework:
   engines:
     - swoole
 
-  extensions: 
+  extensions:
     - redis
 
   bootstrap:
