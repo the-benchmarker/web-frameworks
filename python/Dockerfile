@@ -1,11 +1,12 @@
-FROM python:3.9-alpine
-
-RUN apk add build-base
+FROM python:3.9-slim
 
 WORKDIR /usr/src/app
 
+RUN apt-get -qq update
+RUN apt-get -qy install build-essential
+
 {{#build_deps}}
-  RUN apk add {{{.}}}
+  RUN apt-get add {{{.}}}
 {{/build_deps}}
 
 COPY . ./
