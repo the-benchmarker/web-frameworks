@@ -43,7 +43,7 @@ class Basic
 		// Number of subdirectories from hostname to index.php
 		$sub_dir = substr_count($_SERVER['SCRIPT_NAME'], '/') - 1;
 
-		if (empty($uri[$order+$sub_dir])) return FALSE;
+		if (! isset($uri[$order+$sub_dir])) return FALSE;
 
 		return $uri[$order+$sub_dir];
 	}
