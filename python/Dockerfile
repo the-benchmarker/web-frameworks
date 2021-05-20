@@ -1,11 +1,13 @@
-FROM python:3.9-alpine
+FROM python:3.9-slim
 
 RUN apk add build-base
 
 WORKDIR /usr/src/app
 
+RUN apt-get -qq update
+
 {{#build_deps}}
-  RUN apk add {{{.}}}
+  RUN apt-get add {{{.}}}
 {{/build_deps}}
 
 COPY . ./
