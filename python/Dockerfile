@@ -3,6 +3,7 @@ FROM python:3.9-slim
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update
+RUN apt-get -ay install build-essentials
 
 {{#build_deps}}
   RUN apt-get add {{{.}}}
