@@ -4,7 +4,7 @@ framework:
 
 build_deps:
   - libffi-dev
-  - openssl-dev
+  - libssl-dev
   - curl
 
 fixes:
