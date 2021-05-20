@@ -1,7 +1,5 @@
 FROM python:3.9-slim
 
-RUN apk add build-base
-
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update
