@@ -1,6 +1,6 @@
 framework:
   website: index-py.abersheeran.com
-  version: 0.17
+  version: 0.18
 
 command: >
   gunicorn  \

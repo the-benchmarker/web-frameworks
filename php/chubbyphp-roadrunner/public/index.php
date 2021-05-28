@@ -6,10 +6,11 @@ namespace App;
 
 use Chubbyphp\Framework\Application;
 use Chubbyphp\Framework\Middleware\ExceptionMiddleware;
-use Chubbyphp\Framework\Middleware\RouterMiddleware;
+use Chubbyphp\Framework\Middleware\RouteMatcherMiddleware;
 use Chubbyphp\Framework\RequestHandler\CallbackRequestHandler;
-use Chubbyphp\Framework\Router\FastRoute\Router;
+use Chubbyphp\Framework\Router\FastRoute\RouteMatcher;
 use Chubbyphp\Framework\Router\Route;
+use Chubbyphp\Framework\Router\Routes;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Psr7\Factory\ResponseFactory;
 use Spiral\Goridge\StreamRelay;
@@ -24,7 +25,7 @@ $responseFactory = new ResponseFactory();
 
 $app = new Application([
     new ExceptionMiddleware($responseFactory, true),
-    new RouterMiddleware(new Router([
+    new RouteMatcherMiddleware(new RouteMatcher(new Routes([
         Route::get('/', 'home', new CallbackRequestHandler(
             static function () use ($responseFactory) {
                 $response = $responseFactory->createResponse();
@@ -49,7 +50,7 @@ $app = new Application([
                 return $response;
             }
         ))
-    ]), $responseFactory),
+    ])), $responseFactory),
 ]);
 
 $worker = new Worker(new StreamRelay(STDIN, STDOUT));

@@ -1,6 +1,6 @@
 framework:
   github: an-tao/drogon
-  version: 1.5
+  version: 1.6
 
 provider:
   default:
@@ -30,7 +30,7 @@ binaries:
   - build/drogon_benchmark
 
 download:
-  - git clone --branch v1.5.1 https://github.com/an-tao/drogon
+  - git clone --branch v1.6.0 https://github.com/an-tao/drogon
   - cd drogon && git submodule update --init
 
 build:

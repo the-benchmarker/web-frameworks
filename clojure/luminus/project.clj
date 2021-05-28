@@ -1,6 +1,6 @@
 (defproject luminus "0.1.0-SNAPSHOT"
 
-  :dependencies [[luminus/lein-template "4.06"]
+  :dependencies [[luminus/lein-template "4.09"]
                  [ch.qos.logback/logback-classic "1.2.3"]
                  [cheshire "5.10.0"]
                  [clojure.java-time "0.3.2"]
@@ -20,7 +20,7 @@
                  [org.clojure/tools.cli "1.0.206"]
                  [org.clojure/tools.logging "1.1.0"]
                  [org.webjars.npm/bulma "0.9.2"]
-                 [org.webjars.npm/material-icons "0.3.1"]
+                 [org.webjars.npm/material-icons "0.6.4"]
                  [org.webjars/webjars-locator "0.40"]
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.9.3"]
@@ -53,7 +53,7 @@
                                  [ring/ring-devel "1.9.3"]
                                  [ring/ring-mock "0.4.0"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.24.1"]
-                                 [jonase/eastwood "0.4.2"]] 
+                                 [jonase/eastwood "0.4.3"]] 
                   
                   :source-paths ["env/dev/clj" ]
                   :resource-paths ["env/dev/resources"]
