@@ -25,7 +25,7 @@ namespace :ci do
     Dir.glob('*/config.yaml').each do |path|
       language, = path.split(File::Separator)
 
-      block = { name: language, dependencies: ['setup'], run: { when: "change_in('/#{language}/')" }, task: { prologue: { commands: [
+      block = { name: language, dependencies: ['setup'], run: { when: "change_in(['/#{language}/','data.json'])" }, task: { prologue: { commands: [
         'cache restore $SEMAPHORE_GIT_SHA',
         'cache restore wrk',
         'sudo install wrk /usr/local/bin',
@@ -56,7 +56,7 @@ namespace :ci do
     end
 
     config = { version: 'v1.0', name: 'Benchmarking suite', execution_time_limit: { hours: 24 },
-               agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu1804' } }, blocks: blocks }
+               agent: { machine: { type: 'e1-standard-2', os_image: 'ubuntu2004' } }, blocks: blocks }
     File.write('.semaphore/semaphore.yml', JSON.parse(config.to_json).to_yaml)
     # remvoe conditional run
     config[:blocks].map { |block| block.except!(:run) }
