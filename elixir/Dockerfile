@@ -1,7 +1,8 @@
-FROM elixir:1.12-alpine AS build
+FROM elixir:1.12-slim AS build
 
 # Update system deps
-RUN apk add --update git build-base
+RUN apt-get -qq update
+RUN apt-get -qy install build-essential
 
 # Instal Hex, Rebar and Rebar3
 RUN mix local.rebar --force
@@ -25,10 +26,10 @@ RUN mix release --path release
 
 # ===============================================================================================
 
-FROM alpine:latest AS app
+FROM debian AS app
 
 # Update system deps
-RUN apk add --update bash openssl
+RUN apt-get -qq update && apt-get -qy install openssl
 
 # Application folder
 RUN mkdir /app
