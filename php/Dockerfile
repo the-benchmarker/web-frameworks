@@ -5,6 +5,10 @@ RUN docker-php-ext-install zip opcache
 
 WORKDIR /usr/src/app
 
+((#environment}}
+  ENV {{{.}}}
+((/environment}}
+
 {{#build_deps}}
   RUN apk add {{{.}}}
 {{/build_deps}}
