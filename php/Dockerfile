@@ -5,9 +5,9 @@ RUN docker-php-ext-install zip opcache
 
 WORKDIR /usr/src/app
 
-((#environment}}
-  ENV {{{.}}}
-((/environment}}
+{{#environment}}
+ENV {{{.}}}
+{{/environment}}
 
 {{#build_deps}}
   RUN apk add {{{.}}}
@@ -40,9 +40,7 @@ RUN composer install --no-dev --prefer-dist --classmap-authoritative
 RUN composer dumpautoload -o
 {{/standalone}}
 
-{{#environment}}
-ENV {{{.}}}
-{{/environment}}
+
 
 {{#before_command}}
   RUN {{{.}}}
