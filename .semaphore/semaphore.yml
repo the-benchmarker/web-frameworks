@@ -764,15 +764,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: workerman
       commands:
-      - make  -f php/mark/.Makefile build.php-fpm
+      - make  -f php/mark/.Makefile build.workerman
       - bundle exec rspec .spec
-      - make  -f php/mark/.Makefile collect.php-fpm
+      - make  -f php/mark/.Makefile collect.workerman
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: workerman
 - name: mezzio
   dependencies:
   - php
