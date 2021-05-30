@@ -25,14 +25,14 @@ namespace :ci do
       language, = path.split(File::Separator)
       next unless ['ruby','javascript'].include?(language)
       definition[:blocks] << { 'name' => language, 'dependencies' => ['setup'],
-                               'run' => { 'when' => "change_in('/#{language}/')" }, 'task' => { 'prologue' => { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk', 'sudo install wrk /usr/local/bin', 'cache restore bin', 'cache restore built-in', 'sem-service start postgres', 'createdb -U postgres -h 0.0.0.0 benchmark', 'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql', 'bundle config path .cache', 'bundle install', 'bundle exec rake config'] }, 'jobs' => [{ 'name' => 'setup', 'commands' => ['checkout'] }] } }
+                               'run' => { 'when' => "change_in('/#{language}/','data.json')" }, 'task' => { 'prologue' => { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk', 'sudo install wrk /usr/local/bin', 'cache restore bin', 'cache restore built-in', 'sem-service start postgres', 'createdb -U postgres -h 0.0.0.0 benchmark', 'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql', 'bundle config path .cache', 'bundle install', 'bundle exec rake config'] }, 'jobs' => [{ 'name' => 'setup', 'commands' => ['checkout'] }] } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
 
         block = {
           name: framework,
           dependencies: [language],
-          run: { when: "change_in('/#{language}/#{framework}')" },
+          run: { when: "change_in('/#{language}/#{framework}','data.json')" },
           task: {
             env_vars: [{ name: 'LANGUAGE', value: language }, { name: 'FRAMEWORK', value: framework }],
             prologue: { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk',

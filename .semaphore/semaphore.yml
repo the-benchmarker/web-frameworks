@@ -29,7 +29,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in('/javascript/')
+    when: change_in('/javascript/','data.json')
   task:
     prologue:
       commands:
@@ -52,7 +52,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/0http')
+    when: change_in('/javascript/0http','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -95,7 +95,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/express')
+    when: change_in('/javascript/express','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -129,7 +129,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/fastify')
+    when: change_in('/javascript/fastify','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -163,7 +163,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/feathersjs')
+    when: change_in('/javascript/feathersjs','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -197,7 +197,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/foxify')
+    when: change_in('/javascript/foxify','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -231,7 +231,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/fyrejet')
+    when: change_in('/javascript/fyrejet','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -274,7 +274,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/hapi')
+    when: change_in('/javascript/hapi','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -308,7 +308,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/iotjs-express')
+    when: change_in('/javascript/iotjs-express','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -342,7 +342,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/koa')
+    when: change_in('/javascript/koa','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -376,7 +376,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/moleculer')
+    when: change_in('/javascript/moleculer','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -410,7 +410,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/muneem')
+    when: change_in('/javascript/muneem','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -444,7 +444,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/nanoexpress')
+    when: change_in('/javascript/nanoexpress','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -478,7 +478,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/naturaljs-router')
+    when: change_in('/javascript/naturaljs-router','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -512,7 +512,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/nestjs-express')
+    when: change_in('/javascript/nestjs-express','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -546,7 +546,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/nestjs-fastify')
+    when: change_in('/javascript/nestjs-fastify','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -580,7 +580,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/polka')
+    when: change_in('/javascript/polka','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -614,7 +614,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/polkadot')
+    when: change_in('/javascript/polkadot','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -648,7 +648,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/rayo')
+    when: change_in('/javascript/rayo','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -682,7 +682,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/restana')
+    when: change_in('/javascript/restana','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -716,7 +716,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/restify')
+    when: change_in('/javascript/restify','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -750,7 +750,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/sails')
+    when: change_in('/javascript/sails','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -784,7 +784,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/sifrr')
+    when: change_in('/javascript/sifrr','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -818,7 +818,7 @@ blocks:
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/tinyhttp')
+    when: change_in('/javascript/tinyhttp','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -852,7 +852,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in('/ruby/')
+    when: change_in('/ruby/','data.json')
   task:
     prologue:
       commands:
@@ -875,7 +875,7 @@ blocks:
   dependencies:
   - ruby
   run:
-    when: change_in('/ruby/agoo')
+    when: change_in('/ruby/agoo','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -909,7 +909,7 @@ blocks:
   dependencies:
   - ruby
   run:
-    when: change_in('/ruby/camping')
+    when: change_in('/ruby/camping','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -961,7 +961,7 @@ blocks:
   dependencies:
   - ruby
   run:
-    when: change_in('/ruby/cuba')
+    when: change_in('/ruby/cuba','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1013,7 +1013,7 @@ blocks:
   dependencies:
   - ruby
   run:
-    when: change_in('/ruby/grape')
+    when: change_in('/ruby/grape','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1065,7 +1065,7 @@ blocks:
   dependencies:
   - ruby
   run:
-    when: change_in('/ruby/hanami-api')
+    when: change_in('/ruby/hanami-api','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1117,7 +1117,7 @@ blocks:
   dependencies:
   - ruby
   run:
-    when: change_in('/ruby/rack-routing')
+    when: change_in('/ruby/rack-routing','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1169,7 +1169,7 @@ blocks:
   dependencies:
   - ruby
   run:
-    when: change_in('/ruby/rack_app')
+    when: change_in('/ruby/rack_app','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1221,7 +1221,7 @@ blocks:
   dependencies:
   - ruby
   run:
-    when: change_in('/ruby/rails')
+    when: change_in('/ruby/rails','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1273,7 +1273,7 @@ blocks:
   dependencies:
   - ruby
   run:
-    when: change_in('/ruby/roda')
+    when: change_in('/ruby/roda','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1325,7 +1325,7 @@ blocks:
   dependencies:
   - ruby
   run:
-    when: change_in('/ruby/sinatra')
+    when: change_in('/ruby/sinatra','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1377,7 +1377,7 @@ blocks:
   dependencies:
   - ruby
   run:
-    when: change_in('/ruby/syro')
+    when: change_in('/ruby/syro','data.json')
   task:
     env_vars:
     - name: LANGUAGE

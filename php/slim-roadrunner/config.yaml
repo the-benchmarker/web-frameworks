@@ -1,6 +1,6 @@
 framework:
   website: slimframework.com
-  version: 4.7
+  version: 4.8
 
 before_command:
   - vendor/bin/rr get-binary
