@@ -7,7 +7,7 @@ buildscript {
 
     ext {
         kotlinVersion = "1.5.+"
-        koobyVersion = "2.9.+"
+        joobyVersion = "2.9.+"
 	    shadowVersion = "+"
     }
     
@@ -33,7 +33,6 @@ repositories {
 
 dependencies {
     implementation "io.jooby:jooby-utow:${joobyVersion}"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
 }
 
 shadowJar {
