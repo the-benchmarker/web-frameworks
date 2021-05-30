@@ -6,7 +6,7 @@ buildscript {
     }
 
     ext {
-        kotlinVersion = "1.4.+"
+        kotlinVersion = "1.5.+"
         joobyVersion = "2.9.+"
 	    shadowVersion = "+"
     }
@@ -17,7 +17,10 @@ buildscript {
     }
 }
 
-apply plugin: 'kotlin'
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "${kotlinVersion}"
+}
+
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: 'application'
 
