@@ -5,19 +5,21 @@ buildscript {
     }
 
     ext {
-        kotlinVersion = "1.4.+"
-        ktorVersion = "1.5.+"
+        kotlinVersion = "1.5.+"
+        ktorVersion = "1.6.+"
 	    shadowVersion = "+"
     }
 
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
         classpath "com.github.jengelman.gradle.plugins:shadow:${shadowVersion}"
     }
     
 }
 
-apply plugin: 'kotlin'
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "${kotlinVersion}"
+}
+
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: 'application'
 
@@ -40,11 +42,10 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
-    compile "io.ktor:ktor-server-netty:${ktorVersion}"
-    compile "io.ktor:ktor-server-core:${ktorVersion}"
-    compile "io.ktor:ktor-locations:${ktorVersion}"
-    testCompile "io.ktor:ktor-server-tests:${ktorVersion}"
+    implementation "io.ktor:ktor-server-netty:${ktorVersion}"
+    implementation "io.ktor:ktor-server-core:${ktorVersion}"
+    implementation "io.ktor:ktor-locations:${ktorVersion}"
+    testImplementation "io.ktor:ktor-server-tests:${ktorVersion}"
 }
 
 shadowJar {
