@@ -1,7 +1,8 @@
 buildscript {
+
     repositories {
+        mavenCentral()
         jcenter()
-        maven { url "https://plugins.gradle.org/m2/" }
     }
 
     ext {
@@ -9,19 +10,14 @@ buildscript {
         ktorVersion = "1.6.+"
 	    shadowVersion = "+"
     }
-
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:${shadowVersion}"
-    }
     
 }
 
 plugins {
     id "org.jetbrains.kotlin.jvm" version "${kotlinVersion}"
+    id "com.github.johnrengelman.shadow" version "${shadowVersion}"
+    id "application"
 }
-
-apply plugin: "com.github.johnrengelman.shadow"
-apply plugin: 'application'
 
 group 'benchmark'
 version '0.0.1'

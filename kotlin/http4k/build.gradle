@@ -1,4 +1,5 @@
 buildscript {
+
     repositories {
         mavenCentral()
         jcenter()
@@ -9,24 +10,14 @@ buildscript {
         http4kVersion = "3.275.+"
 	    shadowVersion = "+"
     }
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
-        classpath "com.github.jengelman.gradle.plugins:shadow:${shadowVersion}"
-    }
-}
-
-repositories {
-    mavenCentral()
-    jcenter()
+    
 }
 
 plugins {
     id "org.jetbrains.kotlin.jvm" version "${kotlinVersion}"
+    id "com.github.johnrengelman.shadow" version "${shadowVersion}"
+    id "application"
 }
-
-apply plugin: "com.github.johnrengelman.shadow"
-apply plugin: 'application'
 
 group 'benchmark'
 version '0.0.1'
