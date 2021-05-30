@@ -1242,15 +1242,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: swoole
       commands:
-      - make  -f php/sw-fw-less/.Makefile build.php-fpm
+      - make  -f php/sw-fw-less/.Makefile build.swoole
       - bundle exec rspec .spec
-      - make  -f php/sw-fw-less/.Makefile collect.php-fpm
+      - make  -f php/sw-fw-less/.Makefile collect.swoole
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: swoole
 - name: swoft
   dependencies:
   - php
