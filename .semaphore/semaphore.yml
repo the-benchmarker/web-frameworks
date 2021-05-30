@@ -29,7 +29,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in('/php/')
+    when: change_in('/php/','data.json')
   task:
     prologue:
       commands:
@@ -52,7 +52,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/antidot')
+    when: change_in('/php/antidot','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -86,7 +86,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/basicphp')
+    when: change_in('/php/basicphp','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -120,7 +120,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/bearframework')
+    when: change_in('/php/bearframework','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -154,7 +154,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/chubbyphp')
+    when: change_in('/php/chubbyphp','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -215,7 +215,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/codeigniter4')
+    when: change_in('/php/codeigniter4','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -249,7 +249,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/comet')
+    when: change_in('/php/comet','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -283,7 +283,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/cubex')
+    when: change_in('/php/cubex','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -326,7 +326,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/driftphp')
+    when: change_in('/php/driftphp','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -360,7 +360,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/fastsitephp')
+    when: change_in('/php/fastsitephp','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -394,7 +394,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/fatfree')
+    when: change_in('/php/fatfree','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -428,7 +428,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/hamlet')
+    when: change_in('/php/hamlet','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -462,7 +462,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/hyperf')
+    when: change_in('/php/hyperf','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -496,7 +496,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/ice')
+    when: change_in('/php/ice','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -530,7 +530,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/imi')
+    when: change_in('/php/imi','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -564,7 +564,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/laminas')
+    when: change_in('/php/laminas','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -598,7 +598,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/laravel')
+    when: change_in('/php/laravel','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -641,7 +641,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/laravel-s-laravel')
+    when: change_in('/php/laravel-s-laravel','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -675,7 +675,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/laravel-s-lumen')
+    when: change_in('/php/laravel-s-lumen','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -709,7 +709,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/lumen')
+    when: change_in('/php/lumen','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -743,7 +743,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/mark')
+    when: change_in('/php/mark','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -777,7 +777,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/mezzio')
+    when: change_in('/php/mezzio','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -811,7 +811,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/nano')
+    when: change_in('/php/nano','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -845,7 +845,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/nette')
+    when: change_in('/php/nette','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -879,7 +879,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/one')
+    when: change_in('/php/one','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -922,7 +922,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/phalcon')
+    when: change_in('/php/phalcon','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -956,7 +956,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/siler')
+    when: change_in('/php/siler','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -990,7 +990,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/siler-swoole')
+    when: change_in('/php/siler-swoole','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1024,7 +1024,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/simps')
+    when: change_in('/php/simps','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1058,7 +1058,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/slim')
+    when: change_in('/php/slim','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1110,7 +1110,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/spiral')
+    when: change_in('/php/spiral','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1144,7 +1144,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/sunrise-router')
+    when: change_in('/php/sunrise-router','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1187,7 +1187,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/sunrise-router-annotations')
+    when: change_in('/php/sunrise-router-annotations','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1221,7 +1221,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/sw-fw-less')
+    when: change_in('/php/sw-fw-less','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1255,7 +1255,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/swoft')
+    when: change_in('/php/swoft','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1289,7 +1289,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/swoole')
+    when: change_in('/php/swoole','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1323,7 +1323,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/swoole-coroutine')
+    when: change_in('/php/swoole-coroutine','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1357,7 +1357,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/symfony')
+    when: change_in('/php/symfony','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1391,7 +1391,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/ubiquity')
+    when: change_in('/php/ubiquity','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1425,7 +1425,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/unic')
+    when: change_in('/php/unic','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1459,7 +1459,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/webman')
+    when: change_in('/php/webman','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1493,7 +1493,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/workerman')
+    when: change_in('/php/workerman','data.json')
   task:
     env_vars:
     - name: LANGUAGE
@@ -1527,7 +1527,7 @@ blocks:
   dependencies:
   - php
   run:
-    when: change_in('/php/yii')
+    when: change_in('/php/yii','data.json')
   task:
     env_vars:
     - name: LANGUAGE
