@@ -10,7 +10,7 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 
 // require your server configuration
-$config = require __DIR__ . '/../config/server.php';
+$config = require __DIR__ . '/../config/web.php';
 // construct a server instance
 $server = new Server($config);
 // start the swoole server
