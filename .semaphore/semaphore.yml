@@ -986,40 +986,15 @@ blocks:
       env_vars:
       - name: ENGINE
         value: php-fpm
-- name: siler-swoole
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/siler-swoole','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: siler-swoole
-    prologue:
+    - name: swoole
       commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/siler-swoole/.Makefile build.php-fpm
+      - make  -f php/siler/.Makefile build.swoole
       - bundle exec rspec .spec
-      - make  -f php/siler-swoole/.Makefile collect.php-fpm
+      - make  -f php/siler/.Makefile collect.swoole
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: swoole
 - name: simps
   dependencies:
   - php
@@ -1131,15 +1106,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: road-runner
       commands:
-      - make  -f php/spiral/.Makefile build.php-fpm
+      - make  -f php/spiral/.Makefile build.road-runner
       - bundle exec rspec .spec
-      - make  -f php/spiral/.Makefile collect.php-fpm
+      - make  -f php/spiral/.Makefile collect.road-runner
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: road-runner
 - name: sunrise-router
   dependencies:
   - php
