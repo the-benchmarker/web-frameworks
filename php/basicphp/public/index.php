@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/Basic.php'; // BasicPHP class library
+require_once __DIR__ . '/../Basic.php'; // BasicPHP class library
 
 /*
 |--------------------------------------------------------------------------
