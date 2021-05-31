@@ -1,14 +1,5 @@
 {
   "require": {
-    "php": ">=7.2",
-    "ext-phalcon": "~4.1.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Application\\": "src/"
-    },
-    "files": [
-      "src/Helpers.php"
-    ]
+    "leocavalcante/siler": "~1.7.2"
   }
 }
