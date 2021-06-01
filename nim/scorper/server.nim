@@ -12,5 +12,5 @@ proc cb(req: Request) {.async.} =
     if req.path == "/user":
       await req.resp("")
 
-const address = "127.0.0.1:3000"
+const address = "0.0.0.0:3000"
 waitFor serve(address, cb)
