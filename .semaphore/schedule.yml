@@ -3817,12 +3817,30 @@ blocks:
       - name: ROUTES
         value: GET:/
 <<<<<<< HEAD
+<<<<<<< HEAD
     - name: http4k
       commands:
       - cd kotlin/http4k && make build  -f .Makefile  && cd -
       - FRAMEWORK=kotlin/http4k bundle exec rspec .spec
       - make  -f kotlin/http4k/.Makefile collect
 =======
+=======
+    - name: scorper
+      commands:
+      - cd nim/scorper && make build  -f .Makefile  && cd -
+      - FRAMEWORK=nim/scorper bundle exec rspec .spec
+      - make  -f nim/scorper/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+>>>>>>> upstream/master
     - name: whip
       commands:
       - cd nim/whip && make build  -f .Makefile  && cd -
