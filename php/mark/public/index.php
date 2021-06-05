@@ -1,7 +1,7 @@
 <?php
 use Mark\SimpleApp;
 
-require 'vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 $api = new SimpleApp('tcp://0.0.0.0:3000');
 

@@ -17,7 +17,7 @@ use Sunrise\Http\Router\RequestHandler\CallableRequestHandler;
 use Sunrise\Http\Router\RouteCollector;
 use Sunrise\Http\Router\Router;
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $routeCollector = new RouteCollector();
 $responseFactory = new ResponseFactory();
