@@ -52,7 +52,7 @@ $app = new Application([
                 return $response;
             }
         ))
-    ])), $responseFactory),
+    ]), sys_get_temp_dir() . '/chubbyphp-swoole.php'), $responseFactory),
 ]);
 
 $server = new Server('localhost', 3000);

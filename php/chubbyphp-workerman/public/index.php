@@ -52,7 +52,7 @@ $app = new Application([
                 return $response;
             }
         ))
-    ])), $responseFactory),
+    ]), sys_get_temp_dir() . '/chubbyphp-workerman.php'), $responseFactory),
 ]);
 
 $server = new Worker('http://0.0.0.0:3000');
