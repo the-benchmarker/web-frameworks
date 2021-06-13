@@ -34,6 +34,13 @@ def get_config_from(directory, engines_as_list: true)
       end
     end
   end
+
+  skippable_keys = framework_config['framework'].select { |_k, v| v.nil? }.keys
+  skippable_keys.each do |skippable_key|
+    config['framework'].except!(skippable_key)
+    config['language'].except!(skippable_key)
+  end
+
   config
 end
 
