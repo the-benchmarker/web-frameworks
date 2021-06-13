@@ -12,7 +12,7 @@ error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 'stderr');
 
 //Composer
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 //Initiating shared container, bindings, directories and etc
 $app = \App\App::init(['root' => __DIR__]);
