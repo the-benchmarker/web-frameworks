@@ -551,15 +551,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: php-fpm
+    - name: swoole
       commands:
-      - make  -f php/imi/.Makefile build.php-fpm
+      - make  -f php/imi/.Makefile build.swoole
       - bundle exec rspec .spec
-      - make  -f php/imi/.Makefile collect.php-fpm
+      - make  -f php/imi/.Makefile collect.swoole
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: swoole
 - name: laminas
   dependencies:
   - php
@@ -637,74 +637,6 @@ blocks:
       env_vars:
       - name: ENGINE
         value: swoole
-- name: laravel-s-laravel
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/laravel-s-laravel','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: laravel-s-laravel
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/laravel-s-laravel/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/laravel-s-laravel/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-- name: laravel-s-lumen
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/laravel-s-lumen','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: laravel-s-lumen
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/laravel-s-lumen/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/laravel-s-lumen/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
 - name: lumen
   dependencies:
   - php
@@ -739,6 +671,15 @@ blocks:
       env_vars:
       - name: ENGINE
         value: php-fpm
+    - name: swoole
+      commands:
+      - make  -f php/lumen/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/lumen/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
 - name: mark
   dependencies:
   - php
