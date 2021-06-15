@@ -16,4 +16,6 @@ language:
     swoole:
       modules:
         - pcntl
+      bootstrap:
+        - mkdir storage
       command: php bin/laravels start
