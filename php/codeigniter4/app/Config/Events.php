@@ -1,6 +1,9 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 use CodeIgniter\Events\Events;
+use CodeIgniter\Exceptions\FrameworkException;
 
 /*
  * --------------------------------------------------------------------
@@ -22,12 +25,17 @@ use CodeIgniter\Events\Events;
 Events::on('pre_system', function () {
 	if (ENVIRONMENT !== 'testing')
 	{
-		while (\ob_get_level() > 0)
+		if (ini_get('zlib.output_compression'))
 		{
-			\ob_end_flush();
+			throw FrameworkException::forEnabledZlibOutputCompression();
 		}
 
-		\ob_start(function ($buffer) {
+		while (ob_get_level() > 0)
+		{
+			ob_end_flush();
+		}
+
+		ob_start(function ($buffer) {
 			return $buffer;
 		});
 	}
@@ -38,7 +46,7 @@ Events::on('pre_system', function () {
 	 * --------------------------------------------------------------------
 	 * If you delete, they will no longer be collected.
 	 */
-	if (ENVIRONMENT !== 'production')
+	if (CI_DEBUG && ! is_cli())
 	{
 		Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 		Services::toolbar()->respond();
