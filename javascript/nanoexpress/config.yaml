@@ -2,11 +2,11 @@ framework:
   github: nanoexpress/nanoexpress
   version: 5.0
 
-environment:
-  EXPERIMENTAL_FASTCALL: 1
+  engines:
+    - uwebsockets
 
-build_deps:
-  - git
+  environment:
+    EXPERIMENTAL_FASTCALL: 1
 
-fixes:
-  - ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
+  fixes:
+    - ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
