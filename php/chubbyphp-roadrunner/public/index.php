@@ -50,7 +50,7 @@ $app = new Application([
                 return $response;
             }
         ))
-    ])), $responseFactory),
+    ]), sys_get_temp_dir() . '/chubbyphp-roadrunner.php'), $responseFactory),
 ]);
 
 $worker = new Worker(new StreamRelay(STDIN, STDOUT));

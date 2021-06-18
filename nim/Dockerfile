@@ -21,7 +21,6 @@ RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
     -d:release \
     --passC:-flto \
     --passL:-flto \
-    --threads:on \
     server.nim
 
 FROM alpine
