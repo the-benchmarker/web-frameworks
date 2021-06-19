@@ -22,6 +22,7 @@ language:
         - gcompat # required by uWebSocket
       environment:
         NODE_ENV: production
+        EXPERIMENTAL_FASTCALL: 1
       bootstrap:
         - npm -g install pm2
         - npm install
