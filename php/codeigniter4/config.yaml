@@ -3,10 +3,7 @@ framework:
   version: 4.1
 
   modules:
-    - curl
     - intl
-    - json
-    - mbstring
 
   environment:
     CI_ENVIRONMENT: production
