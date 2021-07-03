@@ -4,12 +4,6 @@ framework:
 
 build_deps:
   - libevent-dev
-  - perl
-  - linux-headers
-  - bsd-compat-headers
-
-bin_deps:
-  - libstdc++
 
 build:
   - cmake -H. -B_builds -DCMAKE_BUILD_TYPE=Release
