@@ -72,7 +72,7 @@ def commands_for(language, framework, provider)
     commands[:build] << 'sleep 30'
   end
 
-  commands[:build] << 'curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
+  commands[:build] << 'HOST=`cat ip.txt` bundle exec rake ping'
 
   commands[:collect] << "LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
 
