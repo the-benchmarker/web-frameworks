@@ -14,8 +14,7 @@ files:
   - "**/hello.conf"
 
 download:
-  - wget -c https://github.com/jorisvink/kore/archive/3.3.1-release.tar.gz
-  - tar -xvf 3.3.1-release.tar.gz
+  - git clone -b 3.3.1-release https://github.com/jorisvink/kore kore-3.3.1-release
   - cd kore-3.3.1-release && TASKS=1 NOTLS=1 make && make install
 
 build:
@@ -24,11 +23,10 @@ build:
   - mv hello/hello.so .
 
 build_deps:
-  - bsd-compat-headers
-  - libressl-dev
+  - libssl-dev
 
 bin_deps:
-  - libressl
+  - openssl
 
 binaries:
   - kore
