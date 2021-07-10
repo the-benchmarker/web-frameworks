@@ -72,7 +72,11 @@ def commands_for(language, framework, provider)
     commands[:build] << 'sleep 30'
   end
 
-  commands[:build] << 'curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
+  # FIXME
+  # Temporary workaround for https://github.com/EsotericSoftware/reflectasm/issues/72
+  commands[:build] << 'sleep 5' if language == 'java'
+
+  commands[:build] << 'curl --keepalive-time 300 --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
 
   commands[:collect] << "LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
 
