@@ -1,9 +1,12 @@
-FROM alpine 
+FROM debian:buster
 
-RUN apk add build-base
+WORKDIR /usr/src/app
+
+RUN apt-get -qq update
+RUN apt-get -qy install build-essential wget
 
 {{#build_deps}}
-   RUN apk add {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/build_deps}}
 
 WORKDIR /usr/src/app
@@ -20,12 +23,14 @@ WORKDIR /usr/src/app
    RUN {{{.}}}
 {{/build}}
 
-FROM alpine
+FROM debian:buster
 
 WORKDIR /opt/web
 
+RUN apt-get -qq update
+
 {{#bin_deps}}
-   RUN apk add {{{.}}}
+   RUN apt-get -qy install {{{.}}}
 {{/bin_deps}}
 
 {{#files}}
