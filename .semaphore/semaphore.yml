@@ -29,7 +29,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/go/','data.json'])
+    when: change_in(['/go/','/data.json'])
   task:
     prologue:
       commands:
@@ -454,7 +454,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/swift/','data.json'])
+    when: change_in(['/swift/','/data.json'])
   task:
     prologue:
       commands:
@@ -564,7 +564,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/dart/','data.json'])
+    when: change_in(['/dart/','/data.json'])
   task:
     prologue:
       commands:
@@ -599,7 +599,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/haskell/','data.json'])
+    when: change_in(['/haskell/','/data.json'])
   task:
     prologue:
       commands:
@@ -649,7 +649,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/pony/','data.json'])
+    when: change_in(['/pony/','/data.json'])
   task:
     prologue:
       commands:
@@ -684,7 +684,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/clojure/','data.json'])
+    when: change_in(['/clojure/','/data.json'])
   task:
     prologue:
       commands:
@@ -764,7 +764,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/python/','data.json'])
+    when: change_in(['/python/','/data.json'])
   task:
     prologue:
       commands:
@@ -1234,7 +1234,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/rust/','data.json'])
+    when: change_in(['/rust/','/data.json'])
   task:
     prologue:
       commands:
@@ -1329,7 +1329,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/csharp/','data.json'])
+    when: change_in(['/csharp/','/data.json'])
   task:
     prologue:
       commands:
@@ -1409,7 +1409,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/java/','data.json'])
+    when: change_in(['/java/','/data.json'])
   task:
     prologue:
       commands:
@@ -1699,7 +1699,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/fsharp/','data.json'])
+    when: change_in(['/fsharp/','/data.json'])
   task:
     prologue:
       commands:
@@ -1809,7 +1809,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/r/','data.json'])
+    when: change_in(['/r/','/data.json'])
   task:
     prologue:
       commands:
@@ -1889,7 +1889,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/php/','data.json'])
+    when: change_in(['/php/','/data.json'])
   task:
     prologue:
       commands:
@@ -2659,7 +2659,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/crystal/','data.json'])
+    when: change_in(['/crystal/','/data.json'])
   task:
     prologue:
       commands:
@@ -2829,7 +2829,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/elixir/','data.json'])
+    when: change_in(['/elixir/','/data.json'])
   task:
     prologue:
       commands:
@@ -2909,7 +2909,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/scala/','data.json'])
+    when: change_in(['/scala/','/data.json'])
   task:
     prologue:
       commands:
@@ -3004,7 +3004,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/kotlin/','data.json'])
+    when: change_in(['/kotlin/','/data.json'])
   task:
     prologue:
       commands:
@@ -3069,7 +3069,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/nim/','data.json'])
+    when: change_in(['/nim/','/data.json'])
   task:
     prologue:
       commands:
@@ -3194,7 +3194,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/perl/','data.json'])
+    when: change_in(['/perl/','/data.json'])
   task:
     prologue:
       commands:
@@ -3229,7 +3229,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/c/','data.json'])
+    when: change_in(['/c/','/data.json'])
   task:
     prologue:
       commands:
@@ -3279,7 +3279,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/cpp/','data.json'])
+    when: change_in(['/cpp/','/data.json'])
   task:
     prologue:
       commands:
@@ -3344,7 +3344,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/ruby/','data.json'])
+    when: change_in(['/ruby/','/data.json'])
   task:
     prologue:
       commands:
@@ -3529,7 +3529,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/julia/','data.json'])
+    when: change_in(['/julia/','/data.json'])
   task:
     prologue:
       commands:
@@ -3564,7 +3564,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/javascript/','data.json'])
+    when: change_in(['/javascript/','/data.json'])
   task:
     prologue:
       commands:
