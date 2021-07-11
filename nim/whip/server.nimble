@@ -8,4 +8,4 @@ license = "MIT"
 # Dependencies
 
 requires "nim >= 1.0.0"
-requires "whip >= 0.2 & < 0.3"
+requires "https://github.com/waghanza/whip.git#fixed_httpbeast_versionw"
