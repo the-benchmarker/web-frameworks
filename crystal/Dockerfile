@@ -2,28 +2,24 @@ FROM crystallang/crystal:1.0.0-alpine
 
 WORKDIR /usr/src/app
 
+COPY . ./
+
 RUN apk add --update yaml-static
 
-COPY src src/
-COPY shard.yml ./
-{{#files}}
-  COPY {{.}} {{{.}}}
-{{/files}}
-
-RUN shards install
+RUN shards install --production
 RUN shards build --release --no-debug --static {{#build_opts}} {{{.}}} {{/build_opts}}
 
-# FROM alpine
+FROM alpine
 
-# COPY --from=0 /usr/src/app/bin/server /usr/bin/app
+COPY --from=0 /usr/src/app/bin/server /usr/bin/app
 
-# {{#files}}
-#   COPY --from=0 /usr/src/app/{{.}} /usr/bin/{{{.}}}
-# {{/files}}
+{{#files}}
+  COPY --from=0 /usr/src/app/{{.}} /usr/bin/{{{.}}}
+{{/files}}
 
-# {{#environment}}
-#   ENV {{{.}}}
-# {{/environment}}
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
 
-# WORKDIR /usr/bin
-# CMD ./app
+WORKDIR /usr/bin
+CMD ./app
