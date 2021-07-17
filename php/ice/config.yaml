@@ -6,11 +6,11 @@ build_deps:
   - bash
   - libexecinfo-dev
 
-php_ext:
- - ice
-
 environment:
   LDFLAGS: -lexecinfo
+
+php_ext:
+  - ice
 
 nginx_conf:
   - |

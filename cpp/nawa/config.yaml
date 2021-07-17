@@ -3,16 +3,19 @@ framework:
   version: 0.6
 
 build_deps:
-  - boost-dev
-  - openssl-dev
+  - libboost-dev
+  - libboost-system-dev
+  - libboost-thread-dev
+  - libssl-dev
   - doxygen
   - graphviz
-  - curl-dev
-  - argon2-dev
+  - libcurl4-openssl-dev
+  - libargon2-dev
 
 bin_deps:
-  - curl
-  - boost
+  - libboost-system1.67
+  - libboost-thread1.67
+  - libcurl4
   - openssl
   - argon2
 

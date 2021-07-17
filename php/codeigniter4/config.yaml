@@ -3,9 +3,7 @@ framework:
   version: 4.1
 
 php_mod:
-  - curl
   - intl
-  - mbstring
 
 environment:
   CI_ENVIRONMENT: production

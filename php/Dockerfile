@@ -67,9 +67,7 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
   # after 15 seconds warm-up, half of the 'idle' children are not killed
   RUN if [ $(nproc) = 1 ] ; then sed -i 's/\(pm\.max_spare_servers =\).*/\1 256/g' /usr/local/etc/php-fpm.d/www.conf ; else sed -i 's/\(pm\.max_spare_servers =\).*/\1 512/g' /usr/local/etc/php-fpm.d/www.conf ; fi 
   
-  RUN rm -fr /etc/nginx/sites-enabled/default
   RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
-  RUN mkdir /run/nginx
   
   RUN echo -e 'server {\n\
       {{#docroot}}
@@ -91,7 +89,7 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
         }\n\
       {{/nginx_conf}}
   }\n'\
-  >> /etc/nginx/conf.d/www.conf
+  > /etc/nginx/http.d/default.conf
   
   RUN echo -e 'opcache.enable=1\n\
   opcache.memory_consumption=512\n\
