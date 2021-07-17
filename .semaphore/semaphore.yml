@@ -29,7 +29,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in('/javascript/','data.json')
+    when: change_in('/javascript/','/data.json')
   task:
     prologue:
       commands:
@@ -852,7 +852,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in('/php/','data.json')
+    when: change_in('/php/','/data.json')
   task:
     prologue:
       commands:
@@ -2309,7 +2309,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in('/ruby/','data.json')
+    when: change_in('/ruby/','/data.json')
   task:
     prologue:
       commands:

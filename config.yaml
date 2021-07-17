@@ -48,7 +48,7 @@ providers:
 
     metadata:
       - docker run -p 3000:3000 -td {{{language}}}.{{{framework}}}.{{{variant}}}
-      - docker-machine ip default > {{{language}}}/{{{framework}}}/ip-{{{variant}}}.txt
+      - echo 127.0.0.1 > {{{language}}}/{{{framework}}}/ip-{{{variant}}}.txt
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}.{{{variant}}}  | xargs docker
