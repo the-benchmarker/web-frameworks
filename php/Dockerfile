@@ -18,8 +18,8 @@ ENV {{{.}}}
 {{/php_mod}}
 
 {{#php_ext}}
-  RUN pecl install {{{.}}}
-  RUN docker-php-ext-enable {{{.}}}
+  RUN pecl install {{{name}}}
+  RUN docker-php-ext-enable {{{extension}}}
 {{/php_ext}}
 
 {{#before_build}}
