@@ -2,6 +2,9 @@ framework:
   website: hyperf.io
   version: 2.2
 
+php_mod:
+  - pcntl
+
 php_ext:
   - redis
   - swoole
