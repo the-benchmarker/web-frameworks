@@ -22,9 +22,9 @@ func App() *buffalo.App {
 			SessionName: "_buffalo_framework_session",
 		})
 
-		app.GET("/", HomeHandler)
+		app.GET("/", EmptyHandler)
 		app.GET("/user/{user}", UserNameEchoHandler)
-		app.POST("/user", UserNameHandler)
+		app.POST("/user", EmptyHandler)
 	}
 
 	return app
