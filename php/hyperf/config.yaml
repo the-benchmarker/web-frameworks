@@ -5,6 +5,7 @@ framework:
 php_ext:
   - redis
   - swoole
+  - pcntl
 
 before_command:
   - echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
