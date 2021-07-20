@@ -9,9 +9,9 @@ proc userGet*(ctx: Context) {.async.} =
 proc simplePost*(ctx: Context) {.async.} =
   resp ""
 
-let settings = newSettings(port = Port(3000))
+let settings = newSettings(port = Port(3000), debug = false)
 
-let app = newApp(settings = settings, debug = false)
+let app = newApp(settings = settings)
 
 app.get("/", simpleGet)
 app.get("user/{id}", userGet)
