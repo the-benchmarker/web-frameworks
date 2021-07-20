@@ -21,7 +21,7 @@ ENV {{{.}}}
 
 {{#php_ext}}
   RUN mkdir -p /usr/src/php/ext/{{{name}}} && \
-    curl -fsSL https://pecl.php.net/get/{{{name}}} | tar xvz -C "/usr/src/php/ext/{{{name}}}" --strip 1
+    curl -fsSL https://pecl.php.net/get/{{{extension}}} | tar xvz -C "/usr/src/php/ext/{{{name}}}" --strip 1
   RUN docker-php-ext-install {{{extension}}}
 {{/php_ext}}
 
