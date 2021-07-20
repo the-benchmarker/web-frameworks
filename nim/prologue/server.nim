@@ -11,7 +11,7 @@ proc simplePost*(ctx: Context) {.async.} =
 
 let settings = newSettings(port = Port(3000))
 
-let app = newApp(settings = settings)
+let app = newApp(settings = settings, debug = false)
 
 app.get("/", simpleGet)
 app.get("user/{id}", userGet)
