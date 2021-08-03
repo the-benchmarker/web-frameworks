@@ -1,3 +1,3 @@
-fastapi>=0.67,<0.69
+fastapi>=0.68,<0.69
 gunicorn
 uvicorn[standard]
