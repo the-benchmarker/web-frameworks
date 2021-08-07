@@ -13,7 +13,7 @@ class Psr4Autoloader
      *
      * @var array
      */
-    protected $prefixes = array();
+    protected $prefixes = [];
 
     /**
      * Register loader with SPL autoloader stack.
@@ -22,7 +22,7 @@ class Psr4Autoloader
      */
     public function register()
     {
-        spl_autoload_register(array($this, 'loadClass'));
+        spl_autoload_register([$this, 'loadClass']);
     }
 
     /**
@@ -46,14 +46,14 @@ class Psr4Autoloader
 
         // initialize the namespace prefix array
         if (isset($this->prefixes[$prefix]) === false) {
-            $this->prefixes[$prefix] = array();
+            $this->prefixes[$prefix] = [];
         }
 
         // retain the base directory for the namespace prefix
         if ($prepend) {
             array_unshift($this->prefixes[$prefix], $base_dir);
         } else {
-            array_push($this->prefixes[$prefix], $base_dir);
+            $this->prefixes[$prefix][] = $base_dir;
         }
     }
 
@@ -72,7 +72,6 @@ class Psr4Autoloader
         // work backwards through the namespace names of the fully-qualified
         // class name to find a mapped file name
         while (false !== $pos = strrpos($prefix, '\\')) {
-
             // retain the trailing namespace separator in the prefix
             $prefix = substr($class, 0, $pos + 1);
 
@@ -111,7 +110,6 @@ class Psr4Autoloader
 
         // look through base directories for this namespace prefix
         foreach ($this->prefixes[$prefix] as $base_dir) {
-
             // replace the namespace prefix with the base directory,
             // replace namespace separators with directory separators
             // in the relative class name, append with .php
@@ -136,7 +134,7 @@ class Psr4Autoloader
      * @param string $file The file to require.
      * @return bool True if the file exists, false if not.
      */
-    protected function requireFile($file)
+    public function requireFile($file)
     {
         if (file_exists($file)) {
             require $file;
@@ -146,7 +144,7 @@ class Psr4Autoloader
     }
 }
 
-$basePath = realpath(__DIR__ . '/../');
+$basePath = dirname(__DIR__) . '/';
 $loader = new Psr4Autoloader();
 $loader->register();
 
@@ -154,6 +152,11 @@ $loader->register();
 $loader->addNamespace('Hhxsv5\LaravelS', $basePath . '/vendor/hhxsv5/laravel-s/src');
 
 // Register laravel-s dependencies
+
+// To fix issue #364 https://github.com/hhxsv5/laravel-s/issues/364
+$loader->addNamespace('Symfony\Polyfill\Php80', $basePath . '/vendor/symfony/polyfill-php80');
+$loader->requireFile($basePath . '/vendor/symfony/polyfill-php80/bootstrap.php');
+
 $loader->addNamespace('Symfony\Component\Console', $basePath . '/vendor/symfony/console');
 $loader->addNamespace('Symfony\Contracts\Service', $basePath . '/vendor/symfony/service-contracts');
 $loader->addNamespace('Symfony\Contracts', $basePath . '/vendor/symfony/contracts');
