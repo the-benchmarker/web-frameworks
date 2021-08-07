@@ -13,10 +13,10 @@ WORKDIR /usr/src/app
   RUN docker-php-ext-install {{{.}}}
 {{/modules}}
 
-{{#extensions}}
-  RUN pecl install {{{.}}}
-  RUN docker-php-ext-enable {{{.}}}
-{{/extensions}}
+{{#php_ext}}
+  RUN pecl install {{{name}}}
+  RUN docker-php-ext-enable {{{extension}}}
+{{/php_ext}}
 
 {{#files}}
   COPY {{source}} {{target}}
