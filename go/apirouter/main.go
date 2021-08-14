@@ -1,18 +1,24 @@
 package main
 
-import "github.com/cnotch/apirouter"
+import (
+	"fmt"
+	"github.com/cnotch/apirouter"
+	"net/http"
+)
 
+func main() {
 	r := apirouter.New(
-		apirouter.API("GET","/",func(w http.ResponseWriter, r *http.Request, ps apirouter.Params){
-			w.Write([]byte(""))
+		apirouter.API("GET", "/", func(w http.ResponseWriter, r *http.Request, ps apirouter.Params) {
+			fmt.Fprint(w, "")
 		}),
-		apirouter.API("GET","/user/:id", func(w http.ResponseWriter, r *http.Request, ps apirouter.Params) {
-			 w.Write(ps.ByName("id")
+		apirouter.API("GET", "/user/:id", func(w http.ResponseWriter, r *http.Request, ps apirouter.Params) {
+			id := ps.ByName("id")
+			fmt.Fprint(w, id)
 		}),
-		apirouter.API("POST","/user/:id", func(w http.ResponseWriter, r *http.Request, ps apirouter.Params) {
-			w.Write([]byte(""))
-	   })
+		apirouter.API("POST", "/user", func(w http.ResponseWriter, r *http.Request, ps apirouter.Params) {
+			fmt.Fprint(w, "")
+		}),
 	)
-	
-	
-http.ListenAndServe(":8080", r)
+
+	http.ListenAndServe(":3000", r)
+}
