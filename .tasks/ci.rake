@@ -51,6 +51,7 @@ namespace :ci do
 		  { name: 'CONCURRENCIES', value: '64' },
 		  { name: 'ROUTES', value: 'GET:/' }
 		] }
+		block[:task].merge!(epilogue: {commands: ["docker logs `cat #{language}/#{framework}/cid.txt`"] })
 	      end
 	      blocks << block
 	    end
