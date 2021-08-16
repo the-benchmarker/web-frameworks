@@ -1,16 +1,9 @@
-FROM nimlang/nim:1.4.8-alpine
+FROM nimlang/nim:1.4.8
 
 WORKDIR /usr/src/app
 
 COPY . ./
 
-{{#deps}}
-  RUN apk --no-cache add {{{.}}}
-{{/deps}}
-
-{{#alpine-deps}}
-  RUN apk --no-cache add {{{.}}}
-{{/alpine-deps}}
 
 ENV PATH $PATH:/root/.nimble/bin
 
@@ -23,7 +16,7 @@ RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
     --passL:-flto \
     server.nim
 
-FROM alpine
+FROM ubuntu
 
 COPY --from=0 /usr/src/app/server /usr/src/app/server
 
