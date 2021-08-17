@@ -65,6 +65,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: go
   dependencies:
   - setup
@@ -547,6 +548,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: nim
   dependencies:
   - setup
@@ -706,6 +708,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: python
   dependencies:
   - setup
@@ -1239,6 +1242,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: clojure
   dependencies:
   - setup
@@ -1330,6 +1334,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: elixir
   dependencies:
   - setup
@@ -1421,6 +1426,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: dart
   dependencies:
   - setup
@@ -1461,6 +1467,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: perl
   dependencies:
   - setup
@@ -1501,6 +1508,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: rust
   dependencies:
   - setup
@@ -1609,6 +1617,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: fsharp
   dependencies:
   - setup
@@ -1734,6 +1743,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: r
   dependencies:
   - setup
@@ -1825,6 +1835,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: java
   dependencies:
   - setup
@@ -2154,6 +2165,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: kotlin
   dependencies:
   - setup
@@ -2228,6 +2240,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: crystal
   dependencies:
   - setup
@@ -2421,6 +2434,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: haskell
   dependencies:
   - setup
@@ -2478,6 +2492,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: php
   dependencies:
   - setup
@@ -3351,6 +3366,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: scala
   dependencies:
   - setup
@@ -3459,6 +3475,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: cpp
   dependencies:
   - setup
@@ -3533,6 +3550,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: swift
   dependencies:
   - setup
@@ -3658,6 +3676,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: csharp
   dependencies:
   - setup
@@ -3749,6 +3768,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: julia
   dependencies:
   - setup
@@ -3789,6 +3809,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: javascript
   dependencies:
   - setup
@@ -4254,6 +4275,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: c
   dependencies:
   - setup
@@ -4311,6 +4333,7 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: ruby
   dependencies:
   - setup
@@ -4521,3 +4544,4 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json

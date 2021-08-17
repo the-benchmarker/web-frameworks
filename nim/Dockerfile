@@ -1,4 +1,4 @@
-FROM nimlang/nim:1.4.8
+FROM nimlang/nim:1.4.8-alpine
 
 WORKDIR /usr/src/app
 
@@ -16,7 +16,7 @@ RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
     --passL:-flto \
     server.nim
 
-FROM ubuntu
+FROM alpine
 
 COPY --from=0 /usr/src/app/server /usr/src/app/server
 
