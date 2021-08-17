@@ -10,7 +10,7 @@ object HelloWorldServerMain extends WebServer
 
 class WebServer extends HttpServer {
 
-  override val defaultHttpPort: String = ":8080"
+  override val defaultHttpPort: String = ":3000"
 
   override def configureHttpServer(server: Server): Server = {
     server

@@ -13,7 +13,7 @@ async fn main() -> std::io::Result<()> {
             .route("/user", web::post().to(|| HttpResponse::Ok()))
             .service(get_user)
     })
-    .bind("0.0.0.0:8080")?
+    .bind("0.0.0.0:3000")?
     .run()
     .await
 }

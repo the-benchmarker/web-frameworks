@@ -29,4 +29,4 @@ async def user(request):
 
 if __name__ == "__main__":
     workers = multiprocessing.cpu_count()
-    app.run(host="0.0.0.0", port=8080, workers=workers, debug=False, access_log=False)
+    app.run(host="0.0.0.0", port=3000, workers=workers, debug=False, access_log=False)

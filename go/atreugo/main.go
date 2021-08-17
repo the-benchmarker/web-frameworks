@@ -18,7 +18,7 @@ func showID(ctx *atreugo.RequestCtx) error {
 
 func main() {
 	server := atreugo.New(atreugo.Config{
-		Addr: ":8080",
+		Addr: ":3000",
 	})
 
 	server.GET("/", showEmpty)

@@ -19,7 +19,7 @@ return [
         'namespace' =>  'ImiApp\ApiServer',
         'type'      =>  Imi\Server\Type::HTTP,
         'host'      =>  '0.0.0.0',
-        'port'      =>  8080,
+        'port'      =>  3000,
         'mode'      =>  SWOOLE_BASE,
         'configs'   =>  [
             'worker_num'        => swoole_cpu_num() * 2,

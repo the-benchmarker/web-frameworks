@@ -11,4 +11,4 @@ using Merly
     HTTP.Response(200, "")
 end
 
-start(host = "0.0.0.0", port = 8080, verbose = true)
+start(host = "0.0.0.0", port = 3000, verbose = true)

@@ -2,8 +2,15 @@ FROM nimlang/nim:1.4.8-alpine
 
 WORKDIR /usr/src/app
 
-COPY . ./
+COPY server.nim server.nimble server.nim.cfg ./
 
+{{#deps}}
+  RUN apk --no-cache add {{{.}}}
+{{/deps}}
+
+{{#alpine-deps}}
+  RUN apk --no-cache add {{{.}}}
+{{/alpine-deps}}
 
 ENV PATH $PATH:/root/.nimble/bin
 

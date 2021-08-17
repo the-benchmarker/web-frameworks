@@ -20,5 +20,5 @@ func main() {
 	r.GET("/user/{id}", showID)
 	r.POST("/user", showEmpty)
 
-	log.Fatal(fasthttp.ListenAndServe(":8080", r.Handler))
+	log.Fatal(fasthttp.ListenAndServe(":3000", r.Handler))
 }

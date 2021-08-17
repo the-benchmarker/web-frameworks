@@ -21,4 +21,4 @@ let handler = get[
 
 let server = newAsyncHttpServer()
 
-waitFor server.serve(Port(8080), handler)
+waitFor server.serve(Port(3000), handler)

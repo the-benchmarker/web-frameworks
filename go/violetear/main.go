@@ -27,7 +27,7 @@ func main() {
 	router.HandleFunc("/user", showEmpty, "POST")
 
 	srv := &http.Server{
-		Addr:           ":8080",
+		Addr:           ":3000",
 		Handler:        router,
 		ReadTimeout:    5 * time.Second,
 		WriteTimeout:   7 * time.Second,

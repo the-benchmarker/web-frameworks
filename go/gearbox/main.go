@@ -19,5 +19,5 @@ func main() {
 	app.Get("/", empty)
 	app.Get("/user/:id", sendID)
 	app.Post("/user", empty)
-	log.Fatal(app.Start(":8080"))
+	log.Fatal(app.Start(":3000"))
 }

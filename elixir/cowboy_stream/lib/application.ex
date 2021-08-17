@@ -21,7 +21,7 @@ defmodule Server.Application do
         [
           :server,
           %{
-            socket_opts: [port: 8080],
+            socket_opts: [port: 3000],
             max_connections: 16_384,
             num_acceptors: 100
           },

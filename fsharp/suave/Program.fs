@@ -18,6 +18,6 @@ let main argv =
                   [ { scheme = HTTP
                       socketBinding =
                           { ip = IPAddress.Parse "0.0.0.0"
-                            port = 8080us } } ] }
+                            port = 3000us } } ] }
     startWebServer config app
     0

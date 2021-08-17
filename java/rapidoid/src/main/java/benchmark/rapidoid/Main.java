@@ -13,7 +13,7 @@ public class Main {
     Conf.HTTP.set("timeout", 0);
     Conf.HTTP.sub("mandatoryHeaders").set("connection", false);
 
-    On.port(8080);
+    On.port(3000);
 
     setupSimpleHandlers();
   }

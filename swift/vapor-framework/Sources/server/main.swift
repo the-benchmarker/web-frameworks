@@ -28,7 +28,7 @@ app.http.server.configuration.hostname = Environment.get("SERVER_HOSTNAME") ?? "
 if let portString = Environment.get("SERVER_PORT"), let port = Int(portString) {
     app.http.server.configuration.port = port
 } else {
-    app.http.server.configuration.port = 8080
+    app.http.server.configuration.port = 3000
 }
 
 try app.run()

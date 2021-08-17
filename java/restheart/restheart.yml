@@ -15,7 +15,7 @@ https-port: 4443
 
 http-listener: true
 http-host: 0.0.0.0
-http-port: 8080
+http-port: 3000
 
 ajp-listener: false
 ajp-host: 0.0.0.0
