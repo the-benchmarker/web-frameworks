@@ -4,13 +4,6 @@ WORKDIR /usr/src/app
 
 COPY . ./
 
-{{#deps}}
-  RUN apk --no-cache add {{{.}}}
-{{/deps}}
-
-{{#alpine-deps}}
-  RUN apk --no-cache add {{{.}}}
-{{/alpine-deps}}
 
 ENV PATH $PATH:/root/.nimble/bin
 

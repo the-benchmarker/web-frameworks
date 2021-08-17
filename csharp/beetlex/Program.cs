@@ -18,7 +18,7 @@ namespace web
                        o.LogToConsole = false;
                        o.ManageApiEnabled = false;
                        o.WriteLog = false;
-                       o.Port = 3000;
+                       o.Port = 8080;
                        o.SetDebug();
                        o.LogLevel = BeetleX.EventArgs.LogType.Off;
                    },

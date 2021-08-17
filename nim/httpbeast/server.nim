@@ -1,4 +1,4 @@
-import options, asyncdispatch, strutils, httpbeast
+import options, asyncdispatch, strutils, httpbeast, net
 
 proc onRequest(req: Request): Future[void] =
   if req.httpMethod == some(HttpGet):
@@ -11,4 +11,4 @@ proc onRequest(req: Request): Future[void] =
     if req.path.get() == "/user":
       req.send(Http200, "")
 
-run(onRequest, Settings(port: Port(3000)))
+run(onRequest)

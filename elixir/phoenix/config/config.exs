@@ -3,7 +3,7 @@ import Config
 # Configures the endpoint
 config :server, Server.Endpoint,
   url: [host: "localhost"],
-  http: [port: 3000],
+  http: [port: 8080],
   server: true
 
 config :logger, level: :warn

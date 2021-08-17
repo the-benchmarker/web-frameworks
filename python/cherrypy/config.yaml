@@ -5,7 +5,7 @@ framework:
 command: >
   gunicorn  \
     --log-level warning  \
-    --bind 0.0.0.0:3000  \
+    --bind 0.0.0.0:8080  \
     --reuse-port  \
     --workers $(nproc)  \
     --worker-class meinheld.gmeinheld.MeinheldWorker \

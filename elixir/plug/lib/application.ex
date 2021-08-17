@@ -6,7 +6,7 @@ defmodule Server.Application do
 
   def start(_type, _args) do
     children = [
-      Plug.Cowboy.child_spec(scheme: :http, plug: Server, options: [port: 3000])
+      Plug.Cowboy.child_spec(scheme: :http, plug: Server, options: [port: 8080])
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: Server.Supervisor)

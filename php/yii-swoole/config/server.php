@@ -1,7 +1,7 @@
 <?php
 return [
     'host' => '0.0.0.0',
-    'port' => 3000,
+    'port' => 8080,
     'mode' => SWOOLE_BASE,
     'sockType' => SWOOLE_SOCK_TCP,
     'app' => require __DIR__ . '/swoole.php',

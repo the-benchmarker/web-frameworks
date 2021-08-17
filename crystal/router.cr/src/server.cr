@@ -29,7 +29,7 @@ struct Server
 
   def run
     server = HTTP::Server.new(route_handler)
-    server.bind_tcp("0.0.0.0", 3000, true)
+    server.bind_tcp("0.0.0.0", 8080, true)
     server.listen
   end
 

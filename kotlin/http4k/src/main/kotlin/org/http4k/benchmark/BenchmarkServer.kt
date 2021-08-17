@@ -24,5 +24,5 @@ fun BenchmarkApp() = SetContentType(TEXT_PLAIN)
     )
 
 fun main() {
-    BenchmarkApp().asServer(Undertow(3000)).start()
+    BenchmarkApp().asServer(Undertow(8080)).start()
 }

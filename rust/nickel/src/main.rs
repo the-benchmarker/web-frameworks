@@ -15,5 +15,5 @@ fn main() {
         },
     );
     server.post("/user", middleware!(""));
-    server.listen("0.0.0.0:3000").unwrap();
+    server.listen("0.0.0.0:8080").unwrap();
 }

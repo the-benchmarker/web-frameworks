@@ -6,7 +6,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Comet\Comet;
 
 $app = new Comet([ 
-	'port'    => 3000,
+	'port'    => 8080,
 	'workers' => WORKERS_COUNT,
 ]);
 

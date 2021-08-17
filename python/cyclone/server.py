@@ -33,5 +33,5 @@ routes = cyclone.web.Application(
     [(r"/", MainHandler), (r"/user/(\d+)", UserInfoHandler), (r"/user", UserHandler)]
 )
 application = service.Application("benchmark")
-server = internet.TCPServer(3000, routes, interface="0.0.0.0")
+server = internet.TCPServer(8080, routes, interface="0.0.0.0")
 server.setServiceParent(application)

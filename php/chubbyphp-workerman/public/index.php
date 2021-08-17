@@ -55,7 +55,7 @@ $app = new Application([
     ]), sys_get_temp_dir() . '/chubbyphp-workerman.php'), $responseFactory),
 ]);
 
-$server = new Worker('http://0.0.0.0:3000');
+$server = new Worker('http://0.0.0.0:8080');
 
 $server->count = shell_exec('nproc') ? shell_exec('nproc') : 32;
 

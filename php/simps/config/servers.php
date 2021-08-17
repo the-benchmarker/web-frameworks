@@ -13,7 +13,7 @@ return [
     'mode' => SWOOLE_BASE,
     'http' => [
         'ip' => '0.0.0.0',
-        'port' => 3000,
+        'port' => 8080,
         'sock_type' => SWOOLE_SOCK_TCP,
         'callbacks' => [
         ],

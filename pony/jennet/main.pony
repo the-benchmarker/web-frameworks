@@ -12,7 +12,7 @@ actor Main
       end
 
     let j =
-      Jennet(auth, env.out, "3000")
+      Jennet(auth, env.out, "8080")
         .> get("/", EmptyHandler)
         .> get("/user/:name", GetUserHandler)
         .> post("/user", EmptyHandler)

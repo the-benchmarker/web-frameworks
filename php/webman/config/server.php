@@ -13,7 +13,7 @@
  */
 
 return [
-    'listen'               => 'http://0.0.0.0:3000',
+    'listen'               => 'http://0.0.0.0:8080',
     'transport'            => 'tcp',
     'context'              => [],
     'name'                 => 'webman',

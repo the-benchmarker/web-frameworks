@@ -33,7 +33,7 @@ def main():
         ]
     )
     server = tornado.httpserver.HTTPServer(app)
-    server.bind(3000)
+    server.bind(8080)
     server.start(0)
     tornado.ioloop.IOLoop.current().start()
 

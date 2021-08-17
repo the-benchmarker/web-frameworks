@@ -3,7 +3,7 @@ use Mark\SimpleApp;
 
 require 'vendor/autoload.php';
 
-$api = new SimpleApp('tcp://0.0.0.0:3000');
+$api = new SimpleApp('tcp://0.0.0.0:8080');
 
 $api->count = 8;
 
