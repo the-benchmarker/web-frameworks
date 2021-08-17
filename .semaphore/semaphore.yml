@@ -29,7 +29,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/pony/','/data.json'])
+    when: 'change_in([''/pony/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -65,11 +65,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: go
   dependencies:
   - setup
   run:
-    when: change_in(['/go/','/data.json'])
+    when: 'change_in([''/go/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -547,11 +548,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: nim
   dependencies:
   - setup
   run:
-    when: change_in(['/nim/','/data.json'])
+    when: 'change_in([''/nim/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -706,11 +708,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: python
   dependencies:
   - setup
   run:
-    when: change_in(['/python/','/data.json'])
+    when: 'change_in([''/python/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -1239,11 +1242,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: clojure
   dependencies:
   - setup
   run:
-    when: change_in(['/clojure/','/data.json'])
+    when: 'change_in([''/clojure/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -1330,11 +1334,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: elixir
   dependencies:
   - setup
   run:
-    when: change_in(['/elixir/','/data.json'])
+    when: 'change_in([''/elixir/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -1421,11 +1426,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: dart
   dependencies:
   - setup
   run:
-    when: change_in(['/dart/','/data.json'])
+    when: 'change_in([''/dart/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -1461,11 +1467,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: perl
   dependencies:
   - setup
   run:
-    when: change_in(['/perl/','/data.json'])
+    when: 'change_in([''/perl/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -1501,11 +1508,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: rust
   dependencies:
   - setup
   run:
-    when: change_in(['/rust/','/data.json'])
+    when: 'change_in([''/rust/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -1609,11 +1617,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: fsharp
   dependencies:
   - setup
   run:
-    when: change_in(['/fsharp/','/data.json'])
+    when: 'change_in([''/fsharp/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -1734,11 +1743,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: r
   dependencies:
   - setup
   run:
-    when: change_in(['/r/','/data.json'])
+    when: 'change_in([''/r/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -1825,11 +1835,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: java
   dependencies:
   - setup
   run:
-    when: change_in(['/java/','/data.json'])
+    when: 'change_in([''/java/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -2154,11 +2165,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: kotlin
   dependencies:
   - setup
   run:
-    when: change_in(['/kotlin/','/data.json'])
+    when: 'change_in([''/kotlin/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -2228,11 +2240,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: crystal
   dependencies:
   - setup
   run:
-    when: change_in(['/crystal/','/data.json'])
+    when: 'change_in([''/crystal/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -2421,11 +2434,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: haskell
   dependencies:
   - setup
   run:
-    when: change_in(['/haskell/','/data.json'])
+    when: 'change_in([''/haskell/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -2478,11 +2492,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: php
   dependencies:
   - setup
   run:
-    when: change_in(['/php/','/data.json'])
+    when: 'change_in([''/php/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -3351,11 +3366,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: scala
   dependencies:
   - setup
   run:
-    when: change_in(['/scala/','/data.json'])
+    when: 'change_in([''/scala/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -3459,11 +3475,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: cpp
   dependencies:
   - setup
   run:
-    when: change_in(['/cpp/','/data.json'])
+    when: 'change_in([''/cpp/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -3533,11 +3550,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: swift
   dependencies:
   - setup
   run:
-    when: change_in(['/swift/','/data.json'])
+    when: 'change_in([''/swift/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -3658,11 +3676,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: csharp
   dependencies:
   - setup
   run:
-    when: change_in(['/csharp/','/data.json'])
+    when: 'change_in([''/csharp/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -3749,11 +3768,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: julia
   dependencies:
   - setup
   run:
-    when: change_in(['/julia/','/data.json'])
+    when: 'change_in([''/julia/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -3789,11 +3809,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: javascript
   dependencies:
   - setup
   run:
-    when: change_in(['/javascript/','/data.json'])
+    when: 'change_in([''/javascript/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -4254,11 +4275,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: c
   dependencies:
   - setup
   run:
-    when: change_in(['/c/','/data.json'])
+    when: 'change_in([''/c/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -4311,11 +4333,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json
 - name: ruby
   dependencies:
   - setup
   run:
-    when: change_in(['/ruby/','/data.json'])
+    when: 'change_in([''/ruby/'',''/data.json''], pipeline_file: ignore)'
   task:
     prologue:
       commands:
@@ -4521,3 +4544,4 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+      - cat /etc/docker/daemon.json

@@ -25,7 +25,7 @@ namespace :ci do
     Dir.glob('*/config.yaml').each do |path|
       language, = path.split(File::Separator)
 
-      block = { name: language, dependencies: ['setup'], run: { when: "change_in(['/#{language}/','/data.json'])" }, task: { prologue: { commands: [
+      block = { name: language, dependencies: ['setup'], run: { when: "change_in(['/#{language}/','/data.json'], pipeline_file: ignore)" }, task: { prologue: { commands: [
         'cache restore $SEMAPHORE_GIT_SHA',
         'cache restore wrk',
         'sudo install wrk /usr/local/bin',
@@ -52,7 +52,8 @@ namespace :ci do
           { name: 'ROUTES', value: 'GET:/' },
           { name: 'FRAMEWORK', value: "#{language}/#{framework}" }
         ] }
-        block[:task].merge!(epilogue: { commands: ['docker logs `cat ${FRAMEWORK}/cid.txt`'] })
+        block[:task].merge!(epilogue: { commands: ['docker logs `cat ${FRAMEWORK}/cid.txt`',
+                                                   'cat /etc/docker/daemon.json'] })
       end
       blocks << block
     end
