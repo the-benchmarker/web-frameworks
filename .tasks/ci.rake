@@ -52,8 +52,7 @@ namespace :ci do
           { name: 'ROUTES', value: 'GET:/' },
           { name: 'FRAMEWORK', value: "#{language}/#{framework}" }
         ] }
-        block[:task].merge!(epilogue: { commands: ['docker logs `cat ${FRAMEWORK}/cid.txt`',
-                                                   'cat /etc/docker/daemon.json'] })
+        block[:task].merge!(epilogue: { commands: ['docker logs `cat ${FRAMEWORK}/cid.txt`'] })
       end
       blocks << block
     end
