@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
   evhtp_set_regex_cb(htp, "^/user/([^/]+)", on_request_user_index, NULL);
   evhtp_set_cb(htp, "/user", on_request_user_register, NULL);
   evhtp_set_cb(htp, "/", on_request_index, NULL);
-  evhtp_bind_socket(htp, "0.0.0.0", 3000, 1024);
+  evhtp_bind_socket(htp, "0.0.0.0", 8080, 1024);
 
   if (num_threads > 1) {
     evhtp_use_threads_wexit(htp, NULL, NULL, num_threads, NULL);

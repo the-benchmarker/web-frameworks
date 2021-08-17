@@ -4,7 +4,7 @@ import static spark.Spark.*;
 
 public class Main {
     public static void main(String[] args) {
-        port(3000);
+        port(8080);
         get("/", (req, res) -> "");
         post("/user", (req, res) -> "");
         get("/user/:name", (request, response) -> {

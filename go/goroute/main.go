@@ -22,5 +22,5 @@ func main() {
 		return c.String(http.StatusOK, "")
 	})
 
-	log.Fatal(http.ListenAndServe(":3000", mux))
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }

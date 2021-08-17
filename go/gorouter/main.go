@@ -28,5 +28,5 @@ func main() {
 	router.GET("/user/{id:[0-9]+}", http.HandlerFunc(userID))
 	router.POST("/user", http.HandlerFunc(user))
 
-	http.ListenAndServe(":3000", router)
+	http.ListenAndServe(":8080", router)
 }

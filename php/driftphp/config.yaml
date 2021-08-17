@@ -9,4 +9,4 @@ php_mod:
   - pcntl
   - sockets
 
-command: php vendor/bin/server run 0.0.0.0:3000 --env=prod --quiet --workers=-1
+command: php vendor/bin/server run 0.0.0.0:8080 --env=prod --quiet --workers=-1

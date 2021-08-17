@@ -10,7 +10,7 @@ return [
     ],
     'httpServer'     => [
         'class'   => HttpServer::class,
-        'port'    => 3000,
+        'port'    => 8080,
         'on'      => [],
         /* @see HttpServer::$setting */
         'setting' => [

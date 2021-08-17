@@ -15,4 +15,4 @@ router MyApplication do
 end
 
 
-MyApplication.start(workers: System.cpu_count, host: "0.0.0.0", port: 3000, reuse_port: true)
+MyApplication.start(workers: System.cpu_count, host: "0.0.0.0", port: 8080, reuse_port: true)

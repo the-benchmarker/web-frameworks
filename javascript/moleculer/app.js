@@ -11,7 +11,7 @@ broker.createService({
   mixins: [HTTPServer],
 
   settings: {
-    port: 3000,
+    port: 8080,
 
     routes: [
       {

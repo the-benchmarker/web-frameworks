@@ -1,4 +1,4 @@
-s <- httpuv::startServer(host = "0.0.0.0", port = 3000,
+s <- httpuv::startServer(host = "0.0.0.0", port = 8080,
   app = list(
     call = function(req) {
       path <- req$PATH_INFO

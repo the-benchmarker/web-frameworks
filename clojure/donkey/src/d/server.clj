@@ -46,7 +46,7 @@
     (->
      (donkey-core/create-donkey
       {:event-loops concurrency})
-     (donkey-core/create-server {:port          3000
+     (donkey-core/create-server {:port          8080
                                  :routes        [get-root-route get-user-id-route post-user-route]
                                  :instances     concurrency
                                  :compression   false

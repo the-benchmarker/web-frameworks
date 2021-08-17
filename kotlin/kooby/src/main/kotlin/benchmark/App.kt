@@ -7,7 +7,7 @@ import io.jooby.runApp
 fun main(args: Array<String>) {
     runApp(args, EVENT_LOOP) {
         serverOptions {
-        port = 3000
+        port = 8080
         defaultHeaders = false
     }
 

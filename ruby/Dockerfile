@@ -18,5 +18,5 @@ ENV {{{.}}}
 {{/command}}
 
 {{^command}}
-  CMD bundle exec puma -p 3000 -e production -w $(nproc)
+  CMD bundle exec puma -p 8080 -e production -w $(nproc)
 {{/command}}

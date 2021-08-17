@@ -1,6 +1,6 @@
 rpc:
   enable: false
 http:
-  address: :3000
+  address: :8080
   workers:
     command: "php worker.php pipes"

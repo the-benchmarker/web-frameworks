@@ -19,7 +19,7 @@ public class BenchmarkApplication extends AbstractVerticle {
         vertx
                 .createHttpServer()
                 .requestHandler(this::handleRequests)
-                .listen(3000)
+                .listen(8080)
                 .onFailure(onReady::fail)
                 .onSuccess(server -> onReady.complete());
     }

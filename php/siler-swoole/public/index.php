@@ -21,7 +21,7 @@ $handler = function () {
     });
 };
 
-$server = http($handler, 3000);
+$server = http($handler, 8080);
 $server->set([
     'worker_num'       => swoole_cpu_num() * 2,
     'enable_coroutine' => false,

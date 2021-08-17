@@ -45,7 +45,7 @@ func getRoutes() []*webgo.Route {
 func main() {
 	cfg := &webgo.Config{
 		Host:         "",
-		Port:         "3000",
+		Port:         "8080",
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}

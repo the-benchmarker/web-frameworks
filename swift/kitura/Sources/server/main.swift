@@ -22,5 +22,5 @@ router.post("/user") { _, res, next in
   next()
 }
 
-Kitura.addHTTPServer(onPort: 3000, with: router)
+Kitura.addHTTPServer(onPort: 8080, with: router)
 Kitura.run()

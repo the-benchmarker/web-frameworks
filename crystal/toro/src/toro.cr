@@ -22,8 +22,8 @@ end
 
 System.cpu_count.times do |i|
   Process.fork do
-    App.run 3000 do |server|
-      server.bind_tcp("0.0.0.0", 3000, true)
+    App.run 8080 do |server|
+      server.bind_tcp("0.0.0.0", 8080, true)
       server.listen
     end
   end

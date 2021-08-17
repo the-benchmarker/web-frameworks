@@ -22,5 +22,5 @@ func main() {
 		fmt.Fprintf(w, "%s", ps.ByName("name"))
 	})
 
-	http.ListenAndServe(":3000", router)
+	http.ListenAndServe(":8080", router)
 }

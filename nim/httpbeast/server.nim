@@ -11,4 +11,4 @@ proc onRequest(req: Request): Future[void] =
     if req.path.get() == "/user":
       req.send(Http200, "")
 
-run(onRequest, Settings(domain: Domain.AF_INET6, port: Port(3000)))
+run(onRequest)

@@ -25,7 +25,7 @@ func (a App) PostUser() mars.Result {
 func main() {
 	RegisterControllers()
 
-	mars.HttpAddr = ":3000"
+	mars.HttpAddr = ":8080"
 	mars.RoutesFile = "routes.conf"
 	mars.DisableCSRF = true
 	mars.SetupRouter()

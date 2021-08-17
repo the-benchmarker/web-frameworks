@@ -1,7 +1,7 @@
 import Web.Scotty
 
 main :: IO ()
-main = scotty 3000 $ do
+main = scotty 8080 $ do
   get "/" $ text ""
   get "/user/:userId" $ do
     userId <- param "userId"

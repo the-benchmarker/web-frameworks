@@ -30,7 +30,7 @@ static void user_handler(agooReq req) {
 
 int main(int argc, char **argv) {
   struct _agooErr err = AGOO_ERR_INIT;
-  int port = 3000;
+  int port = 8080;
 
   // Adjust this to increase or decrease the number of IO threads. 1.0 seems
   // to work pretty well on a 4 core (8 processor) machine. It is the ratio of
