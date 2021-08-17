@@ -76,7 +76,7 @@ Amber::Server.configure do |settings|
   # settings.process_count = System.cpu_count.to_i32
   #
   #
-  # PORT: This is the port that you're application will run on. Examples would be (80, 443, 3000, 8080)
+  # PORT: This is the port that you're application will run on. Examples would be (80, 443, 3000, 3000)
   #
   settings.port = ENV["PORT"].to_i if ENV["PORT"]?
   #
