@@ -8,7 +8,7 @@ import java.security.ProtectionDomain;
 public class App {
 
     public static void main(String[] args) {
-        int port = 8080;
+        int port = 3000;
         if (args.length > 0 && "--port".equals(args[0])) {
             port = Integer.parseInt(args[1]);
         }

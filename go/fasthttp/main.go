@@ -38,5 +38,5 @@ func handler(ctx *fasthttp.RequestCtx) {
 }
 
 func main() {
-	log.Fatal(fasthttp.ListenAndServe(":8080", handler))
+	log.Fatal(fasthttp.ListenAndServe(":3000", handler))
 }

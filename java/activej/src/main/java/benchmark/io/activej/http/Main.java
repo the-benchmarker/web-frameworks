@@ -19,7 +19,7 @@ import static io.activej.http.HttpMethod.GET;
 import static io.activej.http.HttpMethod.POST;
 
 public final class Main extends MultithreadedHttpServerLauncher {
-	private static final int PORT = 8080;
+	private static final int PORT = 3000;
 
 	@Provides
 	@Worker

@@ -18,5 +18,5 @@ func main() {
 		ctx.WriteString("")
 	})
 
-	beego.Run(":8080")
+	beego.Run(":3000")
 }

@@ -10,7 +10,7 @@ use gotham_derive::{StateData, StaticResponseExtender};
 use serde::Deserialize;
 
 fn main() {
-    let addr = "0.0.0.0:8080";
+    let addr = "0.0.0.0:3000";
     println!("Listening for requests at http://{}", addr);
 
     let router = build_simple_router(|route| {

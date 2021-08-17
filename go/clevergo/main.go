@@ -20,5 +20,5 @@ func main() {
 	app.Get("/", dummy)
 	app.Get("/user/:name", user)
 	app.Post("/user", dummy)
-	app.Run(":8080")
+	app.Run(":3000")
 }

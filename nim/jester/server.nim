@@ -1,7 +1,7 @@
 import jester
 
 settings:
-  port = Port(8080)
+  port = Port(3000)
 
 routes:
   get "/":

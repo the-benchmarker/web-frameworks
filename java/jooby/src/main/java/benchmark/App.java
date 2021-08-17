@@ -9,7 +9,7 @@ import io.jooby.StatusCode;
 public class App extends Jooby {
   {
     ServerOptions options = new ServerOptions();
-    options.setPort(8080);
+    options.setPort(3000);
     // Turn off Date and Server Response headers.
     options.setDefaultHeaders(false);
     setServerOptions(options);

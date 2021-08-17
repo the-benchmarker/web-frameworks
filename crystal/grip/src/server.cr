@@ -30,7 +30,7 @@ class Application < Grip::Application
   end
   
   def port
-    8080
+    3000
   end
   
   def router : Array(HTTP::Handler)

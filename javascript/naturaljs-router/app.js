@@ -24,7 +24,7 @@ async function bootstrap () {
   })
   try {
     createRoutes(router)
-    await router.listen(8080)
+    await router.listen(3000)
     // console.log(`Listen http://localhost:${port}`)
   } catch (error) {
     // console.log('Error:', error)

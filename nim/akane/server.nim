@@ -2,7 +2,7 @@ import akane
 
 
 proc main {.gcsafe.} =
-  let server = newServer("0.0.0.0", 8080)
+  let server = newServer("0.0.0.0", 3000)
 
   server.pages:
     "/": 

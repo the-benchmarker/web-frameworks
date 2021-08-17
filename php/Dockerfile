@@ -75,7 +75,7 @@ RUN composer dumpautoload -o
       {{^docroot}}
         root /usr/src/app/public;\n\
       {{/docroot}}
-      listen 0.0.0.0:8080;\n\
+      listen 0.0.0.0:3000;\n\
       {{#nginx_conf}}
         {{{.}}}
       {{/nginx_conf}}

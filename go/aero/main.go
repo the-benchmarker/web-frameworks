@@ -6,7 +6,7 @@ import (
 
 func main() {
 	app := aero.New()
-	app.Config.Ports.HTTP = 8080
+	app.Config.Ports.HTTP = 3000
 
 	app.Get("/", func(ctx aero.Context) error {
 		return ctx.String("")

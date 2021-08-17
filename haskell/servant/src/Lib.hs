@@ -18,7 +18,7 @@ type API =
     :<|> "user" :> Post '[PlainText] String
 
 startApp :: IO ()
-startApp = run 8080 app
+startApp = run 3000 app
 
 app :: Application
 app = serve api server

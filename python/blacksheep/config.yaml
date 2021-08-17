@@ -5,7 +5,7 @@ framework:
 command: >
   gunicorn  \ 
     --log-level warning  \
-    --bind 0.0.0.0:8080  \
+    --bind 0.0.0.0:3000  \
     --reuse-port  \
     --workers $(nproc)  \
     --worker-class uvicorn.workers.UvicornWorker  \

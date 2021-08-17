@@ -19,6 +19,6 @@ object Main {
           complete(id)
         }
 
-    Http().bindAndHandle(route, "0.0.0.0", 8080)
+    Http().bindAndHandle(route, "0.0.0.0", 3000)
   }
 }

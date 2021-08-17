@@ -12,7 +12,7 @@ $worker_num = swoole_cpu_num() * 2;
 $pool = new Pool($worker_num);
 $pool->set(['enable_coroutine' => true]);
 $pool->on('workerStart', function ($pool, $id) {
-    $server = new Server('0.0.0.0', 8080, false, true);
+    $server = new Server('0.0.0.0', 3000, false, true);
     $server->handle('/', function ($request, $response) {
         $response->end('');
     });

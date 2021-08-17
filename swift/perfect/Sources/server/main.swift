@@ -18,6 +18,6 @@ routes.add(method: .post, uri: "/user", handler: { _, response in
 
 try HTTPServer.launch(
     name: "0.0.0.0",
-    port: 8080,
+    port: 3000,
     routes: routes
 )

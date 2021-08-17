@@ -35,7 +35,7 @@ providers:
       - docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}} .
 
     metadata:
-      - docker run -p 8080:8080 -td {{{language}}}.{{{framework}}} > cid.txt
+      - docker run --network=host -p 3000:3000 -td {{{language}}}.{{{framework}}} > cid.txt
       - docker inspect `cat cid.txt` | jq -r '.[0].NetworkSettings.IPAddress' > ip.txt
 
     clean:
@@ -47,7 +47,7 @@ providers:
       - docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}} .
 
     metadata:
-      - docker run -p 8080:8080 -td {{{language}}}.{{{framework}}} > cid.txt
+      - docker run  -p 3000:3000 -td {{{language}}}.{{{framework}}} > cid.txt
       - echo 127.0.0.1 > ip.txt
 
     clean:

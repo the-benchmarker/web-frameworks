@@ -4,7 +4,7 @@
 ip: 0.0.0.0
 
 # Http port if enableHttp is true. It will be ignored if dynamicPort is true.
-httpPort: ${server.httpPort:8080}
+httpPort: ${server.httpPort:3000}
 
 # Enable HTTP should be false by default. It should be only used for testing with clients or tools
 # that don't support https or very hard to import the certificate. Otherwise, https should be used.

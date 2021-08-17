@@ -6,7 +6,7 @@ app
   .disable("x-powered-by")
   .set("workers", 1)
   .set("url", "0.0.0.0")
-  .set("port", 8080);
+  .set("port", 3000);
 
 app
   .get("/", (req, res) => res.send(""))
