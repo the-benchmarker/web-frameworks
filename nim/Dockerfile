@@ -2,7 +2,7 @@ FROM nimlang/nim:1.4.8-alpine
 
 WORKDIR /usr/src/app
 
-COPY server.nim server.nimble server.nim.cfg ./
+COPY . ./
 
 {{#deps}}
   RUN apk --no-cache add {{{.}}}
