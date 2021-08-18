@@ -7,7 +7,6 @@ $http->on('Request', $vega->handler());
 $http->set([
     'enable_coroutine' => false,
     'worker_num' => swoole_cpu_num() * 2,
-    'log_file' => '/dev/null',
-    'log_level' => 5,
+    'log_level' => SWOOLE_LOG_ERROR,
 ]);
 $http->start();
