@@ -1,16 +1,13 @@
 <?php
 namespace ImiApp\ApiServer\Controller;
 
-use Imi\RequestContext;
-use Imi\Controller\HttpController;
-use Imi\Server\View\Annotation\View;
-use Imi\Server\Route\Annotation\Route;
-use Imi\Server\Route\Annotation\Action;
-use Imi\Server\Route\Annotation\Controller;
+use Imi\Server\Http\Controller\HttpController;
+use Imi\Server\Http\Route\Annotation\Action;
+use Imi\Server\Http\Route\Annotation\Controller;
+use Imi\Server\Http\Route\Annotation\Route;
 
 /**
  * @Controller
- * @View(renderType="html")
  */
 class IndexController extends HttpController
 {
