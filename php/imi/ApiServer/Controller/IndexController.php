@@ -17,10 +17,8 @@ class IndexController extends HttpController
     /**
      * @Action
      * @Route(url="/", method="GET")
-     *
-     * @return void
      */
-    public function index()
+    public function index() : string
     {
         return RequestContext::get('response')->write('');
     }
@@ -28,10 +26,8 @@ class IndexController extends HttpController
     /**
      * @Action
      * @Route(url="/user/{id}", method="GET")
-     *
-     * @return void
      */
-    public function get($id)
+    public function get($id) : string
     {
         return RequestContext::get('response')->write($id);
     }
@@ -39,10 +35,8 @@ class IndexController extends HttpController
     /**
      * @Action
      * @Route(url="/user", method="POST")
-     *
-     * @return void
      */
-    public function create()
+    public function create() : string
     {
         return RequestContext::get('response')->write('');
     }
