@@ -1,6 +1,7 @@
 {
   "require": {
-    "yurunsoft/imi": "~2.0.0"
+    "imiphp/imi": "~2.0.0",
+    "imiphp/imi-swoole": "@stable"
   },
   "autoload": {
     "psr-4": {
