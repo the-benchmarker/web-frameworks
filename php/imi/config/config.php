@@ -17,7 +17,7 @@ return [
     // 主服务器配置
     'mainServer'    =>    [
         'namespace' =>  'ImiApp\ApiServer',
-        'type'      =>  Imi\Server\Type::HTTP,
+        'type'      =>  Imi\Swoole\Server\Type::HTTP,
         'host'      =>  '0.0.0.0',
         'port'      =>  3000,
         'mode'      =>  SWOOLE_BASE,
