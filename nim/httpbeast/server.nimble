@@ -8,4 +8,4 @@ license = "MIT"
 # Dependencies
 
 requires "nim >= 0.19.0"
-requires "httpbeast >= 0.2 & < 0.3"
+requires "httpbeast >= 0.3 & < 0.4"
