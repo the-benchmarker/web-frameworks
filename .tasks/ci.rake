@@ -38,9 +38,9 @@ namespace :ci do
         'bundle install',
         'bundle exec rake config'
       ] }, jobs: [] } }
-      Dir.glob("#{language}/*/config.yaml") do |file|
+      Dir.glob("#{language}/*/config.yaml").sort_by { |name| File.mtime(name) }.reverse!.each do |file|
         _, framework, = file.split(File::Separator)
-        next if language == 'php' && framework.start_with?('mixphp')
+
         block[:task][:jobs] << { name: framework, commands: [
           "cd #{language}/#{framework} && make build  -f #{MANIFESTS[:build]}  && cd -",
           'bundle exec rspec .spec',
