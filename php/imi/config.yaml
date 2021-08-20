@@ -6,4 +6,4 @@ php_ext:
   - swoole
   - redis
 
-command: php vendor/bin/imi-swoole server/start
+command: php vendor/bin/imi-swoole swoole/start
