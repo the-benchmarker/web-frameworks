@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'active_support/core_ext/hash/keys'
+require 'yaml'
+
 namespace :ci do
   task :config do
     definition = {
@@ -56,11 +59,17 @@ namespace :ci do
             ],
             env_vars: [{ name: 'ENGINE', value: engine }]
           }
+          block[:task].merge!(epilogue: { commands: ['docker logs `cat ${FRAMEWORK}/cid.txt`'] })
         end
         definition[:blocks] << block
+
+        
       end
     end
 
-    File.write('.semaphore/semaphore.yml', JSON.parse(definition.to_json).to_yaml)
+    File.write('.semaphore/semaphore.yml', definition.deep_stringify_keys.to_yaml)
+    
+    definition[:blocks].map { |block| block.except!(:run) }
+    File.write('.semaphore/schedule.yml', definition.deep_stringify_keys.to_yaml)
   end
 end
