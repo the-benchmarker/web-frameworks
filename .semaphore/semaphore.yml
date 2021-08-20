@@ -255,6 +255,23 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: go/gorouter
+    - name: apirouter
+      commands:
+      - cd go/apirouter && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f go/apirouter/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: go/apirouter
     - name: goyave
       commands:
       - cd go/goyave && make build  -f .Makefile  && cd -
@@ -2702,6 +2719,23 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: php/phalcon
+    - name: mixphp-swoole
+      commands:
+      - cd php/mixphp-swoole && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/mixphp-swoole/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/mixphp-swoole
     - name: one-fpm
       commands:
       - cd php/one-fpm && make build  -f .Makefile  && cd -
@@ -3059,6 +3093,23 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: php/mezzio
+    - name: mixphp-workerman
+      commands:
+      - cd php/mixphp-workerman && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/mixphp-workerman/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/mixphp-workerman
     - name: lumen
       commands:
       - cd php/lumen && make build  -f .Makefile  && cd -
@@ -3212,6 +3263,23 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: php/symfony
+    - name: mixphp
+      commands:
+      - cd php/mixphp && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/mixphp/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/mixphp
     - name: slim
       commands:
       - cd php/slim && make build  -f .Makefile  && cd -
