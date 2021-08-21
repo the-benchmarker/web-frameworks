@@ -29,7 +29,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/c/','/data.json'])
+    when: 'change_in([''/c/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -86,7 +86,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/clojure/','/data.json'])
+    when: 'change_in([''/clojure/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -177,7 +177,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/cpp/','/data.json'])
+    when: 'change_in([''/cpp/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -251,7 +251,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/crystal/','/data.json'])
+    when: 'change_in([''/crystal/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -444,7 +444,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/csharp/','/data.json'])
+    when: 'change_in([''/csharp/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -535,7 +535,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/dart/','/data.json'])
+    when: 'change_in([''/dart/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -575,7 +575,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/elixir/','/data.json'])
+    when: 'change_in([''/elixir/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -666,7 +666,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/fsharp/','/data.json'])
+    when: 'change_in([''/fsharp/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -791,7 +791,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/go/','/data.json'])
+    when: 'change_in([''/go/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -1290,7 +1290,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/haskell/','/data.json'])
+    when: 'change_in([''/haskell/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -1347,7 +1347,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/java/','/data.json'])
+    when: 'change_in([''/java/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -1676,7 +1676,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/javascript/','/data.json'])
+    when: 'change_in([''/javascript/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -2141,7 +2141,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/julia/','/data.json'])
+    when: 'change_in([''/julia/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -2181,7 +2181,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/kotlin/','/data.json'])
+    when: 'change_in([''/kotlin/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -2255,7 +2255,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/nim/','/data.json'])
+    when: 'change_in([''/nim/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -2414,7 +2414,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/perl/','/data.json'])
+    when: 'change_in([''/perl/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -2454,7 +2454,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/php/','/data.json'])
+    when: 'change_in([''/php/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -3327,7 +3327,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/pony/','/data.json'])
+    when: 'change_in([''/pony/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -3367,7 +3367,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/python/','/data.json'])
+    when: 'change_in([''/python/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -3900,7 +3900,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/r/','/data.json'])
+    when: 'change_in([''/r/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -3991,7 +3991,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/ruby/','/data.json'])
+    when: 'change_in([''/ruby/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -4201,7 +4201,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/rust/','/data.json'])
+    when: 'change_in([''/rust/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -4309,7 +4309,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/scala/','/data.json'])
+    when: 'change_in([''/scala/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -4417,7 +4417,7 @@ blocks:
   dependencies:
   - setup
   run:
-    when: change_in(['/swift/','/data.json'])
+    when: 'change_in([''/swift/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
