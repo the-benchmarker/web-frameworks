@@ -2891,11 +2891,11 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: php/chubbyphp
-    - name: imi
+    - name: imi-swoole
       commands:
-      - cd php/imi && make build  -f .Makefile  && cd -
+      - cd php/imi-swoole && make build  -f .Makefile  && cd -
       - bundle exec rspec .spec
-      - make  -f php/imi/.Makefile collect
+      - make  -f php/imi-swoole/.Makefile collect
       - bundle exec rake db:raw_export
       env_vars:
       - name: DATABASE_URL
@@ -2907,7 +2907,24 @@ blocks:
       - name: ROUTES
         value: GET:/
       - name: FRAMEWORK
-        value: php/imi
+        value: php/imi-swoole
+    - name: imi-workerman
+      commands:
+      - cd php/imi-workerman && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/imi-workerman/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/imi-workerman
     - name: unic
       commands:
       - cd php/unic && make build  -f .Makefile  && cd -
