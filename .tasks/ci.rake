@@ -24,12 +24,11 @@ namespace :ci do
     }
 
     Dir.glob('*/config.yaml').each do |path|
-      
       language, = path.split(File::Separator)
-      next unless ['php','ruby','javascript'].include?(language)
-      
+      next unless %w[php ruby javascript].include?(language)
+
       definition[:blocks] << { 'name' => language, 'dependencies' => ['setup'],
-                               'run' => { 'when' => "change_in('/#{language}/','/data.json')" }, 'task' => { 'prologue' => { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk', 'sudo install wrk /usr/local/bin', 'cache restore bin', 'cache restore built-in', 'sem-service start postgres', 'createdb -U postgres -h 0.0.0.0 benchmark', 'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql', 'bundle config path .cache', 'bundle install', 'bundle exec rake config'] }, 'jobs' => [{ 'name' => 'setup', 'commands' => ['checkout'] }] } }
+                               'run' => { 'when' => "change_in(['/#{language}/','/data.json'],{pipeline_file: 'ignore'})" }, 'task' => { 'prologue' => { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk', 'sudo install wrk /usr/local/bin', 'cache restore bin', 'cache restore built-in', 'sem-service start postgres', 'createdb -U postgres -h 0.0.0.0 benchmark', 'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql', 'bundle config path .cache', 'bundle install', 'bundle exec rake config'] }, 'jobs' => [{ 'name' => 'setup', 'commands' => ['checkout'] }] } }
       Dir.glob("#{language}/*/config.yaml") do |file|
         _, framework, = file.split(File::Separator)
 
@@ -47,7 +46,7 @@ namespace :ci do
 
         config = get_config_from(File.join(Dir.pwd, language, framework))
         next unless config.dig('framework', 'engines')
-        
+
         config.dig('framework', 'engines').each do |engine|
           block[:task][:jobs] << {
             name: engine,
@@ -62,13 +61,11 @@ namespace :ci do
           block[:task].merge!(epilogue: { commands: ['docker logs `cat ${FRAMEWORK}/cid.txt`'] })
         end
         definition[:blocks] << block
-
-        
       end
     end
 
     File.write('.semaphore/semaphore.yml', definition.deep_stringify_keys.to_yaml)
-    
+
     definition[:blocks].map { |block| block.except!(:run) }
     File.write('.semaphore/schedule.yml', definition.deep_stringify_keys.to_yaml)
   end
