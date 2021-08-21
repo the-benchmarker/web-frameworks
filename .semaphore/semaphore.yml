@@ -25,1580 +25,6 @@ blocks:
       - bundle install
       - cache store built-in .cache
       - bundle exec rake config
-- name: php
-  dependencies:
-  - setup
-  run:
-    when: change_in('/php/','/data.json')
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: cubex
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/cubex','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: cubex
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/cubex/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/cubex/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    - name: php-fpm
-      commands:
-      - make  -f php/cubex/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/cubex/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: swoole
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/swoole','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: swoole
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/swoole/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/swoole/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: swoft
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/swoft','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: swoft
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/swoft/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/swoft/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: simps
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/simps','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: simps
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/simps/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/simps/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: nano
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/nano','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: nano
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/nano/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/nano/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: codeigniter4
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/codeigniter4','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: codeigniter4
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/codeigniter4/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/codeigniter4/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: yii
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/yii','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: yii
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/yii/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/yii/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/yii/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/yii/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: phalcon
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/phalcon','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: phalcon
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/phalcon/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/phalcon/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: ice
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/ice','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: ice
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/ice/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/ice/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: spiral
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/spiral','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: spiral
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: road-runner
-      commands:
-      - make  -f php/spiral/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/spiral/.Makefile collect.road-runner
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: road-runner
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: mark
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/mark','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: mark
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/mark/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/mark/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: workerman
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/workerman','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: workerman
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/workerman/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/workerman/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: nette
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/nette','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: nette
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/nette/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/nette/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: webman
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/webman','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: webman
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/webman/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/webman/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: driftphp
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/driftphp','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: driftphp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/driftphp/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/driftphp/.Makefile collect.reactphp
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: reactphp
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: sw-fw-less
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/sw-fw-less','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: sw-fw-less
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/sw-fw-less/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/sw-fw-less/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: laminas
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/laminas','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: laminas
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/laminas/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/laminas/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: chubbyphp
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/chubbyphp','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: chubbyphp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    - name: workerman
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    - name: road-runner
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.road-runner
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: road-runner
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: imi
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/imi','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: imi
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/imi/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/imi/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: unic
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/unic','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: unic
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/unic/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/unic/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: basicphp
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/basicphp','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: basicphp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/basicphp/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/basicphp/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: comet
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/comet','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: comet
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/comet/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/comet/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: sunrise-router
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/sunrise-router','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: sunrise-router
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/sunrise-router/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: road-runner
-      commands:
-      - make  -f php/sunrise-router/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router/.Makefile collect.road-runner
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: road-runner
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: ubiquity
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/ubiquity','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: ubiquity
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/ubiquity/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/ubiquity/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: one
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/one','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: one
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/one/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/one/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/one/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/one/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: mezzio
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/mezzio','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: mezzio
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/mezzio/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/mezzio/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: lumen
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/lumen','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: lumen
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/lumen/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/lumen/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/lumen/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/lumen/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: antidot
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/antidot','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: antidot
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/antidot/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/antidot/.Makefile collect.reactphp
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: reactphp
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: siler
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/siler','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: siler
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/siler/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/siler/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/siler/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/siler/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: fastsitephp
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/fastsitephp','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: fastsitephp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/fastsitephp/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/fastsitephp/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: bearframework
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/bearframework','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: bearframework
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/bearframework/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/bearframework/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: hamlet
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/hamlet','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: hamlet
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/hamlet/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/hamlet/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: swoole-coroutine
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/swoole-coroutine','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: swoole-coroutine
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/swoole-coroutine/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/swoole-coroutine/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: symfony
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/symfony','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: symfony
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/symfony/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/symfony/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: slim
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/slim','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: slim
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/slim/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/slim/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/slim/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.road-runner
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: road-runner
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: sunrise-router-annotations
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/sunrise-router-annotations','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: sunrise-router-annotations
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/sunrise-router-annotations/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-annotations/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: fatfree
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/fatfree','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: fatfree
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/fatfree/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/fatfree/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: laravel
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/laravel','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: laravel
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/laravel/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/laravel/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/laravel/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/laravel/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: hyperf
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/hyperf','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: hyperf
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/hyperf/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/hyperf/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
 - name: javascript
   dependencies:
   - setup
@@ -1622,117 +48,6 @@ blocks:
     - name: setup
       commands:
       - checkout
-- name: moleculer
-  dependencies:
-  - javascript
-  run:
-    when: change_in('/javascript/moleculer','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: moleculer
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
-      commands:
-      - make  -f javascript/moleculer/.Makefile build.node
-      - bundle exec rspec .spec
-      - make  -f javascript/moleculer/.Makefile collect.node
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: node
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: polka
-  dependencies:
-  - javascript
-  run:
-    when: change_in('/javascript/polka','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: polka
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
-      commands:
-      - make  -f javascript/polka/.Makefile build.node
-      - bundle exec rspec .spec
-      - make  -f javascript/polka/.Makefile collect.node
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: node
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: foxify
-  dependencies:
-  - javascript
-  run:
-    when: change_in('/javascript/foxify','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: foxify
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
-      commands:
-      - make  -f javascript/foxify/.Makefile build.node
-      - bundle exec rspec .spec
-      - make  -f javascript/foxify/.Makefile collect.node
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: node
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
 - name: 0http
   dependencies:
   - javascript
@@ -1779,117 +94,6 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: sifrr
-  dependencies:
-  - javascript
-  run:
-    when: change_in('/javascript/sifrr','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: sifrr
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uwebsockets
-      commands:
-      - make  -f javascript/sifrr/.Makefile build.uwebsockets
-      - bundle exec rspec .spec
-      - make  -f javascript/sifrr/.Makefile collect.uwebsockets
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwebsockets
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: nestjs-fastify
-  dependencies:
-  - javascript
-  run:
-    when: change_in('/javascript/nestjs-fastify','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: nestjs-fastify
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
-      commands:
-      - make  -f javascript/nestjs-fastify/.Makefile build.node
-      - bundle exec rspec .spec
-      - make  -f javascript/nestjs-fastify/.Makefile collect.node
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: node
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: restana
-  dependencies:
-  - javascript
-  run:
-    when: change_in('/javascript/restana','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: restana
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
-      commands:
-      - make  -f javascript/restana/.Makefile build.node
-      - bundle exec rspec .spec
-      - make  -f javascript/restana/.Makefile collect.node
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: node
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
 - name: express
   dependencies:
   - javascript
@@ -1927,6 +131,163 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: fastify
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/fastify','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: fastify
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/fastify/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/fastify/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: feathersjs
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/feathersjs','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: feathersjs
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/feathersjs/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/feathersjs/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: foxify
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/foxify','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: foxify
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/foxify/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/foxify/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: fyrejet
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/fyrejet','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: fyrejet
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/fyrejet/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/fyrejet/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+    - name: uwebsockets
+      commands:
+      - make  -f javascript/fyrejet/.Makefile build.uwebsockets
+      - bundle exec rspec .spec
+      - make  -f javascript/fyrejet/.Makefile collect.uwebsockets
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uwebsockets
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
 - name: hapi
   dependencies:
   - javascript
@@ -1957,6 +318,117 @@ blocks:
       - make  -f javascript/hapi/.Makefile build.node
       - bundle exec rspec .spec
       - make  -f javascript/hapi/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: iotjs-express
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/iotjs-express','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: iotjs-express
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/iotjs-express/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/iotjs-express/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: koa
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/koa','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: koa
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/koa/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/koa/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: moleculer
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/moleculer','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: moleculer
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/moleculer/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/moleculer/.Makefile collect.node
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
@@ -2038,17 +510,17 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: fyrejet
+- name: naturaljs-router
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/fyrejet','data.json')
+    when: change_in('/javascript/naturaljs-router','data.json')
   task:
     env_vars:
     - name: LANGUAGE
       value: javascript
     - name: FRAMEWORK
-      value: fyrejet
+      value: naturaljs-router
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2063,98 +535,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
-      commands:
-      - make  -f javascript/fyrejet/.Makefile build.node
-      - bundle exec rspec .spec
-      - make  -f javascript/fyrejet/.Makefile collect.node
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: node
     - name: uwebsockets
       commands:
-      - make  -f javascript/fyrejet/.Makefile build.uwebsockets
+      - make  -f javascript/naturaljs-router/.Makefile build.uwebsockets
       - bundle exec rspec .spec
-      - make  -f javascript/fyrejet/.Makefile collect.uwebsockets
+      - make  -f javascript/naturaljs-router/.Makefile collect.uwebsockets
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
         value: uwebsockets
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: feathersjs
-  dependencies:
-  - javascript
-  run:
-    when: change_in('/javascript/feathersjs','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: feathersjs
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
-      commands:
-      - make  -f javascript/feathersjs/.Makefile build.node
-      - bundle exec rspec .spec
-      - make  -f javascript/feathersjs/.Makefile collect.node
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: node
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: iotjs-express
-  dependencies:
-  - javascript
-  run:
-    when: change_in('/javascript/iotjs-express','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: iotjs-express
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
-      commands:
-      - make  -f javascript/iotjs-express/.Makefile build.node
-      - bundle exec rspec .spec
-      - make  -f javascript/iotjs-express/.Makefile collect.node
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: node
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
@@ -2195,17 +584,17 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: restify
+- name: nestjs-fastify
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/restify','data.json')
+    when: change_in('/javascript/nestjs-fastify','data.json')
   task:
     env_vars:
     - name: LANGUAGE
       value: javascript
     - name: FRAMEWORK
-      value: restify
+      value: nestjs-fastify
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2222,9 +611,46 @@ blocks:
     jobs:
     - name: node
       commands:
-      - make  -f javascript/restify/.Makefile build.node
+      - make  -f javascript/nestjs-fastify/.Makefile build.node
       - bundle exec rspec .spec
-      - make  -f javascript/restify/.Makefile collect.node
+      - make  -f javascript/nestjs-fastify/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: polka
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/polka','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: polka
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/polka/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/polka/.Makefile collect.node
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
@@ -2306,54 +732,17 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: naturaljs-router
+- name: restana
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/naturaljs-router','data.json')
+    when: change_in('/javascript/restana','data.json')
   task:
     env_vars:
     - name: LANGUAGE
       value: javascript
     - name: FRAMEWORK
-      value: naturaljs-router
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uwebsockets
-      commands:
-      - make  -f javascript/naturaljs-router/.Makefile build.uwebsockets
-      - bundle exec rspec .spec
-      - make  -f javascript/naturaljs-router/.Makefile collect.uwebsockets
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwebsockets
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: tinyhttp
-  dependencies:
-  - javascript
-  run:
-    when: change_in('/javascript/tinyhttp','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: tinyhttp
+      value: restana
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2370,9 +759,46 @@ blocks:
     jobs:
     - name: node
       commands:
-      - make  -f javascript/tinyhttp/.Makefile build.node
+      - make  -f javascript/restana/.Makefile build.node
       - bundle exec rspec .spec
-      - make  -f javascript/tinyhttp/.Makefile collect.node
+      - make  -f javascript/restana/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: restify
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/restify','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: restify
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/restify/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/restify/.Makefile collect.node
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
@@ -2417,17 +843,54 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: fastify
+- name: sifrr
   dependencies:
   - javascript
   run:
-    when: change_in('/javascript/fastify','data.json')
+    when: change_in('/javascript/sifrr','data.json')
   task:
     env_vars:
     - name: LANGUAGE
       value: javascript
     - name: FRAMEWORK
-      value: fastify
+      value: sifrr
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: uwebsockets
+      commands:
+      - make  -f javascript/sifrr/.Makefile build.uwebsockets
+      - bundle exec rspec .spec
+      - make  -f javascript/sifrr/.Makefile collect.uwebsockets
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uwebsockets
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: tinyhttp
+  dependencies:
+  - javascript
+  run:
+    when: change_in('/javascript/tinyhttp','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: tinyhttp
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2444,9 +907,9 @@ blocks:
     jobs:
     - name: node
       commands:
-      - make  -f javascript/fastify/.Makefile build.node
+      - make  -f javascript/tinyhttp/.Makefile build.node
       - bundle exec rspec .spec
-      - make  -f javascript/fastify/.Makefile collect.node
+      - make  -f javascript/tinyhttp/.Makefile collect.node
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
@@ -2454,17 +917,12 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: koa
+- name: php
   dependencies:
-  - javascript
+  - setup
   run:
-    when: change_in('/javascript/koa','data.json')
+    when: change_in('/php/','/data.json')
   task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: koa
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2479,15 +937,1594 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: setup
       commands:
-      - make  -f javascript/koa/.Makefile build.node
+      - checkout
+- name: antidot
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/antidot','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: antidot
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: reactphp
+      commands:
+      - make  -f php/antidot/.Makefile build.reactphp
       - bundle exec rspec .spec
-      - make  -f javascript/koa/.Makefile collect.node
+      - make  -f php/antidot/.Makefile collect.reactphp
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: reactphp
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: basicphp
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/basicphp','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: basicphp
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/basicphp/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/basicphp/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: bearframework
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/bearframework','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: bearframework
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/bearframework/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/bearframework/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: chubbyphp
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/chubbyphp','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: chubbyphp
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/chubbyphp/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/chubbyphp/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    - name: swoole
+      commands:
+      - make  -f php/chubbyphp/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/chubbyphp/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    - name: workerman
+      commands:
+      - make  -f php/chubbyphp/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f php/chubbyphp/.Makefile collect.workerman
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: workerman
+    - name: road-runner
+      commands:
+      - make  -f php/chubbyphp/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f php/chubbyphp/.Makefile collect.road-runner
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: road-runner
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: codeigniter4
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/codeigniter4','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: codeigniter4
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/codeigniter4/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/codeigniter4/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: comet
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/comet','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: comet
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f php/comet/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f php/comet/.Makefile collect.workerman
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: workerman
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: cubex
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/cubex','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: cubex
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f php/cubex/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f php/cubex/.Makefile collect.workerman
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: workerman
+    - name: php-fpm
+      commands:
+      - make  -f php/cubex/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/cubex/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: driftphp
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/driftphp','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: driftphp
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: reactphp
+      commands:
+      - make  -f php/driftphp/.Makefile build.reactphp
+      - bundle exec rspec .spec
+      - make  -f php/driftphp/.Makefile collect.reactphp
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: reactphp
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: fastsitephp
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/fastsitephp','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: fastsitephp
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/fastsitephp/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/fastsitephp/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: fatfree
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/fatfree','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: fatfree
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/fatfree/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/fatfree/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: hamlet
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/hamlet','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: hamlet
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/hamlet/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/hamlet/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: hyperf
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/hyperf','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: hyperf
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: swoole
+      commands:
+      - make  -f php/hyperf/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/hyperf/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: ice
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/ice','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: ice
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/ice/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/ice/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: imi-swoole
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/imi-swoole','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: imi-swoole
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: swoole
+      commands:
+      - make  -f php/imi-swoole/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/imi-swoole/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: imi-workerman
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/imi-workerman','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: imi-workerman
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/imi-workerman/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/imi-workerman/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: laminas
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/laminas','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: laminas
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/laminas/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/laminas/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: laravel
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/laravel','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: laravel
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/laravel/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/laravel/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    - name: swoole
+      commands:
+      - make  -f php/laravel/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/laravel/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: lumen
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/lumen','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: lumen
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/lumen/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/lumen/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    - name: swoole
+      commands:
+      - make  -f php/lumen/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/lumen/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: mark
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/mark','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: mark
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f php/mark/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f php/mark/.Makefile collect.workerman
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: workerman
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: mezzio
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/mezzio','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: mezzio
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/mezzio/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/mezzio/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: nano
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/nano','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: nano
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f php/nano/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f php/nano/.Makefile collect.workerman
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: workerman
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: nette
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/nette','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: nette
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/nette/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/nette/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: one
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/one','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: one
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/one/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/one/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    - name: swoole
+      commands:
+      - make  -f php/one/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/one/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: phalcon
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/phalcon','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: phalcon
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/phalcon/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/phalcon/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: siler
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/siler','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: siler
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/siler/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/siler/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    - name: swoole
+      commands:
+      - make  -f php/siler/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/siler/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: simps
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/simps','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: simps
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: swoole
+      commands:
+      - make  -f php/simps/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/simps/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: slim
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/slim','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: slim
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/slim/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/slim/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    - name: swoole
+      commands:
+      - make  -f php/slim/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/slim/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    - name: road-runner
+      commands:
+      - make  -f php/slim/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f php/slim/.Makefile collect.road-runner
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: road-runner
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: spiral
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/spiral','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: spiral
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: road-runner
+      commands:
+      - make  -f php/spiral/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f php/spiral/.Makefile collect.road-runner
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: road-runner
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: sunrise-router
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/sunrise-router','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: sunrise-router
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/sunrise-router/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/sunrise-router/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    - name: road-runner
+      commands:
+      - make  -f php/sunrise-router/.Makefile build.road-runner
+      - bundle exec rspec .spec
+      - make  -f php/sunrise-router/.Makefile collect.road-runner
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: road-runner
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: sunrise-router-annotations
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/sunrise-router-annotations','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: sunrise-router-annotations
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/sunrise-router-annotations/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/sunrise-router-annotations/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: sw-fw-less
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/sw-fw-less','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: sw-fw-less
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: swoole
+      commands:
+      - make  -f php/sw-fw-less/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/sw-fw-less/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: swoft
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/swoft','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: swoft
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: swoole
+      commands:
+      - make  -f php/swoft/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/swoft/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: swoole
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/swoole','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: swoole
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: swoole
+      commands:
+      - make  -f php/swoole/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/swoole/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: swoole-coroutine
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/swoole-coroutine','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: swoole-coroutine
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: swoole
+      commands:
+      - make  -f php/swoole-coroutine/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/swoole-coroutine/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: symfony
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/symfony','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: symfony
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/symfony/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/symfony/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: ubiquity
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/ubiquity','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: ubiquity
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/ubiquity/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/ubiquity/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: unic
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/unic','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: unic
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/unic/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/unic/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: webman
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/webman','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: webman
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f php/webman/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f php/webman/.Makefile collect.workerman
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: workerman
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: workerman
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/workerman','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: workerman
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: workerman
+      commands:
+      - make  -f php/workerman/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f php/workerman/.Makefile collect.workerman
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: workerman
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: yii
+  dependencies:
+  - php
+  run:
+    when: change_in('/php/yii','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: php
+    - name: FRAMEWORK
+      value: yii
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: php-fpm
+      commands:
+      - make  -f php/yii/.Makefile build.php-fpm
+      - bundle exec rspec .spec
+      - make  -f php/yii/.Makefile collect.php-fpm
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: php-fpm
+    - name: swoole
+      commands:
+      - make  -f php/yii/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/yii/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
@@ -2514,17 +2551,17 @@ blocks:
     - name: setup
       commands:
       - checkout
-- name: syro
+- name: agoo
   dependencies:
   - ruby
   run:
-    when: change_in('/ruby/syro','data.json')
+    when: change_in('/ruby/agoo','data.json')
   task:
     env_vars:
     - name: LANGUAGE
       value: ruby
     - name: FRAMEWORK
-      value: syro
+      value: agoo
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2539,143 +2576,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name: agoo
       commands:
-      - make  -f ruby/syro/.Makefile build.puma
+      - make  -f ruby/agoo/.Makefile build.agoo
       - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.puma
+      - make  -f ruby/agoo/.Makefile collect.agoo
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: puma
-    - name: iodine
-      commands:
-      - make  -f ruby/syro/.Makefile build.iodine
-      - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.iodine
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: iodine
-    - name: falcon
-      commands:
-      - make  -f ruby/syro/.Makefile build.falcon
-      - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.falcon
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: falcon
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: sinatra
-  dependencies:
-  - ruby
-  run:
-    when: change_in('/ruby/sinatra','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: ruby
-    - name: FRAMEWORK
-      value: sinatra
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: puma
-      commands:
-      - make  -f ruby/sinatra/.Makefile build.puma
-      - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.puma
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: puma
-    - name: iodine
-      commands:
-      - make  -f ruby/sinatra/.Makefile build.iodine
-      - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.iodine
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: iodine
-    - name: falcon
-      commands:
-      - make  -f ruby/sinatra/.Makefile build.falcon
-      - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.falcon
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: falcon
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: rack_app
-  dependencies:
-  - ruby
-  run:
-    when: change_in('/ruby/rack_app','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: ruby
-    - name: FRAMEWORK
-      value: rack_app
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: puma
-      commands:
-      - make  -f ruby/rack_app/.Makefile build.puma
-      - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.puma
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: puma
-    - name: iodine
-      commands:
-      - make  -f ruby/rack_app/.Makefile build.iodine
-      - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.iodine
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: iodine
-    - name: falcon
-      commands:
-      - make  -f ruby/rack_app/.Makefile build.falcon
-      - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.falcon
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: falcon
+        value: agoo
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
@@ -2727,263 +2636,6 @@ blocks:
       - make  -f ruby/camping/.Makefile build.falcon
       - bundle exec rspec .spec
       - make  -f ruby/camping/.Makefile collect.falcon
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: falcon
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: roda
-  dependencies:
-  - ruby
-  run:
-    when: change_in('/ruby/roda','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: ruby
-    - name: FRAMEWORK
-      value: roda
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: puma
-      commands:
-      - make  -f ruby/roda/.Makefile build.puma
-      - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.puma
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: puma
-    - name: iodine
-      commands:
-      - make  -f ruby/roda/.Makefile build.iodine
-      - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.iodine
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: iodine
-    - name: falcon
-      commands:
-      - make  -f ruby/roda/.Makefile build.falcon
-      - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.falcon
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: falcon
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: agoo
-  dependencies:
-  - ruby
-  run:
-    when: change_in('/ruby/agoo','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: ruby
-    - name: FRAMEWORK
-      value: agoo
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: agoo
-      commands:
-      - make  -f ruby/agoo/.Makefile build.agoo
-      - bundle exec rspec .spec
-      - make  -f ruby/agoo/.Makefile collect.agoo
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: agoo
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: rack-routing
-  dependencies:
-  - ruby
-  run:
-    when: change_in('/ruby/rack-routing','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: ruby
-    - name: FRAMEWORK
-      value: rack-routing
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: puma
-      commands:
-      - make  -f ruby/rack-routing/.Makefile build.puma
-      - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.puma
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: puma
-    - name: iodine
-      commands:
-      - make  -f ruby/rack-routing/.Makefile build.iodine
-      - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.iodine
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: iodine
-    - name: falcon
-      commands:
-      - make  -f ruby/rack-routing/.Makefile build.falcon
-      - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.falcon
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: falcon
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: hanami-api
-  dependencies:
-  - ruby
-  run:
-    when: change_in('/ruby/hanami-api','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: ruby
-    - name: FRAMEWORK
-      value: hanami-api
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: puma
-      commands:
-      - make  -f ruby/hanami-api/.Makefile build.puma
-      - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.puma
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: puma
-    - name: iodine
-      commands:
-      - make  -f ruby/hanami-api/.Makefile build.iodine
-      - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.iodine
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: iodine
-    - name: falcon
-      commands:
-      - make  -f ruby/hanami-api/.Makefile build.falcon
-      - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.falcon
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: falcon
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: grape
-  dependencies:
-  - ruby
-  run:
-    when: change_in('/ruby/grape','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: ruby
-    - name: FRAMEWORK
-      value: grape
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: puma
-      commands:
-      - make  -f ruby/grape/.Makefile build.puma
-      - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.puma
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: puma
-    - name: iodine
-      commands:
-      - make  -f ruby/grape/.Makefile build.iodine
-      - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.iodine
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: iodine
-    - name: falcon
-      commands:
-      - make  -f ruby/grape/.Makefile build.falcon
-      - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.falcon
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
@@ -3046,6 +2698,226 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: grape
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/grape','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: grape
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/grape/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/grape/.Makefile collect.puma
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: puma
+    - name: iodine
+      commands:
+      - make  -f ruby/grape/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/grape/.Makefile collect.iodine
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: iodine
+    - name: falcon
+      commands:
+      - make  -f ruby/grape/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/grape/.Makefile collect.falcon
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: falcon
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: hanami-api
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/hanami-api','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: hanami-api
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/hanami-api/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/hanami-api/.Makefile collect.puma
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: puma
+    - name: iodine
+      commands:
+      - make  -f ruby/hanami-api/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/hanami-api/.Makefile collect.iodine
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: iodine
+    - name: falcon
+      commands:
+      - make  -f ruby/hanami-api/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/hanami-api/.Makefile collect.falcon
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: falcon
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: rack-routing
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/rack-routing','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: rack-routing
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/rack-routing/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/rack-routing/.Makefile collect.puma
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: puma
+    - name: iodine
+      commands:
+      - make  -f ruby/rack-routing/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/rack-routing/.Makefile collect.iodine
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: iodine
+    - name: falcon
+      commands:
+      - make  -f ruby/rack-routing/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/rack-routing/.Makefile collect.falcon
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: falcon
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: rack_app
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/rack_app','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: rack_app
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/rack_app/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/rack_app/.Makefile collect.puma
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: puma
+    - name: iodine
+      commands:
+      - make  -f ruby/rack_app/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/rack_app/.Makefile collect.iodine
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: iodine
+    - name: falcon
+      commands:
+      - make  -f ruby/rack_app/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/rack_app/.Makefile collect.falcon
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: falcon
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
 - name: rails
   dependencies:
   - ruby
@@ -3094,6 +2966,171 @@ blocks:
       - make  -f ruby/rails/.Makefile build.falcon
       - bundle exec rspec .spec
       - make  -f ruby/rails/.Makefile collect.falcon
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: falcon
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: roda
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/roda','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: roda
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/roda/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/roda/.Makefile collect.puma
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: puma
+    - name: iodine
+      commands:
+      - make  -f ruby/roda/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/roda/.Makefile collect.iodine
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: iodine
+    - name: falcon
+      commands:
+      - make  -f ruby/roda/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/roda/.Makefile collect.falcon
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: falcon
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: sinatra
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/sinatra','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: sinatra
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/sinatra/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/sinatra/.Makefile collect.puma
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: puma
+    - name: iodine
+      commands:
+      - make  -f ruby/sinatra/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/sinatra/.Makefile collect.iodine
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: iodine
+    - name: falcon
+      commands:
+      - make  -f ruby/sinatra/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/sinatra/.Makefile collect.falcon
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: falcon
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: syro
+  dependencies:
+  - ruby
+  run:
+    when: change_in('/ruby/syro','data.json')
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: ruby
+    - name: FRAMEWORK
+      value: syro
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: puma
+      commands:
+      - make  -f ruby/syro/.Makefile build.puma
+      - bundle exec rspec .spec
+      - make  -f ruby/syro/.Makefile collect.puma
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: puma
+    - name: iodine
+      commands:
+      - make  -f ruby/syro/.Makefile build.iodine
+      - bundle exec rspec .spec
+      - make  -f ruby/syro/.Makefile collect.iodine
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: iodine
+    - name: falcon
+      commands:
+      - make  -f ruby/syro/.Makefile build.falcon
+      - bundle exec rspec .spec
+      - make  -f ruby/syro/.Makefile collect.falcon
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
