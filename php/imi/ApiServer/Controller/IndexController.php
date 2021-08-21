@@ -15,26 +15,26 @@ class IndexController extends HttpController
      * @Action
      * @Route(url="/", method="GET")
      */
-    public function index() : string
+    public function index()
     {
-        return RequestContext::get('response')->write('');
+        return '';
     }
 
     /**
      * @Action
      * @Route(url="/user/{id}", method="GET")
      */
-    public function get($id) : string
+    public function get($id)
     {
-        return RequestContext::get('response')->write($id);
+        return $id;
     }
 
     /**
      * @Action
      * @Route(url="/user", method="POST")
      */
-    public function create() : string
+    public function create()
     {
-        return RequestContext::get('response')->write('');
+        return '';
     }
 }
