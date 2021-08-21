@@ -2,9 +2,12 @@ framework:
   website: imiphp.com
   version: 2.0
 
+php_mod:
+  - pcntl
+  - sockets
+
 php_ext:
   - redis
-  - pcntl
   - event
 
 command: php vendor/bin/imi-workerman workerman/start
