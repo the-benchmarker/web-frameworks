@@ -15,7 +15,7 @@ class IndexController extends HttpController
      * @Action
      * @Route(url="/", method="GET")
      */
-    public function index()
+    public function index(): string
     {
         return '';
     }
@@ -24,7 +24,7 @@ class IndexController extends HttpController
      * @Action
      * @Route(url="/user/{id}", method="GET")
      */
-    public function get($id)
+    public function get($id): string
     {
         return $id;
     }
@@ -33,7 +33,7 @@ class IndexController extends HttpController
      * @Action
      * @Route(url="/user", method="POST")
      */
-    public function create()
+    public function create(): string
     {
         return '';
     }
