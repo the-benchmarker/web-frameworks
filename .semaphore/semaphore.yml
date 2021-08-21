@@ -1457,17 +1457,17 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: imi-swoole
+- name: imi
   dependencies:
   - php
   run:
-    when: change_in('/php/imi-swoole','data.json')
+    when: change_in('/php/imi','data.json')
   task:
     env_vars:
     - name: LANGUAGE
       value: php
     - name: FRAMEWORK
-      value: imi-swoole
+      value: imi
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -1484,50 +1484,22 @@ blocks:
     jobs:
     - name: swoole
       commands:
-      - make  -f php/imi-swoole/.Makefile build.swoole
+      - make  -f php/imi/.Makefile build.swoole
       - bundle exec rspec .spec
-      - make  -f php/imi-swoole/.Makefile collect.swoole
+      - make  -f php/imi/.Makefile collect.swoole
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
         value: swoole
-    epilogue:
+    - name: workerman
       commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: imi-workerman
-  dependencies:
-  - php
-  run:
-    when: change_in('/php/imi-workerman','data.json')
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: imi-workerman
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/imi-workerman/.Makefile build.php-fpm
+      - make  -f php/imi/.Makefile build.workerman
       - bundle exec rspec .spec
-      - make  -f php/imi-workerman/.Makefile collect.php-fpm
+      - make  -f php/imi/.Makefile collect.workerman
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
+        value: workerman
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
