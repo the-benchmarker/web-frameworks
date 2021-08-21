@@ -25,7 +25,7 @@ namespace :ci do
     Dir.glob('*/config.yaml').each do |path|
       language, = path.split(File::Separator)
 
-      block = { name: language, dependencies: ['setup'], run: { when: "change_in(['/#{language}/','/data.json'])" }, task: { prologue: { commands: [
+      block = { name: language, dependencies: ['setup'], run: { when: "change_in(['/#{language}/','/data.json'],{pipeline_file: 'ignore'})" }, task: { prologue: { commands: [
         'cache restore $SEMAPHORE_GIT_SHA',
         'cache restore wrk',
         'sudo install wrk /usr/local/bin',
@@ -38,8 +38,9 @@ namespace :ci do
         'bundle install',
         'bundle exec rake config'
       ] }, jobs: [] } }
-      Dir.glob("#{language}/*/config.yaml") do |file|
+      Dir.glob("#{language}/*/config.yaml").sort_by { |name| File.mtime(name) }.reverse!.each do |file|
         _, framework, = file.split(File::Separator)
+
         block[:task][:jobs] << { name: framework, commands: [
           "cd #{language}/#{framework} && make build  -f #{MANIFESTS[:build]}  && cd -",
           'bundle exec rspec .spec',
@@ -53,6 +54,7 @@ namespace :ci do
           { name: 'FRAMEWORK', value: "#{language}/#{framework}" }
         ] }
         block[:task].merge!(epilogue: { commands: ['docker logs `cat ${FRAMEWORK}/cid.txt`'] })
+        break if block[:task][:jobs].count == 50
       end
       blocks << block
     end
