@@ -5,7 +5,9 @@ language:
     tornado:
       command: ""
     twisted:
-      command: ""
+      build_deps:
+        - gcc
+      command: twistd --python=server.py --nodaemon
     gunicorn:
       bootstrap:
         - pip install gunicorn
