@@ -7,7 +7,7 @@ build_deps:
   - curl
   - libssl-dev
 
-fixes:
+bootstrap:
   - curl https://sh.rustup.rs > init.sh
   - sh init.sh -y
   - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;

@@ -9,11 +9,13 @@ RUN apt-get -qy install build-essential
   RUN apt-get  -qy install {{{.}}}
 {{/build_deps}}
 
-COPY . ./
+{{#files}}
+  COPY {{source}} {{target}}
+{{/files}}
 
-{{#fixes}}
+{{#bootstrap}}
   RUN {{{.}}}
-{{/fixes}}
+{{/bootstrap}}
 
 {{#environment}}
   ENV {{{.}}}

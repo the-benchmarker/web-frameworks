@@ -25,6 +25,516 @@ blocks:
             - bundle install
             - cache store built-in .cache
             - bundle exec rake config
+  - name: pony
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/pony/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: go
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/go/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: nim
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/nim/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: python
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/python/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: aiohttp
+    dependencies:
+      - python
+    run:
+      when: change_in('/python/aiohttp','data.json')
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: aiohttp
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: built-in
+          commands:
+            - make  -f python/aiohttp/.Makefile build.built-in
+            - bundle exec rspec .spec
+            - make  -f python/aiohttp/.Makefile collect.built-in
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: built-in
+        - name: gunicorn
+          commands:
+            - make  -f python/aiohttp/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/aiohttp/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: uvloop
+          commands:
+            - make  -f python/aiohttp/.Makefile build.uvloop
+            - bundle exec rspec .spec
+            - make  -f python/aiohttp/.Makefile collect.uvloop
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvloop
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: apidaora
+    dependencies:
+      - python
+    run:
+      when: change_in('/python/apidaora','data.json')
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: apidaora
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/apidaora/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/apidaora/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/apidaora/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/apidaora/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/apidaora/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/apidaora/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: asgineer
+    dependencies:
+      - python
+    run:
+      when: change_in('/python/asgineer','data.json')
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: asgineer
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/asgineer/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/asgineer/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/asgineer/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/asgineer/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/asgineer/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/asgineer/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: clojure
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/clojure/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: elixir
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/elixir/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: dart
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/dart/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: perl
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/perl/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: rust
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/rust/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: fsharp
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/fsharp/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: r
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/r/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: java
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/java/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: kotlin
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/kotlin/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: crystal
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/crystal/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: haskell
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/haskell/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
   - name: php
     dependencies:
       - setup
@@ -1608,6 +2118,121 @@ blocks:
       epilogue:
         commands:
           - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: scala
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/scala/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: cpp
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/cpp/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: swift
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/swift/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: csharp
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/csharp/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: julia
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/julia/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
   - name: javascript
     dependencies:
       - setup
@@ -2500,6 +3125,29 @@ blocks:
       epilogue:
         commands:
           - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: c
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/c/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
   - name: ruby
     dependencies:
       - setup
