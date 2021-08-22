@@ -268,3 +268,58 @@ blocks:
       epilogue:
         commands:
           - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: bottle
+    dependencies:
+      - python
+    run:
+      when: change_in('/python/bottle','data.json')
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: bottle
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: wsgiref
+          commands:
+            - make  -f python/bottle/.Makefile build.wsgiref
+            - bundle exec rspec .spec
+            - make  -f python/bottle/.Makefile collect.wsgiref
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: wsgiref
+        - name: gunicorn
+          commands:
+            - make  -f python/bottle/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/bottle/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: bjoern
+          commands:
+            - make  -f python/bottle/.Makefile build.bjoern
+            - bundle exec rspec .spec
+            - make  -f python/bottle/.Makefile collect.bjoern
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: bjoern
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`

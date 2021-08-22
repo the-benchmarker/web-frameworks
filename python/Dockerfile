@@ -2,11 +2,13 @@ FROM python:3.9-slim
 
 WORKDIR /usr/src/app
 
-RUN apt-get -qq update
-RUN apt-get -qy install build-essential
+{{#build_deps.length}}
+  ARG DEBIAN_FRONTEND=noninteractive
+  RUN apt-get -y update
+{{/build_deps.length}}
 
 {{#build_deps}}
-  RUN apt-get  -qy install {{{.}}}
+  RUN apt-get -y install {{{.}}}
 {{/build_deps}}
 
 {{#files}}

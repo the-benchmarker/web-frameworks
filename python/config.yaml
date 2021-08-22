@@ -17,7 +17,9 @@ language:
           --worker-class ${WORKER_CLASS} \
           server:app
     bjoern:
-      command: ""
+      build_deps:
+        - gcc
+        - libev-dev
     uwsgi:
       command: ""
     waitress:
