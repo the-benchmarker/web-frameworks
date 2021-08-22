@@ -2,15 +2,17 @@ framework:
   website: hyperf.io
   version: 2.2
 
-php_mod:
-  - pcntl
+  engines:
+    - swoole
 
-php_ext:
-  - redis
-  - swoole
+  modules:
+    - pcntl
 
-before_command:
-  - echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
-  - php sbin/hyperf.php
+  extensions:
+    - redis
 
-command: php sbin/hyperf.php start
+  bootstrap:
+    - echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
+    - php sbin/hyperf.php
+
+  command: php sbin/hyperf.php start
