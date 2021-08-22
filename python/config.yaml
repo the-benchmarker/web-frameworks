@@ -25,7 +25,7 @@ language:
     uvicorn:
       bootstrap:
         - pip install uvicorn[standard]
-      command: uvicorn --host 0.0.0.0 --port 3000 --workers $(nproc) --date-header server:app
+      command: uvicorn --host 0.0.0.0 --port 3000 --workers $(nproc) server:app
     hypercorn:
       bootstrap:
         - pip install hypercorn

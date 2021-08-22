@@ -158,6 +158,61 @@ blocks:
       epilogue:
         commands:
           - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: blacksheep
+    dependencies:
+      - python
+    run:
+      when: change_in('/python/blacksheep','data.json')
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: blacksheep
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/blacksheep/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/blacksheep/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/blacksheep/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/blacksheep/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/blacksheep/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/blacksheep/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
   - name: asgineer
     dependencies:
       - python
