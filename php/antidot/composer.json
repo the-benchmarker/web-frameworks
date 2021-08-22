@@ -18,7 +18,8 @@
     "antidot-fw/fast-router-adapter": "*",
     "antidot-fw/react-framework": "^1.1",
     "antidot-fw/symfony-config-translator": "^1.1",
-    "antidot-fw/yaml-config-provider": "*"
+    "antidot-fw/yaml-config-provider": "*",
+    "react/http": "1.2.0"
   },
   "autoload": {
     "psr-4": {
