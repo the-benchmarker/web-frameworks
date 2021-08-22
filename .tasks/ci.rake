@@ -25,7 +25,8 @@ namespace :ci do
 
     Dir.glob('*/config.yaml').each do |path|
       language, = path.split(File::Separator)
-      
+      # TODO remove this when PR is ready
+      next unless language == 'python'
       definition[:blocks] << { 'name' => language, 'dependencies' => ['setup'],
                                'run' => { 'when' => "change_in(['/#{language}/','/data.json'],{pipeline_file: 'ignore'})" }, 'task' => { 'prologue' => { 'commands' => ['cache restore $SEMAPHORE_GIT_SHA', 'cache restore wrk', 'sudo install wrk /usr/local/bin', 'cache restore bin', 'cache restore built-in', 'sem-service start postgres', 'createdb -U postgres -h 0.0.0.0 benchmark', 'psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql', 'bundle config path .cache', 'bundle install', 'bundle exec rake config'] }, 'jobs' => [{ 'name' => 'setup', 'commands' => ['checkout'] }] } }
       Dir.glob("#{language}/*/config.yaml") do |file|
