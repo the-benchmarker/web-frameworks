@@ -6,6 +6,9 @@ framework:
 build_deps:
   - libevent-dev
 
+php_ext:
+  - event
+
 php_mod:
   - intl
   - pcntl
