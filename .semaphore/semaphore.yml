@@ -201,15 +201,6 @@ blocks:
           env_vars:
             - name: ENGINE
               value: hypercorn
-        - name: daphne
-          commands:
-            - make  -f python/blacksheep/.Makefile build.daphne
-            - bundle exec rspec .spec
-            - make  -f python/blacksheep/.Makefile collect.daphne
-            - bundle exec rake db:raw_export
-          env_vars:
-            - name: ENGINE
-              value: daphne
       epilogue:
         commands:
           - docker logs `cat ${FRAMEWORK}/cid.txt`
