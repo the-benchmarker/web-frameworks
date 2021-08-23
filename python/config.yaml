@@ -23,6 +23,8 @@ language:
         - gcc
         - libev-dev
     uwsgi:
+      bootstrap:
+        - pip install https://projects.unbit.it/downloads/uwsgi-lts.tar.gz # prefer lts version
       command: ""
     waitress:
       command: ""

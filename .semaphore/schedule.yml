@@ -295,6 +295,95 @@ blocks:
       epilogue:
         commands:
           - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: django
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: django
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: gunicorn
+          commands:
+            - make  -f python/django/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/django/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: bjoern
+          commands:
+            - make  -f python/django/.Makefile build.bjoern
+            - bundle exec rspec .spec
+            - make  -f python/django/.Makefile collect.bjoern
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: bjoern
+        - name: uwsgi
+          commands:
+            - make  -f python/django/.Makefile build.uwsgi
+            - bundle exec rspec .spec
+            - make  -f python/django/.Makefile collect.uwsgi
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uwsgi
+        - name: waitress
+          commands:
+            - make  -f python/django/.Makefile build.waitress
+            - bundle exec rspec .spec
+            - make  -f python/django/.Makefile collect.waitress
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: waitress
+        - name: uvicorn
+          commands:
+            - make  -f python/django/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/django/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/django/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/django/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/django/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/django/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
   - name: bottle
     dependencies:
       - python
