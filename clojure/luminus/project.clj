@@ -10,7 +10,7 @@
                  [luminus-jetty "0.2.1"]
                  [luminus-transit "0.1.2"]
                  [luminus/ring-ttl-session "0.3.3"]
-                 [markdown-clj "1.10.5"]
+                 [markdown-clj "1.10.6"]
                  [metosin/muuntaja "0.6.8"]
                  [metosin/reitit "0.5.15"]
                  [metosin/ring-http-response "0.9.2"]
@@ -53,7 +53,7 @@
                                  [ring/ring-devel "1.9.4"]
                                  [ring/ring-mock "0.4.0"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.24.1"]
-                                 [jonase/eastwood "0.9.6"]] 
+                                 [jonase/eastwood "0.9.7"]] 
                   
                   :source-paths ["env/dev/clj" ]
                   :resource-paths ["env/dev/resources"]
