@@ -5,9 +5,6 @@ logging.disable()
 
 
 from flask import Flask
-from meinheld import patch
-
-patch.patch_all()
 
 app = Flask(__name__)
 

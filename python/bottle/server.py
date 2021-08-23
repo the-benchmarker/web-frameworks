@@ -4,9 +4,6 @@ import logging
 logging.disable()
 
 from bottle import Bottle
-from meinheld import patch
-
-patch.patch_all()
 
 
 app = Bottle()
@@ -25,3 +22,12 @@ def user_info(id):
 @app.route("/user", method="POST")
 def user():
     return ""
+
+
+if __name__ == "__main__":
+    import sys
+
+    options = {"host": "0.0.0.0", "port": sys.argv[1]}
+    if len(sys.argv) > 2:
+        options["server"] = sys.argv[2]
+    app.run(**options)
