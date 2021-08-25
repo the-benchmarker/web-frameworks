@@ -40,6 +40,8 @@ language:
         - intl
         - pcntl
         - sockets
+      extensions:
+        - event
 
 framework:
   engines:
