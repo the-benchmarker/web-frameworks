@@ -12,14 +12,13 @@
     "ext-intl": "*",
     "ext-json": "*",
     "antidot-fw/framework": "~0.2.1",
-    "antidot-fw/antidot-react-psr15": "*",
-    "antidot-fw/cli": "*",
-    "antidot-fw/container": "*",
-    "antidot-fw/fast-router-adapter": "*",
-    "antidot-fw/react-framework": "*",
-    "antidot-fw/symfony-config-translator": "*",
-    "antidot-fw/yaml-config-provider": "*",
-    "webmozart/assert": "*"
+    "antidot-fw/antidot-react-psr15": "@stable",
+    "antidot-fw/cli": "@stable",
+    "antidot-fw/container": "@stable",
+    "antidot-fw/fast-router-adapter": "@stable",
+    "antidot-fw/react-framework": "@stable",
+    "antidot-fw/symfony-config-translator": "@stable",
+    "antidot-fw/yaml-config-provider": "@stable"
   },
   "autoload": {
     "psr-4": {
