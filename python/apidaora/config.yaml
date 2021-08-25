@@ -2,25 +2,21 @@ framework:
   github: dutradda/apidaora
   version: 0.28
 
-build_deps:
-  - libffi-dev
-  - curl
-  - libssl-dev
+  engines:
+    - uvicorn
+    - hypercorn
+    - daphne
 
-fixes:
-  - curl https://sh.rustup.rs > init.sh
-  - sh init.sh -y
-  - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
-  - rustup default nightly
+  build_deps:
+    - libffi-dev
+    - curl
+    - libssl-dev
 
-environment:
-  RUSTFLAGS: -C target-feature=-crt-static
+  bootstrap:
+    - curl https://sh.rustup.rs > init.sh
+    - sh init.sh -y
+    - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
+    - rustup default nightly
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class uvicorn.workers.UvicornWorker  \
-      server:app
+  environment:
+    RUSTFLAGS: -C target-feature=-crt-static

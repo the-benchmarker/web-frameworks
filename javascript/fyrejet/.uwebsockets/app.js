@@ -2,7 +2,7 @@ var fyrejet = require("fyrejet");
 var app = fyrejet({
   prioRequestsProcessing: false,
   server: fyrejet.uwsCompat(),
-  serverType: 'uWebSockets'
+  serverType: "uWebSockets",
 });
 
 app.set("etag", false);
