@@ -23,6 +23,9 @@ language:
         - gcc
         - libev-dev
     uwsgi:
+      build_deps:
+        - gcc
+        - libpcre3-dev
       bootstrap:
         - pip install https://projects.unbit.it/downloads/uwsgi-lts.tar.gz # prefer lts version
       command: ""

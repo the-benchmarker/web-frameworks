@@ -4,9 +4,7 @@ framework:
 
   engines:
     - gunicorn
-    - bjoern
     - uwsgi
-    - waitress
     - uvicorn
     - hypercorn
     - daphne
@@ -22,8 +20,14 @@ language:
           app.wsgi
     uwsgi:
       command: >
-        uwsgi --module=app.wsgi:application \
-        --env DJANGO_SETTINGS_MODULE=app.settings \
-        --master --pidfile=/tmp/project-master.pid \
-        --socket=0.0.0.0:3000 \      
-        --processes=$(nproc)
+        uwsgi --module=app.wsgi:application  \
+          --http=0.0.0.0:3000 \      
+          --processes=$(nproc)
+    daphne:
+      command: daphne -b 0.0.0.0 -p 3000 app.wsgi:application
+    uvicorn:
+      command: >
+        uvicorn --host 0.0.0.0 --port 3000 \
+          --workers $(nproc) app.wsgi:application
+    hypercorn:
+      command: hypercorn --bind 0.0.0.0:3000 --workers $(nproc) app.wsgi:application
