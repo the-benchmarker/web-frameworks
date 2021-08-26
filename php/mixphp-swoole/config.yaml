@@ -1,8 +1,0 @@
-framework:
-  github: mix-php/mix
-  version: 3.0
-
-php_ext:
-  - swoole
-
-command: php bin/swoole.php
