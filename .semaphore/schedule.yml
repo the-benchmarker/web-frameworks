@@ -346,41 +346,6 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: mixphp-swoole
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: mixphp-swoole
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/mixphp-swoole/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/mixphp-swoole/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
 - name: ice
   dependencies:
   - php
@@ -1065,41 +1030,6 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: mixphp-workerman
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: mixphp-workerman
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/mixphp-workerman/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/mixphp-workerman/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
 - name: lumen
   dependencies:
   - php
@@ -1421,6 +1351,15 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
+    - name: swoole
+      commands:
+      - make  -f php/mixphp/.Makefile build.swoole
+      - bundle exec rspec .spec
+      - make  -f php/mixphp/.Makefile collect.swoole
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: swoole
     - name: php-fpm
       commands:
       - make  -f php/mixphp/.Makefile build.php-fpm
@@ -1430,6 +1369,15 @@ blocks:
       env_vars:
       - name: ENGINE
         value: php-fpm
+    - name: workerman
+      commands:
+      - make  -f php/mixphp/.Makefile build.workerman
+      - bundle exec rspec .spec
+      - make  -f php/mixphp/.Makefile collect.workerman
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: workerman
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`

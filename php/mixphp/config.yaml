@@ -1,3 +1,21 @@
 framework:
   github: mix-php/mix
   version: 3.0
+
+  engines:
+    - swoole
+    - php-fpm
+    - workerman
+
+  files:
+    - "**/*.php"
+    - composer.json
+    - .workerman/bin/workerman.php
+    - .swoole/bin/swoole.php
+
+language:
+  engines:
+    swoole:
+      command: php bin/swoole.php
+    workerman:
+      command: php bin/workerman.php start
