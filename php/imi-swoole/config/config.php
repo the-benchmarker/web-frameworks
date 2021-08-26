@@ -17,7 +17,7 @@ return [
         'mode'      =>  SWOOLE_BASE,
         'configs'   =>  [
             'worker_num'       => swoole_cpu_num() * 2,
-            'enable_coroutine' => true,
+            'enable_coroutine' => false,
             'open_tcp_nodelay' => true,
             'tcp_fastopen'     => true,
             'log_file'         => '/dev/null',
