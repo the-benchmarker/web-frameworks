@@ -5,9 +5,6 @@ logging.disable()
 
 
 import hug
-from meinheld import patch
-
-patch.patch_all()
 
 
 hug.API(__name__).http.output_format = hug.output_format.text
