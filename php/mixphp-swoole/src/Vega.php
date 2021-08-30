@@ -14,6 +14,7 @@ class Vega
     public static function new(): Engine
     {
         $vega = new Engine();
+        $vega->mode(Engine::FAST_MODE);
         $benchmark = new Benchmark();
         $vega->handle('/', [$benchmark, 'index'])->methods('GET');
         $vega->handle('/user', [$benchmark, 'create'])->methods('POST');
