@@ -259,6 +259,23 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
+    - name: kemal
+      commands:
+      - cd crystal/kemal && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f crystal/kemal/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: crystal/kemal
     - name: spider-gazelle
       commands:
       - cd crystal/spider-gazelle && make build  -f .Makefile  && cd -
@@ -310,23 +327,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: crystal/runcobo
-    - name: kemal
-      commands:
-      - cd crystal/kemal && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f crystal/kemal/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: crystal/kemal
     - name: amber
       commands:
       - cd crystal/amber && make build  -f .Makefile  && cd -
@@ -1341,6 +1341,40 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
+    - name: quarkus
+      commands:
+      - cd java/quarkus && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f java/quarkus/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: java/quarkus
+    - name: micronaut
+      commands:
+      - cd java/micronaut && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f java/micronaut/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: java/micronaut
     - name: vertx4web
       commands:
       - cd java/vertx4web && make build  -f .Makefile  && cd -
@@ -1409,23 +1443,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: java/restheart
-    - name: quarkus
-      commands:
-      - cd java/quarkus && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f java/quarkus/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: java/quarkus
     - name: jooby
       commands:
       - cd java/jooby && make build  -f .Makefile  && cd -
@@ -1528,23 +1545,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: java/rapidoid
-    - name: micronaut
-      commands:
-      - cd java/micronaut && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f java/micronaut/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: java/micronaut
     - name: light-4j
       commands:
       - cd java/light-4j && make build  -f .Makefile  && cd -
