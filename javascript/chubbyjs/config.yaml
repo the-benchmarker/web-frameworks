@@ -1,0 +1,12 @@
+framework:
+  github: chubbyjs/chubbyjs-framework
+  version: 1.0.0
+
+files:
+  - src
+  - tsconfig.json
+
+before_command:
+  - tsc
+
+command: pm2-runtime start dist/app.js -i $(nproc)
