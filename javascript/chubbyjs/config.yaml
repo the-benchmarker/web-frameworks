@@ -1,0 +1,6 @@
+framework:
+  github: chubbyjs/chubbyjs-framework
+  version: 1.0.0
+
+before_command:
+  - tsc
