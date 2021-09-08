@@ -1825,6 +1825,41 @@ blocks:
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
+- name: chubbyjs
+  dependencies:
+  - javascript
+  task:
+    env_vars:
+    - name: LANGUAGE
+      value: javascript
+    - name: FRAMEWORK
+      value: chubbyjs
+    prologue:
+      commands:
+      - cache restore $SEMAPHORE_GIT_SHA
+      - cache restore wrk
+      - sudo install wrk /usr/local/bin
+      - cache restore bin
+      - cache restore built-in
+      - sem-service start postgres
+      - createdb -U postgres -h 0.0.0.0 benchmark
+      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+      - bundle config path .cache
+      - bundle install
+      - bundle exec rake config
+    jobs:
+    - name: node
+      commands:
+      - make  -f javascript/chubbyjs/.Makefile build.node
+      - bundle exec rspec .spec
+      - make  -f javascript/chubbyjs/.Makefile collect.node
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: node
+    epilogue:
+      commands:
+      - docker logs `cat ${FRAMEWORK}/cid.txt`
 - name: restana
   dependencies:
   - javascript

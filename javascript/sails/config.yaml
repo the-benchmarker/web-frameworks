@@ -2,7 +2,9 @@ framework:
   website: sailsjs.com
   version: 1.4
 
-  files:
-    - .sailsrc
-    - "**/*.js"
-    - "**/*.json"
+files:
+  - config
+  - .sailsrc
+  - api
+  - app.js
+  - package.json
