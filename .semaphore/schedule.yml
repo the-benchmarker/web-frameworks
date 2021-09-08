@@ -1668,6 +1668,23 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
+    - name: nanoexpress
+      commands:
+      - cd javascript/nanoexpress && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f javascript/nanoexpress/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: javascript/nanoexpress
     - name: tinyhttp
       commands:
       - cd javascript/tinyhttp && make build  -f .Makefile  && cd -
@@ -1787,23 +1804,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: javascript/naturaljs-router
-    - name: nanoexpress
-      commands:
-      - cd javascript/nanoexpress && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f javascript/nanoexpress/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: javascript/nanoexpress
     - name: low-http-server
       commands:
       - cd javascript/low-http-server && make build  -f .Makefile  && cd -
