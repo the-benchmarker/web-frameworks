@@ -6,6 +6,7 @@ framework:
     - wsgiref
     - gunicorn
     - bjoern
+    - cheroot
 
 language:
   engines:

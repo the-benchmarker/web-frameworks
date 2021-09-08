@@ -2,4 +2,10 @@ framework:
   website: tornadoweb.org
   version: 6.1
 
-command: python /usr/src/app/server.py
+  engines:
+    - tornado
+
+language:
+  engines:
+    tornado:
+      command: python /usr/src/app/server.py

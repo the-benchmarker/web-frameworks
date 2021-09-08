@@ -5,3 +5,4 @@ framework:
   engines:
     - uvicorn
     - hypercorn
+    - daphne

@@ -2,22 +2,29 @@ framework:
   website: masoniteproject.com
   version: 3.0
 
-build_deps:
-  - libffi-dev
-  - libssl-dev
-  - curl
+  engines:
+    - gunicorn
+    - uwsgi
+    - waitress
 
-bootstrap:
-  - curl https://sh.rustup.rs > init.sh
-  - sh init.sh -y
-  - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
-  - rustup default nightly
+  build_deps:
+    - libffi-dev
+    - libssl-dev
+    - curl
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class meinheld.gmeinheld.MeinheldWorker \
-      wsgi
+  bootstrap:
+    - curl https://sh.rustup.rs > init.sh
+    - sh init.sh -y
+    - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
+    - rustup default nightly
+
+language:
+  engines:
+    gunicorn:
+      command: >
+        gunicorn --log-level warning  \
+          --bind 0.0.0.0:3000  \
+          --reuse-port  \
+          --workers $(nproc) \
+          --worker-class ${WORKER_CLASS} \
+          wsgi

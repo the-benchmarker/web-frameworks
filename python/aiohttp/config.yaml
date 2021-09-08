@@ -3,7 +3,7 @@ framework:
   version: 3.7
 
   engines:
-    - built-in
+    - aiohttp
     - gunicorn
     - uvloop
 
@@ -25,5 +25,5 @@ language:
           --workers $(nproc) \
           --worker-class ${WORKER_CLASS} \
           server:app
-    built-in:
+    aiohttp:
       command: python server.py 3000

@@ -8,9 +8,18 @@ language:
       build_deps:
         - gcc
       command: twistd --python=server.py --nodaemon
+    greenlet:
+      build_deps:
+        - gcc
+        - libev-dev
     gunicorn:
+      build_deps:
+        - gcc
       bootstrap:
         - pip install gunicorn
+        - pip install meinheld
+      environment:
+        WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker
       command: >
         gunicorn --log-level warning  \
           --bind 0.0.0.0:3000  \
