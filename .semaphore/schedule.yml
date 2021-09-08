@@ -25,11 +25,11 @@ blocks:
       - bundle install
       - cache store built-in .cache
       - bundle exec rake config
-- name: php
+- name: python
   dependencies:
   - setup
   run:
-    when: 'change_in([''/php/'',''/data.json''],{pipeline_file: ''ignore''})'
+    when: 'change_in([''/python/'',''/data.json''],{pipeline_file: ''ignore''})'
   task:
     prologue:
       commands:
@@ -48,15 +48,15 @@ blocks:
     - name: setup
       commands:
       - checkout
-- name: cubex
+- name: flask
   dependencies:
-  - php
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: php
+      value: python
     - name: FRAMEWORK
-      value: cubex
+      value: flask
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -71,1734 +71,63 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: workerman
+    - name: gunicorn
       commands:
-      - make  -f php/cubex/.Makefile build.workerman
+      - make  -f python/flask/.Makefile build.gunicorn
       - bundle exec rspec .spec
-      - make  -f php/cubex/.Makefile collect.workerman
+      - make  -f python/flask/.Makefile collect.gunicorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: workerman
-    - name: php-fpm
+        value: gunicorn
+    - name: greenlet
       commands:
-      - make  -f php/cubex/.Makefile build.php-fpm
+      - make  -f python/flask/.Makefile build.greenlet
       - bundle exec rspec .spec
-      - make  -f php/cubex/.Makefile collect.php-fpm
+      - make  -f python/flask/.Makefile collect.greenlet
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: swoole
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: swoole
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/swoole/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/swoole/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: swoft
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: swoft
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/swoft/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/swoft/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: simps
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: simps
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/simps/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/simps/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: nano
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: nano
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/nano/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/nano/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: codeigniter4
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: codeigniter4
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/codeigniter4/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/codeigniter4/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: yii
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: yii
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/yii/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/yii/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/yii/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/yii/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: phalcon
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: phalcon
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/phalcon/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/phalcon/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: ice
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: ice
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/ice/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/ice/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: spiral
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: spiral
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: road-runner
-      commands:
-      - make  -f php/spiral/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/spiral/.Makefile collect.road-runner
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: road-runner
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: mark
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: mark
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/mark/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/mark/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: workerman
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: workerman
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/workerman/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/workerman/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: nette
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: nette
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/nette/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/nette/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: webman
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: webman
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/webman/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/webman/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: driftphp
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: driftphp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/driftphp/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/driftphp/.Makefile collect.reactphp
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: reactphp
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: sw-fw-less
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: sw-fw-less
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/sw-fw-less/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/sw-fw-less/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: laminas
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: laminas
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/laminas/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/laminas/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: chubbyphp
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: chubbyphp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    - name: workerman
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    - name: road-runner
-      commands:
-      - make  -f php/chubbyphp/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/chubbyphp/.Makefile collect.road-runner
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: road-runner
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: imi
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: imi
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/imi/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/imi/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    - name: workerman
-      commands:
-      - make  -f php/imi/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/imi/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: unic
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: unic
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/unic/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/unic/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: basicphp
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: basicphp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/basicphp/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/basicphp/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: comet
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: comet
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: workerman
-      commands:
-      - make  -f php/comet/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/comet/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: sunrise-router
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: sunrise-router
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/sunrise-router/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: road-runner
-      commands:
-      - make  -f php/sunrise-router/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router/.Makefile collect.road-runner
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: road-runner
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: ubiquity
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: ubiquity
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/ubiquity/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/ubiquity/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: one
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: one
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/one/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/one/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/one/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/one/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: mezzio
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: mezzio
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/mezzio/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/mezzio/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: lumen
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: lumen
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/lumen/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/lumen/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/lumen/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/lumen/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: antidot
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: antidot
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: reactphp
-      commands:
-      - make  -f php/antidot/.Makefile build.reactphp
-      - bundle exec rspec .spec
-      - make  -f php/antidot/.Makefile collect.reactphp
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: reactphp
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: siler
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: siler
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/siler/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/siler/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/siler/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/siler/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: fastsitephp
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: fastsitephp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/fastsitephp/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/fastsitephp/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: bearframework
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: bearframework
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/bearframework/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/bearframework/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: hamlet
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: hamlet
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/hamlet/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/hamlet/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: swoole-coroutine
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: swoole-coroutine
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/swoole-coroutine/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/swoole-coroutine/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: symfony
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: symfony
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/symfony/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/symfony/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: mixphp
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: mixphp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/mixphp/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/mixphp/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    - name: php-fpm
-      commands:
-      - make  -f php/mixphp/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/mixphp/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: workerman
-      commands:
-      - make  -f php/mixphp/.Makefile build.workerman
-      - bundle exec rspec .spec
-      - make  -f php/mixphp/.Makefile collect.workerman
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: workerman
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: slim
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: slim
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/slim/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/slim/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    - name: road-runner
-      commands:
-      - make  -f php/slim/.Makefile build.road-runner
-      - bundle exec rspec .spec
-      - make  -f php/slim/.Makefile collect.road-runner
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: road-runner
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: sunrise-router-annotations
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: sunrise-router-annotations
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/sunrise-router-annotations/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/sunrise-router-annotations/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: fatfree
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: fatfree
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/fatfree/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/fatfree/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: laravel
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: laravel
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: php-fpm
-      commands:
-      - make  -f php/laravel/.Makefile build.php-fpm
-      - bundle exec rspec .spec
-      - make  -f php/laravel/.Makefile collect.php-fpm
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: php-fpm
-    - name: swoole
-      commands:
-      - make  -f php/laravel/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/laravel/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: hyperf
-  dependencies:
-  - php
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: php
-    - name: FRAMEWORK
-      value: hyperf
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: swoole
-      commands:
-      - make  -f php/hyperf/.Makefile build.swoole
-      - bundle exec rspec .spec
-      - make  -f php/hyperf/.Makefile collect.swoole
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: swoole
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: javascript
-  dependencies:
-  - setup
-  run:
-    when: 'change_in([''/javascript/'',''/data.json''],{pipeline_file: ''ignore''})'
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: moleculer
-  dependencies:
-  - javascript
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: moleculer
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
-      commands:
-      - make  -f javascript/moleculer/.Makefile build.node
-      - bundle exec rspec .spec
-      - make  -f javascript/moleculer/.Makefile collect.node
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: node
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: polka
-  dependencies:
-  - javascript
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: polka
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
-      commands:
-      - make  -f javascript/polka/.Makefile build.node
-      - bundle exec rspec .spec
-      - make  -f javascript/polka/.Makefile collect.node
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: node
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: foxify
-  dependencies:
-  - javascript
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: foxify
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
-      commands:
-      - make  -f javascript/foxify/.Makefile build.node
-      - bundle exec rspec .spec
-      - make  -f javascript/foxify/.Makefile collect.node
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: node
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: 0http
-  dependencies:
-  - javascript
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: 0http
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
+        value: greenlet
+    - name: uwsgi
       commands:
-      - make  -f javascript/0http/.Makefile build.node
+      - make  -f python/flask/.Makefile build.uwsgi
       - bundle exec rspec .spec
-      - make  -f javascript/0http/.Makefile collect.node
+      - make  -f python/flask/.Makefile collect.uwsgi
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
-    - name: uwebsockets
+        value: uwsgi
+    - name: twisted
       commands:
-      - make  -f javascript/0http/.Makefile build.uwebsockets
+      - make  -f python/flask/.Makefile build.twisted
       - bundle exec rspec .spec
-      - make  -f javascript/0http/.Makefile collect.uwebsockets
+      - make  -f python/flask/.Makefile collect.twisted
       - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwebsockets
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: sifrr
-  dependencies:
-  - javascript
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: sifrr
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uwebsockets
+      env_vars:
+      - name: ENGINE
+        value: twisted
+    - name: waitress
       commands:
-      - make  -f javascript/sifrr/.Makefile build.uwebsockets
+      - make  -f python/flask/.Makefile build.waitress
       - bundle exec rspec .spec
-      - make  -f javascript/sifrr/.Makefile collect.uwebsockets
+      - make  -f python/flask/.Makefile collect.waitress
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: uwebsockets
+        value: waitress
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: nestjs-fastify
+- name: aiohttp
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: nestjs-fastify
+      value: aiohttp
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -1813,27 +142,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: aiohttp
+      commands:
+      - make  -f python/aiohttp/.Makefile build.aiohttp
+      - bundle exec rspec .spec
+      - make  -f python/aiohttp/.Makefile collect.aiohttp
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: aiohttp
+    - name: gunicorn
+      commands:
+      - make  -f python/aiohttp/.Makefile build.gunicorn
+      - bundle exec rspec .spec
+      - make  -f python/aiohttp/.Makefile collect.gunicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: gunicorn
+    - name: uvloop
       commands:
-      - make  -f javascript/nestjs-fastify/.Makefile build.node
+      - make  -f python/aiohttp/.Makefile build.uvloop
       - bundle exec rspec .spec
-      - make  -f javascript/nestjs-fastify/.Makefile collect.node
+      - make  -f python/aiohttp/.Makefile collect.uvloop
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: uvloop
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: chubbyjs
+- name: apidaora
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: chubbyjs
+      value: apidaora
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -1848,27 +195,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: uvicorn
+      commands:
+      - make  -f python/apidaora/.Makefile build.uvicorn
+      - bundle exec rspec .spec
+      - make  -f python/apidaora/.Makefile collect.uvicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uvicorn
+    - name: hypercorn
+      commands:
+      - make  -f python/apidaora/.Makefile build.hypercorn
+      - bundle exec rspec .spec
+      - make  -f python/apidaora/.Makefile collect.hypercorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: hypercorn
+    - name: daphne
       commands:
-      - make  -f javascript/chubbyjs/.Makefile build.node
+      - make  -f python/apidaora/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f javascript/chubbyjs/.Makefile collect.node
+      - make  -f python/apidaora/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: restana
+- name: masonite
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: restana
+      value: masonite
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -1883,27 +248,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: gunicorn
+      commands:
+      - make  -f python/masonite/.Makefile build.gunicorn
+      - bundle exec rspec .spec
+      - make  -f python/masonite/.Makefile collect.gunicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: gunicorn
+    - name: uwsgi
+      commands:
+      - make  -f python/masonite/.Makefile build.uwsgi
+      - bundle exec rspec .spec
+      - make  -f python/masonite/.Makefile collect.uwsgi
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uwsgi
+    - name: waitress
       commands:
-      - make  -f javascript/restana/.Makefile build.node
+      - make  -f python/masonite/.Makefile build.waitress
       - bundle exec rspec .spec
-      - make  -f javascript/restana/.Makefile collect.node
+      - make  -f python/masonite/.Makefile collect.waitress
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: waitress
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: express
+- name: clastic
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: express
+      value: clastic
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -1918,27 +301,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: gunicorn
       commands:
-      - make  -f javascript/express/.Makefile build.node
+      - make  -f python/clastic/.Makefile build.gunicorn
       - bundle exec rspec .spec
-      - make  -f javascript/express/.Makefile collect.node
+      - make  -f python/clastic/.Makefile collect.gunicorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: gunicorn
+    - name: uwsgi
+      commands:
+      - make  -f python/clastic/.Makefile build.uwsgi
+      - bundle exec rspec .spec
+      - make  -f python/clastic/.Makefile collect.uwsgi
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uwsgi
+    - name: waitress
+      commands:
+      - make  -f python/clastic/.Makefile build.waitress
+      - bundle exec rspec .spec
+      - make  -f python/clastic/.Makefile collect.waitress
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: waitress
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: hapi
+- name: guillotina
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: hapi
+      value: guillotina
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -1953,27 +354,36 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: uvicorn
+      commands:
+      - make  -f python/guillotina/.Makefile build.uvicorn
+      - bundle exec rspec .spec
+      - make  -f python/guillotina/.Makefile collect.uvicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uvicorn
+    - name: hypercorn
       commands:
-      - make  -f javascript/hapi/.Makefile build.node
+      - make  -f python/guillotina/.Makefile build.hypercorn
       - bundle exec rspec .spec
-      - make  -f javascript/hapi/.Makefile collect.node
+      - make  -f python/guillotina/.Makefile collect.hypercorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: hypercorn
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: muneem
+- name: index.py
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: muneem
+      value: index.py
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -1988,27 +398,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: uvicorn
+      commands:
+      - make  -f python/index.py/.Makefile build.uvicorn
+      - bundle exec rspec .spec
+      - make  -f python/index.py/.Makefile collect.uvicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uvicorn
+    - name: hypercorn
+      commands:
+      - make  -f python/index.py/.Makefile build.hypercorn
+      - bundle exec rspec .spec
+      - make  -f python/index.py/.Makefile collect.hypercorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: hypercorn
+    - name: daphne
       commands:
-      - make  -f javascript/muneem/.Makefile build.node
+      - make  -f python/index.py/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f javascript/muneem/.Makefile collect.node
+      - make  -f python/index.py/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: nanoexpress
+- name: quart
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: nanoexpress
+      value: quart
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2023,27 +451,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: uwebsockets
+    - name: hypercorn
+      commands:
+      - make  -f python/quart/.Makefile build.hypercorn
+      - bundle exec rspec .spec
+      - make  -f python/quart/.Makefile collect.hypercorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: hypercorn
+    - name: uvicorn
+      commands:
+      - make  -f python/quart/.Makefile build.uvicorn
+      - bundle exec rspec .spec
+      - make  -f python/quart/.Makefile collect.uvicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uvicorn
+    - name: daphne
       commands:
-      - make  -f javascript/nanoexpress/.Makefile build.uwebsockets
+      - make  -f python/quart/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f javascript/nanoexpress/.Makefile collect.uwebsockets
+      - make  -f python/quart/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: uwebsockets
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: fyrejet
+- name: pyramid
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: fyrejet
+      value: pyramid
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2058,71 +504,63 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: gunicorn
       commands:
-      - make  -f javascript/fyrejet/.Makefile build.node
+      - make  -f python/pyramid/.Makefile build.gunicorn
       - bundle exec rspec .spec
-      - make  -f javascript/fyrejet/.Makefile collect.node
+      - make  -f python/pyramid/.Makefile collect.gunicorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
-    - name: uwebsockets
+        value: gunicorn
+    - name: hypercorn
       commands:
-      - make  -f javascript/fyrejet/.Makefile build.uwebsockets
+      - make  -f python/pyramid/.Makefile build.hypercorn
       - bundle exec rspec .spec
-      - make  -f javascript/fyrejet/.Makefile collect.uwebsockets
+      - make  -f python/pyramid/.Makefile collect.hypercorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: uwebsockets
-    epilogue:
+        value: hypercorn
+    - name: uvicorn
       commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: feathersjs
-  dependencies:
-  - javascript
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: javascript
-    - name: FRAMEWORK
-      value: feathersjs
-    prologue:
+      - make  -f python/pyramid/.Makefile build.uvicorn
+      - bundle exec rspec .spec
+      - make  -f python/pyramid/.Makefile collect.uvicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uvicorn
+    - name: daphne
       commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: node
+      - make  -f python/pyramid/.Makefile build.daphne
+      - bundle exec rspec .spec
+      - make  -f python/pyramid/.Makefile collect.daphne
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: daphne
+    - name: uwsgi
       commands:
-      - make  -f javascript/feathersjs/.Makefile build.node
+      - make  -f python/pyramid/.Makefile build.uwsgi
       - bundle exec rspec .spec
-      - make  -f javascript/feathersjs/.Makefile collect.node
+      - make  -f python/pyramid/.Makefile collect.uwsgi
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: uwsgi
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: iotjs-express
+- name: starlette
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: iotjs-express
+      value: starlette
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2137,27 +575,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: uvicorn
+      commands:
+      - make  -f python/starlette/.Makefile build.uvicorn
+      - bundle exec rspec .spec
+      - make  -f python/starlette/.Makefile collect.uvicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uvicorn
+    - name: hypercorn
+      commands:
+      - make  -f python/starlette/.Makefile build.hypercorn
+      - bundle exec rspec .spec
+      - make  -f python/starlette/.Makefile collect.hypercorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: hypercorn
+    - name: daphne
       commands:
-      - make  -f javascript/iotjs-express/.Makefile build.node
+      - make  -f python/starlette/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f javascript/iotjs-express/.Makefile collect.node
+      - make  -f python/starlette/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: nestjs-express
+- name: cherrypy
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: nestjs-express
+      value: cherrypy
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2172,27 +628,72 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: cheroot
+      commands:
+      - make  -f python/cherrypy/.Makefile build.cheroot
+      - bundle exec rspec .spec
+      - make  -f python/cherrypy/.Makefile collect.cheroot
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: cheroot
+    - name: gunicorn
+      commands:
+      - make  -f python/cherrypy/.Makefile build.gunicorn
+      - bundle exec rspec .spec
+      - make  -f python/cherrypy/.Makefile collect.gunicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: gunicorn
+    - name: tornado
+      commands:
+      - make  -f python/cherrypy/.Makefile build.tornado
+      - bundle exec rspec .spec
+      - make  -f python/cherrypy/.Makefile collect.tornado
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: tornado
+    - name: twisted
+      commands:
+      - make  -f python/cherrypy/.Makefile build.twisted
+      - bundle exec rspec .spec
+      - make  -f python/cherrypy/.Makefile collect.twisted
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: twisted
+    - name: uwsgi
+      commands:
+      - make  -f python/cherrypy/.Makefile build.uwsgi
+      - bundle exec rspec .spec
+      - make  -f python/cherrypy/.Makefile collect.uwsgi
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uwsgi
+    - name: waitress
       commands:
-      - make  -f javascript/nestjs-express/.Makefile build.node
+      - make  -f python/cherrypy/.Makefile build.waitress
       - bundle exec rspec .spec
-      - make  -f javascript/nestjs-express/.Makefile collect.node
+      - make  -f python/cherrypy/.Makefile collect.waitress
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: waitress
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: restify
+- name: emmett
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: restify
+      value: emmett
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2207,27 +708,36 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: uvicorn
+      commands:
+      - make  -f python/emmett/.Makefile build.uvicorn
+      - bundle exec rspec .spec
+      - make  -f python/emmett/.Makefile collect.uvicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uvicorn
+    - name: gunicorn
       commands:
-      - make  -f javascript/restify/.Makefile build.node
+      - make  -f python/emmett/.Makefile build.gunicorn
       - bundle exec rspec .spec
-      - make  -f javascript/restify/.Makefile collect.node
+      - make  -f python/emmett/.Makefile collect.gunicorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: gunicorn
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: polkadot
+- name: hug
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: polkadot
+      value: hug
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2242,27 +752,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: uwsgi
+      commands:
+      - make  -f python/hug/.Makefile build.uwsgi
+      - bundle exec rspec .spec
+      - make  -f python/hug/.Makefile collect.uwsgi
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uwsgi
+    - name: gunicorn
+      commands:
+      - make  -f python/hug/.Makefile build.gunicorn
+      - bundle exec rspec .spec
+      - make  -f python/hug/.Makefile collect.gunicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: gunicorn
+    - name: waitress
       commands:
-      - make  -f javascript/polkadot/.Makefile build.node
+      - make  -f python/hug/.Makefile build.waitress
       - bundle exec rspec .spec
-      - make  -f javascript/polkadot/.Makefile collect.node
+      - make  -f python/hug/.Makefile collect.waitress
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: waitress
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: rayo
+- name: blacksheep
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: rayo
+      value: blacksheep
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2277,27 +805,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: uvicorn
+      commands:
+      - make  -f python/blacksheep/.Makefile build.uvicorn
+      - bundle exec rspec .spec
+      - make  -f python/blacksheep/.Makefile collect.uvicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uvicorn
+    - name: hypercorn
+      commands:
+      - make  -f python/blacksheep/.Makefile build.hypercorn
+      - bundle exec rspec .spec
+      - make  -f python/blacksheep/.Makefile collect.hypercorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: hypercorn
+    - name: daphne
       commands:
-      - make  -f javascript/rayo/.Makefile build.node
+      - make  -f python/blacksheep/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f javascript/rayo/.Makefile collect.node
+      - make  -f python/blacksheep/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: naturaljs-router
+- name: baize-wsgi
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: naturaljs-router
+      value: baize-wsgi
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2312,27 +858,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: uwebsockets
+    - name: gunicorn
+      commands:
+      - make  -f python/baize-wsgi/.Makefile build.gunicorn
+      - bundle exec rspec .spec
+      - make  -f python/baize-wsgi/.Makefile collect.gunicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: gunicorn
+    - name: uwsgi
       commands:
-      - make  -f javascript/naturaljs-router/.Makefile build.uwebsockets
+      - make  -f python/baize-wsgi/.Makefile build.uwsgi
       - bundle exec rspec .spec
-      - make  -f javascript/naturaljs-router/.Makefile collect.uwebsockets
+      - make  -f python/baize-wsgi/.Makefile collect.uwsgi
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: uwebsockets
+        value: uwsgi
+    - name: waitress
+      commands:
+      - make  -f python/baize-wsgi/.Makefile build.waitress
+      - bundle exec rspec .spec
+      - make  -f python/baize-wsgi/.Makefile collect.waitress
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: waitress
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: tinyhttp
+- name: molten
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: tinyhttp
+      value: molten
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2347,27 +911,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: gunicorn
+      commands:
+      - make  -f python/molten/.Makefile build.gunicorn
+      - bundle exec rspec .spec
+      - make  -f python/molten/.Makefile collect.gunicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: gunicorn
+    - name: uwsgi
+      commands:
+      - make  -f python/molten/.Makefile build.uwsgi
+      - bundle exec rspec .spec
+      - make  -f python/molten/.Makefile collect.uwsgi
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uwsgi
+    - name: waitress
       commands:
-      - make  -f javascript/tinyhttp/.Makefile build.node
+      - make  -f python/molten/.Makefile build.waitress
       - bundle exec rspec .spec
-      - make  -f javascript/tinyhttp/.Makefile collect.node
+      - make  -f python/molten/.Makefile collect.waitress
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: waitress
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: sails
+- name: tornado
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: sails
+      value: tornado
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2382,27 +964,27 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: tornado
       commands:
-      - make  -f javascript/sails/.Makefile build.node
+      - make  -f python/tornado/.Makefile build.tornado
       - bundle exec rspec .spec
-      - make  -f javascript/sails/.Makefile collect.node
+      - make  -f python/tornado/.Makefile collect.tornado
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: tornado
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: fastify
+- name: tonberry
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: fastify
+      value: tonberry
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2417,27 +999,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: uvicorn
+      commands:
+      - make  -f python/tonberry/.Makefile build.uvicorn
+      - bundle exec rspec .spec
+      - make  -f python/tonberry/.Makefile collect.uvicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uvicorn
+    - name: hypercorn
+      commands:
+      - make  -f python/tonberry/.Makefile build.hypercorn
+      - bundle exec rspec .spec
+      - make  -f python/tonberry/.Makefile collect.hypercorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: hypercorn
+    - name: daphne
       commands:
-      - make  -f javascript/fastify/.Makefile build.node
+      - make  -f python/tonberry/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f javascript/fastify/.Makefile collect.node
+      - make  -f python/tonberry/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: koa
+- name: nameko
   dependencies:
-  - javascript
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: javascript
+      value: python
     - name: FRAMEWORK
-      value: koa
+      value: nameko
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2452,50 +1052,27 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: node
+    - name: nameko
       commands:
-      - make  -f javascript/koa/.Makefile build.node
+      - make  -f python/nameko/.Makefile build.nameko
       - bundle exec rspec .spec
-      - make  -f javascript/koa/.Makefile collect.node
+      - make  -f python/nameko/.Makefile collect.nameko
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: node
+        value: nameko
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: ruby
-  dependencies:
-  - setup
-  run:
-    when: 'change_in([''/ruby/'',''/data.json''],{pipeline_file: ''ignore''})'
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: syro
+- name: fastapi
   dependencies:
-  - ruby
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: ruby
+      value: python
     - name: FRAMEWORK
-      value: syro
+      value: fastapi
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2510,45 +1087,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name: uvicorn
       commands:
-      - make  -f ruby/syro/.Makefile build.puma
+      - make  -f python/fastapi/.Makefile build.uvicorn
       - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.puma
+      - make  -f python/fastapi/.Makefile collect.uvicorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: puma
-    - name: iodine
+        value: uvicorn
+    - name: hypercorn
       commands:
-      - make  -f ruby/syro/.Makefile build.iodine
+      - make  -f python/fastapi/.Makefile build.hypercorn
       - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.iodine
+      - make  -f python/fastapi/.Makefile collect.hypercorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: iodine
-    - name: falcon
+        value: hypercorn
+    - name: daphne
       commands:
-      - make  -f ruby/syro/.Makefile build.falcon
+      - make  -f python/fastapi/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f ruby/syro/.Makefile collect.falcon
+      - make  -f python/fastapi/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: falcon
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: sinatra
+- name: klein
   dependencies:
-  - ruby
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: ruby
+      value: python
     - name: FRAMEWORK
-      value: sinatra
+      value: klein
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2563,45 +1140,27 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
-      commands:
-      - make  -f ruby/sinatra/.Makefile build.puma
-      - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.puma
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: puma
-    - name: iodine
-      commands:
-      - make  -f ruby/sinatra/.Makefile build.iodine
-      - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.iodine
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: iodine
-    - name: falcon
+    - name: twisted
       commands:
-      - make  -f ruby/sinatra/.Makefile build.falcon
+      - make  -f python/klein/.Makefile build.twisted
       - bundle exec rspec .spec
-      - make  -f ruby/sinatra/.Makefile collect.falcon
+      - make  -f python/klein/.Makefile collect.twisted
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: falcon
+        value: twisted
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: rack_app
+- name: sanic
   dependencies:
-  - ruby
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: ruby
+      value: python
     - name: FRAMEWORK
-      value: rack_app
+      value: sanic
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2616,45 +1175,63 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name: sanic
+      commands:
+      - make  -f python/sanic/.Makefile build.sanic
+      - bundle exec rspec .spec
+      - make  -f python/sanic/.Makefile collect.sanic
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: sanic
+    - name: gunicorn
+      commands:
+      - make  -f python/sanic/.Makefile build.gunicorn
+      - bundle exec rspec .spec
+      - make  -f python/sanic/.Makefile collect.gunicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: gunicorn
+    - name: uvicorn
       commands:
-      - make  -f ruby/rack_app/.Makefile build.puma
+      - make  -f python/sanic/.Makefile build.uvicorn
       - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.puma
+      - make  -f python/sanic/.Makefile collect.uvicorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: puma
-    - name: iodine
+        value: uvicorn
+    - name: hypercorn
       commands:
-      - make  -f ruby/rack_app/.Makefile build.iodine
+      - make  -f python/sanic/.Makefile build.hypercorn
       - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.iodine
+      - make  -f python/sanic/.Makefile collect.hypercorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: iodine
-    - name: falcon
+        value: hypercorn
+    - name: daphne
       commands:
-      - make  -f ruby/rack_app/.Makefile build.falcon
+      - make  -f python/sanic/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f ruby/rack_app/.Makefile collect.falcon
+      - make  -f python/sanic/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: falcon
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: camping
+- name: responder
   dependencies:
-  - ruby
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: ruby
+      value: python
     - name: FRAMEWORK
-      value: camping
+      value: responder
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2669,45 +1246,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name: hypercorn
       commands:
-      - make  -f ruby/camping/.Makefile build.puma
+      - make  -f python/responder/.Makefile build.hypercorn
       - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.puma
+      - make  -f python/responder/.Makefile collect.hypercorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: puma
-    - name: iodine
+        value: hypercorn
+    - name: uvicorn
       commands:
-      - make  -f ruby/camping/.Makefile build.iodine
+      - make  -f python/responder/.Makefile build.uvicorn
       - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.iodine
+      - make  -f python/responder/.Makefile collect.uvicorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: iodine
-    - name: falcon
+        value: uvicorn
+    - name: daphne
       commands:
-      - make  -f ruby/camping/.Makefile build.falcon
+      - make  -f python/responder/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f ruby/camping/.Makefile collect.falcon
+      - make  -f python/responder/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: falcon
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: roda
+- name: asgineer
   dependencies:
-  - ruby
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: ruby
+      value: python
     - name: FRAMEWORK
-      value: roda
+      value: asgineer
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2722,45 +1299,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name: uvicorn
       commands:
-      - make  -f ruby/roda/.Makefile build.puma
+      - make  -f python/asgineer/.Makefile build.uvicorn
       - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.puma
+      - make  -f python/asgineer/.Makefile collect.uvicorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: puma
-    - name: iodine
+        value: uvicorn
+    - name: hypercorn
       commands:
-      - make  -f ruby/roda/.Makefile build.iodine
+      - make  -f python/asgineer/.Makefile build.hypercorn
       - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.iodine
+      - make  -f python/asgineer/.Makefile collect.hypercorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: iodine
-    - name: falcon
+        value: hypercorn
+    - name: daphne
       commands:
-      - make  -f ruby/roda/.Makefile build.falcon
+      - make  -f python/asgineer/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f ruby/roda/.Makefile collect.falcon
+      - make  -f python/asgineer/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: falcon
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: agoo
+- name: django-ninja
   dependencies:
-  - ruby
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: ruby
+      value: python
     - name: FRAMEWORK
-      value: agoo
+      value: django-ninja
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2775,27 +1352,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: agoo
+    - name: uvicorn
+      commands:
+      - make  -f python/django-ninja/.Makefile build.uvicorn
+      - bundle exec rspec .spec
+      - make  -f python/django-ninja/.Makefile collect.uvicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uvicorn
+    - name: hypercorn
+      commands:
+      - make  -f python/django-ninja/.Makefile build.hypercorn
+      - bundle exec rspec .spec
+      - make  -f python/django-ninja/.Makefile collect.hypercorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: hypercorn
+    - name: daphne
       commands:
-      - make  -f ruby/agoo/.Makefile build.agoo
+      - make  -f python/django-ninja/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f ruby/agoo/.Makefile collect.agoo
+      - make  -f python/django-ninja/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: agoo
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: rack-routing
+- name: baize-asgi
   dependencies:
-  - ruby
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: ruby
+      value: python
     - name: FRAMEWORK
-      value: rack-routing
+      value: baize-asgi
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2810,45 +1405,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name: uvicorn
       commands:
-      - make  -f ruby/rack-routing/.Makefile build.puma
+      - make  -f python/baize-asgi/.Makefile build.uvicorn
       - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.puma
+      - make  -f python/baize-asgi/.Makefile collect.uvicorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: puma
-    - name: iodine
+        value: uvicorn
+    - name: hypercorn
       commands:
-      - make  -f ruby/rack-routing/.Makefile build.iodine
+      - make  -f python/baize-asgi/.Makefile build.hypercorn
       - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.iodine
+      - make  -f python/baize-asgi/.Makefile collect.hypercorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: iodine
-    - name: falcon
+        value: hypercorn
+    - name: daphne
       commands:
-      - make  -f ruby/rack-routing/.Makefile build.falcon
+      - make  -f python/baize-asgi/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f ruby/rack-routing/.Makefile collect.falcon
+      - make  -f python/baize-asgi/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: falcon
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: hanami-api
+- name: cyclone
   dependencies:
-  - ruby
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: ruby
+      value: python
     - name: FRAMEWORK
-      value: hanami-api
+      value: cyclone
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2863,45 +1458,27 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
-      commands:
-      - make  -f ruby/hanami-api/.Makefile build.puma
-      - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.puma
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: puma
-    - name: iodine
-      commands:
-      - make  -f ruby/hanami-api/.Makefile build.iodine
-      - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.iodine
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: iodine
-    - name: falcon
+    - name: twisted
       commands:
-      - make  -f ruby/hanami-api/.Makefile build.falcon
+      - make  -f python/cyclone/.Makefile build.twisted
       - bundle exec rspec .spec
-      - make  -f ruby/hanami-api/.Makefile collect.falcon
+      - make  -f python/cyclone/.Makefile collect.twisted
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: falcon
+        value: twisted
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: grape
+- name: django
   dependencies:
-  - ruby
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: ruby
+      value: python
     - name: FRAMEWORK
-      value: grape
+      value: django
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2916,45 +1493,63 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name: gunicorn
+      commands:
+      - make  -f python/django/.Makefile build.gunicorn
+      - bundle exec rspec .spec
+      - make  -f python/django/.Makefile collect.gunicorn
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: gunicorn
+    - name: uwsgi
+      commands:
+      - make  -f python/django/.Makefile build.uwsgi
+      - bundle exec rspec .spec
+      - make  -f python/django/.Makefile collect.uwsgi
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: uwsgi
+    - name: uvicorn
       commands:
-      - make  -f ruby/grape/.Makefile build.puma
+      - make  -f python/django/.Makefile build.uvicorn
       - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.puma
+      - make  -f python/django/.Makefile collect.uvicorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: puma
-    - name: iodine
+        value: uvicorn
+    - name: hypercorn
       commands:
-      - make  -f ruby/grape/.Makefile build.iodine
+      - make  -f python/django/.Makefile build.hypercorn
       - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.iodine
+      - make  -f python/django/.Makefile collect.hypercorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: iodine
-    - name: falcon
+        value: hypercorn
+    - name: daphne
       commands:
-      - make  -f ruby/grape/.Makefile build.falcon
+      - make  -f python/django/.Makefile build.daphne
       - bundle exec rspec .spec
-      - make  -f ruby/grape/.Makefile collect.falcon
+      - make  -f python/django/.Makefile collect.daphne
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: falcon
+        value: daphne
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: cuba
+- name: falcon
   dependencies:
-  - ruby
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: ruby
+      value: python
     - name: FRAMEWORK
-      value: cuba
+      value: falcon
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -2969,45 +1564,45 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name: uwsgi
       commands:
-      - make  -f ruby/cuba/.Makefile build.puma
+      - make  -f python/falcon/.Makefile build.uwsgi
       - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.puma
+      - make  -f python/falcon/.Makefile collect.uwsgi
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: puma
-    - name: iodine
+        value: uwsgi
+    - name: waitress
       commands:
-      - make  -f ruby/cuba/.Makefile build.iodine
+      - make  -f python/falcon/.Makefile build.waitress
       - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.iodine
+      - make  -f python/falcon/.Makefile collect.waitress
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: iodine
-    - name: falcon
+        value: waitress
+    - name: gunicorn
       commands:
-      - make  -f ruby/cuba/.Makefile build.falcon
+      - make  -f python/falcon/.Makefile build.gunicorn
       - bundle exec rspec .spec
-      - make  -f ruby/cuba/.Makefile collect.falcon
+      - make  -f python/falcon/.Makefile collect.gunicorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: falcon
+        value: gunicorn
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: rails
+- name: bottle
   dependencies:
-  - ruby
+  - python
   task:
     env_vars:
     - name: LANGUAGE
-      value: ruby
+      value: python
     - name: FRAMEWORK
-      value: rails
+      value: bottle
     prologue:
       commands:
       - cache restore $SEMAPHORE_GIT_SHA
@@ -3022,33 +1617,42 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: puma
+    - name: wsgiref
+      commands:
+      - make  -f python/bottle/.Makefile build.wsgiref
+      - bundle exec rspec .spec
+      - make  -f python/bottle/.Makefile collect.wsgiref
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: ENGINE
+        value: wsgiref
+    - name: gunicorn
       commands:
-      - make  -f ruby/rails/.Makefile build.puma
+      - make  -f python/bottle/.Makefile build.gunicorn
       - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.puma
+      - make  -f python/bottle/.Makefile collect.gunicorn
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: puma
-    - name: iodine
+        value: gunicorn
+    - name: bjoern
       commands:
-      - make  -f ruby/rails/.Makefile build.iodine
+      - make  -f python/bottle/.Makefile build.bjoern
       - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.iodine
+      - make  -f python/bottle/.Makefile collect.bjoern
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: iodine
-    - name: falcon
+        value: bjoern
+    - name: cheroot
       commands:
-      - make  -f ruby/rails/.Makefile build.falcon
+      - make  -f python/bottle/.Makefile build.cheroot
       - bundle exec rspec .spec
-      - make  -f ruby/rails/.Makefile collect.falcon
+      - make  -f python/bottle/.Makefile collect.cheroot
       - bundle exec rake db:raw_export
       env_vars:
       - name: ENGINE
-        value: falcon
+        value: cheroot
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`

@@ -2,15 +2,16 @@ framework:
   website: emmett.sh
   version: 2.3
 
-build_deps:
-  - libffi-dev
-  - libssl-dev
+  engines:
+    - uvicorn
+    - gunicorn
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class emmett.asgi.workers.EmmettWorker  \
-      server:app
+  build_deps:
+    - libffi-dev
+    - libssl-dev
+
+language:
+  engines:
+    gunicorn:
+      environment:
+        WORKER_CLASS: emmett.asgi.workers.EmmettWorker
