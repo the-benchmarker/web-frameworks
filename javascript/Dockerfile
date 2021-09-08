@@ -11,6 +11,9 @@ WORKDIR /usr/src/app
 {{#files}}
   COPY {{{.}}} {{{.}}}
 {{/files}}
+{{^files}}
+  COPY app.js package.json ./
+{{/files}}
 
 ENV NODE_ENV production
 
