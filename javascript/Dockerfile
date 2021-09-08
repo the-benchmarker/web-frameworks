@@ -31,9 +31,6 @@ RUN npm install
   RUN {{{.}}}
 {{/before_command}}
 
-
-
-
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
