@@ -8,11 +8,11 @@ RUN npm -g install pm2
 
 WORKDIR /usr/src/app
 
-COPY app.js package.json ./
-
 {{#files}}
   COPY {{{.}}} {{{.}}}
 {{/files}}
+
+ENV NODE_ENV production
 
 {{#bin_deps}}
   RUN apk add {{{.}}}
@@ -29,7 +29,7 @@ RUN npm install
 {{/before_command}}
 
 
-ENV NODE_ENV production
+
 
 {{#environment}}
   ENV {{{.}}}
