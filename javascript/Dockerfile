@@ -2,9 +2,16 @@ FROM node:14.17-alpine
 
 WORKDIR /usr/src/app
 
-RUN apk add build-base
+{{#files}}
+  COPY {{{.}}} {{{.}}}
+{{/files}}
+{{^files}}
+  COPY app.js package.json ./
+{{/files}}
 
-{{#deps}}
+ENV NODE_ENV production
+
+{{#bin_deps}}
   RUN apk add {{{.}}}
 {{/deps}}
 
@@ -14,7 +21,11 @@ RUN apk add build-base
 
 {{#bootstrap}}
   RUN {{{.}}}
+<<<<<<< HEAD
 {{/bootstrap}}
+=======
+{{/before_command}}
+>>>>>>> upstream/master
 
 {{#environment}}
   ENV {{{.}}}
