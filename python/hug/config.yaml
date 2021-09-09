@@ -2,11 +2,18 @@ framework:
   website: hug.rest
   version: 2.6
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class meinheld.gmeinheld.MeinheldWorker \
-      server:__hug_wsgi__
+  engines:
+    - uwsgi
+    - gunicorn
+    - waitress
+
+language:
+  engines:
+    gunicorn:
+      command: >
+        gunicorn --log-level warning  \
+          --bind 0.0.0.0:3000  \
+          --reuse-port  \
+          --workers $(nproc) \
+          --worker-class ${WORKER_CLASS} \
+          server:__hug_wsgi__
