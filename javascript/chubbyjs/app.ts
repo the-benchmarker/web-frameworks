@@ -26,7 +26,7 @@ const app = new Application([
                     '/',
                     'index',
                     new CallbackRequestHandler(
-                        (): ResponseInterface => {
+                        async (): Promise<ResponseInterface> => {
                             const response = responseFactory.createResponse(200);
                             response.getBody().end('');
 
@@ -38,7 +38,7 @@ const app = new Application([
                     '/user/:id',
                     'user_view',
                     new CallbackRequestHandler(
-                        (request: ServerRequestInterface): ResponseInterface => {
+                        async (request: ServerRequestInterface): Promise<ResponseInterface> => {
                             const response = responseFactory.createResponse(200);
                             response.getBody().end(request.getAttribute('id'));
 
@@ -50,7 +50,7 @@ const app = new Application([
                     '/user',
                     'user_create',
                     new CallbackRequestHandler(
-                        (): ResponseInterface => {
+                        async (): Promise<ResponseInterface> => {
                             const response = responseFactory.createResponse(200);
                             response.getBody().end('');
 
@@ -72,9 +72,9 @@ const psrRequestFactory = new PsrRequestFactory(
 
 const nodeResponseEmitter = new NodeResponseEmitter();
 
-const server = createServer((req: IncomingMessage, res: ServerResponse) => {
+const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
     const serverRequest = psrRequestFactory.create(req);
-    const response = app.handle(serverRequest);
+    const response = await app.handle(serverRequest);
 
     nodeResponseEmitter.emit(response, res);
 });
