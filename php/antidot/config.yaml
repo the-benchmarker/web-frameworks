@@ -6,6 +6,9 @@ framework:
 build_deps:
   - libevent-dev
 
+php_ext:
+  - event
+
 php_mod:
   - intl
   - pcntl
@@ -15,4 +18,4 @@ before_command:
   - mkdir -p var/cache && chmod 777 var/cache
   - mkdir -p var/log && chmod 777 var/log
 
-command: bin/console server:run --quiet
+command: bin/console server:run
