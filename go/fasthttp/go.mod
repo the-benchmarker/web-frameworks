@@ -1,3 +1,3 @@
 module main
 
-require github.com/valyala/fasthttp v1.29.0
+require github.com/valyala/fasthttp v1.30.0
