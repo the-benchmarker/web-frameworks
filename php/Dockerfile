@@ -6,8 +6,6 @@ RUN docker-php-ext-install zip opcache
 
 WORKDIR /usr/src/app
 
-# RUN ln -sfv /usr/bin/pecl8 /usr/local/bin/pecl
-
 {{#environment}}
 ENV {{{.}}}
 {{/environment}}
