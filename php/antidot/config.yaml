@@ -5,6 +5,7 @@ framework:
 
 build_deps:
   - libevent-dev
+  - libicu-dev
 
 php_ext:
   - event

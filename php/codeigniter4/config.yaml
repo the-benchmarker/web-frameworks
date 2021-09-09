@@ -2,6 +2,9 @@ framework:
   website: codeigniter.com
   version: 4.1
 
+build_deps:
+  - libicu-dev
+
 php_mod:
   - intl
 
