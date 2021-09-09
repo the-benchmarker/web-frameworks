@@ -1,8 +1,7 @@
 FROM php:8.0-fpm-buster
 
-# RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev php8-pear {{#deps}} {{{.}}} {{/deps}}
 RUN apt-get -qq update
-RUN apt-get -qy install build-essential nginx libcurl4-gnutls-dev zlib1g-dev libzip-dev
+RUN apt-get -qy install build-essential nginx libcurl4-gnutls-dev zlib1g-dev libzip-dev {{#deps}} {{{.}}} {{/deps}}
 RUN docker-php-ext-install zip opcache
 
 WORKDIR /usr/src/app
@@ -14,7 +13,7 @@ ENV {{{.}}}
 {{/environment}}
 
 {{#build_deps}}
-  RUN apk add {{{.}}}
+  RUN apt-get -y install {{{.}}}
 {{/build_deps}}
 
 {{#php_mod}}
