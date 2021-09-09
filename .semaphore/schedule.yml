@@ -8,1651 +8,1651 @@ agent:
 execution_time_limit:
   hours: 24
 blocks:
-- name: setup
-  dependencies: []
-  task:
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-      - cache store $SEMAPHORE_GIT_SHA .
-      - sudo apt-get update
-      - sudo apt-get install build-essential libssl-dev git -y
-      - git clone https://github.com/wg/wrk.git wrk
-      - cd wrk && make
-      - cache store wrk wrk
-      - bundle config path .cache
-      - bundle install
-      - cache store built-in .cache
-      - bundle exec rake config
-- name: python
-  dependencies:
-  - setup
-  run:
-    when: 'change_in([''/python/'',''/data.json''],{pipeline_file: ''ignore''})'
-  task:
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: setup
-      commands:
-      - checkout
-- name: flask
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: flask
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: gunicorn
-      commands:
-      - make  -f python/flask/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/flask/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    - name: greenlet
-      commands:
-      - make  -f python/flask/.Makefile build.greenlet
-      - bundle exec rspec .spec
-      - make  -f python/flask/.Makefile collect.greenlet
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: greenlet
-    - name: uwsgi
-      commands:
-      - make  -f python/flask/.Makefile build.uwsgi
-      - bundle exec rspec .spec
-      - make  -f python/flask/.Makefile collect.uwsgi
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwsgi
-    - name: twisted
-      commands:
-      - make  -f python/flask/.Makefile build.twisted
-      - bundle exec rspec .spec
-      - make  -f python/flask/.Makefile collect.twisted
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: twisted
-    - name: waitress
-      commands:
-      - make  -f python/flask/.Makefile build.waitress
-      - bundle exec rspec .spec
-      - make  -f python/flask/.Makefile collect.waitress
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: waitress
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: aiohttp
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: aiohttp
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: aiohttp
-      commands:
-      - make  -f python/aiohttp/.Makefile build.aiohttp
-      - bundle exec rspec .spec
-      - make  -f python/aiohttp/.Makefile collect.aiohttp
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: aiohttp
-    - name: gunicorn
-      commands:
-      - make  -f python/aiohttp/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/aiohttp/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    - name: uvloop
-      commands:
-      - make  -f python/aiohttp/.Makefile build.uvloop
-      - bundle exec rspec .spec
-      - make  -f python/aiohttp/.Makefile collect.uvloop
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvloop
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: apidaora
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: apidaora
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uvicorn
-      commands:
-      - make  -f python/apidaora/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/apidaora/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/apidaora/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/apidaora/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: daphne
-      commands:
-      - make  -f python/apidaora/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/apidaora/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: masonite
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: masonite
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: gunicorn
-      commands:
-      - make  -f python/masonite/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/masonite/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    - name: uwsgi
-      commands:
-      - make  -f python/masonite/.Makefile build.uwsgi
-      - bundle exec rspec .spec
-      - make  -f python/masonite/.Makefile collect.uwsgi
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwsgi
-    - name: waitress
-      commands:
-      - make  -f python/masonite/.Makefile build.waitress
-      - bundle exec rspec .spec
-      - make  -f python/masonite/.Makefile collect.waitress
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: waitress
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: clastic
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: clastic
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: gunicorn
-      commands:
-      - make  -f python/clastic/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/clastic/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    - name: uwsgi
-      commands:
-      - make  -f python/clastic/.Makefile build.uwsgi
-      - bundle exec rspec .spec
-      - make  -f python/clastic/.Makefile collect.uwsgi
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwsgi
-    - name: waitress
-      commands:
-      - make  -f python/clastic/.Makefile build.waitress
-      - bundle exec rspec .spec
-      - make  -f python/clastic/.Makefile collect.waitress
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: waitress
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: guillotina
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: guillotina
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uvicorn
-      commands:
-      - make  -f python/guillotina/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/guillotina/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/guillotina/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/guillotina/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: index.py
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: index.py
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uvicorn
-      commands:
-      - make  -f python/index.py/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/index.py/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/index.py/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/index.py/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: daphne
-      commands:
-      - make  -f python/index.py/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/index.py/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: quart
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: quart
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: hypercorn
-      commands:
-      - make  -f python/quart/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/quart/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: uvicorn
-      commands:
-      - make  -f python/quart/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/quart/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: daphne
-      commands:
-      - make  -f python/quart/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/quart/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: pyramid
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: pyramid
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: gunicorn
-      commands:
-      - make  -f python/pyramid/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/pyramid/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/pyramid/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/pyramid/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: uvicorn
-      commands:
-      - make  -f python/pyramid/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/pyramid/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: daphne
-      commands:
-      - make  -f python/pyramid/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/pyramid/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    - name: uwsgi
-      commands:
-      - make  -f python/pyramid/.Makefile build.uwsgi
-      - bundle exec rspec .spec
-      - make  -f python/pyramid/.Makefile collect.uwsgi
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwsgi
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: starlette
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: starlette
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uvicorn
-      commands:
-      - make  -f python/starlette/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/starlette/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/starlette/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/starlette/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: daphne
-      commands:
-      - make  -f python/starlette/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/starlette/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: cherrypy
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: cherrypy
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: cheroot
-      commands:
-      - make  -f python/cherrypy/.Makefile build.cheroot
-      - bundle exec rspec .spec
-      - make  -f python/cherrypy/.Makefile collect.cheroot
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: cheroot
-    - name: gunicorn
-      commands:
-      - make  -f python/cherrypy/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/cherrypy/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    - name: tornado
-      commands:
-      - make  -f python/cherrypy/.Makefile build.tornado
-      - bundle exec rspec .spec
-      - make  -f python/cherrypy/.Makefile collect.tornado
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: tornado
-    - name: twisted
-      commands:
-      - make  -f python/cherrypy/.Makefile build.twisted
-      - bundle exec rspec .spec
-      - make  -f python/cherrypy/.Makefile collect.twisted
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: twisted
-    - name: uwsgi
-      commands:
-      - make  -f python/cherrypy/.Makefile build.uwsgi
-      - bundle exec rspec .spec
-      - make  -f python/cherrypy/.Makefile collect.uwsgi
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwsgi
-    - name: waitress
-      commands:
-      - make  -f python/cherrypy/.Makefile build.waitress
-      - bundle exec rspec .spec
-      - make  -f python/cherrypy/.Makefile collect.waitress
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: waitress
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: emmett
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: emmett
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uvicorn
-      commands:
-      - make  -f python/emmett/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/emmett/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: gunicorn
-      commands:
-      - make  -f python/emmett/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/emmett/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: hug
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: hug
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uwsgi
-      commands:
-      - make  -f python/hug/.Makefile build.uwsgi
-      - bundle exec rspec .spec
-      - make  -f python/hug/.Makefile collect.uwsgi
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwsgi
-    - name: gunicorn
-      commands:
-      - make  -f python/hug/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/hug/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    - name: waitress
-      commands:
-      - make  -f python/hug/.Makefile build.waitress
-      - bundle exec rspec .spec
-      - make  -f python/hug/.Makefile collect.waitress
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: waitress
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: blacksheep
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: blacksheep
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uvicorn
-      commands:
-      - make  -f python/blacksheep/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/blacksheep/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/blacksheep/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/blacksheep/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: daphne
-      commands:
-      - make  -f python/blacksheep/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/blacksheep/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: baize-wsgi
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: baize-wsgi
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: gunicorn
-      commands:
-      - make  -f python/baize-wsgi/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/baize-wsgi/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    - name: uwsgi
-      commands:
-      - make  -f python/baize-wsgi/.Makefile build.uwsgi
-      - bundle exec rspec .spec
-      - make  -f python/baize-wsgi/.Makefile collect.uwsgi
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwsgi
-    - name: waitress
-      commands:
-      - make  -f python/baize-wsgi/.Makefile build.waitress
-      - bundle exec rspec .spec
-      - make  -f python/baize-wsgi/.Makefile collect.waitress
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: waitress
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: molten
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: molten
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: gunicorn
-      commands:
-      - make  -f python/molten/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/molten/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    - name: uwsgi
-      commands:
-      - make  -f python/molten/.Makefile build.uwsgi
-      - bundle exec rspec .spec
-      - make  -f python/molten/.Makefile collect.uwsgi
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwsgi
-    - name: waitress
-      commands:
-      - make  -f python/molten/.Makefile build.waitress
-      - bundle exec rspec .spec
-      - make  -f python/molten/.Makefile collect.waitress
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: waitress
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: tornado
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: tornado
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: tornado
-      commands:
-      - make  -f python/tornado/.Makefile build.tornado
-      - bundle exec rspec .spec
-      - make  -f python/tornado/.Makefile collect.tornado
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: tornado
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: tonberry
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: tonberry
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uvicorn
-      commands:
-      - make  -f python/tonberry/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/tonberry/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/tonberry/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/tonberry/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: daphne
-      commands:
-      - make  -f python/tonberry/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/tonberry/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: nameko
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: nameko
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: nameko
-      commands:
-      - make  -f python/nameko/.Makefile build.nameko
-      - bundle exec rspec .spec
-      - make  -f python/nameko/.Makefile collect.nameko
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: nameko
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: fastapi
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: fastapi
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uvicorn
-      commands:
-      - make  -f python/fastapi/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/fastapi/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/fastapi/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/fastapi/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: daphne
-      commands:
-      - make  -f python/fastapi/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/fastapi/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: klein
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: klein
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: twisted
-      commands:
-      - make  -f python/klein/.Makefile build.twisted
-      - bundle exec rspec .spec
-      - make  -f python/klein/.Makefile collect.twisted
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: twisted
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: sanic
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: sanic
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: sanic
-      commands:
-      - make  -f python/sanic/.Makefile build.sanic
-      - bundle exec rspec .spec
-      - make  -f python/sanic/.Makefile collect.sanic
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: sanic
-    - name: gunicorn
-      commands:
-      - make  -f python/sanic/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/sanic/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    - name: uvicorn
-      commands:
-      - make  -f python/sanic/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/sanic/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/sanic/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/sanic/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: daphne
-      commands:
-      - make  -f python/sanic/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/sanic/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: responder
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: responder
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: hypercorn
-      commands:
-      - make  -f python/responder/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/responder/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: uvicorn
-      commands:
-      - make  -f python/responder/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/responder/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: daphne
-      commands:
-      - make  -f python/responder/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/responder/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: asgineer
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: asgineer
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uvicorn
-      commands:
-      - make  -f python/asgineer/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/asgineer/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/asgineer/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/asgineer/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: daphne
-      commands:
-      - make  -f python/asgineer/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/asgineer/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: django-ninja
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: django-ninja
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uvicorn
-      commands:
-      - make  -f python/django-ninja/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/django-ninja/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/django-ninja/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/django-ninja/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: daphne
-      commands:
-      - make  -f python/django-ninja/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/django-ninja/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: baize-asgi
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: baize-asgi
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uvicorn
-      commands:
-      - make  -f python/baize-asgi/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/baize-asgi/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/baize-asgi/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/baize-asgi/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: daphne
-      commands:
-      - make  -f python/baize-asgi/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/baize-asgi/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: cyclone
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: cyclone
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: twisted
-      commands:
-      - make  -f python/cyclone/.Makefile build.twisted
-      - bundle exec rspec .spec
-      - make  -f python/cyclone/.Makefile collect.twisted
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: twisted
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: django
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: django
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: gunicorn
-      commands:
-      - make  -f python/django/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/django/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    - name: uwsgi
-      commands:
-      - make  -f python/django/.Makefile build.uwsgi
-      - bundle exec rspec .spec
-      - make  -f python/django/.Makefile collect.uwsgi
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwsgi
-    - name: uvicorn
-      commands:
-      - make  -f python/django/.Makefile build.uvicorn
-      - bundle exec rspec .spec
-      - make  -f python/django/.Makefile collect.uvicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uvicorn
-    - name: hypercorn
-      commands:
-      - make  -f python/django/.Makefile build.hypercorn
-      - bundle exec rspec .spec
-      - make  -f python/django/.Makefile collect.hypercorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: hypercorn
-    - name: daphne
-      commands:
-      - make  -f python/django/.Makefile build.daphne
-      - bundle exec rspec .spec
-      - make  -f python/django/.Makefile collect.daphne
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: daphne
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: falcon
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: falcon
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: uwsgi
-      commands:
-      - make  -f python/falcon/.Makefile build.uwsgi
-      - bundle exec rspec .spec
-      - make  -f python/falcon/.Makefile collect.uwsgi
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: uwsgi
-    - name: waitress
-      commands:
-      - make  -f python/falcon/.Makefile build.waitress
-      - bundle exec rspec .spec
-      - make  -f python/falcon/.Makefile collect.waitress
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: waitress
-    - name: gunicorn
-      commands:
-      - make  -f python/falcon/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/falcon/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
-- name: bottle
-  dependencies:
-  - python
-  task:
-    env_vars:
-    - name: LANGUAGE
-      value: python
-    - name: FRAMEWORK
-      value: bottle
-    prologue:
-      commands:
-      - cache restore $SEMAPHORE_GIT_SHA
-      - cache restore wrk
-      - sudo install wrk /usr/local/bin
-      - cache restore bin
-      - cache restore built-in
-      - sem-service start postgres
-      - createdb -U postgres -h 0.0.0.0 benchmark
-      - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
-      - bundle config path .cache
-      - bundle install
-      - bundle exec rake config
-    jobs:
-    - name: wsgiref
-      commands:
-      - make  -f python/bottle/.Makefile build.wsgiref
-      - bundle exec rspec .spec
-      - make  -f python/bottle/.Makefile collect.wsgiref
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: wsgiref
-    - name: gunicorn
-      commands:
-      - make  -f python/bottle/.Makefile build.gunicorn
-      - bundle exec rspec .spec
-      - make  -f python/bottle/.Makefile collect.gunicorn
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: gunicorn
-    - name: bjoern
-      commands:
-      - make  -f python/bottle/.Makefile build.bjoern
-      - bundle exec rspec .spec
-      - make  -f python/bottle/.Makefile collect.bjoern
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: bjoern
-    - name: cheroot
-      commands:
-      - make  -f python/bottle/.Makefile build.cheroot
-      - bundle exec rspec .spec
-      - make  -f python/bottle/.Makefile collect.cheroot
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: ENGINE
-        value: cheroot
-    epilogue:
-      commands:
-      - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: setup
+    dependencies: []
+    task:
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+            - cache store $SEMAPHORE_GIT_SHA .
+            - sudo apt-get update
+            - sudo apt-get install build-essential libssl-dev git -y
+            - git clone https://github.com/wg/wrk.git wrk
+            - cd wrk && make
+            - cache store wrk wrk
+            - bundle config path .cache
+            - bundle install
+            - cache store built-in .cache
+            - bundle exec rake config
+  - name: python
+    dependencies:
+      - setup
+    run:
+      when: "change_in(['/python/','/data.json'],{pipeline_file: 'ignore'})"
+    task:
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: setup
+          commands:
+            - checkout
+  - name: flask
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: flask
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: gunicorn
+          commands:
+            - make  -f python/flask/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/flask/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: greenlet
+          commands:
+            - make  -f python/flask/.Makefile build.greenlet
+            - bundle exec rspec .spec
+            - make  -f python/flask/.Makefile collect.greenlet
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: greenlet
+        - name: uwsgi
+          commands:
+            - make  -f python/flask/.Makefile build.uwsgi
+            - bundle exec rspec .spec
+            - make  -f python/flask/.Makefile collect.uwsgi
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uwsgi
+        - name: twisted
+          commands:
+            - make  -f python/flask/.Makefile build.twisted
+            - bundle exec rspec .spec
+            - make  -f python/flask/.Makefile collect.twisted
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: twisted
+        - name: waitress
+          commands:
+            - make  -f python/flask/.Makefile build.waitress
+            - bundle exec rspec .spec
+            - make  -f python/flask/.Makefile collect.waitress
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: waitress
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: aiohttp
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: aiohttp
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: aiohttp
+          commands:
+            - make  -f python/aiohttp/.Makefile build.aiohttp
+            - bundle exec rspec .spec
+            - make  -f python/aiohttp/.Makefile collect.aiohttp
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: aiohttp
+        - name: gunicorn
+          commands:
+            - make  -f python/aiohttp/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/aiohttp/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: uvloop
+          commands:
+            - make  -f python/aiohttp/.Makefile build.uvloop
+            - bundle exec rspec .spec
+            - make  -f python/aiohttp/.Makefile collect.uvloop
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvloop
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: apidaora
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: apidaora
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/apidaora/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/apidaora/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/apidaora/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/apidaora/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/apidaora/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/apidaora/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: masonite
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: masonite
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: gunicorn
+          commands:
+            - make  -f python/masonite/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/masonite/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: uwsgi
+          commands:
+            - make  -f python/masonite/.Makefile build.uwsgi
+            - bundle exec rspec .spec
+            - make  -f python/masonite/.Makefile collect.uwsgi
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uwsgi
+        - name: waitress
+          commands:
+            - make  -f python/masonite/.Makefile build.waitress
+            - bundle exec rspec .spec
+            - make  -f python/masonite/.Makefile collect.waitress
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: waitress
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: clastic
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: clastic
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: gunicorn
+          commands:
+            - make  -f python/clastic/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/clastic/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: uwsgi
+          commands:
+            - make  -f python/clastic/.Makefile build.uwsgi
+            - bundle exec rspec .spec
+            - make  -f python/clastic/.Makefile collect.uwsgi
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uwsgi
+        - name: waitress
+          commands:
+            - make  -f python/clastic/.Makefile build.waitress
+            - bundle exec rspec .spec
+            - make  -f python/clastic/.Makefile collect.waitress
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: waitress
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: guillotina
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: guillotina
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/guillotina/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/guillotina/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/guillotina/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/guillotina/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: index.py
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: index.py
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/index.py/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/index.py/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/index.py/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/index.py/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/index.py/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/index.py/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: quart
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: quart
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: hypercorn
+          commands:
+            - make  -f python/quart/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/quart/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: uvicorn
+          commands:
+            - make  -f python/quart/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/quart/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: daphne
+          commands:
+            - make  -f python/quart/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/quart/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: pyramid
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: pyramid
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: gunicorn
+          commands:
+            - make  -f python/pyramid/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/pyramid/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/pyramid/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/pyramid/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: uvicorn
+          commands:
+            - make  -f python/pyramid/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/pyramid/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: daphne
+          commands:
+            - make  -f python/pyramid/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/pyramid/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+        - name: uwsgi
+          commands:
+            - make  -f python/pyramid/.Makefile build.uwsgi
+            - bundle exec rspec .spec
+            - make  -f python/pyramid/.Makefile collect.uwsgi
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uwsgi
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: starlette
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: starlette
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/starlette/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/starlette/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/starlette/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/starlette/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/starlette/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/starlette/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: cherrypy
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: cherrypy
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: cheroot
+          commands:
+            - make  -f python/cherrypy/.Makefile build.cheroot
+            - bundle exec rspec .spec
+            - make  -f python/cherrypy/.Makefile collect.cheroot
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: cheroot
+        - name: gunicorn
+          commands:
+            - make  -f python/cherrypy/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/cherrypy/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: tornado
+          commands:
+            - make  -f python/cherrypy/.Makefile build.tornado
+            - bundle exec rspec .spec
+            - make  -f python/cherrypy/.Makefile collect.tornado
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: tornado
+        - name: twisted
+          commands:
+            - make  -f python/cherrypy/.Makefile build.twisted
+            - bundle exec rspec .spec
+            - make  -f python/cherrypy/.Makefile collect.twisted
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: twisted
+        - name: uwsgi
+          commands:
+            - make  -f python/cherrypy/.Makefile build.uwsgi
+            - bundle exec rspec .spec
+            - make  -f python/cherrypy/.Makefile collect.uwsgi
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uwsgi
+        - name: waitress
+          commands:
+            - make  -f python/cherrypy/.Makefile build.waitress
+            - bundle exec rspec .spec
+            - make  -f python/cherrypy/.Makefile collect.waitress
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: waitress
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: emmett
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: emmett
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/emmett/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/emmett/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: gunicorn
+          commands:
+            - make  -f python/emmett/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/emmett/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: hug
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: hug
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uwsgi
+          commands:
+            - make  -f python/hug/.Makefile build.uwsgi
+            - bundle exec rspec .spec
+            - make  -f python/hug/.Makefile collect.uwsgi
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uwsgi
+        - name: gunicorn
+          commands:
+            - make  -f python/hug/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/hug/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: waitress
+          commands:
+            - make  -f python/hug/.Makefile build.waitress
+            - bundle exec rspec .spec
+            - make  -f python/hug/.Makefile collect.waitress
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: waitress
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: blacksheep
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: blacksheep
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/blacksheep/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/blacksheep/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/blacksheep/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/blacksheep/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/blacksheep/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/blacksheep/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: baize-wsgi
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: baize-wsgi
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: gunicorn
+          commands:
+            - make  -f python/baize-wsgi/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/baize-wsgi/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: uwsgi
+          commands:
+            - make  -f python/baize-wsgi/.Makefile build.uwsgi
+            - bundle exec rspec .spec
+            - make  -f python/baize-wsgi/.Makefile collect.uwsgi
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uwsgi
+        - name: waitress
+          commands:
+            - make  -f python/baize-wsgi/.Makefile build.waitress
+            - bundle exec rspec .spec
+            - make  -f python/baize-wsgi/.Makefile collect.waitress
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: waitress
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: molten
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: molten
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: gunicorn
+          commands:
+            - make  -f python/molten/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/molten/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: uwsgi
+          commands:
+            - make  -f python/molten/.Makefile build.uwsgi
+            - bundle exec rspec .spec
+            - make  -f python/molten/.Makefile collect.uwsgi
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uwsgi
+        - name: waitress
+          commands:
+            - make  -f python/molten/.Makefile build.waitress
+            - bundle exec rspec .spec
+            - make  -f python/molten/.Makefile collect.waitress
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: waitress
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: tornado
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: tornado
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: tornado
+          commands:
+            - make  -f python/tornado/.Makefile build.tornado
+            - bundle exec rspec .spec
+            - make  -f python/tornado/.Makefile collect.tornado
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: tornado
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: tonberry
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: tonberry
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/tonberry/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/tonberry/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/tonberry/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/tonberry/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/tonberry/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/tonberry/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: nameko
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: nameko
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: nameko
+          commands:
+            - make  -f python/nameko/.Makefile build.nameko
+            - bundle exec rspec .spec
+            - make  -f python/nameko/.Makefile collect.nameko
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: nameko
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: fastapi
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: fastapi
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/fastapi/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/fastapi/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/fastapi/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/fastapi/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/fastapi/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/fastapi/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: klein
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: klein
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: twisted
+          commands:
+            - make  -f python/klein/.Makefile build.twisted
+            - bundle exec rspec .spec
+            - make  -f python/klein/.Makefile collect.twisted
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: twisted
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: sanic
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: sanic
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: sanic
+          commands:
+            - make  -f python/sanic/.Makefile build.sanic
+            - bundle exec rspec .spec
+            - make  -f python/sanic/.Makefile collect.sanic
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: sanic
+        - name: gunicorn
+          commands:
+            - make  -f python/sanic/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/sanic/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: uvicorn
+          commands:
+            - make  -f python/sanic/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/sanic/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/sanic/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/sanic/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/sanic/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/sanic/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: responder
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: responder
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: hypercorn
+          commands:
+            - make  -f python/responder/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/responder/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: uvicorn
+          commands:
+            - make  -f python/responder/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/responder/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: daphne
+          commands:
+            - make  -f python/responder/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/responder/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: asgineer
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: asgineer
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/asgineer/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/asgineer/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/asgineer/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/asgineer/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/asgineer/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/asgineer/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: django-ninja
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: django-ninja
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/django-ninja/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/django-ninja/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/django-ninja/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/django-ninja/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/django-ninja/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/django-ninja/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: baize-asgi
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: baize-asgi
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uvicorn
+          commands:
+            - make  -f python/baize-asgi/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/baize-asgi/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/baize-asgi/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/baize-asgi/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/baize-asgi/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/baize-asgi/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: cyclone
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: cyclone
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: twisted
+          commands:
+            - make  -f python/cyclone/.Makefile build.twisted
+            - bundle exec rspec .spec
+            - make  -f python/cyclone/.Makefile collect.twisted
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: twisted
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: django
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: django
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: gunicorn
+          commands:
+            - make  -f python/django/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/django/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: uwsgi
+          commands:
+            - make  -f python/django/.Makefile build.uwsgi
+            - bundle exec rspec .spec
+            - make  -f python/django/.Makefile collect.uwsgi
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uwsgi
+        - name: uvicorn
+          commands:
+            - make  -f python/django/.Makefile build.uvicorn
+            - bundle exec rspec .spec
+            - make  -f python/django/.Makefile collect.uvicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uvicorn
+        - name: hypercorn
+          commands:
+            - make  -f python/django/.Makefile build.hypercorn
+            - bundle exec rspec .spec
+            - make  -f python/django/.Makefile collect.hypercorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: hypercorn
+        - name: daphne
+          commands:
+            - make  -f python/django/.Makefile build.daphne
+            - bundle exec rspec .spec
+            - make  -f python/django/.Makefile collect.daphne
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: daphne
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: falcon
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: falcon
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: uwsgi
+          commands:
+            - make  -f python/falcon/.Makefile build.uwsgi
+            - bundle exec rspec .spec
+            - make  -f python/falcon/.Makefile collect.uwsgi
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: uwsgi
+        - name: waitress
+          commands:
+            - make  -f python/falcon/.Makefile build.waitress
+            - bundle exec rspec .spec
+            - make  -f python/falcon/.Makefile collect.waitress
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: waitress
+        - name: gunicorn
+          commands:
+            - make  -f python/falcon/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/falcon/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`
+  - name: bottle
+    dependencies:
+      - python
+    task:
+      env_vars:
+        - name: LANGUAGE
+          value: python
+        - name: FRAMEWORK
+          value: bottle
+      prologue:
+        commands:
+          - cache restore $SEMAPHORE_GIT_SHA
+          - cache restore wrk
+          - sudo install wrk /usr/local/bin
+          - cache restore bin
+          - cache restore built-in
+          - sem-service start postgres
+          - createdb -U postgres -h 0.0.0.0 benchmark
+          - psql -U postgres -h 0.0.0.0 -d benchmark < dump.sql
+          - bundle config path .cache
+          - bundle install
+          - bundle exec rake config
+      jobs:
+        - name: wsgiref
+          commands:
+            - make  -f python/bottle/.Makefile build.wsgiref
+            - bundle exec rspec .spec
+            - make  -f python/bottle/.Makefile collect.wsgiref
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: wsgiref
+        - name: gunicorn
+          commands:
+            - make  -f python/bottle/.Makefile build.gunicorn
+            - bundle exec rspec .spec
+            - make  -f python/bottle/.Makefile collect.gunicorn
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: gunicorn
+        - name: bjoern
+          commands:
+            - make  -f python/bottle/.Makefile build.bjoern
+            - bundle exec rspec .spec
+            - make  -f python/bottle/.Makefile collect.bjoern
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: bjoern
+        - name: cheroot
+          commands:
+            - make  -f python/bottle/.Makefile build.cheroot
+            - bundle exec rspec .spec
+            - make  -f python/bottle/.Makefile collect.cheroot
+            - bundle exec rake db:raw_export
+          env_vars:
+            - name: ENGINE
+              value: cheroot
+      epilogue:
+        commands:
+          - docker logs `cat ${FRAMEWORK}/cid.txt`

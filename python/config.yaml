@@ -2,6 +2,8 @@ language:
   version: 3.9
 
   engines:
+    cheroot:
+      command: ""
     tornado:
       command: ""
     twisted:

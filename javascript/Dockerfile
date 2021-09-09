@@ -13,7 +13,7 @@ ENV NODE_ENV production
 
 {{#bin_deps}}
   RUN apk add {{{.}}}
-{{/deps}}
+{{/bin_deps}}
 
 {{#files}}
   COPY {{source}} {{target}}
@@ -21,11 +21,7 @@ ENV NODE_ENV production
 
 {{#bootstrap}}
   RUN {{{.}}}
-<<<<<<< HEAD
 {{/bootstrap}}
-=======
-{{/before_command}}
->>>>>>> upstream/master
 
 {{#environment}}
   ENV {{{.}}}
