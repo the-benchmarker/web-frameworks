@@ -4,6 +4,7 @@ framework:
 
 build_deps:
   - libevent-dev
+  - libssl-dev
 
 php_mod:
   - pcntl
