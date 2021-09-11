@@ -1,0 +1,16 @@
+framework:
+  github: amirfaramarzi/tower
+  version: 1.11
+
+build_deps:
+  - libevent-dev
+  - libssl-dev
+
+php_mod:
+  - pcntl
+  - sockets
+
+php_ext:
+  - event
+
+command: php server.php start
