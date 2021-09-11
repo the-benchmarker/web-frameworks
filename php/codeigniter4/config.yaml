@@ -3,7 +3,7 @@ framework:
   version: 4.1
 
 build_deps:
-  - libicu-dev
+  - icu-dev
 
 php_mod:
   - intl
