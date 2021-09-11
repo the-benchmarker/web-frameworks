@@ -8,9 +8,6 @@ build_deps:
   - libicu-dev
   - libssl-dev
 
-php_ext:
-  - event
-
 php_mod:
   - intl
   - pcntl
@@ -20,4 +17,4 @@ before_command:
   - mkdir -p var/cache && chmod 777 var/cache
   - mkdir -p var/log && chmod 777 var/log
 
-command: bin/console server:run
+command: bin/console server:run --quiet
