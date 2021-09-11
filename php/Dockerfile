@@ -1,17 +1,19 @@
-FROM php:8.0-fpm-buster
+FROM php:7.4-fpm-alpine
 
-RUN apt-get -qq update
-RUN apt-get -qy install build-essential nginx libcurl4-gnutls-dev zlib1g-dev libzip-dev {{#deps}} {{{.}}} {{/deps}}
-RUN docker-php-ext-install zip opcache
+RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev php8-pear {{#deps}} {{{.}}} {{/deps}}
 
 WORKDIR /usr/src/app
 
+RUN ln -sfv /usr/bin/pecl8  /usr/local/bin/pecl
+
+RUN docker-php-ext-install zip opcache
+
 {{#environment}}
-ENV {{{.}}}
+  ENV {{{.}}}
 {{/environment}}
 
 {{#build_deps}}
-  RUN apt-get -y install {{{.}}}
+  RUN apk add {{{.}}}
 {{/build_deps}}
 
 {{#php_mod}}
@@ -37,10 +39,12 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
   mv /tmp/file /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
 
 {{^standalone}}
-  RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-  RUN composer install --no-dev --prefer-dist --classmap-authoritative
-  RUN composer dumpautoload -o
+RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install --no-dev --prefer-dist --classmap-authoritative
+RUN composer dumpautoload -o
 {{/standalone}}
+
+
 
 {{#before_command}}
   RUN {{{.}}}
@@ -68,7 +72,7 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
   
   RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
   
-  RUN echo 'server {\n\
+  RUN echo -e 'server {\n\
       {{#docroot}}
         root {{{.}}};\n\
       {{/docroot}}
@@ -88,7 +92,7 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
         }\n\
       {{/nginx_conf}}
   }\n'\
-  > /etc/nginx/sites-available/default
+  > /etc/nginx/http.d/default.conf
   
   RUN echo -e 'opcache.enable=1\n\
   opcache.memory_consumption=512\n\
