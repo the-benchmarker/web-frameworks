@@ -52,7 +52,7 @@
                                  [prone "2021-04-23"]
                                  [ring/ring-devel "1.9.4"]
                                  [ring/ring-mock "0.4.0"]]
-                  :plugins      [[com.jakemccrary/lein-test-refresh "0.24.1"]
+                  :plugins      [[com.jakemccrary/lein-test-refresh "0.25.0"]
                                  [jonase/eastwood "0.9.9"]] 
                   
                   :source-paths ["env/dev/clj" ]
