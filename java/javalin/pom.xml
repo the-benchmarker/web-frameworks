@@ -16,7 +16,12 @@
 		<dependency>
 			<groupId>io.javalin</groupId>
 			<artifactId>javalin</artifactId>
-			<version>[3.9,4.0)</version>
+			<version>[4.0,4.1)</version>
+		</dependency>
+		<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>[1.7,1.8)</version>
 		</dependency>
 	</dependencies>
 	<build>
