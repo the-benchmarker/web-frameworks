@@ -2483,6 +2483,23 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
+    - name: tower
+      commands:
+      - cd php/tower && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/tower/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/tower
     - name: workerman
       commands:
       - cd php/workerman && make build  -f .Makefile  && cd -
@@ -2535,57 +2552,6 @@ blocks:
       - name: FRAMEWORK
         value: php/tower
     - name: mixphp-workerman
-      commands:
-      - cd php/mixphp-workerman && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f php/mixphp-workerman/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: php/mixphp-workerman
-    - name: laravel
-      commands:
-      - cd php/laravel && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f php/laravel/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: php/laravel
-    - name: imi-workerman
-      commands:
-      - cd php/imi-workerman && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f php/imi-workerman/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: php/imi-workerman
-    - name: ice
       commands:
       - cd php/ice && make build  -f .Makefile  && cd -
       - bundle exec rspec .spec
@@ -2641,6 +2607,57 @@ blocks:
       - cd php/antidot && make build  -f .Makefile  && cd -
       - bundle exec rspec .spec
       - make  -f php/antidot/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/antidot
+    - name: phalcon
+      commands:
+      - cd php/phalcon && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/phalcon/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/phalcon
+    - name: nano
+      commands:
+      - cd php/nano && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/nano/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/nano
+    - name: laravel
+      commands:
+      - cd php/laravel && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/laravel/.Makefile collect
       - bundle exec rake db:raw_export
       env_vars:
       - name: DATABASE_URL

@@ -2,6 +2,13 @@ framework:
   website: iceframework.org
   version: 1.8
 
+build_deps:
+  - bash
+  - libexecinfo-dev
+
+environment:
+  LDFLAGS: -lexecinfo
+
 php_ext:
   - ice
 
