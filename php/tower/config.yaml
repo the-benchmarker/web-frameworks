@@ -12,5 +12,6 @@ php_mod:
 
 php_ext:
   - event
+  - redis
 
 command: php server.php start
