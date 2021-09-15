@@ -1838,23 +1838,6 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: javalin
-      commands:
-      - cd java/javalin && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f java/javalin/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: java/javalin
     - name: quarkus
       commands:
       - cd java/quarkus && make build  -f .Makefile  && cd -
@@ -1889,6 +1872,23 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: java/micronaut
+    - name: javalin
+      commands:
+      - cd java/javalin && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f java/javalin/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: java/javalin
     - name: jersey-grizzly2
       commands:
       - cd java/jersey-grizzly2 && make build  -f .Makefile  && cd -
@@ -2534,41 +2534,24 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: php/webman
+    - name: tower
+      commands:
+      - cd php/tower && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/tower/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/tower
     - name: mixphp-workerman
-      commands:
-      - cd php/mixphp-workerman && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f php/mixphp-workerman/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: php/mixphp-workerman
-    - name: imi-workerman
-      commands:
-      - cd php/imi-workerman && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f php/imi-workerman/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: php/imi-workerman
-    - name: ice
       commands:
       - cd php/ice && make build  -f .Makefile  && cd -
       - bundle exec rspec .spec
@@ -2686,7 +2669,41 @@ blocks:
       - name: ROUTES
         value: GET:/
       - name: FRAMEWORK
-        value: php/laravel
+        value: php/antidot
+    - name: phalcon
+      commands:
+      - cd php/phalcon && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/phalcon/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/phalcon
+    - name: nano
+      commands:
+      - cd php/nano && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/nano/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/nano
     - name: imi-swoole
       commands:
       - cd php/imi-swoole && make build  -f .Makefile  && cd -
