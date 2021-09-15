@@ -14,4 +14,7 @@ php_ext:
   - event
   - redis
 
+before_command:
+  - mkdir storage/logs -p
+
 command: php server.php start
