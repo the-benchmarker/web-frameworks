@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'listen' => 'http://127.0.0.1:9000',
+    'listen' => 'http://0.0.0.0:3000',
     'transport' => 'tcp',
     'context' => [],
     'count' => cpuCoreCount(),

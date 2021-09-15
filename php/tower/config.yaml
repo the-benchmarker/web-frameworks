@@ -4,7 +4,7 @@ framework:
 
 build_deps:
   - libevent-dev
-  - libssl-dev
+  - openssl-dev
 
 php_mod:
   - pcntl
@@ -12,5 +12,9 @@ php_mod:
 
 php_ext:
   - event
+  - redis
+
+before_command:
+  - mkdir storage/logs -p
 
 command: php server.php start
