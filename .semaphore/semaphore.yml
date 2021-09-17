@@ -1862,6 +1862,40 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
+    - name: jooby
+      commands:
+      - cd java/jooby && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f java/jooby/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: java/jooby
+    - name: jersey-grizzly2
+      commands:
+      - cd java/jersey-grizzly2 && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f java/jersey-grizzly2/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: java/jersey-grizzly2
     - name: quarkus
       commands:
       - cd java/quarkus && make build  -f .Makefile  && cd -
@@ -1913,23 +1947,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: java/javalin
-    - name: jersey-grizzly2
-      commands:
-      - cd java/jersey-grizzly2 && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f java/jersey-grizzly2/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: java/jersey-grizzly2
     - name: struts2
       commands:
       - cd java/struts2 && make build  -f .Makefile  && cd -
@@ -2015,23 +2032,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: java/restheart
-    - name: jooby
-      commands:
-      - cd java/jooby && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f java/jooby/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: java/jooby
     - name: activej
       commands:
       - cd java/activej && make build  -f .Makefile  && cd -
@@ -2515,23 +2515,6 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: laravel
-      commands:
-      - cd php/laravel && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f php/laravel/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: php/laravel
     - name: workerman
       commands:
       - cd php/workerman && make build  -f .Makefile  && cd -
@@ -2634,6 +2617,23 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: php/mixphp-workerman
+    - name: laravel
+      commands:
+      - cd php/laravel && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/laravel/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/laravel
     - name: imi-workerman
       commands:
       - cd php/imi-workerman && make build  -f .Makefile  && cd -
@@ -3843,6 +3843,23 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: javascript/sails
+    - name: chubbyjs-uwebsockets
+      commands:
+      - cd javascript/chubbyjs-uwebsockets && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f javascript/chubbyjs-uwebsockets/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: javascript/chubbyjs-uwebsockets
     - name: nestjs-fastify
       commands:
       - cd javascript/nestjs-fastify && make build  -f .Makefile  && cd -
