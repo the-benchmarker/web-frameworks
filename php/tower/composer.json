@@ -16,24 +16,9 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\" : "app/" ,
-            "Database\\" : "database/"
+            "App\\" : "app/"
         }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "require-dev": {
-        "fakerphp/faker": "^1.15",
-        "phpunit/phpunit": "^9.5"
-    }
 }
