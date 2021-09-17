@@ -4,7 +4,7 @@ return [
     'listen' => 'http://0.0.0.0:3000',
     'transport' => 'tcp',
     'context' => [],
-    'count' => cpuCoreCount(),
+    'count' => cpuCoreCount() * 2,
     'user' => '',
     'group' => '',
     'max_request' => 1000000,
