@@ -1879,6 +1879,23 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: java/jooby
+    - name: jersey-grizzly2
+      commands:
+      - cd java/jersey-grizzly2 && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f java/jersey-grizzly2/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: java/jersey-grizzly2
     - name: quarkus
       commands:
       - cd java/quarkus && make build  -f .Makefile  && cd -
@@ -1913,23 +1930,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: java/micronaut
-    - name: jersey-grizzly2
-      commands:
-      - cd java/jersey-grizzly2 && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f java/jersey-grizzly2/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: java/jersey-grizzly2
     - name: javalin
       commands:
       - cd java/javalin && make build  -f .Makefile  && cd -
