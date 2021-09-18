@@ -1,9 +1,12 @@
-FROM php:7.4-fpm-alpine
+FROM php:8.0-fpm-alpine
 
-RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev {{#deps}} {{{.}}} {{/deps}}
-RUN docker-php-ext-install zip opcache
+RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev php8-pear {{#deps}} {{{.}}} {{/deps}}
 
 WORKDIR /usr/src/app
+
+RUN ln -sfv /usr/bin/pecl8  /usr/local/bin/pecl
+
+RUN docker-php-ext-install zip opcache
 
 {{#environment}}
   ENV {{{.}}}
@@ -13,10 +16,18 @@ WORKDIR /usr/src/app
   RUN docker-php-ext-install {{{.}}}
 {{/modules}}
 
+<<<<<<< HEAD
 {{#extensions}}
   RUN pecl install {{{.}}}
   RUN docker-php-ext-enable {{{.}}}
 {{/extensions}}
+=======
+{{#php_ext}}
+  RUN mkdir -p /usr/src/php/ext/{{{.}}} && \
+    curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
+  RUN docker-php-ext-install {{{.}}}
+{{/php_ext}}
+>>>>>>> upstream/master
 
 {{#files}}
   COPY {{source}} {{target}}
