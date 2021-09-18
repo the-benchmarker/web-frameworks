@@ -151,44 +151,32 @@ def commands_for(language, framework, variant, provider = default_provider)
   commands
 end
 
-def create_dockerfile(language, framework, **options)
-  directory = File.join(Dir.pwd, language, framework)
-  main_config = YAML.safe_load(File.open(File.join(Dir.pwd, 'config.yaml')))
-  language_config = YAML.safe_load(File.open(File.join(Dir.pwd, language, 'config.yaml')))
-  framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
-  config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
+def create_dockerfile(directory, engine, config)
+  generic_template = File.join(Dir.pwd, directory, '..', 'Dockerfile')
+  custom_template = File.join(Dir.pwd, directory, '..', "#{engine}.Dockerfile")
+  template = if File.exist?(custom_template)
+               custom_template
+             else
+               generic_template
+             end
+  files = []
 
-  # Path to remove stability suffix (stable, beta, alpha, or version) of php extensions
+  Dir.glob(config['files']).each do |file|
+    variant_file = file.gsub(directory, File.join(directory, ".#{engine}"))
 
-  if config.key?('sources')
-    files = []
-    config['sources'].each do |path|
-      Dir.glob(File.join(directory, path)).each do |f|
-        if f =~ /^*\.\./
-          filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
-          File.open(File.join(directory, filename), 'w') { |stream| stream.write(File.read(f)) }
-          files << filename
-        else
-          files << f.gsub!(directory, '').gsub!(%r{^/}, '')
-        end
-      end
-    end
-    config['sources'] = files
-  end
-  if config.key?('files')
-    files = []
-    config['files'].each do |path|
-      Dir.glob(File.join(directory, path)).each do |f|
-        if f =~ /^*\.\./
-          filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
-          File.open(File.join(directory, filename), 'w') { |stream| stream.write(File.read(f)) }
-          files << filename
-        else
-          files << f.gsub!(directory, '').gsub!(%r{^/}, '')
-        end
-      end
-    end
-    config['files'] = files
+    target = if file.include?(".#{engine}")
+               file.gsub(".#{engine}/", '').gsub("#{directory}/", '')
+             else
+               file.gsub("#{directory}/", '')
+             end
+
+    source = if File.exist?(variant_file)
+               variant_file
+             else
+               file
+             end
+
+    files << { source: source.gsub("#{directory}/", ''), target: target }
   end
 
   File.open(File.join(directory, ".Dockerfile.#{engine}"), 'w') do |f|

@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 
 ENV NODE_ENV production
 
-{{#bin_deps}}
+{{#deps}}
   RUN apk add {{{.}}}
 {{/deps}}
 
@@ -21,11 +21,7 @@ ENV NODE_ENV production
 
 {{#bootstrap}}
   RUN {{{.}}}
-<<<<<<< HEAD
 {{/bootstrap}}
-=======
-{{/before_command}}
->>>>>>> upstream/master
 
 {{#environment}}
   ENV {{{.}}}
