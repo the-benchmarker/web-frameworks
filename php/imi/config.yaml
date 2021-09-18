@@ -1,0 +1,17 @@
+framework:
+  website: imiphp.com
+  version: 2.0
+
+  extensions:
+    - redis
+
+  engines:
+    - swoole
+    - workerman
+
+language:
+  engines:
+    swoole:
+      command: php vendor/bin/imi-swoole swoole/start
+    workerman:
+      command: php vendor/bin/imi-workerman workerman/start
