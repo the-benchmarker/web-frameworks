@@ -2,19 +2,19 @@ framework:
   github: amirfaramarzi/tower
   version: 1.11
 
-build_deps:
-  - libevent-dev
-  - openssl-dev
+  build_deps:
+    - libevent-dev
+    - openssl-dev
 
-php_mod:
-  - pcntl
-  - sockets
+  modules:
+    - pcntl
+    - sockets
 
-php_ext:
-  - event
-  - redis
+  extensions:
+    - event
+    - redis
 
-before_command:
-  - mkdir storage/logs -p
+  bootstrap:
+    - mkdir storage/logs -p
 
-command: php server.php start
+  command: php server.php start
