@@ -1,0 +1,11 @@
+{
+  "require": {
+    "imiphp/imi": "~2.0.0",
+    "imiphp/imi-workerman": "@stable"
+  },
+  "autoload": {
+    "psr-4": {
+      "ImiApp\\": "./"
+    }
+  }
+}

@@ -2,11 +2,15 @@ framework:
   github: chubbyjs/chubbyjs-framework
   version: 1.1
 
-before_command:
-  - npm -g install typescript
-  - tsc
+  engines:
+    - node
+    - uwebsockets
 
-files:
-  - app.ts
-  - package.json
-  - tsconfig.json
+  bootstrap:
+    - npm -g install typescript
+    - tsc
+
+  files:
+    - app.ts
+    - package.json
+    - tsconfig.json
