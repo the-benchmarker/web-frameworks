@@ -1,23 +1,23 @@
 framework:
   website: phalcon.io
-  version: 5.0
+  version: 4.0
 
-php_ext:
-  - psr
+  extensions:
+    - psr
 
-before_build:
-  - mkdir -p /usr/src/php/ext/phalcon
-  - curl -fsSL https://github.com/phalcon/cphalcon/releases/download/v5.0.0alpha5/phalcon-pecl.tgz | tar xvz -C "/usr/src/php/ext/phalcon" --strip 1
-  - docker-php-ext-install phalcon
+  bootstrap:
+    - mkdir -p /usr/src/php/ext/phalcon
+    - curl -fsSL https://github.com/phalcon/cphalcon/releases/download/v5.0.0alpha5/phalcon-pecl.tgz | tar xvz -C "/usr/src/php/ext/phalcon" --strip 1
+    - docker-php-ext-install phalcon
 
-nginx_conf:
-  - |
-    location /{\n\
-        rewrite ^/(.*)$ /index.php?_url=$1 last;\n\
-    }\n\
-  - |
-    location = /index.php {\n\
-      fastcgi_pass unix:/var/run/php-fpm.sock;\n\
-      fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
-      include fastcgi_params;\n\
-    }\n\
+  nginx_conf:
+    - |
+      location /{\n\
+          rewrite ^/(.*)$ /index.php?_url=$1 last;\n\
+      }\n\
+    - |
+      location = /index.php {\n\
+        fastcgi_pass unix:/var/run/php-fpm.sock;\n\
+        fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
+        include fastcgi_params;\n\
+      }\n\

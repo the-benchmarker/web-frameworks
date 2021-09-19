@@ -3,21 +3,15 @@ framework:
   github: antidot-framework/react-framework
   version: 0.2
 
-build_deps:
-  - libevent-dev
-  - icu-dev
-  - openssl-dev
+  files:
+    - config/services/dependencies.prod.yaml
+    - bin/console
 
-php_ext:
-  - event
+  engines:
+    - reactphp
 
-php_mod:
-  - intl
-  - pcntl
-  - sockets
+  bootstrap:
+    - mkdir -p var/cache && chmod 777 var/cache
+    - mkdir -p var/log && chmod 777 var/log
 
-before_command:
-  - mkdir -p var/cache && chmod 777 var/cache
-  - mkdir -p var/log && chmod 777 var/log
-
-command: bin/console server:run --quiet
+  command: bin/console server:run

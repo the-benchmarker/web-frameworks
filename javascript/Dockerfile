@@ -1,44 +1,31 @@
 FROM node:14.17-alpine
 
-{{#build_deps}}
-  RUN apk add {{{.}}}
-{{/build_deps}}
-
-RUN npm -g install pm2
-
 WORKDIR /usr/src/app
 
 {{#files}}
-  COPY {{{.}}} {{{.}}}
-{{/files}}
-{{^files}}
-  COPY app.js package.json ./
+  COPY {{source}} {{target}}
 {{/files}}
 
 ENV NODE_ENV production
 
-{{#bin_deps}}
+{{#deps}}
   RUN apk add {{{.}}}
-{{/bin_deps}}
+{{/deps}}
 
-{{#fixes}}
+{{#files}}
+  COPY {{source}} {{target}}
+{{/files}}
+
+{{#bootstrap}}
   RUN {{{.}}}
-{{/fixes}}
-
-RUN npm install
-
-{{#before_command}}
-  RUN {{{.}}}
-{{/before_command}}
+{{/bootstrap}}
 
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+{{#fixes}}
+  RUN {{{.}}}
+{{/fixes}}
 
-{{^command}}
-  CMD pm2-runtime start app.js -i $(nproc)
-{{/command}}
+CMD {{{command}}}
