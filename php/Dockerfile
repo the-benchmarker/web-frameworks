@@ -16,18 +16,10 @@ RUN docker-php-ext-install zip opcache
   RUN docker-php-ext-install {{{.}}}
 {{/modules}}
 
-<<<<<<< HEAD
 {{#extensions}}
   RUN pecl install {{{.}}}
   RUN docker-php-ext-enable {{{.}}}
 {{/extensions}}
-=======
-{{#php_ext}}
-  RUN mkdir -p /usr/src/php/ext/{{{.}}} && \
-    curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
-  RUN docker-php-ext-install {{{.}}}
-{{/php_ext}}
->>>>>>> upstream/master
 
 {{#files}}
   COPY {{source}} {{target}}

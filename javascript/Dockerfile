@@ -3,10 +3,7 @@ FROM node:14.17-alpine
 WORKDIR /usr/src/app
 
 {{#files}}
-  COPY {{{.}}} {{{.}}}
-{{/files}}
-{{^files}}
-  COPY app.js package.json ./
+  COPY {{source}} {{target}}
 {{/files}}
 
 ENV NODE_ENV production
