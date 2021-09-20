@@ -5,8 +5,9 @@ RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev ic
 WORKDIR /usr/src/app
 
 RUN ln -sfv /usr/bin/pecl8  /usr/local/bin/pecl
+RUN pecl update-channels
 
-RUN docker-php-ext-install zip opcache
+RUN docker-php-ext-install zip opcache openssl
 
 {{#environment}}
   ENV {{{.}}}
