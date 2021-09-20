@@ -5,32 +5,30 @@ RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev ic
 WORKDIR /usr/src/app
 
 RUN ln -sfv /usr/bin/pecl8  /usr/local/bin/pecl
+RUN pecl update-channels
 
-RUN docker-php-ext-install zip opcache
+RUN docker-php-ext-install zip opcache openssl
 
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
-{{#build_deps}}
-  RUN apk add {{{.}}}
-{{/build_deps}}
-
-{{#php_mod}}
+{{#modules}}
   RUN docker-php-ext-install {{{.}}}
-{{/php_mod}}
+{{/modules}}
 
-{{#php_ext}}
-  RUN mkdir -p /usr/src/php/ext/{{{.}}} && \
-    curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
-  RUN docker-php-ext-install {{{.}}}
-{{/php_ext}}
+{{#extensions}}
+  RUN pecl install {{{.}}}
+  RUN docker-php-ext-enable {{{.}}}
+{{/extensions}}
 
-{{#before_build}}
+{{#files}}
+  COPY {{source}} {{target}}
+{{/files}}
+
+{{#bootstrap}}
   RUN {{{.}}}
-{{/before_build}}
-
-COPY . ./
+{{/bootstrap}}
 
 ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
 RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
@@ -38,17 +36,9 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
   sed -e '1i extension=sockets' /usr/local/etc/php/conf.d/docker-php-ext-event.ini > /tmp/file ; \
   mv /tmp/file /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
 
-{{^standalone}}
-RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-dev --prefer-dist --classmap-authoritative
-RUN composer dumpautoload -o
-{{/standalone}}
 
 
 
-{{#before_command}}
-  RUN {{{.}}}
-{{/before_command}}
 
 {{#command}}
   CMD {{{.}}}

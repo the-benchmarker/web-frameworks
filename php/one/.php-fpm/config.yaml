@@ -1,0 +1,10 @@
+framework:
+  github: lizhichao/one
+  version: 2.2
+
+php_mod:
+  - bcmath
+
+bootstrap:
+  - mkdir -p App/RunCache
+  - chmod 777 App/RunCache

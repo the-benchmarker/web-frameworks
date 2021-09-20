@@ -2,7 +2,7 @@ framework:
   github: roblillack/mars
   version: 1.0
 
-before_command:
+bootstrap:
   - go get github.com/roblillack/mars/cmd/mars-gen
   - go generate main.go
 

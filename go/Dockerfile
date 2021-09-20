@@ -11,9 +11,9 @@ COPY . ./
   RUN apk add {{{.}}}
 {{/build_deps}}
 
-{{#before_command}}
+{{#bootstrap}}
   RUN {{{.}}}
-{{/before_command}}
+{{/bootstrap}}
 
 RUN go get
 

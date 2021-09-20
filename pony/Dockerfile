@@ -13,9 +13,9 @@ COPY . ./
   ENV {{{.}}}
 {{/environment}}
 
-{{#before_command}}
+{{#bootstrap}}
   RUN {{{.}}}
-{{/before_command}}
+{{/bootstrap}}
 
 RUN stable env ponyc -Dopenssl_1.1.x -Dstatic
 
