@@ -8,9 +8,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - run: git log
+      - uses: ruby/setup-ruby@v1
         with:
-          fetch-depth: 2
-      - uses: actions/setup-ruby@v1
+          ruby-version: 3.0
+          bundler-cache: true
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
       - id: set-matrix
