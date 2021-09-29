@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-ruby@v1
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
