@@ -7,17 +7,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
-      - uses: actions/setup-ruby@v1
-      - name: Install deps
-        run: bundle install --jobs 4 --retry 3
-      - id: set-matrix
-        run: echo "::set-output name=matrix::$(bundle exec rake ci:matrix)"
-        env:
-          BASE_COMMIT: ${{ github.event.pull_request.base.sha }}
-          LAST_COMMIT: ${{ github.event.pull_request.head.sha }}
+      - id: file_changes
+        uses: trilom/file-changes-action@v1.2.3
+      - name: Get color
+        run: echo "The selected color is ${{ steps.file_changes.outputs.files }}"
 
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
