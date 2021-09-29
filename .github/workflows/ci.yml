@@ -16,7 +16,7 @@ jobs:
       - id: set-matrix
         run: echo "::set-output name=matrix::$(bundle exec rake ci:matrix)"
         env:
-          BASE_COMMIT: ${{ github.event.pull_request.base.sha }}
+          BASE_COMMIT: HEAD^2
           LAST_COMMIT: ${{ github.event.pull_request.head.sha }}
 
     outputs:
