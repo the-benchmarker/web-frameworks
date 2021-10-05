@@ -20,7 +20,7 @@
                  [org.clojure/tools.cli "1.0.206"]
                  [org.clojure/tools.logging "1.1.0"]
                  [org.webjars.npm/bulma "0.9.3"]
-                 [org.webjars.npm/material-icons "1.0.0"]
+                 [org.webjars.npm/material-icons "1.7.1"]
                  [org.webjars/webjars-locator "0.42"]
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.9.4"]
