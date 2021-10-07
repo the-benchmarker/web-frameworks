@@ -1,6 +1,6 @@
 framework:
   website: fastapi.tiangolo.com
-  version: 0.68
+  version: 0.69
 
 command: >
   gunicorn \
