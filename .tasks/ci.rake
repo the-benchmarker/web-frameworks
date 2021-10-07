@@ -10,6 +10,8 @@ namespace :ci do
         commands: [
           'checkout',
           'cache store $SEMAPHORE_GIT_SHA .',
+          'sudo rm -f /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list',
+          'sudo rm -f /etc/apt/sources.list.d/helm-stable-debian.list',
           'sudo apt-get update',
           'sudo apt-get install build-essential libssl-dev git -y',
           'git clone https://github.com/wg/wrk.git wrk',
