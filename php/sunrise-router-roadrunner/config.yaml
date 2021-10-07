@@ -1,11 +1,12 @@
 framework:
   github: sunrise-php/http-router
-  version: 2.7
+  version: 2.10
 
 php_ext:
   - apcu
 
 before_command:
+  - composer update
   - ./vendor/bin/rr get-binary
 
 command: ./rr serve
