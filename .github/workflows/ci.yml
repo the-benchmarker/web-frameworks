@@ -48,15 +48,12 @@ jobs:
       - name: Get docker version
         run: docker --version
 
-      - name: Setup
+      - name: Test
         run: |
           cd ${{ matrix.directory }} 
           make build  -f .Makefile
-
-      - name: Wait for server to be up
-        run: sleep 10
-
-      - name: Test
-        run: bundle exec rspec .spec
+          cd ../..
+          bundle exec rspec .spec
         env:
           FRAMEWORK: ${{ matrix.framework }}
+        
