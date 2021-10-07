@@ -9,29 +9,30 @@ use Sunrise\Http\Factory\ServerRequestFactory;
 use Sunrise\Http\Router\Exception\MethodNotAllowedException;
 use Sunrise\Http\Router\Exception\RouteNotFoundException;
 use Sunrise\Http\Router\RequestHandler\CallableRequestHandler;
-use Sunrise\Http\Router\RouteCollector;
+use Sunrise\Http\Router\Route;
 use Sunrise\Http\Router\Router;
 
 use function Sunrise\Http\Router\emit;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$routeCollector = new RouteCollector();
 $responseFactory = new ResponseFactory();
 
-$routeCollector->route('home', '/', ['GET'], new CallableRequestHandler(
+$routes = [];
+
+$routes[] = new Route('home', '/', ['GET'], new CallableRequestHandler(
     function (ServerRequestInterface $request) use ($responseFactory) : ResponseInterface {
         return $responseFactory->createResponse(200);
     }
 ));
 
-$routeCollector->route('userCreate', '/user', ['POST'], new CallableRequestHandler(
+$routes[] = new Route('user.create', '/user', ['POST'], new CallableRequestHandler(
     function (ServerRequestInterface $request) use ($responseFactory) : ResponseInterface {
-        return $responseFactory->createResponse(201);
+        return $responseFactory->createResponse(200);
     }
 ));
 
-$routeCollector->route('userRead', '/user/{id}', ['GET'], new CallableRequestHandler(
+$routes[] = new Route('user.read', '/user/{id}', ['GET'], new CallableRequestHandler(
     function (ServerRequestInterface $request) use ($responseFactory) : ResponseInterface {
         $response = $responseFactory->createResponse(200);
         $response->getBody()->write($request->getAttribute('id'));
@@ -41,7 +42,7 @@ $routeCollector->route('userRead', '/user/{id}', ['GET'], new CallableRequestHan
 ));
 
 $router = new Router();
-$router->addRoute(...$routeCollector->getCollection()->all());
+$router->addRoute(...$routes);
 
 $request = ServerRequestFactory::fromGlobals();
 
