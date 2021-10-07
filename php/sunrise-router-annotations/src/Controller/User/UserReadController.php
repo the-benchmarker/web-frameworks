@@ -8,19 +8,15 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Sunrise\Http\Message\ResponseFactory;
+use Sunrise\Http\Router\Annotation\Route;
 
-/**
- * @Route(
- *   name="userRead",
- *   path="/user/{id}",
- *   methods={"GET"},
- * )
- */
+/** @Route(name="user.read", path="/user/{id}", method="GET") */
+#[Route(name: 'user.read', path: '/user/{id}', method: 'GET')]
 final class UserReadController implements RequestHandlerInterface
 {
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param ServerRequestInterface $request
      *
