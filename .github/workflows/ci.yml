@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  - pull_request
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: file_changes
+        uses: trilom/file-changes-action@v1.2.3
+      - name: Get color
+        run: echo "The selected color is ${{ steps.file_changes.outputs.files }}"
+
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+  test:
+    needs: matrix
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.matrix.outputs.matrix)}}
+      max-parallel: 4
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-ruby@v1
+      - name: Install deps
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Configure
+        run: bundle exec rake config
+
+      - name: Get docker version
+        run: docker --version
+
+      - name: Setup
+        run: |
+          cd ${{ matrix.directory }} 
+          make build  -f .Makefile
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Test
+        run: bundle exec rspec .spec
+        env:
+          FRAMEWORK: ${{ matrix.framework }}
