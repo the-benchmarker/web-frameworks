@@ -16,6 +16,8 @@ blocks:
       commands:
       - checkout
       - cache store $SEMAPHORE_GIT_SHA .
+      - sudo rm -f /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+      - sudo rm -f /etc/apt/sources.list.d/helm-stable-debian.list
       - sudo apt-get update
       - sudo apt-get install build-essential libssl-dev git -y
       - git clone https://github.com/wg/wrk.git wrk
@@ -577,6 +579,23 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
+    - name: phoenix
+      commands:
+      - cd elixir/phoenix && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f elixir/phoenix/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: elixir/phoenix
     - name: plug
       commands:
       - cd elixir/plug && make build  -f .Makefile  && cd -
@@ -628,23 +647,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: elixir/cowboy
-    - name: phoenix
-      commands:
-      - cd elixir/phoenix && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f elixir/phoenix/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: elixir/phoenix
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
@@ -789,11 +791,11 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: fasthttp
+    - name: echo
       commands:
-      - cd go/fasthttp && make build  -f .Makefile  && cd -
+      - cd go/echo && make build  -f .Makefile  && cd -
       - bundle exec rspec .spec
-      - make  -f go/fasthttp/.Makefile collect
+      - make  -f go/echo/.Makefile collect
       - bundle exec rake db:raw_export
       env_vars:
       - name: DATABASE_URL
@@ -805,7 +807,7 @@ blocks:
       - name: ROUTES
         value: GET:/
       - name: FRAMEWORK
-        value: go/fasthttp
+        value: go/echo
     - name: fiber
       commands:
       - cd go/fiber && make build  -f .Makefile  && cd -
@@ -823,6 +825,23 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: go/fiber
+    - name: fasthttp
+      commands:
+      - cd go/fasthttp && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f go/fasthttp/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: go/fasthttp
     - name: webgo
       commands:
       - cd go/webgo && make build  -f .Makefile  && cd -
@@ -908,23 +927,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: go/gf
-    - name: echo
-      commands:
-      - cd go/echo && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f go/echo/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: go/echo
     - name: clevergo
       commands:
       - cd go/clevergo && make build  -f .Makefile  && cd -
@@ -1668,6 +1670,57 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
+    - name: fastify
+      commands:
+      - cd javascript/fastify && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f javascript/fastify/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: javascript/fastify
+    - name: hapi
+      commands:
+      - cd javascript/hapi && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f javascript/hapi/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: javascript/hapi
+    - name: fyrejet-uwebsockets
+      commands:
+      - cd javascript/fyrejet-uwebsockets && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f javascript/fyrejet-uwebsockets/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: javascript/fyrejet-uwebsockets
     - name: sails
       commands:
       - cd javascript/sails && make build  -f .Makefile  && cd -
@@ -1719,40 +1772,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: javascript/fyrejet
-    - name: fyrejet-uwebsockets
-      commands:
-      - cd javascript/fyrejet-uwebsockets && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f javascript/fyrejet-uwebsockets/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: javascript/fyrejet-uwebsockets
-    - name: fastify
-      commands:
-      - cd javascript/fastify && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f javascript/fastify/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: javascript/fastify
     - name: chubbyjs
       commands:
       - cd javascript/chubbyjs && make build  -f .Makefile  && cd -
@@ -1940,23 +1959,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: javascript/restana
-    - name: hapi
-      commands:
-      - cd javascript/hapi && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f javascript/hapi/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: javascript/hapi
     - name: restify
       commands:
       - cd javascript/restify && make build  -f .Makefile  && cd -
@@ -2504,6 +2506,23 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: php/laravel
+    - name: cubex
+      commands:
+      - cd php/cubex && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f php/cubex/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: php/cubex
     - name: workerman
       commands:
       - cd php/workerman && make build  -f .Makefile  && cd -
@@ -3201,23 +3220,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: php/driftphp
-    - name: cubex
-      commands:
-      - cd php/cubex && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f php/cubex/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: php/cubex
     - name: comet
       commands:
       - cd php/comet && make build  -f .Makefile  && cd -
@@ -3396,6 +3398,23 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: python/index.py
+    - name: django-ninja
+      commands:
+      - cd python/django-ninja && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f python/django-ninja/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: python/django-ninja
     - name: starlette
       commands:
       - cd python/starlette && make build  -f .Makefile  && cd -
@@ -3549,23 +3568,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: python/emmett
-    - name: django-ninja
-      commands:
-      - cd python/django-ninja && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f python/django-ninja/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: python/django-ninja
     - name: cyclone
       commands:
       - cd python/cyclone && make build  -f .Makefile  && cd -
@@ -4419,23 +4421,6 @@ blocks:
       - bundle install
       - bundle exec rake config
     jobs:
-    - name: vapor-framework
-      commands:
-      - cd swift/vapor-framework && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f swift/vapor-framework/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: swift/vapor-framework
     - name: hummingbird-framework
       commands:
       - cd swift/hummingbird-framework && make build  -f .Makefile  && cd -
@@ -4453,6 +4438,23 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: swift/hummingbird-framework
+    - name: vapor-framework
+      commands:
+      - cd swift/vapor-framework && make build  -f .Makefile  && cd -
+      - bundle exec rspec .spec
+      - make  -f swift/vapor-framework/.Makefile collect
+      - bundle exec rake db:raw_export
+      env_vars:
+      - name: DATABASE_URL
+        value: postgresql://postgres@0.0.0.0/benchmark
+      - name: DURATION
+        value: '10'
+      - name: CONCURRENCIES
+        value: '64'
+      - name: ROUTES
+        value: GET:/
+      - name: FRAMEWORK
+        value: swift/vapor-framework
     - name: kitura-nio
       commands:
       - cd swift/kitura-nio && make build  -f .Makefile  && cd -
@@ -4504,23 +4506,6 @@ blocks:
         value: GET:/
       - name: FRAMEWORK
         value: swift/swifter-framework
-    - name: perfect
-      commands:
-      - cd swift/perfect && make build  -f .Makefile  && cd -
-      - bundle exec rspec .spec
-      - make  -f swift/perfect/.Makefile collect
-      - bundle exec rake db:raw_export
-      env_vars:
-      - name: DATABASE_URL
-        value: postgresql://postgres@0.0.0.0/benchmark
-      - name: DURATION
-        value: '10'
-      - name: CONCURRENCIES
-        value: '64'
-      - name: ROUTES
-        value: GET:/
-      - name: FRAMEWORK
-        value: swift/perfect
     epilogue:
       commands:
       - docker logs `cat ${FRAMEWORK}/cid.txt`
