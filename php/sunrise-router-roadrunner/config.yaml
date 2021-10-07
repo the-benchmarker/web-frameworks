@@ -2,12 +2,15 @@ framework:
   github: sunrise-php/http-router
   version: 2.10
 
+build_deps:
+  - libevent-dev
+
 php_mod:
   - sockets
 
 php_ext:
-  - apcu
   - event
+  - apcu
 
 before_command:
   - composer update
