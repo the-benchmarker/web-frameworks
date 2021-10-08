@@ -45,15 +45,12 @@ jobs:
       - name: Configure
         run: bundle exec rake config
 
-      - name: Get docker version
-        run: docker --version
-
       - name: Build
         run: |
           cd ${{ matrix.directory }} 
           make build  -f .Makefile
-      
+
       - name: Test
         run: bundle exec rspec .spec
         env:
-          DIRECTORY: ${{ matrix.directory }} 
+          DIRECTORY: ${{ matrix.directory }}
