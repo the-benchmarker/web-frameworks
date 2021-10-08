@@ -18,5 +18,6 @@ end
 def address(name)
   language, framework = name.split('/')
   ip = File.read(File.join(language, framework, 'ip.txt')).strip
+  pp "Found #{ip}"
   Net::HTTP.new(ip, 3000)
 end
