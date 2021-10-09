@@ -11,7 +11,7 @@ jobs:
         with:
           fetch-depth: 0
       - id: file_changes
-        uses: trilom/file-changes-action@v1.2.3
+        uses: trilom/file-changes-action@v1.2.4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0
