@@ -12,10 +12,9 @@ namespace :ci do
     files.each do |file|
       next if file.start_with?(".")
       language, framework, _ = file.split(File::SEPARATOR)
-      matrix[:include] << { language: language, framework: framework, directory: File.join(language, framework) }
+      matrix[:include] << { language: language, framework: framework, directory: File.join(language, framework) } unless matrix[:include].detect{|row|row[:framework]==framework}
     end
     
-    warn matrix.to_json
     puts matrix.to_json
   end
 end
