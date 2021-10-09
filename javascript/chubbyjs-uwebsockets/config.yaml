@@ -3,7 +3,7 @@ framework:
   version: 1.1
 
 build_deps:
-  - git  # required by uWebSocket
+  - git # required by uWebSocket
 
 bin_deps:
   - gcompat # required by uWebSocket
