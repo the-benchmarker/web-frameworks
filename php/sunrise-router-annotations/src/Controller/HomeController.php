@@ -8,19 +8,15 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Sunrise\Http\Message\ResponseFactory;
+use Sunrise\Http\Router\Annotation\Route;
 
-/**
- * @Route(
- *   name="home",
- *   path="/",
- *   methods={"GET"},
- * )
- */
+/** @Route(name="home", path="/", method="GET") */
+#[Route(name: 'home', path: '/', method: 'GET')]
 final class HomeController implements RequestHandlerInterface
 {
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param ServerRequestInterface $request
      *

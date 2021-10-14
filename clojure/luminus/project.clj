@@ -1,7 +1,7 @@
 (defproject luminus "0.1.0-SNAPSHOT"
 
   :dependencies [[luminus/lein-template "4.19"]
-                 [ch.qos.logback/logback-classic "1.2.5"]
+                 [ch.qos.logback/logback-classic "1.2.6"]
                  [cheshire "5.10.1"]
                  [clojure.java-time "0.3.3"]
                  [cprop "0.1.19"]
@@ -20,12 +20,12 @@
                  [org.clojure/tools.cli "1.0.206"]
                  [org.clojure/tools.logging "1.1.0"]
                  [org.webjars.npm/bulma "0.9.3"]
-                 [org.webjars.npm/material-icons "1.0.0"]
+                 [org.webjars.npm/material-icons "1.7.1"]
                  [org.webjars/webjars-locator "0.42"]
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.9.4"]
                  [ring/ring-defaults "0.3.3"]
-                 [com.fasterxml.jackson.core/jackson-core "2.12.5"]]
+                 [com.fasterxml.jackson.core/jackson-core "2.13.0"]]
 
   :min-lein-version "2.0.0"
   

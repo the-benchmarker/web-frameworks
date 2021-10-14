@@ -1,13 +1,13 @@
 require:
- - rubocop-rake
- - rubocop-rspec
- 
+  - rubocop-rake
+  - rubocop-rspec
+
 AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
 
 Naming/AccessorMethodName:
-  Exclude: 
+  Exclude:
     - ruby/rack-routing/app/route_handler.rb
 
 Style/Documentation:
@@ -22,7 +22,7 @@ Layout/LineLength:
 Metrics/MethodLength:
   Enabled: false
 
-Metrics/CyclomaticComplexity: 
+Metrics/CyclomaticComplexity:
   Enabled: false
 
 Metrics/PerceivedComplexity:

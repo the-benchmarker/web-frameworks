@@ -59,9 +59,7 @@ namespace :db do
         frameworks[id].merge!(framework_config['framework'].transform_keys!(&'framework_'.method(:+)))
         frameworks[id].merge!(language_config['provider']['default'].transform_keys!(&'language_'.method(:+)))
 
-        if framework_config['framework'].key?('framework_name')
-          frameworks[id].merge!(framework: framework_config['framework']['framework_name'])
-        end
+        frameworks[id].merge!(framework: framework_config['framework']['framework_name']) if framework_config['framework'].key?('framework_name')
         scheme = 'https'
         scheme = 'http' if framework_config['framework'].key?('unsecure')
         website = if framework_config['framework'].key?('framework_github')
@@ -75,7 +73,7 @@ namespace :db do
       end
     end
     db.close
-    template = %Q{
+    template = %{
 |    | Language | Framework | Speed (64) | Speed (256) | Speed (512) |
 |----|----------|-----------|-----------:|------------:|------------:|
 {{#results}}
@@ -116,7 +114,6 @@ namespace :db do
       )
     end
     $stdout.write(Mustache.render(template, { results: results, date: Date.today, docker_version: `docker --version` }))
-    
   end
   task :raw_export do
     raise 'Please provide a database' unless ENV['DATABASE_URL']
@@ -154,7 +151,7 @@ namespace :db do
         unless data[:languages].map { |row| row[:label] }.to_a.include?(language)
           data[:languages] << {
             label: language,
-            version: language_config.dig('language', 'version'),
+            version: language_config.dig('language', 'version')
           }
         end
         data[:metrics] << info
