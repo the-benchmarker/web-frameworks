@@ -4,14 +4,8 @@ require "net/http"
 
 require_relative "spec_helper"
 
-<<<<<<< HEAD
-RSpec.describe "routes" do
-  context "GET : /" do
-    subject(:response) { http.request(Net::HTTP::Get.new("/")) }
-=======
 RSpec.describe 'routes' do
   let!(:http) { address(ENV['DIRECTORY']) }
->>>>>>> upstream/master
 
     it "returns successfully" do
       expect(response).to be_a(Net::HTTPSuccess)
