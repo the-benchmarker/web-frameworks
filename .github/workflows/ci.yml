@@ -47,12 +47,10 @@ jobs:
 
       - name: Build
         run: |
-          cd ${DIRECTORY} 
-          make build  -f ".Makefile.${ENGINE}"
+          make "build.${ENGINE}"  -f "${DIRECTORY}/.Makefile"
         env:
-          ENGINE: ${{ matrix.engine }}
           DIRECTORY: ${{ matrix.directory }}
-
+          ENGINE: ${{ matrix.engine }}
 
       - name: Test
         run: bundle exec rspec .spec
@@ -60,5 +58,3 @@ jobs:
           LANGUAGE: ${{ matrix.language }}
           FRAMEWORK: ${{ matrix.framework }}
           ENGINE: ${{ matrix.engine }}
-          
-          
