@@ -9,13 +9,11 @@ open Microsoft.Extensions.Hosting
 // Web app
 // ---------------------------------
 
-let webApp =
-    choose
-        [ GET >=> choose
-                      [ route "/" >=> text ""
-                        routef "/user/%s" text ]
-          POST >=> route "/user" >=> text ""
-          setStatusCode 404 >=> text "Not Found" ]
+let webApp: HttpFunc -> HttpFunc =
+    choose [ routef "/user/%s" (fun name -> GET >=> text name)
+             route "/user" >=> POST >=> text ""
+             route "/" >=> GET >=> text ""
+             setStatusCode 404 >=> text "Not Found" ]
 
 // ---------------------------------
 // Config and Main
@@ -27,11 +25,15 @@ let configureServices (services: IServiceCollection) = services.AddGiraffe() |> 
 
 [<EntryPoint>]
 let main args =
-    Host.CreateDefaultBuilder(args)
+    Host
+        .CreateDefaultBuilder(args)
         .ConfigureWebHost(fun webHost ->
-            webHost.UseKestrel()
-                   .ConfigureServices(configureServices)
-                   .Configure(Action<IApplicationBuilder> configureApp)
-                   |> ignore)
-        .Build().Run()
+            webHost
+                .UseKestrel()
+                .ConfigureServices(configureServices)
+                .Configure(Action<IApplicationBuilder> configureApp)
+            |> ignore)
+        .Build()
+        .Run()
+
     0
