@@ -25,15 +25,12 @@ let configureServices (services: IServiceCollection) = services.AddGiraffe() |> 
 
 [<EntryPoint>]
 let main args =
-    Host
-        .CreateDefaultBuilder(args)
+    Host.CreateDefaultBuilder(args)
         .ConfigureWebHost(fun webHost ->
-            webHost
-                .UseKestrel()
-                .ConfigureServices(configureServices)
-                .Configure(Action<IApplicationBuilder> configureApp)
-            |> ignore)
-        .Build()
-        .Run()
+            webHost.UseKestrel()
+                   .ConfigureServices(configureServices)
+                   .Configure(Action<IApplicationBuilder> configureApp)
+                   |> ignore)
+        .Build().Run()
 
     0
