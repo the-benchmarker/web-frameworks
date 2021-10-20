@@ -1,4 +1,4 @@
-FROM nimlang/nim:1.4.8-alpine
+FROM nimlang/nim:1.6.0-alpine
 
 WORKDIR /usr/src/app
 
