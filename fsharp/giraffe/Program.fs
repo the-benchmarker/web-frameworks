@@ -9,13 +9,11 @@ open Microsoft.Extensions.Hosting
 // Web app
 // ---------------------------------
 
-let webApp =
-    choose
-        [ GET >=> choose
-                      [ route "/" >=> text ""
-                        routef "/user/%s" text ]
-          POST >=> route "/user" >=> text ""
-          setStatusCode 404 >=> text "Not Found" ]
+let webApp: HttpFunc -> HttpFunc =
+    choose [ routef "/user/%s" (fun name -> GET >=> text name)
+             route "/user" >=> POST >=> text ""
+             route "/" >=> GET >=> text ""
+             setStatusCode 404 >=> text "Not Found" ]
 
 // ---------------------------------
 // Config and Main
@@ -34,4 +32,5 @@ let main args =
                    .Configure(Action<IApplicationBuilder> configureApp)
                    |> ignore)
         .Build().Run()
+
     0
