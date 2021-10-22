@@ -2,7 +2,10 @@ framework:
   github: chubbyphp/chubbyphp-framework
   version: 4.0
 
+php_mod:
+    - sockets
+
 before_command:
-  - vendor/bin/rr get-binary
+  - vendor/bin/rr get-binary --filter=v2.4
 
 command: ./rr serve
