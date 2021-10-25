@@ -6,6 +6,6 @@ php_mod:
   - sockets
   
 before_command:
-  - vendor/bin/rr get-binary --filter=v2.4
+  - ./vendor/bin/rr get-binary
 
 command: ./rr serve

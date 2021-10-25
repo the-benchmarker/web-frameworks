@@ -14,6 +14,6 @@ php_ext:
 
 before_command:
   - composer update
-  - ./vendor/bin/rr get-binary --filter=v2.4
+  - ./vendor/bin/rr get-binary
 
 command: ./rr serve
