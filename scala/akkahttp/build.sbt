@@ -1,5 +1,5 @@
 name := "server"
-scalaVersion := "2.13.6"
+scalaVersion := "3.1.0"
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http"    % "[10.2,10.3)",
