@@ -7,6 +7,7 @@ framework:
     - uwebsockets
 
   bootstrap:
+    - npm install # workaround
     - npm -g install typescript
     - tsc
 
