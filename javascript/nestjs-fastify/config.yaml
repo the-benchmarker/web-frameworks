@@ -1,13 +1,12 @@
 framework:
   website: nestjs.com
   version: 8.1
-  
+
   bootstrap:
     - npm install # workaround
     - npm -g install @nestjs/cli
     - nest build
 
-  
   files:
     - nest-cli.json
     - src
