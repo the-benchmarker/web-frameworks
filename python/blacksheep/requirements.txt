@@ -1,4 +1,3 @@
 blacksheep>=1.2,<1.3
 gunicorn
-uvicorn[standard]
-httptools>=0.2.* # see https://github.com/the-benchmarker/web-frameworks/pull/4774#issuecomment-955202512
+uvicorn
