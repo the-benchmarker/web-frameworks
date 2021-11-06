@@ -1,13 +1,13 @@
 framework:
   website: phalcon.io
-  version: 4.0
+  version: 5.0
 
   extensions:
     - psr
 
   bootstrap:
     - mkdir -p /usr/src/php/ext/phalcon
-    - curl -fsSL https://github.com/phalcon/cphalcon/releases/download/v5.0.0alpha5/phalcon-pecl.tgz | tar xvz -C "/usr/src/php/ext/phalcon" --strip 1
+    - curl -fsSL https://github.com/phalcon/cphalcon/releases/download/v5.0.0alpha6/phalcon-pecl.tgz | tar xvz -C "/usr/src/php/ext/phalcon" --strip 1
     - docker-php-ext-install phalcon
 
   nginx_conf:
