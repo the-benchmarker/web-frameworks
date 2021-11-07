@@ -2,17 +2,14 @@ framework:
   github: amirfaramarzi/tower
   version: 1.14
 
-  build_deps:
-    - libevent-dev
-    - openssl-dev
-
-  modules:
-    - pcntl
-    - sockets
+  files:
+    - .env
 
   extensions:
-    - event
     - redis
+
+  engines:
+    - workerman
 
   bootstrap:
     - mkdir storage/logs -p
