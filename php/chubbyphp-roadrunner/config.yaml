@@ -3,7 +3,11 @@ framework:
   version: 4.0
 
 php_mod:
-    - sockets
+  - sodium
+  - sockets
+
+deps:
+  - libsodium-dev
 
 before_command:
   - ./vendor/bin/rr get-binary

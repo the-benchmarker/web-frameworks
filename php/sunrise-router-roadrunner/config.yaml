@@ -4,13 +4,17 @@ framework:
 
 build_deps:
   - libevent-dev
+  - libsodium-dev
+
+php_mod:
+  - sodium
+  - sockets
 
 php_ext:
   - event
   - apcu
 
 before_command:
-  - composer update
   - ./vendor/bin/rr get-binary
 
 command: ./rr serve

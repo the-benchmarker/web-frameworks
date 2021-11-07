@@ -2,7 +2,11 @@ framework:
   website: slimframework.com
   version: 4.9
 
+build_deps:
+  - libsodium-dev
+
 php_mod:
+  - sodium
   - sockets
   
 before_command:

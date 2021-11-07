@@ -11,11 +11,12 @@ use Chubbyphp\Framework\RequestHandler\CallbackRequestHandler;
 use Chubbyphp\Framework\Router\FastRoute\RouteMatcher;
 use Chubbyphp\Framework\Router\Route;
 use Chubbyphp\Framework\Router\Routes;
-use Psr\Http\Message\ServerRequestInterface;
 use Slim\Psr7\Factory\ResponseFactory;
-use Spiral\Goridge\StreamRelay;
+use Slim\Psr7\Factory\ServerRequestFactory;
+use Slim\Psr7\Factory\StreamFactory;
+use Slim\Psr7\Factory\UploadedFileFactory;
+use Spiral\RoadRunner\Http\PSR7Worker;
 use Spiral\RoadRunner\Worker;
-use Spiral\RoadRunner\PSR7Client;
 
 ini_set('display_errors', 'stderr');
 
@@ -53,13 +54,17 @@ $app = new Application([
     ]), sys_get_temp_dir() . '/chubbyphp-roadrunner.php'), $responseFactory),
 ]);
 
-$worker = new Worker(new StreamRelay(STDIN, STDOUT));
-$psr7 = new PSR7Client($worker);
+$worker = new PSR7Worker(
+    Worker::create(),
+    new ServerRequestFactory(),
+    new StreamFactory(),
+    new UploadedFileFactory()
+);
 
-while ($req = $psr7->acceptRequest()) {
+while ($req = $worker->waitRequest()) {
     try {
-        $psr7->respond($app->handle($req));
+        $worker->respond($app->handle($req));
     } catch (\Throwable $e) {
-        $psr7->getWorker()->error((string)$e);
+        $worker->getWorker()->error((string)$e);
     }
 }
