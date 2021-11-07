@@ -47,10 +47,10 @@ namespace :cloud do
       end
     end
 
-    if config.key?('before_command')
+    if config.key?('bootstrap')
       commands = config['cloud']['config']['runcmd'] || []
       config['cloud']['config']['runcmd'] = []
-      config['before_command'].each do |cmd|
+      config['bootstrap'].each do |cmd|
         config['cloud']['config']['runcmd'] << cmd
       end
       commands.each do |cmd|

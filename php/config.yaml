@@ -19,6 +19,7 @@ language:
         - event
       deps:
         - libevent-dev
+        - openssl-dev
       modules:
         - pcntl
         - sockets
@@ -28,6 +29,8 @@ language:
         - .road-runner/.rr.yaml
       bootstrap:
         - vendor/bin/rr get-binary
+      modules:
+        - sockets
       command: ./rr serve
     swoole:
       extensions:

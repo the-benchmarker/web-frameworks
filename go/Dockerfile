@@ -1,4 +1,4 @@
-FROM golang:1.16-alpine
+FROM golang:1.17-alpine
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
@@ -11,9 +11,9 @@ COPY . ./
   RUN apk add {{{.}}}
 {{/build_deps}}
 
-{{#before_command}}
+{{#bootstrap}}
   RUN {{{.}}}
-{{/before_command}}
+{{/bootstrap}}
 
 RUN go get
 
