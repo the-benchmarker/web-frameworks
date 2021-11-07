@@ -1,7 +1,7 @@
-from masonite.routes import Get, Post
+from masonite.routes import Route
 
 ROUTES = [
-    Get("/", "PageController@index"),
-    Get("/user/@id:int", "PageController@show_user"),
-    Post("/user", "PageController@create_user"),
+    Route.get("/", "PageController@index"),
+    Route.get("/user/@id:int", "PageController@show_user"),
+    Route.post("/user", "PageController@create_user"),
 ]
