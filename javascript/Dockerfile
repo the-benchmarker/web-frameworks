@@ -10,7 +10,7 @@ ENV NODE_ENV production
 
 {{#deps}}
   RUN apk add {{{.}}}
-{{/bin_deps}}
+{{/deps}}
 
 {{#files}}
   COPY {{source}} {{target}}
