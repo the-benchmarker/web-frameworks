@@ -5,7 +5,7 @@ framework:
   extensions:
     - psr
 
-  bootstrap:
+  before_bootstrap:
     - mkdir -p /usr/src/php/ext/phalcon
     - curl -fsSL https://github.com/phalcon/cphalcon/releases/download/v5.0.0alpha6/phalcon-pecl.tgz | tar xvz -C "/usr/src/php/ext/phalcon" --strip 1
     - docker-php-ext-install phalcon

@@ -27,6 +27,10 @@ RUN docker-php-ext-install zip opcache
   COPY {{source}} {{target}}
 {{/files}}
 
+{{#before_bootstrap}}
+  RUN {{{.}}}
+{{/before_bootstrap}}
+
 {{#bootstrap}}
   RUN {{{.}}}
 {{/bootstrap}}
