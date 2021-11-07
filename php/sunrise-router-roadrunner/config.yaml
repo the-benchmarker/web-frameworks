@@ -5,9 +5,6 @@ framework:
 build_deps:
   - libevent-dev
 
-php_mod:
-  - sockets
-
 php_ext:
   - event
   - apcu
