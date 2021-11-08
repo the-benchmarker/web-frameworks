@@ -1,6 +1,6 @@
 framework:
   github: mahmoud/clastic
-  version: 21.0
+  version: 21.1
 
 command: >
   gunicorn  \
