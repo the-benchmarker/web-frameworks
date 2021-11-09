@@ -6,7 +6,7 @@ use std::net::{Ipv4Addr};
 fn index() -> &'static str { "" }
 
 #[get("/user/<id>")]
-fn get_user(id: &str) -> String { id.to_string() }
+fn get_user(id: &str) -> &str { id }
 
 #[post("/user")]
 fn post_user() -> &'static str { "" }
