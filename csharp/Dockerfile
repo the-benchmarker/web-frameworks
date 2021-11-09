@@ -12,6 +12,8 @@ RUN dotnet publish -c release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
 
+RUN apk add icu
+
 WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/out out
