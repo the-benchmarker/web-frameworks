@@ -16,5 +16,10 @@ fn main() {
             .post(index)
             .push(Router::new().path("<id>").get(get_user)),
     );
-    salvo::start(Server::new(router).bind(([0, 0, 0, 0], 3000)));
+    salvo::start(async {
+        Server::builder(TcpListener::bind(([0, 0, 0, 0], 3000)).unwrap())
+            .serve(Service::new(router))
+            .await
+            .unwrap();
+    });
 }
