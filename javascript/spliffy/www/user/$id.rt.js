@@ -1,3 +1,3 @@
 module.exports = {
-    GET: ( { url } ) => url.pathParameters.id
-}
+  GET: ({ url }) => url.pathParameters.id,
+};
