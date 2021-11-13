@@ -6,7 +6,7 @@ edition = "2018"
 publish = false
 
 [dependencies]
-gotham = "~0.6"
+gotham = "~0.7"
 gotham_derive = "~0.6"
 serde = { version = "1.0", features = ["derive"] }
 
