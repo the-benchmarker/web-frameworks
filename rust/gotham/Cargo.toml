@@ -7,7 +7,7 @@ publish = false
 
 [dependencies]
 gotham = "~0.6"
-gotham_derive = "~0.6"
+gotham_derive = "~0.7"
 serde = { version = "1.0", features = ["derive"] }
 
 [profile.release]
