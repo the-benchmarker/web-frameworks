@@ -8,3 +8,8 @@ build_deps:
 
 bin_deps:
   - gcompat # required by uWebSocket
+
+files:
+  - app.js
+  - package.json
+  - www/
