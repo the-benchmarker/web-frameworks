@@ -2,12 +2,11 @@
 name = "server"
 version = "0.1.0"
 authors = ["Isaac Whitfield <iw@whitfin.io>"]
-edition = "2018"
+edition = "2021"
 publish = false
 
 [dependencies]
-gotham = "~0.6"
-gotham_derive = "~0.6"
+gotham = { version = "0.7", features = ["derive"], default-features = false }
 serde = { version = "1.0", features = ["derive"] }
 
 [profile.release]
