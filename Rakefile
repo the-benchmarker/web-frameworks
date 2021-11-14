@@ -151,13 +151,12 @@ def commands_for(language, framework, variant, provider = default_provider)
   commands
 end
 
-def create_dockerfile(directory, engine, config)
-  generic_template = File.join(Dir.pwd, directory, '..', 'Dockerfile')
-  custom_template = File.join(Dir.pwd, directory, '..', "#{engine}.Dockerfile")
-  template = if File.exist?(custom_template)
-               custom_template
+def create_dockerfile(directory, engine, config)\
+  path = File.join(Dir.pwd, directory, '..', "#{engine}.Dockerfile")
+  template = if File.symlink?(path)
+               File.readlink(path)
              else
-               generic_template
+               File.read(path)
              end
   files = []
 
@@ -180,9 +179,9 @@ def create_dockerfile(directory, engine, config)
   end
 
   File.open(File.join(directory, ".Dockerfile.#{engine}"), 'w') do |f|
-    f.write(Mustache.render(File.read(template), config.merge('files' => files, 'environment' => config['environment']&.map do |k, v|
-                                                                                                   "#{k}=#{v}"
-                                                                                                 end)))
+    f.write(Mustache.render(template, config.merge('files' => files, 'environment' => config['environment']&.map do |k, v|
+                                                                                        "#{k}=#{v}"
+                                                                                      end)))
   end
 end
 
