@@ -5,7 +5,7 @@
     "spiral/http": "*",
     "spiral/router": "*",
     "spiral/console": "*",
-    "spiral/roadrunner": "*"
+    "spiral/roadrunner": "~1.0"
   },
   "autoload": {
     "psr-4": {
