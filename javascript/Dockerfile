@@ -3,7 +3,7 @@ FROM node:14.18-alpine
 WORKDIR /usr/src/app
 
 {{#files}}
-  COPY {{source}} {{target}}
+  COPY '{{source}}' '{{target}}'
 {{/files}}
 
 ENV NODE_ENV production
@@ -11,10 +11,6 @@ ENV NODE_ENV production
 {{#deps}}
   RUN apk add {{{.}}}
 {{/deps}}
-
-{{#files}}
-  COPY {{source}} {{target}}
-{{/files}}
 
 {{#bootstrap}}
   RUN {{{.}}}

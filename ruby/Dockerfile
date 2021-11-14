@@ -3,7 +3,7 @@ FROM ruby:3.0-alpine
 WORKDIR /usr/src/app
 
 {{#files}}
-  COPY {{source}} {{target}}
+  COPY '{{source}}' '{{target}}'
 {{/files}}
 
 RUN apk add build-base

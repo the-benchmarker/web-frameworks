@@ -3,13 +3,5 @@ framework:
   github: SRFNStack/spliffy
   version: 0.7
 
-files:
-  - app.js
-  - package.json
-  - www
-
-build_deps:
-  - git
-
-bin_deps:
-  - gcompat # required by uWebSocket
+  engines:
+    - uwebsockets
