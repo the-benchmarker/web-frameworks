@@ -153,11 +153,8 @@ end
 
 def create_dockerfile(directory, engine, config)\
   path = File.join(Dir.pwd, directory, '..', "#{engine}.Dockerfile")
-  template = if File.symlink?(path)
-               File.readlink(path)
-             else
-               File.read(path)
-             end
+  path = File.readlink(path) if File.symlink?(path)
+  template = File.read(path)
   files = []
 
   Dir.glob(config['files']).each do |file|
