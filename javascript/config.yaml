@@ -19,7 +19,7 @@ language:
     uwebsockets:
       deps:
         - git
-        - gcompat # required by uWebSocket
+        - gcompat
       environment:
         NODE_ENV: production
         EXPERIMENTAL_FASTCALL: 1
@@ -27,6 +27,8 @@ language:
         - npm -g install pm2
         - npm install
       command: pm2-runtime start app.js -i $(nproc)
+    deno:
+      command: deno run --allow-net --allow-read --allow-env app.ts
 
 framework:
   engines:
