@@ -16,17 +16,9 @@ fn main() {
             .post(index)
             .push(Router::new().path("<id>").get(get_user)),
     );
-<<<<<<< HEAD
     salvo::run(async {
         Server::new(TcpListener::bind(([0, 0, 0, 0], 3000)))
             .serve(router)
             .await;
-=======
-    salvo::start(async {
-        Server::builder(TcpListener::bind(([0, 0, 0, 0], 3000)).unwrap())
-            .serve(Service::new(router))
-            .await
-            .unwrap();
->>>>>>> master
     });
 }
