@@ -151,7 +151,7 @@ def commands_for(language, framework, variant, provider = default_provider)
   commands
 end
 
-def create_dockerfile(directory, engine, config)\
+def create_dockerfile(directory, engine, config)
   path = File.join(Dir.pwd, directory, '..', "#{engine}.Dockerfile")
   path = File.readlink(path) if File.symlink?(path)
   template = File.read(path)
@@ -184,7 +184,7 @@ end
 
 desc 'Create Dockerfiles'
 task :config do
-  Dir.glob(['ruby/*/config.yaml', 'javascript/*/config.yaml', 'php/*/config.yaml']).each do |path|
+  Dir.glob(['php/*/config.yaml', 'ruby/*/config.yaml', 'javascript/*/config.yaml']).each do |path|
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
     raise "missing engine for #{directory}" unless config.dig('framework', 'engines')

@@ -7,15 +7,13 @@ framework:
     - php-fpm
     - workerman
 
-  files:
-    - "**/*.php"
-    - composer.json
-    - .workerman/bin/workerman.php
-    - .swoole/bin/swoole.php
-
 language:
   engines:
     swoole:
+      files:
+        - .swoole/bin/swoole.php
       command: php bin/swoole.php
     workerman:
+      files:
+        - .workerman/bin/workerman.php
       command: php bin/workerman.php start
