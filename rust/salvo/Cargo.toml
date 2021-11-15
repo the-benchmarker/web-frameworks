@@ -5,11 +5,7 @@ edition = "2021"
 authors = ["Chrislearn Young <chrislearn@hotmail.com>"]
 
 [dependencies]
-<<<<<<< HEAD
 salvo = { version = "~0.16" }
-=======
-salvo = { version = "~0.15" }
->>>>>>> master
 
 [profile.release]
 codegen-units = 1
