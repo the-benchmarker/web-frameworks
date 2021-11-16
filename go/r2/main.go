@@ -18,7 +18,7 @@ func main() {
 	}))
 
 	r.Handle(http.MethodGet, "/user/:id", http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
-		rw.Write([]byte(r2.PathParams(req).Get("id")))
+		rw.Write([]byte(r2.PathParam(req, "id")))
 	}))
 
 	http.ListenAndServe(":3000", r)
