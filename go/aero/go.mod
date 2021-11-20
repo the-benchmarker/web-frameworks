@@ -1,3 +1,3 @@
 module main
 
-require github.com/aerogo/aero v1.3.58
+require github.com/aerogo/aero v1.3.59
