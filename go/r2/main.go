@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+	"net"
 	"net/http"
 
 	"github.com/aofei/r2"
@@ -21,5 +23,11 @@ func main() {
 		rw.Write([]byte(r2.PathParam(req, "id")))
 	}))
 
-	http.ListenAndServe(":3000", r)
+	(&http.Server{
+		Addr:    ":3000",
+		Handler: r,
+		BaseContext: func(_ net.Listener) context.Context {
+			return r2.Context()
+		},
+	}).ListenAndServe()
 }
