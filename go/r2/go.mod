@@ -1,3 +1,3 @@
 module main
 
-require github.com/aofei/r2 v0.2.2
+require github.com/aofei/r2 v0.3.0
