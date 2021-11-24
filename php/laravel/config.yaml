@@ -7,8 +7,6 @@ framework:
     - swoole
 
   files:
-    - "**/*.php"
-    - composer.json
     - artisan
     - .swoole/config/laravels.php
     - .swoole/bin/laravels

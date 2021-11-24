@@ -81,7 +81,7 @@ def override_or_merge(value3, value2, value1)
     if value1
       case value1
       when Array
-        value.unshift(*value1)
+        value.unshift(*value1).uniq!
       when String
         value = value1
       end
@@ -189,10 +189,12 @@ task :config do
     config = get_config_from(directory, engines_as_list: false)
     raise "missing engine for #{directory}" unless config.dig('framework', 'engines')
 
+    language_config = config['language']
+    framework_config = config['framework']
     config.dig('framework', 'engines').each do |engine|
       engine.each do |name, data|
-        variables = custom_config(config['language'], config['framework'], data)
-        variables['files'].each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }
+        variables = custom_config(language_config, framework_config, data)
+        variables['files'].each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }.uniq!
 
         create_dockerfile(directory, name, variables)
       end
