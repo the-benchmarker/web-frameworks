@@ -1,6 +1,6 @@
 (defproject luminus "0.1.0-SNAPSHOT"
 
-  :dependencies [[luminus/lein-template "4.21"]
+  :dependencies [[luminus/lein-template "4.25"]
                  [ch.qos.logback/logback-classic "1.2.7"]
                  [cheshire "5.10.1"]
                  [clojure.java-time "0.3.3"]
@@ -10,7 +10,7 @@
                  [luminus-jetty "0.2.1"]
                  [luminus-transit "0.1.2"]
                  [luminus/ring-ttl-session "0.3.3"]
-                 [markdown-clj "1.10.6"]
+                 [markdown-clj "1.10.7"]
                  [metosin/muuntaja "0.6.8"]
                  [metosin/reitit "0.5.15"]
                  [metosin/ring-http-response "0.9.3"]
