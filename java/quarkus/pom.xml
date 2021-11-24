@@ -17,7 +17,8 @@
 
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>2.5.0.Final</quarkus.platform.version>
+    <quarkus.platform.version>2.4.2.Final</quarkus.platform.version>
+    <quarkus.maven-plugin.version>2.4.2.Final</quarkus.maven-plugin.version>
 
   </properties>
   <dependencyManagement>
@@ -46,7 +47,7 @@
       <plugin>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
-        <version>${quarkus.platform.version}</version>
+        <version>${quarkus.maven-plugin.version}</version>
         <extensions>true</extensions>
         <executions>
           <execution>
