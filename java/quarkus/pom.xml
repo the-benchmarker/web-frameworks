@@ -44,7 +44,7 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>io.quarkus</groupId>
+        <groupId>io.quarkus.platform</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
         <version>${quarkus.platform.version}</version>
         <extensions>true</extensions>
