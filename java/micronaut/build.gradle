@@ -8,7 +8,7 @@ buildscript {
 
 plugins {
     id("com.github.johnrengelman.shadow") version "${shadowVersion}"
-    id("io.micronaut.application") version "2.0.8"
+    id("io.micronaut.application") version "3.0.0"
 }
 
 version = "0.1"
@@ -26,7 +26,7 @@ micronaut {
     processing {
         incremental(true)
     }
-  version '2.2.+'
+  version '3.0.+'
 }
 
 dependencies {
