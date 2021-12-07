@@ -1,6 +1,6 @@
 framework:
   website: docs.mezzio.dev
-  version: 3.6
+  version: 3.8
 
 before_command:
   - mkdir /usr/src/app/data
