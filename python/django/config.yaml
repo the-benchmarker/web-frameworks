@@ -1,6 +1,6 @@
 framework:
   website: djangoproject.com
-  version: 3.2
+  version: 4.0
 
 command: >
   gunicorn  \
