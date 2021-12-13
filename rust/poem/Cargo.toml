@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-poem = "~1.0.38"
+poem = "~1.1.0"
 tokio = { version = "~1.14.0", features = ["rt-multi-thread", "macros"] }
 
 [profile.release]
