@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 poem = "~1.1"
-tokio = { version = "~1.14.0", features = ["rt-multi-thread", "macros"] }
+tokio = { version = "~1.15.0", features = ["rt-multi-thread", "macros"] }
 
 [profile.release]
 codegen-units = 1
