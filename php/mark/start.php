@@ -1,5 +1,5 @@
 <?php
-use Mark\SimpleApp;
+use Mark\App;
 
 require 'vendor/autoload.php';
 
