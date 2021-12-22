@@ -1,14 +1,6 @@
-buildscript {
-
-    ext {
-	    shadowVersion = "+"
-    }
-    
-}
-
 plugins {
-    id("com.github.johnrengelman.shadow") version "${shadowVersion}"
-    id("io.micronaut.application") version "3.1.1"
+    id("com.github.johnrengelman.shadow") version "+"
+    id("io.micronaut.application") version "+"
 }
 
 version = "0.1"
