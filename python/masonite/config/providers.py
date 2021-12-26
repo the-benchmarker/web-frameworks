@@ -1,6 +1,6 @@
 """Providers Configuration File."""
 
-from masonite.providers import AppProvider, RouteProvider
+from masonite.providers import RouteProvider
 
 """Providers List
 Providers are a simple way to remove or add functionality for Masonite
@@ -9,4 +9,4 @@ request is made depending on the provider. Take some time to can
 learn more more about Service Providers in our documentation
 """
 
-PROVIDERS = [AppProvider, RouteProvider]
+PROVIDERS = [RouteProvider]
