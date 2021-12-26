@@ -8,13 +8,11 @@ from masonite.middleware import (
     SessionMiddleware,
     EncryptCookies,
     LoadUserMiddleware,
+    VerifyCsrfToken
 )
 from masonite.routes import Route
 from masonite.configuration.Configuration import Configuration
 from masonite.configuration import config
-
-from app.middleware.VerifyCsrfToken import VerifyCsrfToken
-
 
 class Kernel:
 
