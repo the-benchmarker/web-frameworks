@@ -1,3 +1,4 @@
-masonite==4.0.0b1.post7
+masonite>=4,<5
+masonite-orm>=2,<3
 gunicorn
 meinheld
