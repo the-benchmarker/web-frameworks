@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Welcome on Masonite 4{% endblock %}
+
+{% block content %}
+<div class="h-screen flex flex-col items-center justify-center">
+  <img src="/logo.png" alt="Masonite Logo" class="h-16 w-16 mb-4">
+  <div class="text-gray-500 text-5xl mb-10 tracking-wide">
+    Masonite 4
+  </div>
+
+  <nav class="flex space-x-4 justify-center text-gray-500 uppercase text-sm">
+    <a href="https://docs.masoniteproject.com" class="px-3 py-2 hover:text-indigo-700">
+      Documentation
+    </a>
+
+    <a href="https://discord.gg/HEQBAbTXt2" class="px-3 py-2 hover:text-indigo-700">
+      Join Discord Community
+    </a>
+
+    <a href="https://github.com/MasoniteFramework/masonite" class="px-3 py-2 hover:text-indigo-700">
+      GitHub
+    </a>
+
+    <a href="https://github.com/sponsors/MasoniteFramework" class="px-3 py-2 hover:text-indigo-700">
+      Sponsor us
+    </a>
+
+    <a href="https://twitter.com/masoniteproject" class="px-3 py-2 hover:text-indigo-700">
+      Follow us on Twitter
+    </a>
+  </nav>
+
+</div>
+{% endblock %}

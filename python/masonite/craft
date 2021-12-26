@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+"""Craft Command.
+This module is really used for backup only if the masonite CLI cannot import this for you.
+This can be used by running "python craft". This module is not ran when the CLI can
+successfully import commands for you.
+"""
+
+from wsgi import application
+
+if __name__ == "__main__":
+    application.make("commands").run()

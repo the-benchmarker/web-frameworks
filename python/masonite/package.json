@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "npm run development",
+    "development": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production"
+  },
+  "devDependencies": {
+    "axios": "^0.22.0",
+    "laravel-mix": "^6.0.39",
+    "postcss": "^8.4.5"
+  }
+}
