@@ -20,6 +20,9 @@ FRAMEWORKS.yaml
 */*/Dockerfile
 */*/.Makefile
 */*/ip.txt
+<<<<<<< HEAD
+venv
+=======
 */*/cid.txt
 
 /lib/**/*.cr
@@ -40,3 +43,4 @@ obj
 [Rr]elease/
 *.fsproj
 *.fsproj.user
+>>>>>>> upstream/master
