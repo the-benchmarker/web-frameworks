@@ -9,13 +9,12 @@ from masonite.middleware import (
     EncryptCookies,
     LoadUserMiddleware,
     MaintenanceModeMiddleware,
-    VerifyCsrfToken,
 )
 from masonite.routes import Route
 from masonite.configuration.Configuration import Configuration
 from masonite.configuration import config
 from config.filesystem import STATICFILES
-
+from app.middlewares.VerifyCsrfToken import VerifyCsrfToken
 
 class Kernel:
 
