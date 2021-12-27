@@ -1,3 +1,7 @@
+# disable logging
+require "log"
+Log.setup(:none)
+
 require "router"
 
 struct Server

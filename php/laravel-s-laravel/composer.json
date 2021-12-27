@@ -1,0 +1,11 @@
+{
+  "require": {
+    "hhxsv5/laravel-s": "~3.7.0",
+    "laravel/framework": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}

@@ -9,4 +9,4 @@ HASHING = {
     "argon2": {"memory": 1024, "threads": 2, "time": 2},
 }
 
-APP_URL = env("APP_URL", "http://localhost:8000/")
+APP_URL = env("APP_URL", "http://0.0.0.0:3000/")

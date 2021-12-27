@@ -1,33 +1,46 @@
-FROM alpine
-
-RUN apk add git build-base cmake
+FROM debian:buster
 
 WORKDIR /usr/src/app
 
+RUN apt-get -qq update
+RUN apt-get -qy install build-essential git cmake
+
 {{#build_deps}}
-  RUN apk add {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/build_deps}}
 
-COPY . ./
+{{#sources}}
+  COPY {{{.}}} {{{.}}}
+{{/sources}}
 
-{{#clone}}
+{{#download}}
   RUN {{{.}}}
-{{/clone}}
+{{/download}}
 
 {{#build}}
    RUN {{{.}}}
 {{/build}}
 
-FROM alpine
+FROM debian:buster
+
+{{#environment}}
+ENV {{{.}}}
+{{/environment}}
+
+WORKDIR /opt/web
+
+RUN apt-get -qq update
 
 {{#bin_deps}}
-   RUN apk add {{{.}}}
+   RUN apt-get -qy install {{{.}}}
 {{/bin_deps}}
 
 {{#files}}
-  COPY --from=0 /usr/src/app/{{.}} /usr/bin/{{{.}}}
+  COPY {{{.}}} {{{.}}}
 {{/files}}
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+{{#binaries}}
+  COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
+{{/binaries}}
+
+CMD {{{command}}}

@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
 
 WORKDIR /usr/src/app
 
@@ -10,12 +10,14 @@ RUN dotnet restore
 COPY . .
 RUN dotnet publish -c release -o out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
 
 WORKDIR /usr/src/app
 
-COPY --from=0 /usr/src/app/out out
+COPY --from=build /usr/src/app/out out
 
+ENV ASPNETCORE_URLS=http://+:3000
 ENV COMPlus_TieredCompilation 1
+EXPOSE 3000
 
-CMD dotnet /usr/src/app/out/suaveapp.dll
+CMD dotnet /usr/src/app/out/web.dll

@@ -1,4 +1,8 @@
 #! /usr/bin/env python3
+# Disable all logging features
+import logging
+
+logging.disable()
 import cherrypy
 
 
@@ -23,12 +27,8 @@ class UserAPI:
 WebRoot.user = UserAPI()
 
 
-global_config = {
-    "environment": "production" if IS_STANDALONE else "embedded",
-}
-config = {
-    "/user": {"request.dispatch": cherrypy.dispatch.MethodDispatcher(), },
-}
+global_config = {"environment": "production" if IS_STANDALONE else "embedded"}
+config = {"/user": {"request.dispatch": cherrypy.dispatch.MethodDispatcher()}}
 
 
 cherrypy.config.update(global_config)

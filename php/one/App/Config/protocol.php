@@ -16,7 +16,10 @@ return [
         'sock_type'   => SWOOLE_SOCK_TCP,
         'ip'          => '0.0.0.0',
         'set'         => [
-            'worker_num'       => swoole_cpu_num(),
+            'worker_num'       => swoole_cpu_num() * 2,
+            'enable_coroutine' => false,
+            'log_file' => '/dev/null',
+            'log_level' => SWOOLE_LOG_ERROR,
         ],
     ]
 ];

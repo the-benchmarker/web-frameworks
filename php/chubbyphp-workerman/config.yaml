@@ -1,0 +1,16 @@
+framework:
+  github: chubbyphp/chubbyphp-framework
+  version: 4.0
+
+build_deps:
+  - libevent-dev
+  - openssl-dev
+
+php_mod:
+  - pcntl
+  - sockets
+
+php_ext:
+  - event
+
+command: php public/index.php start

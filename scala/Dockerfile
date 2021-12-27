@@ -1,19 +1,17 @@
-FROM hseeberger/scala-sbt:8u222_1.3.3_2.13.1
+FROM hseeberger/scala-sbt:11.0.12_1.5.5_2.13.6 AS build
 
 WORKDIR /usr/src/app
 
 COPY . ./
 
-RUN sbt assembly
+RUN sbt universal:packageZipTarball
 
-FROM openjdk:13-alpine
+FROM openjdk:11-jre
 
 WORKDIR /usr/src/app
 
-{{#files}}
-COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
-{{/files}}
+COPY --from=build /usr/src/app/target target
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+RUN tar -xvzf target/universal/server-0.1.0-SNAPSHOT.tgz
+
+CMD server-0.1.0-SNAPSHOT/bin/server

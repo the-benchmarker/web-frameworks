@@ -1,4 +1,8 @@
-from wsgiref.simple_server import make_server
+# Disable all logging features
+import logging
+
+logging.disable()
+
 from pyramid.config import Configurator
 from pyramid.response import Response
 

@@ -1,28 +1,42 @@
-FROM php:7.4-fpm-alpine
+FROM php:8.0-fpm-alpine
 
-RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc {{#deps}} {{{.}}} {{/deps}}
-RUN docker-php-ext-install zip opcache
+RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev php8-pear {{#deps}} {{{.}}} {{/deps}}
 
 WORKDIR /usr/src/app
 
-{{#php_ext}}
-  RUN pecl install {{{.}}}
-  RUN docker-php-ext-enable {{{.}}}
-{{/php_ext}}
+RUN ln -sfv /usr/bin/pecl8  /usr/local/bin/pecl
+
+RUN docker-php-ext-install zip opcache
+
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
 
 {{#build_deps}}
   RUN apk add {{{.}}}
 {{/build_deps}}
 
-{{#before_build}}
-  RUN {{{.}}}
-{{/before_build}}
-
 {{#php_mod}}
   RUN docker-php-ext-install {{{.}}}
 {{/php_mod}}
 
+{{#php_ext}}
+  RUN mkdir -p /usr/src/php/ext/{{{.}}} && \
+    curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
+  RUN docker-php-ext-install {{{.}}}
+{{/php_ext}}
+
+{{#before_build}}
+  RUN {{{.}}}
+{{/before_build}}
+
 COPY . ./
+
+ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
+RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
+  rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
+  sed -e '1i extension=sockets' /usr/local/etc/php/conf.d/docker-php-ext-event.ini > /tmp/file ; \
+  mv /tmp/file /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
 
 {{^standalone}}
 RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -30,9 +44,7 @@ RUN composer install --no-dev --prefer-dist --classmap-authoritative
 RUN composer dumpautoload -o
 {{/standalone}}
 
-{{#environment}}
-ENV {{{.}}}
-{{/environment}}
+
 
 {{#before_command}}
   RUN {{{.}}}
@@ -53,10 +65,12 @@ ENV {{{.}}}
   RUN sed -i 's/\;\(listen\.owner.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.group.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
+  # pm.max_children set according to nproc
+  RUN if [ $(nproc) = 1 ] ; then sed -i 's/\(pm\.max_children =\).*/\1 512/g' /usr/local/etc/php-fpm.d/www.conf ; else sed -i 's/\(pm\.max_children =\).*/\1 1024/g' /usr/local/etc/php-fpm.d/www.conf ; fi 
+  # after 15 seconds warm-up, half of the 'idle' children are not killed
+  RUN if [ $(nproc) = 1 ] ; then sed -i 's/\(pm\.max_spare_servers =\).*/\1 256/g' /usr/local/etc/php-fpm.d/www.conf ; else sed -i 's/\(pm\.max_spare_servers =\).*/\1 512/g' /usr/local/etc/php-fpm.d/www.conf ; fi 
   
-  RUN rm -fr /etc/nginx/sites-enabled/default
   RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
-  RUN mkdir /run/nginx
   
   RUN echo -e 'server {\n\
       {{#docroot}}
@@ -78,7 +92,7 @@ ENV {{{.}}}
         }\n\
       {{/nginx_conf}}
   }\n'\
-  >> /etc/nginx/conf.d/www.conf
+  > /etc/nginx/http.d/default.conf
   
   RUN echo -e 'opcache.enable=1\n\
   opcache.memory_consumption=512\n\

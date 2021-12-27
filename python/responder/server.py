@@ -1,3 +1,8 @@
+# Disable all logging features
+import logging
+
+logging.disable()
+
 import responder
 
 app = responder.API()

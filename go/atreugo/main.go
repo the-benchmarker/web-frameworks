@@ -1,28 +1,29 @@
 package main
 
 import (
-	"github.com/savsgio/atreugo/v9"
+	"log"
+
+	"github.com/savsgio/atreugo/v11"
 )
 
+func showEmpty(ctx *atreugo.RequestCtx) error {
+	return nil
+}
+
+func showID(ctx *atreugo.RequestCtx) error {
+	id := ctx.UserValue("id").(string)
+
+	return ctx.TextResponse(id)
+}
+
 func main() {
-	config := &atreugo.Config{
-		Addr: "0.0.0.0:3000",
-	}
-	server := atreugo.New(config)
-
-	server.Path("GET", "/", func(ctx *atreugo.RequestCtx) error {
-		return ctx.TextResponse("")
-	})
-	server.Path("GET", "/user/:id", func(ctx *atreugo.RequestCtx) error {
-		id := ctx.UserValue("id").(string)
-		return ctx.TextResponse(id)
-	})
-	server.Path("POST", "/user", func(ctx *atreugo.RequestCtx) error {
-		return ctx.TextResponse("")
+	server := atreugo.New(atreugo.Config{
+		Addr: ":3000",
 	})
 
-	err := server.ListenAndServe()
-	if err != nil {
-		panic(err)
-	}
+	server.GET("/", showEmpty)
+	server.GET("/user/{id}", showID)
+	server.POST("/user", showEmpty)
+
+	log.Fatal(server.ListenAndServe())
 }

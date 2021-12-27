@@ -1,4 +1,4 @@
-FROM node:12.13-alpine
+FROM node:14.18-alpine
 
 {{#build_deps}}
   RUN apk add {{{.}}}
@@ -8,7 +8,14 @@ RUN npm -g install pm2
 
 WORKDIR /usr/src/app
 
-COPY app.js package.json ./
+{{#files}}
+  COPY {{{.}}} {{{.}}}
+{{/files}}
+{{^files}}
+  COPY app.js package.json ./
+{{/files}}
+
+ENV NODE_ENV production
 
 {{#bin_deps}}
   RUN apk add {{{.}}}
@@ -20,6 +27,18 @@ COPY app.js package.json ./
 
 RUN npm install
 
-ENV NODE_ENV production
+{{#before_command}}
+  RUN {{{.}}}
+{{/before_command}}
 
-CMD pm2-runtime start app.js -i $(nproc)
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
+
+{{#command}}
+  CMD {{{.}}}
+{{/command}}
+
+{{^command}}
+  CMD pm2-runtime start app.js -i $(nproc)
+{{/command}}

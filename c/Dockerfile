@@ -1,33 +1,44 @@
-FROM alpine 
+FROM debian:buster
 
-RUN apk add build-base
+WORKDIR /usr/src/app
+
+RUN apt-get -qq update
+RUN apt-get -qy install build-essential wget
 
 {{#build_deps}}
-   RUN apk add {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/build_deps}}
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#sources}}
+   COPY {{{.}}} {{{.}}}
+{{/sources}}
 
-{{#clone}}
+{{#download}}
   RUN {{{.}}}
-{{/clone}}
+{{/download}}
 
 {{#build}}
    RUN {{{.}}}
 {{/build}}
 
-FROM alpine
+FROM debian:buster
+
+WORKDIR /opt/web
+
+RUN apt-get -qq update
 
 {{#bin_deps}}
-   RUN apk add {{{.}}}
+   RUN apt-get -qy install {{{.}}}
 {{/bin_deps}}
 
 {{#files}}
-COPY --from=0 /usr/src/app/{{.}} /usr/bin/{{{.}}}
+   COPY {{{.}}} {{{.}}}
 {{/files}}
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+{{#binaries}}
+   COPY --from=0 /usr/src/app/{{.}} {{{.}}}
+{{/binaries}}
+
+CMD {{{command}}}
