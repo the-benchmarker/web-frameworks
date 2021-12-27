@@ -7,11 +7,11 @@ from masonite.controllers import Controller
 class UserController(Controller):
     """WelcomeController Controller Class."""
 
-    def index(self, view: View):
-        return view.render("")
+    def index(self):
+        return ""
 
     def show(self, request: Request):
-        return view.render(request.input('id'))
+        return request.input('id')
 
-    def create(self, view: View):
-        return view.render("")
+    def create(self):
+        return ""
