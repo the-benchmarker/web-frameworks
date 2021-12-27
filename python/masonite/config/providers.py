@@ -9,6 +9,7 @@ from masonite.providers import (
     AuthenticationProvider,
     AuthorizationProvider,
     ORMProvider,
+    EventProvider
 )
 
 
@@ -17,6 +18,7 @@ PROVIDERS = [
     FrameworkProvider,
     RouteProvider,
     ViewProvider,
+    EventProvider,
     ExceptionProvider,
     SessionProvider,
     QueueProvider,
