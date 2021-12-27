@@ -2,7 +2,7 @@
 
 return [
     //Common Providers
-    \SwFwLess\components\swoole\counter\CounterProvider::class,
+//    \SwFwLess\components\swoole\counter\CounterProvider::class,
 //    \SwFwLess\components\redis\RedisProvider::class,
 
     //App Providers
@@ -10,6 +10,7 @@ return [
 //    \SwFwLess\components\chaos\ChaosProvider::class,
 
     //Worker Providers
+    \SwFwLess\components\pool\Provider::class,
     \SwFwLess\components\datetime\DatetimeProvider::class,
     \SwFwLess\components\event\EventProvider::class,
     \SwFwLess\components\log\LogProvider::class,
@@ -20,7 +21,7 @@ return [
 //    \SwFwLess\components\storage\StorageProvider::class,
 //    \SwFwLess\components\amqp\AmqpProvider::class,
 //    \SwFwLess\components\hbase\HbaseProvider::class,
-    \SwFwLess\components\di\ContainerProvider::class,
+//    \SwFwLess\components\di\ContainerProvider::class,
 //    \SwFwLess\components\auth\jwt\JwtProvider::class,
 
     //Request Providers

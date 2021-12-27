@@ -1,19 +1,37 @@
 package main
 
 import (
-	"github.com/fenny/fiber"
+	"log"
+
+	"github.com/gofiber/fiber/v2"
+)
+
+const id = "id"
+
+var (
+	handlerOK = func(c *fiber.Ctx) error {
+		return nil
+	}
+	handlerID = func(c *fiber.Ctx) error {
+		return c.SendString(c.Params(id))
+	}
 )
 
 func main() {
-	app := fiber.New()
-	app.Get("/", func(c *fiber.Ctx) {
-		c.Send("")
+	app := fiber.New(fiber.Config{
+		Prefork:                   false,
+		CaseSensitive:             true,
+		StrictRouting:             true,
+		DisableDefaultDate:        true,
+		DisableStartupMessage:     true,
+		DisableHeaderNormalizing:  true,
+		DisableDefaultContentType: true,
 	})
-	app.Get("/user/:id", func(c *fiber.Ctx) {
-		c.Send(c.Params("id"))
-	})
-	app.Post("/", func(c *fiber.Ctx) {
-		c.Send("")
-	})
-	app.Listen(3000)
+
+	app.Get("/", handlerOK)
+	app.Get("/user/:id", handlerID)
+
+	app.Post("/user", handlerOK)
+
+	log.Fatal(app.Listen(":3000"))
 }

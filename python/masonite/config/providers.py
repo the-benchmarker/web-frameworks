@@ -13,7 +13,6 @@ from masonite.providers import (
 )
 
 
-
 PROVIDERS = [
     FrameworkProvider,
     RouteProvider,
@@ -25,5 +24,5 @@ PROVIDERS = [
     StorageProvider,
     AuthenticationProvider,
     AuthorizationProvider,
-    ORMProvider
+    ORMProvider,
 ]

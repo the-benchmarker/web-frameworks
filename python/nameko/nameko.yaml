@@ -1,2 +1,2 @@
-WEB_SERVER_ADDRESS: '0.0.0.0:3000'
+WEB_SERVER_ADDRESS: "0.0.0.0:3000"
 max_workers: 5000 # should be higher than expected concurrency

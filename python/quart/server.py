@@ -1,3 +1,8 @@
+# Disable all logging features
+import logging
+
+logging.disable()
+
 from quart import Quart
 
 app = Quart(__name__)

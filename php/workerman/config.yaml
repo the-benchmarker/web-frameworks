@@ -1,9 +1,16 @@
 framework:
-  github: workerman/workerman
-  version: 3.5
+  github: walkor/Workerman
+  version: 4.0
+
+build_deps:
+  - libevent-dev
+  - openssl-dev
 
 php_mod:
   - pcntl
-  - posix
+  - sockets
+
+php_ext:
+  - event
 
 command: php start.php start

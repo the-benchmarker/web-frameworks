@@ -2,20 +2,24 @@
 
 Camping.goes :App
 
-module App::Controllers
-  class Index < R '/'
-    def get
-      ''
+module App
+  module Controllers
+    class Index < R '/'
+      def get
+        ''
+      end
     end
-  end
-  class User < R '/user/(\d+)'
-    def get(id)
-      id
+
+    class User < R '/user/(\d+)'
+      def get(id)
+        id
+      end
     end
-  end
-  class Creator < R '/user'
-    def post
-      ''
+
+    class Creator < R '/user'
+      def post
+        ''
+      end
     end
   end
 end

@@ -1,3 +1,3 @@
 module main
 
-require github.com/astaxie/beego v1.12.0
+require github.com/beego/beego/v2 v2.0.1

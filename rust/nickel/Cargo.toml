@@ -2,6 +2,8 @@
 name = "server"
 version = "0.1.0"
 authors = ["taicsuzu <taicsuzu@yahoo-corp.jp>"]
+edition = "2018"
+publish = false
 
 [dependencies]
 nickel = "~0.11"

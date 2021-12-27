@@ -1,7 +1,0 @@
-framework:
-  website: zendframework.github.io/zend-expressive
-  version: 3.2
-  
-before_command:
-  - mkdir /usr/src/app/data
-  - chmod 777 -R /usr/src/app/data

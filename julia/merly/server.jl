@@ -3,14 +3,12 @@ Pkg.activate(pwd())
 
 using Merly
 
-server = Merly.app()
+@page "/" HTTP.Response(200, "")
 
-@page "/" ""
-
-@page "/user/:id>" "{{id}}"
+@page "/user/:id" HTTP.Response(200, string(request.params["id"]))
 
 @route POST "/user" begin
-    res.body = ""
+    HTTP.Response(200, "")
 end
 
-server.start(config = Dict("host" => "0.0.0.0", "port" => 3000), verbose = true)
+start(host = "0.0.0.0", port = 3000, verbose = true)

@@ -9,13 +9,12 @@ from masonite.middleware import (
     EncryptCookies,
     LoadUserMiddleware,
     MaintenanceModeMiddleware,
+    VerifyCsrfToken,
 )
 from masonite.routes import Route
 from masonite.configuration.Configuration import Configuration
 from masonite.configuration import config
 from config.filesystem import STATICFILES
-
-from app.middlewares.VerifyCsrfToken import VerifyCsrfToken
 
 
 class Kernel:
@@ -71,14 +70,17 @@ class Kernel:
         self.application.bind("server.runner", "masonite.commands.ServeCommand.main")
 
     def register_middleware(self):
-        self.application.make("middleware").add(self.route_middleware).add(self.http_middleware)
+        self.application.make("middleware").add(self.route_middleware).add(
+            self.http_middleware
+        )
 
     def register_routes(self):
         Route.set_controller_locations(self.application.make("controllers.location"))
         self.application.bind("routes.location", "routes/web")
         self.application.make("router").add(
             Route.group(
-                load(self.application.make("routes.location"), "ROUTES"), middleware=["web"]
+                load(self.application.make("routes.location"), "ROUTES"),
+                middleware=["web"],
             )
         )
 

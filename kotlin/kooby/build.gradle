@@ -1,0 +1,43 @@
+buildscript {
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    ext {
+        kotlinVersion = "1.5.+"
+        joobyVersion = "2.9.+"
+	    shadowVersion = "+"
+    }
+    
+}
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "${kotlinVersion}"
+    id "com.github.johnrengelman.shadow" version "${shadowVersion}"
+    id "application"
+}
+
+
+group "benchmark.kooby"
+version "1.0.0"
+mainClassName = "benchmark.AppKt"
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation "io.jooby:jooby-utow:${joobyVersion}"
+}
+
+shadowJar {
+    mergeServiceFiles()
+    baseName = "server"
+    classifier = null
+    version = null
+}

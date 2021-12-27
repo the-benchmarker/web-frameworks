@@ -1,0 +1,16 @@
+framework:
+  website: codeigniter.com
+  version: 4.1
+
+build_deps:
+  - icu-dev
+
+php_mod:
+  - intl
+
+environment:
+  CI_ENVIRONMENT: production
+
+before_command:
+  - mkdir writable/cache -p
+  - chown -R www-data:www-data writable/cache

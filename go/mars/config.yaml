@@ -3,6 +3,7 @@ framework:
   version: 1.0
 
 before_command:
+  - go get github.com/roblillack/mars/cmd/mars-gen
   - go generate main.go
 
 files:

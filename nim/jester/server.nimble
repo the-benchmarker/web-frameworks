@@ -7,4 +7,4 @@ license = "MIT"
 
 # Dependencies
 
-requires "jester >= 0.4 & < 0.5"
+requires "jester >= 0.5 & < 0.6"

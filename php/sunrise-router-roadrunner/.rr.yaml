@@ -1,0 +1,4 @@
+server:
+  command: "php worker.php"
+http:
+  address: :3000

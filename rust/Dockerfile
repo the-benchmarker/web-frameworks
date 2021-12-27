@@ -1,18 +1,13 @@
-FROM rust:1.40
+FROM rust:1.57-slim AS build
 
 WORKDIR /usr/src/app
 
-RUN apt-get -qq update && apt-get -qy install musl-tools
-
-RUN rustup target add x86_64-unknown-linux-musl
-
 COPY . ./
 
-ENV RUSTFLAGS "-C target-cpu=native" 
-RUN cargo build --target x86_64-unknown-linux-musl --release
+RUN cargo build --release && strip target/release/server
 
-FROM alpine
+FROM debian:buster-slim
 
-COPY --from=0 /usr/src/app/target/x86_64-unknown-linux-musl/release/server /usr/src/app/target/x86_64-unknown-linux-musl/release/server
+COPY --from=build /usr/src/app/target/release/server /usr/src/app/target/release/server
 
-CMD /usr/src/app/target/x86_64-unknown-linux-musl/release/server
+CMD /usr/src/app/target/release/server

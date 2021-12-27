@@ -4,6 +4,7 @@ $serverConfig = [
     'host' => env('SERVER_HOST', '0.0.0.0'),
     'port' => envInt('SERVER_PORT', 3000),
     'worker_num' => envInt('SERVER_WORKER_NUM', swoole_cpu_num() * 2),
+    'enable_coroutine' => envBool('SERVER_ENABLE_COROUTINE', false),
     'daemonize' => envBool('SERVER_DAEMONIZE', false),
     'backlog' => envInt('SERVER_BACKLOG', 128),
     'max_request' => envInt('SERVER_MAX_REQUEST', 0),
@@ -14,9 +15,13 @@ $serverConfig = [
     'open_tcp_nodelay' => envBool('SERVER_OPEN_TCP_NODELAY', true),
     'max_coroutine' => envInt('SERVER_MAX_COROUTINE', 1000000),
     'socket_buffer_size' => envInt('SERVER_SOCKET_BUFFER_SIZE', 2 * 1024 * 1024),
+    'log_file' => '/dev/null',
+    'log_level' => SWOOLE_LOG_ERROR,
 ];
 
-if (!empty($pidFile = env('SERVER_PID_FILE'))) {
+$pidFile = env('SERVER_PID_FILE', '');
+
+if (!empty($pidFile)) {
     $serverConfig['pid_file'] = $pidFile;
 }
 

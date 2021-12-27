@@ -1,0 +1,15 @@
+framework:
+  github: chubbyphp/chubbyphp-framework
+  version: 4.0
+
+php_mod:
+  - sodium
+  - sockets
+
+deps:
+  - libsodium-dev
+
+before_command:
+  - ./vendor/bin/rr get-binary
+
+command: ./rr serve

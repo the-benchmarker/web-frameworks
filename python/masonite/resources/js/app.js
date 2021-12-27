@@ -1,2 +1,0 @@
-
-require("./boostrap.js")
