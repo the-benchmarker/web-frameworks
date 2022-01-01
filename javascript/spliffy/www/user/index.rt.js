@@ -1,3 +1,3 @@
-module.exports = {
-  POST: () => {},
-};
+export default {
+    POST: ()=>{}
+}

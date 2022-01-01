@@ -20,6 +20,7 @@ FRAMEWORKS.yaml
 */*/Dockerfile
 */*/.Makefile
 */*/ip.txt
+venv
 */*/cid.txt
 
 /lib/**/*.cr
@@ -40,4 +41,3 @@ obj
 [Rr]elease/
 *.fsproj
 *.fsproj.user
-.env.custom

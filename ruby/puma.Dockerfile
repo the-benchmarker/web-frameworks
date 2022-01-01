@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN apk add build-base
+RUN apk add build-base {{#deps}}{{{.}}}{{/deps}}
 
 RUN bundle config set without 'development test'
 RUN bundle install

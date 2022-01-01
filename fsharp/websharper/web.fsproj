@@ -13,9 +13,9 @@
 
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="6.0.*" />
-    <PackageReference Include="WebSharper.Core" Version="4.7.*" />
-    <PackageReference Include="WebSharper" Version="4.7.*" />
-    <PackageReference Include="WebSharper.AspNetCore" Version="4.7.*" />
+    <PackageReference Include="WebSharper.Core" Version="5.0.*" />
+    <PackageReference Include="WebSharper" Version="5.0.*" />
+    <PackageReference Include="WebSharper.AspNetCore" Version="5.0.*" />
   </ItemGroup>
 
 </Project>
