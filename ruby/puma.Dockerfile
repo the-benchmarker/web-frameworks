@@ -8,11 +8,16 @@ WORKDIR /usr/src/app
 
 RUN apk add build-base {{#deps}}{{{.}}}{{/deps}}
 
-RUN bundle config set without 'development test'
-RUN bundle install
+
 
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
+
+RUN bundle config set without 'development test'
+RUN bundle install
+{{#bootstrap}}
+  RUN {{{.}}}
+{{/bootstrap}}
 
 CMD {{{command}}}
