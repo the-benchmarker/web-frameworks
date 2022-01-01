@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <ServerGarbageCollection>true</ServerGarbageCollection>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BeetleX.FastHttpApi" Version="1.9.*" />
-    <PackageReference Include="BeetleX.FastHttpApi.Hosting" Version="*" />
+    <PackageReference Include="BeetleX.FastHttpApi" Version="2.0.*" />
+    <PackageReference Include="BeetleX.FastHttpApi.Hosting" Version="1.5.*" />
   </ItemGroup>
 
 </Project>

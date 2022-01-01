@@ -84,7 +84,7 @@ def override_or_merge(value3, value2, value1)
     if value1
       case value1
       when Array
-        value.unshift(*value1)
+        value.unshift(*value1).uniq!
       when String
         value = value1
       end
@@ -155,13 +155,9 @@ def commands_for(language, framework, variant, provider = default_provider)
 end
 
 def create_dockerfile(directory, engine, config)
-  generic_template = File.join(Dir.pwd, directory, '..', 'Dockerfile')
-  custom_template = File.join(Dir.pwd, directory, '..', "#{engine}.Dockerfile")
-  template = if File.exist?(custom_template)
-               custom_template
-             else
-               generic_template
-             end
+  path = File.join(Dir.pwd, directory, '..', "#{engine}.Dockerfile")
+  path = File.readlink(path) if File.symlink?(path)
+  template = File.read(path)
   files = []
 
   Dir.glob(config['files']).each do |file|
@@ -183,9 +179,9 @@ def create_dockerfile(directory, engine, config)
   end
 
   File.open(File.join(directory, ".Dockerfile.#{engine}"), 'w') do |f|
-    f.write(Mustache.render(File.read(template), config.merge('files' => files, 'environment' => config['environment']&.map do |k, v|
-                                                                                                   "#{k}=#{v}"
-                                                                                                 end)))
+    f.write(Mustache.render(template, config.merge('files' => files, 'environment' => config['environment']&.map do |k, v|
+                                                                                        "#{k}=#{v}"
+                                                                                      end)))
   end
 end
 
@@ -199,10 +195,12 @@ task :config do
     next unless config
     raise "missing engine for #{directory}" unless config.dig('framework', 'engines')
 
+    language_config = config['language']
+    framework_config = config['framework']
     config.dig('framework', 'engines').each do |engine|
       engine.each do |name, data|
-        variables = custom_config(config['language'], config['framework'], data)
-        variables['files'].each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }
+        variables = custom_config(language_config, framework_config, data)
+        variables['files'].each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }.uniq!
 
         create_dockerfile(directory, name, variables)
       end
