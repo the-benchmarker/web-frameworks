@@ -2,4 +2,18 @@ framework:
   github: sanic-org/sanic
   version: 21.12
 
-command: python server.py
+  engines:
+    - sanic
+    - gunicorn
+    - uvicorn
+    - hypercorn
+
+language:
+  engines:
+    sanic:
+      command: python server.py
+    gunicorn:
+      environment:
+        WORKER_CLASS: sanic.worker.GunicornWorker
+      bootstrap: 
+        - pip install gunicorn

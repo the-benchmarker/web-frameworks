@@ -1,17 +1,34 @@
 framework:
   website: masoniteproject.com
   version: 4.1
- 
-build_deps:
-  - libffi-dev
-  - curl
-  - libssl-dev
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class meinheld.gmeinheld.MeinheldWorker \
-      wsgi
+  engines:
+    - gunicorn
+    - uwsgi
+    - waitress
+
+  build_deps:
+    - libffi-dev
+    - libssl-dev
+    - curl
+
+  bootstrap:
+    - curl https://sh.rustup.rs > init.sh
+    - sh init.sh -y
+    - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
+    - rustup default nightly
+
+language:
+  engines:
+    gunicorn:
+      command: >
+        gunicorn --log-level warning  \
+          --bind 0.0.0.0:3000  \
+          --reuse-port  \
+          --workers $(nproc) \
+          --worker-class ${WORKER_CLASS} \
+          wsgi
+    waitress:
+      command: waitress-serve --host=0.0.0.0 --port=3000 wsgi
+    uwsgi:
+      command: uwsgi --http 0.0.0.0:3000 --module wsgi

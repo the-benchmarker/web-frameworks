@@ -25,6 +25,9 @@ def get_config_from(directory, engines_as_list: true)
 
   config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
+  # TODO: remove this to merge in master
+  return unless config.dig('framework', 'engines')
+
   unless engines_as_list
     config['framework']['engines'] = config.dig('framework', 'engines').map do |row|
       if row.is_a?(String) && config.dig('language', 'engines', row)
@@ -154,6 +157,8 @@ end
 def create_dockerfile(directory, engine, config)
   path = File.join(Dir.pwd, directory, '..', "#{engine}.Dockerfile")
   path = File.readlink(path) if File.symlink?(path)
+  path = File.join(Dir.pwd, directory, '..', 'Dockerfile') unless File.exist?(path)
+
   template = File.read(path)
   files = []
 
@@ -184,9 +189,12 @@ end
 
 desc 'Create Dockerfiles'
 task :config do
-  Dir.glob(['php/*/config.yaml', 'ruby/*/config.yaml', 'javascript/*/config.yaml']).each do |path|
+  Dir.glob('*/*/config.yaml').each do |path|
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
+
+    # TODO: remove this to merge in master
+    next unless config
     raise "missing engine for #{directory}" unless config.dig('framework', 'engines')
 
     language_config = config['language']
