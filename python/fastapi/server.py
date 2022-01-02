@@ -1,7 +1,8 @@
 # Disable all logging features
 import logging
-
 logging.disable()
+from meinheld import patch
+patch.patch_all()
 
 from fastapi import FastAPI
 from starlette.responses import PlainTextResponse

@@ -1,3 +1,8 @@
+import logging
+logging.disable()
+from meinheld import patch
+patch.patch_all()
+
 from baize.asgi import request_response, Router, PlainTextResponse
 
 
