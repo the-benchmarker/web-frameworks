@@ -1,12 +1,11 @@
 # Disable all logging features
 import logging
-
 logging.disable()
+from meinheld import patch
+patch.patch_all()
 
 from bottle import Bottle
-from meinheld import patch
 
-patch.patch_all()
 
 
 app = Bottle()

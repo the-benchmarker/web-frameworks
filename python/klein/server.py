@@ -1,7 +1,8 @@
 # Disable all logging features
 import logging
-
 logging.disable()
+from meinheld import patch
+patch.patch_all()
 
 from klein import Klein
 
