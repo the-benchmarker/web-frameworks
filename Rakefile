@@ -25,7 +25,7 @@ def get_config_from(directory, engines_as_list: true)
 
   config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
-  unless engines_as_list
+  if config.dig('framework', 'engines') && !engines_as_list
     config['framework']['engines'] = config.dig('framework', 'engines').map do |row|
       if row.is_a?(String) && config.dig('language', 'engines', row)
         { row => config.dig('language', 'engines', row) }
@@ -190,13 +190,9 @@ task :config do
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
 
-    # TODO: remove this to merge in master
-    next unless config
-    raise "missing engine for #{directory}" unless config.dig('framework', 'engines')
-
     language_config = config['language']
     framework_config = config['framework']
-    config.dig('framework', 'engines').each do |engine|
+    config.dig('framework', 'engines')&.each do |engine|
       engine.each do |name, data|
         variables = custom_config(language_config, framework_config, data)
         variables['files'].each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }.uniq!
@@ -209,7 +205,7 @@ task :config do
 
     makefile = File.open(File.join(language, framework, MANIFESTS[:build]), 'w')
 
-    config.dig('framework', 'engines').each do |engine|
+    config.dig('framework', 'engines')&.each do |engine|
       engine.each do |name, _|
         commands_for(language, framework, name).each do |target, commands|
           makefile.write("#{target}.#{name}:\n")
@@ -220,8 +216,8 @@ task :config do
       end
     end
 
-    names = config.dig('framework', 'engines').flat_map(&:keys)
-    command = names.flat_map { |n| ["build.#{n}", "collect.#{n}", "clean.#{n}"] }.join(' ')
+    names = config.dig('framework', 'engines')&.flat_map(&:keys)
+    command = names&.flat_map { |n| ["build.#{n}", "collect.#{n}", "clean.#{n}"] }&.join(' ')
 
     makefile.write("run-all : #{command}\n")
 

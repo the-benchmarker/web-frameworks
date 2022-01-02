@@ -20,7 +20,7 @@ namespace :ci do
       next if file.count(File::SEPARATOR) < 2
 
       language, framework, = file.split(File::SEPARATOR)
-
+      
       config = get_config_from(File.join(Dir.pwd, language, framework))
 
       config.dig('framework', 'engines')&.each do |engine|
