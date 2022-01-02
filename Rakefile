@@ -25,9 +25,6 @@ def get_config_from(directory, engines_as_list: true)
 
   config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
-  # TODO: remove this to merge in master
-  return unless config.dig('framework', 'engines')
-
   unless engines_as_list
     config['framework']['engines'] = config.dig('framework', 'engines').map do |row|
       if row.is_a?(String) && config.dig('language', 'engines', row)
