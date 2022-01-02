@@ -7,9 +7,13 @@ framework:
     - gunicorn
     - uvicorn
     - hypercorn
-    - daphne
 
 language:
   engines:
     sanic:
       command: python server.py
+    gunicorn:
+      environment:
+        WORKER_CLASS: sanic.worker.GunicornWorker
+      bootstrap: 
+        - pip install gunicorn

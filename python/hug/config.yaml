@@ -17,3 +17,7 @@ language:
           --workers $(nproc) \
           --worker-class ${WORKER_CLASS} \
           server:__hug_wsgi__
+    uwsgi:
+      command: uwsgi --http 0.0.0.0:3000 --module server:__hug_wsgi__
+    waitress:
+      command: waitress-serve --host=0.0.0.0 --port=3000 server:__hug_wsgi__

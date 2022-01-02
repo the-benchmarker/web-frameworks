@@ -4,7 +4,5 @@ framework:
 
   engines:
     - gunicorn
-    - greenlet
     - uwsgi
-    - twisted
     - waitress

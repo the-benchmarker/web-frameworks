@@ -15,3 +15,5 @@ language:
     gunicorn:
       environment:
         WORKER_CLASS: emmett.asgi.workers.EmmettWorker
+    uvicorn:
+      command: emmett serve --host 0.0.0.0 --port 3000 --workers $(nproc)

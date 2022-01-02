@@ -10,6 +10,7 @@ framework:
     - libffi-dev
     - curl
     - libssl-dev
+    - build-essential
 
   bootstrap:
     - curl https://sh.rustup.rs > init.sh

@@ -4,7 +4,4 @@ framework:
 
   engines:
     - gunicorn
-    - hypercorn
-    - uvicorn
-    - daphne
     - uwsgi

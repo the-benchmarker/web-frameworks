@@ -5,6 +5,11 @@ framework:
   engines:
     - nameko
 
+  files:
+    - "**/*.py"
+    - requirements.txt
+    - nameko.yaml
+
 language:
   engines:
     nameko:

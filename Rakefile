@@ -25,7 +25,7 @@ def get_config_from(directory, engines_as_list: true)
 
   config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
-  # TODO remove this to merge in master 
+  # TODO: remove this to merge in master
   return unless config.dig('framework', 'engines')
 
   unless engines_as_list
@@ -157,6 +157,8 @@ end
 def create_dockerfile(directory, engine, config)
   path = File.join(Dir.pwd, directory, '..', "#{engine}.Dockerfile")
   path = File.readlink(path) if File.symlink?(path)
+  path = File.join(Dir.pwd, directory, '..', 'Dockerfile') unless File.exist?(path)
+
   template = File.read(path)
   files = []
 
@@ -190,8 +192,8 @@ task :config do
   Dir.glob('*/*/config.yaml').each do |path|
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
-    
-    # TODO remove this to merge in master
+
+    # TODO: remove this to merge in master
     next unless config
     raise "missing engine for #{directory}" unless config.dig('framework', 'engines')
 
