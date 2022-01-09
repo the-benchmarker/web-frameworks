@@ -11,7 +11,7 @@ class UserController(Controller):
         return ""
 
     def show(self, request: Request):
-        return request.param('id')
+        return request.param("id")
 
     def create(self):
         return ""

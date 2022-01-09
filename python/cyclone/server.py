@@ -1,8 +1,7 @@
 # Disable all logging features
 import logging
+
 logging.disable()
-from meinheld import patch
-patch.patch_all()
 
 import cyclone.web
 from twisted.application import internet
