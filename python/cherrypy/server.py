@@ -1,8 +1,10 @@
 #! /usr/bin/env python3
 # Disable all logging features
 import logging
+
 logging.disable()
 from meinheld import patch
+
 patch.patch_all()
 import cherrypy
 

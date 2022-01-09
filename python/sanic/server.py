@@ -1,7 +1,9 @@
 # Disable all logging features
 import logging
+
 logging.disable()
 from meinheld import patch
+
 patch.patch_all()
 
 import multiprocessing

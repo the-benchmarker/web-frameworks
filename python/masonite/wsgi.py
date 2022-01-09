@@ -3,8 +3,10 @@ from masonite.utils.location import base_path
 from masonite.configuration import config
 
 import logging
+
 logging.disable()
 from meinheld import patch
+
 patch.patch_all()
 
 from Kernel import Kernel as ApplicationKernel

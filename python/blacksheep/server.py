@@ -1,8 +1,7 @@
 # Disable all logging features
 import logging
+
 logging.disable()
-from meinheld import patch
-patch.patch_all()
 
 from blacksheep.server import Application
 from blacksheep.server.responses import text, Response
