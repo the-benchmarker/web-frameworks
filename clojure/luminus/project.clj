@@ -7,7 +7,7 @@
                  [cprop "0.1.19"]
                  [expound "0.8.10"]
                  [funcool/struct "1.4.0"]
-                 [luminus-jetty "0.2.2"]
+                 [luminus-jetty "0.2.3"]
                  [luminus-transit "0.1.3"]
                  [luminus/ring-ttl-session "0.3.3"]
                  [markdown-clj "1.10.8"]
