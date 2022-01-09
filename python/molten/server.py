@@ -2,6 +2,9 @@
 import logging
 
 logging.disable()
+from meinheld import patch
+
+patch.patch_all()
 
 
 from molten import App, Route, HTTP_200, Response

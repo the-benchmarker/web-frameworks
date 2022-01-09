@@ -9,7 +9,7 @@ from masonite.providers import (
     AuthenticationProvider,
     AuthorizationProvider,
     ORMProvider,
-    EventProvider
+    EventProvider,
 )
 
 

@@ -16,6 +16,7 @@ from masonite.configuration import config
 from config.filesystem import STATICFILES
 from app.middlewares.VerifyCsrfToken import VerifyCsrfToken
 
+
 class Kernel:
 
     http_middleware = [MaintenanceModeMiddleware, EncryptCookies]

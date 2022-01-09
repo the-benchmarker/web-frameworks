@@ -2,6 +2,9 @@
 import logging
 
 logging.disable()
+from meinheld import patch
+
+patch.patch_all()
 
 from pyramid.config import Configurator
 from pyramid.response import Response

@@ -1,3 +1,7 @@
+import logging
+
+logging.disable()
+
 from baize.asgi import request_response, Router, PlainTextResponse
 
 
