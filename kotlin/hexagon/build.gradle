@@ -20,3 +20,9 @@ application {
 dependencies {
     implementation("com.hexagonkt:http_server_jetty:$hexagonVersion")
 }
+
+jarAll {
+    archiveFileName = "server.jar"
+}
+
+assemble.dependsOn("jarAll")
