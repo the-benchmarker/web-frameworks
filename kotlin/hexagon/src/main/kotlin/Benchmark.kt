@@ -11,7 +11,7 @@ import java.net.InetAddress
 fun main() {
     val textPlain = ContentType(TextMedia.PLAIN)
     val adapter = JettyServletAdapter()
-    val settings = HttpServerSettings(InetAddress.getByName("0.0.0"), 3000)
+    val settings = HttpServerSettings(InetAddress.getByName("0.0.0.0"), 3000)
 
     serve(adapter, settings) {
         get {
