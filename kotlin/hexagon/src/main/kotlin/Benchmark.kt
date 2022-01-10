@@ -19,7 +19,7 @@ fun main() {
         }
 
         path("/user") {
-            get {
+            post {
                 ok(contentType = textPlain)
             }
             get("/{id}") {
