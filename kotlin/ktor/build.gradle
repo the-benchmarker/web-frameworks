@@ -8,7 +8,7 @@ buildscript {
     ext {
         kotlinVersion = "1.6.+"
         ktorVersion = "1.6.+"
-	    shadowVersion = "+"
+        shadowVersion = "+"
     }
     
 }
