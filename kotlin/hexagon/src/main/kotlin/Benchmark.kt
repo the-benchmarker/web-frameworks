@@ -1,6 +1,6 @@
 package com.hexagonkt
 
-import com.hexagonkt.core.helpers.require
+import com.hexagonkt.core.require
 import com.hexagonkt.core.media.TextMedia
 import com.hexagonkt.http.model.ContentType
 import com.hexagonkt.http.server.HttpServerSettings
