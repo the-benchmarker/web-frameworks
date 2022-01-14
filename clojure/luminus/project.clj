@@ -5,7 +5,7 @@
                  [cheshire "5.10.1"]
                  [clojure.java-time "0.3.3"]
                  [cprop "0.1.19"]
-                 [expound "0.8.10"]
+                 [expound "0.9.0"]
                  [funcool/struct "1.4.0"]
                  [luminus-jetty "0.2.3"]
                  [luminus-transit "0.1.3"]
