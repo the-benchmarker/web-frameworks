@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BeetleX.FastHttpApi" Version="2.0.*" />
-    <PackageReference Include="BeetleX.FastHttpApi.Hosting" Version="1.5.*" />
+    <PackageReference Include="BeetleX" Version="1.8.*" />
+    <PackageReference Include="BeetleX.FastHttpApi" Version="*" />
+    <PackageReference Include="BeetleX.FastHttpApi.Hosting" Version="*" />
   </ItemGroup>
 
 </Project>
