@@ -1,8 +1,3 @@
-# Disable all logging features
-import logging
-
-logging.disable()
-
 import os
 
 from django.core.asgi import get_asgi_application
