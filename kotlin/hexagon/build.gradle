@@ -5,7 +5,7 @@ plugins {
 
 ext {
     gradleScripts = "https://raw.githubusercontent.com/hexagonkt/hexagon/2.0.0/gradle"
-    hexagonVersion = "2.0.0"
+    hexagonVersion = "2.0.1"
 }
 
 apply(from: "$gradleScripts/kotlin.gradle")
