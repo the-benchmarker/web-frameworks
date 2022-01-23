@@ -53,7 +53,7 @@
                                  [ring/ring-devel "1.9.5"]
                                  [ring/ring-mock "0.4.0"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.25.0"]
-                                 [jonase/eastwood "1.1.1"]] 
+                                 [jonase/eastwood "1.2.0"]] 
                   
                   :source-paths ["env/dev/clj" ]
                   :resource-paths ["env/dev/resources"]
