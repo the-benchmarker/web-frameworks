@@ -1,6 +1,6 @@
 framework:
   website: masoniteproject.com
-  version: 4.2
+  version: 4.3
  
 build_deps:
   - libffi-dev
@@ -14,4 +14,4 @@ command: >
     --reuse-port  \
     --workers $(nproc)  \
     --worker-class meinheld.gmeinheld.MeinheldWorker \
-      wsgi
+      wsgi:application
