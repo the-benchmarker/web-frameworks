@@ -44,6 +44,7 @@ public class User : Endpoint<object, object>
     {
         Post("/user");
         AllowAnonymous();
+        Describe(x => x.Accepts<object>("*/*"));
     }
 
     public override Task HandleAsync(object _, CancellationToken __)
