@@ -42,7 +42,7 @@ public class User : Endpoint<object, object>
 {
     public override void Configure()
     {
-        Get("/user");
+        Post("/user");
         AllowAnonymous();
     }
 
