@@ -35,7 +35,7 @@ jobs:
 
     - name: Setup Brakeman
       run: |
-        gem install brakeman --version $BRAKEMAN_VERSION
+        gem install brakeman
 
     # Execute Brakeman CLI and generate a SARIF output with the security issues identified during the analysis
     - name: Scan
