@@ -1,6 +1,6 @@
 framework:
   github: jatofg/nawa
-  version: 0.6
+  version: 0.8
 
 build_deps:
   - libboost-dev
@@ -27,7 +27,7 @@ environment:
   LD_LIBRARY_PATH: /opt/web/build/nawa
 
 download:
-  - git clone --branch v0.6.2 https://github.com/jatofg/nawa
+  - git clone --branch v0.8.0 https://github.com/jatofg/nawa
   - cd nawa && git submodule update --init
 
 build:

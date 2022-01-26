@@ -1,6 +1,6 @@
 framework:
   website: jooby.io
-  version: 2.12
+  version: 2.13
 
 build:
   - mvn clean package
