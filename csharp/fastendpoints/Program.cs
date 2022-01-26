@@ -1,6 +1,7 @@
-﻿using FastEndpoints;
+using FastEndpoints;
 
 var builder = WebApplication.CreateBuilder();
+builder.Logging.ClearProviders(); //logging results in a ~95% perf drop
 builder.Services.AddFastEndpoints();
 
 var app = builder.Build();
