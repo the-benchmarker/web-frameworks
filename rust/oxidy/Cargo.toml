@@ -1,0 +1,18 @@
+[package]
+name = "oxidy-test"
+version = "0.1.0"
+edition = "2021"
+
+[profile.dev]
+opt-level = 0
+debug = true
+
+[profile.release]
+opt-level = 3
+debug = false
+lto = "fat"
+codegen-units = 1
+incremental = false
+
+[dependencies]
+oxidy = "0.2.1"
