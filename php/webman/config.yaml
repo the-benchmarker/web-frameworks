@@ -5,9 +5,6 @@ framework:
 build_deps:
   - libevent-dev
   - openssl-dev
-
-environment:
-  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
   
 php_mod:
   - pcntl
