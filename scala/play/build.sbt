@@ -1,7 +1,7 @@
 organization := "the-benchmarker"
 
 name := "server"
-scalaVersion := "2.13.8"
+scalaVersion := "3.1.1"
 
 lazy val root = (project.in(file("."))
   .settings(
