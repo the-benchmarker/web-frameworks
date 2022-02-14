@@ -15,5 +15,5 @@ language:
     gunicorn:
       environment:
         WORKER_CLASS: sanic.worker.GunicornWorker
-      bootstrap: 
+      bootstrap:
         - pip install gunicorn
