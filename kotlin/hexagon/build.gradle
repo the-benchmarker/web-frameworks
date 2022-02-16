@@ -4,7 +4,7 @@ plugins {
 }
 
 ext {
-    gradleScripts = "https://raw.githubusercontent.com/hexagonkt/hexagon/2.0.2/gradle"
+    gradleScripts = "https://raw.githubusercontent.com/hexagonkt/hexagon/2.0.3/gradle"
     hexagonVersion = "2.0.3"
 }
 
