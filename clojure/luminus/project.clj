@@ -21,7 +21,7 @@
                  [org.clojure/tools.logging "1.2.4"]
                  [org.webjars.npm/bulma "0.9.3"]
                  [org.webjars.npm/material-icons "1.7.1"]
-                 [org.webjars/webjars-locator "0.42"]
+                 [org.webjars/webjars-locator "0.43"]
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.9.5"]
                  [ring/ring-defaults "0.3.3"]
