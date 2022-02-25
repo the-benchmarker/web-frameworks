@@ -1,13 +1,16 @@
 framework:
   github: walkor/webman
-  version: 1.0
+  version: 1.2
 
 build_deps:
   - libevent-dev
+  - openssl-dev
 
+environment:
+  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
+  
 php_mod:
   - pcntl
-  - posix
   - sockets
 
 php_ext:

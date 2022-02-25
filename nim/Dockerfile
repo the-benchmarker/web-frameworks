@@ -1,4 +1,4 @@
-FROM nimlang/nim:1.4.4-alpine
+FROM nimlang/nim:1.6.4-alpine
 
 WORKDIR /usr/src/app
 
@@ -19,7 +19,8 @@ RUN nimble install -y
 RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
     --excessiveStackTrace:off \
     -d:release \
-    --threads:on \
+    --passC:-flto \
+    --passL:-flto \
     server.nim
 
 FROM alpine

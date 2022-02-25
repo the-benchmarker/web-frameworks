@@ -1,4 +1,4 @@
-FROM swift:5.3
+FROM swift:5.5
 
 RUN apt -y update
 RUN apt -y install libssl-dev zlib1g-dev libcurl4-openssl-dev uuid-dev
@@ -8,9 +8,9 @@ WORKDIR /usr/src/app
 COPY Package.swift ./
 COPY Sources/ ./Sources/
 
-RUN swift build -c release
+RUN swift build -c release -Xswiftc -enforce-exclusivity=unchecked
 
-FROM swift:5.3-slim
+FROM swift:5.5-slim
 {{#environment}}
 ENV {{{.}}}
 {{/environment}}

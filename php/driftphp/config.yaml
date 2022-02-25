@@ -2,12 +2,14 @@ framework:
   github: driftphp/driftphp
   version: 0.1
 
+environment:
+  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
+  
 build_deps:
   - libevent-dev
 
 php_mod:
   - pcntl
-  - posix
   - sockets
 
 command: php vendor/bin/server run 0.0.0.0:3000 --env=prod --quiet --workers=-1

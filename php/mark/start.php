@@ -1,11 +1,11 @@
 <?php
-use Mark\SimpleApp;
+use Mark\App;
 
 require 'vendor/autoload.php';
 
-$api = new SimpleApp('tcp://0.0.0.0:3000');
+$api = new App('http://0.0.0.0:3000');
 
-$api->count = 8;
+$api->count = 7;
 
 $api->get('/', function ($requst) {
     return '';

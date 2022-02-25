@@ -1,8 +1,18 @@
 framework:
   github: chubbyphp/chubbyphp-framework
-  version: 3.4
+  version: 4.0
+
+environment:
+  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
+  
+php_mod:
+  - sodium
+  - sockets
+
+deps:
+  - libsodium-dev
 
 before_command:
-  - vendor/bin/rr get-binary
+  - ./vendor/bin/rr get-binary
 
 command: ./rr serve

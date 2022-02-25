@@ -90,6 +90,8 @@ def create_dockerfile(language, framework, **options)
   framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
   config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
+  # Path to remove stability suffix (stable, beta, alpha, or version) of php extensions
+
   if config.key?('sources')
     files = []
     config['sources'].each do |path|

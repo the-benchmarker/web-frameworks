@@ -1,12 +1,13 @@
 framework:
   website: nestjs.com
-  version: 7.6
+  version: 8.3
 
 files:
   - nest-cli.json
   - src
   - tsconfig.build.json
   - tsconfig.json
+  - package.json
 
 before_command:
   - npm -g install @nestjs/cli

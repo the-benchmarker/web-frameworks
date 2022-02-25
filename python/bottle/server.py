@@ -2,11 +2,11 @@
 import logging
 
 logging.disable()
-
-from bottle import Bottle
 from meinheld import patch
 
 patch.patch_all()
+
+from bottle import Bottle
 
 
 app = Bottle()

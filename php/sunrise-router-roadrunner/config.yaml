@@ -1,8 +1,20 @@
 framework:
   github: sunrise-php/http-router
-  version: 2.6
+  version: 2.12
+
+environment:
+  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
+  
+build_deps:
+  - libevent-dev
+  - libsodium-dev
+
+php_mod:
+  - sodium
+  - sockets
 
 php_ext:
+  - event
   - apcu
 
 before_command:

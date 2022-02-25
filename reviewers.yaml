@@ -13,6 +13,10 @@ javascript:
     - schamberg97
   fyrejet-uwebsockets:
     - schamberg97
+  chubbyjs:
+    - dominikzogg
+  chubbyjs-uwebsockets:
+    - dominikzogg
 go:
   router:
     - savsgio
@@ -44,6 +48,8 @@ go:
     - lunny
   gf:
     - gqcn
+  bunrouter:
+    - vmihailenco
 ruby:
   roda:
     - jeremyevans
@@ -67,6 +73,10 @@ python:
   emmett:
     - gi0baro
   index.py:
+    - abersheeran
+  baize-wsgi:
+    - abersheeran
+  baize-asgi:
     - abersheeran
   blacksheep: RobertoPrevato
 swift:
@@ -107,12 +117,24 @@ php:
     - 48d90782
   slim:
     - l0gicgate
+  sunrise-router:
+    - fenric
+  sunrise-router-roadrunner:
+    - fenric
+  sunrise-router-annotations:
+    - fenric
   phalcon:
     - ruudboon
   ice:
     - mruz
   nano:
     - laylatichy
+  sunrise-router:
+    - fenric
+  sunrise-router-annotations:
+    - fenric
+  sunrise-router-roadrunner
+    - fenric
 fsharp:
   saturn:
     - Krzysztof-Cieslak
@@ -126,6 +148,8 @@ crystal:
     - shootingfly
   orion:
     - jwaldrip
+  router.cr:
+    - tbrand
 java:
   struts2:
     - lukaszlenart
@@ -147,6 +171,8 @@ java:
 kotlin:
   kooby:
     - jknack
+  hexagon:
+    - jaguililla
 rust:
   actix:
     - robjtede
@@ -157,6 +183,12 @@ rust:
     - colinbankier
   salvo:
     - chrislearn
+  poem:
+    - sunli829
+  axum:
+    - davidpdrsn
+  oxidy:
+    - krishnaTORQUE
 csharp:
   carter:
     - jchannon
