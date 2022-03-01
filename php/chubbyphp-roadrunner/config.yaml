@@ -1,6 +1,6 @@
 framework:
   github: chubbyphp/chubbyphp-framework
-  version: 4.0
+  version: 4.1
 
 environment:
   CFLAGS: "$CFLAGS -D_GNU_SOURCE"
