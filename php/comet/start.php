@@ -7,7 +7,7 @@ use Comet\Comet;
 
 $app = new Comet([ 
 	'port'    => 3000,
-	'workers' => WORKERS_COUNT,
+	'workers' => intval(WORKERS_COUNT),
 ]);
 
 
