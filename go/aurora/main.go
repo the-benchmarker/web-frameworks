@@ -13,7 +13,8 @@ func main() {
 		return ""
 	})
 	a.GET("/user/{id}", func(request aurora.Request) interface{} {
-		return request[req.Args]
+		args := request[req.Args].(map[string]interface{})
+		return args["id"]
 	})
 	a.POST("/user", func(request aurora.Request) interface{} {
 		return ""
