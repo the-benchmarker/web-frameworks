@@ -6,14 +6,13 @@ use FrameworkX\App;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Message\Response;
 
+$handlerOK = fn (ServerRequestInterface $request) => Response::plaintext('');
+$handlerID = fn (ServerRequestInterface $request) => Response::plaintext($request->getAttribute('id'));
+
 $app = new App();
 
-$app->get('/', fn (ServerRequestInterface $request) => Response::plaintext(''));
-
-$app->post('/user', fn (ServerRequestInterface $request) => Response::plaintext(''));
-
-$app->get('/user/{id}', fn (ServerRequestInterface $request) => Response::plaintext(
-    $request->getAttribute('id', ''),
-));
+$app->get('/', $handlerOK);
+$app->post('/user', $handlerOK);
+$app->get('/user/{id}', $handlerID);
 
 $app->run();
