@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/aurora-go/aurora/aurora"
-	"github.com/aurora-go/aurora/aurora/req"
+	"github.com/aurora-go/aurora"
+	"github.com/aurora-go/aurora/req"
 )
 
 func main() {
