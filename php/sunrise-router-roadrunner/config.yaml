@@ -1,9 +1,6 @@
 framework:
   github: sunrise-php/http-router
   version: 2.12
-
-environment:
-  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
   
 build_deps:
   - libevent-dev

@@ -1,9 +1,6 @@
 framework:
   github: luoxiaojun1992/sw-fw-less
   version: preview
-
-environment:
-  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
   
 php_mod:
   - sodium
