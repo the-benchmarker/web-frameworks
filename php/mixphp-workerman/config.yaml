@@ -1,9 +1,6 @@
 framework:
   github: mix-php/mix
   version: 3.0
-
-environment:
-  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
   
 build_deps:
   - libevent-dev

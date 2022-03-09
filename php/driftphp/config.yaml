@@ -1,9 +1,6 @@
 framework:
   github: driftphp/driftphp
   version: 0.1
-
-environment:
-  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
   
 build_deps:
   - libevent-dev
