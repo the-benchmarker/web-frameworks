@@ -1,7 +1,10 @@
 # Which is the fastest ?
-----------
-#### Simple framework comparison 
-----------
+
+---
+
+#### Simple framework comparison
+
+---
 
 <p align="center">
   <img src="https://img.shields.io/badge/status-beta-green?style=for-the-badge">
