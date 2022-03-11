@@ -1,6 +1,5 @@
 module main
 
-go 1.17
 
 require github.com/aurora-go/aurora v0.2.7
 
