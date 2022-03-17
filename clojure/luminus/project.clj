@@ -8,7 +8,7 @@
                  [expound "0.9.0"]
                  [funcool/struct "1.4.0"]
                  [luminus-jetty "0.2.3"]
-                 [luminus-transit "0.1.4"]
+                 [luminus-transit "0.1.5"]
                  [luminus/ring-ttl-session "0.3.3"]
                  [markdown-clj "1.10.9"]
                  [metosin/muuntaja "0.6.8"]
