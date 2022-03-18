@@ -6,7 +6,7 @@ async fn index(res: &mut Response) {
 }
 #[fn_handler]
 async fn get_user(req: &mut Request, res: &mut Response) {
-    res.render_plain_text(req.params().get("id").map(|s| &**s).unwrap_or_default());
+    res.render(req.params().get("id").unwrap());
 }
 
 fn main() {
