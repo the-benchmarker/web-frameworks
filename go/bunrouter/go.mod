@@ -1,3 +1,3 @@
 module main
 
-require github.com/uptrace/bunrouter v1.0.12
+require github.com/uptrace/bunrouter v1.0.13
