@@ -1,6 +1,6 @@
 framework:
   website: baize.aber.sh
-  version: 0.15
+  version: 0.16
 
 command: >
   gunicorn \
@@ -8,5 +8,4 @@ command: >
     --bind 0.0.0.0:3000 \
     --reuse-port \
     --workers $(nproc) \
-    --worker-class meinheld.gmeinheld.MeinheldWorker \
       server:app
