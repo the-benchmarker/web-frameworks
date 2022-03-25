@@ -1,4 +1,4 @@
-const nanoexpress = require("nanoexpress/cjs");
+const nanoexpress = require("nanoexpress");
 
 nanoexpress()
   .get("/", (req, res) => {
