@@ -50,6 +50,9 @@ jobs:
           cd ${{ matrix.directory }} 
           make build  -f .Makefile
 
+      - name: Wait
+        run: sleep 1
+
       - name: Test
         run: bundle exec rspec .spec
         env:
