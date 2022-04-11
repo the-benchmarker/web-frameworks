@@ -2,11 +2,11 @@ library(ambiorix)
 
 app <- Ambiorix$new()
 
-app$get("/", \(res, req) {
+app$get("/", \(req, res) {
   res$send("")
 })
 
-app$get("/user/:id", \(res, req) {
+app$get("/user/:id", \(req, res) {
   res$send(req$params$id)
 })
 
