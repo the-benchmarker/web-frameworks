@@ -1,3 +1,4 @@
+ARG IMAGE_NAME
 FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
 
 WORKDIR /usr/src/app
@@ -8,7 +9,7 @@ RUN dotnet restore
 
 # copy everything else and build app
 COPY . .
-RUN dotnet publish -c release -o out -r linux-x64 --self-contained --single-file
+RUN dotnet publish -c release -o out --use-current-runtime --self-contained
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 
