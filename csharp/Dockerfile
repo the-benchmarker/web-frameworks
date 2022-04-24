@@ -8,7 +8,7 @@ RUN dotnet restore
 
 # copy everything else and build app
 COPY . .
-RUN dotnet publish -c release -o out
+RUN dotnet publish -c release -o out -r linux-x64 --self-contained --single-file
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 
@@ -17,8 +17,8 @@ WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/out out
 
 ENV ASPNETCORE_URLS http://*:3000
-ENV DOTNET_TieredPGO 1 
-ENV DOTNET_TC_QuickJitForLoops 1 
-ENV DOTNET_ReadyToRun 0
+ENV DOTNET_TieredPGO 1
+ENV DOTNET_TC_QuickJitForLoops 1
+ENV DOTNET_ReadyToRun 1
 
 CMD dotnet /usr/src/app/out/web.dll
