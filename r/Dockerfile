@@ -1,4 +1,4 @@
-FROM rocker/r-ver:4.1.3
+FROM rocker/r-ver:4.2.0
 WORKDIR /usr/src/app
 
 RUN R  -e 'install.packages("remotes")'
