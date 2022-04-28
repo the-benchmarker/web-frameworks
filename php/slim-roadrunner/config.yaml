@@ -1,9 +1,6 @@
 framework:
   website: slimframework.com
   version: 4.9
-
-environment:
-  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
   
 build_deps:
   - libsodium-dev

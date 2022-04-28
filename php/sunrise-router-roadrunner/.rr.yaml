@@ -1,3 +1,4 @@
+version: "2.7"
 server:
   command: "php worker.php"
 http:

@@ -2,9 +2,6 @@ framework:
   website: imiphp.com
   version: 2.0
 
-environment:
-  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
-
 build_deps:
   - libevent-dev
   - openssl-dev
