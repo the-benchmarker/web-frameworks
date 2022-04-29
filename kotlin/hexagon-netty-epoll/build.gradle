@@ -4,7 +4,9 @@ plugins {
 }
 
 ext {
-    hexagonVersion = "2.0.3"
+    hexagonVersion = "2.0.7"
+    nettyVersion = "4.1.76.Final"
+
     gradleScripts = "https://raw.githubusercontent.com/hexagonkt/hexagon/$hexagonVersion/gradle"
 }
 
@@ -18,7 +20,8 @@ application {
 }
 
 dependencies {
-    implementation("com.hexagonkt:http_server_netty:$hexagonVersion")
+    implementation("com.hexagonkt:http_server_netty_epoll:$hexagonVersion")
+    implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-x86_64")
 }
 
 jarAll {

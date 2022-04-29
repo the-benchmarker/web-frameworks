@@ -4,13 +4,13 @@ import com.hexagonkt.core.require
 import com.hexagonkt.core.media.TextMedia
 import com.hexagonkt.http.model.ContentType
 import com.hexagonkt.http.server.HttpServerSettings
-import com.hexagonkt.http.server.netty.NettyServerAdapter
+import com.hexagonkt.http.server.netty.epoll.NettyEpollServerAdapter
 import com.hexagonkt.http.server.serve
 import java.net.InetAddress
 
 fun main() {
     val textPlain = ContentType(TextMedia.PLAIN)
-    val adapter = NettyServerAdapter(executorThreads = 0)
+    val adapter = NettyEpollServerAdapter(executorThreads = 0)
     val settings = HttpServerSettings(InetAddress.getByName("0.0.0.0"), 3000)
 
     serve(adapter, settings) {
