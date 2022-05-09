@@ -20,6 +20,4 @@ app.post('/user', (request, response) => {
 });
 
 // Start the server on port 3000
-app.listen(port)
-    .then(() => console.log(`Started HyperExpress on port ${port}`))
-    .catch((error) => console.log(`Failed to start HyperExpress on port ${port} because: ${error}`));
+app.listen(port);
