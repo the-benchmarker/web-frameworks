@@ -11,5 +11,8 @@ async fn main() {
 
     let routes = index.or(user).or(user_post);
 
-    warp::serve(routes).run(([0, 0, 0, 0], 3000)).await;
+    warp::serve(routes)
+        .unstable_pipeline()
+        .run(([0, 0, 0, 0], 3000))
+        .await;
 }
