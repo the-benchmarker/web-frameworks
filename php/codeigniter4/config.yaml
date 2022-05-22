@@ -2,11 +2,11 @@ framework:
   website: codeigniter.com
   version: 4.1
 
+build_deps:
+  - icu-dev
+
 php_mod:
-  - curl
   - intl
-  - json
-  - mbstring
 
 environment:
   CI_ENVIRONMENT: production

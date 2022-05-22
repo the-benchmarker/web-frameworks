@@ -4,35 +4,35 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/bnkamalesh/webgo/v4"
+	"github.com/bnkamalesh/webgo/v6"
 )
 
 func empty(w http.ResponseWriter, r *http.Request) {
-	w.Write(nil)
+	_, _ = w.Write(nil)
 }
 
 func userID(w http.ResponseWriter, r *http.Request) {
 	wctx := webgo.Context(r)
-	w.Write([]byte(wctx.Params()["id"]))
+	_, _ = w.Write([]byte(wctx.URIParams["id"]))
 }
 
 func getRoutes() []*webgo.Route {
 	return []*webgo.Route{
-		&webgo.Route{
+		{
 			Name:          "root",
 			Method:        http.MethodGet,
 			Pattern:       "/",
 			Handlers:      []http.HandlerFunc{empty},
 			TrailingSlash: true,
 		},
-		&webgo.Route{
+		{
 			Name:          "user-with-URI-params",
 			Method:        http.MethodGet,
 			Pattern:       "/user/:id",
 			Handlers:      []http.HandlerFunc{userID},
 			TrailingSlash: true,
 		},
-		&webgo.Route{
+		{
 			Name:          "user-without-params",
 			Method:        http.MethodPost,
 			Pattern:       "/user",
@@ -50,6 +50,6 @@ func main() {
 		WriteTimeout: 10 * time.Second,
 	}
 
-	router := webgo.NewRouter(cfg, getRoutes())
+	router := webgo.NewRouter(cfg, getRoutes()...)
 	router.Start()
 }

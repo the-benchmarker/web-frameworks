@@ -1,9 +1,3 @@
-# Disable all logging features
-import logging
-
-logging.disable()
-
-
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
@@ -37,5 +31,6 @@ def main():
     server.start(0)
     tornado.ioloop.IOLoop.current().start()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

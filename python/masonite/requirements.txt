@@ -1,3 +1,4 @@
-masonite>=3.0,<3.1
+masonite>=4.12,<4.13
+masonite-orm
 gunicorn
-meinheld
+gevent

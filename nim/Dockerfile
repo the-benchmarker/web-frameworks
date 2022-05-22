@@ -1,4 +1,4 @@
-FROM nimlang/nim:1.4.6-alpine
+FROM nimlang/nim:1.6.4-alpine
 
 WORKDIR /usr/src/app
 
@@ -21,7 +21,6 @@ RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
     -d:release \
     --passC:-flto \
     --passL:-flto \
-    --threads:on \
     server.nim
 
 FROM alpine

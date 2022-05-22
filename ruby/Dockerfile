@@ -1,10 +1,10 @@
-FROM ruby:3.0-alpine
+FROM ruby:3.1-alpine
 
 WORKDIR /usr/src/app
 
 COPY . ./
 
-RUN apk add build-base
+RUN apk add build-base {{#deps}}{{{.}}}{{/deps}}
 
 RUN bundle config set without 'development test'
 RUN bundle install

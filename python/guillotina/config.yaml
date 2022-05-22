@@ -1,11 +1,11 @@
 framework:
   website: guillotina.io
-  version: 6.3
+  version: 6.4
 
 build_deps:
   - libffi-dev
   - curl
-  - openssl-dev
+  - libssl-dev
 
 fixes:
   - curl https://sh.rustup.rs > init.sh

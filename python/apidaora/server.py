@@ -1,8 +1,3 @@
-# Disable all logging features
-import logging
-
-logging.disable()
-
 from apidaora.asgi.router import Route, make_router
 from apidaora.asgi.app import asgi_app
 from apidaora.method import MethodType

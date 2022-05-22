@@ -1,9 +1,13 @@
 framework:
   github: chubbyphp/chubbyphp-framework
-  version: 3.5
+  version: 4.2
+
+environment:
+  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
 
 build_deps:
   - libevent-dev
+  - openssl-dev
 
 php_mod:
   - pcntl

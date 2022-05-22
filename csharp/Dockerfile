@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine as build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
 
 WORKDIR /usr/src/app
 
@@ -10,13 +10,15 @@ RUN dotnet restore
 COPY . .
 RUN dotnet publish -c release -o out
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 
 WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/out out
 
 ENV ASPNETCORE_URLS http://*:3000
-ENV COMPlus_TieredCompilation 1
+ENV DOTNET_TieredPGO 1 
+ENV DOTNET_TC_QuickJitForLoops 1 
+ENV DOTNET_ReadyToRun 0
 
 CMD dotnet /usr/src/app/out/web.dll

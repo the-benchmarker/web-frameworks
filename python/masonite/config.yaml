@@ -1,17 +1,11 @@
 framework:
   website: masoniteproject.com
-  version: 3.0
-
+  version: 4.12
+ 
 build_deps:
   - libffi-dev
-  - openssl-dev
   - curl
-
-fixes:
-  - curl https://sh.rustup.rs > init.sh
-  - sh init.sh -y
-  - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
-  - rustup default nightly
+  - libssl-dev
 
 command: >
   gunicorn  \
@@ -19,5 +13,5 @@ command: >
     --bind 0.0.0.0:3000  \
     --reuse-port  \
     --workers $(nproc)  \
-    --worker-class meinheld.gmeinheld.MeinheldWorker \
-      wsgi
+    --worker-class gevent \
+      wsgi:application

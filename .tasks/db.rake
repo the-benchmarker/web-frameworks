@@ -71,7 +71,7 @@ namespace :db do
         next
       end
     end
-    data.merge!(updated_at: Time.now.utc)
+    data.merge!(updated_at: Time.now.utc, version: 1)
     data.merge!(hardware: {cpus: Etc.nprocessors, memory: 16282676, cpu_name: 'AMD FX-8320E Eight-Core Processor', os: Etc.uname})
     File.open('data.json','w').write(JSON.pretty_generate(data))
     File.open('data.min.json','w').write(data.to_json)
