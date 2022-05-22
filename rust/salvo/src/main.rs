@@ -11,10 +11,9 @@ fn get_user(req: &mut Request, res: &mut Response) {
 
 fn main() {
     let router = Router::new().get(index).push(
-        Router::new()
-            .path("user")
+        Router::with_path("user")
             .post(index)
-            .push(Router::new().path("<id>").get(get_user)),
+            .push(Router::with_path("<id>").get(get_user)),
     );
     salvo::run(async {
         Server::new(TcpListener::bind(([0, 0, 0, 0], 3000)))
