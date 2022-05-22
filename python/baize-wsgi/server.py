@@ -1,7 +1,3 @@
-import logging
-
-logging.disable()
-
 from baize.wsgi import request_response, Router, PlainTextResponse
 
 
