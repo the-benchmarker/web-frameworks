@@ -1,11 +1,11 @@
 use salvo::prelude::*;
 
 #[fn_handler]
-async fn index(res: &mut Response) {
+fn index(res: &mut Response) {
     res.set_status_code(StatusCode::OK);
 }
 #[fn_handler]
-async fn get_user(req: &mut Request, res: &mut Response) {
+fn get_user(req: &mut Request, res: &mut Response) {
     res.render(req.params().get("id").unwrap());
 }
 
