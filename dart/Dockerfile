@@ -2,13 +2,13 @@ FROM dart:2.17
 
 WORKDIR /app
 
-ADD pubspec.* /app/
+ADD pubspec.yaml /app/
 
-RUN pub get --no-precompile
+RUN dart pub get --no-precompile
 
 ADD . /app/
 
-RUN pub get --offline --no-precompile
+RUN dart pub get --offline --no-precompile
 
 WORKDIR /app
 
