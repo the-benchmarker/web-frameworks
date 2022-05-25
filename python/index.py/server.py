@@ -1,7 +1,3 @@
-import logging
-
-logging.disable()
-
 from indexpy import Index, request
 
 app = Index()
