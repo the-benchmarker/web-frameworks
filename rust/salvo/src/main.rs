@@ -16,7 +16,7 @@ async fn main() {
             .push(Router::with_path("<id>").get(get_user)),
     );
     let service = Service::new(router);
-    salvo::hyper::Server::builder(TcpListener::bind("127.0.0.1:3000"))
+    salvo::hyper::Server::builder(TcpListener::bind("0.0.0.0:3000"))
         .http1_only(true)
         .http1_pipeline_flush(true)
         .serve(service)
