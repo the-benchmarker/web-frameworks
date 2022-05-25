@@ -8,16 +8,17 @@ fn index(res: &mut Response) {
 fn get_user(req: &mut Request, res: &mut Response) {
     res.render(req.params().get("id").unwrap());
 }
-
-fn main() {
+#[tokio::main]
+async fn main() {
     let router = Router::new().get(index).push(
         Router::with_path("user")
             .post(index)
             .push(Router::with_path("<id>").get(get_user)),
     );
-    salvo::run(async {
-        Server::new(TcpListener::bind(([0, 0, 0, 0], 3000)))
-            .serve(router)
-            .await;
-    });
+    let service = Service::new(router);
+    salvo::hyper::Server::builder(TcpListener::bind("127.0.0.1:3000"))
+        .http1_only(true)
+        .http1_pipeline_flush(true)
+        .serve(service)
+        .await.unwrap();
 }
