@@ -1,8 +1,3 @@
-# Disable all logging features
-import logging
-
-logging.disable()
-
 import multiprocessing
 
 from sanic import Sanic

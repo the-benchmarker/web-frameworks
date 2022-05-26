@@ -8,5 +8,5 @@ command: >
     --bind 0.0.0.0:3000  \
     --reuse-port  \
     --workers $(nproc)  \
-    --worker-class meinheld.gmeinheld.MeinheldWorker  \
+    --worker-class gevent  \
       app.wsgi
