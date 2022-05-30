@@ -6,6 +6,7 @@ authors = ["Chrislearn Young <chrislearn@hotmail.com>"]
 
 [dependencies]
 salvo = { version = "~0.24.0" }
+tokio = { version = "1", features = ["full"] }
 
 [profile.release]
 codegen-units = 1
