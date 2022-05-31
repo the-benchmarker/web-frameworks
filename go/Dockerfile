@@ -1,4 +1,9 @@
-FROM golang:1.18-alpine
+{{#version}}
+  FROM golang:{{version}}-alpine
+{{/version}}
+{{^version}}
+  FROM golang:1.18-alpine
+{{/version}}
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
