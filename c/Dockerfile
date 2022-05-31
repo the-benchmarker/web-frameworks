@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 WORKDIR /usr/src/app
 
@@ -23,7 +23,7 @@ WORKDIR /usr/src/app
    RUN {{{.}}}
 {{/build}}
 
-FROM debian:buster
+FROM debian:bullseye
 
 WORKDIR /opt/web
 
