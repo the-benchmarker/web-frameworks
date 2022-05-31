@@ -14,7 +14,7 @@ build_deps:
   - uuid-dev
 
 bin_deps:
-  - libjsoncpp1
+  - libjsoncpp24
   - openssl
   - zlib1g
   - libbrotli1
