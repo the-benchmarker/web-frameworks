@@ -98,7 +98,7 @@ def create_dockerfile(language, framework, **options)
       Dir.glob(File.join(directory, path)).each do |f|
         if f =~ /^*\.\./
           filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
-          File.open(File.join(directory, filename), 'w') { |stream| stream.write(File.read(f)) }
+          File.write(File.join(directory, filename), File.read(f))
           files << filename
         else
           files << f.gsub!(directory, '').gsub!(%r{^/}, '')
@@ -113,7 +113,7 @@ def create_dockerfile(language, framework, **options)
       Dir.glob(File.join(directory, path)).each do |f|
         if f =~ /^*\.\./
           filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
-          File.open(File.join(directory, filename), 'w') { |stream| stream.write(File.read(f)) }
+          File.write(File.join(directory, filename), File.read(f))
           files << filename
         else
           files << f.gsub!(directory, '').gsub!(%r{^/}, '')
@@ -138,11 +138,9 @@ def create_dockerfile(language, framework, **options)
     config['environment'] = environment
   end
 
-  if template
-    File.open(File.join(directory, MANIFESTS[:container]), 'w') do |f|
-      f.write(Mustache.render(File.read(template), config))
-    end
-  end
+  config[:version] = config.dig('language', 'version')
+
+  File.write(File.join(directory, MANIFESTS[:container]), Mustache.render(File.read(template), config)) if template
 end
 
 task :config do
