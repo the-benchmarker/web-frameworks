@@ -9,7 +9,7 @@ func main() {
 	a.Get("/", func() string {
 		return ""
 	})
-	a.Get("/user/{id}", func(id interface{}) interface{} {
+	a.Get("/user/{id}", func(id string) string {
 		return id
 	})
 	a.Post("/user", func() string {
