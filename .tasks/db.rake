@@ -55,9 +55,9 @@ namespace :db do
         unless data[:frameworks].map { |row| row[:id] }.to_a.include?(framework_id)
           data[:frameworks] << {
             id: framework_id,
-            version: config.dig('language', 'version') || framework_config.dig('framework', 'version'),
+            version: framework_config.dig('framework', 'version'),
             label: framework,
-            language: language,
+            language: framework_config.dig('language', 'version') || language,
             website: "#{scheme}://#{website}"
           }
         end
