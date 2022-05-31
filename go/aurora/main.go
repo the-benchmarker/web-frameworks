@@ -2,24 +2,22 @@ package main
 
 import (
 	"github.com/aurora-go/aurora"
-	"github.com/aurora-go/aurora/req"
 )
 
 func main() {
-	//获取 aurora 路由实例
-	a := aurora.New()
-
-	a.GET("/", func(request aurora.Request) interface{} {
+	a := aurora.Web
+	a.Get("/", func() string {
 		return ""
 	})
-	a.GET("/user/{id}", func(request aurora.Request) interface{} {
-		args := request[req.Args].(map[string]interface{})
-		return args["id"]
+	a.Get("/user/{id}", func(id string) string {
+		return id
 	})
-	a.POST("/user", func(request aurora.Request) interface{} {
+	a.Post("/user", func() string {
 		return ""
 	})
-
-	// 启动服务器 默认端口8080，更改端口号 a.Guide(”8081“) 即可
-	a.Guide("3000")
+	err := aurora.Run(a)
+	if err != nil {
+		a.Error(err.Error())
+		return
+	}
 }
