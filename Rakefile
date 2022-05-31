@@ -142,7 +142,7 @@ def commands_for(language, framework, variant, provider = default_provider)
 
   commands[:build] << "curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat #{language}/#{framework}/ip-#{variant}.txt`:3000 -v"
 
-  commands[:collect] << "HOSTNAME=`cat #{language}/#{framework}/ip-#{variant}.txt` ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
+  commands[:collect] << "HOSTNAME=`cat #{language}/#{framework}/ip-#{variant}.txt` ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV.fetch('DATABASE_URL', nil)} bundle exec rake collect"
 
   config.dig('providers', provider, 'clean').each do |cmd|
     commands[:clean] << Mustache.render(cmd, options).to_s
@@ -156,8 +156,39 @@ def create_dockerfile(directory, engine, config)
   path = File.readlink(path) if File.symlink?(path)
   path = File.join(Dir.pwd, directory, '..', 'Dockerfile') unless File.exist?(path)
 
-  template = File.read(path)
-  files = []
+  # Path to remove stability suffix (stable, beta, alpha, or version) of php extensions
+
+  if config.key?('sources')
+    files = []
+    config['sources'].each do |path|
+      Dir.glob(File.join(directory, path)).each do |f|
+        if f =~ /^*\.\./
+          filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
+          File.write(File.join(directory, filename), File.read(f))
+          files << filename
+        else
+          files << f.gsub!(directory, '').gsub!(%r{^/}, '')
+        end
+      end
+    end
+    config['sources'] = files
+  end
+
+  if config.key?('files')
+    files = []
+    config['files'].each do |path|
+      Dir.glob(File.join(directory, path)).each do |f|
+        if f =~ /^*\.\./
+          filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
+          File.write(File.join(directory, filename), File.read(f))
+          files << filename
+        else
+          files << f.gsub!(directory, '').gsub!(%r{^/}, '')
+        end
+      end
+    end
+    config['files'] = files
+  end
 
   Dir.glob(config['files']).each do |file|
     variant_file = file.gsub(directory, File.join(directory, ".#{engine}"))
@@ -177,11 +208,11 @@ def create_dockerfile(directory, engine, config)
     files << { source: source.gsub("#{directory}/", ''), target: target }
   end
 
-  File.open(File.join(directory, ".Dockerfile.#{engine}"), 'w') do |f|
-    f.write(Mustache.render(template, config.merge('files' => files, 'environment' => config['environment']&.map do |k, v|
-                                                                                        "#{k}=#{v}"
-                                                                                      end)))
-  end
+  template = File.read(path)
+
+  File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config.merge('files' => files, 'environment' => config['environment']&.map do |k, v|
+                                                                                                                                        "#{k}=#{v}"
+                                                                                                                                      end)))
 end
 
 desc 'Create Dockerfiles'

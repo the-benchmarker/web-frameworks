@@ -143,8 +143,7 @@ namespace :db do
             id: framework_id,
             version: framework_config.dig('framework', 'version'),
             label: framework,
-            engine: info[:engine],
-            language: language,
+            language: framework_config.dig('language', 'version') || language,
             website: "#{scheme}://#{website}"
           }
         end
@@ -159,8 +158,9 @@ namespace :db do
       end
     end
     data.merge!(updated_at: Time.now.utc, version: 1)
-    data.merge!(hardware: {cpus: Etc.nprocessors, memory: 16282676, cpu_name: 'AMD FX-8320E Eight-Core Processor', os: Etc.uname})
-    File.open('data.json','w').write(JSON.pretty_generate(data))
-    File.open('data.min.json','w').write(data.to_json)
+    data.merge!(hardware: { cpus: Etc.nprocessors, memory: 16_282_676, cpu_name: 'AMD FX-8320E Eight-Core Processor',
+                            os: Etc.uname })
+    File.write('data.json', JSON.pretty_generate(data))
+    File.write('data.min.json', data.to_json)
   end
 end

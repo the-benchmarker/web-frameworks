@@ -30,6 +30,7 @@ venv
 
 # Rust build directories
 rust/*/target
+rust/*/Cargo.lock
 
 #fsharp
 launchSettings.json
