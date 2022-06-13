@@ -57,7 +57,7 @@ namespace :db do
             id: framework_id,
             version: framework_config.dig('framework', 'version'),
             label: framework,
-            language: framework_config.dig('language', 'version') || language,
+            language: language,
             website: "#{scheme}://#{website}"
           }
         end
