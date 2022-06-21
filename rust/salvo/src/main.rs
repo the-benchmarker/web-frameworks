@@ -1,4 +1,5 @@
 use salvo::prelude::*;
+use salvo::routing::*;
 
 #[fn_handler]
 fn index(res: &mut Response) {
@@ -6,19 +7,20 @@ fn index(res: &mut Response) {
 }
 #[fn_handler]
 fn get_user(req: &mut Request, res: &mut Response) {
-    res.render(req.params().get("id").unwrap());
+    res.render(req.params_mut().remove("id").unwrap());
 }
 #[tokio::main]
 async fn main() {
     let router = Router::new().get(index).push(
         Router::with_path("user")
             .post(index)
-            .push(Router::with_path("<id>").get(get_user)),
+            .push(Router::with_path("<id>").filter(get()).handle(get_user)),
     );
     let service = Service::new(router);
     salvo::hyper::Server::builder(TcpListener::bind("0.0.0.0:3000"))
         .http1_only(true)
         .http1_pipeline_flush(true)
         .serve(service)
-        .await.unwrap();
+        .await
+        .unwrap();
 }
