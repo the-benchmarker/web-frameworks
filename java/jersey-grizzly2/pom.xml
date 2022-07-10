@@ -11,7 +11,7 @@
 
 
     <properties>
-        <jersey.version>[2.35,2.36)</jersey.version>
+        <jersey.version>[2.36,2.37)</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -70,7 +70,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.4.1</version>
                 <configuration>
                   <descriptorRefs>
                     <descriptorRef>jar-with-dependencies</descriptorRef>

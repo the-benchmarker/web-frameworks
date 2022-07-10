@@ -160,8 +160,8 @@ def create_dockerfile(directory, engine, config)
 
   if config.key?('sources')
     files = []
-    config['sources'].each do |path|
-      Dir.glob(File.join(directory, path)).each do |f|
+    config['sources'].each do |rel_path|
+      Dir.glob(File.join(directory, rel_path)).each do |f|
         if f =~ /^*\.\./
           filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
           File.write(File.join(directory, filename), File.read(f))
@@ -176,8 +176,8 @@ def create_dockerfile(directory, engine, config)
 
   if config.key?('files')
     files = []
-    config['files'].each do |path|
-      Dir.glob(File.join(directory, path)).each do |f|
+    config['files'].each do |rel_path|
+      Dir.glob(File.join(directory, rel_path)).each do |f|
         if f =~ /^*\.\./
           filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
           File.write(File.join(directory, filename), File.read(f))
