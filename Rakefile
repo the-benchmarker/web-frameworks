@@ -158,26 +158,10 @@ def create_dockerfile(directory, engine, config)
 
   # Path to remove stability suffix (stable, beta, alpha, or version) of php extensions
 
-  if config.key?('sources')
-    files = []
-    config['sources'].each do |rel_path|
-      Dir.glob(File.join(directory, rel_path)).each do |f|
-        if f =~ /^*\.\./
-          filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
-          File.write(File.join(directory, filename), File.read(f))
-          files << filename
-        else
-          files << f.gsub!(directory, '').gsub!(%r{^/}, '')
-        end
-      end
-    end
-    config['sources'] = files
-  end
-
   if config.key?('files')
     files = []
     config['files'].each do |rel_path|
-      Dir.glob(File.join(directory, rel_path)).each do |f|
+      Dir.glob(File.join(rel_path)).each do |f|
         if f =~ /^*\.\./
           filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
           File.write(File.join(directory, filename), File.read(f))
