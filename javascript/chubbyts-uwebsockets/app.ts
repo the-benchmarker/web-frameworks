@@ -12,7 +12,7 @@ import {
 import { createPathToRegexpRouteMatcher } from '@chubbyts/chubbyts-framework-router-path-to-regexp/dist/path-to-regexp-router';
 import { Response, ServerRequest } from '@chubbyts/chubbyts-http-types/dist/message';
 import { createResponseToUwebsocketsEmitter, createUwebsocketsToServerRequestFactory } from '@chubbyts/chubbyts-uwebsockets-http-bridge/dist/uwebsocket-http';
-import { HttpRequest, HttpResponse } from 'uWebSockets.js';
+import { App, HttpRequest, HttpResponse } from 'uWebSockets.js';
 
 const responseFactory = createResponseFactory();
 
@@ -67,8 +67,7 @@ const responseToUwebsocketsEmitter = createResponseToUwebsocketsEmitter();
 const host = '0.0.0.0';
 const port = 3000;
 
-require('uWebSockets.js')
-  .App()
+App()
   .any('/*', async (res: HttpResponse, req: HttpRequest) => {
     // function gets excuted on abort
     // empty function means the request/response gets executed to its end
