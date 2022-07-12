@@ -14,5 +14,10 @@
     "psr-4": {
       "App\\": "src/App/src/"
     }
+  },
+  "config": {
+    "allow-plugins": {
+        "laminas/laminas-component-installer": true
+    }
   }
 }
