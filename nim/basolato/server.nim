@@ -14,12 +14,12 @@ let ROUTES = @[
     Route.get("/user/{id:int}", benchmark_controller.show),
     Route.get("/user", benchmark_controller.user),
 
-    Route.group("/api", @[
-    ])
-    .middleware(set_headers_middleware.setCorsHeadersMiddleware),
+    # Route.group("/api", @[
+    # ])
+    # .middleware(set_headers_middleware.setCorsHeadersMiddleware),
   ])
   # .middleware(set_headers_middleware.setSecureHeadersMiddlware)
-  .middleware(auth_middleware.checkCsrfTokenMiddleware),
+  # .middleware(auth_middleware.checkCsrfTokenMiddleware),
 ]
 
 serve(ROUTES)
