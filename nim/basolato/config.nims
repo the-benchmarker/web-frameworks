@@ -1,5 +1,5 @@
 import os
-putEnv("HOST", "localhost")
+putEnv("HOST", "0.0.0.0")
 # putEnv("DB_SQLITE", $true) # "true" or "false"
 # putEnv("DB_POSTGRES", $true) # "true" or "false"
 # putEnv("DB_MYSQL", $true) # "true" or "false"
