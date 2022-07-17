@@ -9,6 +9,5 @@ deps:
   - openssl
   - openssh-client
   - pcre
-  - pcre-dev
 
 build_opts: '-d:ssl --threads:on --threadAnalysis:off --gc:orc --putenv:PORT=3000'
