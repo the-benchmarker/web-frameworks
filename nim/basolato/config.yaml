@@ -4,3 +4,7 @@ framework:
 
 files:
   - /usr/src/app/server
+  - /usr/src/app/.env
+
+# enviromnents:
+#   PORT: 3000
