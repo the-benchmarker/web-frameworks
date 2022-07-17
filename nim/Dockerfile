@@ -19,7 +19,7 @@ RUN nimble install -y
 RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
     --excessiveStackTrace:off \
     -d:release \
-    --passC:-flto \
+    # --passC:-flto \
     # --passL:-flto \
     server.nim
 
