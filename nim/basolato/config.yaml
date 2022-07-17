@@ -3,7 +3,7 @@ framework:
   version: 0.12.2
 
 run-enviromnents:
-  HOST: "0.0.0.0"
+  HOST: "127.0.0.1"
   PORT: 3000
   LOG_IS_DISPLAY: true
   LOG_IS_FILE: false
