@@ -20,7 +20,7 @@ RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
     --excessiveStackTrace:off \
     -d:release \
     --passC:-flto \
-    --passL:-flto \
+    # --passL:-flto \
     server.nim
 
 FROM alpine
