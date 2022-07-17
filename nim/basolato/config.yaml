@@ -7,6 +7,7 @@ deps:
   - musl-dev
   - bsd-compat-headers
   - openssl
+  - openssh-client
   - pcre
   - pcre-dev
 

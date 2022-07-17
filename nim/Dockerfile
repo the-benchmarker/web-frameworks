@@ -4,13 +4,13 @@ WORKDIR /usr/src/app
 
 COPY . ./
 
+RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
+RUN apk update && \
+    apk upgrade --no-cache
+
 {{#deps}}
   RUN apk --no-cache add {{{.}}}
 {{/deps}}
-
-{{#alpine-deps}}
-  RUN apk --no-cache add {{{.}}}
-{{/alpine-deps}}
 
 ENV PATH $PATH:/root/.nimble/bin
 
