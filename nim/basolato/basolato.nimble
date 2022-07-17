@@ -8,7 +8,7 @@ license       = "MIT"
 backend       = "c"
 # Dependencies
 requires "nim >= 1.6.4"
-requires "https://github.com/itsumura-h/nim-basolato >= 0.12.2"
+requires "https://github.com/itsumura-h/nim-basolato >= 0.12.3"
 requires "allographer >= 0.21.0"
 requires "interface_implements >= 0.2.2"
 requires "bcrypt >= 0.2.1"
