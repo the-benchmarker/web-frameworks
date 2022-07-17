@@ -10,5 +10,5 @@ proc show*(context:Context, params:Params):Future[Response] {.async.} =
   let id = params.getStr("id")
   return render(id)
 
-proc user*(context:Context, params:Params):Future[Response] {.async.} =
+proc store*(context:Context, params:Params):Future[Response] {.async.} =
   return render("")
