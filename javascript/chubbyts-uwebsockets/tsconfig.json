@@ -4,7 +4,7 @@
       "module": "commonjs",
       "outDir": "./",
       "strict": true,
-      "declaration": true,
+      "declaration": true
     },
     "exclude": ["node_modules"]
   }
