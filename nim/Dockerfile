@@ -13,9 +13,6 @@ COPY . ./
 {{/alpine-deps}}
 
 ENV PATH $PATH:/root/.nimble/bin
-{{#build-enviromnents}}
-  ENV {{{.}}}
-{{/build-enviromnents}}
 
 RUN nimble install -y
 
@@ -27,10 +24,6 @@ RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
     server.nim
 
 FROM alpine
-
-{{#run-enviromnents}}
-  ENV {{{.}}}
-{{/run-enviromnents}}
 
 COPY --from=0 /usr/src/app/server /usr/src/app/server
 

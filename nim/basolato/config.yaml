@@ -2,11 +2,4 @@ framework:
   github: itsumura-h/nim-basolato
   version: 0.12.3
 
-run-enviromnents:
-  HOST: "127.0.0.1"
-  PORT: 3000
-  LOG_IS_DISPLAY: true
-  LOG_IS_FILE: false
-  LOG_IS_ERROR_FILE: false
-
 build_opts: '-d:ssl --threads:on --threadAnalysis:off --gc:orc --putenv:PORT=3000'
