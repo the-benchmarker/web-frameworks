@@ -2,9 +2,5 @@ framework:
   github: itsumura-h/nim-basolato
   version: 0.12.2
 
-files:
-  - /usr/src/app/server
-  - /usr/src/app/.env
-
-# enviromnents:
-#   PORT: 3000
+enviromnents:
+  PORT: 3000

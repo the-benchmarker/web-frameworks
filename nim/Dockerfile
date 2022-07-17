@@ -13,9 +13,9 @@ COPY . ./
 {{/alpine-deps}}
 
 ENV PATH $PATH:/root/.nimble/bin
-# {{#enviromnents}}
-#   ENV {{{.}}}
-# {{/enviromnents}}
+{{#enviromnents}}
+  ENV {{{.}}}
+{{/enviromnents}}
 
 RUN nimble install -y
 
