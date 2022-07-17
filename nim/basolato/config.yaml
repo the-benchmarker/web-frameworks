@@ -2,5 +2,12 @@ framework:
   github: itsumura-h/nim-basolato
   version: 0.12.2
 
+environment:
+  PORT: 3000
+  LOG_IS_DISPLAY: false
+  LOG_IS_FILE: false
+  LOG_IS_ERROR_FILE: false
+  ENABLE_ANONYMOUS_COOKIE: false
+
 files:
   - /usr/src/app/server
