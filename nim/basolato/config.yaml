@@ -5,7 +5,7 @@ framework:
 run-enviromnents:
   HOST: "0.0.0.0"
   PORT: 3000
-  LOG_IS_DISPLAY: false
+  LOG_IS_DISPLAY: true
   LOG_IS_FILE: false
   LOG_IS_ERROR_FILE: false
 
