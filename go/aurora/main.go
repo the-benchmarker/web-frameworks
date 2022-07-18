@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/aurora-go/aurora"
+	"gitee.com/aurora-engine/aurora"
 )
 
 func main() {
-	a := aurora.Web
+	a := aurora.NewAurora()
 	a.Get("/", func() string {
 		return ""
 	})
