@@ -3,8 +3,6 @@ version       = "0.1.0"
 author        = "Anonymous"
 description   = "A new awesome basolato package"
 license       = "MIT"
-# srcDir        = "."
-# bin           = @["server"]
 backend       = "c"
 # Dependencies
 requires "nim >= 1.6.4"
@@ -17,7 +15,3 @@ requires "faker >= 0.14.0"
 requires "flatdb >= 0.2.5"
 requires "redis >= 0.3.0"
 requires "sass >= 0.1.0"
-
-task test, "run testament":
-  echo staticExec("testament p \"./tests/test_*.nim\"")
-  discard staticExec("find tests/ -type f ! -name \"*.*\" -delete 2> /dev/null")
