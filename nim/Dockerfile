@@ -1,6 +1,6 @@
 FROM nimlang/nim:1.6.4-alpine
 
-RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
+# RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
 RUN apk update && \
     apk upgrade --no-cache
 
