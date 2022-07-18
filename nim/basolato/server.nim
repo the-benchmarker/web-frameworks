@@ -5,18 +5,13 @@ import app/http/controllers/benchmark_controller
 
 
 let ROUTES = @[
-  Route.group("", @[
-    Route.get("/", benchmark_controller.index),
-    Route.get("/user/{id:str}", benchmark_controller.show),
-    Route.get("/user/{id:int}", benchmark_controller.show),
-    Route.post("/user", benchmark_controller.store),
-
-    # Route.group("/api", @[
-    # ])
-    # .middleware(set_headers_middleware.setCorsHeadersMiddleware),
-  ])
-  # .middleware(set_headers_middleware.setSecureHeadersMiddlware)
-  # .middleware(auth_middleware.checkCsrfTokenMiddleware),
+  Route.get("/", benchmark_controller.index),
+  Route.get("/user/{id:str}", benchmark_controller.show),
+  Route.get("/user/{id:int}", benchmark_controller.show),
+  Route.post("/user", benchmark_controller.store),
+  # Route.group("", @[
+    
+  # ])
 ]
 
 serve(ROUTES)
