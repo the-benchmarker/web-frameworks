@@ -9,9 +9,6 @@ let ROUTES = @[
   Route.get("/user/{id:str}", benchmark_controller.show),
   Route.get("/user/{id:int}", benchmark_controller.show),
   Route.post("/user", benchmark_controller.store),
-  # Route.group("", @[
-    
-  # ])
 ]
 
 serve(ROUTES)
