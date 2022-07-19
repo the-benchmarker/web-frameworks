@@ -1,11 +1,11 @@
 use salvo::prelude::*;
 use salvo::routing::*;
 
-#[fn_handler]
+#[handler]
 fn index(res: &mut Response) {
     res.set_status_code(StatusCode::OK);
 }
-#[fn_handler]
+#[handler]
 fn get_user(req: &mut Request, res: &mut Response) {
     res.render(req.params_mut().remove("id").unwrap());
 }

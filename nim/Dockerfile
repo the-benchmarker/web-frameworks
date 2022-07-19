@@ -1,16 +1,15 @@
 FROM nimlang/nim:1.6.4-alpine
 
-WORKDIR /usr/src/app
-
-COPY . ./
+RUN apk update && \
+    apk upgrade --no-cache
 
 {{#deps}}
   RUN apk --no-cache add {{{.}}}
 {{/deps}}
 
-{{#alpine-deps}}
-  RUN apk --no-cache add {{{.}}}
-{{/alpine-deps}}
+WORKDIR /usr/src/app
+
+COPY . ./
 
 ENV PATH $PATH:/root/.nimble/bin
 
@@ -24,6 +23,9 @@ RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
     server.nim
 
 FROM alpine
+
+RUN apk --no-cache add \
+      pcre-dev
 
 COPY --from=0 /usr/src/app/server /usr/src/app/server
 
