@@ -32,7 +32,7 @@ namespace :db do
   task :raw_export do
     raise 'Please provide a database' unless ENV['DATABASE_URL']
 
-    data = { metrics: [], frameworks: [], languages: [] }
+    data = { metrics: [], frameworks: [], languages: [], schema_version: 1 }
     db = PG.connect(ENV['DATABASE_URL'])
     db.exec("select row_to_json(t) from (#{SQL}) as t") do |result|
       result.each do |row|
