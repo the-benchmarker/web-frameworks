@@ -6,6 +6,8 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
+
+
 RUN apk add build-base {{#deps}}{{{.}}}{{/deps}}
 
 {{#environment}}
@@ -15,5 +17,9 @@ RUN apk add build-base {{#deps}}{{{.}}}{{/deps}}
 {{#bootstrap}}
   RUN {{{.}}}
 {{/bootstrap}}
+
+{{#static_files}}
+  COPY '{{source}}' '/go/bin/{{target}}'
+{{/static_files}}
 
 CMD {{{command}}}

@@ -2,7 +2,7 @@ language:
   version: 1.18
 
   engines:
-    built-in:
+    net-http:
       environment:
         CGO_ENABLED: 0
         GOOS: linux
@@ -20,10 +20,9 @@ language:
         - go get
         - go build -a -ldflags '-extldflags "-static"' -o /go/bin/app ./
       command: cd /go/bin && ./app
-
 framework:
   engines:
-    - built-in
+    - net-http
 
   files:
     - main.go

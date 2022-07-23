@@ -1,3 +1,6 @@
 framework:
   website: pkg.go.dev/github.com/fasthttp/router
   version: 1.4
+
+  engines:
+    - fasthttp
