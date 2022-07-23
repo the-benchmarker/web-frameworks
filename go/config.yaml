@@ -1,3 +1,30 @@
-provider:
-  default:
-    language: 1.18
+language:
+  version: 1.18
+
+  engines:
+    built-in:
+      environment:
+        CGO_ENABLED: 0
+        GOOS: linux
+        GOARCH: amd64
+      bootstrap:
+        - go get
+        - go build -a -ldflags '-extldflags "-static"' -o /go/bin/app ./
+      command: cd /go/bin && ./app
+    fasthttp:
+      environment:
+        CGO_ENABLED: 0
+        GOOS: linux
+        GOARCH: amd64
+      bootstrap:
+        - go get
+        - go build -a -ldflags '-extldflags "-static"' -o /go/bin/app ./
+      command: cd /go/bin && ./app
+
+framework:
+  engines:
+    - built-in
+
+  files:
+    - main.go
+    - go.mod

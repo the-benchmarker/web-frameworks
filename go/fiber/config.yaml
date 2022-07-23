@@ -1,3 +1,6 @@
 framework:
   website: gofiber.io
   version: 2.35
+
+  engines:
+    - fasthttp
