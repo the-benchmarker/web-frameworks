@@ -19,9 +19,8 @@ language:
         - gcc
       bootstrap:
         - pip install gunicorn
-        - pip install meinheld
       environment:
-        WORKER_CLASS: meinheld.gmeinheld.MeinheldWorker
+        WORKER_CLASS: async
       command: >
         gunicorn --log-level warning  \
           --bind 0.0.0.0:3000  \
@@ -58,6 +57,8 @@ language:
       command: daphne -b 0.0.0.0 -p 3000 server:app
 
 framework:
+  engines:
+    - gunicorn
   files:
     - "**/*.py"
     - requirements.txt
