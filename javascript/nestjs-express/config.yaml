@@ -4,7 +4,7 @@ framework:
 
   bootstrap:
     - npm install # workaround
-    - npm -g install @nestjs/cli
+    - npm --location=global install @nestjs/cli
     - nest build
 
   files:

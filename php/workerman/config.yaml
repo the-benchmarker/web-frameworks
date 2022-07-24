@@ -5,14 +5,4 @@ framework:
   engines:
     - workerman
 
-environment:
-  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
-
-php_mod:
-  - pcntl
-  - sockets
-
-php_ext:
-  - event
-
-command: php start.php start
+  command: php start.php start

@@ -8,7 +8,7 @@ framework:
 
   bootstrap:
     - npm install
-    - npm -g install typescript
+    - npm --location=global install typescript
     - tsc
 
   files:

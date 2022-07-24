@@ -2,6 +2,11 @@ framework:
   github: gramework/gramework
   version: 1.7
 
-  environment:
-    ENVIRONMENT: production
-    PORT: 3000
+language:
+  version: 1.17
+  docker-image: golang:1.17-alpine
+  engines:
+    net-http:
+      environment:
+        ENVIRONMENT: production
+        PORT: 3000

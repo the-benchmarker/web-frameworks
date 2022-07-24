@@ -6,14 +6,14 @@ language:
       environment:
         NODE_ENV: production
       bootstrap:
-        - npm -g install pm2
+        - npm --location=global install pm2
         - npm install
       command: pm2-runtime start app.js -i $(nproc)
     turbo-net:
       environment:
         NODE_ENV: production
       bootstrap:
-        - npm -g install pm2
+        - npm --location=global install pm2
         - npm install
       command: pm2-runtime start app.js -i $(nproc)
     uwebsockets:
@@ -24,7 +24,7 @@ language:
         NODE_ENV: production
         EXPERIMENTAL_FASTCALL: 1
       bootstrap:
-        - npm -g install pm2
+        - npm --location=global install pm2
         - npm install
       command: pm2-runtime start app.js -i $(nproc)
     deno:

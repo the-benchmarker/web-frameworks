@@ -17,8 +17,6 @@ language:
     workerman:
       extensions:
         - event
-      environment:
-        CFLAGS: "$CFLAGS -D_GNU_SOURCE"
       deps:
         - libevent-dev
         - openssl-dev

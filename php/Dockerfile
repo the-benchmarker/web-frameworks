@@ -41,10 +41,6 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
   sed -e '1i extension=sockets' /usr/local/etc/php/conf.d/docker-php-ext-event.ini > /tmp/file ; \
   mv /tmp/file /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
 
-
-
-
-
 {{#command}}
   CMD {{{.}}}
 {{/command}}
