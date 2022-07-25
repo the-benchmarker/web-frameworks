@@ -1,6 +1,7 @@
 framework:
-  website: pgjones.gitlab.io/quart
-  version: 0.17
+  website: quart.palletsprojects.com
+  github: pallets/quart
+  version: 0.18
 
 command: >
   gunicorn \

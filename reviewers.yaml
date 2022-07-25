@@ -62,6 +62,8 @@ ruby:
   rack_app:
     - adamluzsi
 python:
+  flask:
+    - pgjones
   quart:
     - pgjones
   sanic:
