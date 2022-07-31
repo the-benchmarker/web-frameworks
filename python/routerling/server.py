@@ -14,4 +14,4 @@ async def empty_text_response(req: HttpRequest, res: ResponseWriter, ctx: Contex
 
 app.GET("/", empty_text_response)
 app.GET("/user/:id", get_user_by_id)
-app.GET("/user", empty_text_response)
+app.POST("/user", empty_text_response)
