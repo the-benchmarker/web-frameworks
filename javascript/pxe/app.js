@@ -4,6 +4,8 @@ const regx = /^\/user\/(?<id>[0-9]+)/i;
 
 const app = new Server();
 
+app.set("disable cookie", true);
+
 app.use(async ctx => {
     const url = ctx.request.url;
     const res = ctx.response;
