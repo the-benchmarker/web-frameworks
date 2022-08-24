@@ -23,6 +23,7 @@ RUN docker-php-ext-install zip opcache
 
 {{#php_mod}}
   COPY --from=php_mod_{{{.}}} /usr/local/lib/php/extensions/no-debug-non-zts-20200930/{{{.}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20200930/{{{.}}}.so
+  RUN docker-php-ext-enable {{{.}}}
 {{/php_mod}}
 
 
