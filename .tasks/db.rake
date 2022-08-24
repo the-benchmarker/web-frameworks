@@ -29,6 +29,11 @@ def compute(data)
 end
 
 namespace :db do
+  task :check_failures do
+    results = JSON.load(File.read('data.json'))
+    frameworks = results['metrics'].filter_map {|row|row['framework_id'] if row['label'] == "total_requests_per_s" && row["value"] == 0 }
+    STDOUT.puts results['frameworks'].filter_map {|row|row['label'] if frameworks.include? (row["id"]) }
+  end
   task :raw_export do
     raise 'Please provide a database' unless ENV['DATABASE_URL']
 
