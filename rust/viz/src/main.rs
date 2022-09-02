@@ -1,9 +1,7 @@
 #![deny(warnings)]
 
 use std::net::SocketAddr;
-use viz::{
-    get, post, types::Params, Error, Request, RequestExt, Result, Router, Server, ServiceMaker,
-};
+use viz::{types::Params, Error, Request, RequestExt, Result, Router, Server, ServiceMaker};
 
 async fn index(_: Request) -> Result<()> {
     Ok(())
@@ -21,9 +19,9 @@ async fn create_user(_: Request) -> Result<()> {
 #[tokio::main]
 async fn main() -> Result<()> {
     let app = Router::new()
-        .route("/", get(index))
-        .route("/user", post(create_user))
-        .route("/user/:id", get(show_user));
+        .get("/", index)
+        .post("/user", create_user)
+        .get("/user/:id", show_user);
 
     Server::bind(&SocketAddr::from(([0, 0, 0, 0], 3000)))
         .serve(ServiceMaker::from(app))

@@ -1,7 +1,7 @@
 (defproject luminus "0.1.0-SNAPSHOT"
 
-  :dependencies [[luminus/lein-template "4.38"]
-                 [ch.qos.logback/logback-classic "1.2.11"]
+  :dependencies [[luminus/lein-template "4.44"]
+                 [ch.qos.logback/logback-classic "1.4.0"]
                  [cheshire "5.11.0"]
                  [clojure.java-time "0.3.3"]
                  [cprop "0.1.19"]
@@ -15,7 +15,7 @@
                  [metosin/reitit "0.5.18"]
                  [metosin/ring-http-response "0.9.3"]
                  [mount "0.1.16"]
-                 [nrepl "0.9.0"]
+                 [nrepl "1.0.0"]
                  [org.clojure/clojure "1.11.1"]
                  [org.clojure/tools.cli "1.0.206"]
                  [org.clojure/tools.logging "1.2.4"]
@@ -53,7 +53,7 @@
                                  [ring/ring-devel "1.9.5"]
                                  [ring/ring-mock "0.4.0"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.25.0"]
-                                 [jonase/eastwood "1.2.4"]] 
+                                 [jonase/eastwood "1.2.5"]] 
                   
                   :source-paths ["env/dev/clj" ]
                   :resource-paths ["env/dev/resources"]
