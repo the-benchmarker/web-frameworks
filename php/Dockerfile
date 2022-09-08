@@ -1,10 +1,5 @@
-{{#php_mod}}
-  FROM php:8.0-fpm-alpine AS php_mod_{{{.}}}
-  RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev php8-pear {{#deps}} {{{.}}} {{/deps}}
-  RUN docker-php-ext-install {{{.}}}
-{{/php_mod}}
-
 FROM php:8.0-fpm-alpine
+
 RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev php8-pear {{#deps}} {{{.}}} {{/deps}}
 
 WORKDIR /usr/src/app
@@ -22,11 +17,8 @@ RUN docker-php-ext-install zip opcache
 {{/build_deps}}
 
 {{#php_mod}}
-  COPY --from=php_mod_{{{.}}} /usr/local/lib/php/extensions/no-debug-non-zts-20200930/{{{.}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20200930/{{{.}}}.so
-  RUN docker-php-ext-enable {{{.}}}
+  RUN docker-php-ext-install {{{.}}}
 {{/php_mod}}
-
-
 
 {{#php_ext}}
   RUN mkdir -p /usr/src/php/ext/{{{.}}} && \
