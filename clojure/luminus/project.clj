@@ -23,7 +23,7 @@
                  [org.webjars.npm/material-icons "1.10.8"]
                  [org.webjars/webjars-locator "0.45"]
                  [ring-webjars "0.2.0"]
-                 [ring/ring-core "1.9.5"]
+                 [ring/ring-core "1.9.6"]
                  [ring/ring-defaults "0.3.3"]
                  [com.fasterxml.jackson.core/jackson-core "2.13.4"]]
 
