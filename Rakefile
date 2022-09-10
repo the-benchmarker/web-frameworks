@@ -152,7 +152,7 @@ task :config do
   sieger_options = ENV.fetch('SIEGER_OPTIONS', '-r GET:/ -c 10')
   clean = ENV.fetch('CLEAN', 'on')
 
-  Dir.glob('php/*/config.yaml').each do |path|
+  Dir.glob('*/*/config.yaml').each do |path|
     directory = File.dirname(path)
     language, framework = directory.split(File::Separator)
 
