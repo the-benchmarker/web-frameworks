@@ -4,7 +4,7 @@ framework:
 
   engines:
     - php-fpm
-    - swoole
+    - swoole-4.8.x
 
   modules:
     - bcmath

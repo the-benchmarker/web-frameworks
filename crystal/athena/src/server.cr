@@ -3,16 +3,15 @@ require "athena"
 Log.setup :none
 
 class BenchmarkController < ATH::Controller
-  @[ATHA::Get("/")]
+  @[ARTA::Get("/")]
   def root_get : Nil
   end
 
-  @[ATHA::Post("/user")]
+  @[ARTA::Post("/user")]
   def root_post : Nil
-    
   end
 
-  @[ATHA::Get("/user/:id", constraints: {id: /\d+/})]
+  @[ARTA::Get("/user/{id<\\d+>}")]
   def user(id : Int32) : Int32
     id
   end

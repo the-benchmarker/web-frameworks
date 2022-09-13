@@ -1,5 +1,5 @@
-name: athena
-version: 0.2.0
+name: athena-routing
+version: 0.1.0
 
 authors:
   - George Dietrich <george@dietrich.app>
@@ -9,8 +9,8 @@ targets:
     main: src/server.cr
 
 dependencies:
-  athena:
-    github: athena-framework/framework
-    version: ~> 0.17.0
+  athena-routing:
+    github: athena-framework/routing
+    version: ~> 0.1.3
 
 license: MIT

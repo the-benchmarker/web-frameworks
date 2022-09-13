@@ -180,6 +180,8 @@ def create_dockerfile(directory, engine, config)
 
   static_files = []
 
+  config['php_ext'] = config['php_ext']&.map { ext, version = _1.split('-') ; {name: ext, version: version}} 
+
   if config['static_files']
     Dir.glob(config['static_files']).each do |static_file|
       static_files << { source: static_file.gsub("#{directory}/", ''), target: static_file.gsub("#{directory}/", '') }

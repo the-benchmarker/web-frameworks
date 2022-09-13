@@ -10,7 +10,7 @@
                  [luminus-jetty "0.2.3"]
                  [luminus-transit "0.1.5"]
                  [luminus/ring-ttl-session "0.3.3"]
-                 [markdown-clj "1.11.2"]
+                 [markdown-clj "1.11.3"]
                  [metosin/muuntaja "0.6.8"]
                  [metosin/reitit "0.5.18"]
                  [metosin/ring-http-response "0.9.3"]
@@ -23,9 +23,9 @@
                  [org.webjars.npm/material-icons "1.10.8"]
                  [org.webjars/webjars-locator "0.45"]
                  [ring-webjars "0.2.0"]
-                 [ring/ring-core "1.9.5"]
+                 [ring/ring-core "1.9.6"]
                  [ring/ring-defaults "0.3.3"]
-                 [com.fasterxml.jackson.core/jackson-core "2.13.3"]]
+                 [com.fasterxml.jackson.core/jackson-core "2.13.4"]]
 
   :min-lein-version "2.0.0"
   
@@ -50,7 +50,7 @@
    :project/dev  {:jvm-opts ["-Dconf=dev-config.edn" ]
                   :dependencies [[pjstadig/humane-test-output "0.11.0"]
                                  [prone "2021-04-23"]
-                                 [ring/ring-devel "1.9.5"]
+                                 [ring/ring-devel "1.9.6"]
                                  [ring/ring-mock "0.4.0"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.25.0"]
                                  [jonase/eastwood "1.2.5"]] 
