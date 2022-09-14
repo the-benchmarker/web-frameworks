@@ -13,10 +13,12 @@ javascript:
     - schamberg97
   fyrejet-uwebsockets:
     - schamberg97
-  chubbyjs:
+  chubbyts:
     - dominikzogg
-  chubbyjs-uwebsockets:
+  chubbyts-uwebsockets:
     - dominikzogg
+  hyper-express:
+    - kartikk221
 go:
   router:
     - savsgio
@@ -46,7 +48,7 @@ go:
     - humaidq
   tango:
     - lunny
-  gf:
+  goframe:
     - gqcn
   bunrouter:
     - vmihailenco
@@ -60,6 +62,8 @@ ruby:
   rack_app:
     - adamluzsi
 python:
+  flask:
+    - pgjones
   quart:
     - pgjones
   sanic:
@@ -187,6 +191,8 @@ rust:
     - sunli829
   axum:
     - davidpdrsn
+  oxidy:
+    - krishnaTORQUE
 csharp:
   carter:
     - jchannon

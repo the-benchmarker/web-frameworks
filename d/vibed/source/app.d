@@ -30,6 +30,8 @@ void main()
 {
     auto router = new URLRouter;
     router.registerWebInterface(new Service);
+    router.rebuild();
+
     listenHTTP("0.0.0.0:3000", router);
     runApplication();
 }

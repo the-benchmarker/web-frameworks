@@ -1,7 +1,7 @@
-use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{get, web, App, HttpServer, Responder, HttpResponse};
 
 #[get("/user/{id}")]
-async fn get_user(web::Path(id): web::Path<String>) -> impl Responder {
+async fn get_user(id: web::Path<String>) -> String {
     id.to_string()
 }
 
@@ -13,7 +13,7 @@ async fn main() -> std::io::Result<()> {
             .route("/user", web::post().to(|| HttpResponse::Ok()))
             .service(get_user)
     })
-    .bind("0.0.0.0:3000")?
+    .bind(("0.0.0.0", 3000))?
     .run()
     .await
 }

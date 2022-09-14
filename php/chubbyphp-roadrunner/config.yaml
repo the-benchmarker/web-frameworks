@@ -1,13 +1,13 @@
 framework:
   github: chubbyphp/chubbyphp-framework
-  version: 4.0
+  version: 4.2
+
+build_deps:
+  - libsodium-dev
 
 php_mod:
   - sodium
   - sockets
-
-deps:
-  - libsodium-dev
 
 before_command:
   - ./vendor/bin/rr get-binary

@@ -20,9 +20,7 @@ FRAMEWORKS.yaml
 */*/Dockerfile
 */*/.Makefile
 */*/ip.txt
-<<<<<<< HEAD
 venv
-=======
 */*/cid.txt
 
 /lib/**/*.cr
@@ -32,6 +30,7 @@ venv
 
 # Rust build directories
 rust/*/target
+rust/*/Cargo.lock
 
 #fsharp
 launchSettings.json
@@ -43,4 +42,3 @@ obj
 [Rr]elease/
 *.fsproj
 *.fsproj.user
->>>>>>> upstream/master

@@ -1,8 +1,8 @@
 framework:
   github: chubbyphp/chubbyphp-framework
-  version: 4.0
+  version: 4.2
 
 php_ext:
-  - swoole
+  - swoole-4.8.11
 
 command: php public/index.php

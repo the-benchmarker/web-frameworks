@@ -1,0 +1,9 @@
+framework:
+  github: clue/framework-x
+  website: framework-x.org
+  version: dev-main
+
+command: php app.php
+
+environment:
+  X_LISTEN: "0.0.0.0:3000"

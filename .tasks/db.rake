@@ -29,10 +29,15 @@ def compute(data)
 end
 
 namespace :db do
+  task :check_failures do
+    results = JSON.load(File.read('data.json'))
+    frameworks = results['metrics'].filter_map {|row|row['framework_id'] if row['label'] == "total_requests_per_s" && row["value"] == 0 }
+    STDOUT.puts results['frameworks'].filter_map {|row|row['label'] if frameworks.include? (row["id"]) }
+  end
   task :raw_export do
     raise 'Please provide a database' unless ENV['DATABASE_URL']
 
-    data = {metrics: [], frameworks: [], languages: [] }
+    data = { metrics: [], frameworks: [], languages: [] }
     db = PG.connect(ENV['DATABASE_URL'])
     db.exec("select row_to_json(t) from (#{SQL}) as t") do |result|
       result.each do |row|
@@ -52,16 +57,16 @@ namespace :db do
                   else
                     (framework_config['framework']['website']).to_s
                   end
-        unless data[:frameworks].map{|row|row[:id]}.to_a.include?(framework_id)
+        unless data[:frameworks].map { |row| row[:id] }.to_a.include?(framework_id)
           data[:frameworks] << {
             id: framework_id,
             version: framework_config.dig('framework', 'version'),
             label: framework,
             language: language,
-            website:  scheme + "://" + website
+            website: "#{scheme}://#{website}"
           }
         end
-        unless data[:languages].map{|row|row[:label]}.to_a.include?(language)
+        unless data[:languages].map { |row| row[:label] }.to_a.include?(language)
           data[:languages] << {
             label: language,
             version: language_config.dig('provider', 'default', 'language')
@@ -72,8 +77,9 @@ namespace :db do
       end
     end
     data.merge!(updated_at: Time.now.utc, version: 1)
-    data.merge!(hardware: {cpus: Etc.nprocessors, memory: 16282676, cpu_name: 'AMD FX-8320E Eight-Core Processor', os: Etc.uname})
-    File.open('data.json','w').write(JSON.pretty_generate(data))
-    File.open('data.min.json','w').write(data.to_json)
+    data.merge!(hardware: { cpus: Etc.nprocessors, memory: 16_282_676, cpu_name: 'AMD FX-8320E Eight-Core Processor',
+                            os: Etc.uname })
+    File.write('data.json', JSON.pretty_generate(data))
+    File.write('data.min.json', data.to_json)
   end
 end
