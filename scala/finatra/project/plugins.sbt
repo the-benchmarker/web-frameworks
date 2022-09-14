@@ -1,1 +1,1 @@
-addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "latest.integration")
+addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "latest.integration")
