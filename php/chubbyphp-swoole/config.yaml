@@ -3,6 +3,6 @@ framework:
   version: 4.2
 
 php_ext:
-  - swoole-4.8.11
+  - swoole
 
 command: php public/index.php
