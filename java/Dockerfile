@@ -32,8 +32,6 @@ FROM openjdk:17-slim
 
 WORKDIR /opt/web
 
-RUN ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
-
 {{#binaries}}
   COPY --from=build /usr/src/web/{{{.}}} {{{.}}}
 {{/binaries}}
