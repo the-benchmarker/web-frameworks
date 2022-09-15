@@ -4,6 +4,6 @@ framework:
 
   engines:
     - php-fpm
-    - swoole-4.8.x
+    - swoole
     - workerman
     - road-runner
