@@ -138,8 +138,7 @@ if config.key?('environment')
   config['environment'] = environment
 end
 
-config['php_ext'] = config['php_ext']&.map { ext, version = _1.split('-') ; {name: ext, version: version}} 
-pp config['php_ext']
+  config['php_ext'] = config['php_ext']&.map { ext, version = _1.split('-') ; {name: ext, version: version}} 
   config[:version] = config.dig('language', 'version')
 
   File.write(File.join(directory, MANIFESTS[:container]), Mustache.render(File.read(template), config)) if template
