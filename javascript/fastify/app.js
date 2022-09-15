@@ -1,16 +1,45 @@
-const fastify = require("fastify");
-const app = fastify();
+const os = require("os");
+const cluster = require("cluster");
+const fastify = require('fastify')({
+    logger: false,
+    disableRequestLogging: true
+});
 
-app.get("/", function (request, reply) {
+fastify.get("/", function (request, reply) {
   reply.send();
 });
 
-app.get("/user/:id", function (request, reply) {
+fastify.get("/user/:id", function (request, reply) {
   reply.send(request.params.id);
 });
 
-app.post("/user", function (request, reply) {
+fastify.post("/user", function (request, reply) {
   reply.send();
 });
 
-app.listen(3000, "0.0.0.0", function () {});
+const start = async () => {
+    try {
+        await fastify.listen({ port: 3000 });
+    } catch (err) {
+        process.exit(1);
+    }
+}
+
+const clusterWorkerSize = os.cpus().length;
+
+if (clusterWorkerSize > 1) {
+    if (cluster.isMaster) {
+        for (let i=0; i < clusterWorkerSize; i++) {
+            cluster.fork();
+        }
+
+        cluster.on("exit", function(worker) {
+            console.log("Worker", worker.id, " has exited.")
+            cluster.fork();
+        })
+    } else {
+        start();
+    }
+} else {
+    start();
+}
