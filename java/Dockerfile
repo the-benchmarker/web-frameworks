@@ -28,7 +28,7 @@ WORKDIR /usr/src/web
   RUN mvn package
 {{/build}}
 
-FROM openjdk:11-jre-slim
+FROM openjdk:17-slim
 
 WORKDIR /opt/web
 
