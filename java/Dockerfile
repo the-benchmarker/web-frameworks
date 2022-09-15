@@ -3,7 +3,7 @@
 {{/image}}
 
 {{^image}}
-  FROM maven:3-jdk-11-slim AS build
+  FROM maven:3-openjdk-17 AS build
 {{/image}}
 
 WORKDIR /usr/src/web

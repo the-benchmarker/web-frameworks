@@ -1,8 +1,8 @@
 provider:
   default:
-    language: 11
+    language: 17
   digitalocean:
-    language: 11
+    language: 17
 
 sources:
   - src/**/*.java
