@@ -8,4 +8,4 @@ build:
 binaries:
   - target/quarkus-1.0.0-runner.jar
 
-command: /usr/bin/java -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/quarkus-1.0.0-runner.jar
+command: /usr/local/openjdk-17/bin/java -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/quarkus-1.0.0-runner.jar
