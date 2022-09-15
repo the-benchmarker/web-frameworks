@@ -13,6 +13,9 @@ files:
   - src/**/*.xml
   - src/**/*.jsp
 
+fix:
+  - ln -sfv /usr/local/openjdk-17/bin/java /usr/bin/java
+
 binaries:
   - target/benchmark-1.0.0.jar
 

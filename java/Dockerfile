@@ -28,11 +28,19 @@ WORKDIR /usr/src/web
   RUN mvn package
 {{/build}}
 
-FROM openjdk:17-slim
+{{#runtime}}
+  FROM {{{.}}}
+{{/runtime}}
+{{^runtime}}
+  FROM openjdk:17-slim
+{{/runtime}}
+
 
 WORKDIR /opt/web
 
-RUN ln -sfv /usr/local/openjdk-17/bin/java /usr/bin/java
+{{#fix}}
+  RUN {{{.}}}
+{{/fix}}
 
 {{#binaries}}
   COPY --from=build /usr/src/web/{{{.}}} {{{.}}}
