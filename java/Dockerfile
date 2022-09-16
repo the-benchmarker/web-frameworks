@@ -32,7 +32,7 @@ WORKDIR /usr/src/web
   FROM {{{.}}}
 {{/runtime}}
 {{^runtime}}
-  FROM openjdk:17-slim
+  FROM openjdk:20-slim
 {{/runtime}}
 
 
