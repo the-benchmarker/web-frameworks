@@ -3,5 +3,5 @@ framework:
   version: 3.3
 
 before_command:
-  - mkdir -p /usr/src/app/data
+  - mkdir /usr/src/app/data
   - chmod 777 -R /usr/src/app/data
