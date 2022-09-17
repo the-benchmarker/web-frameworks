@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "@chubbyts/chubbyts-framework": "~1.4.0",
-    "@chubbyts/chubbyts-framework-router-path-to-regexp": "~1.0.2",
-    "@chubbyts/chubbyts-http": "~1.0.0",
-    "@chubbyts/chubbyts-uwebsockets-http-bridge": "~1.0.0",
+    "@chubbyts/chubbyts-framework-router-path-to-regexp": "*",
+    "@chubbyts/chubbyts-http": "*",
+    "@chubbyts/chubbyts-uwebsockets-http-bridge": "*",
     "@types/node": "16"
   }
 }
