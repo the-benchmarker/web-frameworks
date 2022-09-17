@@ -1,7 +1,7 @@
 framework:
   website: getlaminas.org
-  version: 3.2
+  version: 3.3
 
 before_command:
-  - mkdir /usr/src/app/data
+  - mkdir -p /usr/src/app/data
   - chmod 777 -R /usr/src/app/data
