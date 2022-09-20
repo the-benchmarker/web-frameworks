@@ -74,7 +74,8 @@ def commands_for(language, framework, provider)
 
   commands[:build] << 'curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
 
-  commands[:collect] << "LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
+  commands[:collect] << "LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV.fetch('DATABASE_URL',
+                                                                                              nil)} bundle exec rake collect"
 
   config.dig('providers', provider, 'clean').each do |cmd|
     commands[:clean] << Mustache.render(cmd, options).to_s
@@ -106,39 +107,48 @@ def create_dockerfile(language, framework, **options)
       end
     end
     config['sources'] = files
-end
-if config.key?('files')
-  files = []
-  config['files'].each do |path|
-    Dir.glob(File.join(directory, path)).each do |f|
-      if f =~ /^*\.\./
-        filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
-        File.write(File.join(directory, filename), File.read(f))
-        files << filename
-      else
-        files << f.gsub!(directory, '').gsub!(%r{^/}, '')
+  end
+  if config.key?('files')
+    files = []
+    config['files'].each do |path|
+      Dir.glob(File.join(directory, path)).each do |f|
+        if f =~ /^*\.\./
+          filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
+          File.write(File.join(directory, filename), File.read(f))
+          files << filename
+        else
+          files << f.gsub!(directory, '').gsub!(%r{^/}, '')
+        end
       end
     end
+    config['files'] = files
   end
-  config['files'] = files
-end
 
-template = nil
-if options[:provider].start_with?('docker') || options[:provider].start_with?('podman')
-  template = File.join(directory, '..', 'Dockerfile')
-elsif config.key?('binaries')
-  template = File.join(directory, '..', '.build', options[:provider], 'Dockerfile')
-end
-
-if config.key?('environment')
-  environment = []
-  config.fetch('environment').each do |key, value|
-    environment << "#{key} #{value}"
+  template = nil
+  if options[:provider].start_with?('docker') || options[:provider].start_with?('podman')
+    template = File.join(directory, '..', 'Dockerfile')
+  elsif config.key?('binaries')
+    template = File.join(directory, '..', '.build', options[:provider], 'Dockerfile')
   end
-  config['environment'] = environment
-end
 
-  config['php_ext'] = config['php_ext']&.map { ext, version = _1.split('-') ; {name: ext, version: version}} 
+  if config.key?('environment')
+    environment = []
+    config.fetch('environment').each do |key, value|
+      environment << "#{key} #{value}"
+    end
+    config['environment'] = environment
+  end
+  if config.key?('build_environment')
+    environment = []
+    config.fetch('build_environment').each do |key, value|
+      environment << "#{key} #{value}"
+    end
+    config['build_environment'] = environment
+  end
+  config['php_ext'] = config['php_ext']&.map do
+    ext, version = _1.split('-')
+    { name: ext, version: version }
+  end
   config[:version] = config.dig('language', 'version')
 
   File.write(File.join(directory, MANIFESTS[:container]), Mustache.render(File.read(template), config)) if template
