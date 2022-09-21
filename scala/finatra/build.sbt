@@ -1,5 +1,5 @@
 name := "server"
-scalaVersion := "2.13.8"
+scalaVersion := "2.13.9"
 
 lazy val root = (project in file("."))
   .settings(
