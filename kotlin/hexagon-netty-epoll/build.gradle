@@ -1,10 +1,10 @@
 
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.6.+"
+    id "org.jetbrains.kotlin.jvm" version "1.7.+"
 }
 
 ext {
-    hexagonVersion = "2.0.23"
+    hexagonVersion = "2.0.25"
     nettyVersion = "4.1.+"
 
     gradleScripts = "https://raw.githubusercontent.com/hexagonkt/hexagon/$hexagonVersion/gradle"
