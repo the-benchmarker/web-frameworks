@@ -2,7 +2,7 @@ import { createApplication } from '@chubbyts/chubbyts-framework/dist/application
 import { createErrorMiddleware } from '@chubbyts/chubbyts-framework/dist/middleware/error-middleware';
 import { createRouteMatcherMiddleware } from '@chubbyts/chubbyts-framework/dist/middleware/route-matcher-middleware';
 import { createGetRoute, createPostRoute } from '@chubbyts/chubbyts-framework/dist/router/route';
-import { createRoutesByName } from '@chubbyts/chubbyts-framework/dist/router/routes';
+import { createRoutesByName } from '@chubbyts/chubbyts-framework/dist/router/routes-by-name';
 import {
   createServerRequestFactory,
   createStreamFromResourceFactory,
