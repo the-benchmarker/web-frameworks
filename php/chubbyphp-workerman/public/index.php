@@ -9,7 +9,7 @@ use Chubbyphp\Framework\Middleware\ExceptionMiddleware;
 use Chubbyphp\Framework\Middleware\RouteMatcherMiddleware;
 use Chubbyphp\Framework\Router\FastRoute\RouteMatcher;
 use Chubbyphp\Framework\Router\Route;
-use Chubbyphp\Framework\Router\Routes;
+use Chubbyphp\Framework\Router\RoutesByName;
 use Chubbyphp\WorkermanRequestHandler\OnMessage;
 use Chubbyphp\WorkermanRequestHandler\PsrRequestFactory;
 use Chubbyphp\WorkermanRequestHandler\WorkermanResponseEmitter;
@@ -29,7 +29,7 @@ $responseFactory = new ResponseFactory();
 
 $app = new Application([
     new ExceptionMiddleware($responseFactory, true),
-    new RouteMatcherMiddleware(new RouteMatcher(new Routes([
+    new RouteMatcherMiddleware(new RouteMatcher(new RoutesByName([
         Route::get('/', 'home', new class($responseFactory) implements RequestHandlerInterface {
             public function __construct(private ResponseFactoryInterface $responseFactory) {}
             public function handle(ServerRequestInterface $request): ResponseInterface {
@@ -51,7 +51,7 @@ $app = new Application([
                 return $this->responseFactory->createResponse();
             }
         }),
-    ]), sys_get_temp_dir() . '/chubbyphp-workerman.php'), $responseFactory),
+    ]), sys_get_temp_dir() . '/chubbyphp-workerman.php')),
 ]);
 
 $server = new Worker('http://0.0.0.0:3000');
