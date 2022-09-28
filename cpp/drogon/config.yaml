@@ -1,36 +1,30 @@
 framework:
-  github: an-tao/drogon
-  version: 1.3
+  github: drogonframework/drogon
+  version: 1.8
 
 provider:
   default:
     language: 14/17
 
 build_deps:
-  - jsoncpp-dev
-  - util-linux-dev
-  - libressl-dev
-  - zlib-dev
-  - brotli-dev
+  - libjsoncpp-dev
+  - libssl-dev
+  - zlib1g-dev
+  - libbrotli-dev
+  - uuid-dev
 
 bin_deps:
-  - jsoncpp
-  - libuuid
-  - libressl
-  - zlib
-  - brotli
-
-deps:
-  - jsoncpp
+  - libjsoncpp24
   - openssl
-  - zlib
-  - uuid
+  - zlib1g
+  - libbrotli1
+  - libuuid1
 
 binaries:
   - build/drogon_benchmark
 
 download:
-  - git clone --branch v1.3.0 https://github.com/an-tao/drogon
+  - git clone --branch v1.8.0 https://github.com/an-tao/drogon
   - cd drogon && git submodule update --init
 
 build:

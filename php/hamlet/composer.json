@@ -1,12 +1,11 @@
 {
+  "require": {
+    "hamlet/hamlet-core": "~3.4.0",
+    "cache/array-adapter": "@stable"
+  },
   "autoload": {
     "psr-4": {
       "Application\\": "src/Application/"
     }
-  },
-  "minimum-stability": "dev",
-  "require": {
-    "cache/array-adapter": "^1.1@dev",
-    "hamlet-framework/http": "dev-master"
   }
 }

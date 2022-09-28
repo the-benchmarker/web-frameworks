@@ -1,11 +1,11 @@
-val FinagleVersionRange = "[0.32,0.33)"
+val FinagleVersionRange = "[0.34,0.35)"
 
 name := "server"
-scalaVersion := "2.13.4"
+scalaVersion := "2.13.9"
 
 lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++= Seq(
-      "com.github.finagle" %% "finchx-core" % FinagleVersionRange
+      "com.github.finagle" %% "finch-core" % FinagleVersionRange
     )
   ).enablePlugins(JavaAppPackaging)

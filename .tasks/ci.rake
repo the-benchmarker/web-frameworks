@@ -1,47 +1,34 @@
 # frozen_string_literal: true
 
-require 'git'
+require 'json'
 
 namespace :ci do
   task :matrix do
-    base = ENV['BASE_COMMIT']
-    last = ENV['LAST_COMMIT']
-    workdir = ENV.fetch('GITHUB_WORKSPACE') { Dir.pwd }
-    frameworks = []
-    files = []
+    files = JSON.parse(ENV['FILES'])
+    matrix = { include: [] }
 
-    if base.empty? || last.empty?
-      Dir.glob('*/*/config.yaml').each do |path|
-        parts = path.split(File::SEPARATOR)
-        frameworks << parts[0..1].join(File::SEPARATOR)
-      end
-    else
-      git = Git.open(Dir.pwd)
+    files = Dir.glob('*/*/config.yaml') if files.include?('data.json')
 
-      diff = git.gtree(last).diff(base).each { |diff| files << diff.path }
+    files += files
+             .find_all { |path| path.end_with?('Dockerfile') }
+             .map { |path| path.split(File::SEPARATOR).shift }
+             .flat_map { |language| Dir.glob(File.join(language, '*', 'config.yaml')) }
 
-      files.each do |file|
-        next unless file.end_with?('config.yaml')
+    files.take(256).each do |file|
+      next if file.start_with?('.')
 
-        parts = file.split(File::SEPARATOR)
+      next if file.count(File::SEPARATOR) < 2
 
-        case parts.size
-        when 2 # We are modifying a language
-          Dir.glob("#{parts.first}/*/config.yaml").each do |path|
-            subs = path.split(File::SEPARATOR)
-            frameworks << subs[0..1].join(File::SEPARATOR)
-          end
-        when 3 # We are modifying a framework
-          frameworks << parts[0..1].join(File::SEPARATOR)
-        end
-      end
+      language, framework, = file.split(File::SEPARATOR)
 
-      matrix = { include: [] }
-      frameworks.uniq.each do |framework|
-        matrix[:include] << { directory: framework, framework: framework }
-      end
+      next if matrix[:include].detect do |row|
+                row[:framework] == framework
+              end
 
-      puts matrix.to_json
+      matrix[:include] << { language: language, framework: framework,
+                            directory: File.join(language, framework) }
     end
+    warn matrix.to_json
+    puts matrix.to_json
   end
 end

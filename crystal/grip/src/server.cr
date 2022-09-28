@@ -33,6 +33,16 @@ class Application < Grip::Application
     3000
   end
   
+  def router : Array(HTTP::Handler)
+    [
+      @http_handler,
+    ] of HTTP::Handler
+  end
+
+  def server : HTTP::Server
+    HTTP::Server.new(@router)
+  end
+  
   def routes
     get "/", IndexController
     get "/user/:id", UserController

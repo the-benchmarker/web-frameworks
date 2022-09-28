@@ -1,0 +1,13 @@
+framework:
+  github: itsumura-h/nim-basolato
+  version: 0.12
+
+deps:
+  - gcc
+  - musl-dev
+  - bsd-compat-headers
+  - openssl
+  - openssh-client
+  - pcre-dev
+
+build_opts: '-d:ssl --threads:on --threadAnalysis:off --gc:orc --putenv:PORT=3000'

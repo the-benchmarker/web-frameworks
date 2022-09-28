@@ -1,0 +1,12 @@
+framework:
+  github: chubbyts/chubbyts-framework
+  version: 1.6
+
+before_command:
+  - npm -g install typescript
+  - tsc
+
+files:
+  - app.ts
+  - package.json
+  - tsconfig.json

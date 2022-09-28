@@ -9,18 +9,16 @@
     }
   ],
   "require": {
-    "php": "^7.4|^8.0",
     "ext-intl": "*",
     "ext-json": "*",
-    "antidot-fw/antidot-react-psr15": "~0.0.1",
-    "antidot-fw/cli": "~1.1.3",
-    "antidot-fw/container": "~0.1.4",
-    "antidot-fw/fast-router-adapter": "~0.2.0",
-    "antidot-fw/framework": "~0.2.1",
-    "antidot-fw/react-framework": "~1.1.1",
-    "antidot-fw/symfony-config-translator": "~1.1.2",
-    "antidot-fw/yaml-config-provider": "~0.1.2",
-    "webmozart/assert": "~1.9.0"
+    "antidot-fw/framework": "~1.0",
+    "antidot-fw/antidot-react-psr15": "@stable",
+    "antidot-fw/cli": "@stable",
+    "antidot-fw/container": "@stable",
+    "antidot-fw/fast-router-adapter": "@stable",
+    "antidot-fw/react-framework": "@stable",
+    "antidot-fw/symfony-config-translator": "@stable",
+    "antidot-fw/yaml-config-provider": "@stable"
   },
   "autoload": {
     "psr-4": {

@@ -6,15 +6,20 @@ namespace App;
 
 use Chubbyphp\Framework\Application;
 use Chubbyphp\Framework\Middleware\ExceptionMiddleware;
-use Chubbyphp\Framework\Middleware\RouterMiddleware;
-use Chubbyphp\Framework\RequestHandler\CallbackRequestHandler;
-use Chubbyphp\Framework\Router\FastRoute\Router;
+use Chubbyphp\Framework\Middleware\RouteMatcherMiddleware;
+use Chubbyphp\Framework\Router\FastRoute\RouteMatcher;
 use Chubbyphp\Framework\Router\Route;
+use Chubbyphp\Framework\Router\RoutesByName;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Factory\ResponseFactory;
-use Spiral\Goridge\StreamRelay;
+use Slim\Psr7\Factory\ServerRequestFactory;
+use Slim\Psr7\Factory\StreamFactory;
+use Slim\Psr7\Factory\UploadedFileFactory;
+use Spiral\RoadRunner\Http\PSR7Worker;
 use Spiral\RoadRunner\Worker;
-use Spiral\RoadRunner\PSR7Client;
 
 ini_set('display_errors', 'stderr');
 
@@ -24,41 +29,42 @@ $responseFactory = new ResponseFactory();
 
 $app = new Application([
     new ExceptionMiddleware($responseFactory, true),
-    new RouterMiddleware(new Router([
-        Route::get('/', 'home', new CallbackRequestHandler(
-            static function () use ($responseFactory) {
-                $response = $responseFactory->createResponse();
-                $response->getBody()->write('');
-
-                return $response;
+    new RouteMatcherMiddleware(new RouteMatcher(new RoutesByName([
+        Route::get('/', 'home', new class($responseFactory) implements RequestHandlerInterface {
+            public function __construct(private ResponseFactoryInterface $responseFactory) {}
+            public function handle(ServerRequestInterface $request): ResponseInterface {
+                return $this->responseFactory->createResponse();
             }
-        )),
-        Route::get('/user/{id}', 'user_view', new CallbackRequestHandler(
-            static function (ServerRequestInterface $request) use ($responseFactory) {
-                $response = $responseFactory->createResponse();
+        }),
+        Route::get('/user/{id}', 'user_view', new class($responseFactory) implements RequestHandlerInterface {
+            public function __construct(private ResponseFactoryInterface $responseFactory) {}
+            public function handle(ServerRequestInterface $request): ResponseInterface {
+                $response = $this->responseFactory->createResponse();
                 $response->getBody()->write($request->getAttribute('id'));
 
                 return $response;
             }
-        )),
-        Route::post('/user', 'user_list', new CallbackRequestHandler(
-            static function () use ($responseFactory) {
-                $response = $responseFactory->createResponse();
-                $response->getBody()->write('');
-
-                return $response;
+        }),
+        Route::post('/user', 'user_list', new class($responseFactory) implements RequestHandlerInterface {
+            public function __construct(private ResponseFactoryInterface $responseFactory) {}
+            public function handle(ServerRequestInterface $request): ResponseInterface {
+                return $this->responseFactory->createResponse();
             }
-        ))
-    ]), $responseFactory),
+        }),
+    ]), sys_get_temp_dir() . '/chubbyphp-roadrunner.php')),
 ]);
 
-$worker = new Worker(new StreamRelay(STDIN, STDOUT));
-$psr7 = new PSR7Client($worker);
+$worker = new PSR7Worker(
+    Worker::create(),
+    new ServerRequestFactory(),
+    new StreamFactory(),
+    new UploadedFileFactory()
+);
 
-while ($req = $psr7->acceptRequest()) {
+while ($req = $worker->waitRequest()) {
     try {
-        $psr7->respond($app->handle($req));
+        $worker->respond($app->handle($req));
     } catch (\Throwable $e) {
-        $psr7->getWorker()->error((string)$e);
+        $worker->getWorker()->error((string)$e);
     }
 }

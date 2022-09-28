@@ -10,21 +10,15 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == "GET" {
-			w.Write([]byte(""))
-		}
-	})
+		w.Write([]byte(""))
+	}).Methods("GET")
 	r.HandleFunc("/user/{id}", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == "GET" {
-			vars := mux.Vars(r)
-			w.Write([]byte(vars["id"]))
-		}
-	})
+		vars := mux.Vars(r)
+		w.Write([]byte(vars["id"]))
+	}).Methods("GET")
 	r.HandleFunc("/user", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == "POST" {
-			w.Write([]byte(""))
-		}
-	})
+		w.Write([]byte(""))
+	}).Methods("POST")
 
 	http.Handle("/", r)
 	http.ListenAndServe(":3000", r)

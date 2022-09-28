@@ -1,5 +1,5 @@
 framework:
   github: nameko/nameko
-  version: 2.13
+  version: 2.14
 
 command: nameko run server --config nameko.yaml

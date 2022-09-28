@@ -1,11 +1,12 @@
-FROM alpine
-
-RUN apk add git build-base cmake
+FROM debian:bullseye
 
 WORKDIR /usr/src/app
 
+RUN apt-get -qq update
+RUN apt-get -qy install build-essential git cmake
+
 {{#build_deps}}
-  RUN apk add {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/build_deps}}
 
 {{#sources}}
@@ -20,7 +21,7 @@ WORKDIR /usr/src/app
    RUN {{{.}}}
 {{/build}}
 
-FROM alpine
+FROM debian:bullseye
 
 {{#environment}}
 ENV {{{.}}}
@@ -28,8 +29,10 @@ ENV {{{.}}}
 
 WORKDIR /opt/web
 
+RUN apt-get -qq update
+
 {{#bin_deps}}
-   RUN apk add {{{.}}}
+   RUN apt-get -qy install {{{.}}}
 {{/bin_deps}}
 
 {{#files}}

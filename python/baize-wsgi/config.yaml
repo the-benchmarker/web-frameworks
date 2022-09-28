@@ -1,0 +1,11 @@
+framework:
+  website: baize.aber.sh
+  version: 0.18
+
+command: >
+  gunicorn \
+    --log-level warning \
+    --bind 0.0.0.0:3000 \
+    --reuse-port \
+    --workers $(nproc) \
+      server:app

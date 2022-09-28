@@ -1,0 +1,6 @@
+framework:
+  github: athena-framework/routing
+  version: 0.1
+
+build_deps:
+  - pcre2-dev

@@ -1,4 +1,4 @@
-guillotina>=6.1,<6.2
+guillotina>=6.4,<6.5
 gunicorn
 uvicorn[standard]
 typing_extensions

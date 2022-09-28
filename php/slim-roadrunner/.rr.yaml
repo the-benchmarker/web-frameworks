@@ -1,4 +1,5 @@
+version: "2.7"
 http:
   address: :3000
-  workers:
-    command: "php public/index.php"
+server:
+  command: "php public/index.php"

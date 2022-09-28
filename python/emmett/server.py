@@ -1,8 +1,3 @@
-# Disable all logging features
-import logging
-
-logging.disable()
-
 from emmett import App
 
 app = App(__name__)
