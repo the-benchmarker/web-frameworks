@@ -1,13 +1,13 @@
 framework:
   github: walkor/webman
-  version: 1.0
+  version: 1.4
 
 build_deps:
   - libevent-dev
-
+  - openssl-dev
+  
 php_mod:
   - pcntl
-  - posix
   - sockets
 
 php_ext:

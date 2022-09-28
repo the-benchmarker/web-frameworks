@@ -24,11 +24,10 @@ build:
   - mv hello/hello.so .
 
 build_deps:
-  - bsd-compat-headers
-  - libressl-dev
+  - libssl-dev
 
 bin_deps:
-  - libressl
+  - openssl
 
 binaries:
   - kore

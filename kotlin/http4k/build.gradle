@@ -4,9 +4,15 @@ buildscript {
         jcenter()
     }
 
+    ext {
+        kotlinVersion = "1.7.+"
+        http4kVersion = "3.275.+"
+        shadowVersion = "+"
+    }
+
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
-        classpath "com.github.jengelman.gradle.plugins:shadow:${shadow_version}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+        classpath "com.github.jengelman.gradle.plugins:shadow:${shadowVersion}"
     }
 }
 
@@ -24,8 +30,8 @@ version '0.0.1'
 mainClassName = "org.http4k.benchmark.BenchmarkServerKt"
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"
-    implementation platform("org.http4k:http4k-bom:${http4k_version}")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
+    implementation platform("org.http4k:http4k-bom:${http4kVersion}")
     implementation "org.http4k:http4k-core"
     implementation "org.http4k:http4k-server-undertow"
 }

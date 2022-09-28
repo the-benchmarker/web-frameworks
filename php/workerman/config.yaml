@@ -1,13 +1,13 @@
 framework:
   github: walkor/Workerman
-  version: 4.0
+  version: 4.1
 
 build_deps:
   - libevent-dev
-
+  - openssl-dev
+  
 php_mod:
   - pcntl
-  - posix
   - sockets
 
 php_ext:

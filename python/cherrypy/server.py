@@ -1,8 +1,6 @@
 #! /usr/bin/env python3
-# Disable all logging features
-import logging
 
-logging.disable()
+
 import cherrypy
 
 

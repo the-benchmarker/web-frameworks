@@ -9,6 +9,16 @@ javascript:
     - mcollina
   nanoexpress:
     - dalisoft
+  fyrejet:
+    - schamberg97
+  fyrejet-uwebsockets:
+    - schamberg97
+  chubbyts:
+    - dominikzogg
+  chubbyts-uwebsockets:
+    - dominikzogg
+  hyper-express:
+    - kartikk221
 go:
   router:
     - savsgio
@@ -38,8 +48,10 @@ go:
     - humaidq
   tango:
     - lunny
-  gf:
+  goframe:
     - gqcn
+  bunrouter:
+    - vmihailenco
 ruby:
   roda:
     - jeremyevans
@@ -50,6 +62,8 @@ ruby:
   rack_app:
     - adamluzsi
 python:
+  flask:
+    - pgjones
   quart:
     - pgjones
   sanic:
@@ -64,11 +78,18 @@ python:
     - gi0baro
   index.py:
     - abersheeran
+  baize-wsgi:
+    - abersheeran
+  baize-asgi:
+    - abersheeran
+  blacksheep: RobertoPrevato
 swift:
   vapor-framework:
     - 0xTim
   swifter-framework:
     - Vkt0r
+  hummingbird-framework:
+    - adam-fowler
 php:
   nette:
     - dg
@@ -100,12 +121,24 @@ php:
     - 48d90782
   slim:
     - l0gicgate
+  sunrise-router:
+    - fenric
+  sunrise-router-roadrunner:
+    - fenric
+  sunrise-router-annotations:
+    - fenric
   phalcon:
     - ruudboon
   ice:
     - mruz
   nano:
     - laylatichy
+  sunrise-router:
+    - fenric
+  sunrise-router-annotations:
+    - fenric
+  sunrise-router-roadrunner
+    - fenric
 fsharp:
   saturn:
     - Krzysztof-Cieslak
@@ -119,6 +152,8 @@ crystal:
     - shootingfly
   orion:
     - jwaldrip
+  router.cr:
+    - tbrand
 java:
   struts2:
     - lukaszlenart
@@ -135,9 +170,13 @@ java:
     - pmlopes
   quarkus:
     - geoand
+  activej:
+    - eduard-vasinskyi
 kotlin:
   kooby:
     - jknack
+  hexagon:
+    - jaguililla
 rust:
   actix:
     - robjtede
@@ -146,6 +185,14 @@ rust:
     - sezna
     - msrd0
     - colinbankier
+  salvo:
+    - chrislearn
+  poem:
+    - sunli829
+  axum:
+    - davidpdrsn
+  oxidy:
+    - krishnaTORQUE
 csharp:
   carter:
     - jchannon
@@ -157,9 +204,14 @@ cpp:
 clojure:
   coast:
     - swlkr
+  donkey:
+    - yaronel
 julia:
   merly:
     - codeneomatrix
 scala:
   finatra:
     - cacoco
+r:
+  restrserve:
+    - dselivanov

@@ -74,7 +74,8 @@ def commands_for(language, framework, provider)
 
   commands[:build] << 'curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat ip.txt`:3000 -v'
 
-  commands[:collect] << "LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV['DATABASE_URL']} bundle exec rake collect"
+  commands[:collect] << "LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV.fetch('DATABASE_URL',
+                                                                                              nil)} bundle exec rake collect"
 
   config.dig('providers', provider, 'clean').each do |cmd|
     commands[:clean] << Mustache.render(cmd, options).to_s
@@ -90,13 +91,15 @@ def create_dockerfile(language, framework, **options)
   framework_config = YAML.safe_load(File.open(File.join(directory, 'config.yaml')))
   config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
+  # Path to remove stability suffix (stable, beta, alpha, or version) of php extensions
+
   if config.key?('sources')
     files = []
     config['sources'].each do |path|
       Dir.glob(File.join(directory, path)).each do |f|
         if f =~ /^*\.\./
           filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
-          File.open(File.join(directory, filename), 'w') { |stream| stream.write(File.read(f)) }
+          File.write(File.join(directory, filename), File.read(f))
           files << filename
         else
           files << f.gsub!(directory, '').gsub!(%r{^/}, '')
@@ -111,7 +114,7 @@ def create_dockerfile(language, framework, **options)
       Dir.glob(File.join(directory, path)).each do |f|
         if f =~ /^*\.\./
           filename = f.gsub(directory, '').gsub!(%r{/\.\./\.}, '')
-          File.open(File.join(directory, filename), 'w') { |stream| stream.write(File.read(f)) }
+          File.write(File.join(directory, filename), File.read(f))
           files << filename
         else
           files << f.gsub!(directory, '').gsub!(%r{^/}, '')
@@ -135,12 +138,20 @@ def create_dockerfile(language, framework, **options)
     end
     config['environment'] = environment
   end
-
-  if template
-    File.open(File.join(directory, MANIFESTS[:container]), 'w') do |f|
-      f.write(Mustache.render(File.read(template), config))
+  if config.key?('build_environment')
+    environment = []
+    config.fetch('build_environment').each do |key, value|
+      environment << "#{key} #{value}"
     end
+    config['build_environment'] = environment
   end
+  config['php_ext'] = config['php_ext']&.map do
+    ext, version = _1.split('-')
+    { name: ext, version: version }
+  end
+  config[:version] = config.dig('language', 'version')
+
+  File.write(File.join(directory, MANIFESTS[:container]), Mustache.render(File.read(template), config)) if template
 end
 
 task :config do

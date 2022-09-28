@@ -1,18 +1,18 @@
-from indexpy import Index
+from indexpy import Index, request
 
 app = Index()
 
 
-@app.router.http("/", method="get")
-async def homepage(request):
+@app.router.http("/")
+async def homepage():
     return ""
 
 
-@app.router.http("/user/{user_id}", method="get")
-async def user(request):
+@app.router.http("/user/{user_id}")
+async def user():
     return request.path_params["user_id"]
 
 
-@app.router.http("/user", method="post")
-async def userinfo(request):
+@app.router.http("/user")
+async def userinfo():
     return ""

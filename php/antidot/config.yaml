@@ -1,15 +1,19 @@
 framework:
   website: antidotfw.io
   github: antidot-framework/react-framework
-  version: 0.2
-
+  version: 1.0
+  
 build_deps:
   - libevent-dev
+  - icu-dev
+  - openssl-dev
+
+php_ext:
+  - event
 
 php_mod:
   - intl
   - pcntl
-  - posix
   - sockets
 
 before_command:

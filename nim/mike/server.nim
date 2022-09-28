@@ -1,12 +1,12 @@
 import mike
 
-get "/":
-  send ""
+"/" -> get:
+  result = ""
 
-get "/user/{id}":
-  send(id) 
+"/user/:id" -> get:
+  result = ctx.pathParams["id"] 
 
-post "/user":
-  send ""
+"/user" -> post:
+  result = ""
 
-startServer(3000)
+run(3000)

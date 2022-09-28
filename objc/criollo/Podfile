@@ -4,5 +4,5 @@ use_frameworks!
 
 target 'server_objc_criollo' do
   platform :osx, '10.10'
-  pod 'Criollo', '~> 0.4'
+  pod 'Criollo', '~> 1.0'
 end

@@ -2,10 +2,12 @@
 name = "server"
 version = "0.1.0"
 authors = ["taicsuzu <taicsuzu@yahoo-corp.jp>"]
+edition = "2018"
+publish = false
 
 [dependencies]
 iron = "~0.6"
-router = "*"
+router = "~0.6"
 
 [profile.release]
 codegen-units = 1

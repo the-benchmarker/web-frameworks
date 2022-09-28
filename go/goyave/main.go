@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/System-Glitch/goyave/v3"
+	"goyave.dev/goyave/v4"
 )
 
 func empty(r *goyave.Response, req *goyave.Request) {

@@ -1,9 +1,3 @@
-# Disable all logging features
-import logging
-
-logging.disable()
-
-
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
@@ -24,10 +18,19 @@ class UserInfoHandler(tornado.web.RequestHandler):
         self.write(id)
 
 
-app = tornado.web.Application(
-    handlers=[
-        (r"/", MainHandler),
-        (r"/user", UserHandler),
-        (r"/user/(\d+)", UserInfoHandler),
-    ]
-)
+def main():
+    app = tornado.web.Application(
+        handlers=[
+            (r"/", MainHandler),
+            (r"/user", UserHandler),
+            (r"/user/(\d+)", UserInfoHandler),
+        ]
+    )
+    server = tornado.httpserver.HTTPServer(app)
+    server.bind(3000)
+    server.start(0)
+    tornado.ioloop.IOLoop.current().start()
+
+
+if __name__ == "__main__":
+    main()

@@ -1,6 +1,5 @@
-rpc:
-  enable: false
+version: "2.7"
+server:
+  command: "php worker.php"
 http:
   address: :3000
-  workers:
-    command: "php worker.php pipes"

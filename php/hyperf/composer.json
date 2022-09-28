@@ -7,7 +7,7 @@
     "hyperf/dispatcher": "*",
     "hyperf/event": "*",
     "hyperf/exception-handler": "*",
-    "hyperf/framework": "~2.1.0",
+    "hyperf/framework": "~2.2.0",
     "hyperf/http-server": "*",
     "hyperf/utils": "*"
   },
@@ -15,5 +15,7 @@
     "psr-4": {
       "App\\": "app/"
     }
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

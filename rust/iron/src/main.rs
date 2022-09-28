@@ -1,15 +1,13 @@
-extern crate iron;
-extern crate router;
+#![warn(rust_2018_idioms)]
 
-use iron::prelude::*;
-use iron::status;
+use iron::{prelude::*, status};
 use router::Router;
 
-fn index_handler(_: &mut Request) -> IronResult<Response> {
-    Ok(Response::with((status::Ok)))
+fn index_handler(_: &mut Request<'_, '_>) -> IronResult<Response> {
+    Ok(Response::with(status::Ok))
 }
 
-fn user_handler(req: &mut Request) -> IronResult<Response> {
+fn user_handler(req: &mut Request<'_, '_>) -> IronResult<Response> {
     let ref id = req
         .extensions
         .get::<Router>()
@@ -19,8 +17,8 @@ fn user_handler(req: &mut Request) -> IronResult<Response> {
     Ok(Response::with((status::Ok, *id)))
 }
 
-fn user_register_handler(_: &mut Request) -> IronResult<Response> {
-    Ok(Response::with((status::Ok)))
+fn user_register_handler(_: &mut Request<'_, '_>) -> IronResult<Response> {
+    Ok(Response::with(status::Ok))
 }
 
 fn main() {

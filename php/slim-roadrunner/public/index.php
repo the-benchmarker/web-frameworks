@@ -2,9 +2,12 @@
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Factory\AppFactory;
 use Spiral\Goridge\StreamRelay;
-use Spiral\RoadRunner\PSR7Client;
+use Slim\Factory\AppFactory;
+use Slim\Psr7\Factory\ServerRequestFactory;
+use Slim\Psr7\Factory\StreamFactory;
+use Slim\Psr7\Factory\UploadedFileFactory;
+use Spiral\RoadRunner\Http\PSR7Worker;
 use Spiral\RoadRunner\Worker;
 
 ini_set('display_errors', 'stderr');
@@ -28,14 +31,17 @@ $app->post('/user', function (Request $request, Response $response): Response {
     return $response;
 });
 
-$worker = new Worker(new StreamRelay(STDIN, STDOUT));
-$psr7 = new PSR7Client($worker);
+$worker = new PSR7Worker(
+    Worker::create(),
+    new ServerRequestFactory(),
+    new StreamFactory(),
+    new UploadedFileFactory()
+);
 
-while ($req = $psr7->acceptRequest()) {
+while ($req = $worker->waitRequest()) {
     try {
-        $psr7->respond($app->handle($req));
+        $worker->respond($app->handle($req));
     } catch (\Throwable $e) {
-        $psr7->getWorker()->error((string)$e);
+        $worker->getWorker()->error((string)$e);
     }
 }
-

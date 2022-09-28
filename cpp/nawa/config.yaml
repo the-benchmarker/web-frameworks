@@ -1,18 +1,21 @@
 framework:
   github: jatofg/nawa
-  version: 0.6
+  version: 0.8
 
 build_deps:
-  - boost-dev
-  - openssl-dev
+  - libboost-dev
+  - libboost-system-dev
+  - libboost-thread-dev
+  - libssl-dev
   - doxygen
   - graphviz
-  - curl-dev
-  - argon2-dev
+  - libcurl4-openssl-dev
+  - libargon2-dev
 
 bin_deps:
-  - curl
-  - boost
+  - libboost-system1.67
+  - libboost-thread1.67
+  - libcurl4
   - openssl
   - argon2
 
@@ -24,7 +27,7 @@ environment:
   LD_LIBRARY_PATH: /opt/web/build/nawa
 
 download:
-  - git clone --branch v0.6.2 https://github.com/jatofg/nawa
+  - git clone --branch v0.8.0 https://github.com/jatofg/nawa
   - cd nawa && git submodule update --init
 
 build:
