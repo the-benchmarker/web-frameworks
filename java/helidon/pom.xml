@@ -32,6 +32,10 @@
             <groupId>io.helidon.media</groupId>
             <artifactId>helidon-media-jsonp</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.helidon.media</groupId>
+            <artifactId>helidon-media-common</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
