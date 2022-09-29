@@ -3,7 +3,7 @@
   :dependencies [[luminus/lein-template "4.44"]
                  [ch.qos.logback/logback-classic "1.4.1"]
                  [cheshire "5.11.0"]
-                 [clojure.java-time "1.0.0"]
+                 [clojure.java-time "1.1.0"]
                  [cprop "0.1.19"]
                  [expound "0.9.0"]
                  [funcool/struct "1.4.0"]
