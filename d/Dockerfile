@@ -6,7 +6,7 @@ COPY . ./
 
 RUN dub build -b release
 
-FROM ubuntu:focal
+FROM ubuntu:jammy
 
 RUN apt-get -qq update
 {{#deps}}
