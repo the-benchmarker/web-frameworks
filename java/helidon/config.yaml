@@ -9,6 +9,6 @@ files:
   - target/helidon.webserver-jri/
 
 binaries:
-  - target/helidon.webserver.jar
+  - target/helidon.webserver-jri
 
 command: /opt/web/target/helidon.webserver-jri/bin/start
