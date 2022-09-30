@@ -1,3 +1,3 @@
 module main
 
-require github.com/go-chi/chi v1.5.4
+require github.com/go-chi/chi/v4 v4.1.2+incompatible
