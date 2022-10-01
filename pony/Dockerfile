@@ -2,10 +2,10 @@ FROM ponylang/shared-docker-ci-x86-64-unknown-linux-builder-with-openssl_1.1.1n
 
 WORKDIR /src/main
 
-COPY corral.json lock.json ./
+COPY corral.json ./
 RUN corral fetch
 
-COPY . ./
+COPY main.pony ./
 
 {{#environment}}
   ENV {{{.}}}

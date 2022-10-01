@@ -11,7 +11,7 @@ actor Main
         .> get("/", EmptyHandler)
         .> get("/user/:name", GetUserHandler)
         .> post("/user", EmptyHandler)
-        .serve(ServerConfig(where port' = "3000"))
+        .serve(ServerConfig(where host' = "0.0.0.0", port' = "3000"))
 
 primitive GetUserHandler is RequestHandler
   fun apply(ctx: Context): Context iso^ =>
