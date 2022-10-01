@@ -1,9 +1,9 @@
-{{#version}}
-  FROM golang:{{version}}-alpine
-{{/version}}
-{{^version}}
+{{#docker-image}}
+  FROM {{{.}}}
+{{/docker-image}}
+{{^docker-image}}
   FROM golang:1.19-alpine
-{{/version}}
+{{/docker-image}}
 
 WORKDIR /usr/src/app
 
