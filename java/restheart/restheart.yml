@@ -93,13 +93,12 @@ ansi-console: true
 #### Performance Options
 
 # In order to save bandwitdth RESTHeart Security can force requests to support the giz encoding (if not, requests will be rejected)
-force-gzip-encoding:
-  false
-  # Use 16k buffers for best performance - as in linux 16k is generally the default amount of data that can be sent in a single write() call
-buffer-size: 16384
-buffers-per-region:
-  20
-  # Should the buffer pool use direct buffers, this instructs the JVM to use native (if possible) I/O operations on the buffers
+force-gzip-encoding: false
+# Use 16k buffers for best performance - as in linux 16k is generally the default amount of data that can be sent in a single write() call
+# Setting to 1024 * 16 - 20; the 20 is to allow some space for getProtocol headers, see UNDERTOW-1209
+buffer-size: 16364
+buffers-per-region: 20
+# Should the buffer pool use direct buffers, this instructs the JVM to use native (if possible) I/O operations on the buffers
 direct-buffers: true
 
 #### Connetction Options
