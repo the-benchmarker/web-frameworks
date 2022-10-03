@@ -1,3 +1,3 @@
 module main
 
-require github.com/nbari/violetear df2078440951
+require github.com/nbari/violetear 7.0.0
