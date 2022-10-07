@@ -18,7 +18,7 @@ COPY . ./
   RUN clojure -Auberjar
 {{/build}}
 
-FROM openjdk:11-jre-slim-buster
+FROM openjdk:11.0.16-jre-slim-buster
 
 WORKDIR /opt/bin
 
