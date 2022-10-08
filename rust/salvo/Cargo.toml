@@ -5,7 +5,7 @@ edition = "2021"
 authors = ["Chrislearn Young <chrislearn@hotmail.com>"]
 
 [dependencies]
-salvo = { version = "~0.36.0", default-features = false}
+salvo = { version = "~0.37.0", default-features = false}
 tokio = { version = "1", features = ["full"] }
 
 [profile.release]
