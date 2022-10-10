@@ -1,7 +1,7 @@
 {
-    "name": "tower/tower",
-    "description": "The Tower Framework",
-    "keywords": ["framework", "tower" , "high performance"],
+    "name": "fomo/fomo",
+    "description": "The FomoFramework",
+    "keywords": ["framework", "fomo" , "high performance"],
     "type": "project",
     "license": "MIT",
     "authors": [
@@ -12,7 +12,7 @@
     ],
     "require": {
         "php" : ">=8.0",
-        "tower/tower-framework": "~2.0.0"
+        "fomo/framework": "~2.0.0"
     },
     "autoload": {
         "psr-4": {
