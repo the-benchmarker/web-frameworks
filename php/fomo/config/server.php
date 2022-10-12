@@ -6,7 +6,7 @@ return [
     'port' => 3000 ,
     'sockType' => SWOOLE_SOCK_TCP ,
     'additional' => [
-        'worker_num' => cpuCount() * 2 ,
+        'worker_num'       => swoole_cpu_num() * 2,
     ],
 
     'ssl' => [
