@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     });
 
     http_server_t server;
-    server.port = 8888;
+    server.port = 3000;
     server.service = &service;
     http_server_run(&server);
 }
