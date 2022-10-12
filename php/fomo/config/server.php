@@ -3,7 +3,7 @@
 return [
     'mode' => SWOOLE_BASE ,
     'host' => '0.0.0.0',
-    'port' => 9000 ,
+    'port' => 3000 ,
     'sockType' => SWOOLE_SOCK_TCP ,
     'additional' => [
         'worker_num' => cpuCount() * 2 ,
