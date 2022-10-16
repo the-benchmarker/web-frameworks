@@ -1,6 +1,6 @@
 framework:
-  github: swoole/swoole-src
-  version: 5.0
+  github: openswoole/swoole-src
+  version: 4.8
 
 php_ext:
   - swoole
