@@ -1,6 +1,6 @@
 (defproject luminus "0.1.0-SNAPSHOT"
 
-  :dependencies [[luminus/lein-template "4.46"]
+  :dependencies [[luminus/lein-template "4.47"]
                  [ch.qos.logback/logback-classic "1.4.4"]
                  [cheshire "5.11.0"]
                  [clojure.java-time "1.1.0"]
