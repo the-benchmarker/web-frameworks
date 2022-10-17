@@ -1,0 +1,14 @@
+framework:
+  github: fomo-framework/fomo
+  version: 2.0
+
+php_mod:
+  - pcntl
+
+php_ext:
+  - swoole
+
+before_command:
+  - mkdir storage/logs -p
+
+command: php engineer server:start

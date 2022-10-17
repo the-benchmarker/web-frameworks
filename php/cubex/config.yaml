@@ -5,6 +5,6 @@ framework:
   engines:
     - workerman
     - php-fpm
-    
+
 php_mod:
   - intl
