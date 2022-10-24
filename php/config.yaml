@@ -17,7 +17,6 @@ language:
     workerman:
       extensions:
         - event
-        - pcntl
       deps:
         - libevent-dev
         - openssl-dev
@@ -42,10 +41,10 @@ language:
         - libevent-dev
       modules:
         - intl
-        - pcntl
         - sockets
       extensions:
         - event
+        - pcntl
     swoole-4.8.x:
       extensions:
         - swoole-4.8.11

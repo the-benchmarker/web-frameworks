@@ -179,10 +179,7 @@ def create_dockerfile(directory, engine, config)
   end
 
   static_files = []
-  config['php_ext'] = config['php_ext']&.map do |extension|
-    ext, version = extension.split('-')
-    { name: ext, version: version }
-  end
+
   config[:version] = config.dig('language', 'version')
 
   if config['static_files']
