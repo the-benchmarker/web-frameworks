@@ -20,6 +20,8 @@ namespace :ci do
 
       language, framework, = file.split(File::SEPARATOR)
       
+      pp language
+      pp framework
       config = get_config_from(File.join(Dir.pwd, language, framework))
 
       config.dig('framework', 'engines')&.each do |engine|
