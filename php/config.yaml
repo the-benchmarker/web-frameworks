@@ -17,6 +17,7 @@ language:
     workerman:
       extensions:
         - event
+        - pcntl
       deps:
         - libevent-dev
         - openssl-dev
