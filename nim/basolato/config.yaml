@@ -1,13 +1,80 @@
-framework:
-  github: itsumura-h/nim-basolato
-  version: 0.12
+cloud:
+  config:
+    package_update: true
+    runcmd:
+      - systemctl disable cloud-init
+      - systemctl enable web
+      - mkdir -p /opt/web
+      - find /opt/web -type f -exec chown -R cloudy:cloudy {} \;
+    users:
+      - name: cloudy
+        gecos: Magic Cloud App Daemon User
+        lock_passwd: true
+        ssh_redirect_user: true
+        no_create_home: true
+        no_log_init: true
 
-deps:
-  - gcc
-  - musl-dev
-  - bsd-compat-headers
-  - openssl
-  - openssh-client
-  - pcre-dev
+service: |
+  [Unit]
+  Description=web
+  After=network.target
 
-build_opts: "-d:ssl --threads:on --threadAnalysis:off --gc:orc --putenv:PORT=3000"
+  [Service]
+  Type=simple
+  EnvironmentFile=/etc/web
+  WorkingDirectory=/opt/web
+  ExecStart={{{command}}}
+  User=cloudy
+
+  [Install]
+  WantedBy=multi-user.target
+
+providers:
+  docker:
+    build:
+      - docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}} .
+
+    metadata:
+      - docker run -p 3000:3000 -td {{{language}}}.{{{framework}}} > cid.txt
+      - docker inspect `cat cid.txt` | jq -r '.[0].NetworkSettings.IPAddress' > ip.txt
+
+    clean:
+      - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker
+        rm -f
+
+  docker-machine:
+    build:
+      - docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}} .
+
+    metadata:
+      - docker run -p 3000:3000 -td {{{language}}}.{{{framework}}} > cid.txt
+      - echo 127.0.0.1 > ip.txt
+
+    clean:
+      - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}  | xargs docker
+        rm -f
+
+  digitalocean:
+    build:
+      - rm -fr ~/.ssh/known_hosts
+      - rake cloud:config LANG={{{language}}} FRAMEWORK={{{framework}}}
+      - doctl compute droplet create {{{language}}}.{{{framework}}} --region {{{DO_REGION}}}
+        --image {{{DO_IMAGE}}} --size {{{DO_SIZE}}} --user-data-file user_data.yml --wait
+        --ssh-keys {{{DO_FINGERPRINT}}} {{{DO_OPTIONS}}}
+
+    metadata:
+      - doctl compute droplet list {{{language}}}.{{{framework}}} --format ID --no-header
+        > id.txt
+      - doctl compute droplet list {{{language}}}.{{{framework}}} --format {{{DO_ATTRIBUTE}}}
+        --no-header > ip.txt
+      - rake cloud:wait LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt`
+        SSH_KEY={{{DO_KEY}}}
+      - rake cloud:upload LANG={{{language}}} FRAMEWORK={{{framework}}} HOST=`cat ip.txt`
+        SSH_KEY={{{DO_KEY}}}
+
+    exec: doctl compute ssh {{{language}}}.{{{framework}}} --ssh-key-path {{{DO_KEY}}} --ssh-command "cd /opt/web && {{{command}}}"
+
+    reboot: doctl compute droplet-action reboot `cat id.txt`
+
+    clean:
+      - doctl compute droplet delete {{{language}}}.{{{framework}}} --force
