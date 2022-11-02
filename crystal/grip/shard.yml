@@ -1,5 +1,5 @@
 name: grip
-version: 0.1.0
+version: 0.2.0
 
 authors:
   - grkek <giorgi.kavrelishvili@pm.me>
@@ -11,6 +11,6 @@ targets:
 dependencies:
   grip:
     github: grip-framework/grip
-    version: ~> 1.0.0
+    version: 2.0.0
 
 license: MIT
