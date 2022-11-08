@@ -1,8 +1,0 @@
-framework:
-  website: python-responder.org
-  version: 2.0
-
-  engines:
-    - hypercorn
-    - uvicorn
-    - daphne
