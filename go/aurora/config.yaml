@@ -2,5 +2,10 @@ framework:
   gitee: aurora-engine/aurora
   version: 1.3
 
+  files:
+    - main.go
+    - go.mod
+    - server.go
+
   static_files:
     - application.yml

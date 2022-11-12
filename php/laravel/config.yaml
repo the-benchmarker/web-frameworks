@@ -32,6 +32,4 @@ framework:
 language:
   engines:
     swoole:
-      modules:
-        - pcntl
       command: php bin/laravels start

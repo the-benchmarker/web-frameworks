@@ -5,4 +5,7 @@ framework:
   engines:
     - workerman
 
-  command: php start.php start
+language:
+  engines:
+    workerman:
+      command: php start.php start

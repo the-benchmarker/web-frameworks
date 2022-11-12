@@ -14,8 +14,6 @@ framework:
 language:
   engines:
     swoole:
-      modules:
-        - pcntl
       bootstrap:
         - mkdir storage
       command: php bin/laravels start

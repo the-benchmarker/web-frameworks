@@ -42,9 +42,9 @@ language:
       modules:
         - intl
         - sockets
+        - pcntl
       extensions:
         - event
-        - pcntl
     swoole-4.8.x:
       extensions:
         - swoole-4.8.11

@@ -30,7 +30,10 @@ RUN docker-php-ext-install zip opcache
   RUN {{{.}}}
 {{/before_build}}
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
+
 
 ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
 RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
@@ -46,9 +49,9 @@ RUN composer dumpautoload -o
 
 
 
-{{#before_command}}
+{{#bootstrap}}
   RUN {{{.}}}
-{{/before_command}}
+{{/bootstrap}}
 
 {{#command}}
   CMD {{{.}}}

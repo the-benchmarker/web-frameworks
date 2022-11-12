@@ -2,13 +2,10 @@ framework:
   github: fomo-framework/fomo
   version: 2.0
 
-php_mod:
-  - pcntl
+  engines:
+    - swoole
 
-php_ext:
-  - swoole
+  bootstrap:
+    - mkdir storage/logs -p
 
-before_command:
-  - mkdir storage/logs -p
-
-command: php engineer server:start
+  command: php engineer server:start
