@@ -40,7 +40,7 @@ language:
         - gcc
         - libpcre3-dev
       bootstrap:
-        - pip install https://projects.unbit.it/downloads/uwsgi-lts.tar.gz # prefer lts version
+        - pip install uwsgi
       command: uwsgi --http 0.0.0.0:3000 --module ${PYTHON_APP}
     waitress:
       environment:
