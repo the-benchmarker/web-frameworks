@@ -2,3 +2,4 @@ guillotina>=6.4,<6.5
 gunicorn
 uvicorn[standard]
 typing_extensions
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
