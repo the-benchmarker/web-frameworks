@@ -1,3 +1,8 @@
 framework:
   github: http-rs/tide
   version: 0.16
+
+build_deps:
+  - libc6-dev
+  - build-essential
+

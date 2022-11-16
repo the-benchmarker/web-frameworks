@@ -2,6 +2,12 @@ FROM rust:1.65-slim AS build
 
 WORKDIR /usr/src/app
 
+RUN apt-get -qy update
+
+{{#build_deps}}
+  RUN apt-get -qy install {{{.}}}
+{{/build_deps}}
+
 COPY . ./
 
 RUN cargo build --release && strip target/release/server
