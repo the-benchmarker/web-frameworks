@@ -29,7 +29,7 @@ defmodule Server.MixProject do
 
   defp deps do
     [
-      {:plug, "~> 1.13.0"},
+      {:plug, "~> 1.14.0"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end

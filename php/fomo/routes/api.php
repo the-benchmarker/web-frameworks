@@ -1,6 +1,6 @@
 <?php
 
-/** @var Tower\Router $router */
+/** @var Fomo\Router\Router $router */
 
 use App\Controllers\BenchmarkController;
 

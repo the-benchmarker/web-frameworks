@@ -1,12 +1,12 @@
-FROM dlang2/ldc-ubuntu:1.26.0 AS build
+FROM dlang2/ldc-ubuntu AS build
 
 WORKDIR /usr/src/app
 
 COPY . ./
 
-RUN dub build -b release
+RUN dub build -b release --compiler=ldc2 --verbose
 
-FROM ubuntu:focal
+FROM ubuntu
 
 RUN apt-get -qq update
 {{#deps}}
@@ -16,3 +16,4 @@ RUN apt-get -qq update
 COPY --from=build /usr/src/app/server /usr/src/app/server
 
 CMD /usr/src/app/server
+
