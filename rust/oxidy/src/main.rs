@@ -1,7 +1,7 @@
 use oxidy::{route, Context, Returns, Server};
 
 async fn index(mut c: Context) -> Returns {
-    c.response.body = "".to_string();
+    c.response.body = String::new();
     (c, None)
 }
 
@@ -11,7 +11,7 @@ async fn user(mut c: Context) -> Returns {
 }
 
 async fn user_post(mut c: Context) -> Returns {
-    c.response.body = "".to_string();
+    c.response.body = String::new();
     (c, None)
 }
 
