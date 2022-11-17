@@ -6,7 +6,7 @@ COPY . ./
 
 RUN cargo build --release && strip target/release/server
 
-FROM debian:buster-slim
+FROM debian:stable-slim
 
 COPY --from=build /usr/src/app/target/release/server /usr/src/app/target/release/server
 
