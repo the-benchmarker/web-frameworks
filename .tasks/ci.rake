@@ -6,8 +6,8 @@ namespace :ci do
   task :languages do
     added_files = JSON.parse(File.read(File.expand_path(ENV['ADDITION_FILE'])))
     modified_files = JSON.parse(File.read(File.expand_path(ENV['MODIFICATION_FILE'])))
-    warn added_files.class
-    warn modified_files.class
+    files = (added_files + modified_files)
+    warn files
     # matrix = { include: [] }
 
     # files = Dir.glob('*/*/config.yaml') if files.include?('data.json')
