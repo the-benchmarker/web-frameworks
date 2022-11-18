@@ -4,8 +4,8 @@ require 'json'
 
 namespace :ci do
   task :languages do
-    added_files = JSON.parse(File.expand_path(ENV['ADDITION_FILE']).read)
-    modified_files = JSON.parse(File.expand_path(ENV['MODIFICATION_FILE']).read)
+    added_files = JSON.parse(File.read(File.expand_path(ENV['ADDITION_FILE'])))
+    modified_files = JSON.parse(File.read(File.expand_path(ENV['MODIFICATION_FILE'])))
     warn added_files
     warn modified_files
     # matrix = { include: [] }
