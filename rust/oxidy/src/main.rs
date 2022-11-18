@@ -1,22 +1,25 @@
-use oxidy::server::Server;
-use oxidy::structs::Context;
+use oxidy::{route, Context, Returns, Server};
 
-fn index(ctx: &mut Context) -> () {
-    ctx.response.body = "".to_string();
+async fn index(mut c: Context) -> Returns {
+    c.response.body = String::new();
+    (c, None)
 }
 
-fn user(ctx: &mut Context) -> () {
-    ctx.response.body = ctx.request.params.get("id").unwrap().to_string();
+async fn user(mut c: Context) -> Returns {
+    c.response.body = c.request.param("id").await;
+    (c, None)
 }
 
-fn user_post(ctx: &mut Context) -> () {
-    ctx.response.body = "".to_string();
+async fn user_post(mut c: Context) -> Returns {
+    c.response.body = String::new();
+    (c, None)
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let mut app = Server::new();
-    app.get("/", index);
-    app.get("/user/:id", user);
-    app.post("/user", user_post);
-    app.listen("0.0.0.0:3000");
+    app.add(route!("get /", index));
+    app.add(route!("get /user/:id", user));
+    app.add(route!("post /user", user_post));
+    app.run("0.0.0.0:3000").await;
 }
