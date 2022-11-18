@@ -19,10 +19,11 @@ jobs:
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
       - id: set-matrix
-        run: echo "::set-output name=matrix::$(bundle exec rake ci:languages)"
+        run: bundle exec rake ci:languages
         env:
-          ADDITION_FILE: ~/files_modified.json
-          MODIFICATION_FILE: ~/files_added.json
+          INPUT1: ~/files_modified.json
+          INPUT2: ~/files_added.json
+          OUTPUT: ${GITHUB_OUTPUT}
 
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}

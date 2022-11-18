@@ -5,7 +5,7 @@ require 'json'
 namespace :ci do
   task :languages do
     added_files = JSON.parse(File.read(File.expand_path(ENV['INPUT1'])))
-    modified_files = JSON.parse(File.read(File.expand_path(ENV['INPUT1'])))
+    modified_files = JSON.parse(File.read(File.expand_path(ENV['INPUT2'])))
     files = (added_files + modified_files)
     warn files
     matrix = { include: [] }
