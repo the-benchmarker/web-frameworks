@@ -3,32 +3,35 @@
 require 'json'
 
 namespace :ci do
-  task :matrix do
-    files = JSON.parse(ENV['FILES'])
-    matrix = { include: [] }
+  task :languages do
+    added_files = JSON.parse(ENV['ADDITION_FILE'])
+    modified_files = JSON.parse(ENV['MODIFICATION_FILE'])
+    warn added_files
+    warn modified_files
+    # matrix = { include: [] }
 
-    files = Dir.glob('*/*/config.yaml') if files.include?('data.json')
+    # files = Dir.glob('*/*/config.yaml') if files.include?('data.json')
 
-    files += files
-             .find_all { |path| path.end_with?('Dockerfile') }
-             .map { |path| path.split(File::SEPARATOR).shift }
-             .flat_map { |language| Dir.glob(File.join(language, '*', 'config.yaml')) }
+    # files += files
+    #          .find_all { |path| path.end_with?('Dockerfile') }
+    #          .map { |path| path.split(File::SEPARATOR).shift }
+    #          .flat_map { |language| Dir.glob(File.join(language, '*', 'config.yaml')) }
 
-    files.take(256).each do |file|
-      next if file.start_with?('.')
+    # files.take(256).each do |file|
+    #   next if file.start_with?('.')
 
-      next if file.count(File::SEPARATOR) < 2
+    #   next if file.count(File::SEPARATOR) < 2
 
-      language, framework, = file.split(File::SEPARATOR)
+    #   language, framework, = file.split(File::SEPARATOR)
 
-      next if matrix[:include].detect do |row|
-                row[:framework] == framework
-              end
+    #   next if matrix[:include].detect do |row|
+    #             row[:framework] == framework
+    #           end
 
-      matrix[:include] << { language: language, framework: framework,
-                            directory: File.join(language, framework) }
-    end
-    warn matrix.to_json
-    puts matrix.to_json
+    #   matrix[:include] << { language: language, framework: framework,
+    #                         directory: File.join(language, framework) }
+    # end
+    # warn matrix.to_json
+    # puts matrix.to_json
   end
 end
