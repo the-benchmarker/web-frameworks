@@ -21,8 +21,8 @@ jobs:
       - id: set-matrix
         run: echo "::set-output name=matrix::$(bundle exec rake ci:languages)"
         env:
-          ADDITION_FILE: ~files_modified.json
-          MODIFICATION_FILE: ~files_added.json
+          ADDITION_FILE: ~/files_modified.json
+          MODIFICATION_FILE: ~/files_added.json
 
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
