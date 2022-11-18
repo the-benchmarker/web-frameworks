@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 starlette>=0.21,<0.22
+=======
+starlette>=0.22,<0.23
+gunicorn
+uvicorn[standard]
+>>>>>>> upstream/master
