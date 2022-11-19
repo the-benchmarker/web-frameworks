@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build
 
 WORKDIR /usr/src/app
 
@@ -10,7 +10,7 @@ RUN dotnet restore
 COPY . .
 RUN dotnet publish -c release -o out
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine
 
 WORKDIR /usr/src/app
 
