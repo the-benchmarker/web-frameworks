@@ -12,10 +12,10 @@ let app: WebPart =
 
 let config =
     { defaultConfig with
-            bindings =
-                [ { scheme = HTTP
-                    socketBinding =
-                        { ip = IPAddress.Parse "0.0.0.0"
-                        port = 3000us } } ] }
+        bindings =
+            [ { scheme = HTTP
+                socketBinding =
+                    { ip = IPAddress.Parse "0.0.0.0"
+                      port = 3000us } } ] }
 
 startWebServer config app
