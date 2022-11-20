@@ -18,7 +18,7 @@ jobs:
           bundler-cache: true
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
-      - id: set-matrix
+      - id: set-languages
         run: bundle exec rake ci:languages
         env:
           INPUT1: ~/files_modified.json

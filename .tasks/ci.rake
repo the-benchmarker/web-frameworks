@@ -7,7 +7,6 @@ namespace :ci do
     added_files = JSON.parse(File.read(File.expand_path(ENV['INPUT1'])))
     modified_files = JSON.parse(File.read(File.expand_path(ENV['INPUT2'])))
     files = (added_files + modified_files)
-    warn files
     languages = []
 
     files = Dir.glob('*/*/config.yaml') if files.include?('data.json')
@@ -26,6 +25,7 @@ namespace :ci do
 
       languages << language
     end
-    warn languages
+    warn "Writting updated languages in #{File.expand_path(ENV['OUTPUT'])}"
+    File.write(File.expand_path(ENV['OUTPUT']), languages.to_json)
   end
 end
