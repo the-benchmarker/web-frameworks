@@ -23,7 +23,6 @@ jobs:
         env:
           INPUT1: ~/files_modified.json
           INPUT2: ~/files_added.json
-          OUTPUT: ${GITHUB_OUTPUT}
 
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}

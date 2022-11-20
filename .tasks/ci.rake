@@ -25,7 +25,7 @@ namespace :ci do
 
       languages << language
     end
-    warn "Writting updated languages in #{File.expand_path(ENV['OUTPUT'])}"
+    warn "Writting updated languages in #{File.expand_path(ENV['GITHUB_OUTPUT'])}"
     File.write(File.expand_path(ENV['OUTPUT']), languages.to_json)
   end
 end
