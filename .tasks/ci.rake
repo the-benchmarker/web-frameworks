@@ -26,6 +26,6 @@ namespace :ci do
 
       languages << language
     end
-    warn matrix
+    warn languages
   end
 end
