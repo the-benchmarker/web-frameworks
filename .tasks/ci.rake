@@ -8,7 +8,7 @@ namespace :ci do
     modified_files = JSON.parse(File.read(File.expand_path(ENV['INPUT2'])))
     files = (added_files + modified_files)
     warn files
-    matrix = { include: [] }
+    languages = []
 
     files = Dir.glob('*/*/config.yaml') if files.include?('data.json')
 
@@ -17,19 +17,14 @@ namespace :ci do
              .map { |path| path.split(File::SEPARATOR).shift }
              .flat_map { |language| Dir.glob(File.join(language, '*', 'config.yaml')) }
 
-    files.take(256).each do |file|
+    files.each do |file|
       next if file.start_with?('.')
 
       next if file.count(File::SEPARATOR) < 2
 
-      language, framework, = file.split(File::SEPARATOR)
+      language, = file.split(File::SEPARATOR)
 
-      next if matrix[:include].detect do |row|
-                row[:framework] == framework
-              end
-
-      matrix[:include] << { language: language, framework: framework,
-                            directory: File.join(language, framework) }
+      languages << language
     end
     warn matrix
   end
