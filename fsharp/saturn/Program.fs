@@ -19,7 +19,4 @@ let app = application {
     logging (fun logger -> logger.ClearProviders() |> ignore)
 }
 
-[<EntryPoint>]
-let main _ =
-    run app
-    0 // return an integer exit code
+run app

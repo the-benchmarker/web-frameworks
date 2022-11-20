@@ -1,5 +1,3 @@
-namespace web
-
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Http
@@ -38,16 +36,13 @@ type Startup() =
            context.Response.StatusCode <- 404
            context.Response.WriteAsync("Page not found"))
 
-module Program =
+let args = System.Environment.GetCommandLineArgs()
 
-    [<EntryPoint>]
-    let main args =
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHost(fun webHost ->
-                webHost.UseKestrel(fun c -> c.AddServerHeader <- false)
-                       .ConfigureLogging(fun config -> config.ClearProviders() |> ignore)
-                       .UseStartup<Startup>()
-                       |> ignore)
-            .Build()
-            .Run() 
-        0
+Host.CreateDefaultBuilder(args)
+    .ConfigureWebHost(fun webHost ->
+        webHost.UseKestrel(fun c -> c.AddServerHeader <- false)
+                .ConfigureLogging(fun config -> config.ClearProviders() |> ignore)
+                .UseStartup<Startup>()
+                |> ignore)
+    .Build()
+    .Run() 
