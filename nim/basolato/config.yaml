@@ -10,4 +10,10 @@ deps:
   - openssh-client
   - pcre-dev
 
-build_opts: '-d:ssl --threads:on --threadAnalysis:off --gc:orc --putenv:PORT=3000'
+build_command: 'ducere build -p 3000'
+
+custom_files:
+  - main
+  - startServer.sh
+
+command: './startServer.sh'
