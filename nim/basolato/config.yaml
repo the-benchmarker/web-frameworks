@@ -15,5 +15,6 @@ build_command: 'ducere build -p 3000'
 custom_files:
   - main
   - startServer.sh
+  - .env
 
 command: './startServer.sh'
