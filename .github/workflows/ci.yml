@@ -5,56 +5,79 @@ on:
 jobs:
   matrix:
     runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: false
+    outputs:
+      languages: ${{ steps.list.outputs.json }}
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - id: file_changes
-        uses: trilom/file-changes-action@v1.2.4
+      - uses: trilom/file-changes-action@v1.2.4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0
           bundler-cache: true
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
-      - id: set-languages
-        run: bundle exec rake ci:languages
+      - id: list
+        run: bundle exec rake ci:languages >> $GITHUB_OUTPUT
         env:
           INPUT1: ~/files_modified.json
           INPUT2: ~/files_added.json
-
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-
-  test:
+  language:
     needs: matrix
-
     runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.matrix.outputs.matrix)}}
+      matrix: ${{fromJson(needs.matrix.outputs.languages)}}
       max-parallel: 4
-
+    outputs:
+      frameworks: ${{ steps.language.outputs.json }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-ruby@v1
-      - name: Install deps
-        run: bundle install --jobs 4 --retry 3
-
-      - name: Configure
-        run: bundle exec rake config
-
-      - name: Build
-        run: |
-          cd ${{ matrix.directory }} 
-          make build  -f .Makefile
-
-      - name: Wait
-        run: sleep 1
-
-      - name: Test
-        run: bundle exec rspec .spec
+        with:
+          fetch-depth: 0
+      - uses: trilom/file-changes-action@v1.2.4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+          bundler-cache: true
+      - id: list
+        run: bundle exec rake ci:frameworks
         env:
-          DIRECTORY: ${{ matrix.directory }}
+          INPUT1: ~/files_modified.json
+          INPUT2: ~/files_added.json
+          LANGUAGE: ${{ matrix.language }}
+  framework:
+    needs: language
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.language.outputs.frameworks)}}
+      max-parallel: 4
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+    # steps:
+    #   - uses: actions/checkout@v3
+    #   - uses: actions/setup-ruby@v1
+    #   - name: Install deps
+    #     run: bundle install --jobs 4 --retry 3
+
+    #   - name: Configure
+    #     run: bundle exec rake config
+
+    #   - name: Build
+    #     run: |
+    #       cd ${{ matrix.directory }} 
+    #       make build  -f .Makefile
+
+    #   - name: Wait
+    #     run: sleep 1
+
+    #   - name: Test
+    #     run: bundle exec rspec .spec
+    #     env:
+    #       DIRECTORY: ${{ matrix.directory }}
