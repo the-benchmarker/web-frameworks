@@ -12,7 +12,7 @@ environment:
     /core/worker-threads->0;
     /core/requests-limit->100000;
     /fullAuthorizer/enabled->true;
-    /logging/log-level->"OFF";
+    /logging/log-level->\"OFF\";
     /ping/enabled->false;
 
 binaries:
