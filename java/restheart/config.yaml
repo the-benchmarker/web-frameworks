@@ -14,7 +14,6 @@ environment:
     /fullAuthorizer/enabled->true;
     /logging/log-level->"OFF";
     /ping/enabled->false;
-    /plugins-directory->null;
 
 binaries:
   - target/benchmark.jar
