@@ -12,7 +12,7 @@
   <name>benchmark</name>
 
   <properties>
-    <undertow.version>[2.2,2.3)</undertow.version>
+    <undertow.version>[2.3,2.4)</undertow.version>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <maven.compiler.parameters>true</maven.compiler.parameters>

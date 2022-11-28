@@ -8,4 +8,4 @@ license = "MIT"
 # Dependencies
 
 requires "nim >= 1.4.0"
-requires "prologue >= 0.4 & < 0.5"
+requires "prologue >= 0.6 & < 0.7"

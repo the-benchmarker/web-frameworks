@@ -37,12 +37,6 @@ RUN docker-php-ext-install zip opcache
 
 COPY . ./
 
-ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
-RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
-  rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
-  sed -e '1i extension=sockets' /usr/local/etc/php/conf.d/docker-php-ext-event.ini > /tmp/file ; \
-  mv /tmp/file /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
-
 {{^standalone}}
 RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev --prefer-dist --classmap-authoritative

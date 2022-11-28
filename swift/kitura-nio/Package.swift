@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "server",
     dependencies: [
-        .package(url: "https://github.com/IBM-Swift/Kitura", .upToNextMinor(from: "3.0.0"))
+        .package(url: "https://github.com/Kitura/Kitura", .upToNextMinor(from: "3.0.1"))
     ],
     targets: [
         .target(

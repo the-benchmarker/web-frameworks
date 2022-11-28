@@ -1,6 +1,6 @@
 framework:
   website: javalin.io
-  version: 4.6
+  version: 5.2
 
 build:
   - mvn compile assembly:single

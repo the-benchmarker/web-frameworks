@@ -24,7 +24,7 @@ binaries:
   - build/drogon_benchmark
 
 download:
-  - git clone --branch v1.8.0 https://github.com/an-tao/drogon
+  - git clone --branch v1.8.2 https://github.com/an-tao/drogon
   - cd drogon && git submodule update --init
 
 build:

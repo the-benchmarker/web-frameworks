@@ -25,12 +25,11 @@ let user =
         post (fun _ -> Task.CompletedTask)
     }
 
-[<EntryPoint>]
-let main args =
-    webHost args {
-        configure (fun bldr -> bldr.UseKestrel(fun c -> c.AddServerHeader <- false).ConfigureLogging(fun c -> c.ClearProviders() |> ignore))
-        resource home
-        resource userId
-        resource user
-    }
-    0
+let args = System.Environment.GetCommandLineArgs()
+
+webHost args {
+    configure (fun bldr -> bldr.UseKestrel(fun c -> c.AddServerHeader <- false).ConfigureLogging(fun c -> c.ClearProviders() |> ignore))
+    resource home
+    resource userId
+    resource user
+}

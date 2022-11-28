@@ -1,3 +1,3 @@
 module main
 
-require github.com/gramework/gramework v1.7.1
+require github.com/gramework/gramework v1.8.0

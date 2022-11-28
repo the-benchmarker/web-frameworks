@@ -26,17 +26,15 @@ let configureApp (app: IApplicationBuilder) =
 
 let configureServices (services: IServiceCollection) = services.AddRouting() |> ignore
 
-[<EntryPoint>]
-let main args =
-    Host
-        .CreateDefaultBuilder(args)
-        .ConfigureWebHost(fun webHost ->
-            webHost
-                .UseKestrel()
-                .ConfigureServices(configureServices)
-                .Configure(configureApp)
-            |> ignore)
-        .Build()
-        .Run()
+let args = System.Environment.GetCommandLineArgs()
 
-    0
+Host
+    .CreateDefaultBuilder(args)
+    .ConfigureWebHost(fun webHost ->
+        webHost
+            .UseKestrel()
+            .ConfigureServices(configureServices)
+            .Configure(configureApp)
+        |> ignore)
+    .Build()
+    .Run()

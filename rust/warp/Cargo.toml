@@ -1,6 +1,6 @@
 [package]
 name = "server"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2021"
 
 [profile.dev]
@@ -15,5 +15,5 @@ codegen-units = 1
 incremental = false
 
 [dependencies]
-warp = "0.3.2"
+warp = "~0.3.3"
 tokio = { version = "1", features = ["full"] }

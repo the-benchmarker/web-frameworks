@@ -2,7 +2,8 @@
   "name": "workerman/webman",
   "require": {
     "php": ">=7.2",
-    "workerman/webman-framework": "~1.4.3"
+    "workerman/webman-framework": "~1.4.3",
+    "monolog/monolog": "~2.0"
   },
   "autoload": {
     "psr-4": {
