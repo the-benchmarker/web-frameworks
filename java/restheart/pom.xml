@@ -9,7 +9,7 @@
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
-    <restheart.version>[6.0,7.0)</restheart.version>
+    <restheart.version>[7.0,7.100)</restheart.version>
   </properties>
 
   <dependencies>
