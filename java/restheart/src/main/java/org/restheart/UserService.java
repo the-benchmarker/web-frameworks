@@ -13,7 +13,8 @@ import org.restheart.utils.HttpStatus;
 
 @RegisterPlugin(name = "benchmarkUserService",
     description = "service for user resource",
-    defaultURI = "/user")
+    defaultURI = "/user",
+    blocking = false)
 public class UserService implements ByteArrayService {
   @Override
   public void handle(ByteArrayRequest request, ByteArrayResponse response) throws Exception {

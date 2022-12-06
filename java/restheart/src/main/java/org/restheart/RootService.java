@@ -9,7 +9,8 @@ import org.restheart.plugins.RegisterPlugin.MATCH_POLICY;
 @RegisterPlugin(name = "benchmarkRootService",
     description = "service for root resource",
     defaultURI = "/",
-    uriMatchPolicy = MATCH_POLICY.EXACT)
+    uriMatchPolicy = MATCH_POLICY.EXACT,
+    blocking = false)
 public class RootService implements ByteArrayService {
   @Override
   public void handle(ByteArrayRequest request, ByteArrayResponse response) throws Exception {

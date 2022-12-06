@@ -1,19 +1,21 @@
 framework:
   website: restheart.org
-  version: 6.6
+  version: 7.0
 
 build:
   - mvn package
 
-files:
-  - restheart.yml
-
 environment:
-  RH_IO_THREADS: 1
-  RH_WORKER_THREADS: 4
+  RHO: >
+    /http-listener->{\"enabled\": true, \"host\": \"0.0.0.0\", \"port\": 3000};
+    /core/name->\"restheart-benchmarker\";
+    /core/worker-threads->0;
+    /core/requests-limit->100000;
+    /fullAuthorizer/enabled->true;
+    /logging/log-level->\"OFF\";
+    /ping/enabled->false;
 
 binaries:
   - target/benchmark.jar
-  - restheart.yml
 
-command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/benchmark.jar /opt/web/restheart.yml
+command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/benchmark.jar

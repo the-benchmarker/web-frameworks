@@ -1,7 +1,1 @@
-<<<<<<< HEAD
-fastapi>=0.86,<0.87
-=======
-fastapi>=0.87,<0.88
-gunicorn
-uvicorn[standard]
->>>>>>> upstream/master
+fastapi>=0.88,<0.89
