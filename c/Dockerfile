@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:11.5
 
 WORKDIR /usr/src/app
 
@@ -23,7 +23,7 @@ WORKDIR /usr/src/app
    RUN {{{.}}}
 {{/build}}
 
-FROM debian:bullseye
+FROM debian:11.5
 
 WORKDIR /opt/web
 
