@@ -2,3 +2,5 @@ framework:
   website: ambiorix.dev
   version: 2.1
 
+bootstrap: "remotes::install_github('devOpifex/ambiorix')"
+

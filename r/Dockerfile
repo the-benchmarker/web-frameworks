@@ -5,7 +5,12 @@ RUN R  -e 'install.packages("remotes")'
 
 COPY . ./
 
-RUN R -e 'remotes::install_deps()'
+{{#bootstrap}}
+  RUN R -e "{{{.}}}"
+{{/bootstrap}}
+{{^bootstrap}}
+  RUN R -e 'remotes::install_deps()'
+{{/bootstrap}}
 
 CMD R -e 'source("app.R")'
 
