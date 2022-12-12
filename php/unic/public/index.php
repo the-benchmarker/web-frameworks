@@ -9,4 +9,12 @@ $app->get('/', function($req, $res, $next) {
   $res->send('');
 });
 
+$app->get('/user/{id}', function($req, $res, $next) {
+  $res->send($req->params->id);
+});
+
+$app->post('/user', function($req, $res, $next) {
+  $res->send('');
+});
+
 $app->start();
