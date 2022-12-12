@@ -1,22 +1,12 @@
 <?php
-/**
-* Unic Framework
-*
-* A high performance, open source web application framework.
-*
-* @package : Unic Framework
-* @author : Rajkumar Dusad
-* @copyright : Unic Framework
-* @license : MIT License
-* @link : https://github.com/unicframework/unic
-*/
+require(__DIR__.'/../vendor/autoload.php');
 
-//Include unic framework
-require_once __DIR__.'/../system/Unic.php';
+use Unic\App;
 
-//Initialize web app
-$app = new Unic();
+$app = new App();
 
-//Run web application
-$app->run();
-?>
+$app->get('/', function($req, $res, $next) {
+  $res->send('');
+});
+
+$app->start();
