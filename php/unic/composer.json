@@ -20,8 +20,6 @@
     ],
     "require": {
         "php": ">=5.6",
-        "unicframework/framework": "^1.0"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+        "unicframework/framework": "~1.0.0"
+    }
 }
