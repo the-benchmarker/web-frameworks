@@ -2,6 +2,7 @@ open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
+open Microsoft.Extensions.Logging
 open Giraffe
 open Giraffe.EndpointRouting
 
@@ -24,6 +25,10 @@ let configureApp (app: IApplicationBuilder) =
         .UseEndpoints(fun e -> e.MapGiraffeEndpoints(webApp))
     |> ignore
 
+let configureLogging (log : ILoggingBuilder) =
+    log.ClearProviders()
+    |> ignore
+
 let configureServices (services: IServiceCollection) = services.AddRouting() |> ignore
 
 let args = System.Environment.GetCommandLineArgs()
@@ -32,7 +37,8 @@ Host
     .CreateDefaultBuilder(args)
     .ConfigureWebHost(fun webHost ->
         webHost
-            .UseKestrel()
+            .UseKestrel(fun c -> c.AddServerHeader <- false)
+            .ConfigureLogging(configureLogging)
             .ConfigureServices(configureServices)
             .Configure(configureApp)
         |> ignore)
