@@ -37,7 +37,7 @@ Host
     .CreateDefaultBuilder(args)
     .ConfigureWebHost(fun webHost ->
         webHost
-            .UseKestrel()
+            .UseKestrel(fun c -> c.AddServerHeader <- false)
             .ConfigureLogging(configureLogging)
             .ConfigureServices(configureServices)
             .Configure(configureApp)

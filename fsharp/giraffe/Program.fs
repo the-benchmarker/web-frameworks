@@ -32,7 +32,7 @@ let args = System.Environment.GetCommandLineArgs()
 
 Host.CreateDefaultBuilder(args)
     .ConfigureWebHost(fun webHost ->
-        webHost.UseKestrel()
+        webHost.UseKestrel(fun c -> c.AddServerHeader <- false)
                 .ConfigureLogging(configureLogging)
                 .ConfigureServices(configureServices)
                 .Configure(Action<IApplicationBuilder> configureApp)
