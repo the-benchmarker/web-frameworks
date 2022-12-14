@@ -145,10 +145,6 @@ def create_dockerfile(language, framework, **options)
     end
     config['build_environment'] = environment
   end
-  config['php_ext'] = config['php_ext']&.map do
-    ext, version = _1.split('-')
-    { name: ext, version: version }
-  end
   config[:version] = config.dig('language', 'version')
 
   File.write(File.join(directory, MANIFESTS[:container]), Mustache.render(File.read(template), config)) if template
