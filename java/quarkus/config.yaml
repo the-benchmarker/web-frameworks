@@ -1,6 +1,6 @@
 framework:
   website: quarkus.io
-  version: 2.14
+  version: 2.15
 
 build:
   - mvn clean package -Dquarkus.package.type=uber-jar -Dquarkus.http.port=3000 -Pnative
