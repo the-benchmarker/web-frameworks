@@ -3,7 +3,7 @@
     "sunrise/http-router": "~2.16.0",
     "sunrise/http-factory": "*",
     "symfony/cache": "*",
-    "doctrine/annotations": "^1.6"
+    "doctrine/annotations": "^2.0"
   },
   "autoload": {
     "psr-4": {
