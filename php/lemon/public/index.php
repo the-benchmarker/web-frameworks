@@ -2,6 +2,7 @@
 
 use Lemon\Kernel\Application;
 use Lemon\Protection\Middlwares\Csrf;
+use Lemon\ResponseFactory;
 use Lemon\Route;
 
 require __DIR__.'/../vendor/autoload.php';
@@ -12,7 +13,7 @@ Route::get('/', function() {
     return '';
 });
 
-Route::get('/users/{id}', function($id) {
+Route::get('/user/{id}', function($id) {
     return $id;
 });
 
