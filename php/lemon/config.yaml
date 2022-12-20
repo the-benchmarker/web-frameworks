@@ -1,0 +1,5 @@
+framework:
+  github: Lemon-Framework/Lemon
+  version: 3.10.1
+
+command: php public/index.php serve
