@@ -26,7 +26,7 @@ RUN mix release --path release
 
 # ===============================================================================================
 
-FROM debian AS app
+FROM debian:bullseye AS app
 
 # Update system deps
 RUN apt-get -qq update && apt-get -qy install openssl
