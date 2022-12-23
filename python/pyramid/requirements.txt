@@ -1,3 +1,4 @@
 pyramid>=2.0,<2.1
 gunicorn
 gevent
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
