@@ -1,3 +1,4 @@
 asgineer>=0.8,<0.9
 uvicorn[standard]
 gunicorn
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
