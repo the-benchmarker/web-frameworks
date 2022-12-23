@@ -1,3 +1,4 @@
 apidaora>=0.28,<0.29
 gunicorn
 uvicorn[standard]
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
