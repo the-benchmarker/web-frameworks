@@ -1,3 +1,4 @@
 uvicorn[standard]
 gunicorn
 Tonberry>=0.2,<0.3
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
