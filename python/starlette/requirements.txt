@@ -1,3 +1,4 @@
 starlette>=0.23,<0.24
 gunicorn
 uvicorn[standard]
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
