@@ -2,3 +2,4 @@ masonite>=4.17,<4.18
 masonite-orm
 gunicorn
 gevent
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
