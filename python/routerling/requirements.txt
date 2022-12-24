@@ -1,3 +1,4 @@
 routerling>=0.5,<0.6
 gunicorn
 uvicorn
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
