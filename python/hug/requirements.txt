@@ -1,3 +1,4 @@
 hug>=2.6,<2.7
 gunicorn
 gevent
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
