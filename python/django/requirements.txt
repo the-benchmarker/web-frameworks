@@ -1,3 +1,4 @@
 django>=4.1,<4.2
 gunicorn
 gevent
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
