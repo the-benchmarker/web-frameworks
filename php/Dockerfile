@@ -1,10 +1,8 @@
-FROM php:8.1-fpm-alpine
+FROM php:8.1-fpm-alpine3.16
 
-RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev php8-pear {{#deps}} {{{.}}} {{/deps}}
+RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev {{#deps}} {{{.}}} {{/deps}}
 
 WORKDIR /usr/src/app
-
-RUN ln -sfv /usr/bin/pecl8  /usr/local/bin/pecl
 
 RUN docker-php-ext-install zip opcache
 

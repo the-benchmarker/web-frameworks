@@ -6,7 +6,7 @@ COPY . ./
 
 RUN sbt universal:packageZipTarball
 
-FROM openjdk:11-jre
+FROM openjdk:11.0.16-jre
 
 WORKDIR /usr/src/app
 

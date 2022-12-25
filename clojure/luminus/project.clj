@@ -1,6 +1,6 @@
 (defproject luminus "0.1.0-SNAPSHOT"
 
-  :dependencies [[luminus/lein-template "4.47"]
+  :dependencies [[luminus/lein-template "4.48"]
                  [ch.qos.logback/logback-classic "1.4.5"]
                  [cheshire "5.11.0"]
                  [clojure.java-time "1.1.0"]
@@ -14,7 +14,7 @@
                  [metosin/muuntaja "0.6.8"]
                  [metosin/reitit "0.5.18"]
                  [metosin/ring-http-response "0.9.3"]
-                 [mount "0.1.16"]
+                 [mount "0.1.17"]
                  [nrepl "1.0.0"]
                  [org.clojure/clojure "1.11.1"]
                  [org.clojure/tools.cli "1.0.214"]
