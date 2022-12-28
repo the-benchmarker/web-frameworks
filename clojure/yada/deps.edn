@@ -8,6 +8,6 @@
  :aliases {:outdated {:extra-deps {olical/depot {:mvn/version "2.3.0"}}
                       :main-opts ["-m" "depot.outdated.main"
                                   "-a" "outdated"]}
-           :uberjar {:extra-deps {uberdeps/uberdeps {:mvn/version "1.1.4"}}
+           :uberjar {:extra-deps {uberdeps/uberdeps {:mvn/version "1.2.0"}}
                      :main-opts ["-m" "uberdeps.uberjar"
                                  "--target" "yada.jar"]}}}
