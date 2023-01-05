@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 viz = "~0.4.3"
-tokio = { version = "~1.23.0", features = ["rt-multi-thread", "macros"] }
+tokio = { version = "~1.24.0", features = ["rt-multi-thread", "macros"] }
 
 [profile.release]
 codegen-units = 1
