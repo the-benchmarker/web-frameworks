@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 use Hyperf\Server\Server;
-use Hyperf\Server\SwooleEvent;
+use Hyperf\Server\Event;
 
 return [
     'mode' => SWOOLE_BASE,
@@ -22,7 +22,7 @@ return [
             'port' => 3000,
             'sock_type' => SWOOLE_SOCK_TCP,
             'callbacks' => [
-                SwooleEvent::ON_REQUEST => [App\Kernel\FastServer::class, 'onRequest'],
+                Event::ON_REQUEST => [App\Kernel\FastServer::class, 'onRequest'],
             ],
         ],
     ],
@@ -39,8 +39,8 @@ return [
         'log_level' => SWOOLE_LOG_ERROR,
     ],
     'callbacks' => [
-        SwooleEvent::ON_BEFORE_START => [Hyperf\Framework\Bootstrap\ServerStartCallback::class, 'beforeStart'],
-        SwooleEvent::ON_WORKER_START => [Hyperf\Framework\Bootstrap\WorkerStartCallback::class, 'onWorkerStart'],
-        SwooleEvent::ON_PIPE_MESSAGE => [Hyperf\Framework\Bootstrap\PipeMessageCallback::class, 'onPipeMessage'],
+        Event::ON_BEFORE_START => [Hyperf\Framework\Bootstrap\ServerStartCallback::class, 'beforeStart'],
+        Event::ON_WORKER_START => [Hyperf\Framework\Bootstrap\WorkerStartCallback::class, 'onWorkerStart'],
+        Event::ON_PIPE_MESSAGE => [Hyperf\Framework\Bootstrap\PipeMessageCallback::class, 'onPipeMessage'],
     ],
 ];
