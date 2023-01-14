@@ -3,7 +3,7 @@
 {{/image}}
 
 {{^image}}
-  FROM node:18.12-alpine
+  FROM node:19.4-alpine
 {{/image}}
 
 
