@@ -2,6 +2,8 @@ framework:
   github: fyrejet/fyrejet
   version: 4.0
 
+image: node:16.19-alpine
+
 build_deps:
   - git
 

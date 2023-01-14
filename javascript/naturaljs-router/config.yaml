@@ -2,6 +2,8 @@ framework:
   github: jesusvilla/natural
   version: 0.1.1
 
+image: node:16.19-alpine
+
 build_deps:
   - git
 
