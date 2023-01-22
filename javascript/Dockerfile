@@ -1,12 +1,4 @@
-{{#image}}
-  FROM {{{.}}}
-{{/image}}
-
-{{^image}}
-  FROM node:18.13-alpine
-{{/image}}
-
-
+FROM node:18.13-alpine
 
 {{#build_deps}}
   RUN apk add {{{.}}}
