@@ -5,7 +5,7 @@ use Unic\App;
 use Swoole\Http\Server;
 
 $app = new App();
-$server = new Server('127.0.0.1', 3000);
+$server = new Server('0.0.0.0', 3000);
 
 $app->get('/', function($req, $res) {
   $res->send('');
