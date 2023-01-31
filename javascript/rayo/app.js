@@ -1,4 +1,4 @@
-const rayo = require("rayo");
+import rayo from 'rayo';
 
 rayo({ port: 3000 })
   .get("/", (req, res) => res.end(""))

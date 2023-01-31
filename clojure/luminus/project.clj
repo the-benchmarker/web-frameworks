@@ -1,9 +1,9 @@
 (defproject luminus "0.1.0-SNAPSHOT"
 
-  :dependencies [[luminus/lein-template "4.47"]
-                 [ch.qos.logback/logback-classic "1.4.4"]
+  :dependencies [[luminus/lein-template "4.49"]
+                 [ch.qos.logback/logback-classic "1.4.5"]
                  [cheshire "5.11.0"]
-                 [clojure.java-time "1.1.0"]
+                 [clojure.java-time "1.2.0"]
                  [cprop "0.1.19"]
                  [expound "0.9.0"]
                  [funcool/struct "1.4.0"]
@@ -14,7 +14,7 @@
                  [metosin/muuntaja "0.6.8"]
                  [metosin/reitit "0.5.18"]
                  [metosin/ring-http-response "0.9.3"]
-                 [mount "0.1.16"]
+                 [mount "0.1.17"]
                  [nrepl "1.0.0"]
                  [org.clojure/clojure "1.11.1"]
                  [org.clojure/tools.cli "1.0.214"]
@@ -25,7 +25,7 @@
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.9.6"]
                  [ring/ring-defaults "0.3.4"]
-                 [com.fasterxml.jackson.core/jackson-core "2.14.0"]]
+                 [com.fasterxml.jackson.core/jackson-core "2.14.2"]]
 
   :min-lein-version "2.0.0"
   

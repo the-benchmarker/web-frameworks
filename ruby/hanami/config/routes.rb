@@ -4,7 +4,7 @@ require "hanami/routes"
 
 module Benchmark
   class Routes < Hanami::Routes
-    root { "" }
+    root to: ->(*) { [200, {}, [""]] }
 
     get "/user/:id" do
       params[:id]
@@ -15,4 +15,3 @@ module Benchmark
     end
   end
 end
-
