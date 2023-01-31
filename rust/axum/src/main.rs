@@ -10,7 +10,7 @@ async fn main() {
 
     let router: Router = router.route(
         "/user/:id",
-        get(|id: Path<u8>| async move { id.to_string() }),
+        get(|Path(id): Path<u8>| async move { id.to_string() }),
     );
 
     let router: Router = router.route("/user", post(|| async {}));
