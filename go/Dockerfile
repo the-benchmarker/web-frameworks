@@ -22,7 +22,7 @@ COPY . ./
 
 RUN go get
 
-RUN go build -a -ldflags '-extldflags "-static"' -tags {{#build_tags}} {{{.}}} {{/build_tags}} -o /go/bin/app ./
+RUN go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
 
 FROM alpine
 {{#environment}}
