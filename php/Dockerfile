@@ -26,7 +26,7 @@ RUN docker-php-ext-install zip opcache
   {{^version}}
     RUN curl -fsSL https://pecl.php.net/get/{{{name}}} | tar xvz -C "/usr/src/php/ext/{{{name}}}" --strip 1
   {{/version}}
-  RUN docker-php-ext-install {{{name}}}
+  RUN docker-php-ext-install {{{ext}}}
 {{/php_ext}}
 
 {{#before_build}}
