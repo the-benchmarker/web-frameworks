@@ -11,6 +11,6 @@ deps:
   - libsodium-dev
 
 php_ext:
-  - swoole
+  - openswoole
 
 command: php start.php

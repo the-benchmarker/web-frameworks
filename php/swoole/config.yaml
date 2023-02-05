@@ -3,6 +3,6 @@ framework:
   version: 4.8
 
 php_ext:
-  - swoole
+  - openswoole
 
 command: php start.php

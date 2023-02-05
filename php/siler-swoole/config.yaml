@@ -3,6 +3,6 @@ framework:
   version: 1.7
 
 php_ext:
-  - swoole
+  - openswoole
 
 command: php public/index.php
