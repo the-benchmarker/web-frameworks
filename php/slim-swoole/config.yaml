@@ -3,6 +3,6 @@ framework:
   version: 4.9
 
 php_ext:
-  - openswoole-4.8.11
+  - swoole-4.8.11
 
 command: php public/index.php

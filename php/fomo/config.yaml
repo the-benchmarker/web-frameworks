@@ -6,7 +6,7 @@ php_mod:
   - pcntl
 
 php_ext:
-  - openswoole
+  - swoole
 
 before_command:
   - mkdir storage/logs -p

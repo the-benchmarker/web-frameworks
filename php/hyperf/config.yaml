@@ -7,7 +7,7 @@ php_mod:
 
 php_ext:
   - redis
-  - openswoole
+  - swoole
 
 before_command:
   - echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini

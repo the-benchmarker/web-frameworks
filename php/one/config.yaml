@@ -6,6 +6,6 @@ php_mod:
   - bcmath
 
 php_ext:
-  - openswoole-4.8.11
+  - swoole-4.8.11
 
 command: php App/swoole.php

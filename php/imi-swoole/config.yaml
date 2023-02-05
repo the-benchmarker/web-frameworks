@@ -3,7 +3,7 @@ framework:
   version: 2.0
 
 php_ext:
-  - openswoole
+  - swoole
   - redis
 
 command: php vendor/bin/imi-swoole swoole/start

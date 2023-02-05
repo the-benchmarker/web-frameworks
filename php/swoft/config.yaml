@@ -4,6 +4,6 @@ framework:
 
 php_ext:
   - redis
-  - openswoole
+  - swoole
 
 command: php bin/swoft http:start
