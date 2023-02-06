@@ -1,3 +1,3 @@
-starlette>=0.23,<0.24
+starlette>=0.24,<0.25
 gunicorn
 uvicorn[standard]
