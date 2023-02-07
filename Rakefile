@@ -149,8 +149,6 @@ def create_dockerfile(language, framework, **options)
     name, version = _1.split('-')
     ext = if name == 'event'
             '--ini-name zz-event event'
-    elsif name == 'openswoole'
-      '--ini-name swoole openswoole'
           else
             name
           end
