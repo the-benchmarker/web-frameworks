@@ -1,4 +1,4 @@
-FROM node:16.19-alpine
+FROM node:18.14-alpine
 
 {{#build_deps}}
   RUN apk add {{{.}}}

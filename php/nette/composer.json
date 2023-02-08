@@ -1,8 +1,8 @@
 {
   "require": {
     "nette/application": "~3.1.0",
-    "nette/bootstrap": "~3.1.0",
-    "nette/di": "~3.1.0"
+    "nette/bootstrap": "@stable",
+    "nette/di": "@stable"
   },
   "autoload": {
     "classmap": [
