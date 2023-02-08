@@ -1,5 +1,5 @@
-const http = require("http");
 const { Router } = require("@routejs/router");
+const http = require("http");
 
 const app = new Router();
 
