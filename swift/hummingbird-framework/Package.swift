@@ -9,7 +9,7 @@ let package = Package(
         .executable(name: "server", targets: ["server"])
     ],
     dependencies: [
-        .package(url: "https://github.com/hummingbird-project/hummingbird.git", .upToNextMinor(from: "0.15.0")),
+        .package(url: "https://github.com/hummingbird-project/hummingbird.git", .upToNextMinor(from: "1.0.0")),
     ],
     targets: [
         .target(name: "server",
