@@ -2,7 +2,7 @@
 {:paths ["src/main/clojure" "classes"]
 
  :deps {yada/lean {:mvn/version "1.2.16"}
-        aleph/aleph {:mvn/version "0.6.0"}
+        aleph/aleph {:mvn/version "0.6.1"}
         org.clojure/clojure {:mvn/version "1.11.1"}}
 
  :aliases {:outdated {:extra-deps {olical/depot {:mvn/version "2.3.0"}}
