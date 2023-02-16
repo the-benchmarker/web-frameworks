@@ -1,3 +1,3 @@
 module main
 
-require github.com/aurora-go/aurora v0.2.9
+require gitee.com/aurora-engine/aurora v1.3.14

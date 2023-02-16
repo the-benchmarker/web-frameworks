@@ -1,5 +1,5 @@
 framework:
   website: spring.io/projects/spring-boot
-  version: 2.6
+  version: 3.0
 
-command: /usr/bin/java -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/benchmark-1.0.0.jar
+command: /usr/bin/java -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/benchmark-1.0.0.jar

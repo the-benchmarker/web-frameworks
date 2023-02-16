@@ -1,10 +1,14 @@
-FROM crystallang/crystal:1.4.1-alpine
+FROM crystallang/crystal:1.7.2-alpine
 
 WORKDIR /usr/src/app
 
 COPY . ./
 
 RUN apk add --update yaml-static
+
+{{#build_deps}}
+RUN apk add --update {{{.}}}
+{{/build_deps}}
 
 RUN shards lock
 RUN shards install --production

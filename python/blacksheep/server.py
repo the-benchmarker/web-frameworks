@@ -1,8 +1,3 @@
-# Disable all logging features
-import logging
-
-logging.disable()
-
 from blacksheep.server import Application
 from blacksheep.server.responses import text, Response
 

@@ -3,7 +3,7 @@
 {{/image}}
 
 {{^image}}
-  FROM maven:3-jdk-11-slim AS build
+  FROM maven:3-openjdk-17 AS build
 {{/image}}
 
 WORKDIR /usr/src/web
@@ -28,11 +28,19 @@ WORKDIR /usr/src/web
   RUN mvn package
 {{/build}}
 
-FROM openjdk:11-jre-slim
+{{#runtime}}
+  FROM {{{.}}}
+{{/runtime}}
+{{^runtime}}
+  FROM openjdk:17.0.2-slim
+{{/runtime}}
+
 
 WORKDIR /opt/web
 
-RUN ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
+{{#fix}}
+  RUN {{{.}}}
+{{/fix}}
 
 {{#binaries}}
   COPY --from=build /usr/src/web/{{{.}}} {{{.}}}

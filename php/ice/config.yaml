@@ -1,6 +1,10 @@
+provider:
+  default:
+    language: 8.1
+
 framework:
   website: iceframework.org
-  version: 1.8
+  version: 1.9
 
 build_deps:
   - bash

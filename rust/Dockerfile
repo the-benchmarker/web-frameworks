@@ -1,4 +1,4 @@
-FROM rust:1.60-slim AS build
+FROM rust:1.67-slim AS build
 
 WORKDIR /usr/src/app
 
@@ -6,7 +6,7 @@ COPY . ./
 
 RUN cargo build --release && strip target/release/server
 
-FROM debian:buster-slim
+FROM debian:stable-slim
 
 COPY --from=build /usr/src/app/target/release/server /usr/src/app/target/release/server
 

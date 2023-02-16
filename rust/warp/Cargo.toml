@@ -1,0 +1,19 @@
+[package]
+name = "server"
+version = "0.0.0"
+edition = "2021"
+
+[profile.dev]
+debug = true
+opt-level = 0
+
+[profile.release]
+debug = true
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+incremental = false
+
+[dependencies]
+warp = "~0.3.3"
+tokio = { version = "1", features = ["full"] }

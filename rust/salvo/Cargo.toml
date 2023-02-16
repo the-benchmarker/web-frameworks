@@ -5,7 +5,8 @@ edition = "2021"
 authors = ["Chrislearn Young <chrislearn@hotmail.com>"]
 
 [dependencies]
-salvo = { version = "~0.21.0" }
+salvo = { version = "~0.37.0", default-features = false}
+tokio = { version = "1", features = ["full"] }
 
 [profile.release]
 codegen-units = 1

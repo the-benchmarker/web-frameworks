@@ -1,3 +1,6 @@
 framework:
   website: kitura.dev
-  version: 2.9
+  version: 3.0
+
+build_environment:
+  KITURA_NIO: 0

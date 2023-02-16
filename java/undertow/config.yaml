@@ -1,6 +1,6 @@
 framework:
   website: undertow.io
-  version: 2.2
+  version: 2.3
 
 build:
   - mvn package
@@ -11,4 +11,4 @@ files:
 binaries:
   - target/server-jar-with-dependencies.jar
 
-command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/server-jar-with-dependencies.jar
+command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/server-jar-with-dependencies.jar

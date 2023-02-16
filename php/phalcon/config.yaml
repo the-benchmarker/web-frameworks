@@ -1,6 +1,10 @@
+provider:
+  default:
+    language: 8.1
+
 framework:
   website: phalcon.io
-  version: 5.0
+  version: 5.1
 
 php_ext:
   - psr

@@ -1,6 +1,6 @@
 framework:
   website: django-ninja.rest-framework.com
-  version: 0.17
+  version: '0.20'
 
 command: >
   gunicorn \

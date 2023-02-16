@@ -1,6 +1,6 @@
 framework:
   website: activej.io
-  version: 5.2
+  version: 5.4
 
 build:
   - mvn clean package

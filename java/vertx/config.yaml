@@ -1,6 +1,6 @@
 framework:
   website: vertx.io/docs/vertx-core/java/
-  version: 4.2
+  version: 4.3
 
 build:
   - mvn package
@@ -11,4 +11,4 @@ files:
 binaries:
   - target/server.jar
 
-command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/server.jar -instances `nproc` -options /opt/web/vertx.json
+command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/server.jar -instances `nproc` -options /opt/web/vertx.json

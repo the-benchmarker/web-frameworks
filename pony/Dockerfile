@@ -1,13 +1,11 @@
-FROM ponylang/ponyc:0.40.0
-
-RUN apt-get -y update && apt-get -y install clang libssl-dev
+FROM ponylang/shared-docker-ci-x86-64-unknown-linux-builder-with-openssl_1.1.1n
 
 WORKDIR /src/main
 
-COPY bundle.json .
-RUN stable fetch
+COPY corral.json ./
+RUN corral fetch
 
-COPY . ./
+COPY main.pony ./
 
 {{#environment}}
   ENV {{{.}}}
@@ -17,14 +15,12 @@ COPY . ./
   RUN {{{.}}}
 {{/before_command}}
 
-RUN stable env ponyc -Dopenssl_1.1.x -Dstatic
+RUN corral run ponyc -- -Dopenssl_1.1.x -Dstatic -bjennet
 
-FROM ubuntu
+FROM alpine
 
-RUN apt-get -y update && apt-get -y install openssl libatomic1
+RUN apk --no-cache add libatomic libexecinfo libgcc
 
-WORKDIR /opt
-
-COPY --from=0 /src/main/main main
-
-CMD ./main
+WORKDIR /opt/
+COPY --from=0 /src/main/jennet ./
+CMD ./jennet

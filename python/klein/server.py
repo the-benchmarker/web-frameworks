@@ -1,8 +1,3 @@
-# Disable all logging features
-import logging
-
-logging.disable()
-
 from klein import Klein
 
 app = Klein()

@@ -1,6 +1,6 @@
 framework:
   github: spiral/framework
-  version: 2.12
+  version: 2.14
 
 before_command:
   - vendor/bin/spiral get

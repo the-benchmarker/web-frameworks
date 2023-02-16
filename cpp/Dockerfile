@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 WORKDIR /usr/src/app
 
@@ -21,7 +21,7 @@ RUN apt-get -qy install build-essential git cmake
    RUN {{{.}}}
 {{/build}}
 
-FROM debian:buster
+FROM debian:bullseye
 
 {{#environment}}
 ENV {{{.}}}

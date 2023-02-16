@@ -1,0 +1,22 @@
+# Binaries
+*
+!*.*
+!*/
+
+.Dockerfile
+.Makefile
+
+# Test coverage
+coverage/*
+lcov.info
+
+# IDE
+.vscode/*
+
+# .env
+*.out
+*.log
+*.log.*
+*.sqlite3
+*.db
+*.db.*

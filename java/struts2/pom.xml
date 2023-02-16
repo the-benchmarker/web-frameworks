@@ -10,10 +10,11 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jetty.version>9.4.46.v20220331</jetty.version>
+        <jetty.version>9.4.50.v20221201</jetty.version>
         <jetty-jsp.version>9.2.30.v20200428</jetty-jsp.version>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
+        <glassfish.el.version>3.0.1-b12</glassfish.el.version>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
     </properties>
 
     <dependencies>
@@ -21,7 +22,7 @@
         <dependency>
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-core</artifactId>
-            <version>[2.5,2.6)</version>
+            <version>[6.1,6.2)</version>
         </dependency>
 
         <dependency>
@@ -43,6 +44,18 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-jsp</artifactId>
             <version>${jetty-jsp.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.glassfish</groupId>
+                    <artifactId>javax.el</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>${glassfish.el.version}</version>
         </dependency>
 
     </dependencies>
@@ -60,9 +73,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
-                        <id>package-jar</id>
+                        <id>default-jar</id>
                         <phase>package</phase>
                         <goals>
                             <goal>jar</goal>

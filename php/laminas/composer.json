@@ -1,10 +1,16 @@
 {
   "require": {
-    "laminas/laminas-mvc": "~3.2.0"
+    "laminas/laminas-mvc": "~3.6.0",
+    "laminas/laminas-component-installer": "@stable"
   },
   "autoload": {
     "psr-4": {
       "Application\\": "module/Application/src/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "laminas/laminas-component-installer": true
     }
   }
 }

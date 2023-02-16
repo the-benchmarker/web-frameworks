@@ -10,10 +10,6 @@ php_mod:
   - sodium
   - sockets
 
-php_ext:
-  - event
-  - apcu
-
 before_command:
   - ./vendor/bin/rr get-binary
 

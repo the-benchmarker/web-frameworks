@@ -1,11 +1,15 @@
+provider:
+  default:
+    language: 8.1
+
 framework:
   github: lizhichao/one
-  version: 2.2
+  version: 2.3
 
 php_mod:
   - bcmath
 
 php_ext:
-  - swoole
+  - swoole-4.8.11
 
 command: php App/swoole.php

@@ -1,10 +1,7 @@
 framework:
   github: chubbyphp/chubbyphp-framework
-  version: 4.1
+  version: 5.0
 
-environment:
-  CFLAGS: "$CFLAGS -D_GNU_SOURCE"
-  
 build_deps:
   - libevent-dev
   - openssl-dev

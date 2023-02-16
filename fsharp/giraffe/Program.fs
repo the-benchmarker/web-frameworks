@@ -3,6 +3,7 @@ open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
+open Microsoft.Extensions.Logging
 open Giraffe
 
 // ---------------------------------
@@ -21,16 +22,19 @@ let webApp: HttpFunc -> HttpFunc =
 
 let configureApp (app: IApplicationBuilder) = app.UseGiraffe(webApp)
 
+let configureLogging (log : ILoggingBuilder) =
+    log.ClearProviders()
+    |> ignore
+
 let configureServices (services: IServiceCollection) = services.AddGiraffe() |> ignore
 
-[<EntryPoint>]
-let main args =
-    Host.CreateDefaultBuilder(args)
-        .ConfigureWebHost(fun webHost ->
-            webHost.UseKestrel()
-                   .ConfigureServices(configureServices)
-                   .Configure(Action<IApplicationBuilder> configureApp)
-                   |> ignore)
-        .Build().Run()
+let args = System.Environment.GetCommandLineArgs()
 
-    0
+Host.CreateDefaultBuilder(args)
+    .ConfigureWebHost(fun webHost ->
+        webHost.UseKestrel(fun c -> c.AddServerHeader <- false)
+                .ConfigureLogging(configureLogging)
+                .ConfigureServices(configureServices)
+                .Configure(Action<IApplicationBuilder> configureApp)
+                |> ignore)
+    .Build().Run()

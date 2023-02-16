@@ -1,4 +1,9 @@
-FROM golang:1.17-alpine
+{{#version}}
+  FROM golang:{{version}}-alpine
+{{/version}}
+{{^version}}
+  FROM golang:1.20-alpine
+{{/version}}
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
@@ -17,7 +22,7 @@ COPY . ./
 
 RUN go get
 
-RUN go build -a -ldflags '-extldflags "-static"' -o /go/bin/app ./
+RUN go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
 
 FROM alpine
 {{#environment}}

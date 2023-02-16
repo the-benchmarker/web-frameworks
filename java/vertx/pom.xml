@@ -11,10 +11,10 @@
     <description>Demo project for Vertx</description>
 
     <properties>
-        <java.version>11</java.version>
-        <vertx.version>4.2.7</vertx.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <java.version>17</java.version>
+        <vertx.version>4.3.8</vertx.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vertx.verticle>benchmark.vertx.BenchmarkApplication</vertx.verticle>
     </properties>
@@ -37,7 +37,7 @@
             <plugin>
                 <groupId>io.reactiverse</groupId>
                 <artifactId>vertx-maven-plugin</artifactId>
-                <version>1.0.26</version>
+                <version>1.0.28</version>
                 <executions>
                     <execution>
                         <id>vmp</id>

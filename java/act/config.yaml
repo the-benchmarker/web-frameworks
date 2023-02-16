@@ -2,9 +2,19 @@ framework:
   github: actframework/actframework
   version: 1.9
 
+language:
+  version: 11
+
+image: maven:3-jdk-11-slim
+
+runtime: openjdk:11-jre-slim
+
 build:
   - mvn package
   - mv target/dist/benchmark-1.0.0-*.tar.gz target/dist/benchmark-1.0.0.tar.gz
+
+fix:
+  - ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
 
 binaries:
   - target/dist/benchmark-1.0.0.tar.gz

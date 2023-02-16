@@ -1,6 +1,6 @@
 framework:
   website: eclipse-ee4j.github.io/jersey
-  version: 2.35
+  version: 2.38
 
 build:
   - mvn package
@@ -11,4 +11,4 @@ files:
 binaries:
   - target/server-jar-with-dependencies.jar
 
-command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/server-jar-with-dependencies.jar
+command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/server-jar-with-dependencies.jar

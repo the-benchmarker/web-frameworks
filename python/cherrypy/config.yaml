@@ -1,6 +1,6 @@
 framework:
   github: cherrypy/cherrypy
-  version: 18.6
+  version: 18.8
 
 command: >
   gunicorn  \
@@ -8,5 +8,5 @@ command: >
     --bind 0.0.0.0:3000  \
     --reuse-port  \
     --workers $(nproc)  \
-    --worker-class meinheld.gmeinheld.MeinheldWorker \
+    --worker-class gevent \
       server:app

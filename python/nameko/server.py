@@ -1,8 +1,3 @@
-# Disable all logging features
-import logging
-
-logging.disable()
-
 from nameko.web.handlers import http
 
 

@@ -1,6 +1,10 @@
+provider:
+  default:
+    language: 8.1
+
 framework:
   github: bearframework/bearframework
-  version: 1.8
+  version: '1.10'
 
 php_mod:
   - gd

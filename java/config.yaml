@@ -1,8 +1,8 @@
 provider:
   default:
-    language: 11
+    language: 17
   digitalocean:
-    language: 11
+    language: 17
 
 sources:
   - src/**/*.java
@@ -13,6 +13,9 @@ files:
   - src/**/*.xml
   - src/**/*.jsp
 
+fix:
+  - ln -sfv /usr/local/openjdk-17/bin/java /usr/bin/java
+
 binaries:
   - target/benchmark-1.0.0.jar
 
@@ -21,5 +24,5 @@ deps:
 
 command: >
   /usr/bin/java
-  -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts
+  -XX:+UseNUMA -XX:+UseParallelGC 
   -jar /opt/web/target/benchmark-1.0.0.jar

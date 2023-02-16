@@ -1,6 +1,6 @@
 framework:
   website: getlaminas.org
-  version: 3.2
+  version: 3.6
 
 before_command:
   - mkdir /usr/src/app/data

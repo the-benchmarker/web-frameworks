@@ -7,10 +7,9 @@
   <packaging>jar</packaging>
 
   <properties>
-    <mongodb.version>4.2</mongodb.version>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-    <restheart.version>[5.4,5.5)</restheart.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <restheart.version>[7.2,7.3)</restheart.version>
   </properties>
 
   <dependencies>
@@ -27,8 +26,17 @@
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-shade-plugin</artifactId>
+            <version>3.4.1</version>
             <configuration>
               <createDependencyReducedPom>true</createDependencyReducedPom>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/MANIFEST.MF</exclude>
+                  </excludes>
+                </filter>
+              </filters>
             </configuration>
             <executions>
               <execution>

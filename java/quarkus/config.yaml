@@ -1,6 +1,6 @@
 framework:
   website: quarkus.io
-  version: 2.8
+  version: 2.16
 
 build:
   - mvn clean package -Dquarkus.package.type=uber-jar -Dquarkus.http.port=3000 -Pnative
@@ -8,4 +8,4 @@ build:
 binaries:
   - target/quarkus-1.0.0-runner.jar
 
-command: /usr/bin/java -XX:+UseNUMA -XX:+UseParallelGC -XX:+AggressiveOpts -jar /opt/web/target/quarkus-1.0.0-runner.jar
+command: /usr/local/openjdk-17/bin/java -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/quarkus-1.0.0-runner.jar

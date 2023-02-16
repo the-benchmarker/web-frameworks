@@ -1,0 +1,15 @@
+[package]
+name = "server"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+graphul = "0.5"
+tokio = { version = "1.15.0", features = ["macros", "rt-multi-thread"] }
+
+[profile.release]
+codegen-units = 1
+opt-level = 3
+lto = true
+incremental = false
