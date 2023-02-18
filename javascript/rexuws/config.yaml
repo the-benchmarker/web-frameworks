@@ -1,0 +1,14 @@
+framework:
+  website: https://github.com/rexuws/rexuws
+  github: rexuws/rexuws
+  version: 1.1.4
+
+build_deps:
+  - git 
+  - python3
+  - make
+  - g++
+  - libmagic  # required by uWebSockets.js
+
+bin_deps:
+  - gcompat # required by uWebSockets.js
