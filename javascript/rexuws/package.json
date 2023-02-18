@@ -1,5 +1,14 @@
 {
+    "scripts": {
+        "run": "node app.js"
+    },
     "dependencies": {
-        "rexuws": "https://github.com/Aderinom/rexuws-update-deps"
+        "rexuws": "^1.1.4",
+        "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.19.0"
+    },
+    "overrides":{
+        "rexuws": {
+            "uWebSockets.js": "$uWebSockets.js"
+        }
     }
 }
