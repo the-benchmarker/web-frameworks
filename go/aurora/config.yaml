@@ -3,4 +3,7 @@ framework:
   version: 1.3
 
   files:
+    - go.mod
+    - main.go
+    - server.go
     - application.yml
