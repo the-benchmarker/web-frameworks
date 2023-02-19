@@ -27,6 +27,4 @@ app.post("/user", function (req, res) {
   res.send("");
 });
 
-app.listen(3000, function () {
-  console.log("listening on port 3000");
-});
+app.listen(3000);
