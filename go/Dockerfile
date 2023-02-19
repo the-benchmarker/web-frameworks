@@ -3,7 +3,6 @@ FROM golang:1.20-alpine
 WORKDIR /usr/src/app
 
 WORKDIR /go/src/app
-COPY . ./
 
 {{#build_deps}}
   RUN apk add {{{.}}}
@@ -13,9 +12,9 @@ COPY . ./
  ENV GOOS=linux
  ENV GOARCH=amd64
 
-{{#before_command}}
+{{#bootstrap}}
   RUN {{{.}}}
-{{/before_command}}
+{{/bootstrap}}
 
 RUN go get
 
@@ -31,16 +30,11 @@ COPY --from=0 /go/bin/app /go/bin/app
 {{/files}}
 
 
-
-RUN apk add build-base {{#deps}}{{{.}}}{{/deps}}
-
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
-{{#bootstrap}}
-  RUN {{{.}}}
-{{/bootstrap}}
+
 
 {{#static_files}}
   COPY '{{source}}' '/go/bin/{{target}}'
