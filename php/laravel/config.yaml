@@ -1,6 +1,11 @@
 framework:
   website: laravel.com
-  version: 9.45
+  version: 10.0
+
+environment:
+  APP_ENV: production
+  APP_DEBUG: false
+  APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
 
   engines:
     - php-fpm

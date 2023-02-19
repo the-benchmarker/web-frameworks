@@ -1,12 +1,31 @@
-{{#docker-image}}
-  FROM {{{.}}}
-{{/docker-image}}
-{{^docker-image}}
-  FROM golang:1.19-alpine
-{{/docker-image}}
+FROM golang:1.20-alpine
 
 WORKDIR /usr/src/app
 
+WORKDIR /go/src/app
+COPY . ./
+
+{{#build_deps}}
+  RUN apk add {{{.}}}
+{{/build_deps}}
+
+ ENV CGO_ENABLED=0
+ ENV GOOS=linux
+ ENV GOARCH=amd64
+
+{{#before_command}}
+  RUN {{{.}}}
+{{/before_command}}
+
+RUN go get
+
+RUN go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
+
+FROM alpine
+{{#environment}}
+ENV {{{.}}}
+{{/environment}}
+COPY --from=0 /go/bin/app /go/bin/app
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}

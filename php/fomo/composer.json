@@ -22,5 +22,10 @@
     "psr-4": {
       "App\\": "app/"
     }
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
   }
 }

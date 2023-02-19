@@ -14,12 +14,11 @@
   "authors": [
     {
       "name": "Rajkumar Dusad",
-      "homepage": "https://github.com/rajkumardusad",
-      "role": "Developer"
+      "homepage": "https://github.com/rajkumardusad"
     }
   ],
   "require": {
-    "php": ">=5.6",
+    "php": ">=7.4",
     "unicframework/framework": "~1.0.0"
   }
 }

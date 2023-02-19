@@ -3,8 +3,6 @@ framework:
   version: 1.8
 
 language:
-  version: 1.17
-  docker-image: golang:1.17-alpine
   engines:
     net-http:
       environment:
