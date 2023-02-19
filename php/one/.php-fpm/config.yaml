@@ -2,7 +2,7 @@ framework:
   github: lizhichao/one
   version: 2.3
 
-php_mod:
+modules:
   - bcmath
 
 bootstrap:

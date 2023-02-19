@@ -2,20 +2,19 @@ provider:
   default:
     language: 8.1
 
+language:
+  engines:
+    reactphp:
+      bootstreap:
+        - mkdir -p var/cache && chmod 777 var/cache
+        - mkdir -p var/log && chmod 777 var/log
+
+      command: bin/console server:run --quiet
+
 framework:
   website: antidotfw.io
   github: antidot-framework/react-framework
   version: 1.0
 
-  files:
-    - config/services/dependencies.prod.yaml
-    - bin/console
-
   engines:
     - reactphp
-
-  bootstrap:
-    - mkdir -p var/cache && chmod 777 var/cache
-    - mkdir -p var/log && chmod 777 var/log
-
-  command: bin/console server:run

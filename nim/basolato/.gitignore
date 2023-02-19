@@ -1,44 +1,22 @@
-# Developer content
+# Binaries
+*
+!*.*
+!*/
 
-.DS_Store
-*.swp
+.Dockerfile
+.Makefile
 
-.neph
-neph.yaml
-shard.lock
-Gemfile.lock
+# Test coverage
+coverage/*
+lcov.info
 
-# git temporary files
-*.orig
+# IDE
+.vscode/*
 
-# GoLand IDE
-.idea
-
-# Temporary files
-FRAMEWORKS.yaml
-*/*/.Dockerfile
-*/*/Dockerfile
-*/*/.Makefile
-*/*/ip.txt
-venv
-*/*/cid.txt
-
-/lib/**/*.cr
-/vendor
-.bundle
-/bin
-
-# Rust build directories
-rust/*/target
-rust/*/Cargo.lock
-
-#fsharp
-launchSettings.json
-.vs
-obj
-[Bb]in/
-[Oo]bj/
-[Dd]ebug/
-[Rr]elease/
-*.fsproj
-*.fsproj.user
+# .env
+*.out
+*.log
+*.log.*
+*.sqlite3
+*.db
+*.db.*

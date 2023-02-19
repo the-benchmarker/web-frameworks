@@ -2,9 +2,6 @@ framework:
   github: gramework/gramework
   version: 1.8
 
-language:
-  engines:
-    net-http:
-      environment:
-        ENVIRONMENT: production
-        PORT: 3000
+  environment:
+    ENVIRONMENT: production
+    PORT: 3000

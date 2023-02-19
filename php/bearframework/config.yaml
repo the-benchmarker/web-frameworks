@@ -6,8 +6,11 @@ framework:
   github: bearframework/bearframework
   version: "1.10"
 
-  modules:
-    - gd
+language:
+  engines:
+    php-fpm:
+      modules:
+        - gd
 
-  deps:
-    - libpng-dev
+      build_deps:
+        - libpng-dev

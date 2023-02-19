@@ -19,6 +19,10 @@ ENV GOARCH=amd64
 RUN go get
 RUN go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
 
+{{#bootstrap}}
+  RUN {{{.}}}
+{{/bootstrap}}
+
 
 FROM alpine
 

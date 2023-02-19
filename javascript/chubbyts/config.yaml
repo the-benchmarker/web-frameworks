@@ -2,13 +2,8 @@ framework:
   github: chubbyts/chubbyts-framework
   version: 1.6
 
-  engines:
-    - node
-    - uwebsockets
-
-  bootstrap:
-    - npm install
-    - npm --location=global install typescript
+  boostrap:
+    - npm -g install typescript
     - tsc
 
   files:

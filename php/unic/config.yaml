@@ -2,7 +2,7 @@ framework:
   website: unicframework.github.io/docs
   version: 1.0
 
-php_ext:
+extensions:
   - swoole
 
 command: php public/index.php

@@ -2,8 +2,5 @@ framework:
   website: gitea.com/lunny/tango
   version: 0.6
 
-language:
-  engines:
-    net-http:
-      environment:
-        PORT: 3000
+  environment:
+    PORT: 3000

@@ -198,6 +198,7 @@ end
 desc 'Create Dockerfiles'
 task :config do
   Dir.glob('*/*/config.yaml').each do |path|
+    warn "Analyzing #{path}"
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
 

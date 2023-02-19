@@ -1,3 +1,6 @@
 framework:
   github: fyrejet/fyrejet
   version: 4.0
+
+  engines:
+    - uwebsockets

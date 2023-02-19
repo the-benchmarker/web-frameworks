@@ -2,11 +2,6 @@ framework:
   website: nestjs.com
   version: 9.3
 
-  bootstrap:
-    - npm install # workaround
-    - npm --location=global install @nestjs/cli
-    - nest build
-
   files:
     - nest-cli.json
     - src
@@ -14,4 +9,6 @@ framework:
     - tsconfig.json
     - package.json
 
-  command: pm2-runtime start dist/app.js -i $(nproc)
+  bootstrap:
+    - npm -g install @nestjs/cli
+    - nest build

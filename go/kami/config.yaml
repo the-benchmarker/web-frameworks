@@ -2,8 +2,5 @@ framework:
   github: guregu/kami
   version: 2.2
 
-language:
-  engines:
-    net-http:
-      environment:
-        GOJI_BIND: 0.0.0.0:3000
+  environment:
+    GOJI_BIND: 0.0.0.0:3000

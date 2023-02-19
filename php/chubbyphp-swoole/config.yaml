@@ -1,0 +1,12 @@
+provider:
+  default:
+    language: 8.1
+
+framework:
+  github: chubbyphp/chubbyphp-framework
+  version: 5.0
+
+extensions:
+  - swoole
+
+command: php public/index.php

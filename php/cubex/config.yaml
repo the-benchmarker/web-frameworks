@@ -6,5 +6,5 @@ framework:
     - workerman
     - php-fpm
 
-php_mod:
+modules:
   - intl
