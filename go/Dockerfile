@@ -8,26 +8,24 @@ WORKDIR /go/src/app
   RUN apk add {{{.}}}
 {{/build_deps}}
 
- ENV CGO_ENABLED=0
- ENV GOOS=linux
- ENV GOARCH=amd64
+ENV CGO_ENABLED=0
+ENV GOOS=linux
+ENV GOARCH=amd64
 
-{{#bootstrap}}
-  RUN {{{.}}}
-{{/bootstrap}}
-
-RUN go get
-
-RUN go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
-
-FROM alpine
-{{#environment}}
-ENV {{{.}}}
-{{/environment}}
-COPY --from=0 /go/bin/app /go/bin/app
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
+
+RUN go get
+RUN go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
+
+
+FROM alpine
+
+{{#environment}}
+ENV {{{.}}}
+{{/environment}}
+
 
 
 {{#environment}}
@@ -35,6 +33,7 @@ COPY --from=0 /go/bin/app /go/bin/app
 {{/environment}}
 
 
+COPY --from=0 /go/bin/app /go/bin/app
 
 {{#static_files}}
   COPY '{{source}}' '/go/bin/{{target}}'
