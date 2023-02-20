@@ -2,9 +2,14 @@ framework:
   github: roblillack/mars
   version: 1.1
 
-  bootstreap:
+  bootstrap:
     - go get github.com/roblillack/mars/cmd/mars-gen
     - go generate main.go
 
   files:
+    - go.mod
+    - main.go
+    - routes.conf
+
+  static_files:
     - routes.conf
