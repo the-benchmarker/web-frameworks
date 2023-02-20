@@ -1,0 +1,16 @@
+framework:
+  github: sunrise-php/http-router
+  version: 2.16
+  
+build_deps:
+  - libevent-dev
+  - libsodium-dev
+
+php_mod:
+  - sodium
+  - sockets
+
+before_command:
+  - ./vendor/bin/rr get-binary
+
+command: ./rr serve
