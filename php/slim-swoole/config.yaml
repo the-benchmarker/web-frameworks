@@ -1,0 +1,8 @@
+framework:
+  website: slimframework.com
+  version: 4.9
+
+php_ext:
+  - swoole-4.8.11
+
+command: php public/index.php
