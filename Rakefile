@@ -251,6 +251,9 @@ task :clean do
       next if line.empty?
 
       Dir.glob(File.join(directory, line)).each do |path|
+
+      pp ignore_file
+      pp path
         if File.exist?(path)
           if File.file?(path)
             warn "Delting file #{path}"
