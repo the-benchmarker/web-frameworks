@@ -6,4 +6,6 @@ framework:
     - go.mod
     - main.go
     - server.go
+
+  static_files:
     - application.yml
