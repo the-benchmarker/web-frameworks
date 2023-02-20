@@ -1,6 +1,5 @@
-provider:
-  default:
-    language: 8.1
+language:
+  version: 8.1
 
 framework:
   github: simple-swoole/simps
