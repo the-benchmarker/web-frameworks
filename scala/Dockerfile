@@ -1,9 +1,9 @@
-{{#image-version}}
-  FROM sbtscala/scala-sbt:eclipse-temurin-focal-17.0.5_8_1.8.2_{{#provider.default.image-version}}{{{.}}}{{/provider.default.image-version}}3.2.2 AS build
-{{/image-version}}
-{{^image-version}}
+{{#provider.default.image-version}}
+  FROM sbtscala/scala-sbt:eclipse-temurin-focal-17.0.5_8_1.8.2_{{#provider.default.image-version}}{{{.}}}{{/provider.default.image-version}} AS build
+{{/provider.default.image-version}}
+{{^provider.default.image-version}}
   FROM sbtscala/scala-sbt:eclipse-temurin-focal-17.0.5_8_1.8.2_3.2.2 AS build
-{{/image-version}}
+{{/provider.default.image-version}}
 
 
 WORKDIR /usr/src/app
