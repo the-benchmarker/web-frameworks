@@ -12,7 +12,7 @@ COPY . ./
 
 RUN sbt universal:packageZipTarball
 
-FROM openjdk:11.0.16-jre
+FROM eclipse-temurin:17-jre-jammy
 
 WORKDIR /usr/src/app
 
