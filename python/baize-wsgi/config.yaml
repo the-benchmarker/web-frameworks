@@ -1,6 +1,6 @@
 framework:
   website: baize.aber.sh
-  version: 0.19
+  version: '0.20'
 
 command: >
   gunicorn \
