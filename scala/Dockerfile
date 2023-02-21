@@ -1,4 +1,4 @@
-FROM hseeberger/scala-sbt:11.0.13_1.6.1_2.13.8 AS build
+FROM sbtscala/scala-sbt:eclipse-temurin-17.0.4_1.7.1_2.13.10 AS build
 
 WORKDIR /usr/src/app
 
