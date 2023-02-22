@@ -51,7 +51,7 @@ jobs:
           make build  -f .Makefile
 
       - name: Wait
-        run: sleep 5
+        run: sleep 1
 
       - name: Test
         run: bundle exec rspec .spec
