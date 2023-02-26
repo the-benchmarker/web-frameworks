@@ -9,8 +9,3 @@ framework:
     - npm -g install typescript
     - npm install
     - tsc
-
-  files:
-    - app.ts
-    - package.json
-    - tsconfig.json
