@@ -2,7 +2,9 @@ FROM crystallang/crystal:1.7.2-alpine
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 RUN apk add --update yaml-static
 
@@ -21,7 +23,7 @@ WORKDIR /usr/bin
 COPY --from=0 /usr/src/app/bin/server /usr/bin/app
 
 {{#static_files}}
-  COPY --from=0 /usr/src/app/{{.}} /usr/bin/{{{.}}}
+  COPY '{{source}}' '{{target}}'
 {{/static_files}}
 
 {{#environment}}
