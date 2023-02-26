@@ -2,9 +2,9 @@ FROM dlang2/ldc-ubuntu AS build
 
 WORKDIR /usr/src/app
 
-{{#sources}}
+{{#files}}
   COPY '{{source}}' '{{target}}'
-{{/sources}}
+{{/files}}
 
 RUN dub build -b release --compiler=ldc2 --verbose
 

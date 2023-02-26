@@ -10,9 +10,9 @@ ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV GOARCH=amd64
 
-{{#sources}}
+{{#files}}
   COPY '{{source}}' '{{target}}'
-{{/sources}}
+{{/files}}
 
 {{#bootstrap}}
   RUN {{{.}}}

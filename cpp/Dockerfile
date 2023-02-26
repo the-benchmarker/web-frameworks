@@ -9,10 +9,9 @@ RUN apt-get -qy install build-essential git cmake
   RUN apt-get -qy install {{{.}}}
 {{/build_deps}}
 
-{{#sources}}
-  COPY {{{.}}} {{{.}}}
-{{/sources}}
-
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 {{#download}}
   RUN {{{.}}}
 {{/download}}
@@ -35,10 +34,9 @@ RUN apt-get -qq update
    RUN apt-get -qy install {{{.}}}
 {{/bin_deps}}
 
-{{#sources}}
-  COPY {{{.}}} {{{.}}}
-{{/sources}}
-
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 {{#binaries}}
   COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}

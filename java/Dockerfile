@@ -8,13 +8,12 @@
 
 WORKDIR /usr/src/web
 
-{{#sources}}
-  COPY {{{.}}} {{{.}}}
-{{/sources}}
-
-{{#sources}}
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
+{{#files}}
   COPY {{.}} {{{.}}}
-{{/sources}}
+{{/files}}
 
 {{#patch}}
   {{{.}}}

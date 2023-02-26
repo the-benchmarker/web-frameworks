@@ -28,9 +28,9 @@ RUN docker-php-ext-install zip opcache
   RUN {{{.}}}
 {{/before_build}}
 
-{{#sources}}
+{{#files}}
   COPY '{{source}}' '{{target}}'
-{{/sources}}
+{{/files}}
 
 
 {{^standalone}}

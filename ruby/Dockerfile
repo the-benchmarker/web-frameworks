@@ -2,9 +2,9 @@ FROM ruby:3.2-alpine
 
 WORKDIR /usr/src/app
 
-{{#sources}}
+{{#files}}
   COPY '{{source}}' '{{target}}'
-{{/sources}}
+{{/files}}
 
 RUN apk add build-base {{#deps}}{{{.}}}{{/deps}}
 

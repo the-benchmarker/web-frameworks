@@ -3,9 +3,12 @@ language:
 
   files:
     - Makefile
-    - "**/*.conf"
     - "**/*.h"
     - "**/*.c"
+    - "**/*.conf"
+
+  static_files:
+    - "**/*.conf"
 
   engines:
     default:

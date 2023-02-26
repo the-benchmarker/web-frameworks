@@ -8,7 +8,7 @@ language:
     - src/**/*.java
     - pom.xml
 
-  files:
+  static_files:
     - src/**/*.properties
     - src/**/*.xml
     - src/**/*.jsp
