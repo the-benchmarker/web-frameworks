@@ -4,10 +4,3 @@ framework:
   version: 1.0
   engines:
     - uwebsockets
-language:
-  engines:
-    uwebsockets:
-      files:
-        - app.js
-        - package.json
-        - www/
