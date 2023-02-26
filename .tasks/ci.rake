@@ -14,7 +14,7 @@ namespace :ci do
              .map { |path| path.split(File::SEPARATOR).shift }
              .flat_map { |language| Dir.glob(File.join(language, '*', 'config.yaml')) }
 
-    files.take(220).each do |file|
+    files.take(240).each do |file|
       next if file.start_with?(".")
       next if file.count(File::SEPARATOR) < 2
 
