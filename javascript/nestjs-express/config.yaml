@@ -4,11 +4,14 @@ framework:
 
   files:
     - nest-cli.json
-    - src
+    - src/**.ts
     - tsconfig.build.json
     - tsconfig.json
     - package.json
 
   bootstrap:
     - npm -g install @nestjs/cli
+    - npm install
     - nest build
+
+  command: pm2-runtime start dist/app.js -i $(nproc)

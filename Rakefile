@@ -180,7 +180,6 @@ def create_dockerfile(directory, engine, config)
 
   static_files = []
 
-  config[:version] = config.dig('language', 'version')
 
   if config['static_files']
     Dir.glob(config['static_files']).each do |static_file|
@@ -188,7 +187,7 @@ def create_dockerfile(directory, engine, config)
     end
 
   end
-
+  
   template = File.read(path)
   File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config.merge('files' => files, 'static_files' => static_files, 'environment' => config['environment']&.map do |k, v|
                                                                                                                                                                         "#{k}=#{v}"
@@ -197,7 +196,7 @@ end
 
 desc 'Create Dockerfiles'
 task :config do
-  Dir.glob('*/*/config.yaml').each do |path|
+  Dir.glob('php/antidot/config.yaml').each do |path|
     warn "Analyzing #{path}"
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
@@ -209,8 +208,8 @@ task :config do
         variables = custom_config(language_config, framework_config, data)
         variables['files'].each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }.uniq!
         variables['static_files']&.each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }&.uniq!
-
-        create_dockerfile(directory, name, variables)
+        
+        create_dockerfile(directory, name, config.merge(variables))
       end
     end
 
@@ -252,8 +251,6 @@ task :clean do
 
       Dir.glob(File.join(directory, line)).each do |path|
 
-      pp ignore_file
-      pp path
         if File.exist?(path)
           if File.file?(path)
             warn "Delting file #{path}"

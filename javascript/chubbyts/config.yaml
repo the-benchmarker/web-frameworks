@@ -2,8 +2,9 @@ framework:
   github: chubbyts/chubbyts-framework
   version: 1.6
 
-  boostrap:
+  bootstrap:
     - npm -g install typescript
+    - npm install
     - tsc
 
   files:
