@@ -3,27 +3,6 @@ framework:
   version: 0.12
 
   engines:
-    - wsgiref
     - gunicorn
+    - wsgiref
     - bjoern
-
-language:
-  engines:
-    wsgiref:
-      command: python server.py 3000
-    bjoern:
-      bootstrap:
-        - pip install bjoern
-      command: python server.py 3000 bjoern
-    cheroo3:
-      bootstrap:
-        - pip install cheroot
-      command: python server.py 3000 cheroot
-    waitress:
-      bootstrap:
-        - pip install waitress
-      command: python server.py 3000 waitress
-    gunicorn:
-      bootstrap:
-        - pip install gunicorn
-      command: python server.py 3000 gunicorn

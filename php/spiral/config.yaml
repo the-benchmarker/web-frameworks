@@ -2,9 +2,6 @@ framework:
   github: spiral/framework
   version: 2.14
 
-  files:
-    - .rr.yaml
-
   engines:
     - road-runner
 
@@ -12,4 +9,7 @@ framework:
     - vendor/bin/spiral get
     - php public/index.php configure
 
-  command: ./spiral serve
+language:
+  engines:
+    road-runner:
+      command: ./spiral serve

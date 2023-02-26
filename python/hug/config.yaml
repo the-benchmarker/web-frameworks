@@ -7,17 +7,5 @@ framework:
     - gunicorn
     - waitress
 
-language:
-  engines:
-    gunicorn:
-      command: >
-        gunicorn --log-level warning  \
-          --bind 0.0.0.0:3000  \
-          --reuse-port  \
-          --workers $(nproc) \
-          --worker-class ${WORKER_CLASS} \
-          server:__hug_wsgi__
-    uwsgi:
-      command: uwsgi --http 0.0.0.0:3000 --module server:__hug_wsgi__
-    waitress:
-      command: waitress-serve --host=0.0.0.0 --port=3000 server:__hug_wsgi__
+  environment:
+    PYTHON_APP: __hug_wsgi__

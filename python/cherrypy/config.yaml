@@ -3,5 +3,6 @@ framework:
   version: 18.8
 
   engines:
+    - gunicorn
     - uwsgi
     - waitress

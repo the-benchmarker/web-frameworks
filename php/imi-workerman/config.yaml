@@ -2,16 +2,13 @@ framework:
   website: imiphp.com
   version: 2.0
 
-build_deps:
-  - libevent-dev
-  - openssl-dev
+  extensions:
+    - redis
 
-php_mod:
-  - pcntl
-  - sockets
+  engines:
+    - workerman
 
-php_ext:
-  - redis
-  - event
-
-command: php vendor/bin/imi-workerman workerman/start
+language:
+  engines:
+    workerman:
+      command: php vendor/bin/imi-workerman workerman/start

@@ -3,6 +3,6 @@ framework:
   version: 3.1
 
   engines:
+    - gunicorn
     - uwsgi
     - waitress
-    - gunicorn

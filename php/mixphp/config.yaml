@@ -3,17 +3,4 @@ framework:
   version: 3.0
 
   engines:
-    - swoole
     - php-fpm
-    - workerman
-
-language:
-  engines:
-    swoole:
-      files:
-        - .swoole/bin/swoole.php
-      command: php bin/swoole.php
-    workerman:
-      files:
-        - .workerman/bin/workerman.php
-      command: php bin/workerman.php start

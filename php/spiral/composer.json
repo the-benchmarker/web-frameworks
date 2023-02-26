@@ -1,11 +1,11 @@
 {
   "require": {
     "spiral/framework": "~2.14.0",
-    "spiral/nyholm-bridge": "*",
-    "spiral/http": "*",
-    "spiral/router": "*",
-    "spiral/console": "*",
-    "spiral/roadrunner": "~1.0"
+    "spiral/nyholm-bridge": "@stable",
+    "spiral/http": "@stable",
+    "spiral/router": "@stable",
+    "spiral/console": "@stable",
+    "spiral/roadrunner": "@stable"
   },
   "autoload": {
     "psr-4": {

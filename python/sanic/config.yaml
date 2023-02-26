@@ -4,17 +4,11 @@ framework:
 
   engines:
     - sanic
-    - gunicorn
     - uvicorn
+    - gunicorn
     - hypercorn
 
 language:
   engines:
     sanic:
       command: python server.py
-    gunicorn:
-      environment:
-        WORKER_CLASS: uvicorn.workers.UvicornWorker
-      bootstrap:
-        - pip install uvicorn
-        - pip install gunicorn

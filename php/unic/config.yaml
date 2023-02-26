@@ -2,7 +2,5 @@ framework:
   website: unicframework.github.io/docs
   version: 1.0
 
-extensions:
-  - swoole
-
-command: php public/index.php
+  engines:
+    - swoole

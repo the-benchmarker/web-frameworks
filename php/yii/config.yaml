@@ -4,11 +4,3 @@ framework:
 
   engines:
     - php-fpm
-    - swoole
-
-language:
-  engines:
-    swoole:
-      files:
-        - .swoole/config/server.php
-        - .swoole/config/swoole.php

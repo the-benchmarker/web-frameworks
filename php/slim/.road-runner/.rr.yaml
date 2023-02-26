@@ -1,5 +1,0 @@
-version: "2.7"
-http:
-  address: :3000
-server:
-  command: "php public/index.php"

@@ -2,8 +2,8 @@ framework:
   website: cubex.io
   version: 4.18
 
+  # TODO: add workerman
   engines:
-    - workerman
     - php-fpm
 
 modules:

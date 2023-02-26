@@ -7,10 +7,7 @@ framework:
 
   extensions:
     - psr
-
-  before_bootstrap:
-    - pecl install phalcon-beta
-    - docker-php-ext-enable phalcon
+    - phalcon
 
   nginx_conf:
     - |
