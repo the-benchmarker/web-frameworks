@@ -1,5 +1,9 @@
-provider:
-  default:
-    language: 2.13
+language:
+  version: 2.13
+  engines:
+    default:
+      command: /usr/src/app/server-0.1.0-SNAPSHOT/bin/server
 
-command: target/universal/root-0.1.0-SNAPSHOT.tgz
+framework:
+  engines:
+    - default

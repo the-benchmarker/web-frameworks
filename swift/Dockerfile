@@ -19,4 +19,4 @@ FROM swift:5.7-slim
 ENV {{{.}}}
 {{/environment}}
 COPY --from=0 /usr/src/app/.build/release/server /usr/src/app/.build/release/server
-CMD /usr/src/app/.build/release/server {{options}}
+CMD {{command}} {{options}}

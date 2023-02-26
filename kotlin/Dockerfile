@@ -16,5 +16,5 @@ WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/build/libs/server.jar /usr/src/app/build/libs/server.jar
 
-CMD java -server -XX:+UseNUMA -XX:+UseParallelGC -XX:+AlwaysPreTouch -jar /usr/src/app/build/libs/server.jar
+CMD {{command}}
 

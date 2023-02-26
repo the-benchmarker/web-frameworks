@@ -14,4 +14,4 @@ COPY --from=build /usr/src/app/target target
 
 RUN tar -xvzf target/universal/server-0.1.0-SNAPSHOT.tgz
 
-CMD server-0.1.0-SNAPSHOT/bin/server
+CMD {{command}}

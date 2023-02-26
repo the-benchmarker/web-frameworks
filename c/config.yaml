@@ -1,3 +1,9 @@
-provider:
-  default:
-    language: 11
+language:
+  version: 11
+
+  engines:
+    default:
+      command: /opt/web/simple
+framework:
+  engines:
+    - default

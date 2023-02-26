@@ -13,7 +13,7 @@ environment:
   APP_DEBUG: false
   APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
 
-before_command:
+bootstrap:
   - mkdir bootstrap/cache
   - mkdir storage
   - php artisan config:cache

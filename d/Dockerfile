@@ -2,7 +2,9 @@ FROM dlang2/ldc-ubuntu AS build
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 RUN dub build -b release --compiler=ldc2 --verbose
 
@@ -15,5 +17,8 @@ RUN apt-get -qq update
 
 COPY --from=build /usr/src/app/server /usr/src/app/server
 
-CMD /usr/src/app/server
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
 
+CMD {{{command}}}

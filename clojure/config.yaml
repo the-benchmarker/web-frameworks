@@ -1,9 +1,7 @@
-provider:
-  default:
-    # @see https://github.com/Quantisan/docker-clojure/blob/master/target/openjdk-14-alpine/tools-deps/Dockerfile#L3
-    language: 1.10
+language:
+  version: "1.10"
 
-sources:
-  - "**/*.clj"
-  - "**/*.edn"
-  - "**/*.xml"
+  files:
+    - "**/*.clj"
+    - "**/*.edn"
+    - "**/*.xml"

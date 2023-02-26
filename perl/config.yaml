@@ -1,3 +1,9 @@
-provider:
-  default:
-    language: 5.37
+language:
+  version: 5.37
+  engines:
+    gazelle:
+      command: plackup -s Gazelle --port 3000 --env production --app d2app.psgi
+
+framework:
+  engines:
+    - gazelle

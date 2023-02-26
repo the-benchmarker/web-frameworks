@@ -11,9 +11,9 @@ COPY main.pony ./
   ENV {{{.}}}
 {{/environment}}
 
-{{#before_command}}
+{{#bootstrap}}
   RUN {{{.}}}
-{{/before_command}}
+{{/bootstrap}}
 
 RUN corral run ponyc -- -Dopenssl_1.1.x -Dstatic -bjennet
 
@@ -23,4 +23,4 @@ RUN apk --no-cache add libatomic libexecinfo libgcc
 
 WORKDIR /opt/
 COPY --from=0 /src/main/jennet ./
-CMD ./jennet
+CMD {{command}}

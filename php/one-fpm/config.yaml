@@ -1,5 +1,10 @@
 language:
   version: 8.1
+  engines:
+    php-fpm:
+      bootstrap:
+        - mkdir -p App/RunCache
+        - chmod 777 App/RunCache
 
 framework:
   github: lizhichao/one
@@ -10,12 +15,3 @@ framework:
 
   modules:
     - bcmath
-
-language:
-  engines:
-    swoole:
-      command: php App/swoole.php
-    php-fpm:
-      bootstrap:
-        - mkdir -p App/RunCache
-        - chmod 777 App/RunCache

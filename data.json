@@ -2,6 +2,12 @@
   "metrics": [
     {
       "level": 64,
+      "label": "average_latency",
+      "value": 0,
+      "framework_id": 1
+    },
+    {
+      "level": 64,
       "label": "duration_ms",
       "value": 0,
       "framework_id": 1

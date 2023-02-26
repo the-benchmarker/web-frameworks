@@ -30,7 +30,7 @@ version '0.0.1'
 mainClassName = "org.http4k.benchmark.BenchmarkServerKt"
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-default-jdk8:${kotlinVersion}"
     implementation platform("org.http4k:http4k-bom:${http4kVersion}")
     implementation "org.http4k:http4k-core"
     implementation "org.http4k:http4k-server-undertow"

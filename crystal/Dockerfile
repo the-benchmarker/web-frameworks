@@ -16,6 +16,8 @@ RUN shards build --release --no-debug --static {{#build_opts}} {{{.}}} {{/build_
 
 FROM alpine
 
+WORKDIR /usr/bin
+
 COPY --from=0 /usr/src/app/bin/server /usr/bin/app
 
 {{#files}}
@@ -26,5 +28,4 @@ COPY --from=0 /usr/src/app/bin/server /usr/bin/app
   ENV {{{.}}}
 {{/environment}}
 
-WORKDIR /usr/bin
-CMD ./app
+CMD {{command}}

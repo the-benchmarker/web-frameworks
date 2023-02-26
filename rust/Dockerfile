@@ -10,4 +10,4 @@ FROM debian:stable-slim
 
 COPY --from=build /usr/src/app/target/release/server /usr/src/app/target/release/server
 
-CMD /usr/src/app/target/release/server
+CMD {{command}}

@@ -7,5 +7,5 @@ COPY . ./
 
 RUN R -e 'remotes::install_deps()'
 
-CMD R -e 'source("app.R")'
+CMD {{command}}
 

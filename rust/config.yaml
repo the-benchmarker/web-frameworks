@@ -1,3 +1,9 @@
-provider:
-  default:
-    language: 1.67
+language:
+  version: 1.67
+  engines:
+    default:
+      command: /usr/src/app/target/release/server
+
+framework:
+  engines:
+    - default
