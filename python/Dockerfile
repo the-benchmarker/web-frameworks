@@ -11,9 +11,9 @@ WORKDIR /usr/src/app
   RUN apt-get -y install {{{.}}}
 {{/build_deps}}
 
-{{#files}}
+{{#sources}}
   COPY {{source}} {{target}}
-{{/files}}
+{{/sources}}
 
 {{#bootstrap}}
   RUN {{{.}}}

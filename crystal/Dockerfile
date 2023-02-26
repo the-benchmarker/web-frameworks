@@ -20,9 +20,9 @@ WORKDIR /usr/bin
 
 COPY --from=0 /usr/src/app/bin/server /usr/bin/app
 
-{{#files}}
+{{#sources}}
   COPY --from=0 /usr/src/app/{{.}} /usr/bin/{{{.}}}
-{{/files}}
+{{/sources}}
 
 {{#environment}}
   ENV {{{.}}}

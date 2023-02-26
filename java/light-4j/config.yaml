@@ -5,7 +5,7 @@ framework:
 build:
   - mvn clean package -Prelease
 
-sources:
+files:
   - src/**/*.java
   - src/**/*.yml
   - pom.xml

@@ -12,7 +12,7 @@ patch:
   - RUN chown -R gradle .
   - USER gradle
 
-sources:
+files:
   - src/**/*.java
   - build.gradle
 

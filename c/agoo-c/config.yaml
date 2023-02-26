@@ -12,7 +12,7 @@ download:
   - mv ohler55* agoo-c
   - cd agoo-c/src && make
 
-sources:
+files:
   - Makefile
   - simple.c
 

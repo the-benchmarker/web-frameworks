@@ -6,7 +6,7 @@ provider:
   default:
     language: 99
 
-sources:
+files:
   - "**/*.c"
   - "**/*.conf"
 

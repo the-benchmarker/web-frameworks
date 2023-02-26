@@ -12,9 +12,9 @@ WORKDIR /usr/src/web
   COPY {{{.}}} {{{.}}}
 {{/sources}}
 
-{{#files}}
+{{#sources}}
   COPY {{.}} {{{.}}}
-{{/files}}
+{{/sources}}
 
 {{#patch}}
   {{{.}}}

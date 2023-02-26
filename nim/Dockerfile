@@ -36,12 +36,12 @@ RUN apk update && \
 
 RUN apk --no-cache add openssl-dev pcre-dev
 
-{{#custom_files}}
+{{#custom_sources}}
   COPY --from=0 /usr/src/app/{{{.}}} /usr/src/app/{{{.}}}
-{{/custom_files}}
-{{^custom_files}}
+{{/custom_sources}}
+{{^custom_sources}}
   COPY --from=0 /usr/src/app/server /usr/src/app/server
-{{/custom_files}}
+{{/custom_sources}}
 
 {{#command}}
   CMD {{{.}}}

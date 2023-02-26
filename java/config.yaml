@@ -4,7 +4,7 @@ language:
     default:
       command: java -server -XX:+UseNUMA -XX:+UseParallelGC -XX:+AlwaysPreTouch -jar /usr/src/app/build/libs/server.jar
 
-  sources:
+  files:
     - src/**/*.java
     - pom.xml
 

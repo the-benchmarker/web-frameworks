@@ -1,9 +1,16 @@
 language:
   version: 11
 
+  files:
+    - Makefile
+    - "**/*.conf"
+    - "**/*.h"
+    - "**/*.c"
+
   engines:
     default:
       command: /opt/web/simple
+
 framework:
   engines:
     - default

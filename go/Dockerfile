@@ -10,9 +10,9 @@ ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV GOARCH=amd64
 
-{{#files}}
+{{#sources}}
   COPY '{{source}}' '{{target}}'
-{{/files}}
+{{/sources}}
 
 {{#bootstrap}}
   RUN {{{.}}}
@@ -30,8 +30,8 @@ ENV {{{.}}}
 
 COPY --from=0 /go/bin/app /go/bin/app
 
-{{#static_files}}
+{{#static_sources}}
   COPY '{{source}}' '/go/bin/{{target}}'
-{{/static_files}}
+{{/static_sources}}
 
 CMD {{{command}}}
