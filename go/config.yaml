@@ -12,5 +12,5 @@ framework:
     - net-http
 
   files:
-    - main.go
+    - "**/*.go"
     - go.mod

@@ -30,8 +30,8 @@ ENV {{{.}}}
 
 COPY --from=0 /go/bin/app /go/bin/app
 
-{{#static_sources}}
-  COPY '{{source}}' '/go/bin/{{target}}'
-{{/static_sources}}
+{{#static_files}}
+  COPY '{{source}}' '{{target}}'
+{{/static_files}}
 
 CMD {{{command}}}
