@@ -14,7 +14,7 @@ language:
         NODE_ENV: production
       bootstrap:
         - npm install
-      command: node app.js 
+      command: node app.js
     uwebsockets:
       deps:
         - git

@@ -180,14 +180,12 @@ def create_dockerfile(directory, engine, config)
 
   static_files = []
 
-
   if config['static_files']
     Dir.glob(config['static_files']).each do |static_file|
       static_files << { source: static_file.gsub("#{directory}/", ''), target: static_file.gsub("#{directory}/", '') }
     end
-
   end
-  
+
   template = File.read(path)
   File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config.merge('files' => files, 'static_files' => static_files, 'environment' => config['environment']&.map do |k, v|
                                                                                                                                                                         "#{k}=#{v}"
@@ -208,7 +206,7 @@ task :config do
         variables = custom_config(language_config, framework_config, data)
         variables['files'].each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }.uniq!
         variables['static_files']&.each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }&.uniq!
-        
+
         create_dockerfile(directory, name, config.merge(variables))
       end
     end
@@ -250,7 +248,6 @@ task :clean do
       next if line.empty?
 
       Dir.glob(File.join(directory, line)).each do |path|
-
         if File.exist?(path)
           if File.file?(path)
             warn "Delting file #{path}"
