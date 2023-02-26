@@ -1,5 +1,10 @@
 language:
   version: 4.2
+
+  files:
+    - "**/*.R"
+    - DESCRIPTION
+
   engines:
     default:
       command: R -e 'source("app.R")'

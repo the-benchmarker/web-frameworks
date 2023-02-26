@@ -1,5 +1,8 @@
 language:
   version: 1.7
+  files:
+    - "**/*.cr"
+    - shard.yml
   engines:
     default:
       command: /usr/bin/app

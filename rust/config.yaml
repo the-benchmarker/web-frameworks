@@ -1,5 +1,10 @@
 language:
   version: 1.67
+
+  files:
+    - "**/*.rs"
+    - Cargo.toml
+
   engines:
     default:
       command: /usr/src/app/target/release/server

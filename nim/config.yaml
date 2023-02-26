@@ -1,5 +1,9 @@
 language:
   version: 1.6
+  files:
+    - "**/*.nim"
+    - "**/*.nimble"
+    - "**/*.cfg"
   engines:
     default:
       command: /usr/src/app/server

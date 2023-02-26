@@ -1,5 +1,9 @@
 language:
   version: 5.37
+  files:
+    - "**/*.psgi"
+    - "**/*.pl"
+    - cpanfile
   engines:
     gazelle:
       command: plackup -s Gazelle --port 3000 --env production --app d2app.psgi

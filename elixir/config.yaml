@@ -1,5 +1,8 @@
 language:
   version: 1.14
+  files:
+    - "**/*.ex"
+    - "**/*.exs"
   engines:
     default:
       command: bin/server start

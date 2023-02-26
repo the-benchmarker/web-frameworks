@@ -107,7 +107,7 @@ def commands_for(language, framework, variant, provider = default_provider)
 
   # Compile first, only for non containers
 
-  if app_config.key?('binaries')
+  if app_config.key?('binaries') && !(provider.start_with?('docker') || provider.start_with?('podman'))
     commands << "docker build -f #{MANIFESTS[:container]} -t #{language}.#{framework} ."
     commands << "docker run -td #{language}.#{framework} > cid.txt"
     app_config['binaries'].each do |out|
@@ -195,7 +195,6 @@ end
 desc 'Create Dockerfiles'
 task :config do
   Dir.glob('*/*/config.yaml').each do |path|
-    warn "Analyzing #{path}"
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
 

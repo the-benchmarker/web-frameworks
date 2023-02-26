@@ -1,5 +1,7 @@
 language:
   version: 5.7
+  files:
+    - "**/*.swift"
   engines:
     default:
       command: /usr/src/app/.build/release/server

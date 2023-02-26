@@ -1,5 +1,8 @@
 language:
   version: 8.8
+  files:
+    - server.cabal
+    - "**/*.hs"
   engines:
     default:
       command: /opt/web/server

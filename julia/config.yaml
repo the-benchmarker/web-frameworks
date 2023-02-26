@@ -1,5 +1,9 @@
 language:
   version: 1.8
+  files:
+    - "**/*.jl"
+    - Manifest.toml
+    - Project.toml
   engines:
     default:
       command: julia server.jl

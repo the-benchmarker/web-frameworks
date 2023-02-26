@@ -1,5 +1,8 @@
 language:
   version: 0.51
+  files:
+    - corral.json
+    - "**/*.pony"
   engines:
     default:
       command: ./jennet

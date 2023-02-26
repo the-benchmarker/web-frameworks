@@ -1,5 +1,10 @@
 language:
   version: 7.0
+
+  files:
+    - "**/*.fs"
+    - web.fsproj
+
   engines:
     default:
       command: dotnet /usr/src/app/out/web.dll

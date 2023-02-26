@@ -1,5 +1,8 @@
 language:
   version: 2.13
+  files:
+    - "**/*.gradle"
+    - "**/*.scala"
   engines:
     default:
       command: /usr/src/app/server-0.1.0-SNAPSHOT/bin/server
