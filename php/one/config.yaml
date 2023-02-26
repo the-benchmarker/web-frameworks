@@ -6,7 +6,6 @@ framework:
   version: 2.3
 
   engines:
-    - php-fpm
     - swoole-4.8.x
 
   modules:
@@ -17,14 +16,6 @@ language:
     swoole:
       command: php App/swoole.php
     php-fpm:
-      files:
-        - .php-fpm/App/Config/cache.php
-        - .php-fpm/App/Config/config.php
-        - .php-fpm/App/Config/crypt.php
-        - .php-fpm/App/Config/exception.php
-        - .php-fpm/App/Config/log.php
-        - .php-fpm/App/index.php
-        - .php-fpm/public/index.php
       bootstrap:
         - mkdir -p App/RunCache
         - chmod 777 App/RunCache

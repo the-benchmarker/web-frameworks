@@ -1,11 +1,12 @@
 language:
   version: 8.1
+  engines:
+    swoole:
+      command: php public/index.php
 
 framework:
   github: chubbyphp/chubbyphp-framework
   version: 5.0
 
-extensions:
-  - swoole
-
-command: php public/index.php
+  engines:
+    - swoole
