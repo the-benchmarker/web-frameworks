@@ -25,4 +25,7 @@ framework:
     - kore
     - hello.so
 
+  static_files:
+    - conf/hello.conf
+
   command: /opt/web/kore -f -n -r -c /opt/web/hello/conf/hello.conf

@@ -35,4 +35,12 @@ RUN apt-get -qq update
    COPY --from=0 /usr/src/app/{{.}} {{{.}}}
 {{/binaries}}
 
+{{#static_files}}
+  COPY '{{source}}' '{{target}}'
+{{/static_files}}
+
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
+
 CMD {{{command}}}
