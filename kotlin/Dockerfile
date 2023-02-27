@@ -1,4 +1,4 @@
-FROM gradle:jdk11 As build
+FROM gradle:7-jdk17 AS build
 
 WORKDIR /usr/src/app
 
@@ -10,7 +10,7 @@ COPY . ./
 
 RUN gradle build
 
-FROM openjdk:11.0.16-jre-slim
+FROM openjdk:20-ea-17-slim
 
 WORKDIR /usr/src/app
 

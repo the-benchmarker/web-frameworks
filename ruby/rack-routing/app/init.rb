@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rubygems' unless defined? ::Gem
+require 'rubygems' unless defined? Gem
 
 # Gems
 require 'rack'
