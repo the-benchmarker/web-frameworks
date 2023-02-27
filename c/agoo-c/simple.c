@@ -1,7 +1,6 @@
 // Copyright 2018 by Peter Ohler, All Rights Reserved
 
 #include <stdio.h>
-#include <default.h>
 
 #include <agoo.h>
 #include <agoo/log.h>

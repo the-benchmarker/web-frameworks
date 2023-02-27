@@ -7,9 +7,6 @@ language:
     - "**/*.c"
     - "**/*.conf"
 
-  static_files:
-    - "**/*.conf"
-
   engines:
     default:
       command: /opt/web/simple
