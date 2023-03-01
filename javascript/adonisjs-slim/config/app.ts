@@ -109,24 +109,6 @@ export const http: ServerConfig = {
     secure: false,
     sameSite: false,
   },
-
-  /*
-  |--------------------------------------------------------------------------
-  | Force Content Negotiation
-  |--------------------------------------------------------------------------
-  |
-  | The internals of the framework relies on the content negotiation to
-  | detect the best possible response type for a given HTTP request.
-  |
-  | However, it is a very common these days that API servers always wants to
-  | make response in JSON regardless of the existence of the `Accept` header.
-  |
-  | By setting `forceContentNegotiationTo = 'application/json'`, you negotiate
-  | with the server in advance to always return JSON without relying on the
-  | client to set the header explicitly.
-  |
-  */
-  forceContentNegotiationTo: 'application/json',
 }
 
 /*

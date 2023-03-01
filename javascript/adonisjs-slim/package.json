@@ -1,5 +1,5 @@
 {
-  "name": "adonisjs",
+  "name": "adonisjs-slim",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "@adonisjs/core": "^5.9.0",
-    "@adonisjs/repl": "^3.1.11",
     "proxy-addr": "^2.0.7",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.21"

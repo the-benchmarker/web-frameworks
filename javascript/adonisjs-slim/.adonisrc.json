@@ -2,8 +2,7 @@
   "typescript": true,
   "commands": [
     "./commands",
-    "@adonisjs/core/build/commands/index.js",
-    "@adonisjs/repl/build/commands"
+    "@adonisjs/core/build/commands/index.js"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "aliases": {
@@ -20,8 +19,11 @@
     "./providers/AppProvider",
     "@adonisjs/core"
   ],
-  "aceProviders": [
-    "@adonisjs/repl"
+  "metaFiles": [
+    {
+      "pattern": "public/**",
+      "reloadServer": false
+    }
   ],
   "tests": {
     "suites": [
