@@ -1,6 +1,6 @@
 framework:
   website: vertx.io/docs/vertx-core/java/
-  version: 4.3
+  version: 4.4
 
 build:
   - mvn package
