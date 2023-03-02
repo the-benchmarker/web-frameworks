@@ -10,6 +10,7 @@
   "dependencies": {
     "@adonisjs/assembler": "~5.9.5",
     "@adonisjs/core": "~5.9.0",
+    "adonis-preset-ts": "*",
     "proxy-addr": "*",
     "reflect-metadata": "*",
     "source-map-support": "*"
