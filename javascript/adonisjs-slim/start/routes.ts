@@ -24,7 +24,7 @@ Route.get("/", async () => {
   return "";
 });
 
-Route.get("/user", async () => {
+Route.post("/user", async () => {
   return "";
 });
 
