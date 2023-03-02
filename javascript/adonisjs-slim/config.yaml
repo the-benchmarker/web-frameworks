@@ -2,10 +2,13 @@ framework:
   website: adonisjs.com
   version: 5.9
 
+before_command:
+  - npm install -g typescript
+  - npm link typescript
+  - node ace build --production
+
 files:
   - .adonisrc.json
-  - .env.test
-  - .gitignore
   - ace
   - ace-manifest.json
   - app
@@ -18,3 +21,11 @@ files:
   - server.ts
   - start
   - tsconfig.json
+
+environment:
+  HOST: '0.0.0.0'
+  PORT: 3000
+  APP_KEY: 8RC0lv9zSB3XqCc_F6p4C0Zas6OHg1Z_
+  DRIVE_DISK: local
+
+command: pm2-runtime start build/server.js -i $(nproc)
