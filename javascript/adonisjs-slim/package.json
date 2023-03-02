@@ -7,10 +7,8 @@
     "build": "node ace build --production",
     "start": "node server.js"
   },
-  "devDependencies": {
-    "@adonisjs/assembler": "~5.9.5"
-  },
   "dependencies": {
+    "@adonisjs/assembler": "~5.9.5",
     "@adonisjs/core": "~5.9.0",
     "proxy-addr": "*",
     "reflect-metadata": "*",

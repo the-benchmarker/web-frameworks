@@ -1,3 +1,20 @@
 framework:
   website: adonisjs.com
   version: 5.9
+
+files:
+  - .adonisrc.json
+  - .env.test
+  - .gitignore
+  - ace
+  - ace-manifest.json
+  - app
+  - commands
+  - config
+  - contracts
+  - env.ts
+  - package.json
+  - providers
+  - server.ts
+  - start
+  - tsconfig.json
