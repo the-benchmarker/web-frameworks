@@ -1,19 +1,14 @@
-const { Router } = require("@routejs/router");
-const http = require("http");
+import { Router } from "@routejs/router";
+import uWS from "uWebSockets.js";
 
 const app = new Router();
 
-app.get("/", function (req, res) {
-  res.end("");
-});
+app
+  .get("/", (req, res) => res.end(""))
+  .get("/user/{id}", (req, res) => res.end(req.params.id))
+  .post("/user", (req, res) => res.end(""));
 
-app.get("/user/{id}", function (req, res) {
-  res.end(req.params.id);
-});
-
-app.post("/user", function (req, res) {
-  res.end("");
-});
-
-const server = http.createServer(app.handler());
-server.listen(3000);
+uWS.App().any("*", (res, req) => {
+  const handler = app.handler();
+  handler(req, res);
+}).listen(3000);
