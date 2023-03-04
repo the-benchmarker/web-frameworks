@@ -1,3 +1,9 @@
 framework:
   website: routejs.github.io/docs
   version: 2.1
+
+build_deps:
+  - git # required by uWebSocket
+
+bin_deps:
+  - gcompat # required by uWebSocket
