@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "@routejs/router": "~2.1.0"
-  }
+    "@routejs/router": "~2.1.2",
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.19.0"
+  },
+  type: "module"
 }
