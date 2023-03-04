@@ -8,7 +8,11 @@ app
   .get("/user/{id}", (req, res) => res.end(req.params.id))
   .post("/user", (req, res) => res.end(""));
 
-uWS.App().any("*", (res, req) => {
-  const handler = app.handler();
-  handler(req, res);
-}).listen(3000);
+uWS
+  .App()
+  .any("/*", (res, req) => {
+    const handler = app.handler();
+    handler(req, res);
+  }).listen(3000, () => {
+    console.log("Server started on port 3000");
+  });
