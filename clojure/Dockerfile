@@ -8,7 +8,9 @@
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 {{#build}}
   RUN {{{.}}}
@@ -29,8 +31,6 @@ WORKDIR /opt/bin
 {{#binaries}}
   COPY --from=0 /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
 {{/binaries}}
-
-RUN ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
 
 {{#command}}
   CMD {{{.}}}
