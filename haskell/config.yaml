@@ -3,6 +3,7 @@ language:
   files:
     - server.cabal
     - "**/*.hs"
+    - stack.yaml
   engines:
     default:
       command: /opt/web/server

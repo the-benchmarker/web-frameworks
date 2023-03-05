@@ -2,7 +2,9 @@ FROM fpco/alpine-haskell-stack:gmp-ghc-8.8.3
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 RUN stack build
 
