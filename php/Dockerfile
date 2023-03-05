@@ -80,7 +80,7 @@ RUN composer dumpautoload -o
       {{/nginx_conf}}
       {{^nginx_conf}}
         location / {\n\
-          try_sources $uri $uri/ /index.php;\n\
+          try_files $uri $uri/ /index.php;\n\
           fastcgi_pass unix:/var/run/php-fpm.sock;\n\
           fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
           include fastcgi_params;\n\
