@@ -1,0 +1,20 @@
+framework:
+  website: adonisjs.com
+  version: 5.9
+
+before_command:
+  - npm install -g typescript
+  - npm link typescript
+  - node ace build --production
+
+files:
+  - .adonisrc.json
+  - ace
+  - ace-manifest.json
+  - package.json
+  - app.ts
+  - tsconfig.json
+  - config
+
+
+command: pm2-runtime start build/app.js -i $(nproc)
