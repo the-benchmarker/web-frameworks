@@ -2,7 +2,7 @@ framework:
   website: adonisjs.com
   version: 5.9
 
-before_command:
+bootstrap:
   - npm install -g typescript
   - npm link typescript
   - node ace build --production
