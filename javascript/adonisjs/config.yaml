@@ -12,9 +12,7 @@ files:
   - ace
   - ace-manifest.json
   - package.json
-  - app.ts
+  - "**/*.ts"
   - tsconfig.json
-  - config
-
 
 command: pm2-runtime start build/app.js -i $(nproc)

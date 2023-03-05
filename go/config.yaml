@@ -3,9 +3,9 @@ language:
 
   engines:
     net-http:
-      command: cd /go/bin && ./app
+      command: /go/bin/app
     fasthttp:
-      command: cd /go/bin && ./app
+      command: /go/bin/app
 
 framework:
   engines:

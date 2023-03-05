@@ -24,6 +24,8 @@ RUN go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {
 
 FROM alpine
 
+WORKDIR /go/bin
+
 {{#environment}}
 ENV {{{.}}}
 {{/environment}}
