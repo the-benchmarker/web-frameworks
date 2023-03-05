@@ -11,21 +11,10 @@ files:
   - .adonisrc.json
   - ace
   - ace-manifest.json
-  - app
-  - commands
-  - config
-  - contracts
-  - env.ts
   - package.json
-  - providers
-  - server.ts
-  - start
+  - app.ts
   - tsconfig.json
+  - config
 
-environment:
-  HOST: '0.0.0.0'
-  PORT: 3000
-  APP_KEY: 8RC0lv9zSB3XqCc_F6p4C0Zas6OHg1Z_
-  DRIVE_DISK: local
 
-command: pm2-runtime start build/server.js -i $(nproc)
+command: pm2-runtime start build/app.js -i $(nproc)

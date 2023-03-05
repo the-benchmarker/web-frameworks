@@ -8,8 +8,11 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@adonisjs/assembler": "~5.9.5",
-    "@adonisjs/core": "~5.9.0",
+    "@adonisjs/assembler": "*",
+    "@adonisjs/core": "*",
+    "@adonisjs/encryption": "*",
+    "@adonisjs/application": "*",
+    "@adonisjs/http-server": "~5.12.0",
     "adonis-preset-ts": "*",
     "proxy-addr": "*",
     "reflect-metadata": "*",
