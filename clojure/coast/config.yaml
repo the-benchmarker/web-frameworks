@@ -2,13 +2,13 @@ framework:
   website: coast.swlkr.com
   version: 1.0
 
-environment:
-  COAST_ENV: prod
+  environment:
+    COAST_ENV: prod
 
-build:
-  - mkdir classes && clj -e "(compile 'server)" && clojure -Auberjar --main-class server
+  build:
+    - mkdir classes && clj -e "(compile 'server)" && clojure -Auberjar --main-class server
 
-binaries:
-  - coast.jar
+  binaries:
+    - coast.jar
 
-command: java -jar coast.jar 3000
+  command: java -jar coast.jar 3000

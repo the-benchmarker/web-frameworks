@@ -6,7 +6,7 @@ buildscript {
     }
 
     ext {
-        kotlinVersion = "1.7.+"
+        kotlinVersion = "1.8.+"
         joobyVersion = "2.16.+"
         shadowVersion = "7.+"
     }

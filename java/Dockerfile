@@ -31,7 +31,7 @@ WORKDIR /usr/src/web
   FROM {{{.}}}
 {{/runtime}}
 {{^runtime}}
-  FROM openjdk:17.0.2-slim
+  FROM eclipse-temurin:17-jre
 {{/runtime}}
 
 

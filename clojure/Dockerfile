@@ -3,7 +3,7 @@
 {{/image}}
 
 {{^image}}
-  FROM clojure:openjdk-11-tools-deps-slim-buster
+  FROM clojure:temurin-17-tools-deps
 {{/image}}
 
 WORKDIR /usr/src/app
@@ -18,7 +18,7 @@ COPY . ./
   RUN clojure -Auberjar
 {{/build}}
 
-FROM openjdk:11.0.16-jre-slim-buster
+FROM eclipse-temurin:17-jre
 
 WORKDIR /opt/bin
 

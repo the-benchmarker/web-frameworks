@@ -10,7 +10,7 @@ COPY . ./
 
 RUN gradle build
 
-FROM openjdk:20-ea-17-slim
+FROM eclipse-temurin:17-jre
 
 WORKDIR /usr/src/app
 
