@@ -4,6 +4,12 @@ framework:
 
   image: clojure:temurin-17-lein
 
+  files:
+    - "**/*.clj"
+    - "**/*.edn"
+    - "**/*.xml"
+    - "**/*.html"
+    
   build:
     - lein uberjar
 
