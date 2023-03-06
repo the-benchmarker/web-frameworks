@@ -1,6 +1,7 @@
 language:
   version: 1.6
   files:
+    - config.nims
     - "**/*.nim"
     - "**/*.nimble"
     - "**/*.cfg"

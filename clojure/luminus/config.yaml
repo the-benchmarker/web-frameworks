@@ -9,7 +9,7 @@ framework:
     - "**/*.edn"
     - "**/*.xml"
     - "**/*.html"
-    
+
   build:
     - lein uberjar
 

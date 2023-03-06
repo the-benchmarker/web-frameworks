@@ -9,7 +9,9 @@ RUN apk update && \
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 ENV PATH $PATH:/root/.nimble/bin
 
@@ -36,12 +38,12 @@ RUN apk update && \
 
 RUN apk --no-cache add openssl-dev pcre-dev
 
-{{#custom_sources}}
+{{#custom_files}}
   COPY --from=0 /usr/src/app/{{{.}}} /usr/src/app/{{{.}}}
-{{/custom_sources}}
-{{^custom_sources}}
+{{/custom_files}}
+{{^custom_files}}
   COPY --from=0 /usr/src/app/server /usr/src/app/server
-{{/custom_sources}}
+{{/custom_files}}
 
 {{#command}}
   CMD {{{.}}}
