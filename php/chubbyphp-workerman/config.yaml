@@ -2,15 +2,5 @@ framework:
   github: chubbyphp/chubbyphp-framework
   version: 5.0
 
-build_deps:
-  - libevent-dev
-  - openssl-dev
-
-modules:
-  - pcntl
-  - sockets
-
-extensions:
-  - event
-
-command: php public/index.php start
+  engines:
+    - workerman
