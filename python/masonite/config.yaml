@@ -23,7 +23,7 @@ language:
     gunicorn:
       environment:
         PYTHON_APP: wsgi:application
-        WORKER_CLASS: gevent
+        WORKER_CLASS: sync
     uwsgi:
       environment:
         PYTHON_APP: wsgi:application
