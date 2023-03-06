@@ -33,17 +33,11 @@ RUN docker-php-ext-install zip opcache
 {{/files}}
 
 
-{{^standalone}}
-RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-dev --prefer-dist --classmap-authoritative
-RUN composer dumpautoload -o
-{{/standalone}}
-
-
-
-{{#bootstrap}}
-  RUN {{{.}}}
-{{/bootstrap}}
+{{^framework.standalone}}
+  {{#bootstrap}}
+    RUN {{{.}}}
+  {{/bootstrap}}
+{{/framework.standalone}}
 
 {{#command}}
   CMD {{{.}}}
