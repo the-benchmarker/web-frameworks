@@ -16,5 +16,4 @@ files:
   - tsconfig.json
   - config
 
-
 command: pm2-runtime start build/app.js -i $(nproc)
