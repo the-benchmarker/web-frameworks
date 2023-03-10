@@ -5,28 +5,12 @@ require:
 AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
-
-Naming/AccessorMethodName:
   Exclude:
-    - ruby/rack-routing/app/route_handler.rb
+    - Rakefile
 
 Style/Documentation:
   Enabled: false
 
-Metrics/BlockLength:
-  Enabled: false
-
-Layout/LineLength:
-  Enabled: false
-
-Metrics/MethodLength:
-  Enabled: false
-
-Metrics/CyclomaticComplexity:
-  Enabled: false
-
-Metrics/PerceivedComplexity:
-  Enabled: false
-
-Metrics/AbcSize:
-  Enabled: false
+Naming/AccessorMethodName:
+  Exclude:
+    - ruby/rack-routing/app/route_handler.rb

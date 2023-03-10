@@ -15,6 +15,5 @@ framework:
   custom_files:
     - main
     - startServer.sh
-    # - .env
 
   command: "./startServer.sh"

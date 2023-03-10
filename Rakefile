@@ -142,7 +142,9 @@ def commands_for(language, framework, variant, provider = default_provider)
 
   commands[:build] << "curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat #{language}/#{framework}/ip-#{variant}.txt`:3000 -v"
 
-  commands[:collect] << "HOSTNAME=`cat #{language}/#{framework}/ip-#{variant}.txt` ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV.fetch('DATABASE_URL', nil)} bundle exec rake collect"
+  commands[:collect] << "HOSTNAME=`cat #{language}/#{framework}/ip-#{variant}.txt` ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV.fetch(
+    'DATABASE_URL', nil
+  )} bundle exec rake collect"
 
   config.dig('providers', provider, 'clean').each do |cmd|
     commands[:clean] << Mustache.render(cmd, options).to_s
@@ -204,7 +206,9 @@ task :config do
       engine.each do |name, data|
         variables = custom_config(language_config, framework_config, data)
         variables['files'].each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }.uniq!
-        variables['static_files']&.each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }&.uniq!
+        variables['static_files']&.each do |f|
+          f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory)
+        end&.uniq!
 
         create_dockerfile(directory, name, config.merge(variables))
       end

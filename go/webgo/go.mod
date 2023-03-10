@@ -1,3 +1,3 @@
 module main
 
-require github.com/bnkamalesh/webgo/v6 v6.7.0
+require github.com/bnkamalesh/webgo/v7 v7.0.0
