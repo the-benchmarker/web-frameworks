@@ -18,7 +18,7 @@ framework:
     - "**/*.php"
     - composer.json
     - bin/console
-    - '**/*.prod.yaml'
+    - "**/*.prod.yaml"
 
   engines:
     - reactphp

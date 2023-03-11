@@ -6,8 +6,6 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-ENV NODE_ENV production
-
 {{#deps}}
   RUN apk add {{{.}}}
 {{/deps}}
