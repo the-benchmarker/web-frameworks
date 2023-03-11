@@ -14,5 +14,11 @@ framework:
   github: antidot-framework/react-framework
   version: 1.0
 
+  files:
+    - "**/*.php"
+    - composer.json
+    - bin/console
+    - '**/*.prod.yaml'
+
   engines:
     - reactphp
