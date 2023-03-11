@@ -5,6 +5,10 @@ framework:
   engines:
     - swoole
 
+  extensions:
+    - redis
+    - pcntl
+
   bootstrap:
     - mkdir storage/logs -p
 
