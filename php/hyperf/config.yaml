@@ -7,6 +7,7 @@ framework:
 
   extensions:
     - redis
+    - pcntl
 
   bootstrap:
     - echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
