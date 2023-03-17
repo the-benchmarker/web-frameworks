@@ -1,0 +1,16 @@
+name: lucky
+version: 0.1.0
+
+authors:
+  - Jeremy Woertink <jeremywoertink@gmail.com>
+
+license: MIT
+
+targets:
+  server:
+    main: src/lucky.cr
+
+dependencies:
+  lucky:
+    github: luckyframework/lucky
+    version: ~> 1.0.0
