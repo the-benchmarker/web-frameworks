@@ -14,6 +14,7 @@ return [
         'kuiper\\swoole\\config\\FoundationConfiguration',
         'kuiper\\swoole\\config\\GuzzleHttpMessageFactoryConfiguration',
         'kuiper\\swoole\\config\\DiactorosHttpMessageFactoryConfiguration',
+        'kuiper\\swoole\\config\\NyholmHttpMessageFactoryConfiguration',
         'kuiper\\web\\WebConfiguration',
         'kuiper\\event\\EventConfiguration'
     ]
