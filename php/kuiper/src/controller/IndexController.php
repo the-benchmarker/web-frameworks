@@ -14,7 +14,6 @@ class IndexController extends AbstractController
     #[GetMapping("/")]
     public function index(): void
     {
-        $this->getResponse()->getBody()->write("ok\n");
     }
 
     #[GetMapping("/user/{id:\d+}")]
@@ -26,6 +25,5 @@ class IndexController extends AbstractController
     #[PostMapping("/user")]
     public function userCreate(): void
     {
-        $this->getResponse()->getBody()->write("ok\n");
     }
 }
