@@ -3,7 +3,7 @@ import nhttp from "nhttp-land";
 const app = nhttp();
 
 app.get("/", () => {
-  return new Response("");
+  return new Response();
 });
 
 app.get("/user/:id", (rev) => {
@@ -11,7 +11,7 @@ app.get("/user/:id", (rev) => {
 });
 
 app.post("/", () => {
-  return new Response("");
+  return new Response();
 });
 
 app.listen(3000);
