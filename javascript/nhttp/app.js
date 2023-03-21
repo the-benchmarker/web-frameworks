@@ -10,7 +10,7 @@ app.get("/user/:id", (rev) => {
   return new Response(rev.params.id);
 });
 
-app.post("/", () => {
+app.post("/user", () => {
   return new Response();
 });
 
