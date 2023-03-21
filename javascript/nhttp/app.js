@@ -6,8 +6,8 @@ app.get("/", () => {
   return new Response("");
 });
 
-app.get("/user/:id", ({ params }) => {
-  return new Response(params.id);
+app.get("/user/:id", (rev) => {
+  return new Response(rev.params.id);
 });
 
 app.post("/", () => {
