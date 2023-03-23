@@ -1,8 +1,8 @@
 {{#provider.default.image-version}}
-  FROM sbtscala/scala-sbt:eclipse-temurin-focal-17.0.5_8_1.8.2_{{#provider.default.image-version}}{{{.}}}{{/provider.default.image-version}} AS build
+  FROM sbtscala/scala-sbt:eclipse-temurin-jammy-11.0.17_8_1.8.2_{{#provider.default.image-version}}{{{.}}}{{/provider.default.image-version}} AS build
 {{/provider.default.image-version}}
 {{^provider.default.image-version}}
-  FROM sbtscala/scala-sbt:eclipse-temurin-focal-17.0.5_8_1.8.2_3.2.2 AS build
+  FROM sbtscala/scala-sbt:eclipse-temurin-jammy-11.0.17_8_1.8.2_3.2.2 AS build
 {{/provider.default.image-version}}
 
 
@@ -12,7 +12,7 @@ COPY . ./
 
 RUN sbt universal:packageZipTarball
 
-FROM eclipse-temurin:17-jre-jammy
+FROM eclipse-temurin:11-jre-jammy
 
 WORKDIR /usr/src/app
 
