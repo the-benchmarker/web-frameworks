@@ -1,4 +1,10 @@
-FROM hseeberger/scala-sbt:11.0.13_1.6.1_2.13.8 AS build
+{{#provider.default.image-version}}
+  FROM sbtscala/scala-sbt:eclipse-temurin-jammy-11.0.17_8_1.8.2_{{#provider.default.image-version}}{{{.}}}{{/provider.default.image-version}} AS build
+{{/provider.default.image-version}}
+{{^provider.default.image-version}}
+  FROM sbtscala/scala-sbt:eclipse-temurin-jammy-11.0.17_8_1.8.2_3.2.2 AS build
+{{/provider.default.image-version}}
+
 
 WORKDIR /usr/src/app
 
@@ -6,7 +12,7 @@ COPY . ./
 
 RUN sbt universal:packageZipTarball
 
-FROM openjdk:11.0.16-jre
+FROM eclipse-temurin:11-jre-jammy
 
 WORKDIR /usr/src/app
 
