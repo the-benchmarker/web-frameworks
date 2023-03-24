@@ -1,16 +1,9 @@
 framework:
   website: emmett.sh
-  version: 2.4
+  version: 2.5
 
 build_deps:
   - libffi-dev
   - libssl-dev
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class emmett.asgi.workers.EmmettWorker  \
-      server:app
+command: emmett serve --host 0.0.0.0 --port 3000 --workers $(nproc)

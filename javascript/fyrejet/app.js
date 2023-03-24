@@ -1,7 +1,7 @@
 var fyrejet = require("fyrejet");
 var app = fyrejet();
 app.set("etag", false);
-app.set('x-powered-by', false)
+app.set("x-powered-by", false);
 
 app.get("/", function (req, res) {
   res.sendLite("");

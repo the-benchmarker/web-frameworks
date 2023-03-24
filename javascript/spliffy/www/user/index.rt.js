@@ -1,3 +1,3 @@
 export default {
-    POST: ()=>{}
-}
+  POST: () => {},
+};
