@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . ./
 
+ENV DC=ldc2
 RUN dub build -b release --compiler=ldc2 --verbose
 
 FROM ubuntu
