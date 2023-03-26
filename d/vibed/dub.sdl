@@ -1,6 +1,6 @@
 name "server"
 license "MIT"
 versions "VibeNoSSL"
-dependency "vibe-d:web" version="~>0.9.4"
-dependency "vibe-d:tls" version="~>0.9.5"
+dependency "vibe-d:web" version="~>0.9.6"
+dependency "vibe-d:tls" version="~>0.9.6"
 subConfiguration "vibe-d:tls" "notls"
