@@ -3,7 +3,7 @@
 {{/image}}
 
 {{^image}}
-  FROM maven:3-eclipse-temurin-11-focal AS build
+  FROM maven:3-eclipse-temurin-17-focal AS build
 {{/image}}
 
 WORKDIR /usr/src/web
