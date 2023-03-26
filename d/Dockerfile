@@ -7,7 +7,7 @@ COPY . ./
 ENV DC=ldc2
 RUN dub build -b release --compiler=ldc2 --verbose
 
-FROM ubuntu
+FROM ubuntu:bionic
 
 RUN apt-get -qq update
 {{#deps}}
