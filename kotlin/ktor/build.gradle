@@ -43,7 +43,7 @@ dependencies {
 
 shadowJar {
     mergeServiceFiles()
-    baseName = "server"
-    classifier = null
-    version = null
+    archiveBaseName.set("server")
+    archiveClassifier.set('')
+    archiveVersion.set('')
 }
