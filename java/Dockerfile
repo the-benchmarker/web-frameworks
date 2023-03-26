@@ -46,6 +46,8 @@ WORKDIR /opt/web
   COPY --from=build /usr/src/web/{{{.}}} {{{.}}}
 {{/binaries}}
 
+RUN ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
+
 {{#bootstrap}}
   RUN {{{.}}}
 {{/bootstrap}}
