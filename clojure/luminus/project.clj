@@ -1,7 +1,7 @@
 (defproject luminus "0.1.0-SNAPSHOT"
 
   :dependencies [[luminus/lein-template "4.49"]
-                 [ch.qos.logback/logback-classic "1.4.5"]
+                 [ch.qos.logback/logback-classic "1.4.6"]
                  [cheshire "5.11.0"]
                  [clojure.java-time "1.2.0"]
                  [cprop "0.1.19"]
@@ -20,7 +20,7 @@
                  [org.clojure/tools.cli "1.0.214"]
                  [org.clojure/tools.logging "1.2.4"]
                  [org.webjars.npm/bulma "0.9.4"]
-                 [org.webjars.npm/material-icons "1.10.8"]
+                 [org.webjars.npm/material-icons "1.13.2"]
                  [org.webjars/webjars-locator "0.46"]
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.9.6"]

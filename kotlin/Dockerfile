@@ -1,16 +1,12 @@
-FROM gradle:7-jdk17 AS build
+FROM gradle:8-jdk17 AS build
 
 WORKDIR /usr/src/app
-
-USER root
-RUN chown -R gradle /usr/src/app
-USER gradle
 
 COPY . ./
 
 RUN gradle build
 
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:17.0.6_10-jre
 
 WORKDIR /usr/src/app
 
