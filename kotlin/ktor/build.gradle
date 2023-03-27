@@ -8,7 +8,7 @@ buildscript {
     ext {
         kotlinVersion = "1.7.+"
         ktorVersion = "1.6.+"
-        shadowVersion = "7.+"
+        shadowVersion = "+"
     }
     
 }
@@ -43,7 +43,7 @@ dependencies {
 
 shadowJar {
     mergeServiceFiles()
-    baseName = "server"
-    classifier = null
-    version = null
+    archiveBaseName.set("server")
+    archiveClassifier.set('')
+    archiveVersion.set('')
 }
