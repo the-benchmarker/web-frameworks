@@ -18,7 +18,7 @@ COPY . ./
   RUN clojure -Auberjar
 {{/build}}
 
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:17.0.6_10-jre
 
 WORKDIR /opt/bin
 
