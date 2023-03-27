@@ -32,7 +32,7 @@ WORKDIR /usr/src/web
   FROM {{{.}}}
 {{/runtime}}
 {{^runtime}}
-  FROM eclipse-temurin:17-jre
+  FROM eclipse-temurin:17.0.6_10-jre
 {{/runtime}}
 
 
