@@ -2,7 +2,9 @@ FROM gradle:8-jdk17 AS build
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 RUN gradle build
 

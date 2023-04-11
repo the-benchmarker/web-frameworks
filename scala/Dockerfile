@@ -8,7 +8,9 @@
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 RUN sbt universal:packageZipTarball
 

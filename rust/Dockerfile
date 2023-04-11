@@ -2,7 +2,9 @@ FROM rust:1.68-slim AS build
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 RUN cargo build --release && strip target/release/server
 

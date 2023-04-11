@@ -11,9 +11,7 @@ WORKDIR /usr/src/web
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
-{{#files}}
-  COPY {{.}} {{{.}}}
-{{/files}}
+
 
 {{#patch}}
   {{{.}}}
