@@ -6,7 +6,7 @@ framework:
     - "**/*.php"
     - composer.json
     - engineer
-    
+
   engines:
     - swoole
 
