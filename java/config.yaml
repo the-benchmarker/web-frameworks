@@ -1,8 +1,5 @@
 language:
   version: 17
-  engines:
-    default:
-      command: java -server -XX:+UseNUMA -XX:+UseParallelGC -XX:+AlwaysPreTouch -jar /usr/src/app/build/libs/server.jar
 
   files:
     - src/**/*.java
@@ -22,7 +19,13 @@ language:
   deps:
     - java-17-openjdk
 
-  command: >
-    /usr/bin/java
-    -XX:+UseNUMA -XX:+UseParallelGC 
-    -jar /opt/web/target/benchmark-1.0.0.jar
+  engines:
+    default:
+      command: >
+        /usr/bin/java
+        -XX:+UseNUMA -XX:+UseParallelGC 
+        -jar /opt/web/target/benchmark-1.0.0.jar
+
+framework:
+  engines:
+    - default

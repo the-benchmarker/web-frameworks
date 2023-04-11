@@ -14,3 +14,21 @@ Style/Documentation:
 Naming/AccessorMethodName:
   Exclude:
     - ruby/rack-routing/app/route_handler.rb
+
+Lint/ShadowingOuterLocalVariable:
+  Exclude:
+    - .tasks/*.rake
+
+Metrics/BlockLength:
+  Exclude:
+    - .tasks/*.rake
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - .tasks/*.rake
+Layout/LineLength:
+  Exclude:
+    - .tasks/*.rake
+Metrics/ParameterLists:
+  Exclude:
+    - .tasks/*.rake

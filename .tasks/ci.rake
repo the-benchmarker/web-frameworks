@@ -27,8 +27,11 @@ namespace :ci do
       if engine
         matrix[:include] << { language: language, framework: framework, directory: File.join(language, framework),
                               engine: engine }
+      else
+        warn "Configuration for #{language}/#{framework} is not correct"
       end
     end
+
     matrix[:include] = matrix[:include].take(256)
     puts matrix.to_json
   end

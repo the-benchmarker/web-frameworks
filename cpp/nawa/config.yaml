@@ -2,40 +2,40 @@ framework:
   github: jatofg/nawa
   version: 0.8
 
-build_deps:
-  - libboost-dev
-  - libboost-system-dev
-  - libboost-thread-dev
-  - libssl-dev
-  - doxygen
-  - graphviz
-  - libcurl4-openssl-dev
-  - libargon2-dev
+  build_deps:
+    - libboost-dev
+    - libboost-system-dev
+    - libboost-thread-dev
+    - libssl-dev
+    - doxygen
+    - graphviz
+    - libcurl4-openssl-dev
+    - libargon2-dev
 
-bin_deps:
-  - libboost-system1.67
-  - libboost-thread1.67
-  - libcurl4
-  - openssl
-  - argon2
+  bin_deps:
+    - libboost-system1.67
+    - libboost-thread1.67
+    - libcurl4
+    - openssl
+    - argon2
 
-binaries:
-  - build/nawa_benchmark
-  - build/nawa/libnawa.so
+  binaries:
+    - build/nawa_benchmark
+    - build/nawa/libnawa.so
 
-environment:
-  LD_LIBRARY_PATH: /opt/web/build/nawa
+  environment:
+    LD_LIBRARY_PATH: /opt/web/build/nawa
 
-download:
-  - git clone --branch v0.8.0 https://github.com/jatofg/nawa
-  - cd nawa && git submodule update --init
+  download:
+    - git clone --branch v0.8.0 https://github.com/jatofg/nawa
+    - cd nawa && git submodule update --init
 
-build:
-  - mkdir build
-  - cd build && cmake -DCMAKE_BUILD_TYPE=release ..
-  - cd build && make
+  build:
+    - mkdir build
+    - cd build && cmake -DCMAKE_BUILD_TYPE=release ..
+    - cd build && make
 
-files:
-  - config.ini
+  files:
+    - config.ini
 
-command: /opt/web/build/nawa_benchmark /opt/web/config.ini
+  command: /opt/web/build/nawa_benchmark /opt/web/config.ini
