@@ -2,20 +2,20 @@ framework:
   website: restheart.org
   version: 7.3
 
-build:
-  - mvn package
+  build:
+    - mvn package
 
-environment:
-  RHO: >
-    /http-listener->{\"enabled\": true, \"host\": \"0.0.0.0\", \"port\": 3000};
-    /core/name->\"restheart-benchmarker\";
-    /core/worker-threads->0;
-    /core/requests-limit->100000;
-    /fullAuthorizer/enabled->true;
-    /logging/log-level->\"OFF\";
-    /ping/enabled->false;
+  environment:
+    RHO: >
+      /http-listener->{\"enabled\": true, \"host\": \"0.0.0.0\", \"port\": 3000};
+      /core/name->\"restheart-benchmarker\";
+      /core/worker-threads->0;
+      /core/requests-limit->100000;
+      /fullAuthorizer/enabled->true;
+      /logging/log-level->\"OFF\";
+      /ping/enabled->false;
 
-binaries:
-  - target/benchmark.jar
+  binaries:
+    - target/benchmark.jar
 
-command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/benchmark.jar
+  command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/benchmark.jar

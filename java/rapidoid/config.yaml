@@ -2,14 +2,14 @@ framework:
   website: rapidoid.org
   version: 5.5
 
-build:
-  - mvn compile assembly:single -q
+  build:
+    - mvn compile assembly:single -q
 
-binaries:
-  - target/benchmark-1.0.0-jar-with-dependencies.jar
+  binaries:
+    - target/benchmark-1.0.0-jar-with-dependencies.jar
 
-command: >
-  /usr/bin/java -server
-  -XX:+UseNUMA -XX:+UseParallelGC 
-  -cp target/benchmark-1.0.0-jar-with-dependencies.jar
-  benchmark.rapidoid.Main profiles=production
+  command: >
+    /usr/bin/java -server
+    -XX:+UseNUMA -XX:+UseParallelGC 
+    -cp target/benchmark-1.0.0-jar-with-dependencies.jar
+    benchmark.rapidoid.Main profiles=production
