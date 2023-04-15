@@ -1,6 +1,11 @@
+provider:
+  default:
+    language: 1.7
+
 framework:
   github: ujjwalguptaofficial/shivneri
   version: 0.18
+  image-version: 1.7.3
 
 build_opts: '--link-flags "-lxml2 -llzma"'
 
