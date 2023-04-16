@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Bootloader;
 
-use App\Application\Exception\Renderer\ViewRenderer;
 use Spiral\Boot\AbstractKernel;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Exceptions\ExceptionHandler;
@@ -24,8 +23,7 @@ use Spiral\Http\Middleware\ErrorHandlerMiddleware\SuppressErrorsInterface;
 final class ExceptionHandlerBootloader extends Bootloader
 {
     protected const BINDINGS = [
-        SuppressErrorsInterface::class => EnvSuppressErrors::class,
-        RendererInterface::class => ViewRenderer::class,
+        SuppressErrorsInterface::class => EnvSuppressErrors::class
     ];
 
     public function __construct(

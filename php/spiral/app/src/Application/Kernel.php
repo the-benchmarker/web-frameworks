@@ -6,19 +6,14 @@ namespace App\Application;
 
 use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\Bootloader as Framework;
-use Spiral\Bootloader\Views\TranslatedCacheBootloader;
-use Spiral\Cycle\Bootloader as CycleBridge;
 use Spiral\DotEnv\Bootloader\DotenvBootloader;
 use Spiral\Monolog\Bootloader\MonologBootloader;
 use Spiral\Nyholm\Bootloader\NyholmBootloader;
 use Spiral\Prototype\Bootloader\PrototypeBootloader;
 use Spiral\RoadRunnerBridge\Bootloader as RoadRunnerBridge;
-use Spiral\Scaffolder\Bootloader\ScaffolderBootloader;
-use Spiral\Stempler\Bootloader\StemplerBootloader;
 use Spiral\Tokenizer\Bootloader\TokenizerListenerBootloader;
 use Spiral\Validation\Bootloader\ValidationBootloader;
 use Spiral\Validator\Bootloader\ValidatorBootloader;
-use Spiral\Views\Bootloader\ViewsBootloader;
 use Spiral\YiiErrorHandler\Bootloader\YiiErrorHandlerBootloader;
 
 class Kernel extends \Spiral\Framework\Kernel
@@ -58,20 +53,6 @@ class Kernel extends \Spiral\Framework\Kernel
         Framework\Http\CsrfBootloader::class,
         Framework\Http\PaginationBootloader::class,
 
-        // Databases
-        CycleBridge\DatabaseBootloader::class,
-        CycleBridge\MigrationsBootloader::class,
-
-        // ORM
-        CycleBridge\SchemaBootloader::class,
-        CycleBridge\CycleOrmBootloader::class,
-        CycleBridge\AnnotatedBootloader::class,
-
-        // Views and view translation
-        ViewsBootloader::class,
-        TranslatedCacheBootloader::class,
-        StemplerBootloader::class,
-
         ValidationBootloader::class,
         ValidatorBootloader::class,
 
@@ -80,9 +61,6 @@ class Kernel extends \Spiral\Framework\Kernel
         // Console commands
         Framework\CommandBootloader::class,
         RoadRunnerBridge\CommandBootloader::class,
-        CycleBridge\CommandBootloader::class,
-        ScaffolderBootloader::class,
-        CycleBridge\ScaffolderBootloader::class,
 
         // Configure route groups, middleware for route groups
         Bootloader\RoutesBootloader::class,
@@ -91,8 +69,5 @@ class Kernel extends \Spiral\Framework\Kernel
         PrototypeBootloader::class,
     ];
 
-    protected const APP = [
-        // User Domain
-        Bootloader\PersistenceBootloader::class,
-    ];
+    protected const APP = [];
 }

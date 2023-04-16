@@ -28,13 +28,13 @@ final class HomeController
     }
 
     #[Route(route: '/user', name: 'create_user', methods: 'POST')]
-    public function create_user($id = null) : string
+    public function create_user($id = null): string
     {
         return '';
     }
-    
+
     #[Route(route: '/user/<id:int>', name: 'show_user', methods: 'GET')]
-    public function show_user($id) : string
+    public function show_user($id): string
     {
         return (string)$id;
     }
