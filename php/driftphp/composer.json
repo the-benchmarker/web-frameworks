@@ -9,7 +9,7 @@
   ],
   "require": {
     "symfony/framework-bundle": "~5.0",
-    "symfony/yaml": "*",
+    "symfony/yaml": "@stable",
     "drift/http-kernel": "~0.1.7",
     "drift/server": "~0.1.17"
   },

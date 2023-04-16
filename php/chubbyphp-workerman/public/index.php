@@ -30,24 +30,33 @@ $responseFactory = new ResponseFactory();
 $app = new Application([
     new ExceptionMiddleware($responseFactory, true),
     new RouteMatcherMiddleware(new RouteMatcher(new RoutesByName([
-        Route::get('/', 'home', new class($responseFactory) implements RequestHandlerInterface {
-            public function __construct(private ResponseFactoryInterface $responseFactory) {}
-            public function handle(ServerRequestInterface $request): ResponseInterface {
+        Route::get('/', 'home', new class ($responseFactory) implements RequestHandlerInterface {
+            public function __construct(private ResponseFactoryInterface $responseFactory)
+            {
+            }
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
                 return $this->responseFactory->createResponse();
             }
         }),
-        Route::get('/user/{id}', 'user_view', new class($responseFactory) implements RequestHandlerInterface {
-            public function __construct(private ResponseFactoryInterface $responseFactory) {}
-            public function handle(ServerRequestInterface $request): ResponseInterface {
+        Route::get('/user/{id}', 'user_view', new class ($responseFactory) implements RequestHandlerInterface {
+            public function __construct(private ResponseFactoryInterface $responseFactory)
+            {
+            }
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
                 $response = $this->responseFactory->createResponse();
                 $response->getBody()->write($request->getAttribute('id'));
 
                 return $response;
             }
         }),
-        Route::post('/user', 'user_list', new class($responseFactory) implements RequestHandlerInterface {
-            public function __construct(private ResponseFactoryInterface $responseFactory) {}
-            public function handle(ServerRequestInterface $request): ResponseInterface {
+        Route::post('/user', 'user_list', new class ($responseFactory) implements RequestHandlerInterface {
+            public function __construct(private ResponseFactoryInterface $responseFactory)
+            {
+            }
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
                 return $this->responseFactory->createResponse();
             }
         }),

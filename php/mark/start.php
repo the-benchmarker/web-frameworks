@@ -1,4 +1,5 @@
 <?php
+
 use Mark\App;
 
 require 'vendor/autoload.php';

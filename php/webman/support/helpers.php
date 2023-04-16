@@ -334,7 +334,7 @@ function copy_dir(string $source, string $dest, bool $overwrite = false)
                 \copy_dir("$source/$file", "$dest/$file");
             }
         }
-    } else if (\file_exists($source) && ($overwrite || !\file_exists($dest))) {
+    } elseif (\file_exists($source) && ($overwrite || !\file_exists($dest))) {
         \copy($source, $dest);
     }
 }

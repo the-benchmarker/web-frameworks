@@ -1,7 +1,7 @@
 {
   "require": {
     "chubbyphp/chubbyphp-framework": "~5.0.2",
-    "chubbyphp/chubbyphp-framework-router-fastroute": "*",
-    "slim/psr7": "*"
+    "chubbyphp/chubbyphp-framework-router-fastroute": "@stable",
+    "slim/psr7": "@stable"
   }
 }

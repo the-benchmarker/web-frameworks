@@ -1,7 +1,7 @@
 {
   "require": {
     "slim/slim": "~4.11.0",
-    "slim/psr7": "*",
-    "chubbyphp/chubbyphp-swoole-request-handler": "*"
+    "slim/psr7": "@stable",
+    "chubbyphp/chubbyphp-swoole-request-handler": "@stable"
   }
 }

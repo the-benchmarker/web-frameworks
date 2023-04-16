@@ -1,4 +1,5 @@
 <?php
+
 require(__DIR__.'/../vendor/autoload.php');
 
 use Unic\App;
@@ -14,16 +15,16 @@ $server->set([
     'log_level' => SWOOLE_LOG_ERROR,
 ]);
 
-$app->get('/', function($req, $res) {
-  $res->send('');
+$app->get('/', function ($req, $res) {
+    $res->send('');
 });
 
-$app->get('/user/{id}', function($req, $res) {
-  $res->send($req->params->id);
+$app->get('/user/{id}', function ($req, $res) {
+    $res->send($req->params->id);
 });
 
-$app->post('/user', function($req, $res) {
-  $res->send('');
+$app->post('/user', function ($req, $res) {
+    $res->send('');
 });
 
 $app->useOpenSwooleServer($server);

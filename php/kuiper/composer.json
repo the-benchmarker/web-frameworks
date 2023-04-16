@@ -1,7 +1,7 @@
 {
   "require": {
     "php": "^8.1",
-    "ext-json": "*",
+    "ext-json": "@stable",
     "kuiper/web": "^0.8"
   },
   "require-dev": {
@@ -19,7 +19,7 @@
     "kuiper": {
       "config-file": "src/container.php",
       "whitelist": [
-        "kuiper/*"
+        "kuiper/@stable"
       ]
     }
   }
