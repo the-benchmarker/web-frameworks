@@ -7,7 +7,7 @@ object HelloWorld extends ZIOAppDefault {
   val app = Http.collect[Request] {
           case Method.GET -> !! / "" => Response.ok
           case Method.POST -> !! / "user" => Response.ok
-          case Method.POST -> !! / "user" / id => { Response.text(id) }
+          case Method.GET -> !! / "user" / id => { Response.text(id) }
   }
 
   override val run =
