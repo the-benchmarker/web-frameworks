@@ -1,10 +1,13 @@
+val ZioHttpVersion = "[3.0.0-RC1,3.1.0)"
+
 name := "server"
-scalaVersion := "2.13.10"
+
+scalaVersion := "3.2.2"
 
 lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++= Seq(
-      "com.twitter" %% "finatra-http-server" % "[22.12,22.13)"
+      "dev.zio" %% "zio-http" % ZioHttpVersion
     )
   )
   .enablePlugins(JavaAppPackaging)
