@@ -9,14 +9,14 @@ require __DIR__.'/../vendor/autoload.php';
 
 Application::init(__DIR__);
 
-Route::get('/', function() {
+Route::get('/', function () {
     return '';
 });
 
-Route::get('/user/{id}', function($id) {
+Route::get('/user/{id}', function ($id) {
     return $id;
 });
 
-Route::post('/user', function() {
+Route::post('/user', function () {
     return '';
 })->exclude(Csrf::class); // Since Lemon by default checks csrf, we have to manualy disable it.

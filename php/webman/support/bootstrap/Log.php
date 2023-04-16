@@ -11,6 +11,7 @@
  * @link      http://www.workerman.net/
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace support\bootstrap;
 
 use Webman\Bootstrap;
@@ -30,8 +31,8 @@ use Monolog\Logger;
  * @method static void alert($message, array $context = [])
  * @method static void emergency($message, array $context = [])
  */
-class Log implements Bootstrap {
-
+class Log implements Bootstrap
+{
     /**
      * @var array
      */

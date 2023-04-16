@@ -5,15 +5,15 @@
   "prefer-stable": true,
   "require": {
     "cubex/framework": "~4.18.0",
-    "packaged/polyfill-ctype": "*",
-    "packaged/polyfill-mbstring": "*",
-    "packaged/polyfill-intl": "*",
-    "packaged/polyfill-php71": "*",
-    "packaged/polyfill-php72": "*",
-    "packaged/polyfill-php73": "*",
-    "packaged/polyfill-php74": "*",
-    "packaged/polyfill-php80": "*",
-    "packaged/polyfill-php81": "*"
+    "packaged/polyfill-ctype": "@stable",
+    "packaged/polyfill-mbstring": "@stable",
+    "packaged/polyfill-intl": "@stable",
+    "packaged/polyfill-php71": "@stable",
+    "packaged/polyfill-php72": "@stable",
+    "packaged/polyfill-php73": "@stable",
+    "packaged/polyfill-php74": "@stable",
+    "packaged/polyfill-php80": "@stable",
+    "packaged/polyfill-php81": "@stable"
   },
   "autoload": {
     "psr-4": {

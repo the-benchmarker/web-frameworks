@@ -1,4 +1,5 @@
 <?php
+
 use Ubiquity\controllers\Router;
 
 /**

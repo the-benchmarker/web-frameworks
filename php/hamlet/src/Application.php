@@ -21,7 +21,7 @@ class Application extends AbstractApplication
 
     public function __construct()
     {
-        $this->cache = new ArrayCachePool;
+        $this->cache = new ArrayCachePool();
     }
 
     public function findResource(Request $request): HttpResource
@@ -30,16 +30,16 @@ class Application extends AbstractApplication
         $parts = \explode(DIRECTORY_SEPARATOR, $path);
 
         if ($path === '/user' && $request->getMethod() === 'POST') {
-            return new UserResource;
+            return new UserResource();
         }
         if ($request->getMethod() === 'GET') {
             if ($path === '/') {
-                return new ApplicationResource;
+                return new ApplicationResource();
             } elseif (count($parts) === 3 && $parts[1] === 'user') {
                 return new UserIDResource($parts[2]);
             }
         }
-        return new NotFoundResource;
+        return new NotFoundResource();
     }
 
     protected function getCache(Request $request): CacheItemPoolInterface
