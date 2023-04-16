@@ -1,7 +1,7 @@
 framework:
   github: sunrise-php/http-router
   version: 2.16
-  
+
 build_deps:
   - libevent-dev
   - libsodium-dev

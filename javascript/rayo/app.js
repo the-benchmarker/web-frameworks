@@ -1,4 +1,4 @@
-import rayo from 'rayo';
+import rayo from "rayo";
 
 rayo({ port: 3000 })
   .get("/", (req, res) => res.end(""))
