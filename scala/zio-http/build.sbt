@@ -1,6 +1,4 @@
-
-
-  val ZioHttpVersion = "[3.0.0-RC1,3.1.0)"
+val ZioHttpVersion = "[3.0.0-RC1,3.1.0)"
 
 name := "server"
 
@@ -11,4 +9,5 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "dev.zio" %% "zio-http" % ZioHttpVersion
     )
-  ).enablePlugins(JavaAppPackaging)
+  )
+  .enablePlugins(JavaAppPackaging)
