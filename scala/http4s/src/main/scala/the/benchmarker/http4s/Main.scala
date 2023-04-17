@@ -12,14 +12,16 @@ object Main extends IOApp {
 
   val okEmpty: IO[Response[IO]] = Ok("")
 
-  val helloWorldService = HttpRoutes.of[IO] {
-    case GET -> Root =>
-      okEmpty
-    case POST -> Root / "user" =>
-      okEmpty
-    case GET -> Root / "user" / name =>
-      Ok(name)
-  }.orNotFound
+  val helloWorldService = HttpRoutes
+    .of[IO] {
+      case GET -> Root =>
+        okEmpty
+      case POST -> Root / "user" =>
+        okEmpty
+      case GET -> Root / "user" / name =>
+        Ok(name)
+    }
+    .orNotFound
 
   def run(args: List[String]): IO[ExitCode] =
     BlazeServerBuilder[IO](global)

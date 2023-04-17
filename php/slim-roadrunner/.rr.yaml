@@ -1,5 +1,8 @@
 version: "2.7"
+rpc:
+  listen: "tcp://127.0.0.1:6001"
 http:
-  address: :3000
+  address: "0.0.0.0:3000"
 server:
   command: "php public/index.php"
+  relay: pipes

@@ -14,7 +14,6 @@ use Sunrise\Http\Router\Annotation\Route;
 #[Route(name: 'user.read', path: '/user/{id}', method: 'GET')]
 final class UserReadController implements RequestHandlerInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -22,9 +21,9 @@ final class UserReadController implements RequestHandlerInterface
      *
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $response = (new ResponseFactory)->createResponse(200);
+        $response = (new ResponseFactory())->createResponse(200);
         $response->getBody()->write($request->getAttribute('id'));
 
         return $response;

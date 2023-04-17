@@ -1,6 +1,6 @@
 framework:
   github: spiral/framework
-  version: 2.14
+  version: 3.7
 
   engines:
     - road-runner
@@ -12,4 +12,4 @@ framework:
 language:
   engines:
     road-runner:
-      command: ./spiral serve
+      command: ./ serve

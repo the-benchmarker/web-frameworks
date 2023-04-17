@@ -9,4 +9,5 @@ lazy val root = (project in file("."))
       "org.http4s" %% "http4s-blaze-server" % Http4sVersionRange,
       "org.http4s" %% "http4s-dsl" % Http4sVersionRange
     )
-  ).enablePlugins(JavaAppPackaging)
+  )
+  .enablePlugins(JavaAppPackaging)

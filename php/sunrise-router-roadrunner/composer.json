@@ -1,7 +1,8 @@
 {
   "require": {
-    "spiral/roadrunner": "@stable",
     "sunrise/http-router": "~2.16.0",
-    "sunrise/http-factory": "@stable"
+    "sunrise/http-factory": "@stable",
+    "spiral/roadrunner-cli": "@stable",
+    "spiral/roadrunner-http": "@stable"
   }
 }

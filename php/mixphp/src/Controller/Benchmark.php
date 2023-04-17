@@ -6,7 +6,6 @@ use Mix\Vega\Context;
 
 class Benchmark
 {
-
     /**
      * @param Context $ctx
      */

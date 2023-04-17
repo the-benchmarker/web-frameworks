@@ -6,4 +6,5 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "com.twitter" %% "finatra-http-server" % "[22.12,22.13)"
     )
-  ).enablePlugins(JavaAppPackaging)
+  )
+  .enablePlugins(JavaAppPackaging)

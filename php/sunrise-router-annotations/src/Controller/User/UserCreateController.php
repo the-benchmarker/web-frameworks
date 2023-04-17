@@ -14,7 +14,6 @@ use Sunrise\Http\Router\Annotation\Route;
 #[Route(name: 'user.create', path: '/user', method: 'POST')]
 final class UserCreateController implements RequestHandlerInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -22,8 +21,8 @@ final class UserCreateController implements RequestHandlerInterface
      *
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return (new ResponseFactory)->createResponse(200);
+        return (new ResponseFactory())->createResponse(200);
     }
 }

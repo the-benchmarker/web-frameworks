@@ -19,19 +19,19 @@ class Application extends AbstractApplication
 
     public function __construct()
     {
-        $this->cache = new ArrayCachePool;
+        $this->cache = new ArrayCachePool();
     }
 
     public function findResource(Request $request): HttpResource
     {
         if ($request->getPath() == '/user') {
-            return new UserResource;
+            return new UserResource();
         } elseif ($request->getPath() == '/') {
-            return new ApplicationResource;
+            return new ApplicationResource();
         } elseif ($parts = $request->pathMatchesPattern('/user/{id}')) {
             return new UserIDResource($parts['id']);
         }
-        return new NotFoundResource;
+        return new NotFoundResource();
     }
 
     protected function getCache(Request $request): CacheItemPoolInterface
