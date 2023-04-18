@@ -4,8 +4,6 @@ language:
   files:
     - src/**/*.java
     - pom.xml
-
-  static_files:
     - src/**/*.properties
     - src/**/*.xml
     - src/**/*.jsp
