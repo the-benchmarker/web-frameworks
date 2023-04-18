@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'camping'
+
 Camping.goes :App
 
 module App
