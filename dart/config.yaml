@@ -5,5 +5,8 @@ language:
       command: dart main.dart
 
 framework:
+  files:
+    - "**/*.dart"
+    - pubspec.yaml
   engines:
     - default
