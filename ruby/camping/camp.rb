@@ -2,25 +2,25 @@
 
 require 'camping'
 
-Camping.goes :Server
+Camping.goes :App
 
-module Server
+module App
   module Controllers
-    class Index
+    class Index < R '/'
       def get
         ''
       end
     end
 
-    class User
-      def post
-        ''
+    class User < R '/user/(\d+)'
+      def get(id)
+        id
       end
     end
 
-    class UserCreate < R '/user/(\d+)'
-      def get(id)
-        id
+    class Creator < R '/user/(\d+)'
+      def post
+        ''
       end
     end
   end
