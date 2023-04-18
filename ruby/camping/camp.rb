@@ -18,7 +18,7 @@ module App
       end
     end
 
-    class Creator < R '/user/(\d+)'
+    class Creator < R '/user'
       def post
         ''
       end
