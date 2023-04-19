@@ -5,6 +5,7 @@ language:
     - "**/*.gradle"
     - "**/*.kts"
     - "**/*.kt"
+    - "**/*.conf"
 
   engines:
     default:
