@@ -9,5 +9,9 @@ framework:
     - gunicorn
     - waitress
 
-  environment:
-    PYTHON_APP: __hug_wsgi__
+  # TODO : override unused PYTHON_APP in generated dockerfile
+
+language:
+  engines:
+    uwsgi:
+      command: uwsgi 0.0.0.0:3000 --wsgi-file server.py --callable __hug_wsgi__
