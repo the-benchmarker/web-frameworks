@@ -1,4 +1,4 @@
-package benchmark.light4j.handler;
+package benchmark.handler;
 
 import com.networknt.handler.LightHttpHandler;
 import io.undertow.server.HttpServerExchange;

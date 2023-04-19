@@ -1,4 +1,4 @@
-package micronaut.controller;
+package server.controller;
 
 import io.micronaut.core.annotation.NonBlocking;
 import io.micronaut.http.MediaType;

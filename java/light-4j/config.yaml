@@ -9,7 +9,7 @@ framework:
     - target/benchmark-1.0.0.jar
 
   files:
-    - 'src/**/*.yml'
+    - "src/**/*.yml"
 
   binaries:
     - target/benchmark-1.0.0.jar

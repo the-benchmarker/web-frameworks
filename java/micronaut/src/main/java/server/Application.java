@@ -1,4 +1,4 @@
-package micronaut;
+package server;
 
 import io.micronaut.runtime.Micronaut;
 
