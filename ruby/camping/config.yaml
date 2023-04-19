@@ -2,4 +2,4 @@ framework:
   github: camping/camping
   version: 3.0
 
-command: bundle exec camping -p 3000 -h 0.0.0.0
+  command: bundle exec camping -p 3000 -h 0.0.0.0
