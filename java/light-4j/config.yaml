@@ -9,7 +9,10 @@ framework:
     - target/benchmark-1.0.0.jar
 
   files:
-    - build.gradle
+    - 'src/**/*.yml'
+
+  binaries:
+    - target/benchmark-1.0.0.jar
 
   command: >
     /usr/bin/java
