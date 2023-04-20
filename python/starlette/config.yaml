@@ -1,6 +1,7 @@
 framework:
-  website: starlette.io
-  version: 0.23
+  website: www.starlette.io
+  github: encode/starlette
+  version: 0.26
 
 command: >
   gunicorn  \

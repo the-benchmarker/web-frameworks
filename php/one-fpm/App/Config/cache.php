@@ -1,4 +1,5 @@
 <?php
+
 return [
     'drive' => 'file', // [file | redis] 调用Cache:: 相关方法使用的缓存驱动
 

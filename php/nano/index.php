@@ -2,32 +2,38 @@
 
 require_once 'vendor/autoload.php';
 
-use laylatichy\Nano;
+use laylatichy\nano\core\httpcode\HttpCode;
+use laylatichy\nano\core\router\BASE;
+use laylatichy\nano\core\router\GET;
+use laylatichy\nano\core\router\POST;
+use laylatichy\nano\core\router\NanoRouter;
+use laylatichy\nano\Nano;
 
 $nano = new Nano();
 
-$nano->get(
-    '/',
-    function ($request) use ($nano) {
-        $nano->response->code(200);
+#[BASE('')]
+final class TheBenchmarker extends NanoRouter
+{
+    #[GET('/')]
+    public function index(Nano $nano): void
+    {
+        $nano->response->code(HttpCode::OK);
         $nano->response->plain('');
     }
-);
 
-$nano->get(
-    '/user/{id}',
-    function ($request, $id) use ($nano) {
-        $nano->response->code(200);
+    #[GET('/user/{id}')]
+    public function userId(Nano $nano, string $id): void
+    {
+        $nano->response->code(HttpCode::OK);
         $nano->response->plain($id);
     }
-);
 
-$nano->post(
-    '/user',
-    function ($request) use ($nano) {
-        $nano->response->code(200);
+    #[POST('/user')]
+    public function user(Nano $nano): void
+    {
+        $nano->response->code(HttpCode::OK);
         $nano->response->plain('');
     }
-);
+}
 
 $nano->start();

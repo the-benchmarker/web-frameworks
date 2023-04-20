@@ -1,11 +1,11 @@
 {
   "require": {
-    "phpmv/ubiquity": "~2.4.0"
+    "phpmv/ubiquity": "~2.5.0"
   },
   "require-dev": {
-    "phpmv/ubiquity-attributes": "*",
-    "phpmv/ubiquity-dev": "*",
-    "phpmv/ubiquity-devtools": "*"
+    "phpmv/ubiquity-attributes": "@stable",
+    "phpmv/ubiquity-dev": "@stable",
+    "phpmv/ubiquity-devtools": "@stable"
   },
   "autoload": {
     "psr-4": {

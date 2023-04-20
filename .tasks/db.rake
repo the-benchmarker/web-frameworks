@@ -50,13 +50,14 @@ namespace :db do
         language_config = YAML.safe_load(File.read(File.join(language, 'config.yaml')))
         scheme = 'https'
         scheme = 'http' if framework_config['framework'].key?('unsecure')
+        website = framework_config['framework']['website']
+        if website.nil?
         website = if framework_config['framework'].key?('github')
                     "github.com/#{framework_config['framework']['github']}"
                   elsif framework_config['framework'].key?('gitlab')
                     "gitlab.com/#{framework_config['framework']['gitlab']}"
-                  else
-                    (framework_config['framework']['website']).to_s
                   end
+        end
         unless data[:frameworks].map { |row| row[:id] }.to_a.include?(framework_id)
           data[:frameworks] << {
             id: framework_id,

@@ -2,12 +2,11 @@ buildscript {
 
     repositories {
         mavenCentral()
-        jcenter()
     }
 
     ext {
-        kotlinVersion = "1.7.+"
-        joobyVersion = "2.16.+"
+        kotlinVersion = "1.8.+"
+        joobyVersion = "3.0.0.M7"
         shadowVersion = "+"
     }
     
@@ -23,21 +22,26 @@ plugins {
 group "benchmark.kooby"
 version "1.0.0"
 mainClassName = "benchmark.AppKt"
-sourceCompatibility = 1.8
+sourceCompatibility = 17
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of("17"))
+    }
+}
 
 repositories {
     mavenLocal()
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
-    implementation "io.jooby:jooby-utow:${joobyVersion}"
+    implementation "io.jooby:jooby-undertow:${joobyVersion}"
 }
 
 shadowJar {
     mergeServiceFiles()
-    baseName = "server"
-    classifier = null
-    version = null
+    archiveBaseName.set("server")
+    archiveClassifier.set('')
+    archiveVersion.set('')
 }

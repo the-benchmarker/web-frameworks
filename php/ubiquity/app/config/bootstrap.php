@@ -1,4 +1,5 @@
 <?php
+
 use Ubiquity\devtools\cmd\ConsoleFormatter as Console;
 use Ubiquity\cache\CacheManager;
 

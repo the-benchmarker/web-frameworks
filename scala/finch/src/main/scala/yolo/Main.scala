@@ -24,6 +24,7 @@ object Main extends IOApp with Endpoint.Module[IO] {
   override def run(args: List[String]): IO[ExitCode] =
     Bootstrap[IO]
       .serve[Text.Plain](postUser :+: getUserName :+: root)
-      .listen("0.0.0.0:3000").useForever
+      .listen("0.0.0.0:3000")
+      .useForever
 
 }

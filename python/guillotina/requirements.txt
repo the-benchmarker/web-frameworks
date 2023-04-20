@@ -1,4 +1,4 @@
 guillotina>=6.4,<6.5
 gunicorn
 uvicorn[standard]
-typing_extensions
+zope.interface<6.0

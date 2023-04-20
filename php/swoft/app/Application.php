@@ -1,8 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App;
 
 use Swoft\SwoftApplication;
+
 use function date_default_timezone_set;
 
 /**

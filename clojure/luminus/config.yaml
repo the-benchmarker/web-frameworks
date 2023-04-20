@@ -1,8 +1,8 @@
 framework:
   website: luminusweb.com
-  version: 4.47
+  version: 4.49
 
-image: clojure:openjdk-11-lein-slim-buster
+image: clojure:temurin-17-lein-jammy
 
 build:
   - lein uberjar

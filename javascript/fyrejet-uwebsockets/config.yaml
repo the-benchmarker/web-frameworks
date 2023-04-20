@@ -1,9 +1,0 @@
-framework:
-  github: fyrejet/fyrejet
-  version: 4.0
-
-build_deps:
-  - git
-
-bin_deps:
-  - gcompat # required by uWebSocket

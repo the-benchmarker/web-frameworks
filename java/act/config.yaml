@@ -5,9 +5,9 @@ framework:
 language:
   version: 11
 
-image: maven:3-jdk-11-slim
+image: maven:3.9.0-eclipse-temurin-11-focal
 
-runtime: openjdk:11-jre-slim
+runtime: eclipse-temurin:11-focal
 
 build:
   - mvn package

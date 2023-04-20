@@ -146,8 +146,13 @@ def create_dockerfile(language, framework, **options)
     config['build_environment'] = environment
   end
   config['php_ext'] = config['php_ext']&.map do
-    ext, version = _1.split('-')
-    { name: ext, version: version }
+    name, version = _1.split('-')
+    ext = if name == 'event'
+            '--ini-name zz-event event'
+          else
+            name
+          end
+    { name: name, version: version, ext: ext }
   end
   config[:version] = config.dig('language', 'version')
 

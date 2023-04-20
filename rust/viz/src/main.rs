@@ -1,14 +1,14 @@
 #![deny(warnings)]
 
 use std::net::SocketAddr;
-use viz::{types::Params, Error, Request, RequestExt, Result, Router, Server, ServiceMaker};
+use viz::{Error, Request, RequestExt, Result, Router, Server, ServiceMaker};
 
 async fn index(_: Request) -> Result<()> {
     Ok(())
 }
 
-async fn show_user(mut req: Request) -> Result<String> {
-    let Params(id) = req.extract::<Params<String>>().await?;
+async fn show_user(req: Request) -> Result<String> {
+    let id = req.param("id")?;
     Ok(id)
 }
 

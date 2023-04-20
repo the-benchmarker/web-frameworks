@@ -7,7 +7,6 @@ use Mix\Vega\Engine;
 
 class Vega
 {
-
     /**
      * @return Engine
      */
