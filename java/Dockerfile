@@ -43,6 +43,10 @@ WORKDIR /opt/web
   COPY --from=build /usr/src/web/{{{.}}} {{{.}}}
 {{/binaries}}
 
+{{#static_files}}
+  COPY '{{source}}' '{{target}}'
+{{/static_files}}
+
 RUN ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
 
 {{#bootstrap}}
