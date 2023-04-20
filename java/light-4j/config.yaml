@@ -5,14 +5,11 @@ framework:
   build:
     - mvn clean package -Prelease
 
-  static_files:
+  binaries:
     - target/benchmark-1.0.0.jar
 
   files:
     - "src/**/*.yml"
-
-  binaries:
-    - target/benchmark-1.0.0.jar
 
   command: >
     /usr/bin/java
