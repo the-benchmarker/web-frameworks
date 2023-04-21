@@ -1,16 +1,12 @@
-FROM gradle:jdk11 As build
+FROM gradle:8-jdk17 AS build
 
 WORKDIR /usr/src/app
-
-USER root
-RUN chown -R gradle /usr/src/app
-USER gradle
 
 COPY . ./
 
 RUN gradle build
 
-FROM openjdk:11.0.16-jre-slim
+FROM eclipse-temurin:17.0.6_10-jre
 
 WORKDIR /usr/src/app
 

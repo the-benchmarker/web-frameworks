@@ -1,0 +1,21 @@
+{
+  "name": "adonisjs-slim",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node ace serve --watch",
+    "build": "node ace build --production",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@adonisjs/assembler": "*",
+    "@adonisjs/core": "*",
+    "@adonisjs/encryption": "*",
+    "@adonisjs/application": "*",
+    "@adonisjs/http-server": "~5.12.0",
+    "adonis-preset-ts": "*",
+    "proxy-addr": "*",
+    "reflect-metadata": "*",
+    "source-map-support": "*"
+  }
+}

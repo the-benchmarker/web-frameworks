@@ -1,8 +1,8 @@
 {
   "require": {
     "sunrise/http-router": "~2.16.0",
-    "sunrise/http-factory": "*",
-    "symfony/cache": "*",
+    "sunrise/http-factory": "@stable",
+    "symfony/cache": "@stable",
     "doctrine/annotations": "@stable"
   },
   "autoload": {

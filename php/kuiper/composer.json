@@ -1,0 +1,26 @@
+{
+  "require": {
+    "php": "^8.1",
+    "ext-json": "@stable",
+    "kuiper/web": "^0.8"
+  },
+  "require-dev": {
+    "kuiper/component-installer": "^0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\": "src/"
+    }
+  },
+  "scripts": {
+    "container-config": "kuiper\\component\\ComponentInstaller::generate"
+  },
+  "extra": {
+    "kuiper": {
+      "config-file": "src/container.php",
+      "whitelist": [
+        "kuiper/@stable"
+      ]
+    }
+  }
+}

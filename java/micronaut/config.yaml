@@ -1,8 +1,8 @@
 framework:
   website: micronaut.io
-  version: 3.0
+  version: 3.8
 
-image: gradle:7-jdk17
+image: gradle:8-jdk17
 
 build:
   - gradle build --project-cache-dir ~/.gradle

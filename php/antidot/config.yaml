@@ -1,8 +1,12 @@
+provider:
+  default:
+    language: 8.1
+
 framework:
   website: antidotfw.io
   github: antidot-framework/react-framework
   version: 1.0
-  
+
 build_deps:
   - libevent-dev
   - icu-dev

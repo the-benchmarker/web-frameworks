@@ -1,5 +1,7 @@
 framework:
   website: hug.rest
+  unsecure: true
+  github: hugapi/hug
   version: 2.6
 
 command: >

@@ -10,10 +10,11 @@ buildscript {
         shadowVersion = "+"
     }
 
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
-        classpath "com.github.jengelman.gradle.plugins:shadow:${shadowVersion}"
-    }
+}
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "${kotlinVersion}"
+    id "com.github.johnrengelman.shadow" version "${shadowVersion}"
 }
 
 repositories {
@@ -38,7 +39,7 @@ dependencies {
 
 shadowJar {
     mergeServiceFiles()
-    baseName = "server"
-    classifier = null
-    version = null
+    archiveBaseName.set("server")
+    archiveClassifier.set('')
+    archiveVersion.set('')
 }

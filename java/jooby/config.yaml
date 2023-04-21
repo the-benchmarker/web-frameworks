@@ -1,6 +1,6 @@
 framework:
   website: jooby.io
-  version: 2.16
+  version: 3.0
 
 build:
   - mvn clean package
@@ -10,5 +10,5 @@ binaries:
 
 command: >
   /usr/bin/java -server
-  -XX:+UseNUMA -XX:+UseParallelGC -XX:-UseBiasedLocking -XX:+UseStringDeduplication
+  -Xms2g -Xmx2g -XX:+UseNUMA -XX:+UseParallelGC
   -jar target/benchmark.jar benchmark.App
