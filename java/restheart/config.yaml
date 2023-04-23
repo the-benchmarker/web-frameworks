@@ -5,17 +5,11 @@ framework:
 build:
   - mvn package
 
-environment:
-  RHO: >
-    /http-listener->{\"enabled\": true, \"host\": \"0.0.0.0\", \"port\": 3000};
-    /core/name->\"restheart-benchmarker\";
-    /core/worker-threads->0;
-    /core/requests-limit->100000;
-    /fullAuthorizer/enabled->true;
-    /logging/log-level->\"OFF\";
-    /ping/enabled->false;
-
 binaries:
   - target/benchmark.jar
+  - etc/conf-overrides.yml
 
-command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/benchmark.jar
+files:
+  - etc/conf-overrides.yml
+
+command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/benchmark.jar -o /opt/web/etc/conf-overrides.yml
