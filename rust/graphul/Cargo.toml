@@ -1,15 +1,21 @@
 [package]
 name = "server"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2021"
 publish = false
 
 [dependencies]
 graphul = "0.5"
-tokio = { version = "1.15.0", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 
 [profile.release]
-codegen-units = 1
 opt-level = 3
+debug = true
+debug-assertions = false
+overflow-checks = false
 lto = true
+panic = "abort"
 incremental = false
+codegen-units = 1
+rpath = false
+strip = false

@@ -20,6 +20,5 @@ rpath = false
 strip = false
 
 [dependencies]
-oxidy = "~0.5.0"
-tokio = { version = "~1.27.0", features = ["full"] }
-
+oxidy = "0.5"
+tokio = { version = "1", features = ["full"] }
