@@ -1,6 +1,6 @@
 [package]
 name = "server"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2021"
 publish = false
 
@@ -17,5 +17,5 @@ rpath = false
 strip = false
 
 [dependencies]
-axum = "~0.6"
-tokio = { version = "~1.27.0", features = ["macros", "rt-multi-thread"] }
+axum = "0.6"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }

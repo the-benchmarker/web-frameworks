@@ -14,7 +14,7 @@ WORKDIR /usr/src/app
 
 RUN sbt universal:packageZipTarball
 
-FROM eclipse-temurin:11.0.18_10-jre-jammy
+FROM eclipse-temurin:17.0.7_7-jre-jammy
 
 WORKDIR /usr/src/app
 
