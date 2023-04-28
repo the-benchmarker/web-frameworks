@@ -12,10 +12,11 @@ app
   .post("/user", (req, res) => res.end(""))
   .use((req, res) => res.writeStatus("404").end(""));
 
+const handler = app.handler();
+
 uWS
   .App()
   .any("/*", (res, req) => {
-    const handler = app.handler();
     handler(req, res);
   })
   .listen(3000, () => {
