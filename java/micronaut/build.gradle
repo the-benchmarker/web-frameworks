@@ -40,7 +40,7 @@ dependencies {
 
 
 application {
-    mainClass.set("micronaut.Application")
+    mainClass.set("server.Application")
 }
 
 java {
