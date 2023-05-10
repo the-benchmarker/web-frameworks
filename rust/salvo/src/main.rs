@@ -3,7 +3,7 @@ use salvo::routing::*;
 
 #[handler]
 fn index(res: &mut Response) {
-    res.set_status_code(StatusCode::OK);
+    res.status_code(StatusCode::OK);
 }
 #[handler]
 fn get_user(req: &mut Request, res: &mut Response) {
