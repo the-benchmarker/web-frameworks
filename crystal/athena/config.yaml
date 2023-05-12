@@ -2,8 +2,5 @@ framework:
   github: athena-framework/athena
   version: 0.17
 
-build_deps:
-  - pcre2-dev
-
 environment:
   ATHENA_ENV: production
