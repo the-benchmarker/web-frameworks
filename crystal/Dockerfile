@@ -11,10 +11,6 @@ COPY . ./
 
 RUN apk add --update yaml-static
 
-{{#build_deps}}
-RUN apk add --update {{{.}}}
-{{/build_deps}}
-
 RUN shards lock
 RUN shards install --production
 RUN shards build --release --no-debug --static {{#build_opts}} {{{.}}} {{/build_opts}}
