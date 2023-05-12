@@ -1,9 +1,4 @@
-{{#provider.default.image-version}}
-  FROM crystallang/crystal:{{{.}}}-alpine
-{{/provider.default.image-version}}
-{{^provider.default.image-version}}
-  FROM crystallang/crystal:1.8.2-alpine
-{{/provider.default.image-version}}
+FROM crystallang/crystal:1.8.2-alpine
 
 WORKDIR /usr/src/app
 
