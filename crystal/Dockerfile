@@ -2,7 +2,7 @@
   FROM crystallang/crystal:{{{.}}}-alpine
 {{/provider.default.image-version}}
 {{^provider.default.image-version}}
-  FROM crystallang/crystal:1.8.1-alpine
+  FROM crystallang/crystal:1.8.2-alpine
 {{/provider.default.image-version}}
 
 WORKDIR /usr/src/app
