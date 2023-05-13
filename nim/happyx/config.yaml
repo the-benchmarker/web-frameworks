@@ -1,0 +1,8 @@
+framework:
+  github: HapticX/happyx
+  version: 0.15.1
+
+deps:
+  - pcre-dev
+
+build_opts: '--define:usePcreHeader --passL: "/usr/lib/libpcre.a"'
