@@ -15,7 +15,7 @@ ENV PATH $PATH:/root/.nimble/bin
 
 {{#build_with}}
   RUN {{{.}}}
-{{/build_with}}}
+{{/build_with}}
 {{^build_with}}
   RUN nimble install -y
 {{/build_with}}
