@@ -13,7 +13,12 @@ COPY . ./
 
 ENV PATH $PATH:/root/.nimble/bin
 
-RUN nimble install -y
+{{#build_with}}
+  RUN {{{.}}}
+{{/build_wth}}}
+{{^build_with}}
+  RUN nimble install -y
+{{/build_wth}}
 
 {{#build_command}}
   RUN {{{.}}}

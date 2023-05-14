@@ -6,3 +6,4 @@ deps:
   - pcre-dev
 
 build_opts: '--define:usePcreHeader --passL: "/usr/lib/libpcre.a"'
+build_with: nimble install -d -y
