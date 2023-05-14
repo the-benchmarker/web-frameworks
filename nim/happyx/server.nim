@@ -5,11 +5,11 @@ serve("0.0.0.0", 3000):
   get "/":
     ""
   
-  get "/user$id?:int":
-    "method not allowed"
+  get "/user$id:int":
+    "{id}"
   
   post "/user":
-    "method not allowed"
+    ""
   
   notfound:
     "method not allowed"
