@@ -1,4 +1,5 @@
 <?php
+
 return [
     // 项目根命名空间
     'namespace'    =>    'ImiApp',

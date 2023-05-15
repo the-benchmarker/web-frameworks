@@ -29,9 +29,9 @@ $request = ServerRequestFactory::fromGlobals();
 try {
     emit($router->handle($request));
 } catch (MethodNotAllowedException $e) {
-    emit((new ResponseFactory)->createResponse(405));
+    emit((new ResponseFactory())->createResponse(405));
 } catch (RouteNotFoundException $e) {
-    emit((new ResponseFactory)->createResponse(404));
+    emit((new ResponseFactory())->createResponse(404));
 } catch (Throwable $e) {
-	emit((new ResponseFactory)->createResponse(500));
+    emit((new ResponseFactory())->createResponse(500));
 }

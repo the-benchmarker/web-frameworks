@@ -1,6 +1,6 @@
 framework:
   github: chubbyts/chubbyts-framework
-  version: 1.6
+  version: 1.8
 
 before_command:
   - npm -g install typescript

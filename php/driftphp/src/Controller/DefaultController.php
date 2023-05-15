@@ -17,6 +17,7 @@ namespace App\Controller;
 
 use React\Http\Message\Response;
 use React\Promise\PromiseInterface;
+
 use function React\Promise\resolve;
 
 /**
@@ -27,7 +28,7 @@ class DefaultController
     /**
      * @return PromiseInterface
      */
-    public function index() : PromiseInterface
+    public function index(): PromiseInterface
     {
         return resolve(new Response());
     }
@@ -37,7 +38,7 @@ class DefaultController
      *
      * @return PromiseInterface
      */
-    public function getUser(string $userId) : PromiseInterface
+    public function getUser(string $userId): PromiseInterface
     {
         return resolve(new Response(200, [], $userId));
     }
@@ -45,7 +46,7 @@ class DefaultController
     /**
      * @return PromiseInterface
      */
-    public function createUser() : PromiseInterface
+    public function createUser(): PromiseInterface
     {
         return resolve(new Response());
     }

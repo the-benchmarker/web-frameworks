@@ -1,18 +1,26 @@
 {
   "require": {
-    "spiral/framework": "~2.14.0",
-    "spiral/nyholm-bridge": "*",
-    "spiral/http": "*",
-    "spiral/router": "*",
-    "spiral/console": "*",
-    "spiral/roadrunner": "*"
+    "php": ">=8.1",
+    "ext-sockets": "*",
+    "ext-mbstring": "*",
+    "spiral/framework": "~3.7",
+    "spiral/roadrunner-cli": "@stable",
+    "spiral/nyholm-bridge": "@stable",
+    "spiral-packages/yii-error-handler-bridge": "@stable",
+    "spiral/roadrunner-bridge": "@stable",
+    "doctrine/collections": "@stable",
+    "spiral/validator": "@stable"
   },
   "autoload": {
     "psr-4": {
-      "App\\": "app/src/"
-    }
+      "App\\": "app/src"
+    },
+    "files": [
+      "app/src/Application/helpers.php"
+    ]
   },
   "config": {
+    "sort-packages": true,
     "allow-plugins": {
       "spiral/composer-publish-plugin": true
     }

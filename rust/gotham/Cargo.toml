@@ -1,6 +1,6 @@
 [package]
 name = "server"
-version = "0.1.0"
+version = "0.0.0"
 authors = ["Isaac Whitfield <iw@whitfin.io>"]
 edition = "2021"
 publish = false
@@ -10,7 +10,13 @@ gotham = { version = "0.7", features = ["derive"], default-features = false }
 serde = { version = "1.0", features = ["derive"] }
 
 [profile.release]
-codegen-units = 1
 opt-level = 3
+debug = false
+debug-assertions = false
+overflow-checks = false
 lto = true
+panic = "abort"
 incremental = false
+codegen-units = 1
+rpath = false
+strip = false

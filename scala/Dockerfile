@@ -12,7 +12,12 @@ COPY . ./
 
 RUN sbt universal:packageZipTarball
 
-FROM eclipse-temurin:11.0.18_10-jre-jammy
+{{#provider.default.java-version}}
+  FROM eclipse-temurin:{{{.}}}-jre-jammy
+{{/provider.default.java-version}}
+{{^provider.default.java-version}}
+  FROM eclipse-temurin:17.0.7_7-jre-jammy
+{{/provider.default.java-version}}
 
 WORKDIR /usr/src/app
 

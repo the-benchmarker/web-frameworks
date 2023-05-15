@@ -1,4 +1,4 @@
-FROM nimlang/nim:1.6.10-alpine
+FROM nimlang/nim:1.6.12-alpine
 
 RUN apk update && \
     apk upgrade --no-cache
@@ -13,7 +13,12 @@ COPY . ./
 
 ENV PATH $PATH:/root/.nimble/bin
 
-RUN nimble install -y
+{{#build_with}}
+  RUN {{{.}}}
+{{/build_with}}
+{{^build_with}}
+  RUN nimble install -y
+{{/build_with}}
 
 {{#build_command}}
   RUN {{{.}}}

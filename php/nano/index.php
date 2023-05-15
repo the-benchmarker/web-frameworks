@@ -12,21 +12,25 @@ use laylatichy\nano\Nano;
 $nano = new Nano();
 
 #[BASE('')]
-final class TheBenchmarker extends NanoRouter {
+final class TheBenchmarker extends NanoRouter
+{
     #[GET('/')]
-    public function index(Nano $nano): void {
+    public function index(Nano $nano): void
+    {
         $nano->response->code(HttpCode::OK);
         $nano->response->plain('');
     }
 
     #[GET('/user/{id}')]
-    public function userId(Nano $nano, string $id): void {
+    public function userId(Nano $nano, string $id): void
+    {
         $nano->response->code(HttpCode::OK);
         $nano->response->plain($id);
     }
 
     #[POST('/user')]
-    public function user(Nano $nano): void {
+    public function user(Nano $nano): void
+    {
         $nano->response->code(HttpCode::OK);
         $nano->response->plain('');
     }

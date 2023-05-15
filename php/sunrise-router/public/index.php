@@ -21,19 +21,19 @@ $responseFactory = new ResponseFactory();
 $routes = [];
 
 $routes[] = new Route('home', '/', ['GET'], new CallableRequestHandler(
-    function (ServerRequestInterface $request) use ($responseFactory) : ResponseInterface {
+    function (ServerRequestInterface $request) use ($responseFactory): ResponseInterface {
         return $responseFactory->createResponse(200);
     }
 ));
 
 $routes[] = new Route('user.create', '/user', ['POST'], new CallableRequestHandler(
-    function (ServerRequestInterface $request) use ($responseFactory) : ResponseInterface {
+    function (ServerRequestInterface $request) use ($responseFactory): ResponseInterface {
         return $responseFactory->createResponse(200);
     }
 ));
 
 $routes[] = new Route('user.read', '/user/{id}', ['GET'], new CallableRequestHandler(
-    function (ServerRequestInterface $request) use ($responseFactory) : ResponseInterface {
+    function (ServerRequestInterface $request) use ($responseFactory): ResponseInterface {
         $response = $responseFactory->createResponse(200);
         $response->getBody()->write($request->getAttribute('id'));
 
@@ -53,5 +53,5 @@ try {
 } catch (RouteNotFoundException $e) {
     emit($responseFactory->createResponse(404));
 } catch (Throwable $e) {
-	emit($responseFactory->createResponse(500));
+    emit($responseFactory->createResponse(500));
 }

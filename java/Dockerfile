@@ -3,7 +3,7 @@
 {{/image}}
 
 {{^image}}
-  FROM maven:3-eclipse-temurin-17-focal AS build
+  FROM maven:3-eclipse-temurin-17 AS build
 {{/image}}
 
 WORKDIR /usr/src/web
@@ -32,7 +32,7 @@ WORKDIR /usr/src/web
   FROM {{{.}}}
 {{/runtime}}
 {{^runtime}}
-  FROM eclipse-temurin:17.0.6_10-jre
+  FROM eclipse-temurin:17.0.7_7-jre
 {{/runtime}}
 
 

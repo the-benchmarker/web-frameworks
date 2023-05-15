@@ -1,7 +1,7 @@
 buildscript {
 
     ext {
-        micronautVersion = "3.8.+"
+        micronautVersion = "3.9.+"
         shadowVersion = "+"
     }
     
@@ -9,7 +9,7 @@ buildscript {
 
 plugins {
     id("com.github.johnrengelman.shadow") version "${shadowVersion}"
-    id("io.micronaut.application") version "+"
+    id("io.micronaut.application") version "3.7.+"
 }
 
 version = "0.1"

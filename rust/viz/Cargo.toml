@@ -1,16 +1,16 @@
 [package]
 name = "server"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2021"
 publish = false
 
 [dependencies]
-viz = "~0.4"
-tokio = { version = "~1.27.0", features = ["rt-multi-thread", "macros"] }
+viz = "0.4"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 
 [profile.release]
 opt-level = 3
-debug = true
+debug = false
 debug-assertions = false
 overflow-checks = false
 lto = true

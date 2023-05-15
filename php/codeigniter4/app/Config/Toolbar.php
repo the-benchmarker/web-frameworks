@@ -23,65 +23,65 @@ use CodeIgniter\Debug\Toolbar\Collectors\Views;
  */
 class Toolbar extends BaseConfig
 {
-	/**
-	 * --------------------------------------------------------------------------
-	 * Toolbar Collectors
-	 * --------------------------------------------------------------------------
-	 *
-	 * List of toolbar collectors that will be called when Debug Toolbar
-	 * fires up and collects data from.
-	 *
-	 * @var string[]
-	 */
-	public $collectors = [
-		Timers::class,
-		Database::class,
-		Logs::class,
-		Views::class,
-		// \CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
-		Files::class,
-		Routes::class,
-		Events::class,
-	];
+    /**
+     * --------------------------------------------------------------------------
+     * Toolbar Collectors
+     * --------------------------------------------------------------------------
+     *
+     * List of toolbar collectors that will be called when Debug Toolbar
+     * fires up and collects data from.
+     *
+     * @var string[]
+     */
+    public $collectors = [
+        Timers::class,
+        Database::class,
+        Logs::class,
+        Views::class,
+        // \CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
+        Files::class,
+        Routes::class,
+        Events::class,
+    ];
 
-	/**
-	 * --------------------------------------------------------------------------
-	 * Max History
-	 * --------------------------------------------------------------------------
-	 *
-	 * `$maxHistory` sets a limit on the number of past requests that are stored,
-	 * helping to conserve file space used to store them. You can set it to
-	 * 0 (zero) to not have any history stored, or -1 for unlimited history.
-	 *
-	 * @var integer
-	 */
-	public $maxHistory = 20;
+    /**
+     * --------------------------------------------------------------------------
+     * Max History
+     * --------------------------------------------------------------------------
+     *
+     * `$maxHistory` sets a limit on the number of past requests that are stored,
+     * helping to conserve file space used to store them. You can set it to
+     * 0 (zero) to not have any history stored, or -1 for unlimited history.
+     *
+     * @var integer
+     */
+    public $maxHistory = 20;
 
-	/**
-	 * --------------------------------------------------------------------------
-	 * Toolbar Views Path
-	 * --------------------------------------------------------------------------
-	 *
-	 * The full path to the the views that are used by the toolbar.
-	 * This MUST have a trailing slash.
-	 *
-	 * @var string
-	 */
-	public $viewsPath = SYSTEMPATH . 'Debug/Toolbar/Views/';
+    /**
+     * --------------------------------------------------------------------------
+     * Toolbar Views Path
+     * --------------------------------------------------------------------------
+     *
+     * The full path to the the views that are used by the toolbar.
+     * This MUST have a trailing slash.
+     *
+     * @var string
+     */
+    public $viewsPath = SYSTEMPATH . 'Debug/Toolbar/Views/';
 
-	/**
-	 * --------------------------------------------------------------------------
-	 * Max Queries
-	 * --------------------------------------------------------------------------
-	 *
-	 * If the Database Collector is enabled, it will log every query that the
-	 * the system generates so they can be displayed on the toolbar's timeline
-	 * and in the query log. This can lead to memory issues in some instances
-	 * with hundreds of queries.
-	 *
-	 * `$maxQueries` defines the maximum amount of queries that will be stored.
-	 *
-	 * @var integer
-	 */
-	public $maxQueries = 100;
+    /**
+     * --------------------------------------------------------------------------
+     * Max Queries
+     * --------------------------------------------------------------------------
+     *
+     * If the Database Collector is enabled, it will log every query that the
+     * the system generates so they can be displayed on the toolbar's timeline
+     * and in the query log. This can lead to memory issues in some instances
+     * with hundreds of queries.
+     *
+     * `$maxQueries` defines the maximum amount of queries that will be stored.
+     *
+     * @var integer
+     */
+    public $maxQueries = 100;
 }

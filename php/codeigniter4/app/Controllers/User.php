@@ -1,15 +1,17 @@
-<?php namespace App\Controllers;
+<?php
+
+namespace App\Controllers;
 
 class User extends BaseController
 {
-	public function list()
-	{
-		return '';
-	}
+    public function list()
+    {
+        return '';
+    }
 
-	public function view($id)
-	{
-		return $id;
-	}
+    public function view($id)
+    {
+        return $id;
+    }
 
 }
