@@ -106,9 +106,8 @@ def commands_for(language, framework, variant, provider = default_provider)
   commands = { build: [], collect: [], clean: [] }
 
   # Compile first, only for non containers
-
   if app_config.key?("binaries") && !(provider.start_with?("docker") || provider.start_with?("podman"))
-    commands << "docker build -f #{MANIFESTS[:container]} -t #{language}.#{framework} ."
+    commands << "docker build -f #{MANIFESTS[:container]}.#{variant} -t #{language}.#{framework} ."
     commands << "docker run -td #{language}.#{framework} > cid.txt"
     app_config["binaries"].each do |out|
       if out.count(File::Separator).positive?
@@ -218,14 +217,12 @@ task :config do
 
     makefile = File.open(File.join(language, framework, MANIFESTS[:build]), "w")
 
-    config.dig("framework", "engines")&.each do |engine|
-      engine.each do |name, _|
-        commands_for(language, framework, name).each do |target, commands|
-          makefile.write("#{target}.#{name}:\n")
-          commands.each do |command|
-            makefile.write("\t #{command}\n")
-          end
-        end
+    engine = config.dig("framework", "engines").first.first.first
+
+    commands_for(language, framework, engine).each do |target, commands|
+      makefile.write("#{target}.#{engine}:\n")
+      commands.each do |command|
+        makefile.write("\t #{command}\n")
       end
     end
 
