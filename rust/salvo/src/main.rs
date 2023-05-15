@@ -3,7 +3,7 @@ use salvo::routing::*;
 
 #[handler]
 fn index(res: &mut Response) {
-    res.set_status_code(StatusCode::OK);
+    res.status_code(StatusCode::OK);
 }
 #[handler]
 fn get_user(req: &mut Request, res: &mut Response) {
@@ -16,11 +16,9 @@ async fn main() {
             .post(index)
             .push(Router::with_path("<id>").filter(get()).handle(get_user)),
     );
-    let service = Service::new(router);
-    salvo::hyper::Server::builder(TcpListener::bind("0.0.0.0:3000"))
-        .http1_only(true)
-        .http1_pipeline_flush(true)
-        .serve(service)
-        .await
-        .unwrap();
+    let acceptor = TcpListener::new("0.0.0.0:3000").bind().await;
+    let mut server = Server::new(acceptor);
+    let http1 = server.http1_mut();
+    http1.pipeline_flush(true);
+    server.serve(router).await
 }

@@ -15,7 +15,12 @@ WORKDIR /usr/src/app
 
 ENV PATH $PATH:/root/.nimble/bin
 
-RUN nimble install -y
+{{#build_with}}
+  RUN {{{.}}}
+{{/build_with}}
+{{^build_with}}
+  RUN nimble install -y
+{{/build_with}}
 
 {{#build_command}}
   RUN {{{.}}}
