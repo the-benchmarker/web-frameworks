@@ -27,6 +27,7 @@ ENV PATH $PATH:/root/.nimble/bin
   RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
     --excessiveStackTrace:off \
     -d:release \
+    --opt:speed \
     --passC:-flto \
     --passL:-flto \
     server.nim
