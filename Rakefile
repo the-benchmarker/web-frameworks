@@ -112,9 +112,9 @@ def commands_for(language, framework, variant, provider = default_provider)
     app_config["binaries"].each do |out|
       if out.count(File::Separator).positive?
         FileUtils.mkdir_p(File.join(directory, File.dirname(out)))
-        commands[:build] << "docker cp `cat cid.txt`:/opt/web/#{File.dirname(out)} ."
+        commands[:build] << "docker cp `cat cid-#{variants}.txt`:/opt/web/#{File.dirname(out)} ."
       else
-        commands[:build] << "docker cp `cat cid.txt`:/opt/web/#{out} #{out}"
+        commands[:build] << "docker cp `cat cid-#{variants}.txt`:/opt/web/#{out} #{out}"
       end
     end
   end

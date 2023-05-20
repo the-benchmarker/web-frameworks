@@ -6,6 +6,7 @@ language:
     - pom.xml
     - src/**/*.properties
     - src/**/*.xml
+    - src/**/*.yml
     - src/**/*.jsp
 
   fix:

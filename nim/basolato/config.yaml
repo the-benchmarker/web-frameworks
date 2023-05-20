@@ -12,8 +12,18 @@ framework:
 
   build_command: "ducere build -p 3000"
 
+  command: "./startServer.sh"
+
   custom_files:
     - main
     - startServer.sh
 
-  command: "./startServer.sh"
+language:
+  files:
+    - main
+    - "**/*.json"
+    - config.nims
+    - "**/*.nim"
+    - "**/*.nimble"
+    - "**/*.cfg"
+

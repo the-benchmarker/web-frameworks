@@ -6,7 +6,6 @@ framework:
     - road-runner
 
   bootstrap:
-    - vendor/bin/spiral get
     - php public/index.php configure
 
 language:

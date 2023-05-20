@@ -3,6 +3,9 @@ language:
   files:
     - "**/*.gradle"
     - "**/*.scala"
+    - "**/*.sbt"
+    - "**/*.conf"
+
   engines:
     default:
       command: /usr/src/app/server-0.1.0-SNAPSHOT/bin/server
