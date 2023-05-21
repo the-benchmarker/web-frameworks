@@ -2,6 +2,9 @@ framework:
   github: hhxsv5/laravel-s
   version: 3.7
 
+  engines:
+    - swoole
+
   modules:
     - pcntl
 
@@ -15,5 +18,9 @@ framework:
 
   bootstrap:
     - mkdir storage
+
+  files:
+    - artisan
+    - bin/laravels
 
   command: php bin/laravels start

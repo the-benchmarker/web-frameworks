@@ -4,3 +4,5 @@ framework:
 
   engines:
     - swoole
+
+  command: php server/bootstrap.php

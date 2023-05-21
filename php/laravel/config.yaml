@@ -2,39 +2,22 @@ framework:
   website: laravel.com
   version: 10.11
 
-environment:
-  APP_ENV: production
-  APP_DEBUG: false
-  APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
-
-  engines:
-    - php-fpm
-    - swoole
-
-  files:
-    - artisan
-    - .swoole/config/laravels.php
-    - .swoole/bin/laravels
-
   environment:
     APP_ENV: production
     APP_DEBUG: false
     APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
+
+  files:
+    - artisan
 
   bootstrap:
     - mkdir bootstrap/cache -p
     - mkdir storage/framework/sessions -p
     - mkdir storage/framework/views -p
     - mkdir storage/framework/cache -p
-
     - chown -R www-data:www-data /usr/src/app
     - find /usr/src/app -type f -exec chmod 644 {} \;
     - find /usr/src/app -type d -exec chmod 755 {} \;
     - chmod -R ug+rwx storage /usr/src/app/bootstrap/cache
     - php artisan config:cache
     - php artisan route:cache
-
-language:
-  engines:
-    swoole:
-      command: php bin/laravels start

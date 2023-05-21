@@ -1,8 +1,5 @@
 language:
   version: 8.1
-  engines:
-    swoole:
-      command: php App/swoole.php
 
 framework:
   github: lizhichao/one
@@ -13,3 +10,5 @@ framework:
 
   modules:
     - bcmath
+
+  command: php App/swoole.php

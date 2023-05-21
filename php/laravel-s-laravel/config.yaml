@@ -13,6 +13,10 @@ framework:
     APP_DEBUG: false
     APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
 
+  files:
+    - artisan
+    - bin/laravels
+
   bootstrap:
     - mkdir bootstrap/cache
     - mkdir storage
