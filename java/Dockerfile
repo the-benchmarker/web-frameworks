@@ -8,13 +8,10 @@
 
 WORKDIR /usr/src/web
 
-{{#sources}}
-  COPY {{{.}}} {{{.}}}
-{{/sources}}
-
 {{#files}}
-  COPY {{.}} {{{.}}}
+  COPY '{{source}}' '{{target}}'
 {{/files}}
+
 
 {{#patch}}
   {{{.}}}
@@ -45,6 +42,10 @@ WORKDIR /opt/web
 {{#binaries}}
   COPY --from=build /usr/src/web/{{{.}}} {{{.}}}
 {{/binaries}}
+
+{{#static_files}}
+  COPY '{{source}}' '{{target}}'
+{{/static_files}}
 
 RUN ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
 

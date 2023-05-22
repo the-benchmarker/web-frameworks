@@ -3,9 +3,11 @@ WORKDIR /usr/src/app
 
 RUN R  -e 'install.packages("remotes")'
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 RUN R -e 'remotes::install_deps()'
 
-CMD R -e 'source("app.R")'
+CMD {{{command}}}
 

@@ -58,7 +58,7 @@ defined('DECADE') || define('DECADE', 315360000);
  | The three main conventions used for determining exit status codes
  | are as follows:
  |
- |    Standard C/C++ Library (stdlibc):
+ |    Standard C/C++ Library (defaultc):
  |       http://www.gnu.org/software/libc/manual/html_node/Exit-Status.html
  |       (This link also contains other GNU-specific conventions)
  |    BSD sysexits.h:

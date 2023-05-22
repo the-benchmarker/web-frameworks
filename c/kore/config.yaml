@@ -1,36 +1,31 @@
+language:
+  version: 99
+
 framework:
   website: kore.io
   version: 3.3
 
-provider:
-  default:
-    language: 99
+  download:
+    - wget -c https://github.com/jorisvink/kore/archive/3.3.1-release.tar.gz
+    - tar -xvf 3.3.1-release.tar.gz
+    - cd kore-3.3.1-release && TASKS=1 NOTLS=1 make && make install
 
-sources:
-  - "**/*.c"
-  - "**/*.conf"
+  build:
+    - cd hello && kodev build
+    - mv /usr/local/bin/kore kore
+    - mv hello/hello.so .
 
-files:
-  - "**/hello.conf"
+  build_deps:
+    - libssl-dev
 
-download:
-  - wget -c https://github.com/jorisvink/kore/archive/3.3.1-release.tar.gz
-  - tar -xvf 3.3.1-release.tar.gz
-  - cd kore-3.3.1-release && TASKS=1 NOTLS=1 make && make install
+  bin_deps:
+    - openssl
 
-build:
-  - cd hello && kodev build
-  - mv /usr/local/bin/kore kore
-  - mv hello/hello.so .
+  binaries:
+    - kore
+    - hello.so
 
-build_deps:
-  - libssl-dev
+  static_files:
+    - hello/conf/hello.conf
 
-bin_deps:
-  - openssl
-
-binaries:
-  - kore
-  - hello.so
-
-command: /opt/web/kore -f -n -r -c /opt/web/hello/conf/hello.conf
+  command: /opt/web/kore -f -n -r -c /opt/web/hello/conf/hello.conf

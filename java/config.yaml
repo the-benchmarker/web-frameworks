@@ -1,28 +1,27 @@
-provider:
-  default:
-    language: 17
-  digitalocean:
-    language: 17
+language:
+  version: 17
 
-sources:
-  - src/**/*.java
-  - pom.xml
+  files:
+    - src/**/*.java
+    - pom.xml
+    - src/**/*.properties
+    - src/**/*.xml
+    - src/**/*.yml
+    - src/**/*.jsp
 
-files:
-  - src/**/*.properties
-  - src/**/*.xml
-  - src/**/*.jsp
+  fix:
+    - ln -sfv /usr/local/openjdk-17/bin/java /usr/bin/java
 
-fix:
-  - ln -sfv /usr/local/openjdk-17/bin/java /usr/bin/java
+  deps:
+    - java-17-openjdk
 
-binaries:
-  - target/benchmark-1.0.0.jar
+  engines:
+    default:
+      command: >
+        /usr/bin/java
+        -XX:+UseNUMA -XX:+UseParallelGC 
+        -jar /opt/web/target/benchmark-1.0.0.jar
 
-deps:
-  - java-11-openjdk
-
-command: >
-  /usr/bin/java
-  -XX:+UseNUMA -XX:+UseParallelGC 
-  -jar /opt/web/target/benchmark-1.0.0.jar
+framework:
+  engines:
+    - default

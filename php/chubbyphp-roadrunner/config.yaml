@@ -2,14 +2,5 @@ framework:
   github: chubbyphp/chubbyphp-framework
   version: 5.0
 
-build_deps:
-  - libsodium-dev
-
-php_mod:
-  - sodium
-  - sockets
-
-before_command:
-  - ./vendor/bin/rr get-binary
-
-command: ./rr serve
+  engines:
+    - road-runner

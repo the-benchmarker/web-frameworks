@@ -2,11 +2,28 @@ framework:
   website: aiohttp.readthedocs.io
   version: 3.8
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class aiohttp.GunicornUVLoopWebWorker \
-      server:app
+  engines:
+    - aiohttp
+    - gunicorn
+    - uvloop
+
+language:
+  engines:
+    gunicorn:
+      environment:
+        WORKER_CLASS: aiohttp.GunicornWebWorker
+    uvloop:
+      bootstrap:
+        - pip install gunicorn
+        - pip install uvloop
+      environment:
+        WORKER_CLASS: aiohttp.GunicornUVLoopWebWorker
+      command: >
+        gunicorn --log-level warning  \
+          --bind 0.0.0.0:3000  \
+          --reuse-port  \
+          --workers $(nproc) \
+          --worker-class ${WORKER_CLASS} \
+          server:app
+    aiohttp:
+      command: python server.py 3000

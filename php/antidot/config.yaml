@@ -1,27 +1,24 @@
-provider:
-  default:
-    language: 8.1
+language:
+  version: 8.1
+
+  engines:
+    reactphp:
+      bootstreap:
+        - mkdir -p var/cache && chmod 777 var/cache
+        - mkdir -p var/log && chmod 777 var/log
+
+      command: bin/console server:run --quiet
 
 framework:
   website: antidotfw.io
   github: antidot-framework/react-framework
   version: 1.0
 
-build_deps:
-  - libevent-dev
-  - icu-dev
-  - openssl-dev
+  files:
+    - "**/*.php"
+    - composer.json
+    - bin/console
+    - "**/*.prod.yaml"
 
-php_ext:
-  - event
-
-php_mod:
-  - intl
-  - pcntl
-  - sockets
-
-before_command:
-  - mkdir -p var/cache && chmod 777 var/cache
-  - mkdir -p var/log && chmod 777 var/log
-
-command: bin/console server:run --quiet
+  engines:
+    - reactphp

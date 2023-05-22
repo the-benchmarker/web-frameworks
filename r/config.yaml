@@ -1,3 +1,14 @@
-provider:
-  default:
-    language: 4.2
+language:
+  version: 4.2
+
+  files:
+    - "**/*.R"
+    - DESCRIPTION
+
+  engines:
+    default:
+      command: R -e 'source("app.R")'
+
+framework:
+  engines:
+    - default

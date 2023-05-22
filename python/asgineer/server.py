@@ -3,7 +3,6 @@ import asgineer
 
 @asgineer.to_asgi
 async def app(request):
-
     if request.method == "GET":
         if request.path == "/":
             return ""

@@ -9,7 +9,9 @@ RUN apk update && \
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 ENV PATH $PATH:/root/.nimble/bin
 

@@ -30,15 +30,17 @@ end
 
 namespace :db do
   task :check_failures do
-    results = JSON.load(File.read('data.json'))
-    frameworks = results['metrics'].filter_map {|row|row['framework_id'] if row['label'] == "total_requests_per_s" && row["value"] == 0 }
-    STDOUT.puts results['frameworks'].filter_map {|row|row['label'] if frameworks.include? (row["id"]) }
+    results = JSON.parse(File.read('data.json'))
+    frameworks = results['metrics'].filter_map do |row|
+      row['framework_id'] if row['label'] == 'total_requests_per_s' && (row['value']).zero?
+    end
+    $stdout.puts results['frameworks'].filter_map { |row| row['label'] if frameworks.include?(row['id']) }
   end
   task :raw_export do
     raise 'Please provide a database' unless ENV['DATABASE_URL']
 
     data = { metrics: [], frameworks: [], languages: [] }
-    db = PG.connect(ENV['DATABASE_URL'])
+    db = PG.connect(ENV.fetch('DATABASE_URL', nil))
     db.exec("select row_to_json(t) from (#{SQL}) as t") do |result|
       result.each do |row|
         info = JSON.parse(row['row_to_json'], symbolize_names: true)
@@ -52,11 +54,11 @@ namespace :db do
         scheme = 'http' if framework_config['framework'].key?('unsecure')
         website = framework_config['framework']['website']
         if website.nil?
-        website = if framework_config['framework'].key?('github')
-                    "github.com/#{framework_config['framework']['github']}"
-                  elsif framework_config['framework'].key?('gitlab')
-                    "gitlab.com/#{framework_config['framework']['gitlab']}"
-                  end
+          website = if framework_config['framework'].key?('github')
+                      "github.com/#{framework_config['framework']['github']}"
+                    elsif framework_config['framework'].key?('gitlab')
+                      "gitlab.com/#{framework_config['framework']['gitlab']}"
+                    end
         end
         unless data[:frameworks].map { |row| row[:id] }.to_a.include?(framework_id)
           data[:frameworks] << {

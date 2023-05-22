@@ -2,19 +2,27 @@ framework:
   github: itsumura-h/nim-basolato
   version: 0.14
 
-deps:
-  - gcc
-  - musl-dev
-  - bsd-compat-headers
-  - openssl
-  - openssh-client
-  - pcre-dev
+  deps:
+    - gcc
+    - musl-dev
+    - bsd-compat-headers
+    - openssl
+    - openssh-client
+    - pcre-dev
 
-build_command: "ducere build -p 3000"
+  build_command: "ducere build -p 3000"
 
-custom_files:
-  - main
-  - startServer.sh
-  - .env
+  command: "./startServer.sh"
 
-command: "./startServer.sh"
+  custom_files:
+    - main
+    - startServer.sh
+
+language:
+  files:
+    - main
+    - "**/*.json"
+    - config.nims
+    - "**/*.nim"
+    - "**/*.nimble"
+    - "**/*.cfg"

@@ -1,3 +1,16 @@
-provider:
-  default:
-    language: 1.7
+language:
+  version: 1.8
+
+  files:
+    - "**/*.gradle"
+    - "**/*.kts"
+    - "**/*.kt"
+    - "**/*.conf"
+
+  engines:
+    default:
+      command: java -server -XX:+UseNUMA -XX:+UseParallelGC -XX:+AlwaysPreTouch -jar /usr/src/app/build/libs/server.jar
+
+framework:
+  engines:
+    - default

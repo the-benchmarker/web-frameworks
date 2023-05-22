@@ -1,35 +1,39 @@
-{{#version}}
-  FROM golang:{{version}}-alpine
-{{/version}}
-{{^version}}
-  FROM golang:1.20-alpine
-{{/version}}
-
-ENV CGO_ENABLED=0
-ENV GOOS=linux
-ENV GOARCH=amd64
+FROM golang:1.20-alpine
 
 WORKDIR /go/src/app
-COPY . ./
 
 {{#build_deps}}
   RUN apk add {{{.}}}
 {{/build_deps}}
 
-{{#before_command}}
+ENV CGO_ENABLED=0
+ENV GOOS=linux
+ENV GOARCH=amd64
+
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
+
+{{#bootstrap}}
   RUN {{{.}}}
-{{/before_command}}
+{{/bootstrap}}
 
 RUN go get
-
 RUN go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
 
+
 FROM alpine
+
+WORKDIR /go/bin
+
 {{#environment}}
 ENV {{{.}}}
 {{/environment}}
+
 COPY --from=0 /go/bin/app /go/bin/app
-{{#files}}
-COPY --from=0 /go/src/app/{{{.}}} /go/bin/{{{.}}}
-{{/files}}
-CMD cd /go/bin && ./app
+
+{{#static_files}}
+  COPY '{{source}}' '{{target}}'
+{{/static_files}}
+
+CMD {{{command}}}

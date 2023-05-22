@@ -13,6 +13,14 @@ ext {
 apply(from: "$gradleScripts/kotlin.gradle")
 apply(from: "$gradleScripts/application.gradle")
 
+sourceCompatibility = 17
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of("17"))
+    }
+}
+
 defaultTasks("installDist")
 
 application {

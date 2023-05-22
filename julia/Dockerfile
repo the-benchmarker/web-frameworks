@@ -6,4 +6,4 @@ COPY server.jl Project.toml deps.jl ./
 
 RUN julia deps.jl
 
-CMD julia server.jl
+CMD {{command}}

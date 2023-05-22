@@ -1,3 +1,11 @@
-provider:
-  default:
-    language: 5.8
+language:
+  version: 5.8
+  files:
+    - "**/*.swift"
+  engines:
+    default:
+      command: /usr/src/app/.build/release/server
+
+framework:
+  engines:
+    - default

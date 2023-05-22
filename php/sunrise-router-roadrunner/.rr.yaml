@@ -1,10 +1,8 @@
-
-
-version: '2.7'
+version: "3"
 rpc:
-    listen: 'tcp://127.0.0.1:6001'
+  listen: "tcp://127.0.0.1:6001"
 http:
-    address: '0.0.0.0:3000'
+  address: "0.0.0.0:3000"
 server:
-    command: 'php worker.php'
-    relay: pipes
+  command: "php worker.php"
+  relay: pipes

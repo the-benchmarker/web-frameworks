@@ -1,3 +1,39 @@
-provider:
-  default:
-    language: 18.16
+language:
+  version: ES2019
+
+  engines:
+    node:
+      environment:
+        NODE_ENV: production
+      bootstrap:
+        - npm --location=global install pm2
+        - npm install
+      command: pm2-runtime start app.js -i $(nproc)
+    turbo:
+      environment:
+        NODE_ENV: production
+      bootstrap:
+        - npm install
+      command: node app.js
+    uwebsockets:
+      deps:
+        - git
+        - gcompat
+      environment:
+        NODE_ENV: production
+        EXPERIMENTAL_FASTCALL: 1
+      bootstrap:
+        - npm --location=global install pm2
+        - npm install
+      command: pm2-runtime start app.js -i $(nproc)
+    deno:
+      command: deno run --allow-net --allow-read --allow-env app.ts
+
+framework:
+  engines:
+    - node
+
+  files:
+    - "**/*.js"
+    - "**/*.ts"
+    - "**/*.json"

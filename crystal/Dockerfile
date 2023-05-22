@@ -7,7 +7,9 @@
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 RUN apk add --update yaml-static
 
@@ -21,15 +23,16 @@ RUN shards build --release --no-debug --static {{#build_opts}} {{{.}}} {{/build_
 
 FROM alpine
 
+WORKDIR /usr/bin
+
 COPY --from=0 /usr/src/app/bin/server /usr/bin/app
 
-{{#files}}
-  COPY --from=0 /usr/src/app/{{.}} /usr/bin/{{{.}}}
-{{/files}}
+{{#static_files}}
+  COPY '{{source}}' '{{target}}'
+{{/static_files}}
 
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
-WORKDIR /usr/bin
-CMD ./app
+CMD {{command}}

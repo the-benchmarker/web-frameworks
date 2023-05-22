@@ -121,12 +121,6 @@ php:
     - 48d90782
   slim:
     - l0gicgate
-  sunrise-router:
-    - fenric
-  sunrise-router-roadrunner:
-    - fenric
-  sunrise-router-annotations:
-    - fenric
   phalcon:
     - ruudboon
   ice:
@@ -137,7 +131,7 @@ php:
     - fenric
   sunrise-router-annotations:
     - fenric
-  sunrise-router-roadrunner
+  sunrise-router-roadrunner:
     - fenric
 fsharp:
   saturn:

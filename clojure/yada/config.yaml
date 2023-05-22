@@ -2,10 +2,10 @@ framework:
   website: juxt.pro/yada/
   version: 1.2
 
-build:
-  - mkdir classes && clj -e "(compile 'server)" && clojure -Auberjar --main-class server
+  build:
+    - mkdir classes && clj -e "(compile 'server)" && clojure -Auberjar --main-class server
 
-binaries:
-  - yada.jar
+  binaries:
+    - yada.jar
 
-command: java -jar yada.jar 3000
+  command: java -jar yada.jar 3000

@@ -2,18 +2,25 @@ framework:
   github: hhxsv5/laravel-s
   version: 3.7
 
-php_mod:
-  - pcntl
+  engines:
+    - swoole
 
-php_ext:
-  - swoole
+  modules:
+    - pcntl
 
-environment:
-  APP_ENV: production
-  APP_DEBUG: false
-  APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
+  extensions:
+    - swoole
 
-before_command:
-  - mkdir storage
+  environment:
+    APP_ENV: production
+    APP_DEBUG: false
+    APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
 
-command: php bin/laravels start
+  bootstrap:
+    - mkdir storage
+
+  files:
+    - artisan
+    - bin/laravels
+
+  command: php bin/laravels start

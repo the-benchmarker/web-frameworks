@@ -16,9 +16,8 @@ WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/out out
 
-ENV ASPNETCORE_URLS http://*:3000
-ENV DOTNET_TieredPGO 1 
-ENV DOTNET_TC_QuickJitForLoops 1 
-ENV DOTNET_ReadyToRun 0
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
 
-CMD dotnet /usr/src/app/out/web.dll
+CMD {{command}}

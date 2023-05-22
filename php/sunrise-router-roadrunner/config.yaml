@@ -2,15 +2,13 @@ framework:
   github: sunrise-php/http-router
   version: 2.16
 
-build_deps:
-  - libevent-dev
-  - libsodium-dev
+  engines:
+    - road-runner
 
-php_mod:
-  - sodium
-  - sockets
+  deps:
+    - libevent-dev
+    - libsodium-dev
 
-before_command:
-  - ./vendor/bin/rr get-binary
-
-command: ./rr serve
+  modules:
+    - sodium
+    - sockets

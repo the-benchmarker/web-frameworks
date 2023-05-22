@@ -2,4 +2,13 @@ framework:
   github: sanic-org/sanic
   version: 23.3
 
-command: python server.py
+  engines:
+    - sanic
+    - uvicorn
+    - gunicorn
+    - hypercorn
+
+language:
+  engines:
+    sanic:
+      command: python server.py
