@@ -72,7 +72,7 @@ namespace :db do
         unless data[:languages].map { |row| row[:label] }.to_a.include?(language)
           data[:languages] << {
             label: language,
-            version: language_config.dig('provider', 'default', 'language')
+            version: language_config.dig('language', 'version')
           }
         end
         data[:metrics] << info
