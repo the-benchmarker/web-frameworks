@@ -5,7 +5,7 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  - push
+  - pull_request
 jobs:
   matrix:
     runs-on: ubuntu-latest
