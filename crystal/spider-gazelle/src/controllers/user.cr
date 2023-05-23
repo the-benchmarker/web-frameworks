@@ -9,7 +9,7 @@ class User < Application
     render text: route_params["id"]
   end
 
-  post "/:id", :create do
+  post "/", :create do
     head :ok
   end
 end
