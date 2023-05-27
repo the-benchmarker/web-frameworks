@@ -220,7 +220,7 @@ task :config do
     engine = config.dig("framework", "engines").first.first.first
 
     commands_for(language, framework, engine).each do |target, commands|
-      makefile.write("#{target}.#{engine}:\n")
+      makefile.write("#{target}:\n")
       commands.each do |command|
         makefile.write("\t #{command}\n")
       end
