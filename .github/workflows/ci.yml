@@ -54,7 +54,7 @@ jobs:
 
       - name: Build
         run: |
-          make "build.${ENGINE}"  -f "${DIRECTORY}/.Makefile"
+          make "build"  -f "${DIRECTORY}/.Makefile"
         env:
           DIRECTORY: ${{ matrix.directory }}
           ENGINE: ${{ matrix.engine }}
