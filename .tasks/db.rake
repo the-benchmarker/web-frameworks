@@ -48,9 +48,9 @@ namespace :db do
         info[:framework_id] = framework_id
         language = info.delete :language
         framework = info.delete :framework
-        main_config = YAML.safe_load(File.read(File.join("config.yaml")))
-        language_config = YAML.safe_load(File.read(File.join(language, "config.yaml")))
-        framework_config = YAML.safe_load(File.read(File.join(language, framework, "config.yaml")))
+        main_config = YAML.safe_load(File.read(File.join('config.yaml')))
+        language_config = YAML.safe_load(File.read(File.join(language, 'config.yaml')))
+        framework_config = YAML.safe_load(File.read(File.join(language, framework, 'config.yaml')))
         config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
         scheme = 'https'
         scheme = 'http' if config['framework'].key?('unsecure')
