@@ -48,22 +48,24 @@ namespace :db do
         info[:framework_id] = framework_id
         language = info.delete :language
         framework = info.delete :framework
-        framework_config = YAML.safe_load(File.read(File.join(language, framework, 'config.yaml')))
-        language_config = YAML.safe_load(File.read(File.join(language, 'config.yaml')))
+        main_config = YAML.safe_load(File.read(File.join("config.yaml")))
+        language_config = YAML.safe_load(File.read(File.join(language, "config.yaml")))
+        framework_config = YAML.safe_load(File.read(File.join(language, framework, "config.yaml")))
+        config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
         scheme = 'https'
-        scheme = 'http' if framework_config['framework'].key?('unsecure')
-        website = framework_config['framework']['website']
+        scheme = 'http' if config['framework'].key?('unsecure')
+        website = config['framework']['website']
         if website.nil?
-          website = if framework_config['framework'].key?('github')
-                      "github.com/#{framework_config['framework']['github']}"
-                    elsif framework_config['framework'].key?('gitlab')
-                      "gitlab.com/#{framework_config['framework']['gitlab']}"
+          website = if config['framework'].key?('github')
+                      "github.com/#{config['framework']['github']}"
+                    elsif config['framework'].key?('gitlab')
+                      "gitlab.com/#{config['framework']['gitlab']}"
                     end
         end
         unless data[:frameworks].map { |row| row[:id] }.to_a.include?(framework_id)
           data[:frameworks] << {
             id: framework_id,
-            version: framework_config.dig('framework', 'version'),
+            version: config.dig('framework', 'version'),
             label: framework,
             language: language,
             website: "#{scheme}://#{website}"
@@ -72,7 +74,7 @@ namespace :db do
         unless data[:languages].map { |row| row[:label] }.to_a.include?(language)
           data[:languages] << {
             label: language,
-            version: language_config.dig('languagep', 'version')
+            version: config.dig('language', 'version')
           }
         end
         data[:metrics] << info
