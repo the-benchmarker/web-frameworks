@@ -1,4 +1,4 @@
-FROM php:{{#language.version}}{{{.}}}{{/language.version}}-fpm-alpine3.16
+FROM php:{{#language.version}}{{{.}}}{{/language.version}}-fpm-alpine
 
 RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev linux-headers {{#deps}} {{{.}}} {{/deps}}
 
