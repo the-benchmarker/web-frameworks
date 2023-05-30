@@ -4,10 +4,6 @@ framework:
 
   deps:
     - bash
-    - libexecinfo-dev
-
-  environment:
-    LDFLAGS: -lexecinfo
 
   extensions:
     - ice
