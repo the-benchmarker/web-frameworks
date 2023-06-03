@@ -5,5 +5,5 @@ framework:
 deps:
   - pcre-dev
 
-build_opts: '--checks:off --assertions:off --warnings:off --hints:off -d:httpx --threads:on --define:usePcreHeader --passL: "/usr/lib/libpcre.a"'
+build_opts: '--checks:off --assertions:off --warnings:off --hints:off -d:httpx --threads:on --mm:orc --define:usePcreHeader --passL: "/usr/lib/libpcre.a"'
 build_with: nimble install -d -y
