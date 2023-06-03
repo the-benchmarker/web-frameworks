@@ -1,9 +1,9 @@
 framework:
   github: HapticX/happyx
-  version: "0.26"
+  version: "1.0"
 
 deps:
   - pcre-dev
 
-build_opts: '--checks:off --assertions:off --warnings:off --hints:off -d:httpx --define:usePcreHeader --passL: "/usr/lib/libpcre.a"'
+build_opts: '--checks:off --assertions:off --warnings:off --hints:off -d:httpx --threads:on --define:usePcreHeader --passL: "/usr/lib/libpcre.a"'
 build_with: nimble install -d -y
