@@ -2,5 +2,5 @@ framework:
   github: HapticX/happyx
   version: "1.0"
 
-build_opts: '-d:httpx --threads:on --mm:orc'
+build_opts: '-d:httpx --threads:on --mm:orc --assertions:off --checks:off'
 build_with: nimble install -d -y
