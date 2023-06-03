@@ -31,6 +31,7 @@ ENV PATH $PATH:/root/.nimble/bin
     --assertions:off \
     --checks:off \
     --warnings:off \
+    --hints:off \
     -d:release \
     --opt:speed \
     --passC:-flto \
