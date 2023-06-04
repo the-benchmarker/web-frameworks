@@ -17,6 +17,7 @@ framework:
   custom_files:
     - main
     - startServer.sh
+    - .env
 
 language:
   files:
@@ -26,3 +27,4 @@ language:
     - "**/*.nim"
     - "**/*.nimble"
     - "**/*.cfg"
+    - .env
