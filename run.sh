@@ -17,7 +17,7 @@
 #createdb -U postgres benchmark
 #psql -U postgres -d benchmark < dump.sql
 
-find nim -mindepth 2 -type f -name config.yaml > /tmp/list.txt
+find rust -mindepth 2 -type f -name config.yaml > /tmp/list.txt
 
 while read line ; do 
   echo "*********** ${line} *************"
