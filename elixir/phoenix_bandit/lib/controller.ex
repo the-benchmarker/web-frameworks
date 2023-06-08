@@ -5,14 +5,14 @@ defmodule Server.Controller do
   @compile {:hipe, [:verbose, :o3]}
 
   def index(conn, _params) do
-    text(conn, "")
+    Plug.Conn.send_resp(conn, 200, "")
   end
 
   def show(conn, %{"id" => id}) do
-    text(conn, id)
+    Plug.Conn.send_resp(conn, 200, id)
   end
 
   def create(conn, _params) do
-    text(conn, "")
+    Plug.Conn.send_resp(conn, 200, "")
   end
 end

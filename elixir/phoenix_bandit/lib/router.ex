@@ -4,7 +4,6 @@ defmodule Server.Router do
   @compile :native
   @compile {:hipe, [:verbose, :o3]}
 
-  get("/", Server.Controller, :index)
-
-  resources("/user", Server.Controller, only: [:show, :create])
+  get "/", Server.Controller, :index
+  resources "/user", Server.Controller, only: [:show, :create]
 end

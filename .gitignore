@@ -42,3 +42,8 @@ obj
 [Rr]elease/
 *.fsproj
 *.fsproj.user
+
+# Elixir directories
+/elixir/*/_build/
+/elixir/*/deps/
+erl_crash.dump
