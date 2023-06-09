@@ -46,4 +46,5 @@ obj
 # Elixir directories
 /elixir/*/_build/
 /elixir/*/deps/
+/elixir/*/mix.lock
 erl_crash.dump
