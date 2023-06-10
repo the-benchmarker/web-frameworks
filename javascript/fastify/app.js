@@ -13,4 +13,4 @@ app.post("/user", function (request, reply) {
   reply.send();
 });
 
-app.listen(3000, "0.0.0.0", function () {});
+app.listen({ port: 3000, host: "0.0.0.0" }, function () {})
