@@ -4,5 +4,5 @@ defmodule Server.Endpoint do
   @compile :native
   @compile {:hipe, [:verbose, :o3]}
 
-  plug(Server.Router)
+  plug Server.Router
 end

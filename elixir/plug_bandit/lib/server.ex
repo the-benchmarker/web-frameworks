@@ -4,17 +4,15 @@ defmodule Server do
   @compile :native
   @compile {:hipe, [:verbose, :o3]}
 
-  plug(:match)
-  plug(:dispatch)
+  plug :match
+  plug :dispatch
 
   get "/" do
     send_resp(conn, 200, "")
   end
 
   get "/user/:id" do
-    with %{path_params: %{"id" => id}} <- conn do
-      send_resp(conn, 200, id)
-    end
+    send_resp(conn, 200, id)
   end
 
   post "/user" do

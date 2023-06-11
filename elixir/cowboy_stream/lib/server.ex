@@ -5,6 +5,7 @@ defmodule Server do
   @compile :native
   @compile {:hipe, [:verbose, :o3]}
 
+  @impl :cowboy_stream
   def init(_stream_id, %{method: "GET", path: "/"}, _opts) do
     {response(), []}
   end
@@ -24,19 +25,15 @@ defmodule Server do
     ]
   end
 
-  def data(_stream_id, _is_fin, _data, state) do
-    {[], state}
-  end
+  @impl :cowboy_stream
+  def data(_stream_id, _is_fin, _data, state), do: {[], state}
 
-  def info(_stream_id, _info, state) do
-    {[], state}
-  end
+  @impl :cowboy_stream
+  def info(_stream_id, _info, state), do: {[], state}
 
-  def terminate(_stream_id, _reason, _state) do
-    :ok
-  end
+  @impl :cowboy_stream
+  def terminate(_stream_id, _reason, _state), do: :ok
 
-  def early_error(_stream_id, _reason, _partial_req, resp, _opts) do
-    resp
-  end
+  @impl :cowboy_stream
+  def early_error(_stream_id, _reason, _partial_req, resp, _opts), do: resp
 end
