@@ -28,6 +28,8 @@ language:
       command: pm2-runtime start app.js -i $(nproc)
     deno:
       command: deno run --allow-net --allow-read --allow-env app.ts
+    bun:
+      command: bun run app.ts
 
 framework:
   engines:
