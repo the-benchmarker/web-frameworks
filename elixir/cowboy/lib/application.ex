@@ -5,11 +5,7 @@ defmodule Server.Application do
   @compile {:hipe, [:verbose, :o3]}
 
   def start(_type, _args) do
-    children = [
-      cowboy_child_spec()
-    ]
-
-    Supervisor.start_link(children, strategy: :one_for_one, name: Server.Supervisor)
+    Supervisor.start_link([cowboy_child_spec()], strategy: :one_for_one, name: Server.Supervisor)
   end
 
   def cowboy_child_spec do

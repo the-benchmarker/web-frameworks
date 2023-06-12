@@ -1,8 +1,9 @@
 language:
   version: 1.15
   files:
-    - "**/*.ex"
-    - "**/*.exs"
+    - "mix.exs"
+    - "lib/*.ex"
+    - "config/*.exs"
   engines:
     default:
       command: bin/server start
