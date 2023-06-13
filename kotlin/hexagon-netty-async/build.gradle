@@ -1,0 +1,30 @@
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.8.+"
+}
+
+ext {
+    hexagonVersion = "3.0.0-B2"
+    nettyVersion = "4.1.+"
+
+    gradleScripts = "https://raw.githubusercontent.com/hexagonkt/hexagon/$hexagonVersion/gradle"
+}
+
+apply(from: "$gradleScripts/kotlin.gradle")
+apply(from: "$gradleScripts/application.gradle")
+
+defaultTasks("installDist")
+
+application {
+    mainClass.set("com.hexagonkt.BenchmarkKt")
+}
+
+dependencies {
+    implementation("com.hexagonkt:http_server_netty_async:$hexagonVersion")
+}
+
+jarAll {
+    archiveFileName = "server.jar"
+}
+
+assemble.dependsOn("jarAll")
