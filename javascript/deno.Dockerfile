@@ -1,4 +1,4 @@
-FROM denoland/deno:alpine-1.16.1
+FROM denoland/deno:alpine-1.34.2
 
 WORKDIR /usr/src/app
 
