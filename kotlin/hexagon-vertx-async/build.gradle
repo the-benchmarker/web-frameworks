@@ -1,0 +1,33 @@
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.8.+"
+}
+
+ext {
+    hexagonVersion = "3.0.0-B2"
+    nettyVersion = "4.1.+"
+    vertxVersion = "4.4.+"
+
+    gradleScripts = "https://raw.githubusercontent.com/hexagonkt/hexagon/$hexagonVersion/gradle"
+}
+
+apply(from: "$gradleScripts/kotlin.gradle")
+apply(from: "$gradleScripts/application.gradle")
+
+defaultTasks("installDist")
+
+application {
+    mainClass.set("com.hexagonkt.BenchmarkKt")
+}
+
+dependencies {
+    implementation("com.hexagonkt:http_server_vertx_async:$hexagonVersion")
+    implementation("io.vertx:vertx-io_uring-incubator:$vertxVersion")
+    implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-x86_64")
+}
+
+jarAll {
+    archiveFileName = "server.jar"
+}
+
+assemble.dependsOn("jarAll")
