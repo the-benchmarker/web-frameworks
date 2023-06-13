@@ -1,3 +1,3 @@
 module main
 
-require goyave.dev/goyave/v4 v4.4.10
+require goyave.dev/goyave/v4 v4.4.11

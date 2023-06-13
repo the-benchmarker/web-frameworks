@@ -2,10 +2,10 @@ framework:
   website: struts.apache.org
   version: 6.1
 
-build:
-  - mvn clean package
+  build:
+    - mvn clean package
 
-binaries:
-  - target/benchmark-1.0.0-standalone.jar
+  binaries:
+    - target/benchmark-1.0.0-standalone.jar
 
-command: java -XX:+UseNUMA -XX:+UseParallelGC -jar target/benchmark-1.0.0-standalone.jar --port 3000
+  command: java -XX:+UseNUMA -XX:+UseParallelGC -jar target/benchmark-1.0.0-standalone.jar --port 3000

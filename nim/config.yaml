@@ -1,3 +1,14 @@
-provider:
-  default:
-    language: 1.6
+language:
+  version: 1.6
+  files:
+    - config.nims
+    - "**/*.nim"
+    - "**/*.nimble"
+    - "**/*.cfg"
+  engines:
+    default:
+      command: /usr/src/app/server
+
+framework:
+  engines:
+    - default

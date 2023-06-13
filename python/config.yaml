@@ -1,3 +1,81 @@
-provider:
-  default:
-    language: 3.11
+language:
+  version: 3.11
+
+  engines:
+    cheroot:
+      command: ""
+    tornado:
+      command: ""
+    twisted:
+      build_deps:
+        - gcc
+      command: twistd --python=server.py --nodaemon
+    greenlet:
+      build_deps:
+        - gcc
+        - libev-dev
+    gunicorn:
+      build_deps:
+        - gcc
+      bootstrap:
+        - pip install gunicorn
+      environment:
+        WORKER_CLASS: sync
+        PYTHON_APP: server:app
+      command: >
+        gunicorn --log-level warning  \
+          --bind 0.0.0.0:3000  \
+          --reuse-port  \
+          --workers $(nproc) \
+          --worker-class ${WORKER_CLASS} \
+          ${PYTHON_APP}
+    bjoern:
+      build_deps:
+        - gcc
+        - libev-dev
+    uwsgi:
+      environment:
+        PYTHON_APP: server:app
+      build_deps:
+        - gcc
+        - libpcre3-dev
+      bootstrap:
+        - pip install uwsgi
+      command: uwsgi --http 0.0.0.0:3000 --module ${PYTHON_APP}
+    waitress:
+      environment:
+        PYTHON_APP: server:app
+      bootstrap:
+        - pip install waitress
+      command: waitress-serve --host=0.0.0.0 --port=3000 ${PYTHON_APP}
+    uvicorn:
+      build_deps:
+        - gcc g++
+      environment:
+        PYTHON_APP: server:app
+      bootstrap:
+        - pip install uvicorn[standard]
+      command: uvicorn --host 0.0.0.0 --port 3000 --workers $(nproc) ${PYTHON_APP}
+    hypercorn:
+      build_deps:
+        - gcc g++
+      environment:
+        PYTHON_APP: server:app
+      bootstrap:
+        - pip install hypercorn
+      command: hypercorn --bind 0.0.0.0:3000 --workers $(nproc) ${PYTHON_APP}
+    daphne:
+      build_deps:
+        - gcc g++
+      bootstrap:
+        - pip install daphne
+      environment:
+        PYTHON_APP: server:app
+      command: daphne -b 0.0.0.0 -p 3000 ${PYTHON_APP}
+
+framework:
+  engines:
+    - gunicorn
+  files:
+    - "**/*.py"
+    - requirements.txt

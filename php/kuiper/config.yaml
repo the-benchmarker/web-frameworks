@@ -2,7 +2,7 @@ framework:
   website: kuiper-framework.github.io
   version: 0.8
 
-php_ext:
-  - swoole
+  engines:
+    - swoole
 
-command: php src/index.php start
+  command: php src/index.php start

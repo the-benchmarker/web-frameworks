@@ -5,8 +5,8 @@ serve("0.0.0.0", 3000):
   get "/":
     ""
   
-  get "/user/$id:int":
-    "{id}"
+  get "/user/$id":
+    id
   
   post "/user":
     ""

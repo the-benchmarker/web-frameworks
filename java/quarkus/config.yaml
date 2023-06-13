@@ -1,11 +1,11 @@
 framework:
   website: quarkus.io
-  version: 3.0
+  version: 3.1
 
-build:
-  - mvn clean package -Dquarkus.package.type=uber-jar -Dquarkus.http.port=3000 -Pnative
+  build:
+    - mvn clean package -Dquarkus.package.type=uber-jar -Dquarkus.http.port=3000 -Pnative
 
-binaries:
-  - target/quarkus-1.0.0-runner.jar
+  binaries:
+    - target/quarkus-1.0.0-runner.jar
 
-command: java -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/quarkus-1.0.0-runner.jar
+  command: java -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/quarkus-1.0.0-runner.jar

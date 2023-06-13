@@ -2,8 +2,5 @@ framework:
   github: jkyberneees/low-http-server
   version: 4.1
 
-build_deps:
-  - git
-
-bin_deps:
-  - gcompat # required by uWebSocket
+  engines:
+    - uwebsockets

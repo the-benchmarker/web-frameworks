@@ -4,12 +4,20 @@ plugins {
 }
 
 ext {
-    hexagonVersion = "2.8.4"
+    hexagonVersion = "2.8.6"
     gradleScripts = "https://raw.githubusercontent.com/hexagonkt/hexagon/$hexagonVersion/gradle"
 }
 
 apply(from: "$gradleScripts/kotlin.gradle")
 apply(from: "$gradleScripts/application.gradle")
+
+sourceCompatibility = 17
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of("17"))
+    }
+}
 
 defaultTasks("installDist")
 

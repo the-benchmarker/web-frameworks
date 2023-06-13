@@ -1,7 +1,7 @@
 class Welcome < Application
   base "/"
 
-  def index
+  get "/", :index do
     head :ok
   end
 end

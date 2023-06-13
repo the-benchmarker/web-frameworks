@@ -16,12 +16,12 @@ Gemfile.lock
 
 # Temporary files
 FRAMEWORKS.yaml
-*/*/.Dockerfile
-*/*/Dockerfile
+*/*/.Dockerfile*
 */*/.Makefile
 */*/ip.txt
 venv
 */*/cid.txt
+*/.Makefile
 
 /lib/**/*.cr
 /vendor
@@ -42,3 +42,9 @@ obj
 [Rr]elease/
 *.fsproj
 *.fsproj.user
+
+# Elixir directories
+/elixir/*/_build/
+/elixir/*/deps/
+/elixir/*/mix.lock
+erl_crash.dump

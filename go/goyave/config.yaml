@@ -2,5 +2,5 @@ framework:
   github: go-goyave/goyave
   version: 4.4
 
-files:
-  - config.json
+  static_files:
+    - config.json

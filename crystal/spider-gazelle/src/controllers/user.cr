@@ -1,13 +1,15 @@
 class User < Application
-  def index
+  base "/user"
+
+  get "/", :index do
     head :ok
   end
 
-  def show
+  get "/:id", :show do
     render text: route_params["id"]
   end
 
-  def create
+  post "/", :create do
     head :ok
   end
 end

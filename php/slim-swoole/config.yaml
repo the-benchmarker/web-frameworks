@@ -1,12 +1,11 @@
-provider:
-  default:
-    language: 8.1
-
 framework:
   website: slimframework.com
   version: 4.9
 
-php_ext:
-  - swoole-4.8.11
+  engines:
+    - swoole
 
-command: php public/index.php
+language:
+  engines:
+    swoole:
+      command: php public/index.php

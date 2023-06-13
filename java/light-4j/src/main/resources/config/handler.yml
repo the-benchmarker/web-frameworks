@@ -60,9 +60,9 @@ handlers:
   # - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
   # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
   # Business Handlers
-  - benchmark.light4j.handler.GetHandler
-  - benchmark.light4j.handler.UserIdGetHandler
-  - benchmark.light4j.handler.UserPostHandler
+  - benchmark.handler.GetHandler
+  - benchmark.handler.UserIdGetHandler
+  - benchmark.handler.UserPostHandler
 
 #chains:
 #  default:
@@ -82,12 +82,12 @@ paths:
   - path: "/"
     method: "GET"
     exec:
-      - benchmark.light4j.handler.GetHandler
+      - benchmark.handler.GetHandler
   - path: "/user/{id}"
     method: "GET"
     exec:
-      - benchmark.light4j.handler.UserIdGetHandler
+      - benchmark.handler.UserIdGetHandler
   - path: "/user"
     method: "POST"
     exec:
-      - benchmark.light4j.handler.UserPostHandler
+      - benchmark.handler.UserPostHandler

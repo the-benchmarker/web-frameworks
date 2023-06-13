@@ -1,22 +1,17 @@
 defmodule Server do
-  @compile {:inline, response: 1, response: 2}
   @compile :native
   @compile {:hipe, [:verbose, :o3]}
 
   def init(%{method: "GET", path: "/"} = request, state) do
-    {:ok, response(request), state}
+    {:ok, :cowboy_req.reply(200, %{}, "", request), state}
   end
 
   def init(%{method: "GET", bindings: %{id: id}} = request, state) do
-    {:ok, response(request, id), state}
+    {:ok, :cowboy_req.reply(200, %{}, id, request), state}
   end
 
   def init(%{method: "POST", path: "/user"} = request, state) do
-    {:ok, response(request), state}
-  end
-
-  defp response(request, body \\ "") do
-    :cowboy_req.reply(200, %{}, body, request)
+    {:ok, :cowboy_req.reply(200, %{}, "", request), state}
   end
 
   def routes do

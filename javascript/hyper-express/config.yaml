@@ -1,9 +1,6 @@
 framework:
   github: kartikk221/hyper-express
-  version: 6.5
+  version: 6.7
 
-build_deps:
-  - git # required by uWebSockets.js
-
-bin_deps:
-  - gcompat # required by uWebSockets.js
+  engines:
+    - uwebsockets

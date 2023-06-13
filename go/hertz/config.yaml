@@ -2,5 +2,5 @@ framework:
   website: cloudwego.io/docs/hertz/
   version: 0.6
 
-build_tags:
-  - stdjson
+  build_tags:
+    - stdjson

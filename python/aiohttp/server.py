@@ -22,3 +22,9 @@ async def app():
     app = web.Application()
     app.add_routes(routes)
     return app
+
+
+if __name__ == "__main__":
+    import sys
+
+    web.run_app(app(), port=sys.argv.pop())

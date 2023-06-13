@@ -2,14 +2,12 @@ framework:
   website: slimframework.com
   version: 4.9
 
-build_deps:
-  - libsodium-dev
+  engines:
+    - road-runner
 
-php_mod:
-  - sodium
-  - sockets
+  deps:
+    - libsodium-dev
 
-before_command:
-  - ./vendor/bin/rr get-binary
-
-command: ./rr serve
+  modules:
+    - sodium
+    - sockets

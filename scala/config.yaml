@@ -1,5 +1,15 @@
-provider:
-  default:
-    language: 2.13
+language:
+  version: 2.13
+  files:
+    - "**/*.gradle"
+    - "**/*.scala"
+    - "**/*.sbt"
+    - "**/*.conf"
 
-command: target/universal/root-0.1.0-SNAPSHOT.tgz
+  engines:
+    default:
+      command: /usr/src/app/server-0.1.0-SNAPSHOT/bin/server
+
+framework:
+  engines:
+    - default

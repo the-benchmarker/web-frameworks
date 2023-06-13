@@ -2,11 +2,13 @@ framework:
   github: spiral/framework
   version: 3.7
 
-php_mod:
-  - sockets
+  engines:
+    - road-runner
 
-before_command:
-  - vendor/bin/rr get-binary
-  - php app.php configure
+  bootstrap:
+    - php public/index.php configure
 
-command: ./rr serve
+language:
+  engines:
+    road-runner:
+      command: ./rr serve

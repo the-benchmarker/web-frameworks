@@ -1,13 +1,13 @@
-provider:
-  default:
-    language: 8.1
-
 framework:
   github: bearframework/bearframework
   version: "1.10"
 
-php_mod:
-  - gd
+language:
+  version: 8.1
+  engines:
+    php-fpm:
+      modules:
+        - gd
 
-build_deps:
-  - libpng-dev
+      build_deps:
+        - libpng-dev

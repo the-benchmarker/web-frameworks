@@ -1,12 +1,17 @@
 framework:
   website: django-ninja.rest-framework.com
-  version: 0.21
+  version: 0.22
 
-command: >
-  gunicorn \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class uvicorn.workers.UvicornWorker  \
-      app.asgi:application
+  engines:
+    - uvicorn
+    - hypercorn
+    - daphne
+
+language:
+  engines:
+    uvicorn:
+      command: uvicorn --host 0.0.0.0 --port 3000 --workers $(nproc) app.asgi:application
+    hypercorn:
+      command: hypercorn --bind 0.0.0.0:3000 --workers $(nproc) app.asgi:application
+    daphne:
+      command: daphne -b 0.0.0.0 -p 3000 app.asgi:application

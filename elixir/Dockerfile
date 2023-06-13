@@ -1,4 +1,4 @@
-FROM elixir:1.14-slim AS build
+FROM elixir:1.15 AS build
 
 # Update system deps
 RUN apt-get -qq update
@@ -12,7 +12,9 @@ RUN mix local.hex --force
 WORKDIR /usr/src/app
 
 # Copy source code
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 ENV MIX_ENV="prod"
 ENV ERL_COMPILER_OPTIONS="[native, {hipe, [verbose, o3]}]"
@@ -44,4 +46,4 @@ USER nobody
 ENV HOME /app
 
 # Start release
-CMD bin/server start
+CMD {{command}}

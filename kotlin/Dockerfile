@@ -2,7 +2,9 @@ FROM gradle:8-jdk17 AS build
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 RUN gradle build
 
@@ -12,5 +14,5 @@ WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/build/libs/server.jar /usr/src/app/build/libs/server.jar
 
-CMD java -server -XX:+UseNUMA -XX:+UseParallelGC -XX:+AlwaysPreTouch -jar /usr/src/app/build/libs/server.jar
+CMD {{command}}
 

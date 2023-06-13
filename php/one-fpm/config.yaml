@@ -1,10 +1,17 @@
+language:
+  version: 8.1
+  engines:
+    php-fpm:
+      bootstrap:
+        - mkdir -p App/RunCache
+        - chmod 777 App/RunCache
+
 framework:
   github: lizhichao/one
   version: 2.3
 
-php_mod:
-  - bcmath
+  engines:
+    - php-fpm
 
-before_command:
-  - mkdir -p App/RunCache
-  - chmod 777 App/RunCache
+  modules:
+    - bcmath

@@ -9,11 +9,9 @@ RUN apt-get -qy install build-essential wget
   RUN apt-get -qy install {{{.}}}
 {{/build_deps}}
 
-WORKDIR /usr/src/app
-
-{{#sources}}
-   COPY {{{.}}} {{{.}}}
-{{/sources}}
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 {{#download}}
   RUN {{{.}}}
@@ -33,12 +31,16 @@ RUN apt-get -qq update
    RUN apt-get -qy install {{{.}}}
 {{/bin_deps}}
 
-{{#files}}
-   COPY {{{.}}} {{{.}}}
-{{/files}}
-
 {{#binaries}}
    COPY --from=0 /usr/src/app/{{.}} {{{.}}}
 {{/binaries}}
+
+{{#static_files}}
+  COPY '{{source}}' '{{target}}'
+{{/static_files}}
+
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
 
 CMD {{{command}}}

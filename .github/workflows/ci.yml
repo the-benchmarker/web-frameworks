@@ -1,5 +1,9 @@
 name: CI
 
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
 on:
   - pull_request
 jobs:
@@ -19,7 +23,7 @@ jobs:
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
       - id: set-matrix
-        run: echo "::set-output name=matrix::$(bundle exec rake ci:matrix)"
+        run: echo "matrix=$(bundle exec rake ci:matrix)" >> "$GITHUB_OUTPUT"
         env:
           FILES: ${{ steps.file_changes.outputs.files }}
 
@@ -42,13 +46,18 @@ jobs:
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
 
+      - name: Docker version
+        run: docker -v
+
       - name: Configure
         run: bundle exec rake config
 
       - name: Build
         run: |
-          cd ${{ matrix.directory }} 
-          make build  -f .Makefile
+          make "build"  -f "${DIRECTORY}/.Makefile"
+        env:
+          DIRECTORY: ${{ matrix.directory }}
+          ENGINE: ${{ matrix.engine }}
 
       - name: Wait
         run: sleep 1
@@ -56,4 +65,6 @@ jobs:
       - name: Test
         run: bundle exec rspec .spec
         env:
-          DIRECTORY: ${{ matrix.directory }}
+          LANGUAGE: ${{ matrix.language }}
+          FRAMEWORK: ${{ matrix.framework }}
+          ENGINE: ${{ matrix.engine }}

@@ -1,5 +1,8 @@
 framework:
   website: spring.io/projects/spring-boot
-  version: 3.0
+  version: 3.1
 
-command: /usr/bin/java -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/benchmark-1.0.0.jar
+  binaries:
+    - target/benchmark-1.0.0.jar
+
+  command: /usr/bin/java -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/benchmark-1.0.0.jar

@@ -2,11 +2,32 @@ framework:
   website: djangoproject.com
   version: 4.2
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class gevent  \
-      app.wsgi
+  engines:
+    - gunicorn
+    - uwsgi
+    - uvicorn
+    - hypercorn
+    - daphne
+
+language:
+  engines:
+    gunicorn:
+      command: >
+        gunicorn --log-level warning  \
+          --bind 0.0.0.0:3000  \
+          --reuse-port  \
+          --workers $(nproc) \
+          app.wsgi
+    uwsgi:
+      command: >
+        uwsgi --module=app.wsgi:application  \
+          --http=0.0.0.0:3000 \      
+          --processes=$(nproc)
+    daphne:
+      command: daphne -b 0.0.0.0 -p 3000 app.asgi:application
+    uvicorn:
+      command: >
+        uvicorn --host 0.0.0.0 --port 3000 \
+          --workers $(nproc) app.asgi:application
+    hypercorn:
+      command: hypercorn --bind 0.0.0.0:3000 --workers $(nproc) app.asgi:application

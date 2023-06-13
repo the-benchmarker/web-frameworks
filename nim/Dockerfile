@@ -9,7 +9,9 @@ RUN apk update && \
 
 WORKDIR /usr/src/app
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 ENV PATH $PATH:/root/.nimble/bin
 
@@ -26,7 +28,12 @@ ENV PATH $PATH:/root/.nimble/bin
 {{^build_command}}
   RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
     --excessiveStackTrace:off \
+    --assertions:off \
+    --checks:off \
+    --warnings:off \
+    --hints:off \
     -d:release \
+    --opt:speed \
     --passC:-flto \
     --passL:-flto \
     server.nim

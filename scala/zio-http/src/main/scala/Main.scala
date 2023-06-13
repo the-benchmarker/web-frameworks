@@ -4,9 +4,9 @@ import zio.http._
 object HelloWorld extends ZIOAppDefault {
 
   val app = Http.collect[Request] {
-    case Method.GET -> !!               => Response.ok
-    case Method.POST -> !! / "user"     => Response.ok
-    case Method.GET -> !! / "user" / id => { Response.text(id) }
+    case Method.GET -> Root => Response.ok
+    case Method.POST -> Root / "user" => Response.ok
+    case Method.GET -> Root / "user" / id => { Response.text(id) }
   }
 
   override val run =

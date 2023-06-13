@@ -1,14 +1,14 @@
 framework:
   website: javalin.io
-  version: 5.5
+  version: 5.6
 
-build:
-  - mvn compile assembly:single
+  build:
+    - mvn compile assembly:single
 
-binaries:
-  - target/benchmark-1.0.0-jar-with-dependencies.jar
+  binaries:
+    - target/benchmark-1.0.0-jar-with-dependencies.jar
 
-command: >
-  /usr/bin/java -server 
-  -XX:+UseNUMA -XX:+UseParallelGC 
-  -cp target/benchmark-1.0.0-jar-with-dependencies.jar benchmark.javalin.Bench profiles=production
+  command: >
+    /usr/bin/java -server 
+    -XX:+UseNUMA -XX:+UseParallelGC 
+    -cp target/benchmark-1.0.0-jar-with-dependencies.jar benchmark.javalin.Bench profiles=production

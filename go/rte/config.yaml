@@ -2,5 +2,5 @@ framework:
   github: jwilner/rte
   version: 0.0
 
-environment:
-  SERVER_ADDRESS: 0.0.0.0:3000
+  environment:
+    SERVER_ADDRESS: 0.0.0.0:3000

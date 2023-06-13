@@ -1,11 +1,13 @@
-FROM rocker/r-ver:4.2.3
+FROM rocker/r-ver:4.3.0
 WORKDIR /usr/src/app
 
 RUN R  -e 'install.packages("remotes")'
 
-COPY . ./
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
 RUN R -e 'remotes::install_deps()'
 
-CMD R -e 'source("app.R")'
+CMD {{{command}}}
 

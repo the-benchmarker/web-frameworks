@@ -1,3 +1,12 @@
-provider:
-  default:
-    language: 2.19
+language:
+  version: 2.19
+  engines:
+    default:
+      command: dart main.dart
+
+framework:
+  files:
+    - "**/*.dart"
+    - pubspec.yaml
+  engines:
+    - default
