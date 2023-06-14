@@ -14,4 +14,4 @@ var server = new GuildenServer
 server.initHeaderCtx(handleGet, 3000, false)
 server.initBodyCtx(handlePost, 3000)
 
-server.serve(loglevel = DEBUG)
+server.serve(loglevel = NONE)
