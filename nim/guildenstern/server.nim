@@ -1,11 +1,11 @@
-import cgi, strtabs, httpcore, guildenstern/[ctxheader, ctxbody], strutils
+import cgi, strtabs, httpcore, guildenstern/[ctxheader, ctxbody], uri
 
 proc handleGet(ctx: HttpCtx) =
-  if ctx.getUri() == "/":
+  let uri = parseUri(ctx.getUri())
+  if uri.path == "/":
     ctx.reply("")
   else:
-    let uri = ctx.getUri()
-    let id = uri[6 .. ^1]
+    let id = uri.path[6 .. ^1]
 
 proc handlePost(ctx: HttpCtx) =
   ctx.reply("")
