@@ -1,13 +1,12 @@
-import strutils
 import scorper
 
 proc cb(req: Request) {.async.} =
   case req.meth 
   of HttpGet:
-    if req.path == "/":
+    if req.url.path == "/":
       await req.resp("")
     else:
-      let id = req.path[6 .. ^1]
+      let id = req.url.path[6 .. ^1]
       await req.resp(id)
   of HttpPost:
     await req.resp("")
