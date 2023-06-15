@@ -3,12 +3,14 @@ import cgi, strtabs, httpcore, guildenstern/[ctxheader, ctxbody], uri
 proc handleGet(ctx: HttpCtx) =
   let uri = parseUri(ctx.getUri())
   if uri.path == "/":
-    ctx.reply("")
+    let r = ""
+    ctx.reply(r)
   else:
     let id = uri.path[6 .. ^1]
 
 proc handlePost(ctx: HttpCtx) =
-  ctx.reply("")
+  let r = ""
+  ctx.reply(r)
 
 var server = new GuildenServer
 server.initHeaderCtx(handleGet, 3000, false)
