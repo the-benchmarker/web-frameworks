@@ -5,19 +5,14 @@ plugins {
 
 ext {
     hexagonVersion = "3.0.0-B2"
+    nettyVersion = "4.1.+"
+    vertxVersion = "4.4.+"
+
     gradleScripts = "https://raw.githubusercontent.com/hexagonkt/hexagon/$hexagonVersion/gradle"
 }
 
 apply(from: "$gradleScripts/kotlin.gradle")
 apply(from: "$gradleScripts/application.gradle")
-
-sourceCompatibility = 17
-
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("17"))
-    }
-}
 
 defaultTasks("installDist")
 
@@ -26,7 +21,9 @@ application {
 }
 
 dependencies {
-    implementation("com.hexagonkt:http_server_netty:$hexagonVersion")
+    implementation("com.hexagonkt:http_server_vertx_async:$hexagonVersion")
+    implementation("io.vertx:vertx-io_uring-incubator:$vertxVersion")
+    implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-x86_64")
 }
 
 jarAll {
