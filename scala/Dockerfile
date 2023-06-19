@@ -2,7 +2,7 @@
   FROM sbtscala/scala-sbt:eclipse-temurin-jammy-11.0.17_8_1.8.2_{{{.}}} AS build
 {{/provider.default.image-version}}
 {{^provider.default.image-version}}
-  FROM sbtscala/scala-sbt:eclipse-temurin-jammy-11.0.17_8_1.8.2_3.3.0 AS build
+  FROM sbtscala/scala-sbt:eclipse-temurin-jammy-11.0.17_8_1.9.0_3.3.0 AS build
 {{/provider.default.image-version}}
 
 
