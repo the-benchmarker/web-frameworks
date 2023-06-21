@@ -1,14 +1,7 @@
-use std::sync::Arc;
-use async_trait::async_trait;
 use silent::prelude::*;
 
-struct Index;
-
-#[async_trait]
-impl Handler for Index {
-    async fn call(&self, _req: Request) -> Result<Response> {
-        Ok(Response::empty())
-    }
+async fn index(_req: Request) -> Result<Response> {
+    Ok(Response::empty())
 }
 
 fn main() {
@@ -21,7 +14,7 @@ fn main() {
     );
     user_route.get_handler_mut().insert(
         Method::POST,
-        Arc::new(Index),
+        HandlerWrapperResponse::new(index).arc(),
     );
     let mut route = Route::new("")
         .append(
@@ -29,7 +22,7 @@ fn main() {
         );
     route.get_handler_mut().insert(
         Method::GET,
-        Arc::new(Index),
+        HandlerWrapperResponse::new(index).arc(),
     );
     Server::new().bind("0.0.0.0:3000".parse().unwrap()).bind_route(route).run();
 }
