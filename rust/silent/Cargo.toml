@@ -5,8 +5,7 @@ edition = "2021"
 authors = ["Hubert Shelley <hubertshelley@163.com>"]
 
 [dependencies]
-async-trait = "0.1.68"
-silent = { version = "0.7" }
+silent = { version = "0.8" }
 
 [profile.release]
 opt-level = 3
