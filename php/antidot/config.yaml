@@ -1,5 +1,5 @@
 language:
-  version: 8.1
+  version: 8.2
 
   engines:
     reactphp:
@@ -7,12 +7,12 @@ language:
         - mkdir -p var/cache && chmod 777 var/cache
         - mkdir -p var/log && chmod 777 var/log
 
-      command: bin/console server:run --quiet
+      command: bin/console serve
 
 framework:
   website: antidotfw.io
-  github: antidot-framework/react-framework
-  version: 1.0
+  github: antidot-framework/antidot-framework
+  version: 2.0
 
   files:
     - "**/*.php"

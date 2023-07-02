@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Antidot\Application\Http\Application;
+use Antidot\Framework\Application;
 use Psr\Container\ContainerInterface;
 
 return static function (Application $app, ContainerInterface $container): void {
