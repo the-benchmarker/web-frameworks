@@ -1,12 +1,6 @@
 language:
-  version: 8.2
-
   engines:
     reactphp:
-      bootstreap:
-        - mkdir -p var/cache && chmod 777 var/cache
-        - mkdir -p var/log && chmod 777 var/log
-
       command: bin/console serve
 
 framework:
