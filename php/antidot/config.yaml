@@ -1,12 +1,14 @@
 language:
   engines:
     reactphp:
-      command: bin/console serve
+      command: XDEBUG_MODE=off bin/console serve
 
 framework:
   website: antidotfw.io
   github: antidot-framework/antidot-framework
   version: 2.0
+  bootstrap:
+    - mkdir -p var/cache
 
   files:
     - "**/*.php"
