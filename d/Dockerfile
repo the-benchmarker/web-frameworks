@@ -1,4 +1,4 @@
-FROM dlang2/ldc-ubuntu AS build
+FROM dlangchina/dlang-ldc AS build
 
 WORKDIR /usr/src/app
 
@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 {{/files}}
 
 ENV DC=ldc2
-RUN dub build -b release --compiler=ldc2 --verbose
+RUN dub build -b release-nobounds --compiler=ldc2 --verbose
 
 FROM ubuntu:bionic
 
