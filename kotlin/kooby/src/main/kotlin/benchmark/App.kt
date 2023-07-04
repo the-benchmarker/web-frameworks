@@ -2,7 +2,7 @@ package benchmark
 
 import io.jooby.ExecutionMode.EVENT_LOOP
 import io.jooby.StatusCode
-import io.jooby.runApp
+import io.jooby.kt.runApp
 
 fun main(args: Array<String>) {
   runApp(args, EVENT_LOOP) {
