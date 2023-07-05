@@ -4,6 +4,7 @@ language:
   files:
     - "**/*.d"
     - dub.json
+    - dub.selections.json
     - dub.sdl
 
   engines:
