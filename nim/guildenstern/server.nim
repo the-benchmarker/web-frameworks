@@ -1,17 +1,10 @@
 import guildenstern/[ctxheader], uri
 
 proc handleGet(ctx: HttpCtx) =
-  if ctx.getMethod() == "GET":
-    let uri = parseUri(ctx.getUri())
-    if uri.path == "/":
-      let r = ""
-      ctx.reply(r)
-    else:
-      let id = uri.path[6 .. ^1]
-      ctx.reply(id)
+  if ctx.isUri("/") or not ctx.isMethod("GET"): ctx.reply(Http200)
   else:
-    let r = ""
-    ctx.reply(r)
+    let id = ctx.getUri()[6 .. ^1]
+    ctx.reply(id)
 
 var server = new GuildenServer
 server.initHeaderCtx(handleGet, 3000)
