@@ -1,4 +1,4 @@
-FROM dlangchina/dlang-ldc AS build
+FROM dlang2/ldc-ubuntu AS build
 
 WORKDIR /usr/src/app
 
