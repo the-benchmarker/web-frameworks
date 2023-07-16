@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 {{/files}}
 
 ENV DC=ldc2
-RUN dub build -b release-nobounds --compiler=ldc2 --verbose
+RUN dub build -b release --compiler=ldc2 --verbose
 
 FROM ubuntu:bionic
 
