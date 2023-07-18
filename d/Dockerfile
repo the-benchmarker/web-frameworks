@@ -1,4 +1,5 @@
-FROM dlang2/ldc-ubuntu AS build
+FROM alpine:3.18
+RUN apk add --no-cache ldc
 
 WORKDIR /usr/src/app
 
