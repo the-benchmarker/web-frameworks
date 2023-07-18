@@ -1,5 +1,5 @@
 FROM alpine:3.18 AS build
-RUN apk update &&
+RUN apk update && \
     apk upgrade --no-cache
 RUN apk add --no-cache gcc ldc dub ldc-runtime musl-dev
 
