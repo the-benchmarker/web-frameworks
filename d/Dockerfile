@@ -1,5 +1,5 @@
 FROM alpine:3.18
-RUN apk add --no-cache ldc dub ldc-runtime
+RUN apk add --no-cache gcc ldc dub ldc-runtime
 
 WORKDIR /usr/src/app
 
