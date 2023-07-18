@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3.18 as build
 RUN apk add --no-cache gcc ldc dub ldc-runtime musl-dev
 
 WORKDIR /usr/src/app
