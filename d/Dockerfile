@@ -3,7 +3,7 @@ FROM debian:sid AS build
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update
-RUN apt-get -y install build-essential wget openssl ldc
+RUN apt-get -y install build-essential wget openssl ldc dub
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
