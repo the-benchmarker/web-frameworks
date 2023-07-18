@@ -1,10 +1,9 @@
-FROM alpine AS build
-RUN apk update && \
-    apk upgrade --no-cache
-RUN apk add --no-cache gcc ldc dub ldc-runtime musl-dev openssl-dev pcre-dev
-
+FROM debian:sid AS build
 
 WORKDIR /usr/src/app
+
+RUN apt-get -qq update
+RUN apt-get -y install build-essential wget openssl ldc
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
@@ -14,7 +13,7 @@ ENV DC=ldc2
 RUN dub build -b release --compiler=ldc2 --verbose
 
 {{#deps}}
-  RUN apk --co-cache add {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/deps}}
 
 {{#environment}}
