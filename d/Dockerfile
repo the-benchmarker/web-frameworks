@@ -15,6 +15,7 @@ RUN dub build -b release --compiler=ldc2 --verbose
 FROM alpine
 
 RUN apk --no-cache add openssl-dev pcre-dev
+WORKDIR /usr/src/app
 
 {{#deps}}
   RUN apk --co-cache add {{{.}}}
