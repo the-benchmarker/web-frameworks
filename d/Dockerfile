@@ -1,4 +1,6 @@
-FROM alpine:3.18 as build
+FROM alpine:3.18 AS build
+RUN apk update &&
+    apk upgrade --no-cache
 RUN apk add --no-cache gcc ldc dub ldc-runtime musl-dev
 
 WORKDIR /usr/src/app
@@ -10,11 +12,12 @@ WORKDIR /usr/src/app
 ENV DC=ldc2
 RUN dub build -b release --compiler=ldc2 --verbose
 
-FROM ubuntu:bionic
+FROM alpine
 
-RUN apt-get -qq update
+RUN apk --no-cache add openssl-dev pcre-dev
+
 {{#deps}}
-  RUN apt-get -qy install {{{.}}}
+  RUN apk --co-cache add {{{.}}}
 {{/deps}}
 
 COPY --from=build /usr/src/app/server /usr/src/app/server
