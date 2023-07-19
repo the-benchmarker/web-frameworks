@@ -1,4 +1,4 @@
-FROM debian:sid AS build
+FROM debian:bookworm AS build
 
 WORKDIR /usr/src/app
 
