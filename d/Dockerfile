@@ -18,7 +18,7 @@ WORKDIR /opt/web
 
 RUN apt-get -qq update && apt-get -qy install openssl wget ldc
 
-COPY --from=build /usr/src/app/{{.}} {{{.}}}
+COPY --from=build /usr/src/app/server /opt/web/server
 
 {{#deps}}
   RUN apt-get -qy install {{{.}}}
