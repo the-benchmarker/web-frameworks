@@ -12,7 +12,7 @@ RUN apt-get -qy install build-essential wget openssl ldc dub libssl-dev zlib1g-d
 ENV DC=ldc2
 RUN dub build -b release --compiler=ldc2 --verbose
 
-FROM debiab:bookworm
+FROM debian:bookworm
 
 WORKDIR /usr/src/app
 
