@@ -28,4 +28,8 @@ COPY --from=build /usr/src/app/server /usr/src/app/server
   ENV {{{.}}}
 {{/environment}}
 
+{{#static_files}}
+  COPY '{{source}}' '{{target}}'
+{{/static_files}}
+
 CMD {{{command}}}
