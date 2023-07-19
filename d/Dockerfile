@@ -14,22 +14,22 @@ RUN dub build -b release --compiler=ldc2 --verbose
 
 FROM debian:bookworm
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
-RUN apt-get -qq update && apt-get -qy install openssl libssl-dev
+RUN apt-get -qq update && apt-get -qy install openssl wget ldc
 
-COPY --from=build /usr/src/app/server /usr/src/app/server
+COPY --from=build /usr/src/app/{{.}} {{{.}}}
 
 {{#deps}}
   RUN apt-get -qy install {{{.}}}
 {{/deps}}
 
-{{#environment}}
-  ENV {{{.}}}
-{{/environment}}
-
 {{#static_files}}
   COPY '{{source}}' '{{target}}'
 {{/static_files}}
+
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
 
 CMD {{{command}}}

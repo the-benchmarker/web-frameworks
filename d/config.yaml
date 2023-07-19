@@ -9,7 +9,7 @@ language:
 
   engines:
     default:
-      command: /usr/src/app/server
+      command: /opt/web/server
 
 framework:
   engines:
