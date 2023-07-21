@@ -24,6 +24,4 @@ RUN apt-get -qq update
   RUN {{{.}}}
 {{/fixes}}
 
-RUN bun install
-
 CMD {{{command}}}

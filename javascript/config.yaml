@@ -37,6 +37,7 @@ language:
         - npm
       bootstrap:
         - npm --location=global install pm2
+        - bun install
       command: pm2-runtime start "NODE_ENV=production bun app.ts" -i $(nproc)
 
 framework:
