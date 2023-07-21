@@ -31,14 +31,14 @@ language:
         - npm
       bootstrap:
         - npm --location=global install pm2
-      command: pm2-runtime start app.ts --interpreter="deno" --interpreter-args="run --allow-net"
+      command: pm2 start app.ts --interpreter="deno" --interpreter-args="run --allow-net --allow-read --allow-env" -i max &
     bun:
       deps:
         - npm
       bootstrap:
         - npm --location=global install pm2
         - bun install
-      command: pm2-runtime start "NODE_ENV=production bun app.ts" -i $(nproc)
+      command: pm2 start "NODE_ENV=production bun app.ts" -i max &
 
 framework:
   engines:
