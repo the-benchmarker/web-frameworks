@@ -20,4 +20,4 @@ app.post("/user", (res, req) => {
 });
 
 // Start the server on port 3000
-app.listen(port, result => result && console.log('Listening to port ' + port));
+app.listen(port, () => {});
