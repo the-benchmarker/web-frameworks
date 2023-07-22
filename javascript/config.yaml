@@ -31,7 +31,7 @@ language:
         - npm
       bootstrap:
         - npm -g install pm2
-      command: nohup pm2-runtime start app.ts --interpreter="deno" --interpreter-args="run --allow-net --allow-read --allow-env" -i max
+      command: nohup pm2-runtime start "deno run app.ts --allow-net --allow-read" -i max
     bun:
       deps:
         - npm
