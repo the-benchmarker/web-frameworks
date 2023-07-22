@@ -9,16 +9,13 @@
     }
   ],
   "require": {
-    "ext-intl": "*",
     "ext-json": "*",
-    "antidot-fw/framework": "~1.0",
-    "antidot-fw/antidot-react-psr15": "@stable",
+    "antidot-fw/framework": "~2.0",
     "antidot-fw/cli": "@stable",
     "antidot-fw/container": "@stable",
-    "antidot-fw/fast-router-adapter": "@stable",
-    "antidot-fw/react-framework": "@stable",
-    "antidot-fw/symfony-config-translator": "@stable",
-    "antidot-fw/yaml-config-provider": "@stable"
+    "antidot-fw/runtime": "@stable",
+    "fidry/cpu-core-counter": "@stable",
+    "laminas/laminas-config-aggregator": "@stable"
   },
   "autoload": {
     "psr-4": {
@@ -26,6 +23,9 @@
     }
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "symfony/runtime": true
+    }
   }
 }

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
+use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Laminas\Diactoros\Response\TextResponse;
 
 class UserId implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new TextResponse($request->getAttribute('id'));
+        return new Response(200, ['Content-Type' => 'text/plain'], $request->getAttribute('id'));
     }
 }
