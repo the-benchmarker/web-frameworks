@@ -1,6 +1,9 @@
-FROM dlang2/ldc-ubuntu AS build
+FROM debian:bookworm AS build
 
 WORKDIR /usr/src/app
+
+RUN apt-get -qq update
+RUN apt-get -qy install build-essential wget openssl ldc dub libssl-dev zlib1g-dev
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
@@ -9,14 +12,21 @@ WORKDIR /usr/src/app
 ENV DC=ldc2
 RUN dub build -b release --compiler=ldc2 --verbose
 
-FROM ubuntu:bionic
+FROM debian:bookworm
 
-RUN apt-get -qq update
+WORKDIR /opt/web
+
+RUN apt-get -qq update && apt-get -qy install openssl wget ldc
+
+COPY --from=build /usr/src/app/server /opt/web/server
+
 {{#deps}}
   RUN apt-get -qy install {{{.}}}
 {{/deps}}
 
-COPY --from=build /usr/src/app/server /usr/src/app/server
+{{#static_files}}
+  COPY '{{source}}' '{{target}}'
+{{/static_files}}
 
 {{#environment}}
   ENV {{{.}}}

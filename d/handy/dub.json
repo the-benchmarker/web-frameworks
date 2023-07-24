@@ -1,8 +1,7 @@
 {
   "name": "server",
   "dependencies": {
-    "archttp": "~>1.1.1",
-    "mir-cpuid": "~>1.2.10"
+      "handy-httpd": "~>7.1.0"
   },
   "license": "MIT"
 }
