@@ -1,8 +1,8 @@
-import uWS from "uWebSockets.js";
+import { App } from "uWebSockets.js";
 
 // Create a new instance of HyperExpress HTTP
 const port = 3000;
-const app = uWS.App();
+const app = App();
 
 // GET "/" => 200 with empty body
 app.get("/", (res, req) => {
