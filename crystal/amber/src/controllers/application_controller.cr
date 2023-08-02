@@ -3,7 +3,7 @@ class ApplicationController < Amber::Controller::Base
   end
 
   def get
-    return params[:id]
+    params[:id]
   end
 
   def create
