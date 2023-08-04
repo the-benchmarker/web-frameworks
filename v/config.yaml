@@ -1,0 +1,11 @@
+language:
+  version: 0.4
+  files:
+    - "**/*.v"
+  engines:
+    default:
+      command: /opt/web/server
+
+framework:
+  engines:
+    - default
