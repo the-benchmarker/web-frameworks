@@ -1,4 +1,4 @@
-FROM thevlang/vlang
+FROM thevlang/vlang:alpine as build
 
 WORKDIR /app
 
@@ -6,6 +6,12 @@ WORKDIR /app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN v . -o server
+RUN v . -prod -o server
+
+FROM alpine
+
+WORKDIR /app
+
+COPY --from=build /app /app
 
 CMD {{command}}
