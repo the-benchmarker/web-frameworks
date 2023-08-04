@@ -4,7 +4,7 @@ language:
     - "**/*.v"
   engines:
     default:
-      command: /opt/web/server
+      command: /app/server
 
 framework:
   engines:
