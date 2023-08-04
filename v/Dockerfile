@@ -6,7 +6,7 @@ WORKDIR /app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN v .
+RUN v . -o server
 
 WORKDIR /app
 
