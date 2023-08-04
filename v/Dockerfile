@@ -8,6 +8,4 @@ WORKDIR /app
 
 RUN v . -o server
 
-WORKDIR /app
-
 CMD {{command}}
