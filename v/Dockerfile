@@ -6,6 +6,10 @@ WORKDIR /app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
+{{#bootstrap}}
+  RUN {{{.}}}
+{{/bootstrap}}
+
 RUN v . -prod -o server
 
 FROM alpine
