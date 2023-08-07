@@ -2,5 +2,7 @@ framework:
   github: dom96/jester
   version: 0.6
 
+  build_opts:
+    - "--mm:refc"
 files:
   - /usr/src/app/server
