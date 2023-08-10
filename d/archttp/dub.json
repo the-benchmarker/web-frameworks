@@ -4,5 +4,6 @@
     "archttp": "~>1.1.1",
     "mir-cpuid": "~>1.2.10"
   },
+  "dflags-ldc": ["-mcpu=native"],
   "license": "MIT"
 }
