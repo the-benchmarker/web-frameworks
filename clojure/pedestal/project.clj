@@ -7,6 +7,6 @@
                  [io.pedestal/pedestal.service "0.6.0"]
                  [io.pedestal/pedestal.jetty "0.6.0"]]
   :min-lein-version "2.0.0"
-  :resource-paths ["config", "resources"]
+  :resource-paths []
   :profiles {:uberjar {:aot [the-benchmarker-pedestal.server]}}
   :main ^{:skip-aot true} the-benchmarker-pedestal.server)
