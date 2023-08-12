@@ -3,6 +3,6 @@
   "dependencies": {
     "serverino": "~>0.4.5"
   },
-  "dflags-ldc": ["-mcpu=native"],
+  "dflags-ldc": ["-mcpu=native", "-flto=thin"],
   "license": "MIT"
 }
