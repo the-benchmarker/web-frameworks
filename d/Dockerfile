@@ -32,4 +32,6 @@ COPY --from=build /usr/src/app/server /opt/web/server
   ENV {{{.}}}
 {{/environment}}
 
+USER nobody
+
 CMD {{{command}}}
