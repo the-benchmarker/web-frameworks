@@ -1,0 +1,8 @@
+framework:
+  website: litestar.dev
+  version: "2.0"
+
+  engines:
+    - uvicorn
+    - hypercorn
+    - daphne
