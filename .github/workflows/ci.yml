@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix: ${{fromJson(needs.matrix.outputs.matrix)}}
       max-parallel: 4
 
@@ -66,8 +66,8 @@ jobs:
 
       - name: Siege
         run: |
-          apt-get -y update 
-          apt-get -y install wrk
+          sudo apt-get -y update 
+          sudo apt-get -y install wrk
           wrk http://`cat ${DIRECTORY}/ip-${ENGINE}.txt`:3000
         env:
           DIRECTORY: ${{ matrix.directory }}
