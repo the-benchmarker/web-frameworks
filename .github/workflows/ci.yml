@@ -4,7 +4,7 @@ on:
   - pull_request
 jobs:
   matrix:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v3
@@ -62,9 +62,13 @@ jobs:
         env:
           LANGUAGE: ${{ matrix.language }}
           FRAMEWORK: ${{ matrix.framework }}
+          ENGINE: ${{ matrix.engine }}
 
       - name: Siege
-        run: wrk http://`cat ${DIRECTORY}/ip-${ENGINE}.txt`:3000
+        run: |
+          apt-get -y update 
+          apt-get -y install wrk
+          wrk http://`cat ${DIRECTORY}/ip-${ENGINE}.txt`:3000
         env:
           DIRECTORY: ${{ matrix.directory }}
           ENGINE: ${{ matrix.engine }}
