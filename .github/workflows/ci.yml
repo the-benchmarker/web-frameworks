@@ -53,7 +53,6 @@ jobs:
           make "build"  -f "${DIRECTORY}/.Makefile"
         env:
           DIRECTORY: ${{ matrix.directory }}
-          ENGINE: ${{ matrix.engine }}
 
       - name: Wait
         run: sleep 1
@@ -63,4 +62,9 @@ jobs:
         env:
           LANGUAGE: ${{ matrix.language }}
           FRAMEWORK: ${{ matrix.framework }}
+
+      - name: Siege
+        run: wrk http://`cat ${DIRECTORY}/ip-${ENGINE}.txt`:3000
+        env:
+          DIRECTORY: ${{ matrix.directory }}
           ENGINE: ${{ matrix.engine }}
