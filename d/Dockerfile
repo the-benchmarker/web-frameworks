@@ -16,7 +16,7 @@ FROM debian:bookworm
 
 WORKDIR /opt/web
 
-RUN apt-get -qq update && apt-get -qy install openssl wget ldc
+RUN apt-get -qq update && apt-get -qy install openssl wget ldc nginx
 
 COPY --from=build /usr/src/app/server /opt/web/server
 
@@ -32,6 +32,11 @@ COPY --from=build /usr/src/app/server /opt/web/server
   ENV {{{.}}}
 {{/environment}}
 
-USER nobody
-
-CMD {{{command}}}
+RUN echo 'server {\n\
+    listen 0.0.0.0:3000;\n\
+    location / {\n\
+       proxy_pass http://127.0.0.1:8080;\n\
+    }\n\
+}\n' > /etc/nginx/conf.d/default.conf
+  
+CMD  nohup {{{command}}} ; /usr/sbin/nginx
