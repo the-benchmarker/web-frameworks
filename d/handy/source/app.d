@@ -2,10 +2,6 @@ import handy_httpd;
 import std.algorithm: startsWith;
 
 void main() {
-    ServerConfig cfg = ServerConfig.defaultValues();
-    cfg.workerPoolSize = 5;
-    cfg.hostname = "0.0.0.0";
-    cfg.port = 3000;
     new HttpServer((ref ctx) {
         if (ctx.request.url == "/") {
             ctx.response.setStatus(HttpStatus.OK);
