@@ -17,3 +17,6 @@ def get_user(id: int):
 @app.post('/user')
 def create_user():
     return ''
+
+
+app.start()
