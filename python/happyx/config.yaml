@@ -1,0 +1,12 @@
+framework:
+  website: hapticx.nim.town
+  github: HapticX/happyx
+  version: '2.2'
+
+  engines:
+    - happyx
+
+language:
+  engines:
+    happyx:
+      command: python /usr/src/app/server.py
