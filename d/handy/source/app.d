@@ -13,5 +13,5 @@ void main() {
             ctx.response.setStatus(HttpStatus.OK);
             ctx.response.writeBodyString(ctx.request.url[6..$]);
         }
-    }, cfg).start();
+    }).start();
 }
