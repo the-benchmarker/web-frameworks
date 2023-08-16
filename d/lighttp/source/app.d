@@ -2,7 +2,7 @@ import lighttp;
 
 void main(string[] args) {
     Server server = new Server();
-    server.host("0.0.0.0", 3000);
+    server.host("127.0.0.1", 8080);
     server.router.add(new Router());
     server.run();
 }

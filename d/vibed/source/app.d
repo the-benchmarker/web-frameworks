@@ -32,6 +32,6 @@ void main()
     router.registerWebInterface(new Service);
     router.rebuild();
 
-    listenHTTP("0.0.0.0:3000", router);
+    listenHTTP("127.0.0.1:8080", router);
     runApplication();
 }

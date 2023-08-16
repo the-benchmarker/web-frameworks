@@ -16,7 +16,7 @@ FROM debian:bookworm
 
 WORKDIR /opt/web
 
-RUN apt-get -qq update && apt-get -qy install openssl wget ldc nginx
+RUN apt-get -qq update && apt-get -qy install openssl wget ldc nginx supervisor
 
 COPY --from=build /usr/src/app/server /opt/web/server
 
@@ -38,5 +38,21 @@ RUN echo 'server {\n\
        proxy_pass http://127.0.0.1:8080;\n\
     }\n\
 }\n' > /etc/nginx/conf.d/default.conf
-  
-CMD  nohup {{{command}}} ; /usr/sbin/nginx
+
+RUN echo '[supervisord]\n\
+nodaemon=true\n\
+[program:startup]\n\
+priority=1\n\
+command={{{command}}} \n\
+stdout_logfile=/var/log/supervisor/%(program_name)s.log\n\
+stderr_logfile=/var/log/supervisor/%(program_name)s.log\n\
+autorestart=false\n\
+startsecs=0\n\
+[program:nginx]\n\
+priority=10\n\
+command=nginx -g "daemon off;"\n\
+stdout_logfile=/var/log/supervisor/nginx.log\n\
+stderr_logfile=/var/log/supervisor/nginx.log\n\
+autorestart=true' > /etc/supervisor/supervisord.conf
+
+CMD ["/usr/bin/supervisord", "-n"]
