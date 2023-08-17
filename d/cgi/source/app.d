@@ -15,6 +15,6 @@ void handler(Cgi cgi) {
 }
 
 void main() {
-    auto server = RequestServer(8080);
+    auto server = RequestServer(3000);
     server.serve!handler;
 }

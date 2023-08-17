@@ -11,7 +11,7 @@ mixin ServerinoMain;
 {
 	return ServerinoConfig
 		.create()
-   		.addListener("127.0.0.1", 8080)
+   		.addListener("0.0.0.0", 3000)
 		.setWorkers(totalCPUs);
 }
 

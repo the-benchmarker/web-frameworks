@@ -34,8 +34,8 @@ task :collect do
   hostname = ENV.fetch('HOSTNAME')
   engine = ENV.fetch('ENGINE')
 
-  `wrk -H 'Connection: keep-alive' -d 5s -c 8 --timeout 8 -t #{threads} http://#{hostname}:3000`
-  `wrk -H 'Connection: keep-alive' -d #{duration}s -c 256 --timeout 8 -t #{threads} http://#{hostname}:3000`
+  `wrk -H 'Connection:keep-alive' -d 5s -c 8 --timeout 8 -t #{threads} http://#{hostname}:3000`
+  `wrk -H 'Connection:keep-alive' -d #{duration}s -c 256 --timeout 8 -t #{threads} http://#{hostname}:3000`
 
   db = PG.connect(database)
 
@@ -67,7 +67,7 @@ task :collect do
       concurrency_level_id = res.first['id']
 
       command = format(
-        "wrk -H 'Connection: keep-alive' --connections %<concurrency>s --threads %<threads>s --duration %<duration>s --timeout 1 --script %<pipeline>s http://%<hostname>s:3000#{uri}", concurrency: concurrency, threads: threads, duration: duration, pipeline: PIPELINE[method.to_sym], hostname: hostname
+        "wrk -H 'Connection:keep-alive' --connections %<concurrency>s --threads %<threads>s --duration %<duration>s --timeout 1 --script %<pipeline>s http://%<hostname>s:3000#{uri}", concurrency: concurrency, threads: threads, duration: duration, pipeline: PIPELINE[method.to_sym], hostname: hostname
       )
 
       Open3.popen3(command) do |_, stdout, stderr|

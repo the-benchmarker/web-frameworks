@@ -67,7 +67,7 @@ jobs:
         run: |
           sudo apt-get -y update 
           sudo apt-get -y install wrk
-          wrk -H 'Connection: keep-alive' --connections 64 --threads 8 --duration 15 --timeout 1 http://`cat ${DIRECTORY}/ip-${ENGINE}.txt`:3000
+          wrk -H 'Connection:keep-alive' --connections 64 --threads 8 --duration 15 --timeout 1 http://`cat ${DIRECTORY}/ip-${ENGINE}.txt`:3000
         env:
           DIRECTORY: ${{ matrix.directory }}
           ENGINE: ${{ matrix.engine }}
