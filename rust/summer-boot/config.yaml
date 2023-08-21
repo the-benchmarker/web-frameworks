@@ -1,3 +1,5 @@
 framework:
   github: wansenai/summer-boot
   version: 1.4
+  files:
+    - resources/**/*.yml
