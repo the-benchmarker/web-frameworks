@@ -6,7 +6,18 @@ async fn main() {
     summer_boot::run();
 }
 
-#[summer_boot::get("/hello")]
-pub async fn hello(mut _req: Request<()>) -> Result {
-    Ok(format!("Hello, Summer Boot").into())
+#[summer_boot::get("/")]
+pub async fn index(_req: Request<()>) -> Result {
+    Ok("".into())
+}
+
+#[summer_boot::get("/user/:id")]
+pub async fn get_user(req: Request<()>) -> Result {
+    let id = req.param("id").unwrap_or("");
+    Ok(id.to_string().into())
+}
+
+#[summer_boot::post("/user")]
+pub async fn post_user(_req: Request<()>) -> Result {
+    Ok("".into())
 }
