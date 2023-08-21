@@ -1,0 +1,14 @@
+[package]
+name = "server"
+version = "0.1.0"
+edition = "2021"
+authors = [
+    "James Zow <Jameszow@wansen.email>"
+]
+rust-version = "1.71.1"
+repository = "https://github.com/wansenai/summer-boot"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+summer-boot = { version = "1.4"}
