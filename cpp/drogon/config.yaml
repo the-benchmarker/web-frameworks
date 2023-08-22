@@ -22,7 +22,7 @@ framework:
     - build/drogon_benchmark
 
   download:
-    - git clone --branch v1.8.4 https://github.com/drogonframework/drogon
+    - git clone --branch v1.8.5 https://github.com/drogonframework/drogon
     - cd drogon && git submodule update --init
 
   build:
