@@ -1,0 +1,18 @@
+{
+    "require": {
+        "aplus/framework": "^23"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "classmap": [
+            "App.php"
+        ],
+        "files": [
+            "boot/init.php",
+            "boot/constants.php",
+            "boot/helpers.php"
+        ]
+    }
+}
