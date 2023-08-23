@@ -1,0 +1,24 @@
+framework:
+  github: aplus-framework/one
+  version: 23.1
+  website: aplus-framework.com/packages/one
+
+  build_deps:
+    - libsodium-dev
+    - libmemcached-dev
+    - yaml-dev
+    - icu-dev
+    - libpng-dev
+
+  modules:
+    - sodium
+    - mysqli
+    - intl
+    - gd
+
+  extensions:
+    - igbinary
+    - memcached
+    - msgpack
+    - redis
+    - yaml
