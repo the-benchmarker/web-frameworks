@@ -15,45 +15,39 @@ use CodeIgniter\Config\BaseConfig;
  */
 class ContentSecurityPolicy extends BaseConfig
 {
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Broadbrush CSP management
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * Default CSP report context
-     *
-     * @var boolean
      */
-    public $reportOnly = false;
+    public bool $reportOnly = false;
 
     /**
      * Specifies a URL where a browser will send reports
      * when a content security policy is violated.
-     *
-     * @var string|null
      */
-    public $reportURI = null;
+    public ?string $reportURI = null;
 
     /**
      * Instructs user agents to rewrite URL schemes, changing
      * HTTP to HTTPS. This directive is for websites with
      * large numbers of old URLs that need to be rewritten.
-     *
-     * @var boolean
      */
-    public $upgradeInsecureRequests = false;
+    public bool $upgradeInsecureRequests = false;
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Sources allowed
-    // Note: once you set a policy to 'none', it cannot be further restricted
-    //-------------------------------------------------------------------------
+    // NOTE: once you set a policy to 'none', it cannot be further restricted
+    // -------------------------------------------------------------------------
 
     /**
      * Will default to self if not overridden
      *
      * @var string|string[]|null
      */
-    public $defaultSrc = null;
+    public $defaultSrc;
 
     /**
      * Lists allowed scripts' URLs.
@@ -83,7 +77,7 @@ class ContentSecurityPolicy extends BaseConfig
      *
      * @var string|string[]|null
      */
-    public $baseURI = null;
+    public $baseURI;
 
     /**
      * Lists the URLs for workers and embedded frame contents
@@ -105,7 +99,7 @@ class ContentSecurityPolicy extends BaseConfig
      *
      * @var string|string[]
      */
-    public $fontSrc = null;
+    public $fontSrc;
 
     /**
      * Lists valid endpoints for submission from `<form>` tags.
@@ -122,7 +116,7 @@ class ContentSecurityPolicy extends BaseConfig
      *
      * @var string|string[]|null
      */
-    public $frameAncestors = null;
+    public $frameAncestors;
 
     /**
      * The frame-src directive restricts the URLs which may
@@ -130,14 +124,14 @@ class ContentSecurityPolicy extends BaseConfig
      *
      * @var array|string|null
      */
-    public $frameSrc = null;
+    public $frameSrc;
 
     /**
      * Restricts the origins allowed to deliver video and audio.
      *
      * @var string|string[]|null
      */
-    public $mediaSrc = null;
+    public $mediaSrc;
 
     /**
      * Allows control over Flash and other plugins.
@@ -149,19 +143,34 @@ class ContentSecurityPolicy extends BaseConfig
     /**
      * @var string|string[]|null
      */
-    public $manifestSrc = null;
+    public $manifestSrc;
 
     /**
      * Limits the kinds of plugins a page may invoke.
      *
      * @var string|string[]|null
      */
-    public $pluginTypes = null;
+    public $pluginTypes;
 
     /**
      * List of actions allowed.
      *
      * @var string|string[]|null
      */
-    public $sandbox = null;
+    public $sandbox;
+
+    /**
+     * Nonce tag for style
+     */
+    public string $styleNonceTag = '{csp-style-nonce}';
+
+    /**
+     * Nonce tag for script
+     */
+    public string $scriptNonceTag = '{csp-script-nonce}';
+
+    /**
+     * Replace nonce tag automatically
+     */
+    public bool $autoNonce = true;
 }
