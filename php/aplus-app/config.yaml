@@ -6,3 +6,8 @@ framework:
   bootstrap:
     - mkdir -p storage/logs
     - chown -R www-data:www-data storage/logs
+  deps:
+    - libsodium
+    
+  modules:
+    - sodium
