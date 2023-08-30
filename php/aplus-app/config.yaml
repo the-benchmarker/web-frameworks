@@ -8,6 +8,17 @@ framework:
     - chown -R www-data:www-data storage/logs
   deps:
     - libsodium-dev
-    
+    - libmemcached-dev
+    - yaml-dev
+
   modules:
     - sodium
+    - mysqli
+
+  extensions:
+  - igbinary
+  - memcached
+  - msgpack
+  - redis
+  - yaml
+  - intl
