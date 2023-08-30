@@ -1,7 +1,7 @@
 {
   "name": "server",
   "dependencies": {
-    "arsd-official:cgi": "~>10.9.10"
+    "arsd-official:cgi": "~>11.0.1"
   },
   "subConfigurations": { "arsd-official:cgi": "embedded_httpd_hybrid" },
   "license": "MIT"
