@@ -7,7 +7,7 @@ void main() {
     cfg.hostname = "0.0.0.0";
     cfg.port = 3000;
     new HttpServer((ref ctx) {
-        if (ctx.request.url == "/") {
+        if (ctx.request.url == "") {
             ctx.response.setStatus(HttpStatus.OK);
             ctx.response.writeBodyString("");
         } else if (ctx.request.url == "/user" && ctx.request.method == Method.POST) {
