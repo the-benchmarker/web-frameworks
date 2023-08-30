@@ -1,22 +1,22 @@
 from happyx import new_server
 
 
-app = new_server('0.0.0.0', 3000)
+app = new_server("0.0.0.0", 3000)
 
 
-@app.get('/')
+@app.get("/")
 def index():
-    return ''
+    return ""
 
 
-@app.get('/user/{id}')
+@app.get("/user/{id}")
 def get_user(id: int):
-    return f'{id}'
+    return f"{id}"
 
 
-@app.post('/user')
+@app.post("/user")
 def create_user():
-    return ''
+    return ""
 
 
 app.start()
