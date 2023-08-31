@@ -6,20 +6,22 @@ framework:
   bootstrap:
     - mkdir -p storage/logs
     - chown -R www-data:www-data storage/logs
-  deps:
+  build_deps:
     - libsodium-dev
     - libmemcached-dev
     - yaml-dev
     - icu-dev
+    - libpng-dev
 
   modules:
     - sodium
     - mysqli
     - intl
+    - gd
 
   extensions:
-  - igbinary
-  - memcached
-  - msgpack
-  - redis
-  - yaml
+    - igbinary
+    - memcached
+    - msgpack
+    - redis
+    - yaml
