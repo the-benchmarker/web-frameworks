@@ -1,0 +1,27 @@
+framework:
+  github: aplus-framework/app
+  version: 23.3
+  website: aplus-framework.com/packages/app
+
+  bootstrap:
+    - mkdir -p storage/logs
+    - chown -R www-data:www-data storage/logs
+  build_deps:
+    - libsodium-dev
+    - libmemcached-dev
+    - yaml-dev
+    - icu-dev
+    - libpng-dev
+
+  modules:
+    - sodium
+    - mysqli
+    - intl
+    - gd
+
+  extensions:
+    - igbinary
+    - memcached
+    - msgpack
+    - redis
+    - yaml
