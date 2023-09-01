@@ -1,3 +1,3 @@
 module main
 
-require github.com/cloudwego/hertz v0.6.7
+require github.com/cloudwego/hertz v0.6.8
