@@ -17,10 +17,6 @@ async def create_user() -> str:
 
 
 app = Litestar(
-    route_handlers=[
-        index,
-        get_user,
-        create_user
-    ],
+    route_handlers=[index, get_user, create_user],
     openapi_config=None,
 )

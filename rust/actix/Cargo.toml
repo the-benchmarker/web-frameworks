@@ -8,7 +8,7 @@ authors = [
 edition = "2018"
 
 [dependencies]
-actix-web = "4.3"
+actix-web = "4.4"
 
 [profile.release]
 opt-level = 3

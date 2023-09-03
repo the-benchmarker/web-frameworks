@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Log\Handlers\FileHandler;
 
 class Logger extends BaseConfig
 {
@@ -35,9 +36,9 @@ class Logger extends BaseConfig
      * For a live site you'll usually enable Critical or higher (3) to be logged otherwise
      * your log files will fill up very fast.
      *
-     * @var integer|array
+     * @var array|int
      */
-    public $threshold = 4;
+    public $threshold = (ENVIRONMENT === 'production') ? 4 : 9;
 
     /**
      * --------------------------------------------------------------------------
@@ -46,10 +47,8 @@ class Logger extends BaseConfig
      *
      * Each item that is logged has an associated date. You can use PHP date
      * codes to set your own date formatting
-     *
-     * @var string
      */
-    public $dateFormat = 'Y-m-d H:i:s';
+    public string $dateFormat = 'Y-m-d H:i:s';
 
     /**
      * --------------------------------------------------------------------------
@@ -73,22 +72,16 @@ class Logger extends BaseConfig
      *
      * Handlers are executed in the order defined in this array, starting with
      * the handler on top and continuing down.
-     *
-     * @var array
      */
-    public $handlers = [
-
+    public array $handlers = [
         /*
          * --------------------------------------------------------------------
          * File Handler
          * --------------------------------------------------------------------
          */
-        'CodeIgniter\Log\Handlers\FileHandler' => [
-
-            /*
-             * The log levels that this handler will handle.
-             */
-            'handles'         => [
+        FileHandler::class => [
+            // The log levels that this handler will handle.
+            'handles' => [
                 'critical',
                 'alert',
                 'emergency',
@@ -104,9 +97,9 @@ class Logger extends BaseConfig
              * An extension of 'php' allows for protecting the log files via basic
              * scripting, when they are to be stored under a publicly accessible directory.
              *
-             * Note: Leaving it blank will default to 'log'.
+             * NOTE: Leaving it blank will default to 'log'.
              */
-            'fileExtension'   => '',
+            'fileExtension' => '',
 
             /*
              * The file system permissions to be applied on newly created log files.
@@ -122,10 +115,10 @@ class Logger extends BaseConfig
              * By default, logs are written to WRITEPATH . 'logs/'
              * Specify a different destination here, if desired.
              */
-            'path'            => '',
+            'path' => '',
         ],
 
-        /**
+        /*
          * The ChromeLoggerHandler requires the use of the Chrome web browser
          * and the ChromeLogger extension. Uncomment this block to use it.
          */
@@ -137,19 +130,19 @@ class Logger extends BaseConfig
         //                   'error', 'info', 'notice', 'warning'],
         // ],
 
-        /**
+        /*
          * The ErrorlogHandler writes the logs to PHP's native `error_log()` function.
          * Uncomment this block to use it.
          */
         // 'CodeIgniter\Log\Handlers\ErrorlogHandler' => [
-        // 		/* The log levels this handler can handle. */
-        // 		'handles' => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],
+        //     /* The log levels this handler can handle. */
+        //     'handles' => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],
         //
-        // 		/*
-        // 		 * The message type where the error should go. Can be 0 or 4, or use the
-        // 		 * class constants: `ErrorlogHandler::TYPE_OS` (0) or `ErrorlogHandler::TYPE_SAPI` (4)
-        // 		 */
-        // 		'messageType' => 0,
+        //     /*
+        //     * The message type where the error should go. Can be 0 or 4, or use the
+        //     * class constants: `ErrorlogHandler::TYPE_OS` (0) or `ErrorlogHandler::TYPE_SAPI` (4)
+        //     */
+        //     'messageType' => 0,
         // ],
     ];
 }

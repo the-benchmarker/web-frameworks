@@ -23,7 +23,7 @@ class UserAgents extends BaseConfig
      *
      * @var array<string, string>
      */
-    public $platforms = [
+    public array $platforms = [
         'windows nt 10.0' => 'Windows 10',
         'windows nt 6.3'  => 'Windows 8.1',
         'windows nt 6.2'  => 'Windows 8',
@@ -78,12 +78,12 @@ class UserAgents extends BaseConfig
      *
      * @var array<string, string>
      */
-    public $browsers = [
-        'OPR'               => 'Opera',
-        'Flock'             => 'Flock',
-        'Edge'              => 'Spartan',
-        'Edg'               => 'Edge',
-        'Chrome'            => 'Chrome',
+    public array $browsers = [
+        'OPR'    => 'Opera',
+        'Flock'  => 'Flock',
+        'Edge'   => 'Spartan',
+        'Edg'    => 'Edge',
+        'Chrome' => 'Chrome',
         // Opera 10+ always reports Opera/9.80 and appends Version/<real version> to the user agent string
         'Opera.*?Version'   => 'Opera',
         'Opera'             => 'Opera',
@@ -119,18 +119,18 @@ class UserAgents extends BaseConfig
      *
      * @var array<string, string>
      */
-    public $mobiles = [
+    public array $mobiles = [
         // legacy array, old values commented out
-        'mobileexplorer'       => 'Mobile Explorer',
+        'mobileexplorer' => 'Mobile Explorer',
         // 'openwave'             => 'Open Wave',
         // 'opera mini'           => 'Opera Mini',
         // 'operamini'            => 'Opera Mini',
         // 'elaine'               => 'Palm',
-        'palmsource'           => 'Palm',
+        'palmsource' => 'Palm',
         // 'digital paths'        => 'Palm',
         // 'avantgo'              => 'Avantgo',
         // 'xiino'                => 'Xiino',
-        'palmscape'            => 'Palmscape',
+        'palmscape' => 'Palmscape',
         // 'nokia'                => 'Nokia',
         // 'ericsson'             => 'Ericsson',
         // 'blackberry'           => 'BlackBerry',
@@ -181,42 +181,42 @@ class UserAgents extends BaseConfig
         'openweb'              => 'OpenWeb',
 
         // Operating Systems
-        'android'              => 'Android',
-        'symbian'              => 'Symbian',
-        'SymbianOS'            => 'SymbianOS',
-        'elaine'               => 'Palm',
-        'series60'             => 'Symbian S60',
-        'windows ce'           => 'Windows CE',
+        'android'    => 'Android',
+        'symbian'    => 'Symbian',
+        'SymbianOS'  => 'SymbianOS',
+        'elaine'     => 'Palm',
+        'series60'   => 'Symbian S60',
+        'windows ce' => 'Windows CE',
 
         // Browsers
-        'obigo'                => 'Obigo',
-        'netfront'             => 'Netfront Browser',
-        'openwave'             => 'Openwave Browser',
-        'mobilexplorer'        => 'Mobile Explorer',
-        'operamini'            => 'Opera Mini',
-        'opera mini'           => 'Opera Mini',
-        'opera mobi'           => 'Opera Mobile',
-        'fennec'               => 'Firefox Mobile',
+        'obigo'         => 'Obigo',
+        'netfront'      => 'Netfront Browser',
+        'openwave'      => 'Openwave Browser',
+        'mobilexplorer' => 'Mobile Explorer',
+        'operamini'     => 'Opera Mini',
+        'opera mini'    => 'Opera Mini',
+        'opera mobi'    => 'Opera Mobile',
+        'fennec'        => 'Firefox Mobile',
 
         // Other
-        'digital paths'        => 'Digital Paths',
-        'avantgo'              => 'AvantGo',
-        'xiino'                => 'Xiino',
-        'novarra'              => 'Novarra Transcoder',
-        'vodafone'             => 'Vodafone',
-        'docomo'               => 'NTT DoCoMo',
-        'o2'                   => 'O2',
+        'digital paths' => 'Digital Paths',
+        'avantgo'       => 'AvantGo',
+        'xiino'         => 'Xiino',
+        'novarra'       => 'Novarra Transcoder',
+        'vodafone'      => 'Vodafone',
+        'docomo'        => 'NTT DoCoMo',
+        'o2'            => 'O2',
 
         // Fallback
-        'mobile'               => 'Generic Mobile',
-        'wireless'             => 'Generic Mobile',
-        'j2me'                 => 'Generic Mobile',
-        'midp'                 => 'Generic Mobile',
-        'cldc'                 => 'Generic Mobile',
-        'up.link'              => 'Generic Mobile',
-        'up.browser'           => 'Generic Mobile',
-        'smartphone'           => 'Generic Mobile',
-        'cellphone'            => 'Generic Mobile',
+        'mobile'     => 'Generic Mobile',
+        'wireless'   => 'Generic Mobile',
+        'j2me'       => 'Generic Mobile',
+        'midp'       => 'Generic Mobile',
+        'cldc'       => 'Generic Mobile',
+        'up.link'    => 'Generic Mobile',
+        'up.browser' => 'Generic Mobile',
+        'smartphone' => 'Generic Mobile',
+        'cellphone'  => 'Generic Mobile',
     ];
 
     /**
@@ -228,7 +228,7 @@ class UserAgents extends BaseConfig
      *
      * @var array<string, string>
      */
-    public $robots = [
+    public array $robots = [
         'googlebot'            => 'Googlebot',
         'msnbot'               => 'MSNBot',
         'baiduspider'          => 'Baiduspider',
