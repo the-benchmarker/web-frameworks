@@ -10,7 +10,7 @@ RUN apt-get -qy install build-essential openssl ldc dub libssl-dev zlib1g-dev ll
 {{/files}}
 
 ENV DC=ldc2
-RUN dub build -b release-nobounds --compiler=ldc2
+RUN dub build -b release --compiler=ldc2
 
 FROM debian:bookworm
 
