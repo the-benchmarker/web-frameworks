@@ -1,9 +1,10 @@
 import handy_httpd;
+import std.parallelism: totalCPUs;
 import std.algorithm: startsWith;
 
 void main() {
     ServerConfig cfg = ServerConfig.defaultValues();
-    cfg.workerPoolSize = 16;
+    cfg.workerPoolSize = 2*totalCUPs;
     cfg.hostname = "0.0.0.0";
     cfg.port = 3000;
     new HttpServer((ref ctx) {
