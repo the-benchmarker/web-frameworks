@@ -1,9 +1,9 @@
 import archttp; 
-import cpuid.unified; 
+import std.parallelism: totalCPUs;
  
 void main(string[] args) 
 { 
-    Archttp app  = new Archttp(threads); 
+    Archttp app  = new Archttp(totalCPUs); 
  
     app.get("/", (HttpRequest req, HttpResponse res) { 
         res.send(""); 

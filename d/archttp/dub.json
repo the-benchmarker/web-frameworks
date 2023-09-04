@@ -1,8 +1,8 @@
 {
   "name": "server",
   "dependencies": {
-    "archttp": "~>1.1.1",
-    "mir-cpuid": "~>1.2.10"
+    "archttp": "~>1.1.1"
   },
+  "dflags-ldc": ["-flto=thin", "-flto-binary=/usr/lib/LLVMgold.so"],
   "license": "MIT"
 }
