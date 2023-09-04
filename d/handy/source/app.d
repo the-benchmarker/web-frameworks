@@ -4,7 +4,7 @@ import std.algorithm: startsWith;
 
 void main() {
     ServerConfig cfg = ServerConfig.defaultValues();
-    cfg.workerPoolSize = 2*totalCUPs;
+    cfg.workerPoolSize = 2*totalCPUs;
     cfg.hostname = "0.0.0.0";
     cfg.port = 3000;
     new HttpServer((ref ctx) {
