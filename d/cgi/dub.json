@@ -3,7 +3,11 @@
   "dependencies": {
     "arsd-official:cgi": "~>11.0.1"
   },
-  "dflags-ldc": ["-mcpu=native", "-flto=thin", "-flto-binary=/usr/lib/LLVMgold.so"],
+  "dflags-ldc": [
+    "-mcpu=native",
+    "-flto=thin",
+    "-flto-binary=/usr/lib/LLVMgold.so"
+  ],
   "subConfigurations": { "arsd-official:cgi": "embedded_httpd_hybrid" },
   "license": "MIT"
 }
