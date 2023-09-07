@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-    implementation "io.jooby:jooby-undertow:${joobyVersion}"
+    implementation "io.jooby:jooby-netty:${joobyVersion}"
     implementation "io.jooby:jooby-kotlin:${joobyVersion}"
 }
 
