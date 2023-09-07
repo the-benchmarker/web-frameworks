@@ -3,13 +3,15 @@ framework:
   version: 2.6.2
 
   files:
-    - routes/**/*.ts
+    - user-id.get.ts
+    - routes/index.get.ts
+    - routes/user.post.ts
     - nitro.config.ts
     - tsconfig.json
     - package.json
 
   bootstrap:
     - npm install
-    - npm build
+    - npm run build
 
   command: pm2-runtime start .output/server/index.mjs -i $(nproc)
