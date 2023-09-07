@@ -1,0 +1,15 @@
+framework:
+  website: nitro.unjs.io
+  version: 2.6.2
+
+  files:
+    - routes/**/*.ts
+    - nitro.config.ts
+    - tsconfig.json
+    - package.json
+
+  bootstrap:
+    - npm install
+    - npm build
+
+  command: pm2-runtime start .output/server/index.mjs -i $(nproc)
