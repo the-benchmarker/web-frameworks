@@ -1,3 +1,9 @@
 framework:
   github.com: unjs/h3
   version: 1.8
+
+  files:
+    - app.mjs
+    - package.json
+
+  command: pm2-runtime start app.mjs -i $(nproc)
