@@ -29,10 +29,10 @@ jobs:
   test:
     needs: matrix
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix: ${{fromJson(needs.matrix.outputs.matrix)}}
       max-parallel: 4
 
