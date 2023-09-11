@@ -28,22 +28,9 @@ while read line ; do
 #  cd ../..
   make -f ~/workspace/benchmark/web/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
   make -f ~/workspace/benchmark/web/${LANGUAGE}/${FRAMEWORK}/.Makefile clean
-  if [ "${FRAMEWORK}" == "axum" ] ; then
-    docker ps -aq | xargs --no-run-if-empty docker rm -f;
-    docker images -aq | xargs --no-run-if-empty docker rmi -f
-  fi
-  if [ "${FRAMEWORK}" == "siler" ] ; then
-    docker ps -aq | xargs --no-run-if-empty docker rm -f;
-    docker images -aq | xargs --no-run-if-empty docker rmi -f
-  fi
-  if [ "${FRAMEWORK}" == "orion" ] ; then
-    docker ps -aq | xargs --no-run-if-empty docker rm -f;
-    docker images -aq | xargs --no-run-if-empty docker rmi -f
-  fi
-  if [ "${FRAMEWORK}" == "merly" ] ; then
-    docker ps -aq | xargs --no-run-if-empty docker rm -f;
-    docker images -aq | xargs --no-run-if-empty docker rmi -f
-  fi
+  docker ps -aq | xargs --no-run-if-empty docker rm -f;
+  docker images -aq | xargs --no-run-if-empty docker rmi -f;
+  sudo docker system prune -a -f
   sleep 1
 done < /tmp/list.txt
 
