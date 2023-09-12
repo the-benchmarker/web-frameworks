@@ -22,4 +22,6 @@ WORKDIR /usr/src/app
   RUN {{{.}}}
 {{/fixes}}
 
+RUN npm install -g npm@10
+
 CMD {{{command}}}
