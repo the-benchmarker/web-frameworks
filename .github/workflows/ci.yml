@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix: ${{fromJson(needs.matrix.outputs.matrix)}}
       max-parallel: 4
 
