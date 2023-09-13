@@ -14,7 +14,7 @@ async fn main() {
     let router = Router::new().get(index).push(
         Router::with_path("user")
             .post(index)
-            .push(Router::with_path("<id>").filter(get()).handle(get_user)),
+            .push(Router::with_path("<id>").filter(get()).goal(get_user)),
     );
     let acceptor = TcpListener::new("0.0.0.0:3000").bind().await;
     Server::new(acceptor).serve(router).await
