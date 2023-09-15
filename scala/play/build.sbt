@@ -8,7 +8,7 @@ lazy val root = (project
   .settings(
     libraryDependencies ++= Seq(
       guice,
-      "com.typesafe.play" %% "play-json" % "[2.9,2.10)"
+      "com.typesafe.play" %% "play-json" % "[2.10,2.11)"
     )
   )
   .enablePlugins(PlayScala)
