@@ -27,9 +27,7 @@ ENV PATH $PATH:/root/.nimble/bin
 {{/build_command}}
 {{^build_command}}
   RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
-    --excessiveStackTrace:off \
     --assertions:off \
-    --checks:off \
     --warnings:off \
     --hints:off \
     -d:release \
