@@ -1,0 +1,26 @@
+{
+  "name": "ditsmod-seed",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "npm run build && node dist/main.js",
+    "build": "tsc -b",
+    "clean": "rm -rf dist*"
+  },
+  "imports": {
+    "#src/*": "./dist/*"
+  },
+  "keywords": [],
+  "author": "Your Name Here",
+  "license": "MIT",
+  "dependencies": {
+    "@ditsmod/body-parser": "~2.12.1",
+    "@ditsmod/core": "~2.49.1",
+    "@ditsmod/router": "~2.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.6.1",
+    "typescript": "^5.2.2"
+  }
+}
