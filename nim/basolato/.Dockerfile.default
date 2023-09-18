@@ -1,0 +1,42 @@
+FROM nimlang/nim:2.0.0-alpine
+
+RUN apk update && \
+    apk upgrade --no-cache
+
+  RUN apk --no-cache add gcc
+  RUN apk --no-cache add musl-dev
+  RUN apk --no-cache add bsd-compat-headers
+  RUN apk --no-cache add openssl
+  RUN apk --no-cache add openssh-client
+  RUN apk --no-cache add pcre-dev
+
+WORKDIR /usr/src/app
+
+  COPY 'resources/lang/en/validation.json' 'resources/lang/en/validation.json'
+  COPY 'resources/lang/ja/validation.json' 'resources/lang/ja/validation.json'
+  COPY 'config.nims' 'config.nims'
+  COPY 'app/http/controllers/benchmark_controller.nim' 'app/http/controllers/benchmark_controller.nim'
+  COPY 'main.nim' 'main.nim'
+  COPY 'basolato.nimble' 'basolato.nimble'
+  COPY '.env' '.env'
+
+ENV PATH $PATH:/root/.nimble/bin
+
+  RUN nimble install -y
+
+  RUN ducere build -p 3000
+
+FROM alpine
+
+WORKDIR /usr/src/app
+
+RUN apk update && \
+    apk upgrade --no-cache
+
+RUN apk --no-cache add openssl-dev pcre-dev
+
+  COPY --from=0 /usr/src/app/main /usr/src/app/main
+  COPY --from=0 /usr/src/app/startServer.sh /usr/src/app/startServer.sh
+  COPY --from=0 /usr/src/app/.env /usr/src/app/.env
+
+  CMD ./startServer.sh
