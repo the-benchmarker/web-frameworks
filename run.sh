@@ -13,11 +13,11 @@
 #doctl compute ssh --ssh-key-path ${DO_KEY} sieger
 
 # Clean database
-#dropdb -U postgres benchmark
-#createdb -U postgres benchmark
-#psql -U postgres -d benchmark < dump.sql
-#
-#find . -mindepth 3 -type f -name config.yaml > /tmp/list.txt
+dropdb -U postgres benchmark
+createdb -U postgres benchmark
+psql -U postgres -d benchmark < dump.sql
+
+find . -mindepth 3 -type f -name config.yaml > /tmp/list.txt
 
 while read line ; do 
   echo "*********** ${line} *************"
