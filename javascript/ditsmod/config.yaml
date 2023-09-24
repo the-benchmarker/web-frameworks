@@ -1,0 +1,10 @@
+framework:
+  github: ditsmod/ditsmod
+  website: ditsmod.github.io/en
+  version: 2.49
+
+  bootstrap:
+    - npm install
+    - npm run build
+
+  command: pm2-runtime start dist/main.js -i max
