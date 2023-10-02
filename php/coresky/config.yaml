@@ -1,0 +1,14 @@
+framework:
+  website: coresky.net
+  version: 0.508
+
+  files:
+    - hole.base
+
+  bootstrap:
+    - mkdir -p var/cache && chown www-data var/cache
+    - mkdir -p var/gate && chown www-data var/gate
+    - mkdir -p var/jet && chown www-data var/jet
+    - mkdir -p var/mem && chown www-data var/mem
+    - chown www-data hole.base
+    - php main/warmcache.php
