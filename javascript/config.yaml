@@ -33,12 +33,9 @@ language:
         - npm -g install pm2
       command: nohup pm2-runtime start "deno run --allow-net --allow-read=. app.ts" -i max
     bun:
-      deps:
-        - npm
       bootstrap:
-        - npm -g install pm2
         - bun install
-      command: nohup pm2-runtime start "NODE_ENV=production bun app.ts" -i max
+      command: bun run app.ts
 
 framework:
   engines:
