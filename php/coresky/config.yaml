@@ -1,0 +1,8 @@
+framework:
+  website: coresky.net
+  version: 0.508
+
+  bootstrap:
+    - mkdir -p var/cache && chown www-data var/cache
+    - mkdir -p var/gate && chown www-data var/gate
+    - php main/warmcache.php
