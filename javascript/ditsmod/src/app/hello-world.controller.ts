@@ -1,29 +1,19 @@
-import { HTTP_BODY } from "@ditsmod/body-parser";
-import {
-  AnyObj,
-  controller,
-  inject,
-  PATH_PARAMS,
-  Res,
-  route,
-} from "@ditsmod/core";
+import { controller, SingletonRequestContext, route } from '@ditsmod/core';
 
-@controller()
+@controller({ isSingleton: true })
 export class HelloWorldController {
-  constructor(private res: Res) {}
-
-  @route("GET")
-  empty() {
-    this.res.send();
+  @route('GET')
+  empty(ctx: SingletonRequestContext) {
+    ctx.nodeRes.end();
   }
 
-  @route("GET", "user/:id")
-  userId(@inject(PATH_PARAMS) pathParams: AnyObj) {
-    this.res.send(pathParams.id);
+  @route('GET', 'user/:id')
+  userId(ctx: SingletonRequestContext) {
+    ctx.nodeRes.end(ctx.pathParams!.id);
   }
 
-  @route("POST", "user")
-  postHello(@inject(HTTP_BODY) body: any) {
-    this.res.send();
+  @route('POST', 'user')
+  postHello(ctx: SingletonRequestContext) {
+    ctx.nodeRes.end();
   }
 }
