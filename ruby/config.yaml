@@ -32,3 +32,4 @@ framework:
 
   environment:
     RACK_ENV: production
+    BUNDLE_WITHOUT: "development,test"
