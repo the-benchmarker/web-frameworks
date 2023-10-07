@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 COPY *.csproj .
 RUN dotnet restore
 
-# copy everything else and build app
+# copy everything else and build app 
 COPY . .
 RUN dotnet publish -c release -o out
 
