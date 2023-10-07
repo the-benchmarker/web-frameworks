@@ -1,5 +1,7 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
 
-gem "rails", "~> 7.1.0"
-gem 'tzinfo-data'
+source 'https://rubygems.org'
+
+gem 'rails', '~> 7.1.0'
 gem 'sqlite3'
+gem 'tzinfo-data'
