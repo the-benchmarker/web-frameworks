@@ -1,25 +1,21 @@
-FROM ruby:3.2-alpine AS base
+FROM ruby:3.2-alpine
 
 WORKDIR /usr/src/app
 
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
+
 RUN apk add build-base {{#deps}}{{{.}}}{{/deps}}
 
-{{#files}}
-  COPY '{{source}}' '{{target}}'
-{{/files}}
 
-{{#files}}
-  COPY '{{source}}' '{{target}}'
-{{/files}}
-
-EXPOSE 3000
 
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
+RUN bundle config set without 'development test'
 RUN bundle install
-
 {{#bootstrap}}
   RUN {{{.}}}
 {{/bootstrap}}
