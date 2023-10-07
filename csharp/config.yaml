@@ -10,6 +10,9 @@ language:
       command: dotnet /usr/src/app/out/web.dll
       environment:
         ASPNETCORE_URLS: http://*:3000
+        DOTNET_gcServer: 1
+        DOTNET_SYSTEM_NET_SOCKETS_INLINE_COMPLETIONS: 1
+        DOTNET_Thread_UseAllCpuGroups: 1
 
 framework:
   engines:
