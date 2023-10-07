@@ -3,6 +3,7 @@ framework:
   version: 1.11
 
 language:
+  version: 8.1
   engines:
     php-fpm:
       modules:
