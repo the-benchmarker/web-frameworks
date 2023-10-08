@@ -5,7 +5,7 @@ const app = new Router();
 app.get("/", macro(() => new Response()));
 
 // @ts-ignore A bit hacky here
-app.get("/user/:id", macro(r => new Response(r.params.id)));
+app.get("/user/:id", r => new Response(r.params.id));
 
 app.post("/user", macro(() => new Response()));
 
