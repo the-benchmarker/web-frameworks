@@ -6,10 +6,11 @@ use Swoole\Http\Response;
 
 $server = new Server('0.0.0.0', 3000, SWOOLE_BASE);
 $server->set([
-    'worker_num'       => swoole_cpu_num() * 2,
-    'log_level'        => SWOOLE_LOG_ERROR,
-    'log_file'         => '/dev/null',
-    'enable_coroutine' => false,
+    'worker_num'        => swoole_cpu_num(),
+    'log_level'         => SWOOLE_LOG_ERROR,
+    'log_file'          => '/dev/null',
+    'enable_coroutine'  => false,
+    'enable_reuse_port' => true,
 ]);
 $server->on('request', function (Request $request, Response $response) {
     $uri = $request->server['request_uri'] ?? '/';
