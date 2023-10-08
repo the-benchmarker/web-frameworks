@@ -42,6 +42,6 @@ framework:
     - node
 
   files:
-    - "**/*.js"
-    - "**/*.ts"
-    - "**/*.json"
+    - '**/*.js'
+    - '**/*.ts'
+    - '**/*.json'
