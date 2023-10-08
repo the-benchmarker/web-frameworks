@@ -18,9 +18,7 @@ language:
   engines:
     default:
       command: >
-        /usr/bin/java
-        -XX:+UseNUMA -XX:+UseParallelGC 
-        -jar /opt/web/target/benchmark-1.0.0.jar
+        /usr/bin/java -jar /opt/web/target/benchmark-1.0.0.jar
 
 framework:
   engines:
