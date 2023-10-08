@@ -16,5 +16,5 @@ fn main() {
                 ),
             ).post(index)
         );
-    Server::new().bind("0.0.0.0:3000".parse().unwrap()).bind_route(route).run();
+    Server::new().bind("0.0.0.0:3000".parse().unwrap()).run(route);
 }

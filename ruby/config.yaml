@@ -3,13 +3,16 @@ language:
 
   engines:
     puma:
-      bootstrap: bundle add puma
+      bootstrap: 
+        - bundle add puma
       command: bundle exec puma -p 3000 -w $(nproc)
     falcon:
-      bootstrap: bundle add falcon
+      bootstrap: 
+        - bundle add falcon
       command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
     iodine:
-      bootstrap: bundle add iodine
+      bootstrap: 
+        - bundle add iodine
       command: bundle exec iodine -p 3000 -w $(nproc)
     agoo:
       command: bundler exec ruby app.rb
@@ -29,3 +32,4 @@ framework:
 
   environment:
     RACK_ENV: production
+    BUNDLE_WITHOUT: "development,test"

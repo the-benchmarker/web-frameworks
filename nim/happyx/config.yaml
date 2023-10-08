@@ -1,6 +1,6 @@
 framework:
   github: HapticX/happyx
-  version: "1.10"
+  version: 2.11
 
 build_opts: "-d:beast --threads:on"
 build_with: nimble install -d -y

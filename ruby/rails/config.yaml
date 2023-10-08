@@ -1,3 +1,6 @@
 framework:
   website: rubyonrails.org
-  version: 7.0
+  version: 7.1
+
+  bootstrap:
+    - mkdir -p tmp/pids 

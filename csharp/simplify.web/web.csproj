@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
-		<LangVersion>11.0</LangVersion>
-		<Version>0.1</Version>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<TieredPGO>true</TieredPGO>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Simplify.Web" Version="4.5.*" />
+		<PackageReference Include="Simplify.Web" Version="4.7.*" />
 	</ItemGroup>
 </Project>

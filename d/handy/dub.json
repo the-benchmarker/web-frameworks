@@ -1,7 +1,12 @@
 {
   "name": "server",
   "dependencies": {
-    "handy-httpd": "~>7.1.0"
+    "handy-httpd": "~>7.10.4"
   },
+  "dflags-ldc": [
+    "-mcpu=native",
+    "-flto=thin",
+    "-flto-binary=/usr/lib/LLVMgold.so"
+  ],
   "license": "MIT"
 }

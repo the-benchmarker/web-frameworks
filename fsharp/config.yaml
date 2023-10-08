@@ -10,9 +10,6 @@ language:
       command: dotnet /usr/src/app/out/web.dll
       environment:
         ASPNETCORE_URLS: http://*:3000
-        DOTNET_TieredPGO: 1
-        DOTNET_TC_QuickJitForLoops: 1
-        DOTNET_ReadyToRun: 0
 
 framework:
   engines:

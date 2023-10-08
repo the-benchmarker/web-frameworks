@@ -5,14 +5,13 @@ edition = "2021"
 authors = ["Chrislearn Young <chrislearn@hotmail.com>"]
 
 [dependencies]
-salvo = { version = "0.50", default-features = false, features = ["http1"]}
+salvo = { version = "0.56", default-features = false, features = ["http1"]}
 tokio = { version = "1", features = ["full"] }
 
 [profile.release]
 opt-level = 3
 debug = false
 debug-assertions = false
-overflow-checks = false
 lto = true
 panic = "abort"
 incremental = false

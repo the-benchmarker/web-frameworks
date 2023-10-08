@@ -15,7 +15,7 @@
     <!-- Startup class -->
     <application.class>benchmark.App</application.class>
 
-    <jooby.version>3.0.1</jooby.version>
+    <jooby.version>3.0.5</jooby.version>
 
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
@@ -26,7 +26,7 @@
   <dependencies>
     <dependency>
       <groupId>io.jooby</groupId>
-      <artifactId>jooby-undertow</artifactId>
+      <artifactId>jooby-netty</artifactId>
       <version>${jooby.version}</version>
     </dependency>
   </dependencies>
@@ -35,7 +35,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.5.0</version>
+        <version>3.5.1</version>
         <executions>
           <execution>
             <id>uber-jar</id>
