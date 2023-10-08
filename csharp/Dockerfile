@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
+RUN ls
 COPY ["../Directory.Build.props", "."]
 RUN dotnet restore
 
