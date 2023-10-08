@@ -1,9 +1,4 @@
 framework:
-  website: hapticx.github.io
-  version: 1.1.0
-
-  bootstrap:
-    - npm -g install happyx
-    - npm install
-
-  command: node app.js
+  github: HapticX/happyx
+  website: hapticx.github.io/happyx
+  version: 1.1.1
