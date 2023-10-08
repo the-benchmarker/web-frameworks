@@ -8,3 +8,6 @@ framework:
     - npm run build
 
   command: pm2-runtime start dist/main.js -i max
+
+  engines:
+    - turbo
