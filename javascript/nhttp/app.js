@@ -1,16 +1,16 @@
-import nhttp from "nhttp-land";
+import nhttp from 'nhttp-land';
 
 const app = nhttp();
 
-app.get("/", () => {
+app.get('/', () => {
   return new Response();
 });
 
-app.get("/user/:id", (rev) => {
+app.get('/user/:id', (rev) => {
   return new Response(rev.params.id);
 });
 
-app.post("/user", () => {
+app.post('/user', () => {
   return new Response();
 });
 
