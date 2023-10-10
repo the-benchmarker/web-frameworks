@@ -3,7 +3,7 @@
 {{/language.image-version}}
 {{^language.image-version}}
   FROM sbtscala/scala-sbt:eclipse-temurin-jammy-11.0.20.1_1_1.9.6_3.3.1 AS build
-{{/languageimage-version}}
+{{/language.image-version}}
 
 
 WORKDIR /usr/src/app
