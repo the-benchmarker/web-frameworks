@@ -1,9 +1,7 @@
-provider:
-  default:
-    language: 2.13
-
-    image-version: 2.13.12
-    java-version: 11
+language:
+  version: 2.13
+  image-version: 2.13.12
+  java-version: 11
 
 framework:
   website: twitter.github.io/finatra/

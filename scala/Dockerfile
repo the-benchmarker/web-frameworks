@@ -1,9 +1,9 @@
-{{#provider.default.image-version}}
+{{#language.image-version}}
   FROM sbtscala/scala-sbt:eclipse-temurin-jammy-11.0.20.1_1_1.9.6_{{{.}}} AS build
-{{/provider.default.image-version}}
-{{^provider.default.image-version}}
+{{/language.image-version}}
+{{^language.image-version}}
   FROM sbtscala/scala-sbt:eclipse-temurin-jammy-11.0.20.1_1_1.9.6_3.3.1 AS build
-{{/provider.default.image-version}}
+{{/languageimage-version}}
 
 
 WORKDIR /usr/src/app
@@ -14,12 +14,12 @@ WORKDIR /usr/src/app
 
 RUN sbt universal:packageZipTarball
 
-{{#provider.default.java-version}}
+{{#language.java-version}}
   FROM eclipse-temurin:{{{.}}}-jre-jammy
-{{/provider.default.java-version}}
-{{^provider.default.java-version}}
-  FROM eclipse-temurin:17.0.7_7-jre-jammy
-{{/provider.default.java-version}}
+{{/language.java-version}}
+{{^language.java-version}}
+  FROM eclipse-temurin:17-jre-jammy
+{{/language.java-version}}
 
 WORKDIR /usr/src/app
 
