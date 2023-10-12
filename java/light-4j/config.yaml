@@ -12,6 +12,4 @@ framework:
     - "src/**/*.yml"
 
   command: >
-    /usr/bin/java
-    -XX:+UseNUMA -XX:+UseParallelGC 
-    -jar target/benchmark-1.0.0.jar
+    /usr/bin/java -jar target/benchmark-1.0.0.jar

@@ -12,7 +12,7 @@ framework:
     - ace
     - ace-manifest.json
     - package.json
-    - "**/*.ts"
+    - '**/*.ts'
     - tsconfig.json
 
   command: pm2-runtime start build/app.js -i $(nproc)

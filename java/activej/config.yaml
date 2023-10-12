@@ -9,6 +9,4 @@ framework:
     - target/benchmark.jar
 
   command: >
-    /usr/bin/java -server
-    -XX:+UseNUMA -XX:+UseParallelGC -XX:-UseBiasedLocking -XX:+UseStringDeduplication
-    -jar target/benchmark.jar benchmark.App
+    /usr/bin/java -jar target/benchmark.jar benchmark.App
