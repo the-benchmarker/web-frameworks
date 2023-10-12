@@ -32,4 +32,6 @@ framework:
 
   environment:
     RACK_ENV: production
+    RAILS_ENV: production
+    RAILS_LOG_LEVEL: fatal
     BUNDLE_WITHOUT: "development,test"
