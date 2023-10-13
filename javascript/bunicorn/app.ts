@@ -8,4 +8,4 @@ app.addRoutes([
   rb.post("/user", (ctx) => ctx.ok()),
 ]);
 
-app.listen(3000);
+app.serve({ port: 3000 });
