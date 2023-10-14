@@ -8,10 +8,4 @@ app.addRoutes([
   rb.post("/user", (ctx) => ctx.ok()),
 ]);
 
-// @ts-expect-error
-Bun.serve({
-  fetch(req: Request) {
-    return app.handleRequest(req);
-  },
-  port: 3000,
-});
+app.serve({ port: 3000 });
