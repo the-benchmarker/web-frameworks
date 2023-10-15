@@ -1,39 +1,22 @@
 <?php
 
+use laylatichy\nano\core\request\Request;
+use laylatichy\nano\core\response\Response;
+
 require_once 'vendor/autoload.php';
 
-use laylatichy\nano\core\httpcode\HttpCode;
-use laylatichy\nano\core\router\BASE;
-use laylatichy\nano\core\router\GET;
-use laylatichy\nano\core\router\POST;
-use laylatichy\nano\core\router\NanoRouter;
-use laylatichy\nano\Nano;
+useNano();
 
-$nano = new Nano();
+useRouter()->get('/', fn (Request $request): Response => useResponse()
+    ->withText('')
+);
 
-#[BASE('')]
-final class TheBenchmarker extends NanoRouter
-{
-    #[GET('/')]
-    public function index(Nano $nano): void
-    {
-        $nano->response->code(HttpCode::OK);
-        $nano->response->plain('');
-    }
+useRouter()->get('/user/{id}', fn (Request $request, string $id): Response => useResponse()
+    ->withText($id)
+);
 
-    #[GET('/user/{id}')]
-    public function userId(Nano $nano, string $id): void
-    {
-        $nano->response->code(HttpCode::OK);
-        $nano->response->plain($id);
-    }
+useRouter()->post('/user', fn (Request $request): Response => useResponse()
+    ->withText('')
+);
 
-    #[POST('/user')]
-    public function user(Nano $nano): void
-    {
-        $nano->response->code(HttpCode::OK);
-        $nano->response->plain('');
-    }
-}
-
-$nano->start();
+useNano()->start();
