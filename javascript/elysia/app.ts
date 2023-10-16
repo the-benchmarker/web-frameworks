@@ -8,4 +8,8 @@ app.get("/user/:id", (req) => req.params.id);
 
 app.post("/user", () => "");
 
-app.listen(3000);
+Bun.serve({
+  fetch: app.fetch,
+  reusePort: true,
+  port: 3000
+})
