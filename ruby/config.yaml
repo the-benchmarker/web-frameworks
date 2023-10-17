@@ -30,7 +30,6 @@ framework:
     - Rakefile
     - config.ru
     - config/credentials.yml.enc
-    - config/master.key
 
   environment:
     RACK_ENV: production
