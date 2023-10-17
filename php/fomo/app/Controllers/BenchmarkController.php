@@ -3,22 +3,23 @@
 namespace App\Controllers;
 
 use Fomo\Request\Request;
+use Fomo\Response\Response;
 
 class BenchmarkController
 {
-    public function index(): string
+    public function index(Request $request): Response
     {
-        return "HTTP/1.1 200 OK\r\nContent-Type: text/html;charset=utf-8\r\nContent-Length: 0\r\nConnection: keep-alive\r\n\r\n";
+        return response()->asNoContent();
     }
 
-    public function getUser(Request $request, $id): string
+    public function getUser(Request $request, $id): Response
     {
-        $length = strlen($id);
-        return "HTTP/1.1 200 OK\r\nContent-Type: text/html;charset=utf-8\r\nContent-Length: $length\r\nConnection: keep-alive\r\n\r\n$id";
+        return response(
+            $id, 200);
     }
 
-    public function postUser(): string
+    public function postUser(): Response 
     {
-        return "HTTP/1.1 200 OK\r\nContent-Type: text/html;charset=utf-8\r\nContent-Length: 0\r\nConnection: keep-alive\r\n\r\n";
+        return response()->asNoContent();
     }
 }
