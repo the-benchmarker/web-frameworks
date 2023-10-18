@@ -1,12 +1,11 @@
 organization := "the-benchmarker"
 
 name := "server"
-scalaVersion := "3.3.1"
+scalaVersion := "2.13.12"
 
 lazy val root = (project
   .in(file("."))
   .settings(
-    PlayKeys.akkaHttpScala3Artifacts := true,
     libraryDependencies ++= Seq(
       guice,
       "com.typesafe.play" %% "play-json" % "[2.10,2.11)"
