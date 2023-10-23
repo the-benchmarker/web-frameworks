@@ -1,4 +1,5 @@
 <?php
+
 use swoole\foundation\web\Server;
 use Swoole\Runtime;
 

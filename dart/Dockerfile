@@ -1,4 +1,4 @@
-FROM dart:2.18
+FROM dart:2.19
 
 WORKDIR /app
 
@@ -12,4 +12,4 @@ RUN dart pub get --offline --no-precompile
 
 WORKDIR /app
 
-CMD dart main.dart
+CMD {{command}}

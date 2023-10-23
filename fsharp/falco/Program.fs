@@ -27,14 +27,13 @@ let configureWebHost (endpoints : HttpEndpoint list) (webHost : IWebHostBuilder)
         .ConfigureServices(configureServices)
         .Configure(configure endpoints)        
 
-[<EntryPoint>]
-let main args =       
-    webHost args {
-        configure configureWebHost
-        endpoints [
-            get  "/user/{id}" (Request.mapRoute (fun route -> route.Get "id" "") Response.ofPlainText)
-            post "/user"      (Response.ofEmpty)
-            get  "/"          (Response.ofEmpty)
-        ]
-    }    
-    0
+let args = System.Environment.GetCommandLineArgs()
+
+webHost args {
+    configure configureWebHost
+    endpoints [
+        get  "/user/{id}" (Request.mapRoute (fun route -> route.Get "id" "") Response.ofPlainText)
+        post "/user"      (Response.ofEmpty)
+        get  "/"          (Response.ofEmpty)
+    ]
+}    

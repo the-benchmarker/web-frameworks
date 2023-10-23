@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<LangVersion>8.0</LangVersion>
-		<Version>0.1</Version>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Simplify.Web" Version="4.5.*" />
+		<PackageReference Include="Simplify.Web" Version="4.7.*" />
 	</ItemGroup>
 </Project>

@@ -1,3 +1,16 @@
-provider:
-  default:
-    language: 8.0
+language:
+  version: 11.0
+
+  files:
+    - "**/*.cs"
+    - web.csproj
+
+  engines:
+    default:
+      command: dotnet /usr/src/app/out/web.dll
+      environment:
+        ASPNETCORE_URLS: http://*:3000
+
+framework:
+  engines:
+    - default

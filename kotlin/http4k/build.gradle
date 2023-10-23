@@ -5,15 +5,16 @@ buildscript {
     }
 
     ext {
-        kotlinVersion = "1.7.+"
+        kotlinVersion = "1.8.+"
         http4kVersion = "3.275.+"
         shadowVersion = "+"
     }
 
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
-        classpath "com.github.jengelman.gradle.plugins:shadow:${shadowVersion}"
-    }
+}
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "${kotlinVersion}"
+    id "com.github.johnrengelman.shadow" version "${shadowVersion}"
 }
 
 repositories {
@@ -29,8 +30,16 @@ group 'benchmark'
 version '0.0.1'
 mainClassName = "org.http4k.benchmark.BenchmarkServerKt"
 
+sourceCompatibility = 17
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of("17"))
+    }
+}
+
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     implementation platform("org.http4k:http4k-bom:${http4kVersion}")
     implementation "org.http4k:http4k-core"
     implementation "org.http4k:http4k-server-undertow"
@@ -38,7 +47,7 @@ dependencies {
 
 shadowJar {
     mergeServiceFiles()
-    baseName = "server"
-    classifier = null
-    version = null
+    archiveBaseName.set("server")
+    archiveClassifier.set('')
+    archiveVersion.set('')
 }

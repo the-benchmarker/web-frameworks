@@ -1,3 +1,1 @@
-starlette>=0.21,<0.22
-gunicorn
-uvicorn[standard]
+starlette>=0.31,<0.32

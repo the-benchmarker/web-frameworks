@@ -1,16 +1,21 @@
 [package]
 name = "server"
-version = "0.1.0"
+version = "0.0.0"
 authors = ["taicsuzu <taicsuzu@yahoo-corp.jp>"]
 edition = "2018"
 publish = false
 
 [dependencies]
-iron = "~0.6"
-router = "~0.6"
+iron = "0.6"
+router = "0.6"
 
 [profile.release]
-codegen-units = 1
 opt-level = 3
+debug = false
+debug-assertions = false
 lto = true
+panic = "abort"
 incremental = false
+codegen-units = 1
+rpath = false
+strip = false

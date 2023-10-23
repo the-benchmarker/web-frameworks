@@ -1,8 +1,11 @@
+language:
+  version: 8.1
+
 framework:
   github: simple-swoole/simps
   version: 1.0
 
-php_ext:
-  - swoole
+  engines:
+    - swoole
 
-command: php sbin/simps.php http:start
+  command: php sbin/simps.php http:start

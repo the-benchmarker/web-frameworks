@@ -2,18 +2,14 @@ framework:
   website: doc.networknt.com
   version: 2.1
 
-build:
-  - mvn clean package -Prelease
+  build:
+    - mvn clean package -Prelease
 
-sources:
-  - src/**/*.java
-  - src/**/*.yml
-  - pom.xml
+  binaries:
+    - target/benchmark-1.0.0.jar
 
-files:
-  - target/benchmark-1.0.0.jar
+  files:
+    - "src/**/*.yml"
 
-command: >
-  /usr/bin/java
-  -XX:+UseNUMA -XX:+UseParallelGC 
-  -jar target/benchmark-1.0.0.jar
+  command: >
+    /usr/bin/java -jar target/benchmark-1.0.0.jar

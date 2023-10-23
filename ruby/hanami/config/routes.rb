@@ -1,19 +1,17 @@
 # frozen_string_literal: true
 
-require "hanami/routes"
+require 'hanami/routes'
 
 module Benchmark
   class Routes < Hanami::Routes
-    define do
-      root { "" }
+    root to: ->(*) { [200, {}, ['']] }
 
-      get "/user/:id" do
-        params[:id]
-      end
+    get '/user/:id' do
+      params[:id]
+    end
 
-      post "/user" do
-        ""
-      end
+    post '/user' do
+      ''
     end
   end
 end

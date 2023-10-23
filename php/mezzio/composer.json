@@ -1,14 +1,15 @@
 {
   "require": {
-    "laminas/laminas-component-installer": "*",
-    "laminas/laminas-config-aggregator": "*",
-    "laminas/laminas-diactoros": "*",
-    "mezzio/mezzio": "~3.11.0",
-    "mezzio/mezzio-helpers": "*",
-    "laminas/laminas-stdlib": "*",
-    "laminas/laminas-servicemanager": "*",
-    "laminas/laminas-zendframework-bridge": "*",
-    "mezzio/mezzio-fastroute": "*"
+    "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
+    "composer/package-versions-deprecated": "@stable",
+    "laminas/laminas-component-installer": "@stable",
+    "laminas/laminas-config-aggregator": "@stable",
+    "laminas/laminas-diactoros": "@stable",
+    "laminas/laminas-stdlib": "@stable",
+    "mezzio/mezzio": "~3.17.0",
+    "mezzio/mezzio-helpers": "@stable",
+    "laminas/laminas-servicemanager": "@stable",
+    "mezzio/mezzio-fastroute": "@stable"
   },
   "autoload": {
     "psr-4": {
@@ -17,7 +18,7 @@
   },
   "config": {
     "allow-plugins": {
-        "laminas/laminas-component-installer": true
+      "laminas/laminas-component-installer": true
     }
   }
 }

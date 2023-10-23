@@ -1,3 +1,16 @@
-provider:
-  default:
-    language: 6.0
+language:
+  version: 7.0
+
+  files:
+    - "**/*.fs"
+    - web.fsproj
+
+  engines:
+    default:
+      command: dotnet /usr/src/app/out/web.dll
+      environment:
+        ASPNETCORE_URLS: http://*:3000
+
+framework:
+  engines:
+    - default

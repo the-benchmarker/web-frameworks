@@ -2,7 +2,5 @@ framework:
   github: passwalls/mark
   version: 2.0
 
-php_mod:
-  - pcntl
-
-command: php start.php start
+  engines:
+    - workerman

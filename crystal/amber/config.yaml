@@ -1,6 +1,9 @@
 framework:
   website: amberframework.org
-  version: 1.2
+  version: 1.4
 
-files:
-  - config
+  build_deps:
+    - sqlite-dev
+
+  static_files:
+    - config/environments/production.yml

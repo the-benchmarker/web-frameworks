@@ -1,10 +1,24 @@
 <?php
 
+// Check PHP version.
+$minPhpVersion = '7.4'; // If you update this, don't forget to update `spark`.
+if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
+    $message = sprintf(
+        'Your PHP version must be %s or higher to run CodeIgniter. Current version: %s',
+        $minPhpVersion,
+        PHP_VERSION
+    );
+
+    exit($message);
+}
+
 // Path to the front controller (this file)
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 
 // Ensure the current directory is pointing to the front controller's directory
-chdir(FCPATH);
+if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
+    chdir(FCPATH);
+}
 
 /*
  *---------------------------------------------------------------
@@ -29,13 +43,23 @@ require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstra
 require_once SYSTEMPATH . 'Config/DotEnv.php';
 (new CodeIgniter\Config\DotEnv(ROOTPATH))->load();
 
+// Define ENVIRONMENT
+if (! defined('ENVIRONMENT')) {
+    define('ENVIRONMENT', env('CI_ENVIRONMENT', 'production'));
+}
+
+// Load Config Cache
+// $factoriesCache = new \CodeIgniter\Cache\FactoriesCache();
+// $factoriesCache->load('config');
+// ^^^ Uncomment these lines if you want to use Config Caching.
+
 /*
  * ---------------------------------------------------------------
  * GRAB OUR CODEIGNITER INSTANCE
  * ---------------------------------------------------------------
  *
  * The CodeIgniter class contains the core functionality to make
- * the application run, and does all of the dirty work to get
+ * the application run, and does all the dirty work to get
  * the pieces all working together.
  */
 
@@ -48,8 +72,16 @@ $app->setContext($context);
  *---------------------------------------------------------------
  * LAUNCH THE APPLICATION
  *---------------------------------------------------------------
- * Now that everything is setup, it's time to actually fire
+ * Now that everything is set up, it's time to actually fire
  * up the engines and make this app do its thang.
  */
 
 $app->run();
+
+// Save Config Cache
+// $factoriesCache->save('config');
+// ^^^ Uncomment this line if you want to use Config Caching.
+
+// Exits the application, setting the exit code for CLI-based applications
+// that might be watching.
+exit(EXIT_SUCCESS);

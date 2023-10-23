@@ -1,0 +1,19 @@
+[package]
+name = "server"
+version = "0.0.0"
+edition = "2021"
+authors = ["Hubert Shelley <hubertshelley@163.com>"]
+
+[dependencies]
+silent = { version = "0.11" }
+
+[profile.release]
+opt-level = 3
+debug = false
+debug-assertions = false
+lto = true
+panic = "abort"
+incremental = false
+codegen-units = 1
+rpath = false
+strip = false

@@ -1,16 +1,17 @@
 framework:
   website: nestjs.com
-  version: 9.1
+  version: 10.2
 
-files:
-  - nest-cli.json
-  - src
-  - tsconfig.build.json
-  - tsconfig.json
-  - package.json
+  files:
+    - nest-cli.json
+    - src/**.ts
+    - tsconfig.build.json
+    - tsconfig.json
+    - package.json
 
-before_command:
-  - npm -g install @nestjs/cli
-  - nest build
+  bootstrap:
+    - npm -g install @nestjs/cli
+    - npm install
+    - nest build
 
-command: pm2-runtime start dist/app.js -i $(nproc)
+  command: pm2-runtime start dist/app.js -i $(nproc)

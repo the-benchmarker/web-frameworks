@@ -1,3 +1,11 @@
 framework:
   website: jooby.io
-  version: 2.16
+  version: 3.0
+
+  command: >
+    /opt/java/openjdk/bin/java -server
+    -Xms2g -Xmx2g -XX:+UseNUMA -XX:+UseParallelGC
+    -Dio.netty.disableHttpHeadersValidation=true
+    -Dio.netty.buffer.checkBounds=false
+    -Dio.netty.buffer.checkAccessible=false
+    -jar build/libs/server.jar

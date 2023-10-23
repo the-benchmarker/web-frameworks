@@ -1,3 +1,12 @@
-provider:
-  default:
-    language: 1.6
+language:
+  version: "1.10"
+  files:
+    - "**/*.cr"
+    - shard.yml
+  engines:
+    default:
+      command: /usr/bin/app
+
+framework:
+  engines:
+    - default

@@ -1,18 +1,11 @@
 framework:
   github: chubbyts/chubbyts-framework
-  version: 1.6
+  version: 1.9
 
-build_deps:
-  - git # required by uWebSocket
+  engines:
+    - uwebsockets
 
-bin_deps:
-  - gcompat # required by uWebSocket
-
-before_command:
-  - npm -g install typescript
-  - tsc
-
-files:
-  - app.ts
-  - package.json
-  - tsconfig.json
+  bootstrap:
+    - npm -g install typescript
+    - npm install
+    - tsc

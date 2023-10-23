@@ -1,3 +1,5 @@
 framework:
   github: mattaylor/whip
   version: 0.2
+  build_opts:
+    - "--mm:refc"

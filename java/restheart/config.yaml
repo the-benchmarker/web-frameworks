@@ -1,19 +1,15 @@
 framework:
   website: restheart.org
-  version: 6.5
+  version: 7.5
 
-build:
-  - mvn package
+  build:
+    - mvn package
 
-files:
-  - restheart.yml
+  binaries:
+    - etc/conf-overrides.yml
+    - target/benchmark.jar
 
-environment:
-  RH_IO_THREADS: 1
-  RH_WORKER_THREADS: 4
+  files:
+    - etc/conf-overrides.yml
 
-binaries:
-  - target/benchmark.jar
-  - restheart.yml
-
-command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/benchmark.jar /opt/web/restheart.yml
+  command: /usr/bin/java -jar /opt/web/target/benchmark.jar -o /opt/web/etc/conf-overrides.yml

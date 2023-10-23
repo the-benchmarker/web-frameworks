@@ -3,7 +3,13 @@ framework:
   website: framework-x.org
   version: dev-main
 
-command: php app.php
+  engines:
+    - reactphp
 
-environment:
-  X_LISTEN: "0.0.0.0:3000"
+  command: php app.php
+
+language:
+  engines:
+    reactphp:
+      environment:
+        X_LISTEN: "0.0.0.0:3000"

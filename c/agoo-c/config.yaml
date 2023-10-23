@@ -2,24 +2,16 @@ framework:
   github: ohler55/agoo-c
   version: 0.7
 
-provider:
-  default:
-    language: 11
+  download:
+    - wget -c https://github.com/ohler55/agoo-c/tarball/v0.7.3 -O agoo.tar.gz
+    - tar xzf agoo.tar.gz
+    - mv ohler55* agoo-c
+    - cd agoo-c/src && make
 
-download:
-  - wget -c https://github.com/ohler55/agoo-c/tarball/v0.7.3 -O agoo.tar.gz
-  - tar xzf agoo.tar.gz
-  - mv ohler55* agoo-c
-  - cd agoo-c/src && make
+  build:
+    - make
 
-sources:
-  - Makefile
-  - simple.c
+  binaries:
+    - simple
 
-build:
-  - make
-
-binaries:
-  - simple
-
-command: /opt/web/simple
+  command: /opt/web/simple

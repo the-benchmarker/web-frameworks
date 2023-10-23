@@ -1,22 +1,23 @@
 framework:
   website: laravel.com
-  version: 9.34
+  version: 10.28
 
-environment:
-  APP_ENV: production
-  APP_DEBUG: false
-  APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
+  environment:
+    APP_ENV: production
+    APP_DEBUG: false
+    APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
 
-before_command:
-  - mkdir bootstrap/cache
-  - mkdir storage/framework/sessions -p
-  - mkdir storage/framework/views -p
-  - mkdir storage/framework/cache -p
+  files:
+    - artisan
 
-  - chown -R www-data:www-data /usr/src/app
-  - find /usr/src/app -type f -exec chmod 644 {} \;
-  - find /usr/src/app -type d -exec chmod 755 {} \;
-  - chmod -R ug+rwx storage /usr/src/app/bootstrap/cache
-
-  - php artisan config:cache
-  - php artisan route:cache
+  bootstrap:
+    - mkdir bootstrap/cache -p
+    - mkdir storage/framework/sessions -p
+    - mkdir storage/framework/views -p
+    - mkdir storage/framework/cache -p
+    - chown -R www-data:www-data /usr/src/app
+    - find /usr/src/app -type f -exec chmod 644 {} \;
+    - find /usr/src/app -type d -exec chmod 755 {} \;
+    - chmod -R ug+rwx storage /usr/src/app/bootstrap/cache
+    - php artisan config:cache
+    - php artisan route:cache

@@ -1,3 +1,16 @@
-provider:
-  default:
-    language: 2.096
+language:
+  version: 1.30.0
+
+  files:
+    - "**/*.d"
+    - dub.json
+    - dub.selections.json
+    - dub.sdl
+
+  engines:
+    default:
+      command: /opt/web/server
+
+framework:
+  engines:
+    - default

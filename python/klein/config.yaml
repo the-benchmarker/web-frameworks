@@ -1,5 +1,11 @@
 framework:
   github: twisted/klein
-  version: 21.8
+  version: 23.5
 
-command: PYTHONPATH=$(pwd) twistd -n web --class=server.application --port=tcp:3000
+  engines:
+    - twisted
+
+language:
+  engines:
+    twisted:
+      command: PYTHONPATH=$(pwd) twistd -n web --class=server.application --port=tcp:3000

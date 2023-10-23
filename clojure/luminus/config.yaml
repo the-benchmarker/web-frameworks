@@ -1,13 +1,19 @@
 framework:
   website: luminusweb.com
-  version: 4.45
+  version: "4.50"
 
-image: clojure:openjdk-11-lein-slim-buster
+  image: clojure:temurin-17-lein
 
-build:
-  - lein uberjar
+  files:
+    - "**/*.clj"
+    - "**/*.edn"
+    - "**/*.xml"
+    - "**/*.html"
 
-binaries:
-  - target/uberjar/luminus.jar
+  build:
+    - lein uberjar
 
-command: java -jar target/uberjar/luminus.jar 3000
+  binaries:
+    - target/uberjar/luminus.jar
+
+  command: java -jar target/uberjar/luminus.jar 3000

@@ -1,12 +1,17 @@
 framework:
   website: hug.rest
+  unsecure: true
+  github: hugapi/hug
   version: 2.6
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class gevent \
-      server:__hug_wsgi__
+  engines:
+    - uwsgi
+    - gunicorn
+    - waitress
+
+  # TODO : override unused PYTHON_APP in generated dockerfile
+
+language:
+  engines:
+    uwsgi:
+      command: uwsgi --http 0.0.0.0:3000 --wsgi-file server.py --callable __hug_wsgi__

@@ -1,4 +1,5 @@
 <?php
+
 namespace ImiApp\ApiServer\Controller;
 
 use Imi\Server\Http\Route\Annotation\Route;

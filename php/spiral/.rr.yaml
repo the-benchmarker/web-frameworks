@@ -1,4 +1,8 @@
+version: "3"
+rpc:
+  listen: "tcp://127.0.0.1:6001"
 http:
-  address: :3000
-  workers:
-    command: "php app.php"
+  address: "0.0.0.0:3000"
+server:
+  command: "php public/index.php"
+  relay: pipes

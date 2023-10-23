@@ -3,7 +3,10 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
-use Kint\Renderer\Renderer;
+use Kint\Parser\ConstructablePluginInterface;
+use Kint\Renderer\AbstractRenderer;
+use Kint\Renderer\Rich\TabPluginInterface;
+use Kint\Renderer\Rich\ValuePluginInterface;
 
 /**
  * --------------------------------------------------------------------------
@@ -17,45 +20,50 @@ use Kint\Renderer\Renderer;
  */
 class Kint extends BaseConfig
 {
-	/*
-	|--------------------------------------------------------------------------
-	| Global Settings
-	|--------------------------------------------------------------------------
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Global Settings
+    |--------------------------------------------------------------------------
+    */
 
-	public $plugins = null;
+    /**
+     * @var array<int, ConstructablePluginInterface|string>
+     * @phpstan-var list<class-string<ConstructablePluginInterface>|ConstructablePluginInterface>
+     */
+    public $plugins;
 
-	public $maxDepth = 6;
+    public int $maxDepth           = 6;
+    public bool $displayCalledFrom = true;
+    public bool $expanded          = false;
 
-	public $displayCalledFrom = true;
+    /*
+    |--------------------------------------------------------------------------
+    | RichRenderer Settings
+    |--------------------------------------------------------------------------
+    */
+    public string $richTheme = 'aante-light.css';
+    public bool $richFolder  = false;
+    public int $richSort     = AbstractRenderer::SORT_FULL;
 
-	public $expanded = false;
+    /**
+     * @var array<string, string>
+     * @phpstan-var array<string, class-string<ValuePluginInterface>>
+     */
+    public $richObjectPlugins;
 
-	/*
-	|--------------------------------------------------------------------------
-	| RichRenderer Settings
-	|--------------------------------------------------------------------------
-	*/
-	public $richTheme = 'aante-light.css';
+    /**
+     * @var array<string, string>
+     * @phpstan-var array<string, class-string<TabPluginInterface>>
+     */
+    public $richTabPlugins;
 
-	public $richFolder = false;
-
-	public $richSort = Renderer::SORT_FULL;
-
-	public $richObjectPlugins = null;
-
-	public $richTabPlugins = null;
-
-	/*
-	|--------------------------------------------------------------------------
-	| CLI Settings
-	|--------------------------------------------------------------------------
-	*/
-	public $cliColors = true;
-
-	public $cliForceUTF8 = false;
-
-	public $cliDetectWidth = true;
-
-	public $cliMinWidth = 40;
+    /*
+    |--------------------------------------------------------------------------
+    | CLI Settings
+    |--------------------------------------------------------------------------
+    */
+    public bool $cliColors      = true;
+    public bool $cliForceUTF8   = false;
+    public bool $cliDetectWidth = true;
+    public int $cliMinWidth     = 40;
 }

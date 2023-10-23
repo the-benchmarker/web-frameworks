@@ -1,0 +1,22 @@
+framework:
+  github: fomo-framework/fomo
+  version: 2.0
+
+  files:
+    - "**/*.php"
+    - composer.json
+    - engineer
+
+  engines:
+    - swoole
+
+  extensions:
+    - redis
+
+  modules:
+    - pcntl
+
+  bootstrap:
+    - mkdir storage/logs -p
+
+  command: php engineer server:start

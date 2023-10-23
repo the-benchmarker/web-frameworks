@@ -1,3 +1,13 @@
-provider:
-  default:
-    language: 1.14
+language:
+  version: 1.15
+  files:
+    - "mix.exs"
+    - "lib/*.ex"
+    - "config/*.exs"
+  engines:
+    default:
+      command: bin/server start
+
+framework:
+  engines:
+    - default

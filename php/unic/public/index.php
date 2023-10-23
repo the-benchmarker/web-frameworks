@@ -1,22 +1,31 @@
 <?php
-/**
-* Unic Framework
-*
-* A high performance, open source web application framework.
-*
-* @package : Unic Framework
-* @author : Rajkumar Dusad
-* @copyright : Unic Framework
-* @license : MIT License
-* @link : https://github.com/unicframework/unic
-*/
 
-//Include unic framework
-require_once __DIR__.'/../system/Unic.php';
+require(__DIR__.'/../vendor/autoload.php');
 
-//Initialize web app
-$app = new Unic();
+use Unic\App;
+use Swoole\Http\Server;
 
-//Run web application
-$app->run();
-?>
+$app = new App();
+$server = new Server('localhost', 3000);
+
+$server->set([
+    'worker_num' => swoole_cpu_num() * 2,
+    'enable_coroutine' => false,
+    'log_file' => '/dev/null',
+    'log_level' => SWOOLE_LOG_ERROR,
+]);
+
+$app->get('/', function ($req, $res) {
+    $res->send('');
+});
+
+$app->get('/user/{id}', function ($req, $res) {
+    $res->send($req->params->id);
+});
+
+$app->post('/user', function ($req, $res) {
+    $res->send('');
+});
+
+$app->useOpenSwooleServer($server);
+$app->start();

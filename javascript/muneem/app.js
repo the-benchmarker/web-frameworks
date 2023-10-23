@@ -1,15 +1,15 @@
-const app = require("muneem")();
+const app = require('muneem')();
 
-app.get("/", function (req, res) {
+app.get('/', function (req, res) {
   res.end(200);
 });
 
-app.get("/user/:id", function (req, res) {
+app.get('/user/:id', function (req, res) {
   res.write(req.params.id);
   res.end();
 });
 
-app.post("/user", function (req, res) {
+app.post('/user', function (req, res) {
   res.end(200);
 });
 

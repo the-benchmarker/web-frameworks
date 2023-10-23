@@ -1,12 +1,9 @@
 framework:
-  website: starlette.io
-  version: 0.21
+  website: www.starlette.io
+  github: encode/starlette
+  version: 0.31
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class uvicorn.workers.UvicornWorker  \
-      server:app
+  engines:
+    - uvicorn
+    - hypercorn
+    - daphne

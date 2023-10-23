@@ -1,16 +1,8 @@
 framework:
   github: walkor/webman
-  version: 1.4
+  version: 1.5
 
-build_deps:
-  - libevent-dev
-  - openssl-dev
-  
-php_mod:
-  - pcntl
-  - sockets
+  engines:
+    - workerman
 
-php_ext:
-  - event
-
-command: php start.php start
+  command: php start.php start

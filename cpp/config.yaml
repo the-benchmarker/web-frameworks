@@ -1,10 +1,18 @@
-provider:
-  default:
-    language: 11
+language:
+  version: 11
 
-sources:
-  - CMakeLists.txt
-  - "**/*.h"
-  - "**/*.cc"
-  - "**/*.cpp"
-  - "**/*.cmake"
+  files:
+    - CMakeLists.txt
+    - "**/*.h"
+    - "**/*.hpp"
+    - "**/*.cc"
+    - "**/*.cpp"
+    - "**/*.cmake"
+
+  engines:
+    default:
+      command: /opt/web/simple
+
+framework:
+  engines:
+    - default

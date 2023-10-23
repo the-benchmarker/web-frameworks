@@ -1,3 +1,13 @@
-provider:
-  default:
-    language: 5.36
+language:
+  version: 5.39
+  files:
+    - "**/*.psgi"
+    - "**/*.pl"
+    - cpanfile
+  engines:
+    gazelle:
+      command: plackup -s Gazelle --port 3000 --env production --app d2app.psgi
+
+framework:
+  engines:
+    - gazelle

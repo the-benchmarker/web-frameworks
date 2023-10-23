@@ -5,21 +5,21 @@ framework:
 language:
   version: 11
 
-image: maven:3-jdk-11-slim
+  image: maven:3.9.0-eclipse-temurin-11-focal
 
-runtime: openjdk:11-jre-slim
+  runtime: eclipse-temurin:11-focal
 
-build:
-  - mvn package
-  - mv target/dist/benchmark-1.0.0-*.tar.gz target/dist/benchmark-1.0.0.tar.gz
+  build:
+    - mvn package
+    - mv target/dist/benchmark-1.0.0-*.tar.gz target/dist/benchmark-1.0.0.tar.gz
 
-fix:
-  - ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
+  fix:
+    - ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
 
-binaries:
-  - target/dist/benchmark-1.0.0.tar.gz
+  binaries:
+    - target/dist/benchmark-1.0.0.tar.gz
 
-bootstrap:
-  - tar -xvzf target/dist/benchmark-1.0.0.tar.gz
+  bootstrap:
+    - tar -xvzf target/dist/benchmark-1.0.0.tar.gz
 
-command: /opt/web/run
+  command: /opt/web/run

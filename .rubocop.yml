@@ -1,13 +1,34 @@
 require:
- - rubocop-rake
- - rubocop-rspec
- 
+  - rubocop-rake
+  - rubocop-rspec
+
 AllCops:
   NewCops: enable
-    
+  TargetRubyVersion: 2.7
+  Exclude:
+    - Rakefile
+
 Style/Documentation:
   Enabled: false
 
 Naming/AccessorMethodName:
-  Exclude: 
+  Exclude:
     - ruby/rack-routing/app/route_handler.rb
+
+Lint/ShadowingOuterLocalVariable:
+  Exclude:
+    - .tasks/*.rake
+
+Metrics/BlockLength:
+  Exclude:
+    - .tasks/*.rake
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - .tasks/*.rake
+Layout/LineLength:
+  Exclude:
+    - .tasks/*.rake
+Metrics/ParameterLists:
+  Exclude:
+    - .tasks/*.rake

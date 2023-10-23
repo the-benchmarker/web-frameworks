@@ -1,38 +1,36 @@
+language:
+  version: 14/17
 framework:
   github: drogonframework/drogon
   version: 1.8
 
-provider:
-  default:
-    language: 14/17
+  build_deps:
+    - libjsoncpp-dev
+    - libssl-dev
+    - zlib1g-dev
+    - libbrotli-dev
+    - uuid-dev
 
-build_deps:
-  - libjsoncpp-dev
-  - libssl-dev
-  - zlib1g-dev
-  - libbrotli-dev
-  - uuid-dev
+  bin_deps:
+    - libjsoncpp24
+    - openssl
+    - zlib1g
+    - libbrotli1
+    - libuuid1
 
-bin_deps:
-  - libjsoncpp24
-  - openssl
-  - zlib1g
-  - libbrotli1
-  - libuuid1
+  binaries:
+    - build/drogon_benchmark
 
-binaries:
-  - build/drogon_benchmark
+  download:
+    - git clone --branch v1.8.6 https://github.com/drogonframework/drogon
+    - cd drogon && git submodule update --init
 
-download:
-  - git clone --branch v1.8.0 https://github.com/an-tao/drogon
-  - cd drogon && git submodule update --init
+  build:
+    - mkdir build
+    - cd build && cmake -DCMAKE_BUILD_TYPE=release ..
+    - cd build && make
 
-build:
-  - mkdir build
-  - cd build && cmake -DCMAKE_BUILD_TYPE=release ..
-  - cd build && make
+  files:
+    - config.json
 
-files:
-  - config.json
-
-command: /opt/web/build/drogon_benchmark /opt/web/config.json
+  command: /opt/web/build/drogon_benchmark /opt/web/config.json

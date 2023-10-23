@@ -1,3 +1,14 @@
-provider:
-  default:
-    language: 1.64
+language:
+  version: 1.73
+
+  files:
+    - "**/*.rs"
+    - Cargo.toml
+
+  engines:
+    default:
+      command: /usr/src/app/target/release/server
+
+framework:
+  engines:
+    - default

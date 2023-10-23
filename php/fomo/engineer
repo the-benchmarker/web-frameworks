@@ -1,0 +1,19 @@
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Fomo\Commands\Server\Start as StartServerCommand;
+
+define('PROJECT_PATH' , realpath('./'));
+const FOMO_VERSION = '2.0.0';
+const ENABLE = true;
+const DISABLE = false;
+
+date_default_timezone_set(config('app.timezone'));
+
+$application = new Application();
+
+$application->add(new StartServerCommand());
+
+$application->run();

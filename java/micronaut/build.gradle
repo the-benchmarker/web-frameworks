@@ -1,6 +1,15 @@
+buildscript {
+
+    ext {
+        micronautVersion = "3.9.+"
+        shadowVersion = "+"
+    }
+    
+}
+
 plugins {
-    id("com.github.johnrengelman.shadow") version "+"
-    id("io.micronaut.application") version "+"
+    id("com.github.johnrengelman.shadow") version "${shadowVersion}"
+    id("io.micronaut.application") version "3.7.+"
 }
 
 version = "0.1"
@@ -18,7 +27,7 @@ micronaut {
     processing {
         incremental(true)
     }
-  version '3.0.+'
+  version "${micronautVersion}"
 }
 
 dependencies {
@@ -31,12 +40,12 @@ dependencies {
 
 
 application {
-    mainClass.set("micronaut.Application")
+    mainClass.set("server.Application")
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion("11")
-    targetCompatibility = JavaVersion.toVersion("11")
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
 }
 
 tasks {

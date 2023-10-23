@@ -1,29 +1,24 @@
 framework:
   website: micronaut.io
-  version: 3.0
+  version: 3.9
 
-image: gradle:7-jdk17
+  image: gradle:8-jdk17
 
-build:
-  - gradle build --project-cache-dir ~/.gradle
+  build:
+    - gradle build --project-cache-dir ~/.gradle
 
-patch:
-  - USER root
-  - RUN chown -R gradle .
-  - USER gradle
+  patch:
+    - USER root
+    - RUN chown -R gradle .
+    - USER gradle
 
-sources:
-  - src/**/*.java
-  - build.gradle
+  files:
+    - "**/*.gradle"
 
-files:
-  - src/**/*.yml
-  - src/**/*.xml
+  binaries:
+    - build/distributions/web-0.1.tar
 
-binaries:
-  - build/distributions/web-0.1.tar
+  bootstrap:
+    - tar -xvf build/distributions/web-0.1.tar
 
-bootstrap:
-  - tar -xvf build/distributions/web-0.1.tar
-
-command: /opt/web/web-0.1/bin/web
+  command: /opt/web/web-0.1/bin/web

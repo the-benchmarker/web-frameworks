@@ -1,9 +1,12 @@
 framework:
   github: bearframework/bearframework
-  version: 1.8
+  version: 1.13
 
-php_mod:
-  - gd
+language:
+  engines:
+    php-fpm:
+      modules:
+        - gd
 
-build_deps:
-  - libpng-dev
+      build_deps:
+        - libpng-dev

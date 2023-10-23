@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - id: file_changes
@@ -19,7 +19,7 @@ jobs:
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
       - id: set-matrix
-        run: echo "::set-output name=matrix::$(bundle exec rake ci:matrix)"
+        run: echo "matrix=$(bundle exec rake ci:matrix)" >> "$GITHUB_OUTPUT"
         env:
           FILES: ${{ steps.file_changes.outputs.files }}
 
@@ -29,7 +29,7 @@ jobs:
   test:
     needs: matrix
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: false
@@ -37,18 +37,23 @@ jobs:
       max-parallel: 4
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-ruby@v1
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
+
+      - name: Docker version
+        run: docker -v
 
       - name: Configure
         run: bundle exec rake config
 
       - name: Build
         run: |
-          cd ${{ matrix.directory }} 
-          make build  -f .Makefile
+          make "build"  -f "${DIRECTORY}/.Makefile"
+        env:
+          DIRECTORY: ${{ matrix.directory }}
+          ENGINE: ${{ matrix.engine }}
 
       - name: Wait
         run: sleep 1
@@ -56,4 +61,6 @@ jobs:
       - name: Test
         run: bundle exec rspec .spec
         env:
-          DIRECTORY: ${{ matrix.directory }}
+          LANGUAGE: ${{ matrix.language }}
+          FRAMEWORK: ${{ matrix.framework }}
+          ENGINE: ${{ matrix.engine }}

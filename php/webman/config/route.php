@@ -14,7 +14,6 @@
 
 use Webman\Route;
 
-
 Route::any('/', function () {
     return '';
 });

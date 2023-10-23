@@ -1,17 +1,21 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Exception\Handler;
 
-use const APP_DEBUG;
-use function get_class;
 use ReflectionException;
-use function sprintf;
 use Swoft\Bean\Exception\ContainerException;
 use Swoft\Error\Annotation\Mapping\ExceptionHandler;
 use Swoft\Http\Message\Response;
 use Swoft\Http\Server\Exception\Handler\AbstractHttpErrorHandler;
 use Swoft\Log\Helper\CLog;
 use Throwable;
+
+use function get_class;
+use function sprintf;
+
+use const APP_DEBUG;
 
 /**
  * Class HttpExceptionHandler

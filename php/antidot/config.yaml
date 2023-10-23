@@ -1,23 +1,18 @@
+language:
+  engines:
+    reactphp:
+      command: bin/console serve
+
 framework:
   website: antidotfw.io
-  github: antidot-framework/react-framework
-  version: 1.0
-  
-build_deps:
-  - libevent-dev
-  - icu-dev
-  - openssl-dev
+  github: antidot-framework/antidot-framework
+  version: 2.0
 
-php_ext:
-  - event
+  files:
+    - "**/*.php"
+    - composer.json
+    - bin/console
+    - "**/*.prod.yaml"
 
-php_mod:
-  - intl
-  - pcntl
-  - sockets
-
-before_command:
-  - mkdir -p var/cache && chmod 777 var/cache
-  - mkdir -p var/log && chmod 777 var/log
-
-command: bin/console server:run --quiet
+  engines:
+    - reactphp

@@ -1,0 +1,8 @@
+framework:
+  website: kuiper-framework.github.io
+  version: 0.8
+
+  engines:
+    - swoole
+
+  command: php src/index.php start

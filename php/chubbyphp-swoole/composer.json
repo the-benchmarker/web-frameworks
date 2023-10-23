@@ -1,8 +1,8 @@
 {
   "require": {
     "chubbyphp/chubbyphp-framework": "~5.0.2",
-    "chubbyphp/chubbyphp-framework-router-fastroute": "*",
-    "chubbyphp/chubbyphp-swoole-request-handler": "*",
-    "slim/psr7": "*"
+    "chubbyphp/chubbyphp-framework-router-fastroute": "@stable",
+    "chubbyphp/chubbyphp-swoole-request-handler": "@stable",
+    "slim/psr7": "@stable"
   }
 }

@@ -1,3 +1,5 @@
 framework:
   website: restify.com
-  version: 8.6
+  unsecure: true
+  github: restify/node-restify
+  version: 11.1

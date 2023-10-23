@@ -1,3 +1,5 @@
 framework:
   github: planety/prologue
-  version: 0.4
+  version: 0.6
+  build_opts:
+    - " --mm:refc"

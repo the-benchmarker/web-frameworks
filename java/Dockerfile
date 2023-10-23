@@ -3,18 +3,15 @@
 {{/image}}
 
 {{^image}}
-  FROM maven:3-openjdk-17 AS build
+  FROM maven:3-eclipse-temurin-17 AS build
 {{/image}}
 
 WORKDIR /usr/src/web
 
-{{#sources}}
-  COPY {{{.}}} {{{.}}}
-{{/sources}}
-
 {{#files}}
-  COPY {{.}} {{{.}}}
+  COPY '{{source}}' '{{target}}'
 {{/files}}
+
 
 {{#patch}}
   {{{.}}}
@@ -32,7 +29,7 @@ WORKDIR /usr/src/web
   FROM {{{.}}}
 {{/runtime}}
 {{^runtime}}
-  FROM openjdk:17-slim
+  FROM eclipse-temurin:17.0.7_7-jre
 {{/runtime}}
 
 
@@ -45,6 +42,12 @@ WORKDIR /opt/web
 {{#binaries}}
   COPY --from=build /usr/src/web/{{{.}}} {{{.}}}
 {{/binaries}}
+
+{{#static_files}}
+  COPY '{{source}}' '{{target}}'
+{{/static_files}}
+
+RUN ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
 
 {{#bootstrap}}
   RUN {{{.}}}

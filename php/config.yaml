@@ -1,3 +1,55 @@
-provider:
-  default:
-    language: 8.1
+language:
+  version: 8.2
+
+  files:
+    - "**/*.php"
+    - composer.json
+
+  bootstrap:
+    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
+
+  engines:
+    php-fpm:
+      deps:
+        - nginx
+    workerman:
+      extensions:
+        - event
+      deps:
+        - libevent-dev
+        - openssl-dev
+      modules:
+        - pcntl
+        - sockets
+      command: php public/index.php start
+    road-runner:
+      files:
+        - .rr.yaml
+      bootstrap:
+        - vendor/bin/rr get-binary
+      modules:
+        - sockets
+      command: ./rr serve
+    swoole:
+      extensions:
+        - swoole
+      command: php public/index.php
+    reactphp:
+      deps:
+        - libevent-dev
+      modules:
+        - intl
+        - sockets
+        - pcntl
+      extensions:
+        - event
+    swoole-4.8.x:
+      extensions:
+        - swoole-4.8.11
+      command: php public/index.php
+
+framework:
+  engines:
+    - php-fpm

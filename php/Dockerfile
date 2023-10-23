@@ -1,10 +1,8 @@
-FROM php:8.1-fpm-alpine
+FROM php:{{#language.version}}{{{.}}}{{/language.version}}-fpm-alpine3.16
 
-RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev php8-pear {{#deps}} {{{.}}} {{/deps}}
+RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev linux-headers {{#deps}} {{{.}}} {{/deps}}
 
 WORKDIR /usr/src/app
-
-RUN ln -sfv /usr/bin/pecl8  /usr/local/bin/pecl
 
 RUN docker-php-ext-install zip opcache
 
@@ -16,44 +14,36 @@ RUN docker-php-ext-install zip opcache
   RUN apk add {{{.}}}
 {{/build_deps}}
 
-{{#php_mod}}
+{{#modules}}
   RUN docker-php-ext-install {{{.}}}
-{{/php_mod}}
+{{/modules}}
 
-{{#php_ext}}
-  RUN mkdir -p /usr/src/php/ext/{{{name}}}
-  {{#version}} 
-    RUN  curl -fsSL https://pecl.php.net/get/{{{name}}}-{{{version}}} | tar xvz -C "/usr/src/php/ext/{{{name}}}" --strip 1
-  {{/version}}
-  {{^version}}
-    RUN curl -fsSL https://pecl.php.net/get/{{{name}}} | tar xvz -C "/usr/src/php/ext/{{{name}}}" --strip 1
-  {{/version}}
-  RUN docker-php-ext-install {{{name}}}
-{{/php_ext}}
-
-{{#before_build}}
-  RUN {{{.}}}
-{{/before_build}}
-
-COPY . ./
+{{#extensions}}
+  RUN mkdir -p /usr/src/php/ext/{{{.}}}
+  RUN curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
+  RUN docker-php-ext-install {{{.}}}
+{{/extensions}}
 
 ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
 RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
   rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
   sed -e '1i extension=sockets' /usr/local/etc/php/conf.d/docker-php-ext-event.ini > /tmp/file ; \
   mv /tmp/file /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
-
-{{^standalone}}
-RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-dev --prefer-dist --classmap-authoritative
-RUN composer dumpautoload -o
-{{/standalone}}
-
-
-
-{{#before_command}}
+  
+{{#before_build}}
   RUN {{{.}}}
-{{/before_command}}
+{{/before_build}}
+
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
+
+
+{{^framework.standalone}}
+  {{#bootstrap}}
+    RUN {{{.}}}
+  {{/bootstrap}}
+{{/framework.standalone}}
 
 {{#command}}
   CMD {{{.}}}
@@ -102,7 +92,7 @@ RUN composer dumpautoload -o
   RUN echo -e 'opcache.enable=1\n\
   opcache.memory_consumption=512\n\
   opcache.interned_strings_buffer=64\n\
-  opcache.max_accelerated_files=32531\n\
+  opcache.max_accelerated_sources=32531\n\
   opcache.validate_timestamps=0\n\
   opcache.save_comments=1\n\
   opcache.fast_shutdown=0\n'\

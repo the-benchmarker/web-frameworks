@@ -1,18 +1,25 @@
-FROM dlang2/ldc-ubuntu:1.26.0 AS build
+FROM debian:bookworm AS build
 
 WORKDIR /usr/src/app
 
-COPY . ./
-
-RUN dub build -b release
-
-FROM ubuntu:focal
-
 RUN apt-get -qq update
-{{#deps}}
-  RUN apt-get -qy install {{{.}}}
-{{/deps}}
+RUN apt-get -qy install build-essential openssl ldc dub libssl-dev zlib1g-dev llvm-dev
 
-COPY --from=build /usr/src/app/server /usr/src/app/server
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 
-CMD /usr/src/app/server
+ENV DC=ldc2
+RUN dub build -b release --compiler=ldc2
+
+FROM debian:bookworm
+
+WORKDIR /opt/web
+
+RUN apt-get -qq update && apt-get -qy install openssl ldc
+
+COPY --from=build /usr/src/app/server /opt/web/server
+
+USER nobody
+
+CMD {{{command}}}

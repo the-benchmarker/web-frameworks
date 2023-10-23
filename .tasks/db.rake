@@ -30,15 +30,17 @@ end
 
 namespace :db do
   task :check_failures do
-    results = JSON.load(File.read('data.json'))
-    frameworks = results['metrics'].filter_map {|row|row['framework_id'] if row['label'] == "total_requests_per_s" && row["value"] == 0 }
-    STDOUT.puts results['frameworks'].filter_map {|row|row['label'] if frameworks.include? (row["id"]) }
+    results = JSON.parse(File.read('data.json'))
+    frameworks = results['metrics'].filter_map do |row|
+      row['framework_id'] if row['label'] == 'total_requests_per_s' && (row['value']).zero?
+    end
+    $stdout.puts results['frameworks'].filter_map { |row| row['label'] if frameworks.include?(row['id']) }
   end
   task :raw_export do
     raise 'Please provide a database' unless ENV['DATABASE_URL']
 
     data = { metrics: [], frameworks: [], languages: [] }
-    db = PG.connect(ENV['DATABASE_URL'])
+    db = PG.connect(ENV.fetch('DATABASE_URL', nil))
     db.exec("select row_to_json(t) from (#{SQL}) as t") do |result|
       result.each do |row|
         info = JSON.parse(row['row_to_json'], symbolize_names: true)
@@ -46,21 +48,24 @@ namespace :db do
         info[:framework_id] = framework_id
         language = info.delete :language
         framework = info.delete :framework
-        framework_config = YAML.safe_load(File.read(File.join(language, framework, 'config.yaml')))
+        main_config = YAML.safe_load(File.read(File.join('config.yaml')))
         language_config = YAML.safe_load(File.read(File.join(language, 'config.yaml')))
+        framework_config = YAML.safe_load(File.read(File.join(language, framework, 'config.yaml')))
+        config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
         scheme = 'https'
-        scheme = 'http' if framework_config['framework'].key?('unsecure')
-        website = if framework_config['framework'].key?('github')
-                    "github.com/#{framework_config['framework']['github']}"
-                  elsif framework_config['framework'].key?('gitlab')
-                    "gitlab.com/#{framework_config['framework']['gitlab']}"
-                  else
-                    (framework_config['framework']['website']).to_s
-                  end
+        scheme = 'http' if config['framework'].key?('unsecure')
+        website = config['framework']['website']
+        if website.nil?
+          website = if config['framework'].key?('github')
+                      "github.com/#{config['framework']['github']}"
+                    elsif config['framework'].key?('gitlab')
+                      "gitlab.com/#{config['framework']['gitlab']}"
+                    end
+        end
         unless data[:frameworks].map { |row| row[:id] }.to_a.include?(framework_id)
           data[:frameworks] << {
             id: framework_id,
-            version: framework_config.dig('framework', 'version'),
+            version: config.dig('framework', 'version'),
             label: framework,
             language: language,
             website: "#{scheme}://#{website}"
@@ -69,7 +74,7 @@ namespace :db do
         unless data[:languages].map { |row| row[:label] }.to_a.include?(language)
           data[:languages] << {
             label: language,
-            version: language_config.dig('provider', 'default', 'language')
+            version: config.dig('language', 'version')
           }
         end
         data[:metrics] << info

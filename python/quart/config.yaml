@@ -1,13 +1,9 @@
 framework:
   website: quart.palletsprojects.com
   github: pallets/quart
-  version: 0.18
+  version: 0.19
 
-command: >
-  gunicorn \
-    --log-level warning \
-    --bind 0.0.0.0:3000 \
-    --reuse-port \
-    --workers $(nproc) \
-    --worker-class uvicorn.workers.UvicornWorker \
-      server:app
+  engines:
+    - uvicorn
+    - hypercorn
+    - daphne

@@ -1,17 +1,32 @@
 framework:
   website: masoniteproject.com
-  version: 4.16
- 
-build_deps:
-  - libffi-dev
-  - curl
-  - libssl-dev
+  version: 4.17
 
-command: >
-  gunicorn  \
-    --log-level warning  \
-    --bind 0.0.0.0:3000  \
-    --reuse-port  \
-    --workers $(nproc)  \
-    --worker-class gevent \
-      wsgi:application
+  engines:
+    - gunicorn
+    - uwsgi
+    - waitress
+
+  build_deps:
+    - libffi-dev
+    - libssl-dev
+    - curl
+
+  bootstrap:
+    - curl https://sh.rustup.rs > init.sh
+    - sh init.sh -y
+    - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
+    - rustup default nightly
+
+language:
+  engines:
+    gunicorn:
+      environment:
+        PYTHON_APP: wsgi:application
+        WORKER_CLASS: sync
+    uwsgi:
+      environment:
+        PYTHON_APP: wsgi:application
+    waitress:
+      environment:
+        PYTHON_APP: wsgi:application
