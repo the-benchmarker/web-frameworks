@@ -29,7 +29,6 @@ framework:
     - Gemfile
     - Rakefile
     - config.ru
-    - config/credentials.yml.enc
 
   environment:
     RACK_ENV: production
