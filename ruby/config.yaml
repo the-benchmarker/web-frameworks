@@ -29,9 +29,8 @@ framework:
     - Gemfile
     - Rakefile
     - config.ru
+    - config/credentials.yml.enc
 
   environment:
     RACK_ENV: production
-    RAILS_ENV: production
-    RAILS_LOG_LEVEL: fatal
     BUNDLE_WITHOUT: "development,test"

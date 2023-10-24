@@ -4,3 +4,8 @@ framework:
 
   bootstrap:
     - mkdir -p tmp/pids
+
+  environment:
+    MASTER_KEY: a2c7e0753d7a11e45902b8cc55a6210e
+    RAILS_ENV: production
+    RAILS_LOG_LEVEL: fatal
