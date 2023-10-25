@@ -1,7 +1,7 @@
 {
   "name": "server",
   "dependencies": {
-    "arsd-official:cgi": "~>11.0.1"
+    "arsd-official:cgi": "~>11.2.2"
   },
   "dflags-ldc": [
     "-mcpu=native",

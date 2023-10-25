@@ -1,9 +1,8 @@
 framework:
   github: bearframework/bearframework
-  version: "1.10"
+  version: 1.13
 
 language:
-  version: 8.1
   engines:
     php-fpm:
       modules:

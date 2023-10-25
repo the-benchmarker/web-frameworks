@@ -1,11 +1,10 @@
 import { rootModule } from '@ditsmod/core';
-import { RouterModule } from '@ditsmod/router';
+import { RoutingModule } from '@ditsmod/routing';
 import { BodyParserModule } from '@ditsmod/body-parser';
-
 import { HelloWorldController } from './hello-world.controller.js';
 
 @rootModule({
+  imports: [RoutingModule, BodyParserModule],
   controllers: [HelloWorldController],
-  imports: [RouterModule, BodyParserModule]
 })
 export class AppModule {}
