@@ -6,7 +6,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/user/:id', function (req, res) {
-  res.send(req.params.id);
+  res.send(req.params().id);
 });
 
 app.post('/user', function (req, res) {
