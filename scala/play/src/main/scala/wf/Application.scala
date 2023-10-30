@@ -1,22 +1,21 @@
 package controllers
 
-import javax.inject.Inject
+import javax.inject._
 
 import play.api._
 import play.api.mvc._
 
-class Application @Inject() (action: DefaultActionBuilder)
-    extends ControllerHelpers {
+class Application @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
 
-  def index = action {
+  def index = Action {
     Ok("")
   }
 
-  def g(id: Int) = action {
+  def g(id: Int) = Action {
     Ok(id.toString)
   }
 
-  def p = action {
+  def p = Action {
     Ok("")
   }
 
