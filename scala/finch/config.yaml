@@ -1,3 +1,7 @@
+language:
+  version: 2.13
+  image-version: 2.13.12
+  
 framework:
   website: finagle.github.io/finch/
   version: 0.34
