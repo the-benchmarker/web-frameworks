@@ -2,14 +2,17 @@ import zio._
 import zio.http._
 
 object HelloWorld extends ZIOAppDefault {
+  val one =
+    Method.GET / "" -> handler(Response.ok)
 
-  val app = Http.collect[Request] {
-    case Method.GET -> Root => Response.ok
-    case Method.POST -> Root / "user" => Response.ok
-    case Method.GET -> Root / "user" / id => { Response.text(id) }
+  val two =
+    Method.POST / "" -> handler(Response.ok)
+
+  val three = Method.GET / "user" / string("id") -> handler { (id: String, req: Request) =>
+    Response.text(id)
   }
 
-  override val run =
-    Server.serve(app).provide(Server.defaultWithPort(3000))
+  val app = Routes(one, two, three).toHttpApp
 
+  override val run = Server.serve(app).provide(Server.default)
 }
