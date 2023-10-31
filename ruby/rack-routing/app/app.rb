@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class App
   class << self
     def call(env)

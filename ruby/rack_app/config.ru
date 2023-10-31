@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'rack/app'
 
 class App < Rack::App

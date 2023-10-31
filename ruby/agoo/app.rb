@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'agoo'
 
 Agoo::Log.configure(dir: '',
@@ -18,7 +16,7 @@ Agoo::Log.configure(dir: '',
 
 worker_count = `nproc`.to_i
 worker_count = 1 if worker_count < 1
-Agoo::Server.init(3000, '.', thread_count: 0, worker_count: worker_count, poll_timeout: 0.1)
+Agoo::Server.init(3000, '.', thread_count: 0, worker_count:, poll_timeout: 0.1)
 
 # Empty response.
 class Empty
