@@ -1,3 +1,10 @@
 framework:
   website: playframework.com
-  version: 2.9
+  version: "3.0"
+  files:
+    - "**/*.gradle"
+    - "**/*.scala"
+    - "**/*.sbt"
+    - "**/*.conf"
+    - conf/routes
+    - conf/logback.xml
