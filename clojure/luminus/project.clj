@@ -15,17 +15,17 @@
                  [metosin/reitit "0.6.0"]
                  [metosin/ring-http-response "0.9.3"]
                  [mount "0.1.17"]
-                 [nrepl "1.0.0"]
+                 [nrepl "1.1.0"]
                  [org.clojure/clojure "1.11.1"]
                  [org.clojure/tools.cli "1.0.219"]
                  [org.clojure/tools.logging "1.2.4"]
                  [org.webjars.npm/bulma "0.9.4"]
                  [org.webjars.npm/material-icons "1.13.2"]
-                 [org.webjars/webjars-locator "0.47"]
+                 [org.webjars/webjars-locator "0.48"]
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.10.0"]
                  [ring/ring-defaults "0.4.0"]
-                 [com.fasterxml.jackson.core/jackson-core "2.15.2"]]
+                 [com.fasterxml.jackson.core/jackson-core "2.15.3"]]
 
   :min-lein-version "2.0.0"
   

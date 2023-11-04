@@ -9,6 +9,4 @@ framework:
     - target/benchmark-1.0.0-jar-with-dependencies.jar
 
   command: >
-    /usr/bin/java -server 
-    -XX:+UseNUMA -XX:+UseParallelGC 
-    -cp target/benchmark-1.0.0-jar-with-dependencies.jar benchmark.javalin.Bench profiles=production
+    /usr/bin/java -cp target/benchmark-1.0.0-jar-with-dependencies.jar benchmark.javalin.Bench
