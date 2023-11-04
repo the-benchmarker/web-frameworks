@@ -9,7 +9,7 @@ RUN apt-get -qq update
 {{/files}}
 
 {{#deps}}
-  RUN apt-get -qy install add {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/deps}}
 
 {{#bootstrap}}
