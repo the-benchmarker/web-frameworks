@@ -2,7 +2,7 @@ FROM denoland/deno:latest
 
 WORKDIR /usr/src/app
 
-RUN apt-get -aa update
+RUN apt-get -qq update
 
 {{#deps}}
   RUN apt-get -qy install {{{.}}}
