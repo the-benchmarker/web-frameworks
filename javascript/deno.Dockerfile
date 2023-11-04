@@ -2,8 +2,10 @@ FROM denoland/deno:latest
 
 WORKDIR /usr/src/app
 
+RUN apt-get -aa update
+
 {{#deps}}
-  RUN apk add {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/deps}}
 
 {{#bootstrap}}

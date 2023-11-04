@@ -18,7 +18,6 @@ language:
     uwebsockets:
       deps:
         - git
-        - gcompat
       environment:
         NODE_ENV: production
         EXPERIMENTAL_FASTCALL: 1

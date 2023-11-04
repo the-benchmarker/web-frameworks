@@ -2,12 +2,14 @@ FROM node:lts-slim
 
 WORKDIR /usr/src/app
 
+RUN apt-get -qq update
+
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
 {{#deps}}
-  RUN apk add {{{.}}}
+  RUN apt-get -qy install add {{{.}}}
 {{/deps}}
 
 {{#bootstrap}}
