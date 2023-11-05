@@ -1,13 +1,15 @@
-FROM node:18.18-alpine
+FROM node:lts-slim
 
 WORKDIR /usr/src/app
+
+RUN apt-get -qq update
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
 {{#deps}}
-  RUN apk add {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/deps}}
 
 {{#bootstrap}}

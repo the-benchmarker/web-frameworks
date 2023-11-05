@@ -18,7 +18,6 @@ language:
     uwebsockets:
       deps:
         - git
-        - gcompat
       environment:
         NODE_ENV: production
         EXPERIMENTAL_FASTCALL: 1
@@ -36,6 +35,10 @@ language:
       bootstrap:
         - bun install
       command: bun run app.ts
+    happyx:
+      bootstrap:
+        - npm install
+      command: node app.js
 
 framework:
   engines:
