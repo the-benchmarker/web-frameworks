@@ -1,4 +1,4 @@
-FROM node:18.16-alpine
+FROM node:18.18-alpine
 
 WORKDIR /usr/src/app
 
@@ -21,5 +21,7 @@ WORKDIR /usr/src/app
 {{#fixes}}
   RUN {{{.}}}
 {{/fixes}}
+
+RUN npm install -g npm@10
 
 CMD {{{command}}}

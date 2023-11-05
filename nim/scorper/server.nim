@@ -1,16 +1,17 @@
-import strutils
 import scorper
 
 proc cb(req: Request) {.async.} =
-  if req.meth == HttpGet:
-    if req.path == "/":
+  case req.meth 
+  of HttpGet:
+    if req.url.path == "/":
       await req.resp("")
-    elif req.path.startsWith("/user/"):
-      let id = req.path[6 .. ^1]
+    else:
+      let id = req.url.path[6 .. ^1]
       await req.resp(id)
-  elif req.meth == HttpPost:
-    if req.path == "/user":
-      await req.resp("")
+  of HttpPost:
+    await req.resp("")
+  else:
+    discard
 
 const address = "0.0.0.0:3000"
 waitFor serve(address, cb)

@@ -2,7 +2,7 @@ language:
   version: 14/17
 framework:
   github: drogonframework/drogon
-  version: 1.8
+  version: 1.9
 
   build_deps:
     - libjsoncpp-dev
@@ -22,7 +22,7 @@ framework:
     - build/drogon_benchmark
 
   download:
-    - git clone --branch v1.8.3 https://github.com/an-tao/drogon
+    - git clone --branch v1.9.0 https://github.com/drogonframework/drogon
     - cd drogon && git submodule update --init
 
   build:

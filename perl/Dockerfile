@@ -1,4 +1,4 @@
-FROM perl:5.37-slim
+FROM perl:5.39-slim
 
 RUN apt-get -qq update && \
   apt-get -qy install build-essential

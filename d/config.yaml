@@ -1,14 +1,15 @@
 language:
-  version: 2.096
+  version: 1.30.0
 
   files:
     - "**/*.d"
     - dub.json
+    - dub.selections.json
     - dub.sdl
 
   engines:
     default:
-      command: /usr/src/app/server
+      command: /opt/web/server
 
 framework:
   engines:

@@ -27,8 +27,14 @@ language:
         - npm install
       command: pm2-runtime start app.js -i $(nproc)
     deno:
-      command: deno run --allow-net --allow-read --allow-env app.ts
+      deps:
+        - npm
+      bootstrap:
+        - npm -g install pm2
+      command: nohup pm2-runtime start "deno run --allow-net --allow-read=. app.ts" -i max
     bun:
+      bootstrap:
+        - bun install
       command: bun run app.ts
 
 framework:
@@ -36,6 +42,6 @@ framework:
     - node
 
   files:
-    - "**/*.js"
-    - "**/*.ts"
-    - "**/*.json"
+    - '**/*.js'
+    - '**/*.ts'
+    - '**/*.json'

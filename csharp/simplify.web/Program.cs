@@ -1,20 +1,12 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+﻿using Simplify.Web;
 
-namespace web
-{
-	public class Program
-	{
-        public static void Main(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.ConfigureKestrel(c => c.AddServerHeader = false);
-                    webBuilder.ConfigureLogging(config => config.ClearProviders());
-                    webBuilder.UseStartup<Startup>();
-                })
-                .Build()
-                .Run();
-	}
-}
+var builder = WebApplication.CreateBuilder();
+builder.WebHost.ConfigureKestrel(o => o.AddServerHeader = false);
+builder.Logging.ClearProviders();
+
+var app = builder.Build();
+
+app.UseSimplifyWeb();
+
+app.Run();
+

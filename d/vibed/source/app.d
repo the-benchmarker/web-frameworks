@@ -1,37 +1,34 @@
-import vibe.core.core : runApplication;
-import vibe.http.router;
+import vibe.core.core : runApplication, runWorkerTask, setupWorkerThreads;
 import vibe.http.server;
-import vibe.web.web;
+import std.parallelism: totalCPUs;
+import std.algorithm: startsWith;
 
-class Service
+void handleRequest(scope HTTPServerRequest req, scope HTTPServerResponse res)
 {
-    @path("/")
-    void getIndex()
-    {
-        status(200);
-        response.writeVoidBody();
-    }
-
-    @path("/user")
-    void postUser()
-    {
-        status(200);
-        response.writeVoidBody();
-    }
-
-    @path("/user/:id")
-    void getUser(string _id)
-    {
-        response.writeBody(_id, 200);
+	if (req.requestURI == "/")
+		res.writeBody("", "text/plain");
+    else if (startsWith(req.requestURI,"/user")) {
+        if (req.method == HTTPMethod.POST)
+		    res.writeBody("", "text/plain");
+        else if (req.method == HTTPMethod.GET)
+            res.writeBody(req.requestURI[6..$], "text/plain");
     }
 }
 
 void main()
 {
-    auto router = new URLRouter;
-    router.registerWebInterface(new Service);
-    router.rebuild();
+    setupWorkerThreads(2*totalCPUs);
+    runWorkerTask(&runServer);
+	runApplication();
+}
 
-    listenHTTP("0.0.0.0:3000", router);
-    runApplication();
+void runServer() nothrow
+{
+    try {
+        auto settings = new HTTPServerSettings;
+        settings.options |= HTTPServerOption.reusePort;
+        settings.port = 3000;
+        settings.bindAddresses = ["0.0.0.0"];
+        listenHTTP(settings, &handleRequest);
+    } catch (Exception e) assert(false, e.msg);
 }

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'json'
 
 namespace :ci do
@@ -25,13 +23,14 @@ namespace :ci do
       engine = config.dig('framework', 'engines')&.first
 
       if engine
-        matrix[:include] << { language: language, framework: framework, directory: File.join(language, framework),
-                              engine: engine }
+        matrix[:include] << ({ language:, framework:, directory: File.join(language, framework),
+                               engine: })
       else
         warn "Configuration for #{language}/#{framework} is not correct"
       end
     end
 
+    matrix[:include].uniq!
     matrix[:include] = matrix[:include].take(256)
     puts matrix.to_json
   end

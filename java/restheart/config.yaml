@@ -1,6 +1,6 @@
 framework:
   website: restheart.org
-  version: 7.4
+  version: 7.5
 
   build:
     - mvn package
@@ -12,4 +12,4 @@ framework:
   files:
     - etc/conf-overrides.yml
 
-  command: /usr/bin/java -XX:-RelaxAccessControlCheck -XX:+UseNUMA -XX:+UseParallelGC  -jar /opt/web/target/benchmark.jar -o /opt/web/etc/conf-overrides.yml
+  command: /usr/bin/java -jar /opt/web/target/benchmark.jar -o /opt/web/etc/conf-overrides.yml

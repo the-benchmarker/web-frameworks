@@ -5,4 +5,8 @@ app.get("/", (c) => c.text(""));
 app.get("/user/:id", (c) => c.text(c.req.param("id")));
 app.post("/user", (c) => c.text(""));
 
-export default app;
+Bun.serve({
+  fetch: app.fetch,
+  reusePort: true,
+  port: 3000
+})

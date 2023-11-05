@@ -1,0 +1,12 @@
+language:
+  version: 0.4
+  files:
+    - "**/*.v"
+    - server
+  engines:
+    default:
+      command: /app/server
+
+framework:
+  engines:
+    - default

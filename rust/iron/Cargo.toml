@@ -13,7 +13,6 @@ router = "0.6"
 opt-level = 3
 debug = false
 debug-assertions = false
-overflow-checks = false
 lto = true
 panic = "abort"
 incremental = false

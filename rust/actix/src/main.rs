@@ -2,7 +2,7 @@ use actix_web::{get, web, App, HttpServer, Responder, HttpResponse};
 
 #[get("/user/{id}")]
 async fn get_user(id: web::Path<String>) -> String {
-    id.to_string()
+    id.into_inner()
 }
 
 #[actix_web::main]

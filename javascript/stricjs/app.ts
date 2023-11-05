@@ -1,6 +1,16 @@
-import { Router } from "@stricjs/router";  
+import { Router, macro } from '@stricjs/router';
 
-export default new Router()
-  .get("/", () => new Response(""))
-  .get("/user/:id", req => new Response(req.params.id))
-  .post("/user", () => new Response(""));
+const app = new Router();
+
+app.get("/", macro(() => new Response()));
+
+// @ts-ignore A bit hacky here
+app.get("/user/:id", r => new Response(r.params.id));
+
+app.post("/user", macro(() => new Response()));
+
+Bun.serve({
+  fetch: app.fetch,
+  reusePort: true,
+  port: 3000
+})

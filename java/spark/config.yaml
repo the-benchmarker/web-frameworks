@@ -9,6 +9,4 @@ framework:
     - target/benchmark-1.0.0-jar-with-dependencies.jar
 
   command: >
-    /usr/bin/java -server
-    -XX:+UseNUMA -XX:+UseParallelGC -XX:-UseBiasedLocking -XX:+UseStringDeduplication
-    -jar target/benchmark-1.0.0-jar-with-dependencies.jar the.benchmarker.Main
+    /usr/bin/java -jar target/benchmark-1.0.0-jar-with-dependencies.jar the.benchmarker.Main

@@ -1,4 +1,4 @@
-FROM nimlang/nim:1.6.12-alpine
+FROM nimlang/nim:2.0.0-alpine
 
 RUN apk update && \
     apk upgrade --no-cache
@@ -27,9 +27,7 @@ ENV PATH $PATH:/root/.nimble/bin
 {{/build_command}}
 {{^build_command}}
   RUN nim c {{#build_opts}} {{{.}}} {{/build_opts}} \
-    --excessiveStackTrace:off \
     --assertions:off \
-    --checks:off \
     --warnings:off \
     --hints:off \
     -d:release \

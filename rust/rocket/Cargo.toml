@@ -10,7 +10,6 @@ rocket = "0.5.0-rc"
 opt-level = 3
 debug = false
 debug-assertions = false
-overflow-checks = false
 lto = true
 panic = "abort"
 incremental = false

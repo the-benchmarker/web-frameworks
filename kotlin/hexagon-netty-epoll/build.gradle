@@ -4,7 +4,7 @@ plugins {
 }
 
 ext {
-    hexagonVersion = "3.0.0-B2"
+    hexagonVersion = "3.4.1"
     nettyVersion = "4.1.+"
 
     gradleScripts = "https://raw.githubusercontent.com/hexagonkt/hexagon/$hexagonVersion/gradle"
