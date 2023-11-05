@@ -10,7 +10,13 @@ import java.net.InetAddress
 
 fun main() {
     val textPlain = ContentType(TEXT_PLAIN)
-    val adapter = NettyServerAdapter(executorThreads = 0)
+    val adapter = NettyServerAdapter(
+        executorThreads = 0,
+        keepAliveHandler = false,
+        httpAggregatorHandler = false,
+        chunkedHandler = false,
+        enableWebsockets = false,
+    )
     val settings = HttpServerSettings(InetAddress.getByName("0.0.0.0"), 3000)
 
     serve(adapter, settings) {
