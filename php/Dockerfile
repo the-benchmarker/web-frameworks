@@ -1,6 +1,7 @@
-FROM php:{{#language.version}}{{{.}}}{{/language.version}}-fpm-alpine3.16
+FROM php:8.2-fpm
 
-RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev linux-headers {{#deps}} {{{.}}} {{/deps}}
+RUN apt-get -qq update
+RUN apt-get -qy install git zlib1g-dev libzip-dev build-essential nginx curl-dev libicu-dev oniguruma-dev {{#deps}} {{{.}}} {{/deps}}
 
 WORKDIR /usr/src/app
 
@@ -11,7 +12,7 @@ RUN docker-php-ext-install zip opcache
 {{/environment}}
 
 {{#build_deps}}
-  RUN apk add {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/build_deps}}
 
 {{#modules}}

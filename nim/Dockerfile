@@ -1,4 +1,4 @@
-FROM nimlang/nim:2.0.0-alpine
+FROM nimlang/nim:2.0.0-slim
 
 RUN apk update && \
     apk upgrade --no-cache
@@ -37,7 +37,7 @@ ENV PATH $PATH:/root/.nimble/bin
     server.nim
 {{/build_command}}
 
-FROM alpine
+FROM debian:stable-slim
 
 WORKDIR /usr/src/app
 

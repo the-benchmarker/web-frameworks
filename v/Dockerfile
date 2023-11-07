@@ -1,4 +1,4 @@
-FROM thevlang/vlang:alpine as build
+FROM thevlang/vlang:debian as build
 
 WORKDIR /app
 

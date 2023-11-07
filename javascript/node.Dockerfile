@@ -1,4 +1,4 @@
-FROM node:lts-slim
+FROM node:21-slim
 
 WORKDIR /usr/src/app
 
@@ -23,7 +23,5 @@ RUN apt-get -qq update
 {{#fixes}}
   RUN {{{.}}}
 {{/fixes}}
-
-RUN npm install -g npm@10
 
 CMD {{{command}}}
