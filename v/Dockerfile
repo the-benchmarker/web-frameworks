@@ -12,7 +12,7 @@ WORKDIR /app
 
 RUN v . -prod -o server
 
-FROM alpine
+FROM debian
 
 WORKDIR /app
 

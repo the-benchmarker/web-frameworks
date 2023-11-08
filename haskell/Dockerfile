@@ -1,4 +1,4 @@
-FROM fpco/alpine-haskell-stack:gmp-ghc-8.8.3
+FROM haskell:9.8-slim
 
 WORKDIR /usr/src/app
 
@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 
 RUN stack build
 
-FROM alpine
+FROM debian:stable-slim
 
 WORKDIR /opt/web
 

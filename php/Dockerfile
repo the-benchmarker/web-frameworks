@@ -1,7 +1,7 @@
 FROM php:8.2-fpm
 
 RUN apt-get -qq update
-RUN apt-get -qy install git zlib1g-dev libzip-dev build-essential nginx curl-dev libicu-dev oniguruma-dev {{#deps}} {{{.}}} {{/deps}}
+RUN apt-get -qy install {{#deps}} {{{.}}} {{/deps}}
 
 WORKDIR /usr/src/app
 

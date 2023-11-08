@@ -41,10 +41,9 @@ FROM debian:stable-slim
 
 WORKDIR /usr/src/app
 
-RUN apk update && \
-    apk upgrade --no-cache
+RUN apt-get -qq update
 
-RUN apk --no-cache add openssl-dev pcre-dev
+RUN apt-get -qy install libssl-dev libpcre3-dev
 
 {{#custom_files}}
   COPY --from=0 /usr/src/app/{{{.}}} /usr/src/app/{{{.}}}
