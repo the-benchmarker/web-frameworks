@@ -1,7 +1,7 @@
 FROM php:8.2-fpm
 
 RUN apt-get -qq update
-RUN apt-get -qy install {{#deps}} {{{.}}} {{/deps}}
+RUN apt-get -qy install libzip-dev {{#deps}} {{{.}}} {{/deps}}
 
 WORKDIR /usr/src/app
 

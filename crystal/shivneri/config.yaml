@@ -3,6 +3,10 @@ provider:
     language: 1.7
     image-version: 1.7.3
 
+build_deps:
+  - libxml2-dev
+  - liblzma-dev
+
 framework:
   github: ujjwalguptaofficial/shivneri
   version: 0.18
