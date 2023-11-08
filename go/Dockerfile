@@ -1,4 +1,4 @@
-FROM golang:1.21-slim
+FROM golang:1.21
 
 WORKDIR /go/src/app
 
@@ -22,7 +22,7 @@ RUN go get
 RUN go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
 
 
-FROM debian:stable-slim
+FROM debian:stable
 
 WORKDIR /go/bin
 
