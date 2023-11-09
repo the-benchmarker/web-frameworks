@@ -22,7 +22,6 @@ plugins {
 group "benchmark.kooby"
 version "1.0.0"
 mainClassName = "benchmark.AppKt"
-sourceCompatibility = 17
 
 kotlin {
     jvmToolchain {

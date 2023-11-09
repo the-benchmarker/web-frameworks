@@ -30,8 +30,6 @@ group 'benchmark'
 version '0.0.1'
 mainClassName = "org.http4k.benchmark.BenchmarkServerKt"
 
-sourceCompatibility = 17
-
 kotlin {
     jvmToolchain {
         languageVersion.set(JavaLanguageVersion.of("21"))

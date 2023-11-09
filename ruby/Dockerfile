@@ -10,8 +10,8 @@ WORKDIR /usr/src/app
   ENV {{{.}}}
 {{/environment}}
 
-RUN bundle config set without 'development test'
 RUN bundle install
+
 {{#bootstrap}}
   RUN {{{.}}}
 {{/bootstrap}}

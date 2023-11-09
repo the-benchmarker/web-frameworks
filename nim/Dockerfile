@@ -3,7 +3,7 @@ FROM nimlang/nim:2.0.0-slim
 RUN apt-get -qq update
 
 {{#deps}}
-  RUN aot-get -qy install {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/deps}}
 
 WORKDIR /usr/src/app
