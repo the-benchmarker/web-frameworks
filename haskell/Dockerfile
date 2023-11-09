@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN stack build
+RUN stack build --system-ghc
 
 FROM debian:stable-slim
 

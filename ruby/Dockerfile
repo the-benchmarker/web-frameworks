@@ -6,10 +6,6 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN apk add build-base {{#deps}}{{{.}}}{{/deps}}
-
-
-
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}

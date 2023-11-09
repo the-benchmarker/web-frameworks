@@ -15,9 +15,9 @@ sourceCompatibility = 17
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("17"))
+        languageVersion.set(JavaLanguageVersion.of("21"))
     }
-}
+}ub
 
 defaultTasks("installDist")
 

@@ -1,10 +1,9 @@
 FROM nimlang/nim:2.0.0-slim
 
-RUN apk update && \
-    apk upgrade --no-cache
+RUN apt-get -qq update
 
 {{#deps}}
-  RUN apk --no-cache add {{{.}}}
+  RUN aot-get -qy install {{{.}}}
 {{/deps}}
 
 WORKDIR /usr/src/app
