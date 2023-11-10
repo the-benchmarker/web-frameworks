@@ -1,4 +1,4 @@
-FROM nimlang/nim:2.0.0-slim
+FROM nimlang/nim:2.0.0
 
 RUN apt-get -qq update
 
@@ -6,7 +6,14 @@ RUN apt-get -qq update
   RUN apt-get -qy install {{{.}}}
 {{/deps}}
 
+## set working directory
 WORKDIR /usr/src/app
+
+## Nim environment
+ENV NIM_ENV=production
+ENV NIMBLE_DIR=/home/nim/.nimble
+ENV PATH=$PATH:/home/nim/.nimble/bin
+
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
@@ -36,7 +43,7 @@ ENV PATH $PATH:/root/.nimble/bin
     server.nim
 {{/build_command}}
 
-FROM debian:stable-slim
+FROM debian:stable
 
 WORKDIR /usr/src/app
 

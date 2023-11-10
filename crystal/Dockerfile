@@ -11,15 +11,9 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN apt-get -qq update
-
-{{#build_deps}}
-RUN apt-get -qy install {{{.}}}
-{{/build_deps}}
-
 RUN shards lock
 RUN shards install --production
-RUN shards build --release --no-debug --static {{#build_opts}} {{{.}}} {{/build_opts}}
+RUN shards build --release --no-debug --static
 
 FROM debian:stable-slim
 
