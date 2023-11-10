@@ -6,11 +6,14 @@ framework:
   bootstrap:
     - mkdir -p storage/logs
     - chown -R www-data:www-data storage/logs
+
   build_deps:
     - libsodium-dev
-    - libmemcached-dev
-    - yaml-dev
-    - icu-dev
+    - memcached
+    - libmemcached-tools
+    - libmemcached-dev 
+    - libyaml-dev
+    - libicu-dev
     - libpng-dev
 
   modules:

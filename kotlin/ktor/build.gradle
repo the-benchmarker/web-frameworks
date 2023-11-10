@@ -22,11 +22,10 @@ plugins {
 group 'benchmark'
 version '0.0.1'
 mainClassName = "io.ktor.server.netty.EngineMain"
-sourceCompatibility = 17
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("17"))
+        languageVersion.set(JavaLanguageVersion.of("21"))
     }
 }
 

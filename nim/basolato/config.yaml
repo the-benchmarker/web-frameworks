@@ -4,11 +4,9 @@ framework:
 
   deps:
     - gcc
-    - musl-dev
-    - bsd-compat-headers
     - openssl
     - openssh-client
-    - pcre-dev
+    - libpcre2-dev
 
   build_command: "ducere build -p 3000"
 

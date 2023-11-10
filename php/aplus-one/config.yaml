@@ -5,9 +5,11 @@ framework:
 
   build_deps:
     - libsodium-dev
-    - libmemcached-dev
-    - yaml-dev
-    - icu-dev
+    - memcached
+    - libmemcached-tools
+    - libmemcached-dev 
+    - libyaml-dev
+    - libicu-dev
     - libpng-dev
 
   modules:

@@ -1,13 +1,19 @@
-FROM nimlang/nim:2.0.0-alpine
+FROM nimlang/nim:2.0.0
 
-RUN apk update && \
-    apk upgrade --no-cache
+RUN apt-get -qq update
 
 {{#deps}}
-  RUN apk --no-cache add {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/deps}}
 
+## set working directory
 WORKDIR /usr/src/app
+
+## Nim environment
+ENV NIM_ENV=production
+ENV NIMBLE_DIR=/home/nim/.nimble
+ENV PATH=$PATH:/home/nim/.nimble/bin
+
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
@@ -37,14 +43,13 @@ ENV PATH $PATH:/root/.nimble/bin
     server.nim
 {{/build_command}}
 
-FROM alpine
+FROM debian:stable
 
 WORKDIR /usr/src/app
 
-RUN apk update && \
-    apk upgrade --no-cache
+RUN apt-get -qq update
 
-RUN apk --no-cache add openssl-dev pcre-dev
+RUN apt-get -qy install libssl-dev libpcre3-dev
 
 {{#custom_files}}
   COPY --from=0 /usr/src/app/{{{.}}} /usr/src/app/{{{.}}}

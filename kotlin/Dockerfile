@@ -1,4 +1,4 @@
-FROM gradle:8-jdk17 AS build
+FROM gradle:8-jdk21 AS build
 
 WORKDIR /usr/src/app
 
@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 
 RUN gradle build
 
-FROM eclipse-temurin:17.0.9_9-jre
+FROM eclipse-temurin:21-jre-jammy
 
 WORKDIR /usr/src/app
 
