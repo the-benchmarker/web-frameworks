@@ -1,4 +1,4 @@
-FROM fpco/alpine-haskell-stack:gmp-ghc-8.8.3
+FROM haskell:9.8-slim
 
 WORKDIR /usr/src/app
 
@@ -6,9 +6,9 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN stack build
+RUN stack build --install-ghc
 
-FROM alpine
+FROM debian:stable-slim
 
 WORKDIR /opt/web
 

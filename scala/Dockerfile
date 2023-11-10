@@ -1,8 +1,8 @@
 {{#language.image-version}}
-  FROM sbtscala/scala-sbt:eclipse-temurin-jammy-11.0.20.1_1_1.9.6_{{{.}}} AS build
+  FROM sbtscala/scala-sbt:eclipse-temurin-jammy-21.0.1_12_1.9.7_{{{.}}} AS build
 {{/language.image-version}}
 {{^language.image-version}}
-  FROM sbtscala/scala-sbt:eclipse-temurin-jammy-11.0.20.1_1_1.9.6_3.3.1 AS build
+  FROM sbtscala/scala-sbt:eclipse-temurin-jammy-21.0.1_12_1.9.7_3.3.1 AS build
 {{/language.image-version}}
 
 

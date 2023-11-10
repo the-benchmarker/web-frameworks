@@ -19,7 +19,7 @@ language:
         - event
       deps:
         - libevent-dev
-        - openssl-dev
+        - libssl-dev
       modules:
         - pcntl
         - sockets

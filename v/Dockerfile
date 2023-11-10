@@ -1,4 +1,4 @@
-FROM thevlang/vlang:alpine as build
+FROM thevlang/vlang:debian as build
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ WORKDIR /app
 
 RUN v . -prod -o server
 
-FROM alpine
+FROM debian
 
 WORKDIR /app
 
