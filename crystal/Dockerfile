@@ -1,15 +1,16 @@
-{{#provider.default.image-version}}
-  FROM crystallang/crystal:{{{.}}}
-{{/provider.default.image-version}}
-{{^provider.default.image-version}}
-  FROM crystallang/crystal:1.10
-{{/provider.default.image-version}}
+FROM crystallang/crystal:1.10
 
 WORKDIR /usr/src/app
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
+
+RUN apt-get -qq update
+
+{{#build_deps}}
+  RUN apt-get -qy install {{{.}}}
+{{/build_deps}}
 
 RUN shards lock
 RUN shards install --production
