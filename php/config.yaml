@@ -39,6 +39,8 @@ language:
     reactphp:
       deps:
         - libevent-dev
+        - libicu-dev
+        - libssl-dev
       modules:
         - intl
         - sockets
