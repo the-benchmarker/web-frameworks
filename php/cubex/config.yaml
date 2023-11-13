@@ -6,5 +6,8 @@ framework:
   engines:
     - php-fpm
 
+build_deps:
+  - libicu-dev
+
 modules:
   - intl

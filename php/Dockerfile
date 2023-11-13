@@ -68,7 +68,7 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
   
   RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
   
-  RUN echo -e 'server {\n\
+  RUN echo 'server {\n\
       {{#docroot}}
         root {{{.}}};\n\
       {{/docroot}}
@@ -88,9 +88,9 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
         }\n\
       {{/nginx_conf}}
   }\n'\
-  > /etc/nginx/http.d/default.conf
+  > /etc/nginx/conf.d/server.conf
   
-  RUN echo -e 'opcache.enable=1\n\
+  RUN echo 'opcache.enable=1\n\
   opcache.memory_consumption=512\n\
   opcache.interned_strings_buffer=64\n\
   opcache.max_accelerated_sources=32531\n\
