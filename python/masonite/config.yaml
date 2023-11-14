@@ -19,6 +19,7 @@ framework:
     - rustup default nightly
 
 language:
+  version: 3.11
   engines:
     gunicorn:
       environment:
