@@ -76,6 +76,8 @@ language:
 framework:
   engines:
     - gunicorn
+  build_deps:
+    - build-essential
   files:
     - "**/*.py"
     - requirements.txt

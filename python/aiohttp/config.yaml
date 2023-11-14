@@ -2,9 +2,6 @@ framework:
   website: aiohttp.readthedocs.io
   version: 3.8
 
-  build_deps:
-    - build-essential
-
   engines:
     - aiohttp
     - gunicorn
