@@ -1,5 +1,5 @@
 language:
-  version: 3.11
+  version: 3.12
 
   engines:
     cheroot:
@@ -76,6 +76,8 @@ language:
 framework:
   engines:
     - gunicorn
+  build_deps:
+    - build-essential
   files:
     - "**/*.py"
     - requirements.txt
