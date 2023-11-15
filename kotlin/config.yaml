@@ -6,6 +6,7 @@ language:
     - "**/*.kts"
     - "**/*.kt"
     - "**/*.conf"
+    - "**/*.properties"
 
   engines:
     default:
