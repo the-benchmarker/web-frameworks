@@ -3,11 +3,10 @@ framework:
   version: 1.9
 
 language:
-  version: 11
 
-  image: maven:3.9.0-eclipse-temurin-11-focal
+  image: maven:3-eclipse-temurin-21
 
-  runtime: eclipse-temurin:11-focal
+  runtime: eclipse-temurin:21-jammy
 
   build:
     - mvn package

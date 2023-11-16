@@ -2,7 +2,7 @@ framework:
   github: AppsFlyer/donkey
   version: 0.5
 
-  image: clojure:temurin-17-lein
+  image: clojure:temurin-21-lein
 
   build:
     - lein uberjar
