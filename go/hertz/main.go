@@ -12,8 +12,6 @@ func main() {
 		server.WithHostPorts(":3000"),
 		server.WithDisableHeaderNamesNormalizing(true),
 		server.WithDisablePrintRoute(true),
-		server.WithDisableDefaultDate(true),
-		server.WithDisableDefaultContentType(true),
 	)
 
 	r.GET("/", func(_ context.Context, ctx *app.RequestContext) {})
