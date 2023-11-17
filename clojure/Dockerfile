@@ -20,7 +20,7 @@ WORKDIR /usr/src/app
   RUN clojure -Auberjar
 {{/build}}
 
-FROM eclipse-temurin:17.0.9_9-jre
+FROM eclipse-temurin:21.0.1_12-jre
 
 WORKDIR /opt/bin
 
