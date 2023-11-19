@@ -4,7 +4,7 @@ version = "0.0.0"
 edition = "2018"
 
 [dependencies]
-rocket = "0.5.0-rc"
+rocket = "0.5.0"
 
 [profile.release]
 opt-level = 3
