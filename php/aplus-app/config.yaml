@@ -13,6 +13,7 @@ framework:
     - libz-dev
     - libmemcached-tools
     - libmemcached-dev
+    - libssl-dev
     - libyaml-dev
     - libicu-dev
     - libpng-dev
