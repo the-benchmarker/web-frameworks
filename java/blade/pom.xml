@@ -9,15 +9,15 @@
     <version>1.0.0</version>
 
     <properties>
-        <blade.version>[2.0,2.1)</blade.version>
+        <blade-mvc.version>[2.0,2.1)</blade-mvc.version>
     </properties>
 
     <dependencies>
         <!-- mvc dependency -->
         <dependency>
-            <groupId>com.hellokaton</groupId>
-            <artifactId>blade-core</artifactId>
-            <version>${blade.version}</version>
+            <groupId>com.bladejava</groupId>
+            <artifactId>blade-mvc</artifactId>
+            <version>${blade-mvc.version}</version>
         </dependency>
     </dependencies>
 
