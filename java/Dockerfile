@@ -25,12 +25,12 @@ WORKDIR /usr/src/web
   RUN mvn package
 {{/build}}
 
-{{#runtime}}
-  FROM {{{.}}}
-{{/runtime}}
-{{^runtime}}
+{{#language.version}}
+  FROM eclipse-temurin:{{{.}}}-jre
+{{/language.version}}
+{{^language.version}}
   FROM eclipse-temurin:21-jre
-{{/runtime}}
+{{/language.version}}
 
 
 WORKDIR /opt/web
