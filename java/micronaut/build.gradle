@@ -9,7 +9,7 @@ buildscript {
 
 plugins {
     id("com.github.johnrengelman.shadow") version "${shadowVersion}"
-    id("io.micronaut.application") version "3.7.+"
+    id("io.micronaut.application") version "4.2.+"
 }
 
 version = "0.1"
