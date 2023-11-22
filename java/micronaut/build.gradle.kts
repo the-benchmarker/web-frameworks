@@ -1,9 +1,9 @@
 buildscript {
-   System.setProperty("micronautVersion", "4.2.+")
-   System.setProperty("shadowVersion", "+")
+    System.setProperty("micronautVersion", "4.2.+")
+    System.setProperty("shadowVersion", "+")
 }
 
-plugins {    
+plugins {
     id("com.github.johnrengelman.shadow") version System.getProperty("shadowVersion")
     id("io.micronaut.application") version System.getProperty("micronautVersion")
     id("io.micronaut.aot") version System.getProperty("micronautVersion")
@@ -24,7 +24,6 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
 }
 
-
 application {
     mainClass.set("com.example.Application")
 }
@@ -32,7 +31,6 @@ java {
     sourceCompatibility = JavaVersion.toVersion("17")
     targetCompatibility = JavaVersion.toVersion("17")
 }
-
 
 graalvmNative.toolchainDetection.set(false)
 micronaut {
@@ -42,8 +40,8 @@ micronaut {
         annotations("com.example.*")
     }
     aot {
-    // Please review carefully the optimizations enabled below
-    // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+        // Please review carefully the optimizations enabled below
+        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
         optimizeServiceLoading.set(false)
         convertYamlToJava.set(false)
         precomputeOperations.set(true)
@@ -53,6 +51,3 @@ micronaut {
         optimizeNetty.set(true)
     }
 }
-
-
-

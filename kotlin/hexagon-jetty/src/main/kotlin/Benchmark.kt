@@ -1,7 +1,7 @@
 package com.hexagonkt
 
-import com.hexagonkt.core.require
 import com.hexagonkt.core.media.TEXT_PLAIN
+import com.hexagonkt.core.require
 import com.hexagonkt.http.model.ContentType
 import com.hexagonkt.http.server.HttpServerSettings
 import com.hexagonkt.http.server.jetty.JettyServletAdapter
