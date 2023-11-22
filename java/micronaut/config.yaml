@@ -1,6 +1,6 @@
 framework:
   website: micronaut.io
-  version: 3.9
+  version: 4.2
 
   image: gradle:jdk21-jammy
 
@@ -12,8 +12,10 @@ framework:
     - RUN chown -R gradle .
     - USER gradle
 
+
   files:
-    - "**/*.gradle"
+    - "**/*.kts"
+    - "**/*.properties"
 
   binaries:
     - build/distributions/web-0.1.tar
