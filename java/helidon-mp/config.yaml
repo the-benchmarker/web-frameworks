@@ -6,9 +6,9 @@ framework:
     - mvn clean install -Pjlink-image
 
   files:
-    - target/helidon.webserver-jri/
+    - target/helidon-mp.webserver-jri/
 
   binaries:
-    - target/helidon.webserver-jri
+    - target/helidon-mp.webserver-jri
 
-  command: /opt/web/target/helidon.webserver-jri/bin/start
+  command: /opt/web/target/helidon-mp.webserver-jri/bin/start
