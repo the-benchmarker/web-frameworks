@@ -1,39 +1,38 @@
 package web.helidon;
 
-import io.helidon.media.jsonp.JsonpSupport;
-import io.helidon.common.reactive.Single;
+import io.helidon.logging.common.LogConfig;
 import io.helidon.config.Config;
 import io.helidon.webserver.WebServer;
-import io.helidon.webserver.Routing;
+import io.helidon.webserver.http.HttpRouting;
 
-public final class Main {
-
-    public static void main(final String[] args) {
-        startServer();
+public class Main {
+    private Main() {
     }
 
-    static Single<WebServer> startServer() {
+    public static void main(String[] args) {
 
         Config config = Config.create();
+        Config.global(config);
 
-        WebServer server = WebServer.builder(createRouting(config))
+
+        WebServer server = WebServer.builder()
                 .config(config.get("server"))
+                .routing(Main::routing)
                 .port(3000)
-                .addMediaSupport(JsonpSupport.create())
-                .build();
+                .build()
+                .start();
 
-        Single<WebServer> webserver = server.start();
-        return webserver;
+        System.out.println("WEB server is up! http://localhost:" + server.port() + "/simple-greet");
+
     }
 
-    private static Routing createRouting(Config config) {
+
+    static void routing(HttpRouting.Builder routing) {
         IndexService indexService = new IndexService();
         UserService userService = new UserService();
-        Routing.Builder builder = Routing.builder()
-                .register("/", indexService)
+
+        routing
+      		.register("/", indexService)
                 .register("/user", userService);
-
-
-        return builder.build();
     }
 }
