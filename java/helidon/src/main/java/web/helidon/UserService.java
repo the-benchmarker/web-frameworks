@@ -1,23 +1,24 @@
 package web.helidon;
 
-import io.helidon.webserver.Service;
 import io.helidon.webserver.Routing;
 
-import io.helidon.webserver.ServerRequest;
-import io.helidon.webserver.ServerResponse;
+import io.helidon.webserver.http.HttpRules;
+import io.helidon.webserver.http.HttpService;
+import io.helidon.webserver.http.ServerRequest;
+import io.helidon.webserver.http.ServerResponse;
 
 
-public class UserService implements Service {
+public class UserService implements HttpService {
 
     @Override
-    public void update(Routing.Rules rules) {
+    public void routing(HttpRules rules) {
         rules
                 .post("/", this::getDefaultMessageHandler)
                 .get("/{id}", this::getMessageHandler);
     }
 
     private void getMessageHandler(ServerRequest request, ServerResponse response) {
-        String id = request.path().param("id");
+        String id = request.path().pathParameters().get("id");
         sendResponse(response, id);
     }
 
