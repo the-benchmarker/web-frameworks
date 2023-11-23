@@ -9,7 +9,7 @@ import io.micronaut.http.annotation.Produces;
 
 @Controller
 @NonBlocking
-public class BenchController {
+public class ApplicationController {
   @Get(produces = MediaType.TEXT_PLAIN)
   public String index() {
     return "";

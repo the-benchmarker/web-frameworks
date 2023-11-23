@@ -14,14 +14,15 @@ import org.http4k.routing.routes
 import org.http4k.server.Undertow
 import org.http4k.server.asServer
 
-fun BenchmarkApp() = SetContentType(TEXT_PLAIN)
-    .then(
-        routes(
-            "/user/{id}" bind GET to { req: Request -> Response(OK).body(req.path("id")!!) },
-            "/user" bind POST to { Response(OK) },
-            "/" bind GET to { Response(OK) }
+fun BenchmarkApp() =
+    SetContentType(TEXT_PLAIN)
+        .then(
+            routes(
+                "/user/{id}" bind GET to { req: Request -> Response(OK).body(req.path("id")!!) },
+                "/user" bind POST to { Response(OK) },
+                "/" bind GET to { Response(OK) },
+            ),
         )
-    )
 
 fun main() {
     BenchmarkApp().asServer(Undertow(3000)).start()
