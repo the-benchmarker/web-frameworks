@@ -1,0 +1,14 @@
+framework:
+  website: helidon.io
+  version: 4.0
+
+  build:
+    - mvn clean install -Pjlink-image
+
+  files:
+    - target/helidon-mp.webserver-jri/
+
+  binaries:
+    - target/helidon-mp.webserver-jri
+
+  command: /opt/web/target/helidon-mp.webserver-jri/bin/start
