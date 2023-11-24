@@ -7,7 +7,7 @@ void main() async {
 
   app.get('/', (Request request) => Response.ok(''));
 
-  app.get('/user', (Request request) => Response.ok(''));
+  app.post('/user', (Request request) => Response.ok(''));
 
   app.get('/user/<user>', (Request request, String user) => Response.ok(user));
 
