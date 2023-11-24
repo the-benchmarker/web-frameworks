@@ -13,13 +13,13 @@ public class UserResource {
 
     @Path("/{id}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public String getMessageHandler(@PathParam("id") String id) {
         return id;
     }
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public String getDefaultMessageHandler() {
         return "";
     }

@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 public class IndexResource {
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public String getDefaultMessageHandler() {
         return "";
     }
