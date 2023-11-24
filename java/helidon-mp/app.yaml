@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: web.frameworks.helidon-mp
+  labels:
+    app: web.frameworks.helidon-mp
+spec:
+  type: NodePort
+  selector:
+    app: web.frameworks.helidon-mp
+  ports:
+  - port: 3000
+    targetPort: 3000
+    name: http
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: web.frameworks.helidon-mp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web.frameworks.helidon-mp
+  template:
+    metadata:
+      labels:
+        app: web.frameworks.helidon-mp
+        version: v1
+    spec:
+      containers:
+      - name: web.frameworks.helidon-mp
+        image: web.frameworks.helidon-mp
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
