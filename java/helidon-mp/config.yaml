@@ -3,12 +3,12 @@ framework:
   version: 4.0
 
   build:
-    - mvn clean install -Pjlink-image
+    - mvn clean package
 
   files:
-    - target/helidon-mp.webserver-jri/
+    - target/helidon-mp.webserver.jar
 
   binaries:
-    - target/helidon-mp.webserver-jri
+    - target/helidon-mp.webserver.jar
 
-  command: /opt/web/target/helidon-mp.webserver-jri/bin/start
+  command: /usr/bin/java target/helidon-mp.webserver.jar
