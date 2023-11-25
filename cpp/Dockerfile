@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 WORKDIR /usr/src/app
 
@@ -20,7 +20,7 @@ RUN apt-get -qy install build-essential git cmake
    RUN {{{.}}}
 {{/build}}
 
-FROM debian:bullseye
+FROM debian:bookworm
 
 {{#environment}}
 ENV {{{.}}}
