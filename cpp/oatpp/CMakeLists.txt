@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.26)
 
-set(project_name oatpp_app) ## rename your project here
+set(project_name oat_benchmark) ## rename your project here
 
 project(${project_name})
 
@@ -24,13 +24,13 @@ target_include_directories(${project_name}-lib PUBLIC src)
 
 ## add executables
 
-add_executable(${project_name}-exe
+add_executable(${project_name}
         src/App.cpp
         )
-target_link_libraries(${project_name}-exe ${project_name}-lib)
-add_dependencies(${project_name}-exe ${project_name}-lib)
+target_link_libraries(${project_name} ${project_name}-lib)
+add_dependencies(${project_name} ${project_name}-lib)
 
-set_target_properties(${project_name}-lib ${project_name}-exe PROPERTIES
+set_target_properties(${project_name}-lib ${project_name} PROPERTIES
         CXX_STANDARD 11
         CXX_EXTENSIONS OFF
         CXX_STANDARD_REQUIRED ON
