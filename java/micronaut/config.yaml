@@ -12,7 +12,6 @@ framework:
     - RUN chown -R gradle .
     - USER gradle
 
-
   files:
     - "**/*.kts"
     - "**/*.properties"

@@ -15,7 +15,7 @@ namespace :ci do
     files.each do |file|
       next if file.start_with?('.')
       next if file.count(File::SEPARATOR) < 2
-      next unless File.exist?(file )
+      next unless File.exist?(file)
 
       language, framework, = file.split(File::SEPARATOR)
 
