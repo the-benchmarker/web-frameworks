@@ -1,9 +1,11 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update
-RUN apt-get -qy install build-essential git cmake
+RUN apt-get -qy install build-essential git
+RUN echo "deb http://ftp.debian.org/debian bookworm-backports main" >> /etc/apt/sources.list
+RUN apt-get -qyt bookworm-backports install -y cmake
 
 {{#build_deps}}
   RUN apt-get -qy install {{{.}}}
@@ -20,7 +22,7 @@ RUN apt-get -qy install build-essential git cmake
    RUN {{{.}}}
 {{/build}}
 
-FROM debian:bullseye
+FROM debian:bookworm
 
 {{#environment}}
 ENV {{{.}}}
