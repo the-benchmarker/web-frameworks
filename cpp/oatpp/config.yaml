@@ -20,6 +20,6 @@ framework:
   build:
     - mkdir build
     - cd build && cmake -DOATPP_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ..
-    - cd build && make install -j 6
+    - cd build && make
 
   command: /opt/web/build/oat_benchmark
