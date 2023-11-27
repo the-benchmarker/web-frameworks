@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 RUN echo "deb http://ftp.debian.org/debian bullseye-backports main" >> /etc/apt/sources.list
 RUN apt-get -qq update
-RUN apt-get -qy install build-essential git
+RUN apt-get -qy install build-essential git autoremove
 RUN apt-get -qy install cmake/bullseye-backports
 
 {{#build_deps}}
