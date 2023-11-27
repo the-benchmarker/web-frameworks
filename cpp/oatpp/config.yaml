@@ -12,13 +12,10 @@ framework:
     - build/oat_benchmark
 
   download:
-    - git clone --depth=1 https://github.com/oatpp/oatpp
-    - cd oatpp/
-    - mkdir build
-    - ls
-    - cd build && cmake -DOATPP_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release .
-    - cd build && make install -j 6
-    - cd ..
+    - git clone --depth=1 https://github.com/oatpp/oatpp.git
+    - mkdir oatpp/build
+    - cd oatpp/build && cmake -DOATPP_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ..
+    - cd oatpp/build && make install -j 6
 
   build:
     - mkdir build

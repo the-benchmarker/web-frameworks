@@ -2,10 +2,11 @@ FROM debian:bullseye
 
 WORKDIR /usr/src/app
 
+RUN apt-get -qq update
+RUN apt-get -qy install build-essential git
 RUN echo "deb http://ftp.debian.org/debian unstable main" >> /etc/apt/sources.list
 RUN apt-get -qq update
 RUN apt-get remove --auto-remove cmake 
-RUN apt-get -qy install build-essential git
 RUN apt-get -qy install cmake/unstable cmake-data/unstable
 
 {{#build_deps}}
