@@ -6,7 +6,7 @@ RUN echo "deb http://ftp.debian.org/debian bullseye-backports main" >> /etc/apt/
 RUN apt-get -qq update
 RUN apt-get remove --auto-remove cmake 
 RUN apt-get -qy install build-essential git
-RUN apt-get -qy install cmake/bullseye-backports
+RUN apt-get -qy install cmake/bullseye-backports cmake-data/bullseye-backports
 
 {{#build_deps}}
   RUN apt-get -qy install {{{.}}}
