@@ -2,11 +2,11 @@ FROM debian:bullseye
 
 WORKDIR /usr/src/app
 
-RUN echo "deb http://ftp.debian.org/debian bullseye-backports main" >> /etc/apt/sources.list
+RUN echo "deb http://ftp.debian.org/debian unstable main" >> /etc/apt/sources.list
 RUN apt-get -qq update
 RUN apt-get remove --auto-remove cmake 
 RUN apt-get -qy install build-essential git
-RUN apt-get -qy install cmake/bullseye-backports cmake-data/bullseye-backports
+RUN apt-get -qy install cmake/unstable cmake-data/unstable
 
 {{#build_deps}}
   RUN apt-get -qy install {{{.}}}

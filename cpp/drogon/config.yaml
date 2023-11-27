@@ -12,7 +12,7 @@ framework:
     - uuid-dev
 
   bin_deps:
-    - libjsoncpp24
+    - libjsoncpp25
     - openssl
     - zlib1g
     - libbrotli1
