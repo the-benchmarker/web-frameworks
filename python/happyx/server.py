@@ -1,7 +1,6 @@
-from happyx import new_server
+from happyx import Server
 
-
-app = new_server("0.0.0.0", 3000)
+app = Server("0.0.0.0", 3000)
 
 
 @app.get("/")
