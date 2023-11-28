@@ -21,7 +21,7 @@ public:
     return createResponse(Status::CODE_200, "");
   }
   
-  ENDPOINT("PUT", "/user", putUser) {
+  ENDPOINT("POST", "/user", postUser) {
     return createResponse(Status::CODE_200, "");
   }
 
