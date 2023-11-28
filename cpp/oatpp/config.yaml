@@ -1,0 +1,25 @@
+language:
+  version: 11
+framework:
+  github: oatpp/oatpp
+  version: 1.3.0
+
+  build_deps:
+
+  bin_deps:
+
+  binaries:
+    - build/oat_benchmark
+
+  download:
+    - git clone --depth=1 https://github.com/oatpp/oatpp.git
+    - mkdir oatpp/build
+    - cd oatpp/build && cmake -DOATPP_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ..
+    - cd oatpp/build && make install -j 6
+
+  build:
+    - mkdir build
+    - cd build && cmake -DOATPP_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ..
+    - cd build && make
+
+  command: /opt/web/build/oat_benchmark
