@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 WORKDIR /usr/src/app
 
@@ -21,7 +21,7 @@ RUN apt-get -qy install build-essential wget
    RUN {{{.}}}
 {{/build}}
 
-FROM debian:bullseye
+FROM debian:bookworm
 
 WORKDIR /opt/web
 

@@ -28,7 +28,7 @@ RUN mix release --path release
 
 # ===============================================================================================
 
-FROM debian:bullseye AS app
+FROM debian:bookworm AS app
 
 # Update system deps
 RUN apt-get -qq update && apt-get -qy install openssl
