@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.3-fpm
 
 RUN apt-get -qq update
 RUN apt-get -qy install libzip-dev {{#deps}} {{{.}}} {{/deps}}
