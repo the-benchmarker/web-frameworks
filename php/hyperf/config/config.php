@@ -11,6 +11,8 @@ declare(strict_types=1);
  */
 use Hyperf\Contract\StdoutLoggerInterface;
 
+use function Hyperf\Support\env;
+
 return [
     'app_name' => env('APP_NAME', 'skeleton'),
     'scan_cacheable' => true,
