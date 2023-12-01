@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 use Hyperf\Contract\StdoutLoggerInterface;
+use function Hyperf\Support\env;
 
 return [
     'app_name' => env('APP_NAME', 'skeleton'),
