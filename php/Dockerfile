@@ -1,8 +1,8 @@
 {{#language.version}}
-  FROM php:{{{.}}}
+  FROM php:{{{.}}}-fpm
 {{/language.version}}
 {{^language.version}}
-FROM php:8.3-fpm
+  FROM php:8.3-fpm
 {{/language.version}}
 
 RUN apt-get -qq update
