@@ -17,9 +17,12 @@ return [
         // class name.
         'invokables' => [
             // Fully\Qualified\InterfaceName::class => Fully\Qualified\ClassName::class,
+            \App\Handler\Home::class => \App\Handler\Home::class,
+            \App\Handler\User::class => \App\Handler\User::class,
+            \App\Handler\UserId::class => \App\Handler\UserId::class
         ],
         // Use 'factories' for services provided by callbacks/factory classes.
-        'factories' => [
+        'factories'  => [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
         ],
     ],
