@@ -1,4 +1,9 @@
-FROM php:8.2-fpm
+{{#language.version}}
+  FROM php:{{{.}}}-fpm
+{{/language.version}}
+{{^language.version}}
+  FROM php:8.3-fpm
+{{/language.version}}
 
 RUN apt-get -qq update
 RUN apt-get -qy install libzip-dev {{#deps}} {{{.}}} {{/deps}}
@@ -26,10 +31,9 @@ RUN docker-php-ext-install zip opcache
 {{/extensions}}
 
 ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
-RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
+RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
-  sed -e '1i extension=sockets' /usr/local/etc/php/conf.d/docker-php-ext-event.ini > /tmp/file ; \
-  mv /tmp/file /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
+  sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
   
 {{#before_build}}
   RUN {{{.}}}
