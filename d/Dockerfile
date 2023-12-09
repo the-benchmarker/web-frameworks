@@ -1,9 +1,9 @@
-FROM debian:bookworm AS build
+FROM debian:trixie AS build
 
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update
-RUN apt-get -qy install build-essential openssl ldc dub libssl-dev zlib1g-dev llvm-dev
+RUN apt-get -qy install build-essential ldc dub openssl libssl-dev zlib1g-dev llvm-dev
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
@@ -12,7 +12,7 @@ RUN apt-get -qy install build-essential openssl ldc dub libssl-dev zlib1g-dev ll
 ENV DC=ldc2
 RUN dub build -b release --compiler=ldc2
 
-FROM debian:bookworm
+FROM debian:trixie
 
 WORKDIR /opt/web
 
