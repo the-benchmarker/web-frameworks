@@ -1,12 +1,9 @@
-FROM debian:bookworm AS build
+FROM debian:trixie AS build
 
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update
-RUN apt-get -qy install build-essential wget openssl libssl-dev zlib1g-dev llvm-dev
-RUN wget https://github.com/ldc-developers/ldc/releases/download/v1.36.0-beta1/ldc2-1.36.0-beta1-linux-x86_64.tar.xz
-RUN rm -rf /usr/local/ldc2* && tar -C /usr/local -xvf ldc2-1.36.0-beta1-linux-x86_64.tar.xz
-ENV PATH="$PATH:/usr/local/ldc2-1.36.0-beta1-linux-x86_64/bin"
+RUN apt-get -qy install build-essential ldc dub openssl libssl-dev zlib1g-dev llvm-dev
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
@@ -15,7 +12,7 @@ ENV PATH="$PATH:/usr/local/ldc2-1.36.0-beta1-linux-x86_64/bin"
 ENV DC=ldc2
 RUN dub build -b release --compiler=ldc2
 
-FROM debian:bookworm
+FROM debian:trixie
 
 WORKDIR /opt/web
 
