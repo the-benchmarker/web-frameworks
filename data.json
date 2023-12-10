@@ -999,7 +999,7 @@
     {
       "level": 64,
       "label": "minimum_latency",
-      "value": -9.223372036854776e+18,
+      "value": -9.223372036854776e18,
       "framework_id": 4
     },
     {
@@ -1107,7 +1107,7 @@
     {
       "level": 256,
       "label": "minimum_latency",
-      "value": -9.223372036854776e+18,
+      "value": -9.223372036854776e18,
       "framework_id": 4
     },
     {
@@ -1215,7 +1215,7 @@
     {
       "level": 512,
       "label": "minimum_latency",
-      "value": -9.223372036854776e+18,
+      "value": -9.223372036854776e18,
       "framework_id": 4
     },
     {
@@ -1323,7 +1323,7 @@
     {
       "level": 64,
       "label": "minimum_latency",
-      "value": -3.0744573456182584e+18,
+      "value": -3.0744573456182584e18,
       "framework_id": 5
     },
     {
@@ -1431,7 +1431,7 @@
     {
       "level": 256,
       "label": "minimum_latency",
-      "value": -3.074457345618257e+18,
+      "value": -3.074457345618257e18,
       "framework_id": 5
     },
     {
@@ -1539,7 +1539,7 @@
     {
       "level": 512,
       "label": "minimum_latency",
-      "value": -3.0744573456182574e+18,
+      "value": -3.0744573456182574e18,
       "framework_id": 5
     },
     {
@@ -1647,7 +1647,7 @@
     {
       "level": 64,
       "label": "minimum_latency",
-      "value": -6.148914691236517e+18,
+      "value": -6.148914691236517e18,
       "framework_id": 6
     },
     {
@@ -1755,7 +1755,7 @@
     {
       "level": 256,
       "label": "minimum_latency",
-      "value": -6.148914691236517e+18,
+      "value": -6.148914691236517e18,
       "framework_id": 6
     },
     {
@@ -1863,7 +1863,7 @@
     {
       "level": 512,
       "label": "minimum_latency",
-      "value": -6.148914691236517e+18,
+      "value": -6.148914691236517e18,
       "framework_id": 6
     },
     {
@@ -74223,7 +74223,7 @@
     {
       "level": 64,
       "label": "minimum_latency",
-      "value": -3.0744573456182574e+18,
+      "value": -3.0744573456182574e18,
       "framework_id": 230
     },
     {
@@ -99074,7 +99074,7 @@
       "version": "ES2019"
     }
   ],
-  "updated_at": "2023-12-10 20:41:08 UTC",
+  "updated_at": "2023-12-10 20:53:53 UTC",
   "version": 1,
   "hardware": {
     "cpus": 8,
