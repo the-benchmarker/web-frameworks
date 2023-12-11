@@ -2,5 +2,5 @@ framework:
   github: HapticX/happyx
   version: 3.7
 
-build_opts: "-d:beast --threads:on"
+build_opts: "-d:beast -d:disableApiDoc --threads:on"
 build_with: nimble install -d -y
