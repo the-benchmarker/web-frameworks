@@ -5,7 +5,7 @@ edition = "2021"
 publish = false
 
 [dependencies]
-viz = "0.5"
+viz = "0.6"
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 
 [profile.release]
