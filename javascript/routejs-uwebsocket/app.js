@@ -8,7 +8,7 @@ app.get('/', function (req, res) {
 });
 app
   .get('/', (req, res) => res.end(''))
-  .get('/user/{id}', (req, res) => res.end(req.params.id))
+  .get('/user/:id', (req, res) => res.end(req.params.id))
   .post('/user', (req, res) => res.end(''))
   .use((req, res) => res.writeStatus('404').end(''));
 
