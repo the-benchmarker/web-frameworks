@@ -7,7 +7,7 @@ app.get('/', function (req, res) {
   res.end('');
 });
 
-app.get('/user/{id}', function (req, res) {
+app.get('/user/:id', function (req, res) {
   res.end(req.params.id);
 });
 
