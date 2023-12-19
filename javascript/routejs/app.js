@@ -15,6 +15,9 @@ app.post('/user', function (req, res) {
   res.end('');
 });
 
-const server = http.createServer(app.handler());
+app.use(function (req, res) {
+  res.writeStatus('404').end('');
+});
 
+const server = http.createServer(app.handler());
 server.listen(3000);
