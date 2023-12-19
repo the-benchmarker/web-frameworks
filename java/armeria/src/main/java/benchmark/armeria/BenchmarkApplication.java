@@ -7,17 +7,15 @@ import com.linecorp.armeria.server.Server;
 
 public class BenchmarkApplication {
 
-    private static final HttpResponse EMPTY_HTTP_RESPONSE = HttpResponse.of("");
-
     public static void main(String... args) {
         final Server server = Server.builder()
                 .http(3000)
-                .service("/", (ctx, req) -> EMPTY_HTTP_RESPONSE)
-                .service("/user", (ctx, req) -> EMPTY_HTTP_RESPONSE)
+                .service("/", (ctx, req) -> HttpResponse.of(""))
+                .service("/user/:userId", (ctx, req) -> HttpResponse.of(ctx.pathParam("userId")))
                 .service(Route.builder()
-                        .path("/user/:userId")
+                        .path("/user")
                         .methods(HttpMethod.POST)
-                        .build(), (ctx, req) -> HttpResponse.of(ctx.pathParam("userId")))
+                        .build(), (ctx, req) -> HttpResponse.of(""))
                 .build();
 
         server.closeOnJvmShutdown();
