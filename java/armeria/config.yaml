@@ -1,6 +1,6 @@
 framework:
-  website: https://armeria.dev/
-  version: 1.26.4
+  website: armeria.dev
+  version: 1.26
 
   build:
     - mvn package
