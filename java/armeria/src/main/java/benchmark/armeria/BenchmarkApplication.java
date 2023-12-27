@@ -9,29 +9,36 @@ import com.linecorp.armeria.server.Route;
 import com.linecorp.armeria.server.RoutingContext;
 import com.linecorp.armeria.server.Server;
 import com.linecorp.armeria.server.ServiceRequestContext;
+import com.linecorp.armeria.server.annotation.Get;
+import com.linecorp.armeria.server.annotation.Param;
+import com.linecorp.armeria.server.annotation.Post;
 
 public class BenchmarkApplication {
 
     public static void main(String... args) {
         final Server server = Server.builder()
                 .http(3000)
-                .service("/", (UnaryService) (ctx, req) -> HttpResponse.of(""))
-                .service("/user/:userId", (UnaryService) (ctx, req) -> HttpResponse.of(ctx.pathParam("userId")))
-                .service(Route.builder()
-                        .path("/user")
-                        .methods(HttpMethod.POST)
-                        .build(), (UnaryService) (ctx, req) -> HttpResponse.of(""))
+                .annotatedService(new UserService())
                 .build();
 
         server.closeOnJvmShutdown();
         server.start().join();
     }
 
-    @FunctionalInterface
-    private interface UnaryService extends HttpService {
-        @Override
-        default ExchangeType exchangeType(RoutingContext routingContext) {
-            return ExchangeType.UNARY;
+    private static final class UserService {
+        @Get("/")
+        public String index() {
+            return "";
+        }
+
+        @Get("/user/:userId")
+        public String getUser(@Param("userId") String userId) {
+            return userId;
+        }
+
+        @Post("/user")
+        public String createUser() {
+            return "";
         }
     }
 }
