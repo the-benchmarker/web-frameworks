@@ -187,8 +187,8 @@ def create_dockerfile(directory, engine, config)
     end
   end
 
-  config['extensions'].map!{{_1 => true, :name => _1}}
-  config['modules'].map!{{_1 => true, :name => _1}}
+  config['extensions']&.map!{{_1 => true, :name => _1}}
+  config['modules']&.map!{{_1 => true, :name => _1}}
 
   template = File.read(path)
   template_data = config.merge("files" => files, "static_files" => static_files, "environment" => config["environment"]&.map do |k, v|
