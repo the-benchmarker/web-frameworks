@@ -9,18 +9,19 @@ RUN apt-get -qq update
 RUN apt-get -qy install libzip-dev {{#deps}} {{{.}}} {{/deps}} 
 RUN docker-php-ext-install zip opcache
 
-
-
 {{#modules}}
-  FROM base AS {{{.}}}
-  RUN docker-php-ext-install {{{.}}}
+  FROM base AS {{{name}}}
+  RUN docker-php-ext-install {{{name}}}
 {{/modules}}
 
 {{#extensions}}
-  FROM base AS {{{.}}}
-  RUN mkdir -p /usr/src/php/ext/{{{.}}}
-  RUN curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
-  RUN docker-php-ext-install {{{.}}}
+  FROM base AS {{{name}}}
+  {{#event}}
+   RUN docker-php-ext-install sockets
+   {{/event}}
+  RUN mkdir -p /usr/src/php/ext/{{{name}}}
+  RUN curl -fsSL https://pecl.php.net/get/{{{name}}} | tar xvz -C "/usr/src/php/ext/{{{name}}}" --strip 1
+  RUN docker-php-ext-install {{{name}}}
 {{/extensions}}
 
 
@@ -30,12 +31,20 @@ FROM base
 WORKDIR /usr/src/app
 
 {{#modules}}
-  COPY --from={{{.}}} /usr/local/etc/php/conf.d/docker-php-ext-{{{.}}}.ini /usr/local/etc/php/conf.d/docker-php-ext-{{{.}}}.ini
-  COPY --from={{{.}}} /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{.}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{.}}}.so
+  COPY --from={{{name}}} /usr/local/lib/php/extensions/no-debug-non-zts-20220829/{{{name}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/{{{name}}}.so
 {{/modules}}
 {{#extensions}}
-  COPY --from={{{.}}} /usr/local/etc/php/conf.d/docker-php-ext-{{{.}}}.ini /usr/local/etc/php/conf.d/docker-php-ext-{{{.}}}.ini
-  COPY --from={{{.}}} /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{.}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{.}}}.so
+  {{#event}}
+  COPY --from=sockets /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini
+    COPY --from=sockets /usr/local/lib/php/extensions/no-debug-non-zts-20220829/sockets.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/sockets.so
+ {{/event}}
+
+  COPY --from={{{name}}} /usr/local/etc/php/conf.d/docker-php-ext-{{{name}}}.ini /usr/local/etc/php/conf.d/docker-php-ext-{{{name}}}.ini
+  {{#event}}
+   RUN docker-php-ext-install sockets
+   RUN sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini
+   {{/event}}
+  COPY --from={{{name}}} /usr/local/lib/php/extensions/no-debug-non-zts-20220829/{{{name}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/{{{name}}}.so
 {{/extensions}}
 
 
@@ -53,10 +62,7 @@ WORKDIR /usr/src/app
 
 
 
-ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
-RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
-  rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
-  sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
+
   
 {{#before_build}}
   RUN {{{.}}}
