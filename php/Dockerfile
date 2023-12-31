@@ -1,16 +1,46 @@
 {{#language.version}}
-  FROM php:{{{.}}}-fpm
+  FROM php:{{{.}}}-fpm AS base
 {{/language.version}}
 {{^language.version}}
-  FROM php:8.3-fpm
+  FROM php:8.3-fpm AS base
 {{/language.version}}
 
 RUN apt-get -qq update
-RUN apt-get -qy install libzip-dev {{#deps}} {{{.}}} {{/deps}}
+RUN apt-get -qy install libzip-dev {{#deps}} {{{.}}} {{/deps}} 
+RUN docker-php-ext-install zip opcache
+
+
+
+{{#modules}}
+  FROM base AS {{{.}}}
+  RUN docker-php-ext-install {{{.}}}
+{{/modules}}
+
+{{#extensions}}
+  FROM base AS {{{.}}}
+  RUN mkdir -p /usr/src/php/ext/{{{.}}}
+  RUN curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
+  RUN docker-php-ext-install {{{.}}}
+{{/extensions}}
+
+
+
+FROM base 
 
 WORKDIR /usr/src/app
 
-RUN docker-php-ext-install zip opcache
+{{#modules}}
+  COPY --from={{{.}}} /usr/local/etc/php/conf.d/docker-php-ext-{{{.}}}.ini /usr/local/etc/php/conf.d/docker-php-ext-{{{.}}}.ini
+  COPY --from={{{.}}} /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{.}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{.}}}.so
+{{/modules}}
+{{#extensions}}
+  COPY --from={{{.}}} /usr/local/etc/php/conf.d/docker-php-ext-{{{.}}}.ini /usr/local/etc/php/conf.d/docker-php-ext-{{{.}}}.ini
+  COPY --from={{{.}}} /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{.}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{.}}}.so
+{{/extensions}}
+
+
+
+
 
 {{#environment}}
   ENV {{{.}}}
@@ -20,15 +50,8 @@ RUN docker-php-ext-install zip opcache
   RUN apt-get -qy install {{{.}}}
 {{/build_deps}}
 
-{{#modules}}
-  RUN docker-php-ext-install {{{.}}}
-{{/modules}}
 
-{{#extensions}}
-  RUN mkdir -p /usr/src/php/ext/{{{.}}}
-  RUN curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
-  RUN docker-php-ext-install {{{.}}}
-{{/extensions}}
+
 
 ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
 RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
@@ -64,10 +87,8 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   RUN sed -i 's/\(listen =\).*/\1 \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.owner.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.group.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
-  RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
-  # pm.max_children set according to nproc
+  RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf\
   RUN if [ $(nproc) = 1 ] ; then sed -i 's/\(pm\.max_children =\).*/\1 512/g' /usr/local/etc/php-fpm.d/www.conf ; else sed -i 's/\(pm\.max_children =\).*/\1 1024/g' /usr/local/etc/php-fpm.d/www.conf ; fi 
-  # after 15 seconds warm-up, half of the 'idle' children are not killed
   RUN if [ $(nproc) = 1 ] ; then sed -i 's/\(pm\.max_spare_servers =\).*/\1 256/g' /usr/local/etc/php-fpm.d/www.conf ; else sed -i 's/\(pm\.max_spare_servers =\).*/\1 512/g' /usr/local/etc/php-fpm.d/www.conf ; fi 
   
   RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
