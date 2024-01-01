@@ -47,10 +47,6 @@ language:
         - pcntl
       extensions:
         - event
-    swoole-4.8.x:
-      extensions:
-        - swoole-4.8.11
-      command: php public/index.php
 
 framework:
   engines:
