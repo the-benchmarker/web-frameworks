@@ -9,9 +9,9 @@
 
 import proxyaddr from "proxy-addr";
 import { createServer } from "http";
-import { Encryption } from "@adonisjs/encryption/build/standalone";
+import { Encryption } from "@adonisjs/encryption";
 import { Application } from "@adonisjs/application";
-import { Server } from "@adonisjs/http-server/build/standalone";
+import { Server } from "@adonisjs/http-server";
 
 const app = new Application(__dirname, "web", {});
 app.setup();
