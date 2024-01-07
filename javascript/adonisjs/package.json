@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "@adonisjs/assembler": "*",
-    "@adonisjs/core": "*",
+    "@adonisjs/core": "~5.9.0",
     "@adonisjs/encryption": "*",
     "@adonisjs/application": "*",
-    "@adonisjs/http-server": "~7.0.0",
+    "@adonisjs/http-server": "~5.9.0",
     "adonis-preset-ts": "*",
     "proxy-addr": "*",
     "reflect-metadata": "*",
