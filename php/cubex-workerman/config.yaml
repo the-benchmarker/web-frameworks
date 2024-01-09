@@ -4,4 +4,9 @@ framework:
   version: "4.20"
 
   engines:
-    - php-fpm
+    - workerman
+
+language:
+  engines:
+    workerman:
+      command: php bin/index start
