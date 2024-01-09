@@ -4,7 +4,7 @@ use Cubex\Cubex;
 use Cubex\Workerman\CubexWorker;
 use App\Application;
 
-$loader = require_once('vendor/autoload.php');
+$loader = require_once(dirname(__DIR__) . '/vendor/autoload.php');
 
 $worker = CubexWorker::create(
   __DIR__,
