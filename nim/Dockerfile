@@ -49,7 +49,9 @@ WORKDIR /usr/src/app
 
 RUN apt-get -qq update
 
-RUN apt-get -qy install libssl-dev libpcre3-dev
+RUN apt-get -qy install \
+    libssl-dev \
+    libpcre3-dev
 
 {{#custom_files}}
   COPY --from=0 /usr/src/app/{{{.}}} /usr/src/app/{{{.}}}
