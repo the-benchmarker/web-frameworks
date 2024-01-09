@@ -1,13 +1,7 @@
 framework:
+  github: cubex/framework
   website: cubex.io
   version: "4.20"
 
-  # TODO: add workerman
   engines:
     - php-fpm
-
-build_deps:
-  - libicu-dev
-
-modules:
-  - intl
