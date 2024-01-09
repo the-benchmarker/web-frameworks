@@ -10,7 +10,7 @@ $worker = CubexWorker::create(
   __DIR__,
   $loader,
   function (Cubex $cubex) { return new Application($cubex); },
-  'http://0.0.0.0:' . '3719',
+  'http://0.0.0.0:3000',
 )->setCount(4);
 
 \Workerman\Worker::$pidFile = 'cubex.pid';
