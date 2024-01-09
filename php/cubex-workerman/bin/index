@@ -1,9 +1,9 @@
 #!/usr/bin/env php
 <?php
 
+use App\Application;
 use Cubex\Cubex;
 use Cubex\Workerman\CubexWorker;
-use App\Application;
 
 $loader = require_once(dirname(__DIR__) . '/vendor/autoload.php');
 
@@ -12,7 +12,9 @@ $worker = CubexWorker::create(
   $loader,
   function (Cubex $cubex) { return new Application($cubex); },
   'http://0.0.0.0:3000',
-)->setCount(4);
+);
+
+$worker->setCount(shell_exec('nproc') ? shell_exec('nproc') : 32);
 
 \Workerman\Worker::$pidFile = 'cubex.pid';
 \Workerman\Worker::$logFile = 'cubex.log';
