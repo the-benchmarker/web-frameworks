@@ -1,6 +1,7 @@
 {
   "require": {
     "cubex/framework": "~4.20.0",
+    "cubex/workerman": "@stable",
     "packaged/polyfill-ctype": "@stable",
     "packaged/polyfill-mbstring": "@stable",
     "packaged/polyfill-intl": "@stable",
