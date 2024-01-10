@@ -6,7 +6,7 @@
 {{/language.version}}
 
 RUN apt-get -qq update
-RUN apt-get -qy install libzip-dev {{#deps}} {{{.}}} {{/deps}} 
+RUN apt-get -qy install libzip-dev {{#deps}} {{{.}}} {{/deps}} {{#build_deps}} {{{.}}} {{/build_deps}}
 RUN docker-php-ext-install zip opcache
 
 {{#modules}}
@@ -18,13 +18,11 @@ RUN docker-php-ext-install zip opcache
   FROM base AS {{{name}}}
   {{#event}}
    RUN docker-php-ext-install sockets
-   {{/event}}
+  {{/event}}
   RUN mkdir -p /usr/src/php/ext/{{{name}}}
   RUN curl -fsSL https://pecl.php.net/get/{{{name}}} | tar xvz -C "/usr/src/php/ext/{{{name}}}" --strip 1
   RUN docker-php-ext-install {{{name}}}
 {{/extensions}}
-
-
 
 FROM base 
 
@@ -35,43 +33,25 @@ WORKDIR /usr/src/app
 {{/modules}}
 {{#extensions}}
   {{#event}}
-  COPY --from=sockets /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini
+    COPY --from=sockets /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini
     COPY --from=sockets /usr/local/lib/php/extensions/no-debug-non-zts-20220829/sockets.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/sockets.so
- {{/event}}
+  {{/event}}
 
   COPY --from={{{name}}} /usr/local/etc/php/conf.d/docker-php-ext-{{{name}}}.ini /usr/local/etc/php/conf.d/docker-php-ext-{{{name}}}.ini
   {{#event}}
-   RUN docker-php-ext-install sockets
-   RUN sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini
-   {{/event}}
+    RUN docker-php-ext-install sockets
+     RUN sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini
+  {{/event}}
   COPY --from={{{name}}} /usr/local/lib/php/extensions/no-debug-non-zts-20220829/{{{name}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/{{{name}}}.so
 {{/extensions}}
-
-
-
-
 
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
-{{#build_deps}}
-  RUN apt-get -qy install {{{.}}}
-{{/build_deps}}
-
-
-
-
-
-  
-{{#before_build}}
-  RUN {{{.}}}
-{{/before_build}}
-
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
-
 
 {{^framework.standalone}}
   {{#bootstrap}}
@@ -133,4 +113,3 @@ WORKDIR /usr/src/app
   CMD /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
 
 {{/command}}
-
