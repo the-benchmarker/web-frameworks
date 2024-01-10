@@ -29,12 +29,12 @@ FROM base
 WORKDIR /usr/src/app
 
 {{#modules}}
-  COPY --from={{{name}}} /usr/local/lib/php/extensions/no-debug-non-zts-20220829/{{{name}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/{{{name}}}.so
+  COPY --from={{{name}}} /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{name}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{name}}}.so
 {{/modules}}
 {{#extensions}}
   {{#event}}
     COPY --from=sockets /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini
-    COPY --from=sockets /usr/local/lib/php/extensions/no-debug-non-zts-20220829/sockets.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/sockets.so
+    COPY --from=sockets /usr/local/lib/php/extensions/no-debug-non-zts-20230831/sockets.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/sockets.so
   {{/event}}
 
   COPY --from={{{name}}} /usr/local/etc/php/conf.d/docker-php-ext-{{{name}}}.ini /usr/local/etc/php/conf.d/docker-php-ext-{{{name}}}.ini
@@ -42,7 +42,7 @@ WORKDIR /usr/src/app
     RUN docker-php-ext-install sockets
      RUN sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini
   {{/event}}
-  COPY --from={{{name}}} /usr/local/lib/php/extensions/no-debug-non-zts-20220829/{{{name}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20220829/{{{name}}}.so
+  COPY --from={{{name}}} /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{name}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{name}}}.so
 {{/extensions}}
 
 {{#environment}}
