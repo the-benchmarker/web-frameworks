@@ -6,7 +6,7 @@ framework:
   engines:
     - workerman
 
-language:
-  engines:
-    workerman:
-      command: php bin/index start
+  language:
+    engines:
+      workerman:
+        command: php public/index start
