@@ -7,7 +7,6 @@ framework:
     - happyx
 
 language:
-  version: 3.11
   engines:
     happyx:
       command: python server.py
