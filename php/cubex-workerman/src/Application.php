@@ -11,7 +11,7 @@ class Application extends Controller
     {
         yield self::_route('/user/{id}', 'user');
         yield self::_route('/user', 'user');
-        yield self::_route('/', 'home');
+        return 'home';
     }
 
     public function postUser()
