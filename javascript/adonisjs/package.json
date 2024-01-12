@@ -1,28 +1,19 @@
 {
-  "name": "adonisjs",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "node ace serve --watch",
-    "build": "node ace build --production",
-    "start": "node server.js",
-    "test": "node ace test"
-  },
   "devDependencies": {
-    "@adonisjs/assembler": "^5.9.5",
-    "@types/proxy-addr": "^2.0.3",
-    "@types/source-map-support": "^0.5.10",
-    "adonis-preset-ts": "^2.1.0",
-    "pino-pretty": "^10.3.1",
-    "typescript": "~4.9.0",
-    "youch": "^3.3.3",
-    "youch-terminal": "^2.2.3"
+    "@adonisjs/assembler": "~5.9.0",
+    "@types/proxy-addr": "*",
+    "@types/source-map-support": "*",
+    "adonis-preset-ts": "*",
+    "pino-pretty": "*",
+    "typescript": "*",
+    "youch": "*",
+    "youch-terminal": "*"
   },
   "dependencies": {
-    "@adonisjs/core": "^5.9.0",
-    "@adonisjs/repl": "^3.1.11",
-    "proxy-addr": "^2.0.7",
-    "reflect-metadata": "^0.2.1",
-    "source-map-support": "^0.5.21"
+    "@adonisjs/core": "~5.9.0",
+    "@adonisjs/repl": "~3.1.11",
+    "proxy-addr": "*",
+    "reflect-metadata": "*",
+    "source-map-support": "*"
   }
 }
