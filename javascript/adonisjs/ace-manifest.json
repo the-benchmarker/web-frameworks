@@ -82,6 +82,19 @@
       "args": [],
       "aliases": [],
       "flags": []
+    },
+    "repl": {
+      "settings": {
+        "loadApp": true,
+        "environment": "repl",
+        "stayAlive": true
+      },
+      "commandPath": "@adonisjs/repl/build/commands/AdonisRepl",
+      "commandName": "repl",
+      "description": "Start a new REPL session",
+      "args": [],
+      "aliases": [],
+      "flags": []
     }
   },
   "aliases": {}

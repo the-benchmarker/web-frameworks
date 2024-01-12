@@ -5,8 +5,8 @@
  * file.
  */
 
-import Env from "@ioc:Adonis/Core/Env";
-import { hashConfig } from "@adonisjs/core/build/config";
+import Env from '@ioc:Adonis/Core/Env';
+import { hashConfig } from '@adonisjs/core/build/config';
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ export default hashConfig({
   | free to change the default value
   |
   */
-  default: Env.get("HASH_DRIVER", "scrypt"),
+  default: Env.get('HASH_DRIVER', 'scrypt'),
 
   list: {
     /*
@@ -44,7 +44,7 @@ export default hashConfig({
     |
     */
     scrypt: {
-      driver: "scrypt",
+      driver: 'scrypt',
       cost: 16384,
       blockSize: 8,
       parallelization: 1,
@@ -67,8 +67,8 @@ export default hashConfig({
     |
     */
     argon: {
-      driver: "argon2",
-      variant: "id",
+      driver: 'argon2',
+      variant: 'id',
       iterations: 3,
       memory: 4096,
       parallelism: 1,
@@ -89,7 +89,7 @@ export default hashConfig({
     |
     */
     bcrypt: {
-      driver: "bcrypt",
+      driver: 'bcrypt',
       rounds: 10,
     },
   },

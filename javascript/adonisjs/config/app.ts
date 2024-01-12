@@ -5,12 +5,12 @@
  * file.
  */
 
-import proxyAddr from "proxy-addr";
-import Env from "@ioc:Adonis/Core/Env";
-import type { ServerConfig } from "@ioc:Adonis/Core/Server";
-import type { LoggerConfig } from "@ioc:Adonis/Core/Logger";
-import type { ProfilerConfig } from "@ioc:Adonis/Core/Profiler";
-import type { ValidatorConfig } from "@ioc:Adonis/Core/Validator";
+import proxyAddr from 'proxy-addr';
+import Env from '@ioc:Adonis/Core/Env';
+import type { ServerConfig } from '@ioc:Adonis/Core/Server';
+import type { LoggerConfig } from '@ioc:Adonis/Core/Logger';
+import type { ProfilerConfig } from '@ioc:Adonis/Core/Profiler';
+import type { ValidatorConfig } from '@ioc:Adonis/Core/Validator';
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ import type { ValidatorConfig } from "@ioc:Adonis/Core/Validator";
 | be decrypted.
 |
 */
-export const appKey: string = Env.get("APP_KEY");
+export const appKey: string = Env.get('APP_KEY');
 
 /*
 |--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ export const http: ServerConfig = {
   | headers.
   |
   */
-  trustProxy: proxyAddr.compile("loopback"),
+  trustProxy: proxyAddr.compile('loopback'),
 
   /*
   |--------------------------------------------------------------------------
@@ -94,7 +94,7 @@ export const http: ServerConfig = {
   | JSONP Callback
   |--------------------------------------------------------------------------
   */
-  jsonpCallbackName: "callback",
+  jsonpCallbackName: 'callback',
 
   /*
   |--------------------------------------------------------------------------
@@ -102,13 +102,31 @@ export const http: ServerConfig = {
   |--------------------------------------------------------------------------
   */
   cookie: {
-    domain: "",
-    path: "/",
-    maxAge: "2h",
+    domain: '',
+    path: '/',
+    maxAge: '2h',
     httpOnly: true,
     secure: false,
     sameSite: false,
   },
+
+  /*
+  |--------------------------------------------------------------------------
+  | Force Content Negotiation
+  |--------------------------------------------------------------------------
+  |
+  | The internals of the framework relies on the content negotiation to
+  | detect the best possible response type for a given HTTP request.
+  |
+  | However, it is a very common these days that API servers always wants to
+  | make response in JSON regardless of the existence of the `Accept` header.
+  |
+  | By setting `forceContentNegotiationTo = 'application/json'`, you negotiate
+  | with the server in advance to always return JSON without relying on the
+  | client to set the header explicitly.
+  |
+  */
+  forceContentNegotiationTo: 'application/json',
 };
 
 /*
@@ -129,7 +147,7 @@ export const logger: LoggerConfig = {
   | reading the `name` property from the `package.json` file.
   |
   */
-  name: Env.get("APP_NAME"),
+  name: Env.get('APP_NAME'),
 
   /*
   |--------------------------------------------------------------------------
@@ -151,7 +169,7 @@ export const logger: LoggerConfig = {
   | at deployment level and not code level.
   |
   */
-  level: Env.get("LOG_LEVEL", "info"),
+  level: Env.get('LOG_LEVEL', 'info'),
 
   /*
   |--------------------------------------------------------------------------
@@ -162,7 +180,7 @@ export const logger: LoggerConfig = {
   | can have huge impact on performance.
   |
   */
-  prettyPrint: Env.get("NODE_ENV") === "development",
+  prettyPrint: Env.get('NODE_ENV') === 'development',
 };
 
 /*

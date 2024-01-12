@@ -15,4 +15,13 @@ framework:
     - '**/*.ts'
     - tsconfig.json
 
-  command: pm2-runtime start build/app.js -i $(nproc)
+  command: pm2-runtime start build/server.js -i $(nproc)
+
+language:
+  engines:
+    node:
+      environment:
+        HOST: 0.0.0.0
+        PORT: 3000
+        APP_KEY: awesomesecretkey
+        DRIVE_DISK: local
