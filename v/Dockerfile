@@ -1,6 +1,7 @@
 FROM thevlang/vlang:debian as build
 
 WORKDIR /app
+RUN v up
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
@@ -12,7 +13,7 @@ WORKDIR /app
 
 RUN v . -prod -o server
 
-FROM alpine
+FROM alpine:latest
 
 WORKDIR /app
 
