@@ -11,7 +11,7 @@ RUN v up
   RUN {{{.}}}
 {{/bootstrap}}
 
-RUN v . -prod -cc gcc -o server
+RUN v . -prod -cc clang -o server
 
 FROM alpine:latest
 
