@@ -1,4 +1,4 @@
-FROM thevlang/vlang:debian as build
+FROM thevlang/vlang:alpine-dev as build
 
 WORKDIR /app
 RUN v up
