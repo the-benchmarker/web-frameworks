@@ -1,6 +1,10 @@
-FROM thevlang/vlang:alpine-dev as build
+FROM thevlang/vlang:debian-dev as build
 
 WORKDIR /app
+
+RUN apt-get -qq update
+RUN apt-get -qy install build-essential
+
 RUN v up
 
 {{#files}}
@@ -11,9 +15,9 @@ RUN v up
   RUN {{{.}}}
 {{/bootstrap}}
 
-RUN v . -prod -cc clang -o server
+RUN v . {{#build_flags}} {{{.}}} {{/build_flags}} -o server
 
-FROM alpine:latest
+FROM thevlang/vlang:debian-dev
 
 WORKDIR /app
 

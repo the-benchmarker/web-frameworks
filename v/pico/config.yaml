@@ -1,3 +1,6 @@
 framework:
   github: vlang/v
   version: 0.4
+
+  build_flags:
+    - -prod -cc gcc

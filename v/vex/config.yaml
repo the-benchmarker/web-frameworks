@@ -4,3 +4,6 @@ framework:
 
   bootstrap:
     - v install nedpals.vex
+
+  build_flags:
+    - -prod -cc clang
