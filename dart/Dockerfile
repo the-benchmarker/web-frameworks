@@ -7,7 +7,7 @@ WORKDIR /app
 COPY pubspec.yaml pubspec.yaml
 RUN dart pub get --no-precompile
 
-# Copy app source code and AOT compile it
+# Copy app source code and refetch dependencies to cache
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
@@ -24,4 +24,4 @@ COPY --from=build /app/server /app/server
 # Fix CI
 COPY --from=build /bin/sh /bin/sh
 
-CMD {{command}} {{options}}
+CMD {{command}}
