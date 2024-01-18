@@ -19,4 +19,7 @@ FROM scratch
 COPY --from=build /runtime/ /
 COPY --from=build /app/server /app/server
 
-CMD {{command}}
+# Fix CI
+COPY --from=build /bin/sh /bin/sh
+
+CMD {{command}} {{options}}
