@@ -4,7 +4,7 @@ FROM dart:3.2 AS build
 WORKDIR /app
 
 # Add pubspec.yaml and get dependencies
-ADD pubspec.* ./
+COPY pubspec.yaml pubspec.yaml
 RUN dart pub get --no-precompile
 
 # Copy app source code and AOT compile it
