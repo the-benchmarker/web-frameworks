@@ -17,11 +17,12 @@ RUN dart pub get --offline --no-precompile
 RUN dart compile exe server.dart -o server
 
 # Build minimal serving image from AOT-compiled `server` executable
-FROM scratch
-COPY --from=build /runtime/ /
-COPY --from=build /app/server /app/server
+# FROM scratch
+# COPY --from=build /runtime/ /
+# COPY --from=build /app/server /app/server
 
-# Fix CI
-COPY --from=build /bin/sh /bin/sh
+# Fix CI, Figure out why and don't delete it when copying sh will succeed.
+# PS: It is not a requirement of AOT, but caused by `docker run {optoins} > {file}`.
+# COPY --from=build /bin/sh /bin/sh
 
 CMD {{command}}
