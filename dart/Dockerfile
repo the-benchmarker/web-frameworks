@@ -21,8 +21,4 @@ RUN dart compile exe server.dart -o server
 # COPY --from=build /runtime/ /
 # COPY --from=build /app/server /app/server
 
-# Fix CI, Figure out why and don't delete it when copying sh will succeed.
-# PS: It is not a requirement of AOT, but caused by `docker run {optoins} > {file}`.
-# COPY --from=build /bin/sh /bin/sh
-
 CMD {{command}}
