@@ -18,7 +18,9 @@ RUN dart compile exe server.dart -o server
 
 # Build minimal serving image from AOT-compiled `server` executable
 FROM scratch
+#COPY --from=build /bin/sh /bin/sh
+
 COPY --from=build /runtime/ /
 COPY --from=build /app/server /app/server
 
-CMD {{command}}
+ENTRYPOINT {{command}}
