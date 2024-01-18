@@ -17,8 +17,8 @@ RUN dart pub get --offline --no-precompile
 RUN dart compile exe server.dart -o server
 
 # Build minimal serving image from AOT-compiled `server` executable
-# FROM scratch
-# COPY --from=build /runtime/ /
-# COPY --from=build /app/server /app/server
+FROM scratch
+COPY --from=build /runtime/ /
+COPY --from=build /app/server /app/server
 
 CMD {{command}}
