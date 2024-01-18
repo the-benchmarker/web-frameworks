@@ -8,7 +8,9 @@ COPY pubspec.yaml pubspec.yaml
 RUN dart pub get --no-precompile
 
 # Copy app source code and AOT compile it
-ADD . .
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
 RUN dart pub get --offline --no-precompile
 
 # AOT compile `server.dart` to server executable
