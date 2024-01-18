@@ -7,6 +7,5 @@ language:
 framework:
   files:
     - '**/*.dart'
-    - pubspec.yaml
   engines:
     - aot
