@@ -43,4 +43,4 @@ RUN apt-get -qq update
   ENV {{{.}}}
 {{/environment}}
 
-CMD {{{command}}}
+ENTRYPOINT {{{command}}}

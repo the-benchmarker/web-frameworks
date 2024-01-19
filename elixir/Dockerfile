@@ -46,4 +46,4 @@ USER nobody
 ENV HOME /app
 
 # Start release
-CMD {{command}}
+ENTRYPOINT {{command}}

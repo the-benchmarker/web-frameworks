@@ -20,4 +20,4 @@ RUN bundle install
   RUN {{{.}}}
 {{/bootstrap}}
 
-CMD {{{command}}}
+ENTRYPOINT {{{command}}}
