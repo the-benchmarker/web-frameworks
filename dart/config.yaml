@@ -1,12 +1,11 @@
 language:
   version: 3.2
   engines:
-    default:
-      command: dart main.dart
+    aot:
+      command: /app/server
 
 framework:
   files:
-    - "**/*.dart"
-    - pubspec.yaml
+    - '**/*.dart'
   engines:
-    - default
+    - aot

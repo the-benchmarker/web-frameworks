@@ -36,4 +36,4 @@ COPY --from=0 /go/bin/app /go/bin/app
   COPY '{{source}}' '{{target}}'
 {{/static_files}}
 
-CMD {{{command}}}
+ENTRYPOINT {{{command}}}

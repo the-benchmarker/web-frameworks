@@ -22,4 +22,4 @@ COPY --from=build /usr/src/app/server /opt/web/server
 
 USER nobody
 
-CMD {{{command}}}
+ENTRYPOINT {{{command}}}
