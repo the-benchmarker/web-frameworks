@@ -4,7 +4,7 @@ framework:
 
   bootstrap:
     - v install nedpals.vex
-    - cd /opt/vlang && git fetch --all --tags && git checkout tags/weekly.2023.13 && make && v -version && cd /app
+    - cd /opt/vlang && git fetch --all --tags && git checkout tags/weekly.2023.50 && make && v -version && cd /app
 
   build_flags:
     - -prod -cc clang
