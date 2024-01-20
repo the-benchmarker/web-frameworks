@@ -1,6 +1,9 @@
 framework:
   github: vlang/v
-  version: latest
+  version: weekly.2023.33
+
+  bootstrap:
+    - cd /opt/vlang && git fetch --all --tags && git checkout tags/weekly.2023.33 && make && v -version && cd /app
 
   build_flags:
-    - -prod -cc gcc
+    - -prod -cc clang
