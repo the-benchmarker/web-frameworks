@@ -1,7 +1,7 @@
 FROM debian as build
 
 RUN apt-get -qq update
-RUN apt-get -qy install build-essential git clang
+RUN apt-get -qy install build-essential git clang tcc
 
 ENV PATH=/opt/vlang:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
