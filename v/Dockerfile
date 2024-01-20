@@ -1,9 +1,19 @@
-FROM thevlang/vlang:debian-dev as build
-
-WORKDIR /app
+FROM debian as build
 
 RUN apt-get -qq update
 RUN apt-get -qy install build-essential
+
+WORKDIR /opt/vlang
+
+ENV PATH=/opt/vlang:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+RUN /bin/sh -c mkdir -p /opt/vlang && ln -s /opt/vlang/v /usr/bin/v # buildkit
+
+WORKDIR /opt/vlang
+
+RUN /bin/sh -c git clone --depth 1 https://github.com/vlang/v /opt/vlang && make
+
+WORKDIR /app
 
 RUN v up
 
@@ -17,7 +27,7 @@ RUN v up
 
 RUN v . {{#build_flags}} {{{.}}} {{/build_flags}} -o server
 
-FROM thevlang/vlang:debian-dev
+FROM debian
 
 WORKDIR /app
 
