@@ -6,4 +6,5 @@ framework:
     - v install nedpals.vex
 
   build_flags:
+    - cd /opt/vlang && git fetch --all --tags && git checkout tags/weekly.2023.30 && make && v -version && cd /app
     - -prod -cc clang
