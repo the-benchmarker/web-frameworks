@@ -1,7 +1,7 @@
 language:
   version: latest
   files:
-    - "**/*.v"
+    - "vweb/main.v"
     - server
   engines:
     default:
