@@ -5,13 +5,11 @@ RUN apt-get -qy install build-essential
 
 ENV PATH=/opt/vlang:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-CMD ["bash"]
-
-RUN /bin/sh -c mkdir -p /opt/vlang && ln -s /opt/vlang/v /usr/bin/v # buildkit
-
 WORKDIR /opt/vlang
 
-RUN /bin/sh -c git clone --depth 1 https://github.com/vlang/v /opt/vlang && make
+RUN git clone --depth 1 https://github.com/vlang/v /opt/vlang && make
+
+RUN ln -s /opt/vlang/v /usr/bin/v
 
 WORKDIR /app
 
