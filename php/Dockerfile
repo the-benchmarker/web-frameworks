@@ -51,7 +51,7 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
 {{/framework.standalone}}
 
 {{#command}}
-  CMD {{{.}}}
+  ENTRYPOINT {{{.}}}
 {{/command}}
 
 {{^command}}
@@ -103,7 +103,7 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   opcache.fast_shutdown=0\n'\
   >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
   
-  CMD /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
+  ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
 
 {{/command}}
 

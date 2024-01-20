@@ -57,4 +57,4 @@ RUN ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
   ENV {{{.}}}
 {{/environment}}
 
-CMD {{{command}}}
+ENTRYPOINT {{{command}}}

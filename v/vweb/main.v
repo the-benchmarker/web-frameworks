@@ -1,20 +1,20 @@
 import vweb
 
 struct App {
-    vweb.Context
+	vweb.Context
 }
 
-["/"]
+@['/']
 fn (mut app App) index() vweb.Result {
 	return app.text('')
 }
 
-['/user/:id']
+@['/user/:id']
 fn (mut app App) get_user_id(id string) vweb.Result {
 	return app.text(id)
 }
 
-['/user'; post]
+@['/user'; post]
 fn (mut app App) post_user() vweb.Result {
 	return app.text('')
 }

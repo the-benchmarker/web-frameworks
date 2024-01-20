@@ -8,6 +8,7 @@ gem 'mustache'
 gem 'open3'
 gem 'pg'
 gem 'rake'
+gem 'csv'
 
 group :development, :test do
   gem 'rspec'
