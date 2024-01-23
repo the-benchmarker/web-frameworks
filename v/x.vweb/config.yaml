@@ -1,6 +1,12 @@
 framework:
   github: vlang/v
-  version: 0.4
+  version: weekly.2024.03
 
   build_deps:
     - libatomic1
+
+  bootstrap:
+    - cd /opt/vlang && git fetch --all --tags && git checkout tags/weekly.2024.03 && make && v -version && cd /app
+
+  build_flags:
+    - -prod -cc gcc
