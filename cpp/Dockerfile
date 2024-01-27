@@ -3,10 +3,12 @@ FROM debian:bookworm
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update
-RUN apt-get -qy install build-essential git cmake
+RUN apt-get -qy install --no-install-recommends build-essential git cmake \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 {{#build_deps}}
-  RUN apt-get -qy install {{{.}}}
+  RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/build_deps}}
 
 {{#files}}
@@ -31,7 +33,7 @@ WORKDIR /opt/web
 RUN apt-get -qq update
 
 {{#bin_deps}}
-   RUN apt-get -qy install {{{.}}}
+   RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/bin_deps}}
 
 {{#files}}

@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 RUN apt-get -qq update
 
 {{#build_deps}}
-  RUN apt-get -qy install {{{.}}}
+  RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/build_deps}}
 
 RUN shards lock

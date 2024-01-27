@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 RUN apt-get -qq update
 
-RUN apt-get -qy install build-essential
+RUN apt-get -qy install --no-install-recommends build-essential
 
 {{#files}}
   COPY '{{source}}' '{{target}}'

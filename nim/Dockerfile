@@ -3,7 +3,7 @@ FROM nimlang/nim:2.0.2
 RUN apt-get -qq update
 
 {{#deps}}
-  RUN apt-get -qy install {{{.}}}
+  RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/deps}}
 
 ## set working directory
@@ -49,7 +49,7 @@ WORKDIR /usr/src/app
 
 RUN apt-get -qq update
 
-RUN apt-get -qy install \
+RUN apt-get -qy install --no-install-recommends \
     libssl-dev \
     libpcre3-dev
 
