@@ -19,7 +19,7 @@ class Benchmark
      */
     public function get(Context $ctx)
     {
-        $ctx->string(200, $ctx->request->get('id') ?? '');
+        $ctx->string(200, $ctx->request->param['id'] ?? '');
     }
 
     /**
