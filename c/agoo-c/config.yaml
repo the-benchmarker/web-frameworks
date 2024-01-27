@@ -3,7 +3,7 @@ framework:
   version: 0.7
 
   download:
-    - wget -c https://github.com/ohler55/agoo-c/tarball/v0.7.3 -O agoo.tar.gz
+    - wget --no-check-certificate -c https://github.com/ohler55/agoo-c/tarball/v0.7.3 -O agoo.tar.gz
     - tar xzf agoo.tar.gz
     - mv ohler55* agoo-c
     - cd agoo-c/src && make

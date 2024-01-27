@@ -3,13 +3,13 @@ FROM debian:bullseye
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update
-RUN apt-get -qy install --no-install-recommends build-essential wget \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+RUN apt-get -qy install --no-install-recommends build-essential wget
 
 {{#build_deps}}
   RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/build_deps}}
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 {{#files}}
   COPY '{{source}}' '{{target}}'

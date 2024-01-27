@@ -7,6 +7,8 @@ RUN apt-get -qy install --no-install-recommends build-essential git clang tcc \
 
 ENV PATH=/opt/vlang:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
+ENV GIT_SSL_NO_VERIFY=1
+
 WORKDIR /opt/vlang
 
 RUN git clone --depth 1 https://github.com/vlang/v /opt/vlang && make

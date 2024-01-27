@@ -6,7 +6,7 @@ framework:
   version: 3.3
 
   download:
-    - wget -c https://github.com/jorisvink/kore/archive/3.3.1-release.tar.gz
+    - wget --no-check-certificate -c https://github.com/jorisvink/kore/archive/3.3.1-release.tar.gz
     - tar -xvf 3.3.1-release.tar.gz
     - cd kore-3.3.1-release && TASKS=1 NOTLS=1 make && make install
 
