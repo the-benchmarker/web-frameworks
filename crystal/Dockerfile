@@ -30,4 +30,4 @@ COPY --from=0 /usr/src/app/bin/server /usr/bin/app
   ENV {{{.}}}
 {{/environment}}
 
-ENTRYPOINT {{command}}
+CMD {{command}}

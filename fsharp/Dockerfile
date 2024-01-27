@@ -21,4 +21,4 @@ COPY --from=build /usr/src/app/out out
 {{/environment}}
 
 
-ENTRYPOINT {{command}}
+CMD {{command}}

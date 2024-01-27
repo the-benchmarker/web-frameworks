@@ -39,4 +39,4 @@ WORKDIR /app
 
 COPY --from=build /app /app
 
-ENTRYPOINT {{command}}
+CMD {{command}}

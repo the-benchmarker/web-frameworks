@@ -31,4 +31,4 @@ WORKDIR /usr/src/app
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT {{command}}
+CMD {{command}}

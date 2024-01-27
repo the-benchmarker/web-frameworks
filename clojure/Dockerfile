@@ -33,5 +33,5 @@ WORKDIR /opt/bin
 {{/binaries}}
 
 {{#command}}
-  ENTRYPOINT {{{.}}}
+  CMD {{{.}}}
 {{/command}}

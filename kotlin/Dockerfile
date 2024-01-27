@@ -14,5 +14,5 @@ WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/build/libs/server.jar /usr/src/app/build/libs/server.jar
 
-ENTRYPOINT java -server -jar /usr/src/app/build/libs/server.jar
+CMD java -server -jar /usr/src/app/build/libs/server.jar
 

@@ -61,8 +61,8 @@ RUN apt-get -qy install \
 {{/custom_files}}
 
 {{#command}}
-  ENTRYPOINT {{{.}}}
+  CMD {{{.}}}
 {{/command}}
 {{^command}}
-  ENTRYPOINT /usr/src/app/server
+  CMD /usr/src/app/server
 {{/command}}

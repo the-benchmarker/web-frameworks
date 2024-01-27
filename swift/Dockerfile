@@ -19,4 +19,4 @@ FROM swift:5.9-slim
 ENV {{{.}}}
 {{/environment}}
 COPY --from=0 /usr/src/app/.build/release/server /usr/src/app/.build/release/server
-ENTRYPOINT {{command}} {{options}}
+CMD {{command}} {{options}}

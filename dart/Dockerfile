@@ -23,4 +23,4 @@ COPY --from=build /bin/sh /bin/sh
 COPY --from=build /runtime/ /
 COPY --from=build /app/server /app/server
 
-ENTRYPOINT {{command}}
+CMD {{command}}

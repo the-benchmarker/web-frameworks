@@ -41,4 +41,4 @@ RUN apt-get -qq update
   COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
 
-ENTRYPOINT {{{command}}}
+CMD {{{command}}}

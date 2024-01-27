@@ -7,4 +7,4 @@ WORKDIR /usr/src/app
 COPY cpanfile d2app.psgi ./
 RUN cpanm --notest --installdeps .
 
-ENTRYPOINT {{command}}
+CMD {{command}}
