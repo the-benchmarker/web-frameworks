@@ -33,7 +33,6 @@ namespace :ci do
 
     matrix[:include].uniq!
     matrix[:include] = matrix[:include].take(256)
-    matrix = {"include":[{"language":"d","framework":"handy","directory":"d/handy","engine":"default"},{"language":"d","framework":"cgi","directory":"d/cgi","engine":"default"},{"language":"d","framework":"lighttp","directory":"d/lighttp","engine":"default"},{"language":"d","framework":"serverino","directory":"d/serverino","engine":"default"},{"language":"d","framework":"vibed","directory":"d/vibed","engine":"default"}]}
     puts matrix.to_json
   end
 end
