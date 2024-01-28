@@ -1,48 +1,57 @@
 {{#language.version}}
-  FROM php:{{{.}}}-fpm
+  FROM php:{{{.}}}-fpm AS base
 {{/language.version}}
 {{^language.version}}
-  FROM php:8.3-fpm
+  FROM php:8.3-fpm AS base
 {{/language.version}}
 
 RUN apt-get -qq update
-RUN apt-get -qy install libzip-dev {{#deps}} {{{.}}} {{/deps}}
+RUN apt-get -qy install libzip-dev {{#deps}} {{{.}}} {{/deps}} {{#build_deps}} {{{.}}} {{/build_deps}}
+RUN docker-php-ext-install zip opcache
+
+{{#modules}}
+  FROM base AS {{{name}}}
+  RUN docker-php-ext-install {{{name}}}
+{{/modules}}
+
+{{#extensions}}
+  FROM base AS {{{name}}}
+  {{#event}}
+   RUN docker-php-ext-install sockets
+  {{/event}}
+  RUN mkdir -p /usr/src/php/ext/{{{name}}}
+  RUN curl -fsSL https://pecl.php.net/get/{{{name}}} | tar xvz -C "/usr/src/php/ext/{{{name}}}" --strip 1
+  RUN docker-php-ext-install {{{name}}}
+{{/extensions}}
+
+FROM base 
 
 WORKDIR /usr/src/app
 
-RUN docker-php-ext-install zip opcache
+{{#modules}}
+  COPY --from={{{name}}} /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{name}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{name}}}.so
+{{/modules}}
+{{#extensions}}
+  {{#event}}
+    COPY --from=sockets /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini
+    COPY --from=sockets /usr/local/lib/php/extensions/no-debug-non-zts-20230831/sockets.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/sockets.so
+  {{/event}}
+
+  COPY --from={{{name}}} /usr/local/etc/php/conf.d/docker-php-ext-{{{name}}}.ini /usr/local/etc/php/conf.d/docker-php-ext-{{{name}}}.ini
+  {{#event}}
+    RUN docker-php-ext-install sockets
+     RUN sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini
+  {{/event}}
+  COPY --from={{{name}}} /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{name}}}.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/{{{name}}}.so
+{{/extensions}}
 
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
-{{#build_deps}}
-  RUN apt-get -qy install {{{.}}}
-{{/build_deps}}
-
-{{#modules}}
-  RUN docker-php-ext-install {{{.}}}
-{{/modules}}
-
-{{#extensions}}
-  RUN mkdir -p /usr/src/php/ext/{{{.}}}
-  RUN curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
-  RUN docker-php-ext-install {{{.}}}
-{{/extensions}}
-
-ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
-RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
-  rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
-  sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
-  
-{{#before_build}}
-  RUN {{{.}}}
-{{/before_build}}
-
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
-
 
 {{^framework.standalone}}
   {{#bootstrap}}
@@ -64,10 +73,8 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   RUN sed -i 's/\(listen =\).*/\1 \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.owner.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.group.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
-  RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
-  # pm.max_children set according to nproc
+  RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf\
   RUN if [ $(nproc) = 1 ] ; then sed -i 's/\(pm\.max_children =\).*/\1 512/g' /usr/local/etc/php-fpm.d/www.conf ; else sed -i 's/\(pm\.max_children =\).*/\1 1024/g' /usr/local/etc/php-fpm.d/www.conf ; fi 
-  # after 15 seconds warm-up, half of the 'idle' children are not killed
   RUN if [ $(nproc) = 1 ] ; then sed -i 's/\(pm\.max_spare_servers =\).*/\1 256/g' /usr/local/etc/php-fpm.d/www.conf ; else sed -i 's/\(pm\.max_spare_servers =\).*/\1 512/g' /usr/local/etc/php-fpm.d/www.conf ; fi 
   
   RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
@@ -106,4 +113,3 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
 
 {{/command}}
-

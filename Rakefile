@@ -187,10 +187,14 @@ def create_dockerfile(directory, engine, config)
     end
   end
 
+  config['extensions']&.map!{{_1 => true, :name => _1}}
+  config['modules']&.map!{{_1 => true, :name => _1}}
+
   template = File.read(path)
-  File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config.merge("files" => files, "static_files" => static_files, "environment" => config["environment"]&.map do |k, v|
-                                                                                                     "#{k}=#{v}"
-                                                                                                   end)))
+  template_data = config.merge("files" => files, "static_files" => static_files, "environment" => config["environment"]&.map do |k, v|
+      "#{k}=#{v}"
+    end)
+  File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, template_data))
 end
 
 desc "Create Dockerfiles"
