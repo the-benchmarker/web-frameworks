@@ -5,13 +5,12 @@ void main() {
     import slf4d;
     import slf4d.default_provider;
 
-    auto provider = new shared DefaultProvider(true, Levels.ERROR);
+    auto provider = new DefaultProvider(true, Levels.ERROR);
     configureLoggingProvider(provider);
 
-    ServerConfig cfg = ServerConfig.defaultValues();
+    ServerConfig cfg = ServerConfig.init;
     cfg.hostname = "0.0.0.0";
     cfg.port = 3000;
-    cfg.enableWebSockets = false;
 
     auto pathHandler = new PathHandler()
         .addMapping(Method.GET, "/", (ref ctx) {ctx.response.okResponse();})
