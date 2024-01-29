@@ -6,9 +6,7 @@
 {{/language.version}}
 
 RUN apt-get -qq update
-RUN apt-get -qy install --no-install-recommends libzip-dev {{#deps}} {{{.}}} {{/deps}} \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+RUN apt-get -qy install --no-install-recommends libzip-dev {{#deps}} {{{.}}} {{/deps}}
 
 WORKDIR /usr/src/app
 
@@ -21,6 +19,8 @@ RUN docker-php-ext-install zip opcache
 {{#build_deps}}
   RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/build_deps}}
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 {{#modules}}
   RUN docker-php-ext-install {{{.}}}
