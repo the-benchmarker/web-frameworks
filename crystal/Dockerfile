@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 RUN apt-get -qq update
 
 {{#build_deps}}
-  RUN apt-get -qy install {{{.}}}
+  RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/build_deps}}
 
 RUN shards lock
@@ -30,4 +30,4 @@ COPY --from=0 /usr/src/app/bin/server /usr/bin/app
   ENV {{{.}}}
 {{/environment}}
 
-ENTRYPOINT {{command}}
+CMD {{command}}

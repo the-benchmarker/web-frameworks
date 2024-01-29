@@ -29,10 +29,15 @@ end
 namespace :db do
   task :check_failures do
     results = JSON.parse(File.read('data.json'))
-    frameworks = results['metrics'].filter_map do |row|
+    results['frameworks'].map { _1['label'] }
+    failing_frameworks = results['metrics'].filter_map do |row|
       row['framework_id'] if row['label'] == 'total_requests_per_s' && (row['value']).zero?
     end
-    $stdout.puts results['frameworks'].filter_map { |row| row['label'] if frameworks.include?(row['id']) }
+    list_of = Dir.glob('*/*/config.yaml').map { _1.split('/')[1] }
+    $stdout.puts "Failing : #{results['frameworks'].filter_map do |row|
+                                row['label'] if failing_frameworks.include?(row['id'])
+                              end}"
+    $stdout.puts "Missing : #{list_of - results['frameworks'].map { _1['label'] }}"
   end
   task :raw_export do
     raise 'Please provide a database' unless ENV['DATABASE_URL']

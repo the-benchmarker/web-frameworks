@@ -1,4 +1,4 @@
-FROM debian:trixie AS build
+FROM debian:stable AS build
 
 WORKDIR /usr/src/app
 
@@ -12,7 +12,7 @@ RUN apt-get -qy install build-essential ldc dub openssl libssl-dev zlib1g-dev ll
 ENV DC=ldc2
 RUN dub build -b release --compiler=ldc2
 
-FROM debian:trixie
+FROM debian:stable
 
 WORKDIR /opt/web
 
@@ -22,4 +22,4 @@ COPY --from=build /usr/src/app/server /opt/web/server
 
 USER nobody
 
-ENTRYPOINT {{{command}}}
+CMD {{{command}}}

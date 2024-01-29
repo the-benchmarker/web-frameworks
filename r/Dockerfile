@@ -9,5 +9,5 @@ RUN R  -e 'install.packages("remotes")'
 
 RUN R -e 'remotes::install_deps()'
 
-ENTRYPOINT {{{command}}}
+CMD {{{command}}}
 

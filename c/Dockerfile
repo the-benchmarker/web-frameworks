@@ -3,11 +3,13 @@ FROM debian:bullseye
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update
-RUN apt-get -qy install build-essential wget
+RUN apt-get -qy install --no-install-recommends build-essential wget
 
 {{#build_deps}}
-  RUN apt-get -qy install {{{.}}}
+  RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/build_deps}}
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
@@ -28,7 +30,7 @@ WORKDIR /opt/web
 RUN apt-get -qq update
 
 {{#bin_deps}}
-   RUN apt-get -qy install {{{.}}}
+   RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/bin_deps}}
 
 {{#binaries}}
@@ -43,4 +45,4 @@ RUN apt-get -qq update
   ENV {{{.}}}
 {{/environment}}
 
-ENTRYPOINT {{{command}}}
+CMD {{{command}}}

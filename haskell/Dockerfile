@@ -12,6 +12,6 @@ FROM debian:stable-slim
 
 WORKDIR /opt/web
 
-COPY --from=0 /usr/src/app/.stack-work/dist/x86_64-linux-tinfo6-libc6-pre232/Cabal-3.0.1.0/build/server/server server
+COPY --from=0 /usr/src/app/.stack-work/dist/x86_64-linux-tinfo6-libc6-pre232/ghc-8.8.3/build/server/server server
 
-ENTRYPOINT {{command}}
+CMD {{command}}

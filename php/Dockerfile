@@ -6,7 +6,7 @@
 {{/language.version}}
 
 RUN apt-get -qq update
-RUN apt-get -qy install libzip-dev {{#deps}} {{{.}}} {{/deps}}
+RUN apt-get -qy install --no-install-recommends libzip-dev {{#deps}} {{{.}}} {{/deps}}
 
 WORKDIR /usr/src/app
 
@@ -17,8 +17,10 @@ RUN docker-php-ext-install zip opcache
 {{/environment}}
 
 {{#build_deps}}
-  RUN apt-get -qy install {{{.}}}
+  RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/build_deps}}
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 {{#modules}}
   RUN docker-php-ext-install {{{.}}}
@@ -51,7 +53,7 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
 {{/framework.standalone}}
 
 {{#command}}
-  ENTRYPOINT {{{.}}}
+  CMD {{{.}}}
 {{/command}}
 
 {{^command}}
@@ -103,7 +105,7 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   opcache.fast_shutdown=0\n'\
   >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
   
-  ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
+  CMD /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
 
 {{/command}}
 
