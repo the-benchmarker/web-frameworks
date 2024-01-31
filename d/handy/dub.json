@@ -1,7 +1,7 @@
 {
   "name": "server",
   "dependencies": {
-    "handy-httpd": "~>8.2.0"
+    "handy-httpd": "~>8.3.0"
   },
   "dflags-ldc": [
     "-mcpu=native",
