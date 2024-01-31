@@ -1,21 +1,20 @@
 framework:
   website: adonisjs.com
-  version: 5.9
+  version: 6.2
 
   bootstrap:
     - npm install -g typescript
     - npm link typescript
-    - node ace build --production
+    - node ace.js build
 
   files:
-    - .adonisrc.json
-    - ace
-    - ace-manifest.json
+    - adonisrc.ts
+    - ace.js
     - package.json
     - '**/*.ts'
     - tsconfig.json
 
-  command: pm2-runtime start build/server.js -i $(nproc)
+  command: pm2-runtime start build/bin/server.js -i $(nproc)
 
 language:
   engines:
@@ -25,3 +24,5 @@ language:
         PORT: 3000
         APP_KEY: awesomesecretkey
         DRIVE_DISK: local
+        SESSION_DRIVER: memory
+        LOG_LEVEL: error
