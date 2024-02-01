@@ -1,15 +1,7 @@
 import { Elysia } from "elysia";
 
-const app = new Elysia();
-
-app.get("/", () => "");
-
-app.get("/user/:id", (req) => req.params.id);
-
-app.post("/user", () => "");
-
-Bun.serve({
-  fetch: app.fetch,
-  reusePort: true,
-  port: 3000
-})
+new Elysia()
+  .get("/", () => "")
+  .get("/user/:id", (req) => req.params.id)
+  .post("/user", () => "")
+  .listen(3000);
