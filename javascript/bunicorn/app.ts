@@ -8,4 +8,8 @@ app.addRoutes([
   rb.post("/user", (ctx) => ctx.ok()),
 ]);
 
-app.serve({ port: 3000 });
+Bun.serve({
+  fetch: app.handleRequest,
+  reusePort: true,
+  port: 3000
+})
