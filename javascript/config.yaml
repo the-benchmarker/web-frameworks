@@ -6,8 +6,9 @@ language:
       environment:
         NODE_ENV: production
       bootstrap:
+        - npm --location=global install pm2
         - npm install
-      command: node app.js
+      command: pm2-runtime start app.js -i $(nproc)
     turbo:
       environment:
         NODE_ENV: production
@@ -33,7 +34,7 @@ language:
     bun:
       bootstrap:
         - bun install
-      command: bun run app.ts
+      command: bun run cluster.ts
     happyx:
       bootstrap:
         - npm install
