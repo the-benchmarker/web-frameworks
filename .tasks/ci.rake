@@ -8,7 +8,7 @@ namespace :ci do
     files = Dir.glob('*/*/config.yaml') if files.include?('data.json')
 
     files += files
-             .find_all { |path| path.end_with?('Dockerfile') }
+             .find_all { |path| path.end_with?('Dockerfile') || (path.split('/').size == 2 && path.end_with?('config.yaml')) }
              .map { |path| path.split(File::SEPARATOR).shift }
              .flat_map { |language| Dir.glob(File.join(language, '*', 'config.yaml')) }
 

@@ -26,15 +26,13 @@ language:
         - npm install
       command: pm2-runtime start app.js -i $(nproc)
     deno:
-      deps:
-        - npm
       bootstrap:
-        - npm -g install pm2
+        - deno run -Ar https://deno.land/x/pup/pup.ts setup
       command: nohup pm2-runtime start "deno run --allow-net --allow-read=. app.ts" -i max
     bun:
       bootstrap:
         - bun install
-      command: bun run app.ts
+      command: bun run cluster.ts
     happyx:
       bootstrap:
         - npm install
