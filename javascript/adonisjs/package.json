@@ -1,18 +1,4 @@
 {
-  "name": "adonisjs",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "license": "UNLICENSED",
-  "scripts": {
-    "start": "node bin/server.js",
-    "build": "node ace build",
-    "dev": "node ace serve --watch",
-    "test": "node ace test",
-    "lint": "eslint .",
-    "format": "prettier --write .",
-    "typecheck": "tsc --noEmit"
-  },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
     "#exceptions/*": "./app/exceptions/*.js",
@@ -46,18 +32,14 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@adonisjs/auth": "^9.1.1",
-    "@adonisjs/core": "^6.2.2",
-    "@adonisjs/cors": "^2.2.1",
-    "@adonisjs/lucid": "^20.1.0",
-    "@adonisjs/session": "^7.1.1",
-    "@vinejs/vine": "^1.7.1",
-    "better-sqlite3": "^9.3.0",
-    "luxon": "^3.4.4",
-    "reflect-metadata": "^0.2.1"
-  },
-  "eslintConfig": {
-    "extends": "@adonisjs/eslint-config/app"
-  },
-  "prettier": "@adonisjs/prettier-config"
+    "@adonisjs/auth": "*",
+    "@adonisjs/core": "~6.2.2",
+    "@adonisjs/cors": "*",
+    "@adonisjs/lucid": "*",
+    "@adonisjs/session": "*",
+    "@vinejs/vine": "*",
+    "better-sqlite3": "*",
+    "luxon": "*",
+    "reflect-metadata": "*"
+  }
 }
