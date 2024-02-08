@@ -1,0 +1,8 @@
+framework:
+  website: docs.spring.io/spring-framework/reference/web/webflux.html
+  version: 3.2
+
+  binaries:
+    - target/benchmark-webflux-1.0.0.jar
+
+  command: /usr/bin/java -jar /opt/web/target/benchmark-webflux-1.0.0.jar

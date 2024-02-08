@@ -1,21 +1,21 @@
-FROM ruby:3.2-alpine
+FROM ruby:3.3-slim
 
 WORKDIR /usr/src/app
+
+RUN apt-get -qq update
+
+RUN apt-get -qy install --no-install-recommends build-essential
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN apk add build-base {{#deps}}{{{.}}}{{/deps}}
-
-
-
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
 
-RUN bundle config set without 'development test'
 RUN bundle install
+
 {{#bootstrap}}
   RUN {{{.}}}
 {{/bootstrap}}

@@ -1,7 +1,10 @@
+language:
+  version: 11
+  image: maven:3-eclipse-temurin-11
 framework:
   website: lets-blade.github.io
   github: lets-blade/blade
-  version: 2.0
+  version: 2.1
 
   build:
     - mvn compile assembly:single -q

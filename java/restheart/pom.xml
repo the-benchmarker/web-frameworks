@@ -7,9 +7,9 @@
   <packaging>jar</packaging>
 
   <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <restheart.version>[7.5,7.6)</restheart.version>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <restheart.version>[7.7,7.8)</restheart.version>
   </properties>
 
   <dependencies>

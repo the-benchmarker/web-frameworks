@@ -1,9 +1,11 @@
-FROM denoland/deno:alpine-1.34.2
+FROM denoland/deno:1.40.4
 
 WORKDIR /usr/src/app
 
+RUN apt-get -qq update
+
 {{#deps}}
-  RUN apk add {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/deps}}
 
 {{#bootstrap}}

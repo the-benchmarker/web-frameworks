@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'json'
 
 namespace :ci do
@@ -10,13 +8,14 @@ namespace :ci do
     files = Dir.glob('*/*/config.yaml') if files.include?('data.json')
 
     files += files
-             .find_all { |path| path.end_with?('Dockerfile') }
+             .find_all { |path| path.end_with?('Dockerfile') || (path.split('/').size == 2 && path.end_with?('config.yaml')) }
              .map { |path| path.split(File::SEPARATOR).shift }
              .flat_map { |language| Dir.glob(File.join(language, '*', 'config.yaml')) }
 
     files.each do |file|
       next if file.start_with?('.')
       next if file.count(File::SEPARATOR) < 2
+      next unless File.exist?(file)
 
       language, framework, = file.split(File::SEPARATOR)
 
@@ -25,8 +24,8 @@ namespace :ci do
       engine = config.dig('framework', 'engines')&.first
 
       if engine
-        matrix[:include] << { language: language, framework: framework, directory: File.join(language, framework),
-                              engine: engine }
+        matrix[:include] << ({ language:, framework:, directory: File.join(language, framework),
+                               engine: })
       else
         warn "Configuration for #{language}/#{framework} is not correct"
       end

@@ -1,10 +1,6 @@
-provider:
-  default:
-    language: 8.1
-
 framework:
   github: chubbyphp/chubbyphp-framework
-  version: 5.0
+  version: 5.1
 
   engines:
     - swoole

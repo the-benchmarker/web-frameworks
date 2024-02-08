@@ -1,6 +1,6 @@
 <?php
 
-namespace CubexMin;
+namespace App;
 
 use Cubex\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;

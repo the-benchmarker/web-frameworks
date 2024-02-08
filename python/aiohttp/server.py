@@ -27,4 +27,4 @@ async def app():
 if __name__ == "__main__":
     import sys
 
-    web.run_app(app(), port=sys.argv.pop())
+    web.run_app(app(), port=int(sys.argv.pop()) or 3000)

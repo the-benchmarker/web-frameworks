@@ -1,24 +1,23 @@
 {
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "laminas/laminas-component-installer": true
+    }
+  },
   "require": {
-    "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
-    "composer/package-versions-deprecated": "@stable",
     "laminas/laminas-component-installer": "@stable",
     "laminas/laminas-config-aggregator": "@stable",
     "laminas/laminas-diactoros": "@stable",
-    "laminas/laminas-stdlib": "@stable",
-    "mezzio/mezzio": "~3.17.0",
-    "mezzio/mezzio-helpers": "@stable",
     "laminas/laminas-servicemanager": "@stable",
-    "mezzio/mezzio-fastroute": "@stable"
+    "laminas/laminas-stdlib": "@stable",
+    "mezzio/mezzio": "~3.18.0",
+    "mezzio/mezzio-fastroute": "@stable",
+    "mezzio/mezzio-helpers": "@stable"
   },
   "autoload": {
     "psr-4": {
       "App\\": "src/App/src/"
-    }
-  },
-  "config": {
-    "allow-plugins": {
-      "laminas/laminas-component-installer": true
     }
   }
 }

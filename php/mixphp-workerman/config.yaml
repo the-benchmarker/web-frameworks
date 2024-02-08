@@ -1,3 +1,6 @@
+language:
+  version: 8.1
+
 framework:
   github: mix-php/mix
   version: 3.0
@@ -5,9 +8,4 @@ framework:
   engines:
     - workerman
 
-language:
-  engines:
-    workerman:
-      files:
-        - .workerman/bin/workerman.php
-      command: php bin/workerman.php start
+  command: php bin/workerman.php start

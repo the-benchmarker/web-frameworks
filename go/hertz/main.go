@@ -8,20 +8,16 @@ import (
 
 func main() {
 
-	r := server.New(server.WithHostPorts(":3000"))
+	r := server.New(
+		server.WithHostPorts(":3000"),
+		server.WithDisableHeaderNamesNormalizing(true),
+		server.WithDisablePrintRoute(true),
+	)
 
-	r.GET("/", func(_ context.Context, ctx *app.RequestContext) {
-		ctx.Write([]byte(""))
-	})
-
+	r.GET("/", func(_ context.Context, ctx *app.RequestContext) {})
 	r.GET("/user/:name", func(_ context.Context, ctx *app.RequestContext) {
-		name := ctx.Params.ByName("name")
-		ctx.Write([]byte(name))
+		ctx.Response.SetBodyString(ctx.Param("name"))
 	})
-
-	r.POST("/user", func(_ context.Context, ctx *app.RequestContext) {
-		ctx.Write([]byte(""))
-	})
-
+	r.POST("/user", func(_ context.Context, ctx *app.RequestContext) {})
 	r.Spin()
 }

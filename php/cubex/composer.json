@@ -1,10 +1,6 @@
 {
-  "name": "bajb/cubex-min",
-  "license": "MIT",
-  "type": "project",
-  "prefer-stable": true,
   "require": {
-    "cubex/framework": "~4.18.0",
+    "cubex/framework": "~4.21.0",
     "packaged/polyfill-ctype": "@stable",
     "packaged/polyfill-mbstring": "@stable",
     "packaged/polyfill-intl": "@stable",
@@ -17,7 +13,7 @@
   },
   "autoload": {
     "psr-4": {
-      "CubexMin\\": "src/"
+      "App\\": "src/"
     }
   }
 }

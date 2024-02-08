@@ -1,0 +1,14 @@
+framework:
+  website: armeria.dev
+  version: 1.27
+
+  build:
+    - mvn package
+
+  files:
+    - target/benchmark.jar
+
+  binaries:
+    - target/benchmark.jar
+
+  command: /usr/bin/java -jar /opt/web/target/benchmark.jar

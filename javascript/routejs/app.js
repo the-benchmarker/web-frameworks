@@ -7,11 +7,16 @@ app.get('/', function (req, res) {
   res.end('');
 });
 
-app.get('/user/{id}', function (req, res) {
+app.get('/user/:id', function (req, res) {
   res.end(req.params.id);
 });
 
 app.post('/user', function (req, res) {
+  res.end('');
+});
+
+app.use(function (req, res) {
+  res.statusCode = 404;
   res.end('');
 });
 

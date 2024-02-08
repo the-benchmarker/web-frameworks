@@ -1,13 +1,17 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update
-RUN apt-get -qy install build-essential git cmake
+RUN apt-get -qy install --no-install-recommends build-essential git cmake
+
+ENV GIT_SSL_NO_VERIFY=1
 
 {{#build_deps}}
-  RUN apt-get -qy install {{{.}}}
+  RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/build_deps}}
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
@@ -20,7 +24,7 @@ RUN apt-get -qy install build-essential git cmake
    RUN {{{.}}}
 {{/build}}
 
-FROM debian:bullseye
+FROM debian:bookworm
 
 {{#environment}}
 ENV {{{.}}}
@@ -31,7 +35,7 @@ WORKDIR /opt/web
 RUN apt-get -qq update
 
 {{#bin_deps}}
-   RUN apt-get -qy install {{{.}}}
+   RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/bin_deps}}
 
 {{#files}}

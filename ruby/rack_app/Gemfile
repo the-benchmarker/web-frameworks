@@ -1,6 +1,3 @@
-# frozen_string_literal: true
-
 source 'https://rubygems.org'
 
-gem 'puma'
 gem 'rack-app', '~> 11.0.0'

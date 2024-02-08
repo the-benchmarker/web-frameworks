@@ -5,7 +5,7 @@ edition = "2021"
 authors = ["Hubert Shelley <hubertshelley@163.com>"]
 
 [dependencies]
-silent = { version = "0.11" }
+silent = { version = "1.0" }
 
 [profile.release]
 opt-level = 3

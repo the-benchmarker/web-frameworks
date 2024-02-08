@@ -1,8 +1,6 @@
-provider:
-  default:
-    language: 2.13
-
-    image-version: 2.13.10
+language:
+  version: 2.13
+  image-version: 2.13.12
 
 framework:
   website: finagle.github.io/finch/

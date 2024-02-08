@@ -5,8 +5,8 @@ buildscript {
     }
 
     ext {
-        kotlinVersion = "1.8.+"
-        joobyVersion = "3.0.6"
+        kotlinVersion = "1.9.+"
+        joobyVersion = "3.0.7"
         shadowVersion = "+"
     }
     
@@ -22,11 +22,10 @@ plugins {
 group "benchmark.kooby"
 version "1.0.0"
 mainClassName = "benchmark.AppKt"
-sourceCompatibility = 17
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("17"))
+        languageVersion.set(JavaLanguageVersion.of("21"))
     }
 }
 

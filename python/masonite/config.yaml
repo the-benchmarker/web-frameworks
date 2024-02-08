@@ -1,6 +1,6 @@
 framework:
   website: masoniteproject.com
-  version: 4.17
+  version: 4.19
 
   engines:
     - gunicorn
@@ -19,6 +19,7 @@ framework:
     - rustup default nightly
 
 language:
+  version: 3.11
   engines:
     gunicorn:
       environment:

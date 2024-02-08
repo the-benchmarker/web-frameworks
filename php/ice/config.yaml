@@ -2,13 +2,6 @@ framework:
   website: iceframework.org
   version: "1.10"
 
-  deps:
-    - bash
-    - libexecinfo-dev
-
-  environment:
-    LDFLAGS: -lexecinfo
-
   extensions:
     - ice
 

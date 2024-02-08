@@ -1,21 +1,19 @@
 
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.8.+"
+    id "org.jetbrains.kotlin.jvm" version "1.9.+"
 }
 
 ext {
-    hexagonVersion = "3.4.0"
+    hexagonVersion = "3.4.7"
     gradleScripts = "https://raw.githubusercontent.com/hexagonkt/hexagon/$hexagonVersion/gradle"
 }
 
 apply(from: "$gradleScripts/kotlin.gradle")
 apply(from: "$gradleScripts/application.gradle")
 
-sourceCompatibility = 17
-
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("17"))
+        languageVersion.set(JavaLanguageVersion.of("21"))
     }
 }
 

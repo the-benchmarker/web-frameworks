@@ -1,9 +1,8 @@
-# frozen_string_literal: true
-
 source 'https://rubygems.org'
 
 gem 'activesupport'
 gem 'bigdecimal'
+gem 'csv'
 gem 'dotenv'
 gem 'git'
 gem 'mustache'

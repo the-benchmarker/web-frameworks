@@ -5,8 +5,8 @@ buildscript {
     }
 
     ext {
-        kotlinVersion = "1.8.+"
-        http4kVersion = "3.275.+"
+        kotlinVersion = "1.9.+"
+        http4kVersion = "5.13.+"
         shadowVersion = "+"
     }
 
@@ -30,11 +30,9 @@ group 'benchmark'
 version '0.0.1'
 mainClassName = "org.http4k.benchmark.BenchmarkServerKt"
 
-sourceCompatibility = 17
-
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("17"))
+        languageVersion.set(JavaLanguageVersion.of("21"))
     }
 }
 

@@ -1,9 +1,10 @@
-provider:
-  default:
-    language: 2.13
-
-    image-version: 2.13.10
-
 framework:
   website: playframework.com
-  version: "2.10"
+  version: "3.0"
+  files:
+    - "**/*.gradle"
+    - "**/*.scala"
+    - "**/*.sbt"
+    - "**/*.conf"
+    - conf/routes
+    - conf/logback.xml

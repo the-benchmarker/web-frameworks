@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'syro'
 
 App = Syro.new do

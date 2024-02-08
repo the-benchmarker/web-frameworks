@@ -1,3 +1,3 @@
 export default {
-  GET: ({ url }) => url.pathParameters.id,
+  GET: ({ url }) => url.param('id'),
 };
