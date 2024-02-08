@@ -18,18 +18,18 @@
     "#config/*": "./config/*.js"
   },
   "devDependencies": {
-    "@adonisjs/assembler": "^7.1.1",
-    "@adonisjs/eslint-config": "^1.2.1",
-    "@adonisjs/prettier-config": "^1.2.1",
-    "@adonisjs/tsconfig": "^1.2.1",
-    "@swc/core": "^1.3.107",
-    "@types/luxon": "^3.4.2",
-    "@types/node": "^20.11.10",
-    "eslint": "^8.56.0",
-    "pino-pretty": "^10.3.1",
-    "prettier": "^3.2.4",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "@adonisjs/assembler": "*",
+    "@adonisjs/eslint-config": "*",
+    "@adonisjs/prettier-config": "*",
+    "@adonisjs/tsconfig": "*",
+    "@swc/core": "*",
+    "@types/luxon": "*",
+    "@types/node": "*",
+    "eslint": "*",
+    "pino-pretty": "*",
+    "prettier": "*",
+    "ts-node": "*",
+    "typescript": "*"
   },
   "dependencies": {
     "@adonisjs/auth": "*",
