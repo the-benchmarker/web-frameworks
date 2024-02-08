@@ -1,0 +1,16 @@
+name: marten
+version: 0.1.0
+
+authors:
+  - Morgan Aubert <me@morganaubert.name>
+
+license: MIT
+
+targets:
+  server:
+    main: src/server.cr
+
+dependencies:
+  marten:
+    github: martenframework/marten
+    version: ~> 0.4.0
