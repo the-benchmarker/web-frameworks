@@ -1,31 +1,16 @@
 /*
 |--------------------------------------------------------------------------
-| Routes
+| Routes file
 |--------------------------------------------------------------------------
 |
-| This file is dedicated for defining HTTP routes. A single file is enough
-| for majority of projects, however you can define routes in different
-| files and just make sure to import them inside this file. For example
-|
-| Define routes in following two files
-| ├── start/routes/cart.ts
-| ├── start/routes/customer.ts
-|
-| and then import them inside `start/routes.ts` as follows
-|
-| import './routes/cart'
-| import './routes/customer'
+| The routes file is used for defining the HTTP routes.
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route';
+import router from '@adonisjs/core/services/router'
 
-Route.get('/', async () => {
-  return '';
-});
-Route.get('/user/:id', async ({ params }) => {
-  return params.id;
-});
-Route.post('/user', async () => {
-  return '';
-});
+router.get('/', '#controllers/application_controller.index')
+
+router.get('/user/:id', '#controllers/users_controller.show')
+
+router.post('/user', '#controllers/users_controller.create')
