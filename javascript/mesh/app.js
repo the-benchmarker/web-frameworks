@@ -1,5 +1,5 @@
-var fiber = require('@ionited/fiber');
-var app = new fiber.App();
+var mesh = require('@ionited/mesh');
+var app = new mesh.App();
 
 app.get('/', function (req, res) {
   res.send('');
