@@ -1,4 +1,4 @@
-FROM dart:3.2 AS build
+FROM dart:3.3.0-279.3.beta AS build
 
 # Set the working directory
 WORKDIR /app
