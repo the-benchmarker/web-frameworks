@@ -33,8 +33,8 @@ language:
       command: pm2 start app.ts --interpreter="deno" --interpreter-args="run --allow-net" -i max
     bun:
       bootstrap:
-        - bun install
-      command: bun run cluster.ts
+        - bun install pm2
+      command: /usr/src/app/node_modules/pm2/bin/pm2 start --interpreter /usr/local/bin/bun app.ts -imax
     happyx:
       bootstrap:
         - npm install
