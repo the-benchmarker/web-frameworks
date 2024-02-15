@@ -24,7 +24,7 @@ server.getRouter().get('/user/:id', async (ctx) => {
   return ctx.response.ok(ctx.params.id);
 });
 
-server.getRouter().get('/user', async (ctx) => {
+server.getRouter().post('/user', async (ctx) => {
   return ctx.response.noContent();
 });
 
