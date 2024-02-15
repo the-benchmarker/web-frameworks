@@ -30,11 +30,9 @@ language:
         - npm
       bootstrap:
         - npm --location=global install pm2
-      command: pm2 start app.ts --interpreter="deno" --interpreter-args="run --allow-net" -i max
+      command: nohup pm2-runtime start "deno run --allow-net --allow-read=. app.ts" -i max
     bun:
-      bootstrap:
-        - bun install pm2
-      command: /usr/src/app/node_modules/pm2/bin/pm2 start --interpreter /usr/local/bin/bun app.ts -i max
+      command: bun run cluster.ts
     happyx:
       bootstrap:
         - npm install
