@@ -23,7 +23,6 @@
     "@adonisjs/prettier-config": "*",
     "@adonisjs/tsconfig": "*",
     "@swc/core": "*",
-    "@types/luxon": "*",
     "@types/node": "*",
     "eslint": "*",
     "pino-pretty": "*",
@@ -32,14 +31,7 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@adonisjs/auth": "*",
     "@adonisjs/core": "~6.2.2",
-    "@adonisjs/cors": "*",
-    "@adonisjs/lucid": "*",
-    "@adonisjs/session": "*",
-    "@vinejs/vine": "*",
-    "better-sqlite3": "*",
-    "luxon": "*",
     "reflect-metadata": "*"
   },
   "type": "module"
