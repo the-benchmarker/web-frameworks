@@ -24,7 +24,7 @@ language:
       bootstrap:
         - npm --location=global install pm2
         - npm install
-      command: pm2-runtime start app.js -i $(nproc)
+      command: pm2-runtime start app.js -i max
     deno:
       deps:
         - npm
@@ -32,8 +32,6 @@ language:
         - npm --location=global install pm2
       command: nohup pm2-runtime start "deno run --allow-net --allow-read=. app.ts" -i max
     bun:
-      bootstrap:
-        - bun install
       command: bun run cluster.ts
     happyx:
       bootstrap:

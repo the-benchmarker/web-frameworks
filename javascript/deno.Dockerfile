@@ -1,12 +1,16 @@
-FROM denoland/deno:1.40.4
+FROM denoland/deno:latest
 
 WORKDIR /usr/src/app
 
-RUN apt-get -qq update
+{{#deps.length}}
+  ARG DEBIAN_FRONTEND=noninteractive
+  RUN apt-get -qq update
 
-{{#deps}}
-  RUN apt-get -qy install {{{.}}}
-{{/deps}}
+  {{#deps}}
+    RUN apt-get -qy install {{{.}}}
+  {{/deps}}
+
+{{/deps.length}}
 
 {{#bootstrap}}
   RUN {{{.}}}
