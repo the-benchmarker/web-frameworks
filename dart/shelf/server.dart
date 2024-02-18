@@ -2,6 +2,12 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_router/shelf_router.dart';
 
+import 'cluster.dart';
+
+void main() {
+  scale(startServer);
+}
+
 Future<void> startServer() async {
   var app = Router();
 
