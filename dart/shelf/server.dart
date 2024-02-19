@@ -8,7 +8,7 @@ void main() {
   scale(startServer);
 }
 
-Future<void> startServer() async {
+void startServer() async {
   var app = Router();
 
   app.get('/', (Request request) => Response.ok(''));
