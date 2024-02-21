@@ -1,6 +1,6 @@
 framework:
   github: vlang/v
-  version: weekly.2024.06
+  version: weekly.2024.06 # https://github.com/vlang/v/releases
 
   build_deps:
     - libatomic1
