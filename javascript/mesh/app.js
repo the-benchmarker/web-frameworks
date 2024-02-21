@@ -1,16 +1,18 @@
-var mesh = require('@ionited/mesh');
-var app = new mesh.App();
+var { App } = require('@ionited/mesh');
+var app = new App();
 
-app.get('/', function (req, res) {
-  res.send('');
-});
+app
 
-app.get('/user/:id', function (req, res) {
+.get('/', function (_, res) {
+  res.end();
+})
+
+.get('/user/:id', function (req, res) {
   res.send(req.params().id);
-});
+})
 
-app.post('/user', function (req, res) {
-  res.send('');
-});
+.post('/user', function (_, res) {
+  res.end();
+})
 
-app.listen(3000);
+.listen(3000);
