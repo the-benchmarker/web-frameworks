@@ -1,4 +1,13 @@
-FROM elixir:1.16 AS build
+ARG ELIXIR_VERSION=1.16.1
+ARG ERLANG_VERSION=26.2.2
+ARG DEBIAN_VERSION=bullseye-20240130
+
+ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${ERLANG_VERSION}-debian-${DEBIAN_VERSION}"
+ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
+
+# ===============================================================================================
+
+FROM ${BUILDER_IMAGE} AS build
 
 # Update system deps
 RUN apt-get -qq update
@@ -30,7 +39,7 @@ RUN mix release --path release
 
 # ===============================================================================================
 
-FROM debian:bullseye AS app
+FROM ${RUNNER_IMAGE} AS app
 
 # Update system deps
 RUN apt-get -qq update && apt-get -qy install --no-install-recommends openssl

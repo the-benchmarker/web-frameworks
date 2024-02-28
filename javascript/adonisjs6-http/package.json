@@ -1,0 +1,10 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@adonisjs/application": "^8.0.4",
+    "@adonisjs/encryption": "^6.0.1",
+    "@adonisjs/events": "^9.0.1",
+    "@adonisjs/http-server": "^7.0.3",
+    "@adonisjs/logger": "^6.0.1"
+  }
+}
