@@ -3,7 +3,7 @@ const { BlazeCreator } = require('@busy-hour/blaze');
 const find = BlazeCreator.action({
   rest: 'GET /:id',
   handler(ctx) {
-    ctx.response.set('text');
+    ctx.response = 'text';
 
     return ctx.request.params?.id;
   },
@@ -12,7 +12,7 @@ const find = BlazeCreator.action({
 const create = BlazeCreator.action({
   rest: 'POST /',
   handler(ctx) {
-    ctx.response.set('text');
+    ctx.response = 'text';
 
     return '';
   },
