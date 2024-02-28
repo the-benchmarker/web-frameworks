@@ -3,7 +3,7 @@ const { BlazeCreator } = require('@busy-hour/blaze');
 const list = BlazeCreator.action({
   rest: 'GET /',
   handler(ctx) {
-    ctx.response.set('text');
+    ctx.response = 'text';
 
     return '';
   },
