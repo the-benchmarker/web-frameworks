@@ -4,7 +4,7 @@
                  [ch.qos.logback/logback-classic "1.5.3"]
                  [cheshire "5.12.0"]
                  [clojure.java-time "1.4.2"]
-                 [cprop "0.1.19"]
+                 [cprop "0.1.20"]
                  [expound "0.9.0"]
                  [funcool/struct "1.4.0"]
                  [luminus-jetty "0.2.3"]
