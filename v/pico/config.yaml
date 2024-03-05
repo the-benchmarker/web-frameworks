@@ -6,4 +6,4 @@ framework:
     - cd /opt/vlang && git fetch --all --tags && git checkout tags/weekly.2024.10 && make && v -version && cd /app
 
   build_flags:
-    - -prod -cc clang
+    - -prod -cc gcc

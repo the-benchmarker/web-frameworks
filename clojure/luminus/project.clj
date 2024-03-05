@@ -1,10 +1,10 @@
 (defproject luminus "0.1.0-SNAPSHOT"
 
   :dependencies [[luminus/lein-template "4.51"]
-                 [ch.qos.logback/logback-classic "1.5.0"]
+                 [ch.qos.logback/logback-classic "1.5.3"]
                  [cheshire "5.12.0"]
                  [clojure.java-time "1.4.2"]
-                 [cprop "0.1.19"]
+                 [cprop "0.1.20"]
                  [expound "0.9.0"]
                  [funcool/struct "1.4.0"]
                  [luminus-jetty "0.2.3"]
@@ -14,7 +14,7 @@
                  [metosin/muuntaja "0.6.8"]
                  [metosin/reitit "0.6.0"]
                  [metosin/ring-http-response "0.9.3"]
-                 [mount "0.1.17"]
+                 [mount "0.1.18"]
                  [nrepl "1.1.1"]
                  [org.clojure/clojure "1.11.1"]
                  [org.clojure/tools.cli "1.1.230"]
