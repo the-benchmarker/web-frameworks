@@ -10,12 +10,13 @@ RUN apt-get -qy install build-essential ldc dub openssl libssl-dev zlib1g-dev ll
 {{/files}}
 
 ENV DC=ldc2
-RUN dub build -b release --compiler=ldc2
+RUN dub build -b release-nobounds --compiler=ldc2
 
 FROM debian:stable
 
 WORKDIR /opt/web
 
+RUN echo "* hard nofile 16768" >> /etc/limits.conf
 RUN apt-get -qq update && apt-get -qy install openssl ldc
 
 COPY --from=build /usr/src/app/server /opt/web/server
