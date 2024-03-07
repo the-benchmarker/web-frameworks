@@ -1,7 +1,7 @@
 {
   "name": "server",
   "dependencies": {
-    "serverino": "~>0.5.1"
+    "serverino": "~>0.6.0"
   },
   "dflags-ldc": [
     "-mcpu=native",
