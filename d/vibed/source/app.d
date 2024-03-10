@@ -24,11 +24,9 @@ void main()
 
 void runServer() nothrow
 {
-    try {
-        auto settings = new HTTPServerSettings;
-        settings.options |= HTTPServerOption.reusePort;
-        settings.port = 3000;
-        settings.bindAddresses = ["0.0.0.0"];
-        listenHTTP(settings, &handleRequest);
-    } catch (Exception e) assert(false, e.msg);
+    auto settings = new HTTPServerSettings;
+    settings.options |= HTTPServerOption.reusePort;
+    settings.port = 3000;
+    settings.bindAddresses = ["0.0.0.0"];
+    listenHTTP(settings, &handleRequest);
 }
