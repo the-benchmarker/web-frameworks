@@ -1,4 +1,4 @@
-import { defineConfig } from '@adonisjs/core/app'
+import { defineConfig } from '@adonisjs/core/app';
 
 export default defineConfig({
   /*
@@ -10,7 +10,7 @@ export default defineConfig({
   | will be scanned automatically from the "./commands" directory.
   |
   */
-  commands: [() => import('@adonisjs/core/commands'), () => import('@adonisjs/lucid/commands')],
+  commands: [() => import('@adonisjs/core/commands')],
 
   /*
   |--------------------------------------------------------------------------
@@ -28,11 +28,6 @@ export default defineConfig({
       file: () => import('@adonisjs/core/providers/repl_provider'),
       environment: ['repl', 'test'],
     },
-    () => import('@adonisjs/core/providers/vinejs_provider'),
-    () => import('@adonisjs/cors/cors_provider'),
-    () => import('@adonisjs/lucid/database_provider'),
-    () => import('@adonisjs/session/session_provider'),
-    () => import('@adonisjs/auth/auth_provider')
   ],
 
   /*
@@ -69,4 +64,4 @@ export default defineConfig({
     ],
     forceExit: false,
   },
-})
+});

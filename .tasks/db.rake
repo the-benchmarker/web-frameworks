@@ -35,8 +35,8 @@ namespace :db do
     end
     list_of = Dir.glob('*/*/config.yaml').map { _1.split('/')[1] }
     $stdout.puts "Failing : #{results['frameworks'].filter_map do |row|
-                                row['label'] if failing_frameworks.include?(row['id'])
-                              end}"
+      row['label'] if failing_frameworks.include?(row['id'])
+    end}"
     $stdout.puts "Missing : #{list_of - results['frameworks'].map { _1['label'] }}"
   end
   task :raw_export do

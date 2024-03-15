@@ -9,8 +9,8 @@
 
 import router from '@adonisjs/core/services/router'
 
-router.get('/', '#controllers/application_controller.index')
+router.get('/', (ctx) => ctx.response.noContent())
 
-router.get('/user/:id', '#controllers/users_controller.show')
+router.get('/user/:id', (ctx) => ctx.response.ok(ctx.params.id))
 
-router.post('/user', '#controllers/users_controller.create')
+router.post('/user', (ctx) => ctx.response.noContent())
