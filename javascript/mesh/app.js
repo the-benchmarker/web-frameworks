@@ -3,16 +3,16 @@ var app = new App();
 
 app
 
-  .get('/', function (_, res) {
-    res.end();
-  })
+.get('/', function (_, res) {
+  res.end();
+})
 
-  .get('/user/:id', function (req, res) {
-    res.send(req.params().id);
-  })
+.get('/user/:id', function (req, res) {
+  res.send(req.params().id);
+})
 
-  .post('/user', function (_, res) {
-    res.end();
-  })
+.post('/user', function (_, res) {
+  res.end();
+})
 
-  .listen(3000);
+.listen(3000);
