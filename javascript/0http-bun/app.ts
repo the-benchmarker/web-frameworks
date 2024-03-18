@@ -2,7 +2,7 @@ import http from '0http-bun'
 
 const { router } = http()
 
-router.get('/', (req, res) => {
+router.get('/', (req) => {
   return new Response("")
 })
 router.get('/user/:id', (req) => {
