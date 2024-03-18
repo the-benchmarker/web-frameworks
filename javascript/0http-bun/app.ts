@@ -3,13 +3,13 @@ import http from '0http-bun'
 const { router } = http()
 
 router.get('/', (req, res) => {
-  return new Response()
+  return new Response("")
 })
-router.get('/:id', async (req) => {
+router.get('/user/:id', (req) => {
   return new Response(req.params.id)
 })
-router.post('/', async (req) => {
-  return new Response()
+router.post('/user', (req) => {
+  return new Response("")
 })
 
 Bun.serve({
