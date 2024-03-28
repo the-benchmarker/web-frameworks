@@ -2,5 +2,5 @@ framework:
   github: HapticX/happyx
   version: 3.8
 
-build_opts: "-d:beast -d:disableApiDoc -d:useMalloc --threads:on"
+build_opts: "-d:beast -d:disableApiDoc -d:useMalloc --threads:on --opt:speed"
 build_with: nimble install -d -y
