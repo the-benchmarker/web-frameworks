@@ -3,7 +3,7 @@
 {{/image}}
 
 {{^image}}
-  FROM maven:3-eclipse-temurin-17 AS build
+  FROM maven:3-eclipse-temurin-21 AS build
 {{/image}}
 
 WORKDIR /usr/src/web
@@ -25,12 +25,12 @@ WORKDIR /usr/src/web
   RUN mvn package
 {{/build}}
 
-{{#runtime}}
-  FROM {{{.}}}
-{{/runtime}}
-{{^runtime}}
-  FROM eclipse-temurin:17.0.7_7-jre
-{{/runtime}}
+{{#language.version}}
+  FROM eclipse-temurin:{{{.}}}-jre
+{{/language.version}}
+{{^language.version}}
+  FROM eclipse-temurin:21.0.2_13-jre
+{{/language.version}}
 
 
 WORKDIR /opt/web

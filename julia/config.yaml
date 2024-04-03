@@ -1,12 +1,12 @@
 language:
-  version: 1.9
+  version: "1.10"
   files:
     - "**/*.jl"
     - Manifest.toml
     - Project.toml
   engines:
     default:
-      command: julia server.jl
+      command: julia -t auto server.jl
 
 framework:
   engines:

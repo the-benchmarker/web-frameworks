@@ -1,0 +1,20 @@
+{
+  "require": {
+    "cubex/framework": "~4.21.0",
+    "cubex/workerman": "@stable",
+    "packaged/polyfill-ctype": "@stable",
+    "packaged/polyfill-mbstring": "@stable",
+    "packaged/polyfill-intl": "@stable",
+    "packaged/polyfill-php71": "@stable",
+    "packaged/polyfill-php72": "@stable",
+    "packaged/polyfill-php73": "@stable",
+    "packaged/polyfill-php74": "@stable",
+    "packaged/polyfill-php80": "@stable",
+    "packaged/polyfill-php81": "@stable"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}

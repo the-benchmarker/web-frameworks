@@ -12,7 +12,7 @@ framework:
     - uuid-dev
 
   bin_deps:
-    - libjsoncpp24
+    - libjsoncpp25
     - openssl
     - zlib1g
     - libbrotli1
@@ -22,7 +22,7 @@ framework:
     - build/drogon_benchmark
 
   download:
-    - git clone --branch v1.9.0 https://github.com/drogonframework/drogon
+    - git clone --branch v1.9.3 https://github.com/drogonframework/drogon
     - cd drogon && git submodule update --init
 
   build:

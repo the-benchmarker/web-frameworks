@@ -8,13 +8,13 @@
     <version>1.0.0</version>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.main.class>com.networknt.server.Server</project.main.class>
         <version.light-4j>[2.1,2.2)</version.light-4j>
         <version.jackson>[1.0,)</version.jackson>
-        <version.undertow>2.3.10.Final</version.undertow>
+        <version.undertow>2.3.12.Final</version.undertow>
         <version.json-schema-validator>[1.0,)</version.json-schema-validator>
         <version.fastscanner>[1.0,)</version.fastscanner>
     </properties>

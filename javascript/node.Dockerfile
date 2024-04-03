@@ -1,13 +1,15 @@
-FROM node:18.18-alpine
+FROM node:20-slim
 
 WORKDIR /usr/src/app
+
+RUN apt-get -qq update
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
 {{#deps}}
-  RUN apk add {{{.}}}
+  RUN apt-get -qy install {{{.}}}
 {{/deps}}
 
 {{#bootstrap}}
@@ -21,7 +23,5 @@ WORKDIR /usr/src/app
 {{#fixes}}
   RUN {{{.}}}
 {{/fixes}}
-
-RUN npm install -g npm@10
 
 CMD {{{command}}}

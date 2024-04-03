@@ -1,9 +1,4 @@
-{{#provider.default.image-version}}
-  FROM crystallang/crystal:{{{.}}}-alpine
-{{/provider.default.image-version}}
-{{^provider.default.image-version}}
-  FROM crystallang/crystal:1.10.1-alpine
-{{/provider.default.image-version}}
+FROM crystallang/crystal:1.11
 
 WORKDIR /usr/src/app
 
@@ -11,17 +6,17 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN apk add --update yaml-static
+RUN apt-get -qq update
 
 {{#build_deps}}
-RUN apk add --update {{{.}}}
+  RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/build_deps}}
 
 RUN shards lock
 RUN shards install --production
-RUN shards build --release --no-debug --static {{#build_opts}} {{{.}}} {{/build_opts}}
+RUN shards build --release --no-debug --static
 
-FROM alpine
+FROM debian:stable-slim
 
 WORKDIR /usr/bin
 

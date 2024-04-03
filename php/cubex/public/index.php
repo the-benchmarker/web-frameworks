@@ -3,7 +3,7 @@
 define('PHP_START', microtime(true));
 
 use Cubex\Cubex;
-use CubexMin\Application;
+use App\Application;
 
 $loader = require_once(dirname(__DIR__) . '/vendor/autoload.php');
 try {

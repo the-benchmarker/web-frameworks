@@ -19,13 +19,11 @@ var (
 
 func main() {
 	app := fiber.New(fiber.Config{
-		Prefork:                   false,
-		CaseSensitive:             true,
-		StrictRouting:             true,
-		DisableDefaultDate:        true,
-		DisableStartupMessage:     true,
-		DisableHeaderNormalizing:  true,
-		DisableDefaultContentType: true,
+		Prefork:                  false,
+		CaseSensitive:            true,
+		StrictRouting:            true,
+		DisableStartupMessage:    true,
+		DisableHeaderNormalizing: true,
 	})
 
 	app.Get("/", handlerOK)

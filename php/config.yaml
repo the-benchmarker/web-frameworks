@@ -1,5 +1,5 @@
 language:
-  version: 8.2
+  version: 8.3
 
   files:
     - "**/*.php"
@@ -19,7 +19,7 @@ language:
         - event
       deps:
         - libevent-dev
-        - openssl-dev
+        - libssl-dev
       modules:
         - pcntl
         - sockets
@@ -39,16 +39,14 @@ language:
     reactphp:
       deps:
         - libevent-dev
+        - libicu-dev
+        - libssl-dev
       modules:
         - intl
         - sockets
         - pcntl
       extensions:
         - event
-    swoole-4.8.x:
-      extensions:
-        - swoole-4.8.11
-      command: php public/index.php
 
 framework:
   engines:

@@ -1,4 +1,9 @@
-FROM golang:1.21-alpine
+{{#language.version}}
+FROM golang:{{{.}}}
+{{/language.version}}
+{{^language.version}}
+FROM golang:1.22
+{{/language.version}}
 
 WORKDIR /go/src/app
 
@@ -22,7 +27,7 @@ RUN go get
 RUN go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
 
 
-FROM alpine
+FROM debian:stable
 
 WORKDIR /go/bin
 

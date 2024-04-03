@@ -12,8 +12,7 @@ return [
     ConfigAggregator::ENABLE_CACHE => true,
 
     // Enable debugging; typically used to provide debugging information within templates.
-    'debug' => false,
-
+    'debug'  => false,
     'mezzio' => [
         // Provide templates for the error handling middleware to use when
         // generating responses.

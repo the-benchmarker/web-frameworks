@@ -18,24 +18,25 @@ language:
     uwebsockets:
       deps:
         - git
-        - gcompat
       environment:
         NODE_ENV: production
         EXPERIMENTAL_FASTCALL: 1
       bootstrap:
         - npm --location=global install pm2
         - npm install
-      command: pm2-runtime start app.js -i $(nproc)
+      command: pm2-runtime start app.js -i max
     deno:
       deps:
         - npm
       bootstrap:
-        - npm -g install pm2
+        - npm --location=global install pm2
       command: nohup pm2-runtime start "deno run --allow-net --allow-read=. app.ts" -i max
     bun:
+      command: bun run cluster.ts
+    happyx:
       bootstrap:
-        - bun install
-      command: bun run app.ts
+        - npm install
+      command: node app.js
 
 framework:
   engines:

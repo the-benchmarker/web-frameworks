@@ -1,6 +1,0 @@
-{
-  "typescript": true,
-  "commands": ["@adonisjs/core/build/commands/index.js"],
-  "exceptionHandlerNamespace": "App/Exceptions/Handler",
-  "providers": ["@adonisjs/core"]
-}

@@ -1,10 +1,16 @@
-FROM denoland/deno:alpine-1.34.2
+FROM denoland/deno:latest
 
 WORKDIR /usr/src/app
 
-{{#deps}}
-  RUN apk add {{{.}}}
-{{/deps}}
+{{#deps.length}}
+  ARG DEBIAN_FRONTEND=noninteractive
+  RUN apt-get -qq update
+
+  {{#deps}}
+    RUN apt-get -qy install {{{.}}}
+  {{/deps}}
+
+{{/deps.length}}
 
 {{#bootstrap}}
   RUN {{{.}}}

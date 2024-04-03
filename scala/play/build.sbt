@@ -1,15 +1,11 @@
-organization := "the-benchmarker"
-
-name := "server"
-scalaVersion := "2.13.10"
-
-lazy val root = (project
-  .in(file("."))
+lazy val root = (project in file("."))
+  .enablePlugins(PlayScala)
   .settings(
+    name := "server",
+    organization := "com.example",
+    version := "0.1.0-SNAPSHOT",
+    scalaVersion := "3.4.1",
     libraryDependencies ++= Seq(
-      guice,
-      "com.typesafe.play" %% "play-json" % "[2.10,2.11)"
+      guice
     )
   )
-  .enablePlugins(PlayScala)
-  .disablePlugins(PlayLayoutPlugin))

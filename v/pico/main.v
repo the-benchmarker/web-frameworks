@@ -20,6 +20,7 @@ fn callback(data voidptr, req picohttpparser.Request, mut res picohttpparser.Res
 }
 
 fn main() {
-	mut server := picoev.new(port: 3000, cb: callback)
+	mut server := picoev.new(port: 3000, cb: callback)!
+
 	server.serve()
 }

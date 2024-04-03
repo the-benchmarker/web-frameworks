@@ -1,5 +1,5 @@
 language:
-  version: 17
+  version: 21
 
   files:
     - src/**/*.java
@@ -10,15 +10,11 @@ language:
     - src/**/*.jsp
 
   fix:
-    - ln -sfv /usr/local/openjdk-17/bin/java /usr/bin/java
-
-  deps:
-    - java-17-openjdk
+    - ln -sfv /usr/local/openjdk-21/bin/java /usr/bin/java
 
   engines:
     default:
-      command: >
-        /usr/bin/java -jar /opt/web/target/benchmark-1.0.0.jar
+      command: /usr/bin/java -jar /opt/web/target/benchmark-1.0.0.jar
 
 framework:
   engines:

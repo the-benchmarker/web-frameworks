@@ -14,7 +14,6 @@ namespace App\Kernel;
 
 use FastRoute\Dispatcher;
 use Hyperf\Contract\NormalizerInterface;
-use Hyperf\Contract\Sendable;
 use Hyperf\Di\MethodDefinitionCollectorInterface;
 use Hyperf\Dispatcher\HttpDispatcher;
 use Hyperf\ExceptionHandler\ExceptionHandlerDispatcher;
@@ -24,26 +23,19 @@ use Hyperf\HttpServer\ResponseEmitter;
 use Hyperf\HttpServer\Router\Dispatched;
 use Hyperf\HttpServer\Router\DispatcherFactory;
 use Hyperf\HttpServer\Server;
-use Hyperf\Utils\Codec\Json;
+use Hyperf\Codec\Json;
 use Hyperf\Context\Context;
-use Hyperf\Utils\Coordinator\Constants;
-use Hyperf\Utils\Coordinator\CoordinatorManager;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Swoole\Http\Request as SwooleRequest;
-use Swoole\Http\Response as SwooleResponse;
 
 class FastServer extends Server
 {
-    /**
-     * @var MethodDefinitionCollectorInterface
-     */
-    protected $methodDefinitionCollector;
+    protected MethodDefinitionCollectorInterface $methodDefinitionCollector;
 
-    /**
-     * @var NormalizerInterface
-     */
-    protected $normalizer;
+    protected NormalizerInterface $normalizer;
+
+    protected Dispatcher $routerDispatcher;
 
     public function __construct(ContainerInterface $container, HttpDispatcher $dispatcher, ExceptionHandlerDispatcher $exceptionHandlerDispatcher, ResponseEmitter $responseEmitter)
     {
@@ -82,7 +74,7 @@ class FastServer extends Server
     /**
      * Handle the response when found.
      *
-     * @return ResponseInterface|Sendable
+     * @return ResponseInterface
      */
     protected function handleFound(Dispatched $dispatched)
     {

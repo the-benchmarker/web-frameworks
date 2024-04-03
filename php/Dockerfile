@@ -1,6 +1,12 @@
-FROM php:{{#language.version}}{{{.}}}{{/language.version}}-fpm-alpine3.16
+{{#language.version}}
+  FROM php:{{{.}}}-fpm
+{{/language.version}}
+{{^language.version}}
+  FROM php:8.3-fpm
+{{/language.version}}
 
-RUN apk add git zlib-dev libzip-dev build-base autoconf nginx openrc curl-dev icu-dev oniguruma-dev linux-headers {{#deps}} {{{.}}} {{/deps}}
+RUN apt-get -qq update
+RUN apt-get -qy install --no-install-recommends libzip-dev {{#deps}} {{{.}}} {{/deps}}
 
 WORKDIR /usr/src/app
 
@@ -11,8 +17,10 @@ RUN docker-php-ext-install zip opcache
 {{/environment}}
 
 {{#build_deps}}
-  RUN apk add {{{.}}}
+  RUN apt-get -qy install --no-install-recommends {{{.}}}
 {{/build_deps}}
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 {{#modules}}
   RUN docker-php-ext-install {{{.}}}
@@ -25,10 +33,9 @@ RUN docker-php-ext-install zip opcache
 {{/extensions}}
 
 ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
-RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
+RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
-  sed -e '1i extension=sockets' /usr/local/etc/php/conf.d/docker-php-ext-event.ini > /tmp/file ; \
-  mv /tmp/file /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
+  sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
   
 {{#before_build}}
   RUN {{{.}}}
@@ -67,7 +74,7 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
   
   RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
   
-  RUN echo -e 'server {\n\
+  RUN echo 'server {\n\
       {{#docroot}}
         root {{{.}}};\n\
       {{/docroot}}
@@ -87,9 +94,9 @@ RUN if [[ -f "${EVENT_EXT_FILE}" ]] ; then \
         }\n\
       {{/nginx_conf}}
   }\n'\
-  > /etc/nginx/http.d/default.conf
+  > /etc/nginx/conf.d/server.conf
   
-  RUN echo -e 'opcache.enable=1\n\
+  RUN echo 'opcache.enable=1\n\
   opcache.memory_consumption=512\n\
   opcache.interned_strings_buffer=64\n\
   opcache.max_accelerated_sources=32531\n\

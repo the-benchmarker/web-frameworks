@@ -1,3 +1,9 @@
 framework:
   github: vlang/v
-  version: 0.4
+  version: weekly.2024.10 # https://github.com/vlang/v/releases
+
+  bootstrap:
+    - cd /opt/vlang && git fetch --all --tags && git checkout tags/weekly.2024.10 && make && v -version && cd /app
+
+  build_flags:
+    - -prod -cc gcc
