@@ -23,9 +23,10 @@ language:
         WORKER_CLASS: sync
         PYTHON_APP: server:app
       command: >
-        gunicorn --log-level critical  \
-          --bind 0.0.0.0:3000  \
-          --reuse-port  \
+        gunicorn \
+          --log-level critical \
+          --bind 0.0.0.0:3000 \
+          --reuse-port \
           --workers $(nproc) \
           --worker-class ${WORKER_CLASS} \
           ${PYTHON_APP}
@@ -56,7 +57,8 @@ language:
       bootstrap:
         - pip install uvicorn[standard]
       command: >
-        uvicorn --log-level critical \
+        uvicorn \
+          --log-level critical \
           --host 0.0.0.0 \
           --port 3000 \
           --workers $(nproc) \
@@ -77,6 +79,20 @@ language:
       environment:
         PYTHON_APP: server:app
       command: daphne -b 0.0.0.0 -p 3000 ${PYTHON_APP}
+    granian:
+      bootstrap:
+        - pip install granian
+      environment:
+        INTERFACE: asgi
+        PYTHON_APP: server:app
+      command: >
+        granian \
+          --log-level critical \
+          --interface ${INTERFACE} \
+          --host 0.0.0.0 \
+          --port 3000 \
+          --workers $(nproc) \
+          ${PYTHON_APP}
 
 framework:
   engines:
