@@ -5,6 +5,7 @@ framework:
   engines:
     - gunicorn
     - uwsgi
+    - granian
     - uvicorn
     - hypercorn
     - daphne
@@ -16,6 +17,10 @@ language:
         PYTHON_APP: app.wsgi:application
     uwsgi:
       environment:
+        PYTHON_APP: app.wsgi:application
+    granian:
+      environment:
+        INTERFACE: wsgi
         PYTHON_APP: app.wsgi:application
     daphne:
       environment:
