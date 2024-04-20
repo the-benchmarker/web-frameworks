@@ -2,7 +2,7 @@ FROM ubuntu:22.04 as build
 
 RUN apt-get update && apt-get upgrade -y
 
-RUN apt-get install -yq curl llvm libxml2 xz-utils tzdata && \
+RUN apt-get install -yq curl clang libxml2 xz-utils tzdata && \
     ln -fs /usr/share/zoneinfo/Europe/Rome /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
 
@@ -24,7 +24,7 @@ FROM ubuntu:22.04
 
 RUN apt-get update && apt-get upgrade -y
 
-RUN apt-get install -yq curl llvm openssl libxml2 xz-utils tzdata && \
+RUN apt-get install -yq curl clang openssl libxml2 xz-utils tzdata && \
     ln -fs /usr/share/zoneinfo/Europe/Rome /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
 
