@@ -2,7 +2,7 @@ FROM ubuntu:22.04 as build
 
 RUN apt-get update && apt-get upgrade -y
 
-RUN apt-get install -yq curl libz libssl libcrypto clang libxml2 xz-utils tzdata && \
+RUN apt-get install -yq curl zlib1g-dev libssl-dev clang libxml2 xz-utils tzdata && \
     ln -fs /usr/share/zoneinfo/Europe/Rome /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
 
@@ -24,7 +24,7 @@ FROM ubuntu:22.04
 
 RUN apt-get update && apt-get upgrade -y
 
-RUN apt-get install -yq curl clang openssl libz libssl libcrypto libxml2 xz-utils tzdata && \
+RUN apt-get install -yq curl clang openssl zlib1g-dev libssl-dev libxml2 xz-utils tzdata && \
     ln -fs /usr/share/zoneinfo/Europe/Rome /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
 
