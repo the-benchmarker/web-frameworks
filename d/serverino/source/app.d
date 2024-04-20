@@ -2,7 +2,6 @@ module app;
 
 import serverino;
 import std.datetime: Duration, seconds;
-import std.parallelism: totalCPUs;
 import std.array: split;
 import std.algorithm: startsWith;
 
@@ -14,8 +13,7 @@ mixin ServerinoMain;
         .create()
         .setHttpTimeout(10.seconds)
         .enableKeepAlive(180.seconds)
-        .addListener("0.0.0.0", 3000)
-        .setWorkers(totalCPUs);
+        .addListener("0.0.0.0", 3000);
 }
 
 @safe

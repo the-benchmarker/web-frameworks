@@ -1,12 +1,10 @@
 {
   "name": "server",
   "dependencies": {
-    "serverino": "~>0.7.0"
+    "serverino": "~>0.7.1"
   },
   "dflags-ldc": [
-    "-mcpu=native",
-    "-flto=thin",
-    "-flto-binary=/usr/lib/LLVMgold.so"
+    "-mcpu=native"
   ],
   "license": "MIT"
 }
