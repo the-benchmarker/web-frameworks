@@ -8,8 +8,6 @@
     "VibeHighEventPriority",
     "VibeDisableCommandLineParsing"
   ],
-  "dflags-ldc": [
-    "-mcpu=native"
-  ],
+  "dflags-ldc": ["-mcpu=native"],
   "license": "MIT"
 }
