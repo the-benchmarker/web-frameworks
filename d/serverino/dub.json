@@ -4,5 +4,6 @@
     "serverino": "~>0.7.1"
   },
   "dflags-ldc": ["-mcpu=native"],
+  "subConfigurations": { "serverino": "disable_websockets" },
   "license": "MIT"
 }
