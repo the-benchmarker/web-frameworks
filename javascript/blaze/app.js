@@ -1,12 +1,11 @@
-const { Blaze, initializeServices } = require('@busy-hour/blaze');
-const { serve } = require('@hono/node-server');
+const { Blaze } = require('@busy-hour/blaze');
 const path = require('node:path');
 
 const app = new Blaze({});
 
-initializeServices({
-  app,
+app.load({
+  autoStart: true,
   path: path.resolve(__dirname, 'services'),
 });
 
-serve(app);
+app.serve(3000);
