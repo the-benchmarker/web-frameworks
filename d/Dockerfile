@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 as build
+FROM ubuntu:24.04 as build
 
 RUN apt-get update && apt-get upgrade -y
 
@@ -20,7 +20,7 @@ WORKDIR /usr/src/app
 ENV DC=ldc2
 RUN dub build -b release --compiler=ldc2
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 RUN apt-get update && apt-get upgrade -y
 
