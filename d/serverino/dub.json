@@ -1,8 +1,9 @@
 {
   "name": "server",
   "dependencies": {
-    "serverino": "~>0.7.1"
+    "serverino": "~>0.7.2"
   },
   "dflags-ldc": ["-mcpu=native"],
+  "subConfigurations": { "serverino": "disable_websockets" },
   "license": "MIT"
 }
