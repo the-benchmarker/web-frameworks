@@ -25,7 +25,7 @@
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.12.1"]
                  [ring/ring-defaults "0.5.0"]
-                 [com.fasterxml.jackson.core/jackson-core "2.17.0"]]
+                 [com.fasterxml.jackson.core/jackson-core "2.17.1"]]
 
   :min-lein-version "2.0.0"
   
