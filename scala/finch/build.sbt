@@ -1,7 +1,7 @@
 val FinagleVersionRange = "[0.34,0.35)"
 
 name := "server"
-scalaVersion := "2.13.14"
+scalaVersion := "2.13.13"
 
 lazy val root = (project in file("."))
   .settings(
