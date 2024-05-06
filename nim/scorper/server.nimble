@@ -8,4 +8,4 @@ license = "MIT"
 # Dependencies
 
 requires "nim >= 1.3.1"
-requires "scorper >= 1.1 & < 1.2"
+requires "scorper >= 1.2 & < 1.3"
