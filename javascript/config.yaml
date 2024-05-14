@@ -8,7 +8,7 @@ language:
       bootstrap:
         - npm --location=global install pm2
         - npm install
-      command: pm2-runtime start app.js -i $(nproc)
+      command: pm2-runtime start app.js -i max
     turbo:
       environment:
         NODE_ENV: production
