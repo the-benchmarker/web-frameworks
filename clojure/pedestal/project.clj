@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.11.3"]
                  [io.pedestal/pedestal.service "0.6.4"]
-                 [io.pedestal/pedestal.jetty "0.6.3"]]
+                 [io.pedestal/pedestal.jetty "0.6.4"]]
   :min-lein-version "2.0.0"
   :resource-paths []
   :profiles {:uberjar {:aot [the-benchmarker-pedestal.server]}}
