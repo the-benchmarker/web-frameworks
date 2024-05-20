@@ -1,12 +1,11 @@
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+build-backend = "flit_core.buildapi"
+requires = ["flit_core >=3.2,<4"]
 
 [project]
 name = 'benchmark'
 version = '1.0.0'
 description = "Simple benchmark implementation"
 dependencies = ["guillotina>=7,<7.1","zope.interface<6.0"]
-[tool.hatch.build.targets.wheel]
-packages = ["."]
+
