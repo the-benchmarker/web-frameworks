@@ -1,0 +1,10 @@
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+dependencies = ["masonite>=4.20,<4.21", "masonite-orm", "attrs"]
+name = 'benchmark'
+version = '1.0.0'
+description = "Simple benchmark implementation"

@@ -1,0 +1,10 @@
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = 'benchmark'
+version = '1.0.0'
+description = "Simple benchmark implementation"
+dependencies = ["tornado>=6.4,<6.5"]
