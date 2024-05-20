@@ -1,5 +1,8 @@
 name: shelf_app
 
+environment:
+  sdk: ">=3.4.0 <3.5.0"
+
 dependencies:
   shelf: ">=1.4.1 <1.5.0"
   shelf_router: any
