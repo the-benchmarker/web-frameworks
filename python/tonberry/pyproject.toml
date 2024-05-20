@@ -8,3 +8,5 @@ name = 'benchmark'
 version = '1.0.0'
 description = "Simple benchmark implementation"
 dependencies = ["Tonberry>=0.2,<0.33"]
+[tool.hatch.build.targets.wheel]
+packages = ["."]

@@ -8,3 +8,5 @@ name = 'benchmark'
 version = '1.0.0'
 description = "Simple benchmark implementation"
 dependencies = ["hug>=2.6,<2.7"]
+[tool.hatch.build.targets.wheel]
+packages = ["."]

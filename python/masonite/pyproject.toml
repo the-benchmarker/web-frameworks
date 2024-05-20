@@ -5,6 +5,8 @@ build-backend = "hatchling.build"
 
 [project]
 dependencies = ["masonite>=4.20,<4.21", "masonite-orm", "attrs"]
+[tool.hatch.build.targets.wheel]
+packages = ["."]
 name = 'benchmark'
 version = '1.0.0'
 description = "Simple benchmark implementation"

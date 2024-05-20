@@ -8,3 +8,5 @@ name = 'benchmark'
 version = '1.0.0'
 description = "Simple benchmark implementation"
 dependencies = ["routerling>=0.5,<0.6"]
+[tool.hatch.build.targets.wheel]
+packages = ["."]

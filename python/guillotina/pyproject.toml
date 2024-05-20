@@ -8,3 +8,5 @@ name = 'benchmark'
 version = '1.0.0'
 description = "Simple benchmark implementation"
 dependencies = ["guillotina>=7,<7.1","zope.interface<6.0"]
+[tool.hatch.build.targets.wheel]
+packages = ["."]

@@ -7,3 +7,5 @@ name = 'benchmark'
 version = '1.0.0'
 description = "Simple benchmark implementation"
 dependencies = ["django>=5,<5.1"]
+[tool.hatch.build.targets.wheel]
+packages = ["."]
