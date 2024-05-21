@@ -1,4 +1,4 @@
-const { BlazeCreator } = require('@busy-hour/blaze');
+import { BlazeCreator } from '@busy-hour/blaze';
 
 const find = BlazeCreator.action({
   rest: 'GET /:id',
@@ -26,4 +26,4 @@ const service = BlazeCreator.service({
   },
 });
 
-module.exports = service;
+export default service;

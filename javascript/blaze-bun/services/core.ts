@@ -1,4 +1,4 @@
-const { BlazeCreator } = require('@busy-hour/blaze');
+import { BlazeCreator } from '@busy-hour/blaze';
 
 const list = BlazeCreator.action({
   rest: 'GET /',
@@ -16,4 +16,4 @@ const service = BlazeCreator.service({
   },
 });
 
-module.exports = service;
+export default service;
