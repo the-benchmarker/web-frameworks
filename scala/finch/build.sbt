@@ -1,4 +1,4 @@
-val FinagleVersionRange = "[0.34,0.35)"
+val FinagleVersionRange = "[24.5,24.6)"
 
 name := "server"
 scalaVersion := "2.13.14"
