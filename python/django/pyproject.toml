@@ -3,7 +3,7 @@ build-backend = "flit_core.buildapi"
 requires = ["flit_core >=3.2,<4"]
 
 [project]
-name='server'
+name='app.wsgi'
 version = '1.0.0'
 description = "Simple benchmark implementation"
 dependencies = ["django>=5,<5.1"]
