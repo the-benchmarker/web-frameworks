@@ -5,9 +5,11 @@
 
 /core/name: restheart-benchmarker
 
-/fullAuthorizer/enabled: true
-
 /logging/log-level: "OFF"
 /logging/requests-log-mode: 0
 
+/fullAuthorizer/enabled: true
+
 /ping/enabled: false
+/xPoweredBy/enabled: false
+/dateHeader/enabled: false
