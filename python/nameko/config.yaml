@@ -7,7 +7,7 @@ framework:
 
   files:
     - "**/*.py"
-    - requirements.txt
+    - pyproject.toml
     - nameko.yaml
 
 language:
