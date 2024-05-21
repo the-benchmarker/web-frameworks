@@ -1,0 +1,10 @@
+
+[build-system]
+build-backend = "flit_core.buildapi"
+requires = ["flit_core"]
+
+[project]
+name='app.asgi'
+version = '1.0.0'
+description = "Simple benchmark implementation"
+dependencies = ["django-ninja>=1.1,<1.2"]
