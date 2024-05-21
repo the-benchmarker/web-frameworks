@@ -1,0 +1,9 @@
+[build-system]
+build-backend = "flit_core.buildapi"
+requires = ["flit_core"]
+
+[project]
+name='server'
+version = '1.0.0'
+description = "Simple benchmark implementation"
+dependencies = ["cherrypy>=18.9,<18.10"]

@@ -1,0 +1,11 @@
+
+[build-system]
+build-backend = "flit_core.buildapi"
+requires = ["flit_core"]
+
+[project]
+name='server'
+version = '1.0.0'
+description = "Simple benchmark implementation"
+dependencies = ["robyn>=0.54,<0.55"]
+

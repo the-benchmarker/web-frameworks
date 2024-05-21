@@ -101,4 +101,4 @@ framework:
     - build-essential
   files:
     - "**/*.py"
-    - requirements.txt
+    - pyproject.toml
