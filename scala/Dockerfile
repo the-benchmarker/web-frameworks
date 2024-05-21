@@ -1,15 +1,14 @@
-
-  FROM sbtscala/scala-sbt:eclipse-temurin-jammy-22_36_1.9.9_3.4.2 AS build
+FROM sbtscala/scala-sbt:eclipse-temurin-alpine-22_36_1.10.0_3.4.2 AS build
 
 WORKDIR /usr/src/app
 
 {{#files}}
-  COPY '{{source}}' '{{target}}'
+COPY '{{source}}' '{{target}}'
 {{/files}}
 
 RUN sbt universal:packageZipTarball
 
-  FROM eclipse-temurin:21.0.3_9-jre-jammy
+FROM eclipse-temurin:21.0.3_9-jre-jammy
 
 WORKDIR /usr/src/app
 
