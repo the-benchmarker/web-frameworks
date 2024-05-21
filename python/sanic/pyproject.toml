@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 requires = ["flit_core >=3.2,<4"]
 
 [project]
-name = 'benchmark'
+name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
 dependencies = ["sanic>=23.12,<23.13"]
