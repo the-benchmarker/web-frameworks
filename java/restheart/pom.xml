@@ -18,21 +18,6 @@
         <artifactId>restheart</artifactId>
         <version>${restheart.version}</version>
       </dependency>
-
-      <!-- avoids including following artifacts in shaded jar-->
-      <dependency>
-        <groupId>org.graalvm.polyglot</groupId>
-        <artifactId>polyglot</artifactId>
-        <scope>provided</scope>
-        <version>[24.0.0,)</version>
-    </dependency>
-    <dependency>
-        <groupId>org.graalvm.polyglot</groupId>
-        <artifactId>js-community</artifactId>
-        <type>pom</type>
-        <scope>provided</scope>
-        <version>[24.0.0,)</version>
-    </dependency>
   </dependencies>
 
   <build>
@@ -52,6 +37,12 @@
                   </excludes>
                 </filter>
               </filters>
+              <!-- avoids including graalvm transitive dependencies into shaded jar-->
+              <artifactSet>
+                <excludes>
+                    <exclude>org.graalvm.*:*</exclude>
+                </excludes>
+            </artifactSet>
             </configuration>
             <executions>
               <execution>
