@@ -12,13 +12,16 @@
 
 /*
  * --------------------------------------------------------------------
- * CodeIgniter command-line tools
+ * CODEIGNITER COMMAND-LINE TOOLS
  * --------------------------------------------------------------------
  * The main entry point into the CLI system and allows you to run
  * commands and perform maintenance on your application.
- *
- * Because CodeIgniter can handle CLI requests as just another web request
- * this class mainly acts as a passthru to the framework itself.
+ */
+
+/*
+ *---------------------------------------------------------------
+ * CHECK SERVER API
+ *---------------------------------------------------------------
  */
 
 // Refuse to run when called from php-cgi
@@ -26,8 +29,13 @@ if (strpos(PHP_SAPI, 'cgi') === 0) {
     exit("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
 }
 
-// Check PHP version.
-$minPhpVersion = '7.4'; // If you update this, don't forget to update `public/index.php`.
+/*
+ *---------------------------------------------------------------
+ * CHECK PHP VERSION
+ *---------------------------------------------------------------
+ */
+
+$minPhpVersion = '8.1'; // If you update this, don't forget to update `public/index.php`.
 if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
     $message = sprintf(
         'Your PHP version must be %s or higher to run CodeIgniter. Current version: %s',
@@ -39,15 +47,14 @@ if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
 }
 
 // We want errors to be shown when using it from the CLI.
-error_reporting(-1);
+error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-/**
- * @var bool
- *
- * @deprecated No longer in use. `CodeIgniter` has `$context` property.
+/*
+ *---------------------------------------------------------------
+ * SET THE CURRENT DIRECTORY
+ *---------------------------------------------------------------
  */
-define('SPARKED', true);
 
 // Path to the front controller
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR);
@@ -64,41 +71,14 @@ chdir(FCPATH);
  * and fires up an environment-specific bootstrapping.
  */
 
-// Load our paths config file
+// LOAD OUR PATHS CONFIG FILE
 // This is the line that might need to be changed, depending on your folder structure.
 require FCPATH . '../app/Config/Paths.php';
 // ^^^ Change this line if you move your application folder
 
 $paths = new Config\Paths();
 
-// Location of the framework bootstrap file.
-require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
+// LOAD THE FRAMEWORK BOOTSTRAP FILE
+require $paths->systemDirectory . '/Boot.php';
 
-// Load environment settings from .env files into $_SERVER and $_ENV
-require_once SYSTEMPATH . 'Config/DotEnv.php';
-(new CodeIgniter\Config\DotEnv(ROOTPATH))->load();
-
-// Define ENVIRONMENT
-if (! defined('ENVIRONMENT')) {
-    define('ENVIRONMENT', env('CI_ENVIRONMENT', 'production'));
-}
-
-// Grab our CodeIgniter
-$app = Config\Services::codeigniter();
-$app->initialize();
-
-// Grab our Console
-$console = new CodeIgniter\CLI\Console();
-
-// Show basic information before we do anything else.
-if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true))) {
-    unset($_SERVER['argv'][$suppress]); // @codeCoverageIgnore
-    $suppress = true;
-}
-
-$console->showHeader($suppress);
-
-// fire off the command in the main framework.
-$exit = $console->run();
-
-exit(is_int($exit) ? $exit : EXIT_SUCCESS);
+exit(CodeIgniter\Boot::bootSpark($paths));
