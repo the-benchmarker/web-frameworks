@@ -1,8 +1,9 @@
 language:
-  version: 8.2
   engines:
     reactphp:
       command: bin/console serve
+      environment:
+        COMPOSER_ALLOW_SUPERUSER: 1
 
 framework:
   website: antidotfw.io
@@ -17,3 +18,6 @@ framework:
 
   engines:
     - reactphp
+
+  bootstrap:
+    - mkdir var/cache -p
