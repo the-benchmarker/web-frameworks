@@ -85,7 +85,7 @@ def override_or_merge(value3, value2, value1)
   value
 end
 
-def commands_for(language, framework, variant, provider = 'docker')
+def commands_for(language, framework, variant, provider = "docker")
   config = YAML.safe_load(File.read("config.yaml"))
 
   directory = Dir.pwd
