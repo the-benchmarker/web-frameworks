@@ -44,14 +44,6 @@ def get_config_from(directory, engines_as_list: true)
   config
 end
 
-def default_provider
-  if RbConfig::CONFIG["host_os"] =~ /linux/
-    "docker"
-  else
-    "docker-desktop"
-  end
-end
-
 def custom_config(dict1, dict2, dict3)
   keys = dict1.keys << dict2.keys << dict3.keys
   data = {}
@@ -93,7 +85,7 @@ def override_or_merge(value3, value2, value1)
   value
 end
 
-def commands_for(language, framework, variant, provider = default_provider)
+def commands_for(language, framework, variant, provider = "docker")
   config = YAML.safe_load(File.read("config.yaml"))
 
   directory = Dir.pwd

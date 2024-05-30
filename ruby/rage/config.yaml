@@ -1,0 +1,9 @@
+framework:
+  github: rage-rb/rage
+  version: 1.5
+
+  engines:
+    - rage
+
+  environment:
+    RAGE_ENV: production

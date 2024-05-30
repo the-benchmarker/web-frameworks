@@ -1,0 +1,47 @@
+buildscript {
+
+    repositories {
+        mavenCentral()
+    }
+
+    ext {
+        kotlinVersion = "2.0.+"
+        joobyVersion = "3.1.+"
+        shadowVersion = "+"
+    }
+    
+}
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "${kotlinVersion}"
+    id "com.github.johnrengelman.shadow" version "${shadowVersion}"
+    id "application"
+}
+
+
+group "benchmark.kooby"
+version "1.0.0"
+mainClassName = "benchmark.AppKt"
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of("21"))
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation "io.jooby:jooby-netty:${joobyVersion}"
+    implementation "io.jooby:jooby-kotlin:${joobyVersion}"
+}
+
+shadowJar {
+    mergeServiceFiles()
+    archiveBaseName.set("server")
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}

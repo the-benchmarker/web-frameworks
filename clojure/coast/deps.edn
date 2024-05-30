@@ -1,7 +1,7 @@
 {:paths ["src/main/clojure" "classes"]
 
  :deps {coast-framework/coast {:mvn/version "0.1.0-SNAPSHOT"}
-        org.clojure/clojure {:mvn/version "1.11.1"}}
+        org.clojure/clojure {:mvn/version "1.11.3"}}
 
  :aliases {:outdated {:extra-deps {olical/depot {:mvn/version "2.3.0"}}
                       :main-opts ["-m" "depot.outdated.main"

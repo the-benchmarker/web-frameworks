@@ -2,7 +2,7 @@ language:
   version: 11
 framework:
   github: oatpp/oatpp
-  version: 1.3.0
+  version: 1.3
 
   build_deps:
 
@@ -12,7 +12,7 @@ framework:
     - build/oat_benchmark
 
   download:
-    - git clone --depth=1 https://github.com/oatpp/oatpp.git
+    - git clone --depth=1 https://github.com/oatpp/oatpp.git -b 1.3.0
     - mkdir oatpp/build
     - cd oatpp/build && cmake -DOATPP_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ..
     - cd oatpp/build && make install -j 6

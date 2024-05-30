@@ -1,0 +1,6 @@
+framework:
+  website: turbo.readthedocs.io
+  version: "2.1.3"
+
+  build:
+    - apk add --no-cache lua-turbo

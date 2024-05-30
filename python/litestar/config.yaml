@@ -1,8 +1,9 @@
 framework:
   website: litestar.dev
-  version: 2.6
+  version: 2.8
 
   engines:
     - uvicorn
     - hypercorn
     - daphne
+    - granian

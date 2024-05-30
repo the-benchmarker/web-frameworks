@@ -51,3 +51,6 @@ obj
 /elixir/*/deps/
 /elixir/*/mix.lock
 erl_crash.dump
+
+# python
+__pycache__/

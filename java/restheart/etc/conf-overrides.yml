@@ -5,12 +5,11 @@
 
 /core/name: restheart-benchmarker
 
-/core/worker-threads: 0
-
-/core/requests-limit: 100000
+/logging/log-level: "OFF"
+/logging/requests-log-mode: 0
 
 /fullAuthorizer/enabled: true
 
-/logging/log-level: "OFF"
-
 /ping/enabled: false
+/xPoweredBy/enabled: false
+/dateHeader/enabled: false
