@@ -1,7 +1,8 @@
 {
   "name": "server",
   "dependencies": {
-    "vibe-d:http": "~>0.9.8"
+    "vibe-d:http": "~>0.10.0",
+    "vibe-d:tls": "*"
   },
   "versions": [
     "VibeManualMemoryManagement",
@@ -9,5 +10,8 @@
     "VibeDisableCommandLineParsing"
   ],
   "dflags-ldc": ["-mcpu=native"],
+  "subConfigurations": {
+        "vibe-d:tls": "notls"
+  },
   "license": "MIT"
 }
