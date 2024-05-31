@@ -9,11 +9,9 @@
     "VibeHighEventPriority",
     "VibeDisableCommandLineParsing"
   ],
+  "dflags-ldc": ["-mcpu=native"],
   "subConfigurations": {
         "vibe-d:tls": "notls"
   },
-  "dflags-ldc": [
-    "-mcpu=native"
-  ],
   "license": "MIT"
 }
