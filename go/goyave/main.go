@@ -1,26 +1,39 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 
-	"goyave.dev/goyave/v4"
+	"goyave.dev/goyave/v5"
+	"goyave.dev/goyave/v5/util/errors"
 )
 
-func empty(r *goyave.Response, req *goyave.Request) {
+func empty(r *goyave.Response, _ *goyave.Request) {
 	r.Status(http.StatusOK)
 }
 
-func registerRoutes(router *goyave.Router) {
+func registerRoutes(_ *goyave.Server, router *goyave.Router) {
 	router.Get("/", empty)
 	router.Get("/user/{id}", func(r *goyave.Response, req *goyave.Request) {
-		r.String(http.StatusOK, req.Params["id"])
+		r.String(http.StatusOK, req.RouteParams["id"])
 	})
 	router.Post("/user", empty)
 }
 
 func main() {
-	if err := goyave.Start(registerRoutes); err != nil {
-		os.Exit(err.(*goyave.Error).ExitCode)
+	server, err := goyave.New(goyave.Options{})
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err.(*errors.Error).String())
+		os.Exit(1)
+	}
+
+	server.RegisterSignalHook()
+
+	server.RegisterRoutes(registerRoutes)
+
+	if err := server.Start(); err != nil {
+		server.Logger.Error(err)
+		os.Exit(2)
 	}
 }
