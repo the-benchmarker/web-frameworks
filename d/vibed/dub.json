@@ -11,7 +11,7 @@
   ],
   "dflags-ldc": ["-mcpu=native"],
   "subConfigurations": {
-        "vibe-d:tls": "notls"
+    "vibe-d:tls": "notls"
   },
   "license": "MIT"
 }
