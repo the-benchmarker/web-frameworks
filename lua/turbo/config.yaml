@@ -3,4 +3,5 @@ framework:
   version: "2.1.3"
 
   build:
-    - apk add --no-cache lua-turbo
+    - apk add --no-cache luajit lua5.4-dev luarocks5.4 git build-base libressl-dev
+    - luarocks-5.4 install turbo
