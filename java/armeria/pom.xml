@@ -15,7 +15,7 @@
         <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <armeria.version>[1.28,1.29)</armeria.version>
+        <armeria.version>[1.29,1.30)</armeria.version>
         <slf4j.version>[1.7,)</slf4j.version>
     </properties>
 
