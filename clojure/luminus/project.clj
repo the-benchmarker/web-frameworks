@@ -50,7 +50,7 @@
    :project/dev  {:jvm-opts ["-Dconf=dev-config.edn" ]
                   :dependencies [[pjstadig/humane-test-output "0.11.0"]
                                  [prone "2021-04-23"]
-                                 [ring/ring-devel "1.12.1"]
+                                 [ring/ring-devel "1.12.2"]
                                  [ring/ring-mock "0.4.0"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.25.0"]
                                  [jonase/eastwood "1.4.2"]] 
