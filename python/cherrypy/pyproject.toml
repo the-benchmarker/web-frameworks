@@ -6,4 +6,4 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["cherrypy>=18.9,<18.10"]
+dependencies = ["cherrypy>=18.10,<18.11"]
