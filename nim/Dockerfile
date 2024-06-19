@@ -1,4 +1,4 @@
-FROM nimlang/nim:2.0.4
+FROM nimlang/nim:2.0.6
 
 RUN apt-get -qq update
 
