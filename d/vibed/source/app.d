@@ -17,7 +17,7 @@ void handleRequest(scope HTTPServerRequest req, scope HTTPServerResponse res)
 
 void main()
 {
-    setupWorkerThreads(totalCPUs);
+    setupWorkerThreads(50);
     runWorkerTask(&runServer);
 	runApplication();
 }
