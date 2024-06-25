@@ -1,8 +1,8 @@
 {
-    "name": "server",
-    "dependencies": {
-      "hunt-http": "~>0.8.2"
-    },
-    "dflags-ldc": ["-mcpu=native"],
-    "license": "MIT"
-  }
+  "name": "server",
+  "dependencies": {
+    "hunt-http": "~>0.8.2"
+  },
+  "dflags-ldc": ["-mcpu=native"],
+  "license": "MIT"
+}
