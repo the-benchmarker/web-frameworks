@@ -13,7 +13,7 @@
                  [markdown-clj "1.12.1"]
                  [metosin/muuntaja "0.6.10"]
                  [metosin/reitit "0.7.0"]
-                 [metosin/ring-http-response "0.9.3"]
+                 [metosin/ring-http-response "0.9.4"]
                  [mount "0.1.18"]
                  [nrepl "1.2.0"]
                  [org.clojure/clojure "1.11.3"]
