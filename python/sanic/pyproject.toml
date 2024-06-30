@@ -7,5 +7,5 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["sanic>=23.12,<23.13"]
+dependencies = ["sanic>=24.6,<24.7"]
 
