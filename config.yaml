@@ -32,10 +32,10 @@ service: |
 providers:
   docker:
     build:
-      - cd {{{language}}}/{{{framework}}} && docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}}.{{{variant}}} . && cd -
+      - cd {{{language}}}/{{{framework}}} && docker build --platform linux/arm64 -f {{{manifest}}} -t {{{language}}}.{{{framework}}}.{{{variant}}} . && cd -
 
     metadata:
-      - docker run -td {{{language}}}.{{{framework}}}.{{{variant}}} > {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt
+      - docker run --platform linux/arm64 -td {{{language}}}.{{{framework}}}.{{{variant}}} > {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt
       - docker inspect `cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt` | jq -r '.[0].NetworkSettings.IPAddress' > {{{language}}}/{{{framework}}}/ip-{{{variant}}}.txt
 
     clean:
