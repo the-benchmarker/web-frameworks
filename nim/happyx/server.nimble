@@ -2,7 +2,7 @@
 
 description = "Macro-oriented asynchronous web-framework written with ♥"
 author = "HapticX"
-version = "3.11.0"
+version = "4.0.2"
 license = "MIT"
 srcDir = "src"
 installExt = @["nim"]
@@ -10,7 +10,7 @@ bin = @["hpx"]
 
 # Dependencies
 
-requires "happyx >= 3.11 & < 3.12"
+requires "happyx >= 4.0 & < 4.1"
 requires "cligen"
 requires "checksums"
 requires "regex"
