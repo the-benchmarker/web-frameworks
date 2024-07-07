@@ -1,4 +1,4 @@
-from happyx import Server
+from happyxpy import Server
 
 app = Server("0.0.0.0", 3000)
 

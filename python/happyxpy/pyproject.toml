@@ -7,4 +7,4 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["happyx>=3.8,<3.9"]
+dependencies = ["happyxpy>=4.1,<4.2"]
