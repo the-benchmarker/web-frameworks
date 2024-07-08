@@ -8,7 +8,7 @@
 
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
-    <restheart.version>8.0.4</restheart.version>
+    <restheart.version>[8.0,8.1.0-SNAPSHOT)</restheart.version>
   </properties>
 
   <dependencies>
