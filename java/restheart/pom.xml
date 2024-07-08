@@ -7,9 +7,8 @@
   <packaging>jar</packaging>
 
   <properties>
-    <maven.compiler.source>21</maven.compiler.source>
-    <maven.compiler.target>21</maven.compiler.target>
-    <restheart.version>[8.0,8.1.0-SNAPSHOT)</restheart.version>
+    <maven.compiler.release>21</maven.compiler.release>
+    <restheart.version>8.0.4</restheart.version>
   </properties>
 
   <dependencies>
@@ -26,7 +25,7 @@
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-shade-plugin</artifactId>
-            <version>3.5.3</version>
+            <version>3.6.0</version>
             <configuration>
               <createDependencyReducedPom>true</createDependencyReducedPom>
               <filters>
@@ -37,12 +36,6 @@
                   </excludes>
                 </filter>
               </filters>
-              <!-- avoids including graalvm transitive dependencies into shaded jar-->
-              <artifactSet>
-                <excludes>
-                    <exclude>org.graalvm.*:*</exclude>
-                </excludes>
-            </artifactSet>
             </configuration>
             <executions>
               <execution>
