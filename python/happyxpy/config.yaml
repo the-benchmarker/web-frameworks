@@ -1,0 +1,12 @@
+framework:
+  website: hapticx.github.io/happyx
+  github: HapticX/happyx
+  version: 4.1
+
+  engines:
+    - happyxpy
+
+language:
+  engines:
+    happyxpy:
+      command: python server.py

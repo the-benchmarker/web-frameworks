@@ -1,6 +1,6 @@
 framework:
   github: cherrypy/cherrypy
-  version: 18.9
+  version: "18.10"
 
   engines:
     - gunicorn

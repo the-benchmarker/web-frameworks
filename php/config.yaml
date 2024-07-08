@@ -36,6 +36,8 @@ language:
       extensions:
         - swoole
       command: php public/index.php
+      build_deps:
+        - libbrotli-dev
     reactphp:
       deps:
         - libevent-dev

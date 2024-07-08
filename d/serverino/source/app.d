@@ -14,7 +14,7 @@ mixin ServerinoMain;
         .setHttpTimeout(10.seconds)
         .enableKeepAlive(180.seconds)
         .addListener("0.0.0.0", 3000)
-        .setWorkers(8);
+        .setWorkers(50);
 }
 
 @safe

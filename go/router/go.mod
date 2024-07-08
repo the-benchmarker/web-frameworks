@@ -1,3 +1,3 @@
 module main
 
-require github.com/fasthttp/router v1.5.0
+require github.com/fasthttp/router v1.5.2

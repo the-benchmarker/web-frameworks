@@ -1,9 +1,9 @@
 framework:
   website: quarkus.io
-  version: 3.9
+  version: 3.11
 
   build:
-    - mvn clean package -Dquarkus.package.type=uber-jar -Dquarkus.http.port=3000 -Pnative
+    - mvn clean package -Dquarkus.package.type=uber-jar -Dquarkus.http.port=3000
 
   binaries:
     - target/quarkus-1.0.0-runner.jar
