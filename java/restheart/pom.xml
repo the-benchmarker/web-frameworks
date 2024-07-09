@@ -36,12 +36,6 @@
                   </excludes>
                 </filter>
               </filters>
-              <!-- avoids including graalvm transitive dependencies into shaded jar-->
-              <artifactSet>
-                <excludes>
-                    <exclude>org.graalvm.*:*</exclude>
-                </excludes>
-            </artifactSet>
             </configuration>
             <executions>
               <execution>
