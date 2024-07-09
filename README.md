@@ -1,47 +1,15 @@
-# Which is the fastest ?
-
----
-
-#### Simple framework comparison
-
----
-
-<p align="center">
-  <img src="https://img.shields.io/badge/status-beta-green?style=for-the-badge">
-</p>
-
-<hr/>
-
-<p align="center">
-   <a href="https://the-benchmarker.semaphoreci.com/badges/web-frameworks/branches/master.svg">
-      <img src="https://the-benchmarker.semaphoreci.com/badges/web-frameworks/branches/master.svg" alt="Build Status">
-   </a>
-   <a href="https://join.slack.com/t/thebenchmarker/shared_invite/zt-fcyy1ybq-A7T1SedewiVMEtJQGEyQYw" target="_blank">
-      <img src="https://img.shields.io/badge/slack-chat_with_us-green" alt="Chat with us">
-   </a>
-   <a href="https://github.com/the-benchmarker/web-frameworks/blob/master/LICENSE" target="_blank">
-      <img src="https://img.shields.io/github/license/the-benchmarker/web-frameworks" alt="License">
-   </a>
-</p>
-
-## Motivation
-
-There are many frameworks, each one comes with its own advantages and drawbacks. The purpose of this project is to identify them and attempt to measure their differences (performance is only one metric).
-
-#### What is a framework ?
-
-A framework is a set of components working together. The main intention behind a framework is to facilitate (app or service) creation. The way a framework helps any developer may vary from one to another.
-
-A majority of frameworks could be split in 2 parts :
-
-+ **full-stack** meaning it provides all aspects (-stacks-) from data layer to sometimes deployment
-+ **micro** meaning it provides only the routing part, and let the developer choose any other component for the others
-
-## Requirements
-
 + `ruby`, all tools are made in `ruby`
+```sh
+sudo dnf install ruby
+```
 + `wrk`, results are collected using `wrk`
+```sh
+ cd `mktemp -d` && git clone https://github.com/wg/wrk -b 4.2.0 . && make && sudo mv cp /usr/bin
+```
 + `postgresql`, results are stored in `postgresql`
+```sh
+sudo dn install postgresql{,-server}
+```
 + `docker`, each implementation is implemented in an isolated **container**
 + `jq`, processing `docker` metadata
 + `docker-machine` if you are on `macos`

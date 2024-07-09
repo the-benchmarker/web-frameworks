@@ -13,7 +13,7 @@ WORKDIR /go/src/app
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
-ENV GOARCH=amd64
+ENV GOARCH=arm64
 
 {{#files}}
   COPY '{{source}}' '{{target}}'

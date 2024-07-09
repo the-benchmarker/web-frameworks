@@ -6,7 +6,7 @@ framework:
     - gcc
     - openssl
     - openssh-client
-    - libpcre2-dev
+    - pcre-dev
 
   build_command: "ducere build -p 3000"
 

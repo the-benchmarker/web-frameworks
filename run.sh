@@ -13,25 +13,27 @@
 #doctl compute ssh --ssh-key-path ${DO_KEY} sieger
 
 # Clean database
-dropdb -U postgres benchmark
-createdb -U postgres benchmark
-psql -U postgres -d benchmark < dump.sql
+#dropdb -U postgres benchmark
+#createdb -U postgres benchmark
+#psql -U postgres -d benchmark < dump.sql
 
-find . -mindepth 3 -type f -name config.yaml > /tmp/list.txt
-
+echo > /tmp/list.txt
+for i in javascript go python r php d; do
+find $i -mindepth 2 -type f -name config.yaml >> /tmp/list.txt
+done
 while read line ; do 
   echo "*********** ${line} *************"
   LANGUAGE=`echo $line | awk -F '/' '{print $(NF-2)}'`
   FRAMEWORK=`echo $line | awk -F '/' '{print $(NF-1)}'`
  # cd ${LANGUAGE}/${FRAMEWORK}
-  make -f ~/workspace/benchmark/web/${LANGUAGE}/${FRAMEWORK}/.Makefile build
+  make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile build
 #  cd ../..
-  make -f ~/workspace/benchmark/web/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
-  make -f ~/workspace/benchmark/web/${LANGUAGE}/${FRAMEWORK}/.Makefile clean
+  make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
+  make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile clean
   docker ps -aq | xargs --no-run-if-empty docker rm -f;
   docker images -aq | xargs --no-run-if-empty docker rmi -f;
   sudo docker system prune -a -f
-  sleep 1
+  sleep 5
 done < /tmp/list.txt
 
 #echo 'select label from frameworks' | psql -U postgres -d benchmark -t | sort > /tmp/done.txt
