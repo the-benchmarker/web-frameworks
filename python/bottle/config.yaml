@@ -3,8 +3,8 @@ framework:
   version: 0.12
 
   engines:
-    - gunicorn
     - wsgiref
+    - gunicorn
     - bjoern
     - cheroot
     - waitress

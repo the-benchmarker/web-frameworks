@@ -37,7 +37,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          arch: aarch64
       - uses: actions/setup-ruby@v1
+        with:
+          arch: aarch64
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
 
@@ -65,5 +69,3 @@ jobs:
           LANGUAGE: ${{ matrix.language }}
           FRAMEWORK: ${{ matrix.framework }}
           ENGINE: ${{ matrix.engine }}
-        with:
-          arch: aarch64
