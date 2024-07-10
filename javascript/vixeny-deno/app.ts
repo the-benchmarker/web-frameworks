@@ -18,4 +18,8 @@ const app  = wrap()()
   })
   .compose()
 
+<<<<<<< HEAD
 Deno.serve({port: 3000}, app)
+=======
+  Deno.serve({port: 3000}, app)
+>>>>>>> 8334be01 (`app` doesn't have `fetch`)
