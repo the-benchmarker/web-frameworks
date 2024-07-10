@@ -7,5 +7,5 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["robyn>=0.56,<0.57"]
+dependencies = ["robyn>=0.57,<0.58"]
 
