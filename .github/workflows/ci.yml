@@ -57,8 +57,6 @@ jobs:
         env:
           DIRECTORY: ${{ matrix.directory }}
           ENGINE: ${{ matrix.engine }}
-        with:
-          arch: aarch64
 
       - name: Wait
         run: sleep 1
