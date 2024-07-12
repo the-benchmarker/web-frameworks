@@ -37,7 +37,7 @@
             <plugin>
                 <groupId>io.reactiverse</groupId>
                 <artifactId>vertx-maven-plugin</artifactId>
-                <version>1.0.29</version>
+                <version>2.0.0</version>
                 <executions>
                     <execution>
                         <id>vmp</id>
