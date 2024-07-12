@@ -6,7 +6,7 @@ use Symfony\Component\Console\Application;
 use Fomo\Commands\Server\Start as StartServerCommand;
 
 define('PROJECT_PATH' , realpath('./'));
-const FOMO_VERSION = '2.0.0';
+const FOMO_VERSION = '2.4.1';
 const ENABLE = true;
 const DISABLE = false;
 
