@@ -8,7 +8,7 @@
 	<name>benchmark</name>
 	<description>Demo project for rapidoid</description>
 	<properties>
-		<java.version>21</java.version>
+        <maven.compiler.release>21</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

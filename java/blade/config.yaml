@@ -1,6 +1,5 @@
 language:
-  version: 11
-  image: maven:3-eclipse-temurin-11
+  image: maven:3-eclipse-temurin-21
 framework:
   website: lets-blade.github.io
   github: lets-blade/blade
