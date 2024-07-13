@@ -3,12 +3,12 @@
   FROM gradle:jdk21-jammy AS build
 {{/language.compiler.gradle}}
 {{#language.compiler.maven}}
-  {{#language.image}}
+  {{#language.version}}
     FROM {{{.}}} AS build
-  {{/language.image}}
-  {{^language.image}}
+  {{/language.version}}
+  {{^language.version}}
     FROM maven:3-eclipse-temurin-21 AS build
-  {{/language.image}}
+  {{/language.version}}
 {{/language.compiler.maven}}
 
 WORKDIR /usr/src/web
