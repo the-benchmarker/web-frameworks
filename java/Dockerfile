@@ -1,10 +1,15 @@
-{{#image}}
-  FROM {{{.}}} AS build
-{{/image}}
 
-{{^image}}
-  FROM maven:3-eclipse-temurin-21 AS build
-{{/image}}
+{{#language.compiler.gradle}}
+  FROM gradle:jdk21-jammy AS build
+{{/language.compiler.gradle}}
+{{language.compiler.maven}}
+  {{#language.image}}
+    FROM {{{.}}} AS build
+  {{/language.image}}
+  {{^language.image}}
+    FROM maven:3-eclipse-temurin-21 AS build
+  {{/language.image}}
+{{/language.compiler.maven}}
 
 WORKDIR /usr/src/web
 
