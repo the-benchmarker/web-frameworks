@@ -4,7 +4,7 @@
 {{/language.compiler.gradle}}
 {{#language.compiler.maven}}
   {{#language.version}}
-    FROM {{{.}}} AS build
+    FROM maven:3-eclipse-temurin-{{{.}}} AS build
   {{/language.version}}
   {{^language.version}}
     FROM maven:3-eclipse-temurin-21 AS build
