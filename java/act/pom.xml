@@ -14,11 +14,11 @@
     <groupId>org.actframework</groupId>
     <artifactId>act-starter-parent</artifactId>
     <version>[1.9,1.10)</version>
-    <maven.compiler.release>21</maven.compiler.release>
   </parent>
 
   <properties>
     <app.entry>benchmark.act.AppEntry</app.entry>
+    <maven.compiler.release>11</maven.compiler.release>
   </properties>
 
 </project>
