@@ -2,7 +2,7 @@
 {{#language.compiler.gradle}}
   FROM gradle:jdk21-jammy AS build
 {{/language.compiler.gradle}}
-{{language.compiler.maven}}
+{{#language.compiler.maven}}
   {{#language.image}}
     FROM {{{.}}} AS build
   {{/language.image}}
