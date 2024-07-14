@@ -96,7 +96,7 @@ def commands_for(language, framework, variant, provider = "docker")
   options = { language: language, framework: framework, variant: variant,
               manifest: "#{MANIFESTS[:container]}.#{variant}" }
   commands = { build: [], collect: [], clean: [] }
-
+  
   # Compile first, only for non containers
   if app_config.key?("binaries") && !(provider.start_with?("docker") || provider.start_with?("podman"))
     commands << "docker build -f #{MANIFESTS[:container]}.#{variant} -t #{language}.#{framework} ."
@@ -177,6 +177,10 @@ def create_dockerfile(directory, engine, config)
     Dir.glob(config["static_files"]).each do |static_file|
       static_files << { source: static_file.gsub("#{directory}/", ""), target: static_file.gsub("#{directory}/", "") }
     end
+  end
+compiler = config.dig('language','compiler')
+  if compiler
+    config['language']['compiler'] = {compiler => true}
   end
 
   template = File.read(path)

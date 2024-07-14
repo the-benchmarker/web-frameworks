@@ -12,8 +12,7 @@
 	<description>Demo project for sparkjava</description>
 
 	<properties>
-		<maven.compiler.target>21</maven.compiler.target>
-    <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.release>21</maven.compiler.release>
 	</properties>
 
 	<dependencies>

@@ -1,28 +1,31 @@
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:spry/spry.dart';
+import 'package:spry/spry.dart' hide Platform;
+import 'package:spry/io.dart';
 
-Future<void> server([_]) async {
-  final app =
-      await Application.create(port: 3000, address: '0.0.0.0', shared: true);
+Future<void> runServer([_]) async {
+  final app = Spry();
 
-  app.get('/', (request) {});
-  app.post('/user', (request) {});
-  app.get('/user/:name', (request) => request.params.get('name'));
+  app.get('/', (event) {});
+  app.post('/user', (event) {});
+  app.get('/user/:name', (event) => event.params('name'));
 
-  await app.listen();
+  final handler = const IOPlatform().createHandler(app);
+  final server = await HttpServer.bind('0.0.0.0', 3000, shared: true);
+
+  server.listen(handler);
 }
 
 Future<void> main() async {
   // Run the server in the main isolate
-  await server();
+  await runServer();
   print('Main server running...');
 
   // Create a cluster of servers
   final cluster = List<Future<Isolate>>.generate(
     Platform.numberOfProcessors - 1,
-    (_) => Isolate.spawn(server, null),
+    (_) => Isolate.spawn(runServer, null),
   );
 
   // Wait for the cluster to be ready

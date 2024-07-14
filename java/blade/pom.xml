@@ -10,6 +10,7 @@
 
     <properties>
         <blade-core.version>[2.1,2.2)</blade-core.version>
+        <maven.compiler.release>11</maven.compiler.release>
     </properties>
 
     <dependencies>

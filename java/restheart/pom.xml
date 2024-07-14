@@ -7,8 +7,7 @@
   <packaging>jar</packaging>
 
   <properties>
-    <maven.compiler.source>21</maven.compiler.source>
-    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.release>21</maven.compiler.release>
     <restheart.version>[8.0,8.1.0-SNAPSHOT)</restheart.version>
   </properties>
 
@@ -37,12 +36,6 @@
                   </excludes>
                 </filter>
               </filters>
-              <!-- avoids including graalvm transitive dependencies into shaded jar-->
-              <artifactSet>
-                <excludes>
-                    <exclude>org.graalvm.*:*</exclude>
-                </excludes>
-            </artifactSet>
             </configuration>
             <executions>
               <execution>

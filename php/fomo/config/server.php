@@ -14,8 +14,10 @@ return [
         'ssl_key_file' => null ,
     ] ,
 
-    'services' => [] ,
-
+    'services' => [
+        Fomo\Services\Response::class ,
+    ] ,
+    
     'watcher' => [
         'app',
         'config',
