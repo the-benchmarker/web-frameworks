@@ -17,7 +17,9 @@ jobs:
           ruby-version: 3.0
           bundler-cache: true
       - name: Install deps
-        run: bundle install --jobs 4 --retry 3
+        run: |
+          brew install libpq
+          bundle install --jobs 4 --retry 3
       - id: set-matrix
         run: echo "matrix=$(bundle exec rake ci:matrix)" >> "$GITHUB_OUTPUT"
         env:
@@ -29,7 +31,7 @@ jobs:
   test:
     needs: matrix
 
-    runs-on: ubuntu-22.04
+    runs-on: macos-14
 
     strategy:
       fail-fast: false
