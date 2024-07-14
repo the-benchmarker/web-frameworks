@@ -21063,13 +21063,13 @@
     {
       "level": 64,
       "label": "average_latency",
-      "value": 360,
+      "value": 357,
       "framework_id": 67
     },
     {
       "level": 64,
       "label": "duration_ms",
-      "value": 15018599,
+      "value": 15017712.5,
       "framework_id": 67
     },
     {
@@ -21081,7 +21081,7 @@
     {
       "level": 64,
       "label": "maximum_latency",
-      "value": 6868.333333333333,
+      "value": 7175.166666666667,
       "framework_id": 67
     },
     {
@@ -21093,31 +21093,31 @@
     {
       "level": 64,
       "label": "percentile_50",
-      "value": 135.33333333333334,
+      "value": 135.66666666666666,
       "framework_id": 67
     },
     {
       "level": 64,
       "label": "percentile_75",
-      "value": 478,
+      "value": 474.8333333333333,
       "framework_id": 67
     },
     {
       "level": 64,
       "label": "percentile_90",
-      "value": 986.6666666666666,
+      "value": 975.1666666666666,
       "framework_id": 67
     },
     {
       "level": 64,
       "label": "percentile_99",
-      "value": 2332.6666666666665,
+      "value": 2301.1666666666665,
       "framework_id": 67
     },
     {
       "level": 64,
       "label": "percentile_99.999",
-      "value": 5369.333333333333,
+      "value": 5540.166666666667,
       "framework_id": 67
     },
     {
@@ -21147,37 +21147,37 @@
     {
       "level": 64,
       "label": "standard_deviation",
-      "value": 490.3333333333333,
+      "value": 484.1666666666667,
       "framework_id": 67
     },
     {
       "level": 64,
       "label": "total_bytes_received",
-      "value": 385925356,
+      "value": 386152750.5,
       "framework_id": 67
     },
     {
       "level": 64,
       "label": "total_requests",
-      "value": 4360700,
+      "value": 4362460.166666667,
       "framework_id": 67
     },
     {
       "level": 64,
       "label": "total_requests_per_s",
-      "value": 290353.3333333333,
+      "value": 290487.8333333333,
       "framework_id": 67
     },
     {
       "level": 256,
       "label": "average_latency",
-      "value": 1142,
+      "value": 1140.6666666666667,
       "framework_id": 67
     },
     {
       "level": 256,
       "label": "duration_ms",
-      "value": 15082806.666666666,
+      "value": 15082494.833333334,
       "framework_id": 67
     },
     {
@@ -21189,7 +21189,7 @@
     {
       "level": 256,
       "label": "maximum_latency",
-      "value": 16650,
+      "value": 17725.5,
       "framework_id": 67
     },
     {
@@ -21201,31 +21201,31 @@
     {
       "level": 256,
       "label": "percentile_50",
-      "value": 535.3333333333334,
+      "value": 536.3333333333334,
       "framework_id": 67
     },
     {
       "level": 256,
       "label": "percentile_75",
-      "value": 1677.3333333333333,
+      "value": 1675.8333333333333,
       "framework_id": 67
     },
     {
       "level": 256,
       "label": "percentile_90",
-      "value": 3049.6666666666665,
+      "value": 3044.6666666666665,
       "framework_id": 67
     },
     {
       "level": 256,
       "label": "percentile_99",
-      "value": 5986.333333333333,
+      "value": 5978.166666666667,
       "framework_id": 67
     },
     {
       "level": 256,
       "label": "percentile_99.999",
-      "value": 14613.666666666666,
+      "value": 14871.833333333334,
       "framework_id": 67
     },
     {
@@ -21255,25 +21255,25 @@
     {
       "level": 256,
       "label": "standard_deviation",
-      "value": 1382.3333333333333,
+      "value": 1381.1666666666667,
       "framework_id": 67
     },
     {
       "level": 256,
       "label": "total_bytes_received",
-      "value": 425724163,
+      "value": 425869321.5,
       "framework_id": 67
     },
     {
       "level": 256,
       "label": "total_requests",
-      "value": 4802009.666666667,
+      "value": 4804644.833333333,
       "framework_id": 67
     },
     {
       "level": 256,
       "label": "total_requests_per_s",
-      "value": 318379.3333333333,
+      "value": 318559.6666666667,
       "framework_id": 67
     },
     {
@@ -21285,7 +21285,7 @@
     {
       "level": 512,
       "label": "duration_ms",
-      "value": 15097212.333333334,
+      "value": 15097979.666666666,
       "framework_id": 67
     },
     {
@@ -21297,7 +21297,7 @@
     {
       "level": 512,
       "label": "maximum_latency",
-      "value": 40307.333333333336,
+      "value": 36485,
       "framework_id": 67
     },
     {
@@ -21309,31 +21309,31 @@
     {
       "level": 512,
       "label": "percentile_50",
-      "value": 1219.3333333333333,
+      "value": 1223.8333333333333,
       "framework_id": 67
     },
     {
       "level": 512,
       "label": "percentile_75",
-      "value": 3088.6666666666665,
+      "value": 3096.5,
       "framework_id": 67
     },
     {
       "level": 512,
       "label": "percentile_90",
-      "value": 5192,
+      "value": 5202,
       "framework_id": 67
     },
     {
       "level": 512,
       "label": "percentile_99",
-      "value": 10594,
+      "value": 10540,
       "framework_id": 67
     },
     {
       "level": 512,
       "label": "percentile_99.999",
-      "value": 29235,
+      "value": 27490.166666666668,
       "framework_id": 67
     },
     {
@@ -21363,25 +21363,25 @@
     {
       "level": 512,
       "label": "standard_deviation",
-      "value": 2394.3333333333335,
+      "value": 2386.3333333333335,
       "framework_id": 67
     },
     {
       "level": 512,
       "label": "total_bytes_received",
-      "value": 429400836,
+      "value": 429735552,
       "framework_id": 67
     },
     {
       "level": 512,
       "label": "total_requests",
-      "value": 4843312,
+      "value": 4846600,
       "framework_id": 67
     },
     {
       "level": 512,
       "label": "total_requests_per_s",
-      "value": 320808.6666666667,
+      "value": 321009.8333333333,
       "framework_id": 67
     },
     {
@@ -102715,7 +102715,7 @@
       "version": 4.4
     }
   ],
-  "updated_at": "2024-07-14 14:32:15 UTC",
+  "updated_at": "2024-07-14 17:21:46 UTC",
   "version": 1,
   "hardware": {
     "cpus": 8,
