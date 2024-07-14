@@ -10,7 +10,11 @@ bin = @["hpx"]
 
 # Dependencies
 
+<<<<<<< Updated upstream
 requires "happyx >= 4.3 & < 4.4"
+=======
+requires "happyx >= 4.0 & < 4.1"
+>>>>>>> Stashed changes
 requires "cligen"
 requires "checksums"
 requires "regex"
