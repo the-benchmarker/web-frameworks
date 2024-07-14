@@ -13,6 +13,7 @@ const app  = wrap()()
     f: ctx => ctx.param
   })
   .stdPetition({
+    method: 'POST',
     path: '/user',
     f: () => null
   })

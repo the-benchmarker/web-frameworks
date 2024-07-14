@@ -13,6 +13,7 @@ const app  = wrap()()
     f: ctx => ctx.param
   })
   .stdPetition({
+    method: 'POST',
     path: '/user',
     f: () => null
   })
@@ -20,6 +21,6 @@ const app  = wrap()()
 
 export default { 
     port: 3000,
-    fetch: app.fetch,
+    fetch: app,
     reusePort: true
   }
