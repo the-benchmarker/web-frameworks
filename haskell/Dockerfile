@@ -1,4 +1,4 @@
-FROM haskell:9.6-slim
+FROM haskell:9.8-slim
 
 WORKDIR /usr/src/app
 
