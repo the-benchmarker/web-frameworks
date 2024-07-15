@@ -16,6 +16,22 @@ class ::Hash
   end
 end
 
+def architecture
+  if RUBY_PLATFORM.start_with?('aarch64')
+    'arm64'
+  else
+    'amd64'
+  end
+end
+
+def arch
+  if RUBY_PLATFORM.start_with?('aarch64')
+    'aarch64'
+  else
+    'x86_64'
+  end
+end
+
 def get_config_from(directory, engines_as_list: true)
   main_config = YAML.safe_load(File.open(File.join(directory, "..", "..", "config.yaml")))
 
@@ -93,7 +109,7 @@ def commands_for(language, framework, variant, provider = "docker")
   language_config = YAML.safe_load(File.open(File.join(directory, language, "config.yaml")))
   framework_config = YAML.safe_load(File.open(File.join(directory, language, framework, "config.yaml")))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-  options = { language: language, framework: framework, variant: variant,
+  options = { language: language, framework: framework, variant: variant, arch:, architecture:, 
               manifest: "#{MANIFESTS[:container]}.#{variant}" }
   commands = { build: [], collect: [], clean: [] }
   

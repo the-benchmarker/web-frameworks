@@ -12,6 +12,11 @@ language:
     turbo:
       environment:
         NODE_ENV: production
+      deps:
+        - python3
+        - make
+        - gcc
+        - g++
       bootstrap:
         - npm install
       command: node app.js

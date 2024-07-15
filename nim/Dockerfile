@@ -1,9 +1,9 @@
-FROM nimlang/nim:2.0.6
+FROM akito13/nim:2.0.8-alpine
 
-RUN apt-get -qq update
+RUN apk update
 
 {{#deps}}
-  RUN apt-get -qy install --no-install-recommends {{{.}}}
+  RUN apk add {{{.}}}
 {{/deps}}
 
 ## set working directory
@@ -43,15 +43,13 @@ ENV PATH $PATH:/root/.nimble/bin
     server.nim
 {{/build_command}}
 
-FROM debian:stable
+FROM alpine:latest
 
 WORKDIR /usr/src/app
 
-RUN apt-get -qq update
+RUN apk update
 
-RUN apt-get -qy install --no-install-recommends \
-    libssl-dev \
-    libpcre3-dev
+RUN apk add openssl-dev pcre-dev
 
 {{#custom_files}}
   COPY --from=0 /usr/src/app/{{{.}}} /usr/src/app/{{{.}}}

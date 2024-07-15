@@ -11,9 +11,11 @@ WORKDIR /go/src/app
   RUN apk add {{{.}}}
 {{/build_deps}}
 
+ARG ARCHITECTURE=amd64
+
 ENV CGO_ENABLED=0
 ENV GOOS=linux
-ENV GOARCH=amd64
+ENV GOARCH=$ARCHITECTURE
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
