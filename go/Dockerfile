@@ -16,6 +16,7 @@ ARG ARCHITECTURE=amd64
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV GOARCH=$ARCHITECTURE
+ENV GOAMD64=v3
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
