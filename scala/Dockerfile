@@ -8,7 +8,7 @@ COPY '{{source}}' '{{target}}'
 
 RUN sbt universal:packageZipTarball
 
-FROM eclipse-temurin:21.0.3_9-jre-jammy
+FROM eclipse-temurin:21.0.4_7-jre-jammy
 
 WORKDIR /usr/src/app
 
