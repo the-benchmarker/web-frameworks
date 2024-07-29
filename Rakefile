@@ -109,7 +109,7 @@ def commands_for(language, framework, variant, provider = "docker")
   language_config = YAML.safe_load(File.open(File.join(directory, language, "config.yaml")))
   framework_config = YAML.safe_load(File.open(File.join(directory, language, framework, "config.yaml")))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-  options = { language: language, framework: framework, variant: variant, arch:, architecture:, 
+  options = { language: language, framework: framework, variant: variant,
               manifest: "#{MANIFESTS[:container]}.#{variant}" }
   commands = { build: [], collect: [], clean: [] }
   
@@ -200,9 +200,18 @@ compiler = config.dig('language','compiler')
   end
 
   template = File.read(path)
-  File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config.merge("files" => files, "static_files" => static_files, "environment" => config["environment"]&.map do |k, v|
+  File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config.merge(template_variables).merge(template_conditions).merge("files" => files, "static_files" => static_files, "environment" => config["environment"]&.map do |k, v|
                                                                                                      "#{k}=#{v}"
                                                                                                    end)))
+end
+
+# This method returns a hash with variables usable in dockerfiles
+def template_variables
+  { arch:, architecture: }
+end
+
+def template_conditions
+  template_variables.flat_map {|k,v| ["if.#{k}.#{v}" => true]}.reduce({}, :merge)
 end
 
 desc "Create Dockerfiles"
