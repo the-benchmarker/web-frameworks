@@ -202,9 +202,7 @@ compiler = config.dig('language','compiler')
   template = File.read(path)
   config.merge!(template_variables).merge!({if: template_conditions}).merge!(files:, static_files:, environment: config["environment"]&.map do |k, v|
     "#{k}=#{v}"
-  end).transform_keys!(&:to_s)
-  pp config
-  pp Mustache.render(template, config)
+  end)
   File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config))
 end
 
@@ -219,7 +217,7 @@ end
 
 desc "Create Dockerfiles"
 task :config do
-  Dir.glob("go/*/config.yaml").each do |path|
+  Dir.glob("*/*/config.yaml").each do |path|
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
 
