@@ -200,9 +200,12 @@ compiler = config.dig('language','compiler')
   end
 
   template = File.read(path)
-  File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config.merge(template_variables).merge(template_conditions).merge("files" => files, "static_files" => static_files, "environment" => config["environment"]&.map do |k, v|
-                                                                                                     "#{k}=#{v}"
-                                                                                                   end)))
+  config.merge!(template_variables).merge!({if: template_conditions}).merge!(files:, static_files:, environment: config["environment"]&.map do |k, v|
+    "#{k}=#{v}"
+  end).transform_keys!(&:to_s)
+  pp config
+  pp Mustache.render(template, config)
+  File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config))
 end
 
 # This method returns a hash with variables usable in dockerfiles
@@ -211,12 +214,12 @@ def template_variables
 end
 
 def template_conditions
-  template_variables.flat_map {|k,v| ["if.#{k}.#{v}" => true]}.reduce({}, :merge)
+   template_variables.flat_map{|k,v| {k.to_s => {v => true}}}.reduce(:merge)
 end
 
 desc "Create Dockerfiles"
 task :config do
-  Dir.glob("*/*/config.yaml").each do |path|
+  Dir.glob("go/*/config.yaml").each do |path|
     directory = File.dirname(path)
     config = get_config_from(directory, engines_as_list: false)
 

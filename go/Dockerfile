@@ -1,9 +1,4 @@
-{{#language.version}}
-FROM golang:{{{.}}}
-{{/language.version}}
-{{^language.version}}
-FROM golang:1.22
-{{/language.version}}
+FROM golang:1.23-rc
 
 WORKDIR /go/src/app
 
@@ -11,13 +6,22 @@ WORKDIR /go/src/app
   RUN apk add {{{.}}}
 {{/build_deps}}
 
-ARG ARCHITECTURE=amd64
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
-ENV GOARCH=$ARCHITECTURE
-ENV GOAMD64=v3
-ENV GOARM64=v8.5
+ENV GOARCH={{#arch}}{{{.}}}{{/arch}}
+
+{{#if.architecture.amd64}}
+  # This compile with v3 micoarchitecture
+  # See https://en.wikipedia.org/wiki/X86-64#Microarchitecture_levels 
+  ENV GOAMD64=v3
+{{/if.architecture.amd64}}
+
+{{#if.architecture.arm64}}
+  # Use arm 8.5 instrctions set
+  # See https://en.wikipedia.org/wiki/Apple_M1
+  ENV GOARM64=v8.5
+{{/if.architecture.arm64}}
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
