@@ -1,6 +1,6 @@
 import { App } from 'uWebSockets.js';
 
-// Create a new instance of HyperExpress HTTP
+// Create a new instance of uWebSockets.js HTTP
 const port = 3000;
 const app = App();
 

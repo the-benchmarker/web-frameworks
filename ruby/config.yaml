@@ -16,6 +16,8 @@ language:
       command: bundle exec iodine -p 3000 -w $(nproc)
     agoo:
       command: bundler exec ruby app.rb
+    rage:
+      command: bundle exec rage s -p 3000 -b 0.0.0.0
 
 framework:
   engines:

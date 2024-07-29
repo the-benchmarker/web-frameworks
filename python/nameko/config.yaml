@@ -7,11 +7,10 @@ framework:
 
   files:
     - "**/*.py"
-    - requirements.txt
+    - pyproject.toml
     - nameko.yaml
 
 language:
-  version: 3.11
   engines:
     nameko:
       command: nameko run server --config nameko.yaml

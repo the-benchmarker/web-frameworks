@@ -4,8 +4,8 @@ using Simplify.Web.Attributes;
 namespace web.Controllers
 {
 	[Post("/user")]
-	public class UserController : Controller
+	public class UserController : Controller2
 	{
-		public override ControllerResponse Invoke() => StatusCode(200);
+		public ControllerResponse Invoke() => StatusCode(200);
 	}
 }

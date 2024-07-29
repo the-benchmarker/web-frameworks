@@ -34,8 +34,10 @@ language:
       command: ./rr serve
     swoole:
       extensions:
-        - swoole
+        - swoole/5.1.3
       command: php public/index.php
+      build_deps:
+        - libbrotli-dev
     reactphp:
       deps:
         - libevent-dev

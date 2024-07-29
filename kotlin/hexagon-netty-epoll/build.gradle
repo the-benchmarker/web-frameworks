@@ -1,13 +1,13 @@
 
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.9.+"
+    id "org.jetbrains.kotlin.jvm" version "2.0.+"
 }
 
 ext {
-    hexagonVersion = "3.4.7"
+    hexagonVersion = "3.6.0"
     nettyVersion = "4.1.+"
 
-    gradleScripts = "https://raw.githubusercontent.com/hexagonkt/hexagon/$hexagonVersion/gradle"
+    gradleScripts = "https://raw.githubusercontent.com/hexagontk/hexagon/$hexagonVersion/gradle"
 }
 
 apply(from: "$gradleScripts/kotlin.gradle")
@@ -27,7 +27,7 @@ application {
 
 dependencies {
     implementation("com.hexagonkt:http_server_netty_epoll:$hexagonVersion")
-    implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-x86_64")
+    implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-aarch_64")
 }
 
 jarAll {

@@ -5,6 +5,7 @@ framework:
   engines:
     - gunicorn
     - uwsgi
+    - granian
     - uvicorn
     - hypercorn
     - daphne
@@ -12,22 +13,21 @@ framework:
 language:
   engines:
     gunicorn:
-      command: >
-        gunicorn --log-level warning  \
-          --bind 0.0.0.0:3000  \
-          --reuse-port  \
-          --workers $(nproc) \
-          app.wsgi
+      environment:
+        PYTHON_APP: app.wsgi:application
     uwsgi:
-      command: >
-        uwsgi --module=app.wsgi:application  \
-          --http=0.0.0.0:3000 \      
-          --processes=$(nproc)
+      environment:
+        PYTHON_APP: app.wsgi:application
+    granian:
+      environment:
+        INTERFACE: wsgi
+        PYTHON_APP: app.wsgi:application
     daphne:
-      command: daphne -b 0.0.0.0 -p 3000 app.asgi:application
+      environment:
+        PYTHON_APP: app.asgi:application
     uvicorn:
-      command: >
-        uvicorn --host 0.0.0.0 --port 3000 \
-          --workers $(nproc) app.asgi:application
+      environment:
+        PYTHON_APP: app.asgi:application
     hypercorn:
-      command: hypercorn --bind 0.0.0.0:3000 --workers $(nproc) app.asgi:application
+      environment:
+        PYTHON_APP: app.asgi:application

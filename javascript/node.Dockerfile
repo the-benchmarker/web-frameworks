@@ -8,9 +8,13 @@ RUN apt-get -qq update
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-{{#deps}}
-  RUN apt-get -qy install {{{.}}}
-{{/deps}}
+{{#deps.length}}
+  ARG DEBIAN_FRONTEND=noninteractive
+  RUN apt-get -qq update
+  {{#deps}}
+    RUN apt-get -qy install {{{.}}}
+  {{/deps}}
+{{/deps.length}}
 
 {{#bootstrap}}
   RUN {{{.}}}

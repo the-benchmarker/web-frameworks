@@ -1,4 +1,4 @@
-FROM crystallang/crystal:1.11
+FROM 84codes/crystal:1.13.1-debian-bookworm
 
 WORKDIR /usr/src/app
 

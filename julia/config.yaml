@@ -6,7 +6,7 @@ language:
     - Project.toml
   engines:
     default:
-      command: julia server.jl
+      command: julia -t auto server.jl
 
 framework:
   engines:

@@ -1,13 +1,9 @@
 {
   "name": "server",
   "dependencies": {
-    "arsd-official:cgi": "~>11.3.0"
+    "arsd-official:cgi": "~>11.4.2"
   },
-  "dflags-ldc": [
-    "-mcpu=native",
-    "-flto=thin",
-    "-flto-binary=/usr/lib/LLVMgold.so"
-  ],
+  "dflags-ldc": ["-mcpu=native"],
   "subConfigurations": { "arsd-official:cgi": "embedded_httpd_hybrid" },
   "license": "MIT"
 }

@@ -3,7 +3,7 @@
 {{/image}}
 
 {{^image}}
-  FROM clojure:temurin-21-tools-deps-jammy
+  FROM clojure:tools-deps-bookworm-slim
 {{/image}}
 
 WORKDIR /usr/src/app
@@ -20,7 +20,7 @@ WORKDIR /usr/src/app
   RUN clojure -Auberjar
 {{/build}}
 
-FROM eclipse-temurin:21.0.2_13-jre
+FROM eclipse-temurin:21.0.4_7-jre
 
 WORKDIR /opt/bin
 

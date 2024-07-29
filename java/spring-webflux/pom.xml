@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>[3.2,3.3)</version>
+		<version>[3.3,3.4)</version>
 		<relativePath/>
 	</parent>
 	<groupId>framework</groupId>
@@ -14,7 +14,7 @@
 	<name>benchmark-webflux</name>
 	<description>Benchmark for Spring WebFlux</description>
 	<properties>
-		<java.version>21</java.version>
+		<maven.compiler.release>21</maven.compiler.release>
 	</properties>
 	<dependencies>
 		<dependency>

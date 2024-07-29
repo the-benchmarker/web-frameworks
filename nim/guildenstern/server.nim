@@ -1,6 +1,6 @@
-import guildenstern/[ctxheader], uri
+import guildenstern/[dispatcher, httpserver]
 
-proc handleGet(ctx: HttpCtx) =
+proc handleGet(ctx: HttpContext) =
   if ctx.isUri("/") or not ctx.isMethod("GET"): ctx.reply(Http200)
   else:
     let id = ctx.getUri()[6 .. ^1]

@@ -4,8 +4,8 @@ using Simplify.Web.Attributes;
 namespace web.Controllers
 {
 	[Get("/user/{id}")]
-	public class UserIdController : Controller
+	public class UserIdController : Controller2
 	{
-		public override ControllerResponse Invoke() => Content(RouteParameters.id);
+		public ControllerResponse Invoke(string id) => Content(id);
 	}
 }

@@ -15,10 +15,9 @@
     <!-- Startup class -->
     <application.class>benchmark.App</application.class>
 
-    <jooby.version>3.0.8</jooby.version>
+    <jooby.version>[3.2.0,3.3.0)</jooby.version>
 
-    <maven.compiler.source>21</maven.compiler.source>
-    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.release>21</maven.compiler.release>
     <maven.compiler.parameters>true</maven.compiler.parameters>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -35,7 +34,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.5.2</version>
+        <version>3.6.0</version>
         <executions>
           <execution>
             <id>uber-jar</id>

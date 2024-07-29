@@ -29,6 +29,6 @@ WORKDIR /usr/src/app
   ENV {{{.}}}
 {{/environment}}
 
-RUN pip install -r requirements.txt
+RUN pip install .
 
 CMD {{command}}

@@ -1,10 +1,15 @@
-{{#image}}
-  FROM {{{.}}} AS build
-{{/image}}
 
-{{^image}}
-  FROM maven:3-eclipse-temurin-21 AS build
-{{/image}}
+{{#language.compiler.gradle}}
+  FROM gradle:jdk21-jammy AS build
+{{/language.compiler.gradle}}
+{{#language.compiler.maven}}
+  {{#language.version}}
+    FROM maven:3-eclipse-temurin-{{{.}}} AS build
+  {{/language.version}}
+  {{^language.version}}
+    FROM maven:3-eclipse-temurin-21 AS build
+  {{/language.version}}
+{{/language.compiler.maven}}
 
 WORKDIR /usr/src/web
 
@@ -29,7 +34,7 @@ WORKDIR /usr/src/web
   FROM eclipse-temurin:{{{.}}}-jre
 {{/language.version}}
 {{^language.version}}
-  FROM eclipse-temurin:21.0.2_13-jre
+  FROM eclipse-temurin:21.0.4_7-jre
 {{/language.version}}
 
 

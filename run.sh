@@ -24,10 +24,10 @@ while read line ; do
   LANGUAGE=`echo $line | awk -F '/' '{print $(NF-2)}'`
   FRAMEWORK=`echo $line | awk -F '/' '{print $(NF-1)}'`
  # cd ${LANGUAGE}/${FRAMEWORK}
-  make -f ~/workspace/benchmark/web/${LANGUAGE}/${FRAMEWORK}/.Makefile build
+  make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile build
 #  cd ../..
-  make -f ~/workspace/benchmark/web/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
-  make -f ~/workspace/benchmark/web/${LANGUAGE}/${FRAMEWORK}/.Makefile clean
+  make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
+  make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile clean
   docker ps -aq | xargs --no-run-if-empty docker rm -f;
   docker images -aq | xargs --no-run-if-empty docker rmi -f;
   sudo docker system prune -a -f

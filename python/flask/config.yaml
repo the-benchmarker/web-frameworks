@@ -6,3 +6,10 @@ framework:
     - gunicorn
     - uwsgi
     - waitress
+    - granian
+
+language:
+  engines:
+    granian:
+      environment:
+        INTERFACE: wsgi

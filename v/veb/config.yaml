@@ -1,0 +1,5 @@
+framework:
+  github: vlang/v
+
+  build_deps:
+    - libatomic1

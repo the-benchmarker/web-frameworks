@@ -4,7 +4,6 @@ framework:
 
   engines:
     - gunicorn
-    - wsgiref
     - bjoern
     - cheroot
     - waitress
@@ -12,8 +11,6 @@ framework:
 
 language:
   engines:
-    wsgiref:
-      command: python server.py 3000
     bjoern:
       bootstrap:
         - pip install bjoern

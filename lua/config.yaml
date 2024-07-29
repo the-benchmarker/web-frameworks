@@ -1,0 +1,12 @@
+language:
+  version: luajit-2.1
+  files:
+    - "*.lua"
+
+  engines:
+    default:
+      command: luajit server.lua
+
+framework:
+  engines:
+    - default
