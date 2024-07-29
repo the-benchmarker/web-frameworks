@@ -1,7 +1,5 @@
 <?php
 
-define('WWW', basename(__DIR__) . '/');
-define('DIR', dirname(__DIR__));
-chdir(DIR);
-require 'main/conf.php';
+define('START_TS', microtime(true));
+require __DIR__ . '/../bootstrap.php';
 new HEAVEN;
