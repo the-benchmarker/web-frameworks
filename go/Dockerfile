@@ -9,7 +9,7 @@ WORKDIR /go/src/app
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
-ENV GOARCH={{#arch}}{{{.}}}{{/arch}}
+ENV GOARCH={{#architecture}}{{{.}}}{{/architecture}}
 
 {{#if.architecture.amd64}}
   # This compile with v3 micoarchitecture
@@ -20,7 +20,7 @@ ENV GOARCH={{#arch}}{{{.}}}{{/arch}}
 {{#if.architecture.arm64}}
   # Use arm 8.5 instrctions set
   # See https://en.wikipedia.org/wiki/Apple_M1
-  ENV GOARM64=v8.5
+  ²
 {{/if.architecture.arm64}}
 
 {{#files}}
