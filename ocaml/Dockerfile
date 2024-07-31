@@ -11,4 +11,6 @@ WORKDIR /usr/src/app
 {{/bootstrap}}
 
 
-{{#command}}{{{.}}}{{/command}}
+{{#command}}
+  CMD {{{.}}}
+{{/command}}
