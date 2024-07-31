@@ -9,5 +9,5 @@ let user _request = Dream.html ""
 
 let () =
   let open Dream in
-  run ~port:3000
+  run ~interface:"0.0.0.0" ~port:3000
   @@ router [ get "/" index; get "/user/:id" user_info; post "/user" user ]
