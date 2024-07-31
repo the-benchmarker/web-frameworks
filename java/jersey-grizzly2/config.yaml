@@ -1,6 +1,6 @@
 framework:
   website: eclipse-ee4j.github.io/jersey
-  version: 2.43
+  version: 2.44
 
   build:
     - mvn package
