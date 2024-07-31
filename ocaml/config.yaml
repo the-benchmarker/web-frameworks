@@ -4,7 +4,6 @@ language:
   engines:
     default:
       bootstrap:
-      - opam switch create . 5.2.0 --yes
       - opam install --deps-only --yes .
       command: dune exec --root . ./server.exe
 
