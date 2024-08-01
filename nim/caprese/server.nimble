@@ -7,4 +7,4 @@ license = "MIT"
 
 # Dependencies
 
-requires "caprese"
+requires "caprese >= 0.1 & < 0.2"
