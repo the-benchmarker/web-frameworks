@@ -4,13 +4,13 @@ language:
   engines:
     default:
       bootstrap:
-      - opam install --deps-only --yes .
+        - opam install --deps-only --yes .
       command: dune exec --root . ./server.exe
 
 framework:
   engines:
     - default
-  
+
   files:
     - "**/*.opam"
     - "**/*.ml"
