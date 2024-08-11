@@ -35,3 +35,4 @@ framework:
   environment:
     RACK_ENV: production
     BUNDLE_WITHOUT: "development,test"
+    SECRET_KEY_BASE: Awe$ome_Secret.
