@@ -49,7 +49,7 @@ WORKDIR /opt/web
   COPY '{{source}}' '{{target}}'
 {{/static_files}}
 
-RUN  ln -sfv /usr/local/openjdk-{{#language.version}}{{{.}}}{{/language.version}}/bin/java /usr/bin/java
+RUN  ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
 
 {{#bootstrap}}
   RUN {{{.}}}
