@@ -7,6 +7,6 @@ public partial class UserController : CodeBehindController
         if (Section.Count() > 0)
             Write(Section.GetValue(0)); // path: /user/id
         else
-            Write("256"); // path: /user
+            Write(""); // path: /user
     }
 }
