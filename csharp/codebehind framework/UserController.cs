@@ -5,8 +5,12 @@ public partial class UserController : CodeBehindController
     public void PageLoad(HttpContext context)
     {
         if (Section.Count() > 0)
-            Write(Section.GetValue(0)); // path: /user/id
+        {
+            if (context.Request.Method == "GET")
+                Write(Section.GetValue(0)); // path: /user/id
+        }
         else
-            Write(""); // path: /user
+            if (context.Request.Method == "POST")
+                Write(""); // path: /user
     }
 }
