@@ -6,8 +6,7 @@ public partial class UserController : CodeBehindController
     {
         if (Section.Count() > 0)
         {
-            if (context.Request.Method == "GET" || string.IsNullOrEmpty(context.Request.Method))
-                Write(Section.GetValue(0)); // path: /user/id
+            Write(Section.GetValue(1)); // path: /user/id
         }
         else
             if (context.Request.Method == "POST")
