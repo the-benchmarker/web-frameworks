@@ -2,7 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 
-SetCodeBehind.CodeBehindCompiler.Initialization(true);
+SetCodeBehind.CodeBehindCompiler.Initialization();
 
 app.UseCodeBehind();
 
