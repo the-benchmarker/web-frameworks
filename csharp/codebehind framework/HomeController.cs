@@ -4,6 +4,7 @@ public partial class HomeController : CodeBehindController
 {
     public void PageLoad(HttpContext context)
     {
-        Write(""); // path: /
+        if (context.Request.Method == "GET")
+            Write(""); // path: /
     }
 }
