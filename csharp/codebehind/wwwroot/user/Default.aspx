@@ -1,3 +1,3 @@
 ﻿@page
-@controller UserController()
+@controller UserController
 @section
