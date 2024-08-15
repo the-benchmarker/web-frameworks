@@ -1,6 +1,6 @@
 using CodeBehind;
 
-public partial class UserController : CodeBehindController
+public partial class user : CodeBehindController
 {
     public void PageLoad(HttpContext context)
     {
