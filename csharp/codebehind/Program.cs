@@ -4,6 +4,6 @@ var app = builder.Build();
 
 SetCodeBehind.CodeBehindCompiler.Initialization();
 
-app.UseCodeBehind();
+app.UseCodeBehindRoute();
 
 app.Run();
