@@ -1,20 +1,21 @@
 from panther import Panther
 from panther.app import API
+from panther.response import PlainTextResponse
 
 
 @API(methods=['GET'])
 async def index():
-    return ''
+    return PlainTextResponse('')
 
 
 @API(methods=['GET'])
 async def get_user(id: str):
-    return id
+    return PlainTextResponse(id)
 
 
 @API(methods=['POST'])
 async def create_user() -> str:
-    return ''
+    return PlainTextResponse('')
 
 
 urls = {
