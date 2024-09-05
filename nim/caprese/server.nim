@@ -5,13 +5,14 @@ config:
   headerServer = true
   headerDate = true
   headerContentType = true
+  activeHeader = true
   connectionPreferred = InternalConnection
   postRequestMethod = true
 
 server(ip = "0.0.0.0", port = 3000):
   routes:
-    get "/": "".addActiveHeader("text").send
+    get "/": "".addHeader("text").send
     get "/user/:id": id.addHeader("text").send
-    post "/user": "".addActiveHeader("text").send
+    post "/user": "".addHeader("text").send
 
 serverStart()
