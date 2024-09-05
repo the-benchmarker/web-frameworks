@@ -4,3 +4,7 @@ framework:
 
   bootstrap:
     - mkdir -p tmp/pids
+
+  environment:
+    RAILS_ENV: production
+    RAILS_LOG_LEVEL: fatal
