@@ -3,7 +3,7 @@
 {{/language.version}}
 
 {{^language.version}}
-  FROM golang:1.23rc2
+  FROM golang:1.23
 {{/language.version}}
 
 WORKDIR /go/src/app
