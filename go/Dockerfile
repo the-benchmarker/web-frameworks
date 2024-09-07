@@ -26,7 +26,7 @@ ENV GOARCH={{#architecture}}{{{.}}}{{/architecture}}
 {{#if.architecture.arm64}}
   # Use arm 8.5 instrctions set
   # See https://en.wikipedia.org/wiki/Apple_M1
-  ²
+  ENV GOARM64=v8.5
 {{/if.architecture.arm64}}
 
 {{#files}}
