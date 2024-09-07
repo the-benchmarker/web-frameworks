@@ -109,7 +109,7 @@ def commands_for(language, framework, variant, provider = "docker")
   language_config = YAML.safe_load(File.open(File.join(directory, language, "config.yaml")))
   framework_config = YAML.safe_load(File.open(File.join(directory, language, framework, "config.yaml")))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-  options = { language: language, framework: framework, variant: variant}
+  options = { language: language, framework: framework, variant: variant,  manifest: "#{MANIFESTS[:container]}.#{variant}" }
   commands = { build: [], collect: [], clean: [] }
   
   # Compile first, only for non containers

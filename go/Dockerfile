@@ -8,11 +8,6 @@
 
 WORKDIR /go/src/app
 
-{{#build_deps}}
-  RUN apk add {{{.}}}
-{{/build_deps}}
-
-
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV GOARCH={{#architecture}}{{{.}}}{{/architecture}}
