@@ -109,8 +109,7 @@ def commands_for(language, framework, variant, provider = "docker")
   language_config = YAML.safe_load(File.open(File.join(directory, language, "config.yaml")))
   framework_config = YAML.safe_load(File.open(File.join(directory, language, framework, "config.yaml")))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-  options = { language: language, framework: framework, variant: variant,
-              manifest: "#{MANIFESTS[:container]}.#{variant}" }
+  options = { language: language, framework: framework, variant: variant}
   commands = { build: [], collect: [], clean: [] }
   
   # Compile first, only for non containers
@@ -259,7 +258,7 @@ end
 
 desc "Clean unused file"
 task :clean do
-  Dir.glob("*/*/.gitignore").each do |ignore_file|
+  Dir.glob("d/serverino/.gitignore").each do |ignore_file|
     directory = File.dirname(ignore_file)
 
     File.foreach(ignore_file) do |line|

@@ -1,4 +1,4 @@
-FROM sbtscala/scala-sbt:eclipse-temurin-alpine-22_36_1.10.0_3.4.2 AS build
+FROM sbtscala/scala-sbt:eclipse-temurin-alpine-22_36_1.10.1_3.5.0 AS build
 
 WORKDIR /usr/src/app
 
