@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: db
+    image: nouchka/sqlite3
+    volumes:
+      - ./db/database.db:/root/db/database.db
+
+#volumes:
+#  db:
+#    driver: local
