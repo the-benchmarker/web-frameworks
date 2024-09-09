@@ -7,4 +7,4 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["hug>=2.6,<2.7"]
+dependencies = ["hug>=2.6,<2.7",'setuptools']
