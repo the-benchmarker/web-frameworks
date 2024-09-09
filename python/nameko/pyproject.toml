@@ -7,5 +7,5 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["nameko>=2.14,<2.15"]
+dependencies = ["nameko>=2.14,<2.15",'setuptools']
 
