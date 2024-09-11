@@ -1,8 +1,8 @@
 framework:
   github: mario-huang/durian.js
   version: 1.0.0
+  engines:
+    - bun
 
   bootstrap:
     - bun install
-
-  command: bun run start
