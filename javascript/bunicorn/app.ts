@@ -1,6 +1,6 @@
 import { RouteBuilder, BunicornApp } from "@bunicorn/server";
 
-const app = new BunicornApp({ basePath: "/" });
+const app = new BunicornApp();
 const rb = new RouteBuilder();
 app.addRoutes([
   rb.get("/", (ctx) => ctx.ok()),
@@ -8,8 +8,7 @@ app.addRoutes([
   rb.post("/user", (ctx) => ctx.ok()),
 ]);
 
-Bun.serve({
-  fetch: app.handleRequest,
-  reusePort: true,
-  port: 3000
+app.serve({
+  port: 3000,
+	reusePort: true
 })
