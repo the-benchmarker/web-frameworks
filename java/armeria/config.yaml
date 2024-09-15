@@ -1,6 +1,6 @@
 framework:
   website: armeria.dev
-  version: 1.29
+  version: "1.30"
 
   build:
     - mvn package
