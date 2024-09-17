@@ -46,10 +46,9 @@ language:
       environment:
         NODE_ENV: production
       bootstrap:
-        - npm install -g bun
-        - bun add -g pm2
+        - npm install -g pm2 bun
         - bun install
-      command: pm2-runtime start src/app.ts --interpreter ~/.bun/bin/bun -i max
+      command: pm2-runtime start src/app.ts --interpreter /usr/local/bin/bun -i max
 
 framework:
   engines:
