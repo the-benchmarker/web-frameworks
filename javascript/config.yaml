@@ -47,7 +47,7 @@ language:
         NODE_ENV: production
       bootstrap:
         - npm install -g bun
-        - npm install -g pm2
+        - bun add -g pm2
         - bun install
       command: pm2-runtime start src/app.ts --interpreter ~/.bun/bin/bun -i max
 
