@@ -1,6 +1,6 @@
 framework:
   website: helidon.io
-  version: 4.0
+  version: 4.1
 
   build:
     - mvn clean install -Pjlink-image
