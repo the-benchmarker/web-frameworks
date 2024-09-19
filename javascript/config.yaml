@@ -48,7 +48,7 @@ language:
       bootstrap:
         - npm install -g pm2 bun
         - bun install
-      command: pm2-runtime start src/app.ts --interpreter /usr/local/bin/bun -i max
+      command: pm2-runtime start app.ts --interpreter /usr/local/bin/bun -i max
 
 framework:
   engines:
