@@ -9,7 +9,6 @@ installExt = @["nim"]
 bin = @["hpx"]
 
 # Dependencies
-
 requires "happyx >= 4.5 & < 4.6"
 requires "cligen"
 requires "checksums"
