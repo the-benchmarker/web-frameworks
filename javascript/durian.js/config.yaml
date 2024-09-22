@@ -2,4 +2,7 @@ framework:
   github: mario-huang/durian.js
   version: 1.0
   engines:
-    - durian.js
+    - bun
+
+  bootstrap:
+    - bun install
