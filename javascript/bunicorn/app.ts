@@ -1,7 +1,7 @@
-import { RouteBuilder, BunicornApp } from "@bunicorn/server";
+import { Router, BunicornApp } from "@bunicorn/server";
 
 const app = new BunicornApp();
-const rb = new RouteBuilder();
+const rb = new Router();
 app.addRoutes([
   rb.get("/", (ctx) => ctx.ok()),
   rb.get("/user/:id", (ctx) => ctx.raw(ctx.params.id)),

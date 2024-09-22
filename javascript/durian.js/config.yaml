@@ -3,6 +3,5 @@ framework:
   version: 1.0
   engines:
     - bun
-
   bootstrap:
     - bun install
