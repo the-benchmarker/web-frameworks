@@ -1,18 +1,17 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "server",
-    products: [
-        .executable(name: "server", targets: ["server"])
-    ],
+    platforms: [.macOS(.v14)], // This is for development on macOS
     dependencies: [
-        .package(url: "https://github.com/hummingbird-project/hummingbird.git", .upToNextMinor(from: "1.0.0")),
+        .package(url: "https://github.com/hummingbird-project/hummingbird.git", .upToNextMinor(from: "2.0.0")),
     ],
     targets: [
-        .target(name: "server",
+        .executableTarget(
+            name: "server",
             dependencies: [
                 .product(name: "Hummingbird", package: "hummingbird"),
             ],
