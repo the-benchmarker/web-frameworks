@@ -1,0 +1,5 @@
+framework:
+  github: zenywallet/caprese
+  version: 0.1
+  build_with:
+    - "NOSSL=1 nimble install -y"

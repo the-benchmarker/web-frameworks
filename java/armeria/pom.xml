@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>21</java.version>
         <maven.compiler.release>21</maven.compiler.release>
-        <armeria.version>[1.29,1.30)</armeria.version>
+        <armeria.version>[1.30,1.31)</armeria.version>
         <slf4j.version>[1.7,)</slf4j.version>
     </properties>
 

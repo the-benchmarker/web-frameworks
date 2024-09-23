@@ -32,7 +32,7 @@ service: |
 providers:
   docker:
     build:
-      - cd {{{language}}}/{{{framework}}} && docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}}.{{{variant}}} --build-arg ARCHITECTURE={{{architecture}}} --build-arg ARCH={{{arch}}} . && cd -
+      - cd {{{language}}}/{{{framework}}} && docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}}.{{{variant}}} . && cd -
 
     metadata:
       - docker run -td {{{language}}}.{{{framework}}}.{{{variant}}} > {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt

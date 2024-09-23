@@ -12,6 +12,6 @@ FROM debian:stable-slim
 
 WORKDIR /opt/web
 
-COPY --from=0 /usr/src/app/.stack-work/dist/aarch64-linux-tinfo6-libc6-pre232/ghc-9.6.6/build/server/server server
+COPY --from=0 /usr/src/app/.stack-work/dist/aarch64-linux/ghc-9.6.6/build/server/server server
 
-CMD {{command}}
+CMD {{#command}}{{{.}}}{{/command}}

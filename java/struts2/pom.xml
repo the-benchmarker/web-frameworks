@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jetty.version>9.4.55.v20240627</jetty.version>
+        <jetty.version>9.4.56.v20240826</jetty.version>
         <jetty-jsp.version>9.2.30.v20200428</jetty-jsp.version>
         <glassfish.el.version>3.0.1-b12</glassfish.el.version>
         <maven.compiler.release>21</maven.compiler.release>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-core</artifactId>
-            <version>[6.4,6.5)</version>
+            <version>[6.6,6.7)</version>
         </dependency>
 
         <dependency>

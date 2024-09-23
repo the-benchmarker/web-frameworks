@@ -42,6 +42,13 @@ language:
       bootstrap:
         - npm install
       command: node app.js
+    durian.js:
+      environment:
+        NODE_ENV: production
+      bootstrap:
+        - npm install -g pm2 bun
+        - bun install
+      command: pm2-runtime start app.ts --interpreter /usr/local/bin/bun -i max
 
 framework:
   engines:

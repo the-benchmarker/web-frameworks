@@ -6,7 +6,7 @@ core:
     DEV: false
     DEBUG: 0
     _PUBLIC: benchmarker.coresky
-    DEFAULT_LG: ''
+    DEFAULT_LG: ""
 
   ini_set:
     log_errors: 0

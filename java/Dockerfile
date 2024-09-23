@@ -40,9 +40,6 @@ WORKDIR /usr/src/web
 
 WORKDIR /opt/web
 
-{{#fix}}
-  RUN {{{.}}}
-{{/fix}}
 
 {{#binaries}}
   COPY --from=build /usr/src/web/{{{.}}} {{{.}}}
@@ -52,7 +49,7 @@ WORKDIR /opt/web
   COPY '{{source}}' '{{target}}'
 {{/static_files}}
 
-RUN ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
+RUN  ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
 
 {{#bootstrap}}
   RUN {{{.}}}
