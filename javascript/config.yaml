@@ -36,19 +36,12 @@ language:
       bootstrap:
         - npm --location=global install pm2
       command: nohup pm2-runtime start "deno run --allow-net --allow-read=. app.ts" -i max
-    bun:
-      command: bun run cluster.ts
     happyx:
       bootstrap:
         - npm install
       command: node app.js
-    durian.js:
-      environment:
-        NODE_ENV: production
-      bootstrap:
-        - npm install -g pm2 bun
-        - bun install
-      command: pm2-runtime start app.ts --interpreter /usr/local/bin/bun -i max
+    bun:
+      command: bun run cluster.ts
 
 framework:
   engines:
