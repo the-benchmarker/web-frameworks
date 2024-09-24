@@ -13,7 +13,7 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Component
-public class BenchmarkRouter {
+public class BenchmarkController {
 
     private static final Mono<ServerResponse> EMPTY_RESPONSE = ServerResponse.ok().build();
 
