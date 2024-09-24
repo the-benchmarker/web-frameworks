@@ -15,28 +15,14 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Component
 public class BenchmarkRouter {
 
-    private static final Mono<ServerResponse> EMPTY_RESPONSE = ServerResponse.ok()
-            .contentType(MediaType.TEXT_PLAIN)
-            .body(Mono.empty(), String.class);
+    private static final Mono<ServerResponse> EMPTY_RESPONSE = ServerResponse.ok().build();
 
     @Bean
     public RouterFunction<ServerResponse> routes() {
-        return route(GET("/"), this::root)
-                .andRoute(GET("/user/{id}"), this::userId)
-                .andRoute(POST("/user"), this::user);
-    }
-
-    // Reuse empty response to avoid constant re-creation
-    public Mono<ServerResponse> root(ServerRequest request) {
-        return EMPTY_RESPONSE;
-    }
-
-    public Mono<ServerResponse> userId(ServerRequest request) {
-        // Directly parse the id from path variable without extra boxing/unboxing
-        return ServerResponse.ok().bodyValue(Integer.parseInt(request.pathVariable("id")));
-    }
-
-    public Mono<ServerResponse> user(ServerRequest request) {
-        return EMPTY_RESPONSE;
+        return route()
+                .GET("/", request -> EMPTY_RESPONSE)
+                .GET("/user/{id}", request -> ServerResponse.ok().bodyValue(request.pathVariable("id")))
+                .POST("/user", request -> EMPTY_RESPONSE)
+                .build();
     }
 }
