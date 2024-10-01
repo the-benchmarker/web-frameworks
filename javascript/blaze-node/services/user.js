@@ -2,7 +2,7 @@ import { BlazeCreator } from '@busy-hour/blaze';
 
 const find = BlazeCreator.action({
   rest: 'GET /:id',
-  handler(ctx) {
+  async handler(ctx) {
     ctx.response = 'text';
 
     return ctx.request.params?.id;
@@ -11,7 +11,7 @@ const find = BlazeCreator.action({
 
 const create = BlazeCreator.action({
   rest: 'POST /',
-  handler(ctx) {
+  async handler(ctx) {
     ctx.response = 'text';
 
     return '';

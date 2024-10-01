@@ -12,9 +12,11 @@ jobs:
           fetch-depth: 0
       - id: file_changes
         uses: trilom/file-changes-action@v1.2.4
+        steps:
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0
+          ruby-version: "3.3"
           bundler-cache: true
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
@@ -29,7 +31,7 @@ jobs:
   test:
     needs: matrix
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: false
