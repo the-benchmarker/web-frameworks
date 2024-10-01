@@ -1,13 +1,13 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { Blaze } from '@busy-hour/blaze';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import coreService from './services/core';
+import userService from './services/user';
 
-const app = new Blaze({
+const app = new Blaze();
+
+app.import({
   autoStart: true,
-  path: path.resolve(__dirname, 'services'),
+  services: [coreService, userService],
 });
 
 Bun.serve({
