@@ -16,12 +16,10 @@ public class BenchmarkController {
 
     private static final CacheControl MAX_AGE_15_SECONDS = CacheControl.maxAge(Duration.ofSeconds(15));
     private static final Mono<ServerResponse> EMPTY_RESPONSE = ServerResponse.ok()
+            .contentType(MediaType.TEXT_PLAIN)
             .cacheControl(MAX_AGE_15_SECONDS)
-            .headers(h -> {
-                h.remove(HttpHeaders.DATE);
-                h.remove(HttpHeaders.SERVER);
-            })
-            .build();
+            .headers(h -> h.remove(HttpHeaders.SERVER))
+            .build().share().cache(Duration.ofSeconds(15));
 
 
     @Bean
@@ -29,12 +27,12 @@ public class BenchmarkController {
         return route()
                 .GET("/", request -> EMPTY_RESPONSE)
                 .GET("/user/{id}", request -> ServerResponse.ok()
+                        .contentType(MediaType.TEXT_PLAIN)
                         .cacheControl(MAX_AGE_15_SECONDS)
-                        .headers(h -> {
-                            h.remove(HttpHeaders.DATE);
-                            h.remove(HttpHeaders.SERVER);
-                        }).bodyValue(request.pathVariable("id")))
+                        .headers(h -> h.remove(HttpHeaders.SERVER))
+                        .bodyValue(request.pathVariable("id")))
                 .POST("/user", request -> EMPTY_RESPONSE)
                 .build();
     }
+
 }
