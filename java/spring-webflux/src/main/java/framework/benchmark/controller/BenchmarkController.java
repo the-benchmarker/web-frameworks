@@ -14,15 +14,13 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Component
 public class BenchmarkController {
 
-    private static final CacheControl MAX_AGE_15_SECONDS = CacheControl.maxAge(Duration.ofSeconds(15));
     private static final Mono<ServerResponse> EMPTY_RESPONSE = ServerResponse.ok()
             .contentType(MediaType.TEXT_PLAIN)
-            .cacheControl(MAX_AGE_15_SECONDS)
             .headers(h -> {
                 h.remove(HttpHeaders.SERVER);
                 h.remove(HttpHeaders.CONNECTION);
             })
-            .build().share().cache(Duration.ofSeconds(15));
+            .build().share();
 
 
     @Bean
@@ -31,7 +29,6 @@ public class BenchmarkController {
                 .GET("/", request -> EMPTY_RESPONSE)
                 .GET("/user/{id}", request -> ServerResponse.ok()
                         .contentType(MediaType.TEXT_PLAIN)
-                        .cacheControl(MAX_AGE_15_SECONDS)
                         .headers(h -> {
                             h.remove(HttpHeaders.SERVER);
                             h.remove(HttpHeaders.CONNECTION);
