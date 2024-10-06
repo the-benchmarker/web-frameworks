@@ -4,7 +4,7 @@ import { bootstrap } from './src/app';
 
 if (cluster.isPrimary) {
   console.log(`Master ${process.pid} is running`);
-  for (let i = 0; i < os.cpus().length; i++) {
+  for (let i = 0; i < os.availableParallelism(); i++) {
     cluster.fork();
   }
   cluster.on('exit', (worker, code, signal) => {
