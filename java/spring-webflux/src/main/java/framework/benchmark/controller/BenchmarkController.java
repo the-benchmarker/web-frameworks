@@ -13,27 +13,12 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Component
 public class BenchmarkController {
 
-    private static final Mono<ServerResponse> EMPTY_RESPONSE = ServerResponse.ok()
-            .contentType(MediaType.TEXT_PLAIN)
-            .headers(h -> {
-                h.remove(HttpHeaders.SERVER);
-                h.remove(HttpHeaders.CONNECTION);
-            })
-            .build().share();
-
-
     @Bean
     public RouterFunction<ServerResponse> routes() {
         return route()
-                .GET("/", request -> EMPTY_RESPONSE)
-                .GET("/user/{id}", request -> ServerResponse.ok()
-                        .contentType(MediaType.TEXT_PLAIN)
-                        .headers(h -> {
-                            h.remove(HttpHeaders.SERVER);
-                            h.remove(HttpHeaders.CONNECTION);
-                        })
-                        .bodyValue(request.pathVariable("id")))
-                .POST("/user", request -> EMPTY_RESPONSE)
+                .GET("/", request -> ServerResponse.ok().bodyValue(""))
+                .GET("/user/{id}", request -> ServerResponse.ok().bodyValue(request.pathVariable("id")))
+                .POST("/user", request -> ServerResponse.ok().bodyValue(""))
                 .build();
     }
 
