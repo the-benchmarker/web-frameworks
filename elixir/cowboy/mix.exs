@@ -5,9 +5,9 @@ defmodule Server.MixProject do
     [
       app: :server,
       version: "0.1.0",
-      elixir: "~> 1.14",
+      elixir: "~> 1.17",
       start_permanent: Mix.env() == :prod,
-      deps: [{:cowboy, "~> 2.11.0"}],
+      deps: [{:cowboy, "~> 2.12.0"}],
       releases: [server: [include_executables_for: [:unix]]]
     ]
   end

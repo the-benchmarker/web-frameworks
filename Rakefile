@@ -109,8 +109,7 @@ def commands_for(language, framework, variant, provider = "docker")
   language_config = YAML.safe_load(File.open(File.join(directory, language, "config.yaml")))
   framework_config = YAML.safe_load(File.open(File.join(directory, language, framework, "config.yaml")))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-  options = { language: language, framework: framework, variant: variant, arch:, architecture:, 
-              manifest: "#{MANIFESTS[:container]}.#{variant}" }
+  options = { language: language, framework: framework, variant: variant,  manifest: "#{MANIFESTS[:container]}.#{variant}" }
   commands = { build: [], collect: [], clean: [] }
   
   # Compile first, only for non containers
@@ -200,9 +199,19 @@ compiler = config.dig('language','compiler')
   end
 
   template = File.read(path)
-  File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config.merge("files" => files, "static_files" => static_files, "environment" => config["environment"]&.map do |k, v|
-                                                                                                     "#{k}=#{v}"
-                                                                                                   end)))
+  config.merge!(template_variables).merge!({if: template_conditions}).merge!(files:, static_files:, environment: config["environment"]&.map do |k, v|
+    "#{k}=#{v}"
+  end)
+  File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config))
+end
+
+# This method returns a hash with variables usable in dockerfiles
+def template_variables
+  { arch:, architecture: }
+end
+
+def template_conditions
+   template_variables.flat_map{|k,v| {k.to_s => {v => true}}}.reduce(:merge)
 end
 
 desc "Create Dockerfiles"
@@ -249,7 +258,7 @@ end
 
 desc "Clean unused file"
 task :clean do
-  Dir.glob("*/*/.gitignore").each do |ignore_file|
+  Dir.glob("d/serverino/.gitignore").each do |ignore_file|
     directory = File.dirname(ignore_file)
 
     File.foreach(ignore_file) do |line|

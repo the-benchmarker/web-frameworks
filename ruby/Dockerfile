@@ -6,6 +6,9 @@ RUN apt-get -qq update
 
 RUN apt-get -qy install --no-install-recommends build-essential
 
+RUN apt-get install -y --no-install-recommends libjemalloc2
+ENV LD_PRELOAD=libjemalloc.so.2
+
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}

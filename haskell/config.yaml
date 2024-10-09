@@ -1,9 +1,10 @@
 language:
-  version: 9.8
+  version: 9.6
   files:
     - server.cabal
     - "**/*.hs"
     - stack.yaml
+
   engines:
     default:
       command: /opt/web/server
