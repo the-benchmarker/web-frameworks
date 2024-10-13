@@ -8,6 +8,7 @@ framework:
     - daphne
 
 language:
+  version: 3.12
   engines:
     uvicorn:
       command: uvicorn --host 0.0.0.0 --port 3000 --workers $(nproc) app.asgi:application

@@ -7,5 +7,5 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["guillotina>=7,<7.1","zope.interface<7.2"]
+dependencies = ["guillotina>=7,<7.1"]
 
