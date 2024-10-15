@@ -19,37 +19,18 @@ class UserController < Grip::Controllers::Http
 end
 
 class Application < Grip::Application
-  def reuse_port
-    true
-  end
-
-  def port
-    3000
-  end
-
-  def router : Array(HTTP::Handler)
-    [http_handler] of HTTP::Handler
-  end
-
-  def server : HTTP::Server
-    HTTP::Server.new(router)
-  end
-
-  def initialize
-    super(environment: "production", serve_static: false)
+  def initialize(environment : String)
+    # By default the environment is set to "development".
+    super(environment)
 
     get "/", IndexController
     get "/user/:id", UserController
     post "/user", UserController
+
+    # Enable request/response logging.
+    router.insert(0, Grip::Handlers::Log.new)
   end
 end
 
-app = Application.new
-
-System.cpu_count.times do |_|
-  Process.fork do
-    app.run
-  end
-end
-
-sleep
+app = Application.new(environment: "production")
+app.run

@@ -1,4 +1,9 @@
-FROM julia:1.11
+{{#language.version}}
+  FROM julia:{{{.}}}
+{{/language.version}}
+{{^language.version}}
+  FROM julia:1.11
+{{/language.version}}
 
 WORKDIR /usr/src/app
 
