@@ -2,6 +2,6 @@ opam-version: "2.0"
 
 depends: [
   "ocaml" {= "5.2.0"}
-  "dream" {= "1.0.0~alpha6"}
+  "dream" {= "1.0.0~alpha7"}
   "dune" {>= "2.0.0"}
 ]
