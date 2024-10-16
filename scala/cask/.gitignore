@@ -1,2 +1,7 @@
-cask/.metals/
-cask/.vscode/
+project/project
+project/target
+target/
+.bloop/
+.metals/
+.vscode/
+project/metals.sbt

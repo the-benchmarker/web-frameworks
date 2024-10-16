@@ -1,22 +1,26 @@
 case class MinimalRoutes()(implicit cc: castor.Context, log: cask.Logger) extends cask.Routes{
 
-
   @cask.get("/")
   def hello() = {
-    "Hello World!"
+    ""
   }
 
-  @cask.post("/do-thing")
-  def doThing(request: cask.Request) = {
-    request.text().reverse
+  @cask.post("/user")
+  def postUser(request: cask.Request) = {
+    ""
+  }
+
+  @cask.get("/user/:name") // variable path segment, e.g. HOST/user/lihaoyi
+  def getUser(name: String) = {
+    name
   }
 
   initialize()
 }
 
 
-object MinimalRoutesMain extends cask.Main{
-  val port = 3000
+object MinimalRoutesMain extends cask.Main {
+  override val port = 3000
 
   val allRoutes = Seq(MinimalRoutes())
 }
