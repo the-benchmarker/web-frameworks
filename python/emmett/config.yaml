@@ -11,7 +11,6 @@ framework:
     - libssl-dev
 
 language:
-  version: 3.12
   engines:
     gunicorn:
       environment:

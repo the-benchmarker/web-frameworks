@@ -9,7 +9,6 @@ framework:
     - hypercorn
 
 language:
-  version: 3.12
   engines:
     sanic:
       command: python server.py
