@@ -1,20 +1,18 @@
 require "grip"
 
 class IndexController < Grip::Controllers::Http
-  def get(context)
-    context.text("")
+  def get(context : Context) : Context
+    context.put_status(200).text("").halt()
   end
 end
-
 class UserController < Grip::Controllers::Http
-  def get(context)
+  def get(context : Context) : Context
     id = context.fetch_path_params.["id"]
 
-    context.text(id)
+    context.text(id).halt()
   end
-
-  def post(context)
-    context.text("")
+  def post(context : Context) : Context
+    context.put_status(200).text("").halt()
   end
 end
 
