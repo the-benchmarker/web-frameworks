@@ -1,6 +1,6 @@
 framework:
   website: emmett.sh
-  version: 2.5
+  version: 2.6
 
   engines:
     - emmett
@@ -11,6 +11,7 @@ framework:
     - libssl-dev
 
 language:
+  version: 3.12
   engines:
     gunicorn:
       environment:

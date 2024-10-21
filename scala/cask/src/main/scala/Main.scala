@@ -21,6 +21,7 @@ case class MinimalRoutes()(implicit cc: castor.Context, log: cask.Logger) extend
 
 object MinimalRoutesMain extends cask.Main {
   override val port = 3000
+  override val host = "0.0.0.0"
 
   val allRoutes = Seq(MinimalRoutes())
 }
