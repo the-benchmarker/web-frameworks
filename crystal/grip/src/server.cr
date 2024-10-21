@@ -28,6 +28,10 @@ class Application < Grip::Application
     # Enable request/response logging.
     router.insert(0, Grip::Handlers::Log.new)
   end
+
+  def port : Int32
+    3000
+  end
 end
 
 app = Application.new(environment: "production")
