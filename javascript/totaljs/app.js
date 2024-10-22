@@ -1,7 +1,7 @@
 require('total5')
 
 ROUTE('GET /', function($) {
-  $.text('Hello world!');
+  $.text('');
 });
 
 ROUTE('GET /user/{id}/', function($) {
