@@ -1,28 +1,25 @@
 package framework.benchmark.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-@RestController
+import static org.springframework.web.reactive.function.server.RouterFunctions.route;
+
+@Component
 public class BenchmarkController {
 
-    private static final String EMPTY = "";
-
-    @GetMapping("/")
-    public Mono<String> root() {
-        return Mono.just(EMPTY);
+    @Bean
+    public RouterFunction<ServerResponse> routes() {
+        return route()
+                .GET("/", request -> ServerResponse.ok().bodyValue(""))
+                .GET("/user/{id}", request -> ServerResponse.ok().bodyValue(request.pathVariable("id")))
+                .POST("/user", request -> ServerResponse.ok().bodyValue(""))
+                .build();
     }
 
-    @GetMapping("/user/{id}")
-    public Mono<Integer> userId(@PathVariable Integer id) {
-        return Mono.just(id);
-    }
-
-    @PostMapping("/user")
-    public Mono<String> user() {
-        return Mono.just(EMPTY);
-    }
 }

@@ -1,12 +1,13 @@
 framework:
   website: robyn.tech
   github: sparckles/robyn
-  version: 0.61
+  version: 0.62
 
   engines:
     - robyn
 
 language:
+  version: 3.12
   engines:
     robyn:
       command: python /usr/src/app/server.py --workers=$(nproc) --processes=$(nproc) --log-level=CRITICAL

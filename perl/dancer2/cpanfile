@@ -8,6 +8,5 @@ requires 'Crypt::URandom';
 requires 'HTTP::XSHeaders';
 requires 'Math::Random::ISAAC::XS';
 requires 'MooX::TypeTiny';
-requires 'Scope::Upper';
 requires 'Type::Tiny::XS';
 requires 'URL::Encode::XS';
