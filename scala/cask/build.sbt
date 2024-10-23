@@ -2,7 +2,7 @@ val CaskVersion = "0.9.4"
 
 name := "server"
 
-scalaVersion := "3.5.1"
+scalaVersion := "3.5.2"
 
 run / fork := true
 
