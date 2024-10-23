@@ -32,6 +32,11 @@ class Application < Grip::Application
   def port : Int32
     3000
   end
+
+  def reuse_port : Bool
+    true
+  end
+
 end
 
 app = Application.new(environment: "production")
