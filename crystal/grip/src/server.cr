@@ -1,55 +1,38 @@
 require "grip"
 
 class IndexController < Grip::Controllers::Http
-  def get(context)
-    context.text("")
+  def get(context : Context) : Context
+    context.put_status(200).text("").halt()
   end
 end
-
 class UserController < Grip::Controllers::Http
-  def get(context)
+  def get(context : Context) : Context
     id = context.fetch_path_params.["id"]
 
-    context.text(id)
+    context.text(id).halt()
   end
-
-  def post(context)
-    context.text("")
+  def post(context : Context) : Context
+    context.put_status(200).text("").halt()
   end
 end
 
 class Application < Grip::Application
-  def reuse_port
-    true
-  end
-
-  def port
-    3000
-  end
-
-  def router : Array(HTTP::Handler)
-    [http_handler] of HTTP::Handler
-  end
-
-  def server : HTTP::Server
-    HTTP::Server.new(router)
-  end
-
-  def initialize
-    super(environment: "production", serve_static: false)
+  def initialize(environment : String)
+    # By default the environment is set to "development".
+    super(environment)
 
     get "/", IndexController
     get "/user/:id", UserController
     post "/user", UserController
+
+    # Enable request/response logging.
+    router.insert(0, Grip::Handlers::Log.new)
+  end
+
+  def port : Int32
+    3000
   end
 end
 
-app = Application.new
-
-System.cpu_count.times do |_|
-  Process.fork do
-    app.run
-  end
-end
-
-sleep
+app = Application.new(environment: "production")
+app.run
