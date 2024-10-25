@@ -22,7 +22,7 @@ impl HttpService for WebFramework {
 
         match (method, path) {
             ("GET", "/") => {
-                rsp.header("Content-Type: text/plain").body("Hello, World!");
+                rsp.header("Content-Type: text/plain");
             }
 
             (method_, path_) if path_.starts_with("/user") => {
