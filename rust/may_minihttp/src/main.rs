@@ -37,7 +37,7 @@ impl HttpService for WebFramework {
                 }
             }
             ("POST", "/user") => {
-                rsp.header("Content-Type: text/plain").body("User created");
+                rsp.header("Content-Type: text/plain");
             }
             _ => {
                 rsp.status_code(404, "Not Found");
