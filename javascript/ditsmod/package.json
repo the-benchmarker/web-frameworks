@@ -5,7 +5,7 @@
   "description": "",
   "scripts": {
     "start": "npm run build && node dist/main.js",
-    "build": "tsc -b",
+    "build": "tsc -b && rm node_modules/@ditsmod/*/tsconfig.json",
     "clean": "rm -rf dist*"
   },
   "imports": {
@@ -15,12 +15,12 @@
   "author": "Your Name Here",
   "license": "MIT",
   "dependencies": {
-    "@ditsmod/body-parser": "~2.17.0",
-    "@ditsmod/core": "~2.59.0",
-    "@ditsmod/routing": "~2.5.0"
+    "@ditsmod/body-parser": "~2.17.1",
+    "@ditsmod/core": "~2.60.0",
+    "@ditsmod/routing": "~2.6.0"
   },
   "devDependencies": {
     "@types/node": "^20.6.1",
-    "typescript": "^5.2.2"
+    "typescript": "5.2.2"
   }
 }
