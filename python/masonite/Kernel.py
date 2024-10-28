@@ -69,7 +69,9 @@ class Kernel:
         self.application.bind("server.runner", "masonite.commands.ServeCommand.main")
 
     def register_middleware(self):
-        self.application.make("middleware").add(self.route_middleware).add(self.http_middleware)
+        self.application.make("middleware").add(self.route_middleware).add(
+            self.http_middleware
+        )
 
     def register_routes(self):
         Route.set_controller_locations(self.application.make("controllers.location"))

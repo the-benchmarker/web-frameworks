@@ -20,7 +20,9 @@ async def user_info(context, request):
     return Response(body=id_.encode("utf-8"))
 
 
-@configure.service(method="POST", context=IApplication, permission="guillotina.Public", name="/user")
+@configure.service(
+    method="POST", context=IApplication, permission="guillotina.Public", name="/user"
+)
 async def user_info(context, request):
     return Response(body=b"")
 
