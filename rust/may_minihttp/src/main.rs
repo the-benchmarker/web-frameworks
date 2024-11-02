@@ -24,14 +24,11 @@ impl HttpService for WebFramework {
             ("GET", "/") => {
                 rsp.header("Content-Type: text/plain");
             }
-
             (method_, path_) if path_.starts_with("/user") => {
                 if method_ == "GET" {
                     let id = path_.split("/").last().unwrap();
                     rsp.header("Content-Type: text/plain");
-
-                    let body_response = format!("{}", id);
-                    rsp.body_mut().extend_from_slice(body_response.as_bytes());
+                    rsp.body_mut().extend_from_slice(id.as_bytes());
                 } else if method_ == "POST" {
                     rsp.status_code(200, "OK");
                 }
