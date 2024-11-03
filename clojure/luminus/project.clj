@@ -10,7 +10,7 @@
                  [luminus-jetty "0.2.3"]
                  [luminus-transit "0.1.6"]
                  [luminus/ring-ttl-session "0.3.3"]
-                 [markdown-clj "1.12.1"]
+                 [markdown-clj "1.12.2"]
                  [metosin/muuntaja "0.6.10"]
                  [metosin/reitit "0.7.2"]
                  [metosin/ring-http-response "0.9.4"]
