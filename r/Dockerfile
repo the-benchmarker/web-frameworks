@@ -1,4 +1,4 @@
-FROM r-base:4.4.1
+FROM r-base:4.4.2
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update
