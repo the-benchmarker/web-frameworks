@@ -1,19 +1,39 @@
 import picoev
 import picohttpparser
 
+// keep-alive header response
 fn callback(data voidptr, req picohttpparser.Request, mut res picohttpparser.Response) {
 	if req.method == 'GET' {
 		if req.path == '/' {
-			res.http_ok()
+			res.write_string('HTTP/1.1 200 OK\r\n')
+			res.header('Connection', 'keep-alive')
+			res.header('Content-Type', 'text/plain')
+			res.header('Content-Length', '0')
+
+			// \r\n is required before body response
+			res.write_string('\r\n')
 		} else if req.path.starts_with('/user/') {
-			res.http_ok()
-			id := req.path[6..]
-			res.body(id)
+			content := req.path[6..]
+
+			res.write_string('HTTP/1.1 200 OK\r\n')
+			res.header('Connection', 'keep-alive')
+			res.header('Content-Type', 'text/plain')
+			res.header('Content-Length', '${content.len}')
+
+			// \r\n is required before body response
+			res.write_string('\r\n')
+			res.write_string(content)
 		}
 	}
 	if req.method == 'POST' {
 		if req.path == '/user' {
-			res.http_ok()
+			res.write_string('HTTP/1.1 200 OK\r\n')
+			res.header('Connection', 'keep-alive')
+			res.header('Content-Type', 'text/plain')
+			res.header('Content-Length', '0')
+
+			//\r\n is required before body response
+			res.write_string('\r\n')
 		}
 	}
 	res.end()
