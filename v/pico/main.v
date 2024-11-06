@@ -18,7 +18,7 @@ fn callback(data voidptr, req picohttpparser.Request, mut res picohttpparser.Res
 			res.write_string('HTTP/1.1 200 OK\r\n')
 			res.header('Connection', 'keep-alive')
 			res.header('Content-Type', 'text/plain')
-			res.header('Content-Length', '${content.len}')
+			res.header('Content-Length', content.len.str())
 
 			// \r\n is required before body response
 			res.write_string('\r\n')
