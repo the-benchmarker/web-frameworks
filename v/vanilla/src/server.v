@@ -255,7 +255,7 @@ fn process_events(server &Server) {
 					C.send(unsafe { events[i].data.fd }, tiny_bad_request_response.data,
 						tiny_bad_request_response.len, 0)
 					handle_client_closure(server, unsafe { events[i].data.fd })
-					unsafe { request_buffer.free() }
+					unsafe { free(request_buffer) }
 					continue
 				}
 
@@ -264,7 +264,7 @@ fn process_events(server &Server) {
 					C.send(unsafe { events[i].data.fd }, tiny_bad_request_response.data,
 						tiny_bad_request_response.len, 0)
 					handle_client_closure(server, unsafe { events[i].data.fd })
-					unsafe { request_buffer.free() }
+					unsafe { free(request_buffer) }
 					continue
 				}
 
@@ -272,10 +272,10 @@ fn process_events(server &Server) {
 					0)
 				handle_client_closure(server, unsafe { events[i].data.fd })
 
-				unsafe { request_buffer.free() }
+				unsafe { free(request_buffer) }
 			} else if bytes_read == 0 || (bytes_read < 0 && C.errno != 11 && C.errno != 11) {
 				handle_client_closure(server, unsafe { events[i].data.fd })
-				unsafe { request_buffer.free() }
+				unsafe { free(request_buffer) }
 			}
 		}
 	}
