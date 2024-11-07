@@ -1,4 +1,3 @@
-````md
 # Vanilla
 
 Vanilla is a raw V server.
@@ -93,4 +92,3 @@ fn setup_router() Router {
 	return router
 }
 ```
-````
