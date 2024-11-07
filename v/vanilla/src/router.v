@@ -1,22 +1,26 @@
 module main
 
+// RadixNode represents a node in the Radix Trie used for routing.
+// It contains a map of children nodes, a handler function, and information
+// about whether the node represents a parameterized segment.
+// [see](https://en.wikipedia.org/wiki/Radix_tree)
 @[heap]
 struct RadixNode {
 mut:
 	children   map[string]&RadixNode
-	handler    fn (params map[string]string) ![]u8 = unsafe { nil } // evita o uso de opcional
+	handler    fn (params map[string]string) ![]u8 = unsafe { nil } // avoid the use of optional
 	is_param   bool
 	param_name string
 }
 
-// Radix Trie router with parameterized route support
+// Router represents a Radix Trie router with support for parameterized routes.
 struct Router {
 mut:
-	root   RadixNode
-	params map[string]string // reuso de mapa para evitar nova alocação em cada requisição
+	root   RadixNode         // Root node of the Radix Trie
+	params map[string]string // Map to store route parameters
 }
 
-// Adds a route to the Radix Trie with support for parameters
+// add_route adds a route to the Radix Trie with support for parameters
 fn (mut router Router) add_route(method string, path string, handler fn (params map[string]string) ![]u8) {
 	segments := path.split('/').filter(it.len > 0)
 	mut node := &router.root
@@ -36,7 +40,8 @@ fn (mut router Router) add_route(method string, path string, handler fn (params 
 	node.handler = handler
 }
 
-// Finds and executes the handler for a given route
+// handle_request finds and executes the handler for a given route.
+// It takes an HttpRequest object as an argument and returns the response as a byte array.
 fn (mut router Router) handle_request(req HttpRequest) ![]u8 {
 	path := req.buffer[req.path.start..req.path.start + req.path.len]
 	segments := path.bytestr().split('/').filter(it.len > 0)
@@ -68,14 +73,15 @@ fn (mut router Router) handle_request(req HttpRequest) ![]u8 {
 
 	if node.handler == unsafe { nil } {
 		dump(req.buffer.bytestr())
-		return error('Route not have handler for path ${path.bytestr()}')
+		return error('Route does not have handler for path ${path.bytestr()}')
 	}
 	handler := node.handler
 
 	return handler(router.params)!
 }
 
-// Initialize the router and add the routes
+// setup_router initializes the router and adds predefined routes with their handler functions.
+// It returns the initialized Router object.
 fn setup_router() Router {
 	mut router := Router{
 		root: RadixNode{
@@ -83,7 +89,7 @@ fn setup_router() Router {
 		}
 	}
 
-	// Adding routes with handler functions
+	// Adding routes with handler functions/controllers
 	router.add_route('GET', '/', home_controller)
 	router.add_route('GET', '/user', get_users_controller)
 	router.add_route('GET', '/user/:id', get_user_controller)

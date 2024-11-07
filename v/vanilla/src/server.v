@@ -1,3 +1,15 @@
+// This module implements a basic HTTP server using epoll for handling multiple client connections efficiently.
+// The server is designed to be non-blocking and uses multiple threads to handle incoming requests concurrently.
+//
+// Performance Considerations:
+// - Non-blocking I/O: The server uses non-blocking sockets to ensure that it can handle multiple connections without being blocked by any single connection.
+// - Epoll: The use of epoll allows the server to efficiently monitor multiple file descriptors to see if I/O is possible on any of them.
+// - Threading: The server spawns multiple threads to handle client requests, which can improve performance on multi-core systems.
+// - Memory Management: Care is taken to allocate and free memory appropriately to avoid memory leaks and ensure efficient memory usage.
+// - Error Handling: The server includes error handling to manage and log errors without crashing, ensuring robustness and reliability.
+// - SO_REUSEPORT: The server sets the SO_REUSEPORT socket option to allow multiple sockets on the same host and port, which can improve performance in certain scenarios.
+// - Connection Handling: The server efficiently handles client connections, including accepting new connections, reading requests, and sending responses.
+// - Mutex Locking: The server uses mutex locks to manage access to shared resources, ensuring thread safety while minimizing contention.
 module main
 
 import sync
