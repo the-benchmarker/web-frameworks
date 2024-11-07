@@ -225,6 +225,7 @@ fn handle_client_closure(server &Server, client_fd int) {
 	}
 }
 
+@[manualfree]
 fn process_events(server &Server) {
 	events := [512]C.epoll_event{}
 	num_events := C.epoll_wait(server.epoll_fd, &events[0], 512, -1)
@@ -254,6 +255,7 @@ fn process_events(server &Server) {
 					C.send(unsafe { events[i].data.fd }, tiny_bad_request_response.data,
 						tiny_bad_request_response.len, 0)
 					handle_client_closure(server, unsafe { events[i].data.fd })
+					unsafe { request_buffer.free() }
 					continue
 				}
 
@@ -262,6 +264,7 @@ fn process_events(server &Server) {
 					C.send(unsafe { events[i].data.fd }, tiny_bad_request_response.data,
 						tiny_bad_request_response.len, 0)
 					handle_client_closure(server, unsafe { events[i].data.fd })
+					unsafe { request_buffer.free() }
 					continue
 				}
 
@@ -269,9 +272,10 @@ fn process_events(server &Server) {
 					0)
 				handle_client_closure(server, unsafe { events[i].data.fd })
 
-				C.free(request_buffer)
+				unsafe { request_buffer.free() }
 			} else if bytes_read == 0 || (bytes_read < 0 && C.errno != 11 && C.errno != 11) {
 				handle_client_closure(server, unsafe { events[i].data.fd })
+				unsafe { request_buffer.free() }
 			}
 		}
 	}
