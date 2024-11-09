@@ -84,7 +84,7 @@ mut:
 	epoll_fd      int
 	lock_flag     sync.Mutex
 	has_clients   int
-	threads       [16]thread
+	threads       [max_thread_pool_size]thread
 	router        Router
 }
 
@@ -97,6 +97,8 @@ const sock_stream = C.SOCK_STREAM
 const sock_nonblock = C.SOCK_NONBLOCK
 
 const max_unix_path = 108
+
+const max_connection_size = 1024
 
 @[_pack: '1']
 pub struct Ip6 {
@@ -131,14 +133,14 @@ pub:
 }
 
 fn set_blocking(fd int, blocking bool) {
-	flags := C.fcntl(fd, 3, 0)
+	flags := C.fcntl(fd, C.F_GETFL, 0)
 	if flags == -1 {
 		return
 	}
 	if blocking {
-		C.fcntl(fd, 4, flags & ~2048)
+		C.fcntl(fd, C.F_SETFL, flags & ~C.O_NONBLOCK)
 	} else {
-		C.fcntl(fd, 4, flags | 2048)
+		C.fcntl(fd, C.F_SETFL, flags | C.O_NONBLOCK)
 	}
 }
 
@@ -160,7 +162,7 @@ fn create_server_socket(port int) int {
 	}
 
 	server_addr := Sockaddr_in{
-		sin_family: 2
+		sin_family: 2 // ip
 		sin_port:   C.htons(port)
 		sin_addr:   In_addr{C.INADDR_ANY}
 		sin_zero:   [8]u8{}
@@ -172,7 +174,7 @@ fn create_server_socket(port int) int {
 		C.close(server_fd)
 		return -1
 	}
-	if C.listen(server_fd, 512) < 0 {
+	if C.listen(server_fd, max_connection_size) < 0 {
 		eprintln(@LOCATION)
 		C.perror('Listen failed'.str)
 		C.close(server_fd)
@@ -181,31 +183,40 @@ fn create_server_socket(port int) int {
 	return server_fd
 }
 
+// Function to add a file descriptor to the epoll instance
 fn add_fd_to_epoll(epoll_fd int, fd int, events u32) int {
-	mut ev := C.epoll_event{}
-	ev.events = events
+	mut ev := C.epoll_event{
+		events: events
+	}
 	ev.data.fd = fd
-	if C.epoll_ctl(epoll_fd, 1, fd, &ev) == -1 {
-		C.perror(c'epoll_ctl: fd')
+	if C.epoll_ctl(epoll_fd, C.EPOLL_CTL_ADD, fd, &ev) == -1 {
+		eprintln(@LOCATION)
+		C.perror('epoll_ctl'.str)
 		return -1
 	}
 	return 0
 }
 
+// Function to remove a file descriptor from the epoll instance
 fn remove_fd_from_epoll(epoll_fd int, fd int) {
-	C.epoll_ctl(epoll_fd, 2, fd, C.NULL)
+	C.epoll_ctl(epoll_fd, C.EPOLL_CTL_DEL, fd, C.NULL)
 }
 
 fn handle_accept(server &Server) {
 	for {
 		client_fd := C.accept(server.server_socket, C.NULL, C.NULL)
 		if client_fd < 0 {
-			if C.errno == 11 || C.errno == 11 {
-				break
+			// Check for EAGAIN or EWOULDBLOCK, usually represented by errno 11.
+			if C.errno == C.EAGAIN || C.errno == C.EWOULDBLOCK {
+				break // No more incoming connections; exit loop.
 			}
-			C.perror(c'Accept failed')
+
+			eprintln(@LOCATION)
+			C.perror('Accept failed'.str)
 			return
 		}
+
+		// Set the client socket to non-blocking mode if accepted successfully
 		set_blocking(client_fd, false)
 		unsafe {
 			server.lock_flag.lock()
@@ -227,27 +238,22 @@ fn handle_client_closure(server &Server, client_fd int) {
 
 @[manualfree]
 fn process_events(server &Server) {
-	events := [512]C.epoll_event{}
-	num_events := C.epoll_wait(server.epoll_fd, &events[0], 512, -1)
+	events := [max_connection_size]C.epoll_event{}
+	num_events := C.epoll_wait(server.epoll_fd, &events[0], max_connection_size, -1)
 	for i := 0; i < num_events; i++ {
 		if events[i].events & (C.EPOLLHUP | C.EPOLLERR) != 0 {
 			handle_client_closure(server, unsafe { events[i].data.fd })
 			continue
 		}
 		if events[i].events & C.EPOLLIN != 0 {
-			request_buffer := unsafe { C.malloc(140) }
-			if request_buffer == C.NULL {
-				C.perror('malloc failed'.str)
-				continue
-			}
-			unsafe { C.memset(request_buffer, 0, 140) }
-			bytes_read := C.recv(unsafe { events[i].data.fd }, request_buffer, 140 - 1,
+			request_buffer := [140]u8{}
+			bytes_read := C.recv(unsafe { events[i].data.fd }, &request_buffer[0], 140 - 1,
 				0)
 			if bytes_read > 0 {
 				mut readed_request_buffer := []u8{cap: bytes_read}
 
 				unsafe {
-					readed_request_buffer.push_many(request_buffer, bytes_read)
+					readed_request_buffer.push_many(&request_buffer[0], bytes_read)
 				}
 
 				decoded_http_request := decode_http_request(readed_request_buffer) or {
@@ -255,27 +261,28 @@ fn process_events(server &Server) {
 					C.send(unsafe { events[i].data.fd }, tiny_bad_request_response.data,
 						tiny_bad_request_response.len, 0)
 					handle_client_closure(server, unsafe { events[i].data.fd })
-					unsafe { free(request_buffer) }
 					continue
 				}
 
+				// This lock is a workaround for avoiding race condition in router.params
+				// This slows down the server, but it's a temporary solution
+				(*server).lock_flag.lock()
 				response_buffer := (*server).router.handle_request(decoded_http_request) or {
 					eprintln('Error handling request ${err}')
 					C.send(unsafe { events[i].data.fd }, tiny_bad_request_response.data,
 						tiny_bad_request_response.len, 0)
 					handle_client_closure(server, unsafe { events[i].data.fd })
-					unsafe { free(request_buffer) }
+					(*server).lock_flag.unlock()
 					continue
 				}
+				(*server).lock_flag.unlock()
 
 				C.send(unsafe { events[i].data.fd }, response_buffer.data, response_buffer.len,
 					0)
 				handle_client_closure(server, unsafe { events[i].data.fd })
-
-				unsafe { free(request_buffer) }
-			} else if bytes_read == 0 || (bytes_read < 0 && C.errno != 11 && C.errno != 11) {
+			} else if bytes_read == 0
+				|| (bytes_read < 0 && C.errno != C.EAGAIN && C.errno != C.EWOULDBLOCK) {
 				handle_client_closure(server, unsafe { events[i].data.fd })
-				unsafe { free(request_buffer) }
 			}
 		}
 	}

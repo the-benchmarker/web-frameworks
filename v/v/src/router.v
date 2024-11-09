@@ -47,6 +47,8 @@ fn (mut router Router) handle_request(req HttpRequest) ![]u8 {
 	segments := path.bytestr().split('/').filter(it.len > 0)
 	mut node := &router.root
 	// router.params.clear()
+
+	// FIXME: race condition here in router.params
 	router.params = map[string]string{}
 
 	for segment in segments {
@@ -54,7 +56,9 @@ fn (mut router Router) handle_request(req HttpRequest) ![]u8 {
 
 		for key, child in node.children {
 			if child.is_param {
+				// FIXME: race condition here in router.params
 				router.params[child.param_name] = segment
+
 				node = child
 				matched = true
 				break

@@ -1,6 +1,7 @@
 module main
 
 const port = 3000
+const max_thread_pool_size = 8
 
 fn main() {
 	mut server := Server{
@@ -30,7 +31,7 @@ fn main() {
 	server.lock_flag.unlock()
 
 	server.lock_flag.init()
-	for i := 0; i < 16; i++ {
+	for i := 0; i < max_thread_pool_size; i++ {
 		server.threads[i] = spawn worker_thread(&server)
 	}
 	println('listening on http://localhost:${port}/')

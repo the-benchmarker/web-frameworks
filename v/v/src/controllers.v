@@ -13,6 +13,7 @@ fn get_users_controller(params map[string]string) ![]u8 {
 	return http_ok_response
 }
 
+@[manualfree]
 fn get_user_controller(params map[string]string) ![]u8 {
 	id := params['id'] or { return error('User ID required') }
 	response_body := id
@@ -23,6 +24,14 @@ Content-Length: ${response_body.len}\r
 Connection: keep-alive\r
 \r
 ${response_body}'.bytes()
+
+	defer {
+		unsafe {
+			id.free()
+			response_body.free()
+			response.free()
+		}
+	}
 
 	return response
 }
