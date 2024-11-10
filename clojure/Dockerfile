@@ -34,7 +34,7 @@ WORKDIR /opt/bin
 
 RUN apt-get -qq update
 RUN apt-get -qy install curl
-HEALTHCHECK --interval=15m --start-interval=1m --timeout=30s --retries=10 CMD curl --fail http://0.0.0.0:3000 || exit 1
+HEALTHCHECK --interval=15m --start-interval=1m --timeout=60s --retries=10 CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 {{#command}}
   ENTRYPOINT {{{.}}}
