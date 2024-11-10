@@ -58,9 +58,13 @@ RUN apk add openssl-dev pcre-dev
   COPY --from=0 /usr/src/app/server /usr/src/app/server
 {{/custom_files}}
 
+RUN apt-get -qq update
+RUN apt-get -qy install curl
+HEALTHCHECK --interval=1m --timeout=60s --retries=3 CMD curl --fail http://0.0.0.0:3000 || exit 1
+
 {{#command}}
-  CMD {{{.}}}
+  ENTRYPOINT {{{.}}}
 {{/command}}
 {{^command}}
-  CMD /usr/src/app/server
+  ENTRYPOINT /usr/src/app/server
 {{/command}}

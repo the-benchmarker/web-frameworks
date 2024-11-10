@@ -42,6 +42,8 @@ language:
       command: node app.js
     bun:
       command: bun run cluster.ts
+      files:
+        - bunfig.toml
 
 framework:
   engines:

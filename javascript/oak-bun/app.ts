@@ -19,7 +19,4 @@ route.get("/user", (ctx) => {
 
 app.use(route.routes());
 
-app.serve({
-  port: 3000,
-        reusePort: true
-})
+app.listen({ port: 3000 });
