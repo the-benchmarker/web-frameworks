@@ -18,6 +18,7 @@ namespace :ci do
       next unless File.exist?(file)
 
       language, framework, = file.split(File::SEPARATOR)
+      next unless language == "clojure"
 
       config = get_config_from(File.join(Dir.pwd, language, framework))
 
