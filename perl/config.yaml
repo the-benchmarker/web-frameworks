@@ -6,6 +6,8 @@ language:
     - cpanfile
   engines:
     gazelle:
+      bootstrap:
+        - cpanm --install gazelle
       command: plackup -s Gazelle --port 3000 --env production --app d2app.psgi
 
 framework:
