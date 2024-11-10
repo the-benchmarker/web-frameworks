@@ -61,7 +61,7 @@ USER nobody
 ENV HOME /app
 
 # Check status
-HEALTHCHECK --interval=900s --start-period=60s --start-interval=60s --timeout=60s --retries=5 CMD curl --fail http://0.0.0.0:3000 || exit 1
+HEALTHCHECK --interval=1500s --start-period=60s --start-interval=60s --timeout=60s --retries=5 CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 # Start release
 ENTRYPOINT {{command}}
