@@ -59,7 +59,7 @@ jobs:
           ENGINE: ${{ matrix.engine }}
 
       - name: Sleep
-        run: sleep 5
+        run: sleep 1
 
       - name: Test
         run: bundle exec rspec .spec
