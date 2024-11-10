@@ -16,6 +16,6 @@ COPY --from=0 /usr/src/app/.stack-work/dist/aarch64-linux/ghc-9.6.6/build/server
 
 RUN apt-get -qq update
 RUN apt-get -qy install curl
-HEALTHCHECK --interval=1m --timeout=60s --retries=3 CMD curl --fail http://0.0.0.0:3000 || exit 1
+HEALTHCHECK --interval=900s --start-period=60s --start-interval=60s --timeout=60s --retries=5 CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{#command}}{{{.}}}{{/command}}
