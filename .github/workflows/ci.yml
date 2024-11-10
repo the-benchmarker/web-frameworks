@@ -58,6 +58,9 @@ jobs:
           DIRECTORY: ${{ matrix.directory }}
           ENGINE: ${{ matrix.engine }}
 
+      - name: Sleep
+        run: sleep 5
+
       - name: Test
         run: bundle exec rspec .spec
         env:
