@@ -32,10 +32,9 @@ WORKDIR /opt/bin
   COPY --from=0 /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
 {{/binaries}}
 
+ENTRYPOINT {{command}}
+
 RUN apt-get -qq update
 RUN apt-get -qy install curl
-HEALTHCHECK --interval=15m --start-interval=1m --timeout=60s --retries=50 CMD curl --fail http://0.0.0.0:3000 || exit 1
 
-{{#command}}
-  ENTRYPOINT {{{.}}}
-{{/command}}
+HEALTHCHECK --interval=600s --start-period=60s --start-interval=60s --timeout=60s --retries=5 CMD curl --fail http://0.0.0.0:3000 || exit 1
