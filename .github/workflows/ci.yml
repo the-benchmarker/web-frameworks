@@ -63,7 +63,7 @@ jobs:
           export CID=`cat ${LANGUAGE}/${FRAMEWORK}/cid-${ENGINE}.txt`
           echo "Sleep a second"
           sleep 1
-          until [ "`docker inspect -f {{.State.Health.Status}} ${CID}`"=="healthy" ]; do 
+          until [ "`docker inspect -f {{.State.Health.Status}} ${CID}`" -eq "healthy" ]; do 
             echo "Wait for container to be healthy"
             sleep 1 
           done
