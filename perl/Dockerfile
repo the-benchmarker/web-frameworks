@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 {{/files}}
 
 {{#bootstrap}}
-   {{{.}}}
+   RUN {{{.}}}
 {{/bootstrap}}
 
 RUN cpanm --installdeps . --with-feature=accelerate
