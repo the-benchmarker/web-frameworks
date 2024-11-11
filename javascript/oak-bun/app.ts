@@ -13,7 +13,7 @@ route.get("/user/:id", (ctx) => {
     ctx.response.body = ctx.params.id
 })
 
-route.get("/user", (ctx) => {
+route.post("/user", (ctx) => {
     ctx.response.body = ''
 })
 

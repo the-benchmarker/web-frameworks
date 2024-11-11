@@ -41,6 +41,8 @@ language:
         - npm install
       command: node app.js
     bun:
+      bootstrap:
+        - bun install
       command: bun run cluster.ts
       files:
         - bunfig.toml
