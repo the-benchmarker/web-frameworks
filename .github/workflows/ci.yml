@@ -58,6 +58,16 @@ jobs:
           DIRECTORY: ${{ matrix.directory }}
           ENGINE: ${{ matrix.engine }}
 
+      - name: Sleep
+        run: |
+          export CID=`cat ${LANGUAGE}/${FRAMEWORK}/cid-${ENGINE}.txt`
+          echo "Sleep a second"
+          sleep 1
+          until [ "`docker inspect -f {{.State.Health.Status}} ${CID}`"=="healthy" ]; do 
+            echo "Wait for container to be healthy"
+            sleep 1 
+          done
+
       - name: Test
         run: bundle exec rspec .spec
         env:
