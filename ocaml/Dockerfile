@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 
 USER root
 RUN apt-get update -y && apt-get install pkg-config libev-dev libssl-dev libgmp-dev -y
+RUN apt-get -qy install curl
 USER opam
 
 {{#files}}
@@ -15,6 +16,9 @@ USER opam
 {{/bootstrap}}
 
 
+
 {{#command}}
-  CMD {{{.}}}
+  ENTRYPOINT {{{.}}}
 {{/command}}
+
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1

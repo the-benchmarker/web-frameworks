@@ -51,10 +51,17 @@ WORKDIR /app
 # Copy release from build container
 COPY --from=build /usr/src/app/release ./
 
+# Add utils for healtcheck
+RUN apt-get -qq update
+RUN apt-get -qy install curl
+
 # User
 RUN chown -R nobody: /app
 USER nobody
 ENV HOME /app
 
+# Check status
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+
 # Start release
-CMD {{command}}
+ENTRYPOINT {{command}}

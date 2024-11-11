@@ -146,8 +146,6 @@ def commands_for(language, framework, variant, provider = "docker")
     commands[:build] << "sleep 30"
   end
 
-  commands[:build] << "curl --retry 5 --retry-delay 5 --retry-max-time 180 --retry-connrefused http://`cat #{language}/#{framework}/ip-#{variant}.txt`:3000 -v"
-
   commands[:collect] << "HOSTNAME=`cat #{language}/#{framework}/ip-#{variant}.txt` ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV.fetch(
     "DATABASE_URL", nil
   )} bundle exec rake collect"
