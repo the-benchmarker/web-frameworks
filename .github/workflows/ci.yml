@@ -67,6 +67,10 @@ jobs:
             echo "Wait for container to be healthy"
             sleep 1 
           done
+        env:
+          LANGUAGE: ${{ matrix.language }}
+          FRAMEWORK: ${{ matrix.framework }}
+          ENGINE: ${{ matrix.engine }}
 
       - name: Test
         run: bundle exec rspec .spec
