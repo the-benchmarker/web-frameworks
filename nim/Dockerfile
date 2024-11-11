@@ -1,5 +1,5 @@
 FROM curlimages/curl AS curl
-FROM akito13/nim:2.0.8-alpine
+FROM akito13/nim:2.0.8-alpine AS build
 
 RUN apk update
 
@@ -53,10 +53,11 @@ RUN apk update
 RUN apk add openssl-dev pcre-dev
 
 {{#custom_files}}
-  COPY --from=0 /usr/src/app/{{{.}}} /usr/src/app/{{{.}}}
+  COPY --from=build /usr/src/app/{{{.}}} /usr/src/app/{{{.}}}
 {{/custom_files}}
+
 {{^custom_files}}
-  COPY --from=0 /usr/src/app/server /usr/src/app/server
+  COPY --from=build /usr/src/app/server /usr/src/app/server
 {{/custom_files}}
 
 COPY --from=curl /usr/bin/curl curl
