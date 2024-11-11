@@ -59,7 +59,7 @@ RUN apk add openssl-dev pcre-dev
   COPY --from=0 /usr/src/app/server /usr/src/app/server
 {{/custom_files}}
 
-COPY --from=curl /usr/bin/curl /curl
+COPY --from=curl /usr/bin/curl curl
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 {{#command}}
