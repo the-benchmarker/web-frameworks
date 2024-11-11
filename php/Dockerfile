@@ -45,6 +45,9 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
+  RUN apt-get -qq update
+  RUN apt-get -qy install curl
+
 
 {{^framework.standalone}}
   {{#bootstrap}}
@@ -53,10 +56,6 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
 {{/framework.standalone}}
 
 {{#command}}
-  RUN apt-get -qq update
-  RUN apt-get -qy install curl
-  HEALTHCHECK --interval=1m --timeout=60s --retries=3 CMD curl --fail http://0.0.0.0:3000 || exit 1
-
   ENTRYPOINT {{{.}}}
 {{/command}}
 
@@ -109,11 +108,9 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   opcache.fast_shutdown=0\n'\
   >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
   
-  RUN apt-get -qq update
-  RUN apt-get -qy install curl
-  HEALTHCHECK --interval=1m --timeout=60s --retries=3 CMD curl --fail http://0.0.0.0:3000 || exit 1
 
   ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
 
 {{/command}}
 
+HEALTHCHECK curl --fail http://0.0.0.0:3000 || exit 1

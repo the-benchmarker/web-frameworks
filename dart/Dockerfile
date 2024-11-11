@@ -26,6 +26,6 @@ COPY --from=build /runtime/ /
 COPY --from=build /app/server /app/server
 
 COPY --from=curl /usr/bin/curl /curl
-HEALTHCHECK --interval=5m --timeout=30s --retries=3 CMD curl --fail http://0.0.0.0:3000 || exit 1
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{command}}
