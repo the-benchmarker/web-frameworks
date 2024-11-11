@@ -113,4 +113,4 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
 
 {{/command}}
 
-HEALTHCHECK curl --fail http://0.0.0.0:3000 || exit 1
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
