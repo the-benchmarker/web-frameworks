@@ -7,7 +7,7 @@ language:
 
   engines:
     default: 
-       command: "/server"
+       command: /server
 
 framework:
   engines:
