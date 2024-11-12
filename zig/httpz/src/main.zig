@@ -17,7 +17,7 @@ pub fn main() !void {
     var router = server.router();
 
     router.get("/", empty_handler);
-    router.get("/user", empty_handler);
+    router.post("/user", empty_handler);
     router.get("/user/:id", user_id_handler);
     try server.listen();
 }
