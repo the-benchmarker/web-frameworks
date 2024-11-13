@@ -31,11 +31,9 @@ pub fn main() !void {
 }
 
 pub fn user_id_handler(req: *httpz.Request, res: *httpz.Response) !void {
-    res.keepalive = true;
     res.body = req.param("id") orelse "";
 }
 
 pub fn empty_handler(_: *httpz.Request, res: *httpz.Response) !void {
-    res.keepalive = true;
     res.body = "";
 }
