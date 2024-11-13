@@ -1,14 +1,14 @@
-FROM debian AS build
+FROM chainguard/zig:latest AS build
 
-ARG ZIG_VER=0.13.0
+#ARG ZIG_VER=0.13.0
 
-RUN apt-get -qq update 
-RUN apt-get -qy install curl xz-utils \
-    && apt-get clean 
+#RUN apt-get -qq update 
+#RUN apt-get -qy install curl xz-utils \
+#    && apt-get clean 
 
-RUN curl https://ziglang.org/download/${ZIG_VER}/zig-linux-$(uname -m)-${ZIG_VER}.tar.xz -o zig-linux.tar.xz && \
-    tar xf zig-linux.tar.xz && \
-    mv zig-linux-$(uname -m)-${ZIG_VER}/ /opt/zig
+#RUN curl https://ziglang.org/download/${ZIG_VER}/zig-linux-$(uname -m)-${ZIG_VER}.tar.xz -o zig-linux.tar.xz && \
+#    tar xf zig-linux.tar.xz && \
+#    mv zig-linux-$(uname -m)-${ZIG_VER}/ /opt/zig
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ WORKDIR /app
 COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN /opt/zig/zig build -Doptimize=ReleaseFast
+RUN zig build -Doptimize=ReleaseFast
 
 FROM debian
 
