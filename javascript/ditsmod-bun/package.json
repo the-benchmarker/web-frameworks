@@ -1,11 +1,11 @@
 {
-  "name": "ditsmod-node",
+  "name": "ditsmod-bun",
   "type": "module",
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npm run build && node dist/main.js",
-    "build": "tsc -b",
+    "start": "bun dist/main.js",
+    "build": "tsc -b && rm node_modules/@ditsmod/*/tsconfig.json",
     "clean": "rm -rf dist*"
   },
   "imports": {
