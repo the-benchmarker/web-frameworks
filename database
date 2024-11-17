@@ -1,0 +1,3 @@
+create table category (id blob not null, name varchar(255) not null, primary key (id))
+create table transaction (amount float not null, transaction_date_time timestamp not null, category_id blob not null, currency varchar(255) not null, id blob not null, primary key (id))
+
