@@ -18,7 +18,6 @@ pub fn build(b: *std.Build) void {
         .version = version,
         .optimize = optimize,
         .root_source_file = root_source_file,
-        .strip = true,
     });
     exe.root_module.addImport("httpz", httpz_mod);
     b.installArtifact(exe);
