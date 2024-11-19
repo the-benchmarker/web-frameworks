@@ -10,4 +10,4 @@ framework:
     - bun install
     - bun run build
 
-  command: pm2-runtime start --interpreter ~/.bun/bin/bun dist/main.js -i max
+  command: bun dist/main.js

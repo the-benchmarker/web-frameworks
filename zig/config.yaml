@@ -1,13 +1,13 @@
 language:
   version: 0.13
 
-  files: 
+  files:
     - "**/*.zig"
     - "build.zig.zon"
 
   engines:
-    default: 
-       command: /server
+    default:
+      command: /server
 
 framework:
   engines:
