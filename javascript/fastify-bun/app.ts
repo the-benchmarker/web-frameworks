@@ -1,5 +1,6 @@
 import fastify from 'fastify';
 const app = fastify();
+app.register(await import('@fastify/formbody'));
 
 app.get('/', function (request, reply) {
   reply.send();

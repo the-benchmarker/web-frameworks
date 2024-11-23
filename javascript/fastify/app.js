@@ -1,5 +1,6 @@
 const fastify = require('fastify');
 const app = fastify();
+app.register(require('@fastify/formbody'));
 
 app.get('/', function (request, reply) {
   reply.send();
