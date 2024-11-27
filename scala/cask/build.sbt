@@ -1,4 +1,4 @@
-val CaskVersion = "0.10.1"
+val CaskVersion = "0.10.2"
 
 name := "server"
 
