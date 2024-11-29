@@ -1,7 +1,24 @@
-(function () {
-  'use strict';
+const Hapi = require('@hapi/hapi');
+const cluster = require('cluster');
+const os = require('os');
 
-  const Hapi = require('@hapi/hapi');
+if (cluster.isPrimary) {
+  const numCPUs = os.cpus().length;
+
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers.
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+    cluster.fork(); // Restart the worker
+  });
+} else {
+  // Workers can share any TCP connection
+  // In this case it is an HTTP server
 
   // Create a server with a host and port
   const server = Hapi.server({
@@ -14,7 +31,7 @@
     method: 'GET',
     path: '/',
     handler: function (req, handler) {
-      return '';
+      return handler.response('').header('Content-Length', '0');
     },
   });
 
@@ -30,7 +47,7 @@
     method: 'POST',
     path: '/user',
     handler: function (req, handler) {
-      return '';
+      return handler.response('').header('Content-Length', '0');
     },
   });
 
@@ -43,8 +60,8 @@
       process.exit(1);
     }
 
-    console.log('Server running at:', server.info.uri);
+    console.log(`Worker ${process.pid} running at:`, server.info.uri);
   }
 
   start();
-})();
+}
