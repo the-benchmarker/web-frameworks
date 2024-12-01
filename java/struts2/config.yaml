@@ -1,6 +1,6 @@
 framework:
   website: struts.apache.org
-  version: 6.6
+  version: 6.7
 
   build:
     - mvn clean package
