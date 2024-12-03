@@ -1,0 +1,12 @@
+{
+  "require": {
+    "php": ">=8.2.0",
+    "phphleb/framework": "v2.0.45"
+  },
+  "autoload": {
+    "classmap": [
+      "app/"
+    ]
+  },
+  "minimum-stability": "dev"
+}
