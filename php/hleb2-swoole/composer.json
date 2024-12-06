@@ -1,11 +1,10 @@
 {
   "require": {
-    "phphleb/framework": ">=v2.0.48"
+    "phphleb/framework": "~2.0.0"
   },
   "autoload": {
     "classmap": [
       "app/"
     ]
-  },
-  "minimum-stability": "dev"
+  }
 }

@@ -12,7 +12,6 @@ $http->set([
     'enable_coroutine' => false,
     'log_file' => '/dev/null',
     'log_level' => SWOOLE_LOG_ERROR,
-    'open_tcp_nodelay' => true,
 ]);
 
 $app = new Hleb\HlebAsyncBootstrap(__DIR__);

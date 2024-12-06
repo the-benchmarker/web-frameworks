@@ -2,7 +2,7 @@
 
 return [
     'debug' => false,
-    'log.enabled' => true,
+    'log.enabled' => false,
     'max.log.level' => 'info',
     'max.cli.log.level' => 'info',
     'log.level.in-cli' => false,
