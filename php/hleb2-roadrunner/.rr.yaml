@@ -1,0 +1,8 @@
+version: "3"
+http:
+  address: "0.0.0.0:3000"
+server:
+  command: "php public/index.php"
+  relay: pipes
+logs:
+  level: error
