@@ -13,13 +13,10 @@ route.get("/user/:id", (ctx) => {
     ctx.response.body = ctx.params.id
 })
 
-route.get("/user", (ctx) => {
+route.post("/user", (ctx) => {
     ctx.response.body = ''
 })
 
 app.use(route.routes());
 
-app.serve({
-  port: 3000,
-        reusePort: true
-})
+app.listen({ port: 3000 });

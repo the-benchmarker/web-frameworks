@@ -3,7 +3,7 @@
   :dependencies [[luminus/lein-template "4.51"]
                  [ch.qos.logback/logback-classic "1.5.12"]
                  [cheshire "5.13.0"]
-                 [clojure.java-time "1.4.2"]
+                 [clojure.java-time "1.4.3"]
                  [cprop "0.1.20"]
                  [expound "0.9.0"]
                  [funcool/struct "1.4.0"]
@@ -25,7 +25,7 @@
                  [ring-webjars "0.3.0"]
                  [ring/ring-core "1.13.0"]
                  [ring/ring-defaults "0.5.0"]
-                 [com.fasterxml.jackson.core/jackson-core "2.18.1"]]
+                 [com.fasterxml.jackson.core/jackson-core "2.18.2"]]
 
   :min-lein-version "2.0.0"
   

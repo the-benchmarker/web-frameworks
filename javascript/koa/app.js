@@ -15,4 +15,9 @@ router
     ctx.body = '';
   });
 
-app.use(router.routes()).use(router.allowedMethods()).listen(3000);
+app
+  .use(router.routes())
+  .use(router.allowedMethods())
+  .listen(3000, () => {
+    console.log(`Worker ${process.pid} started`);
+  });

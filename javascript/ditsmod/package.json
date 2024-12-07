@@ -1,11 +1,11 @@
 {
-  "name": "ditsmod-seed",
+  "name": "ditsmod-node",
   "type": "module",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "start": "npm run build && node dist/main.js",
-    "build": "tsc -b && rm node_modules/@ditsmod/*/tsconfig.json",
+    "build": "tsc -b",
     "clean": "rm -rf dist*"
   },
   "imports": {
@@ -16,11 +16,11 @@
   "license": "MIT",
   "dependencies": {
     "@ditsmod/body-parser": "~2.17.1",
-    "@ditsmod/core": "~2.61.0",
+    "@ditsmod/core": "~2.61.1",
     "@ditsmod/routing": "~2.7.0"
   },
   "devDependencies": {
-    "@types/node": "22",
-    "typescript": "5.6.3"
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3"
   }
 }

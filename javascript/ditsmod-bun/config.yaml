@@ -1,0 +1,13 @@
+framework:
+  github: ditsmod/ditsmod
+  website: ditsmod.github.io/en
+  version: 2.61
+
+  engines:
+    - bun
+
+  bootstrap:
+    - bun install
+    - bun run build
+
+  command: bun dist/main.js

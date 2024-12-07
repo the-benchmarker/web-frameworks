@@ -1,0 +1,10 @@
+{
+  "require": {
+    "phphleb/framework": "~2.0.0"
+  },
+  "autoload": {
+    "classmap": [
+      "app/"
+    ]
+  }
+}

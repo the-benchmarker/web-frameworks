@@ -1,0 +1,14 @@
+{
+  "require": {
+    "php": ">=8.2.0",
+    "phphleb/framework": "~2.0.0",
+    "nyholm/psr7": "@stable",
+    "spiral/roadrunner-cli": "@stable",
+    "spiral/roadrunner-http": "@stable"
+  },
+  "autoload": {
+    "classmap": [
+      "app/"
+    ]
+  }
+}

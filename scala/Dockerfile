@@ -21,4 +21,9 @@ COPY --from=build /usr/src/app/target target
 
 RUN tar -xvzf target/universal/server-0.1.0-SNAPSHOT.tgz
 
-CMD {{command}}
+RUN apt-get -qq update
+RUN apt-get -qy install curl
+
+ENTRYPOINT {{command}}
+
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1

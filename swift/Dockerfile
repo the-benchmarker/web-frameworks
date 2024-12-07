@@ -34,4 +34,9 @@ ENV {{{.}}}
 
 COPY --from=0 /usr/src/app/.build/release/server /usr/src/app/.build/release/server
 
-CMD {{command}} {{options}}
+RUN apt-get -qq update
+RUN apt-get -qy install curl
+
+ENTRYPOINT {{command}} {{options}}
+
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1

@@ -1,6 +1,6 @@
 framework:
   website: aiohttp.readthedocs.io
-  version: "3.10"
+  version: 3.11
 
   engines:
     - aiohttp
@@ -8,6 +8,7 @@ framework:
     - uvloop
 
 language:
+  version: 3.11
   engines:
     gunicorn:
       environment:

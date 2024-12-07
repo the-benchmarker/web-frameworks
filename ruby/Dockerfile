@@ -23,4 +23,9 @@ RUN bundle install
   RUN {{{.}}}
 {{/bootstrap}}
 
-CMD {{{command}}}
+RUN apt-get -qq update
+RUN apt-get -qy install curl
+
+ENTRYPOINT {{{command}}}
+
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1

@@ -2,7 +2,7 @@
   FROM php:{{{.}}}-fpm
 {{/language.version}}
 {{^language.version}}
-  FROM php:8.3-fpm
+  FROM php:8.4-fpm
 {{/language.version}}
 
 RUN apt-get -qq update
@@ -45,6 +45,9 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
+  RUN apt-get -qq update
+  RUN apt-get -qy install curl
+
 
 {{^framework.standalone}}
   {{#bootstrap}}
@@ -53,7 +56,7 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
 {{/framework.standalone}}
 
 {{#command}}
-  CMD {{{.}}}
+  ENTRYPOINT {{{.}}}
 {{/command}}
 
 {{^command}}
@@ -105,7 +108,9 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   opcache.fast_shutdown=0\n'\
   >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
   
-  CMD /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
+
+  ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
 
 {{/command}}
 
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
