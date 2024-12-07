@@ -11,7 +11,6 @@ mut:
 	method  Slice
 	path    Slice
 	version Slice
-	headers map[string]Slice
 }
 
 fn parse_request_line(mut req HttpRequest) ! {
@@ -55,68 +54,12 @@ fn parse_request_line(mut req HttpRequest) ! {
 	}
 }
 
-fn parse_headers(mut req HttpRequest, offset &int) ! {
-	for offset < req.buffer.len {
-		// End of headers
-		if req.buffer[*offset] == `\r` && req.buffer[*offset + 1] == `\n` {
-			unsafe {
-				*offset += 2
-			}
-			break
-		}
-
-		// Parse header name
-		mut header_start := *offset
-		for offset < req.buffer.len && req.buffer[*offset] != `:` {
-			unsafe {
-				*offset = *offset + 1
-			}
-		}
-		header_name := req.buffer[header_start..*offset].bytestr()
-		unsafe {
-			*offset++ // Skip the colon
-		}
-		// Skip whitespace after the colon
-		for offset < req.buffer.len && req.buffer[*offset] == ` ` {
-			unsafe {
-				*offset++
-			}
-		}
-
-		// Parse header value
-		mut value_start := *offset
-		for offset < req.buffer.len && req.buffer[*offset] != `\r` {
-			unsafe {
-				*offset++
-			}
-		}
-		header_value := Slice{
-			start: value_start
-			len:   *offset - value_start
-		}
-		req.headers[header_name] = header_value
-
-		// Move to the next line
-		if *offset + 1 < req.buffer.len && req.buffer[*offset] == `\r`
-			&& req.buffer[*offset + 1] == `\n` {
-			unsafe {
-				*offset += 2
-			}
-		} else {
-			return error('Invalid header line')
-		}
-	}
-}
-
 fn decode_http_request(buffer []u8) !HttpRequest {
 	mut req := HttpRequest{
-		buffer:  buffer
-		headers: map[string]Slice{}
+		buffer: buffer
 	}
-	offset := 0
 
 	parse_request_line(mut req)!
-	parse_headers(mut req, &offset)!
 
 	return req
 }
