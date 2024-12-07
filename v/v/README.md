@@ -79,9 +79,8 @@ fn main() {
 
 ```sh
 curl -X GET --verbose http://localhost:3000/ &&
-curl -X GET --verbose http://localhost:3000/user &&
-curl -X GET --verbose http://localhost:3000/user/1 &&
-curl -X POST --verbose http://localhost:3000/
+curl -X POST --verbose http://localhost:3000/user &&
+curl -X GET --verbose http://localhost:3000/user/1
 
 ```
 
