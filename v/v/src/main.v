@@ -4,9 +4,7 @@ const port = 3000
 const max_thread_pool_size = 8
 
 fn main() {
-	mut server := Server{
-		router: setup_router()
-	}
+	mut server := Server{}
 
 	server.server_socket = create_server_socket(port)
 	if server.server_socket < 0 {

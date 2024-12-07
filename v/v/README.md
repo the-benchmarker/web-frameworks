@@ -73,22 +73,20 @@ fn main() {
 }
 ```
 
-### Router
+## Test
 
-The router setup and route handling are implemented in [src/router.v](v/vanilla/src/router.v). The `setup_router` function initializes the router and adds routes with their respective handler functions:
+### CURL
 
-```v
-fn setup_router() Router {
-	mut router := Router{
-		root: RadixNode{
-			children: map[string]&RadixNode{}
-		}
-	}
-	// Adding routes with handler functions
-	router.add_route('GET', '/', home_controller)
-	router.add_route('GET', '/user', get_users_controller)
-	router.add_route('GET', '/user/:id', get_user_controller)
-	router.add_route('POST', '/user', create_user_controller)
-	return router
-}
+```sh
+curl -X GET --verbose http://localhost:3000/ &&
+curl -X GET --verbose http://localhost:3000/user &&
+curl -X GET --verbose http://localhost:3000/user/1 &&
+curl -X POST --verbose http://localhost:3000/
+
+```
+
+### WRK
+
+```sh
+wrk --connection 512 --threads 16 --duration 10s http://localhost:3000
 ```

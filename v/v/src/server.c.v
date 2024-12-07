@@ -85,7 +85,6 @@ mut:
 	lock_flag     sync.Mutex
 	has_clients   int
 	threads       [max_thread_pool_size]thread
-	router        Router
 }
 
 fn C.fcntl(fd int, cmd int, arg int) int
@@ -241,11 +240,11 @@ fn process_events(server &Server) {
 	events := [max_connection_size]C.epoll_event{}
 	num_events := C.epoll_wait(server.epoll_fd, &events[0], max_connection_size, -1)
 	for i := 0; i < num_events; i++ {
-		if events[i].events & (C.EPOLLHUP | C.EPOLLERR) != 0 {
+		if events[i].events & u32((C.EPOLLHUP | C.EPOLLERR)) != 0 {
 			handle_client_closure(server, unsafe { events[i].data.fd })
 			continue
 		}
-		if events[i].events & C.EPOLLIN != 0 {
+		if events[i].events & u32(C.EPOLLIN) != 0 {
 			request_buffer := [140]u8{}
 			bytes_read := C.recv(unsafe { events[i].data.fd }, &request_buffer[0], 140 - 1,
 				0)
@@ -267,7 +266,7 @@ fn process_events(server &Server) {
 				// This lock is a workaround for avoiding race condition in router.params
 				// This slows down the server, but it's a temporary solution
 				(*server).lock_flag.lock()
-				response_buffer := (*server).router.handle_request(decoded_http_request) or {
+				response_buffer := handle_request(decoded_http_request) or {
 					eprintln('Error handling request ${err}')
 					C.send(unsafe { events[i].data.fd }, tiny_bad_request_response.data,
 						tiny_bad_request_response.len, 0)
