@@ -1,24 +1,23 @@
 import { wrap } from "vixeny";
 
-const app  = wrap()()
-  .stdPetition({
+const app  = await wrap()()
+  .get({
     path: '/',
-    f: () => null
+    f: () => ''
   })
-  .stdPetition({
+  .get({
     path: '/user/:id',
     param: {
       unique: true
     },
     f: ctx => ctx.param
   })
-  .stdPetition({
-    method: 'POST',
+  .post({
     path: '/user',
-    f: () => null
+    f: () => ""
   })
   .compose()
-
+  
 export default { 
     port: 3000,
     fetch: app,
