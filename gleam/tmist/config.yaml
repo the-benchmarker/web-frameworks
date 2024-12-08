@@ -1,0 +1,7 @@
+framework:
+  website: https://github.com/rawhat/mist
+  version: "3.0.0"
+  files:
+    - "**/*.gleam"
+    - "gleam.toml"
+    - "manifest.toml"
