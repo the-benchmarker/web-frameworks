@@ -9,5 +9,5 @@ executable          server
     ghc-options:    -Wall -threaded -O2 -rtsopts -with-rtsopts=-N
     extensions:     OverloadedStrings
     build-depends:  base   >= 4      && < 5
-                  , scotty >= 0.12 && < 0.13
+                  , scotty >= 0.22 && < 0.23
                   , text

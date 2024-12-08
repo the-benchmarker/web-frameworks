@@ -34,15 +34,12 @@ WORKDIR /usr/src/web
   FROM eclipse-temurin:{{{.}}}-jre
 {{/language.version}}
 {{^language.version}}
-  FROM eclipse-temurin:21.0.3_9-jre
+  FROM eclipse-temurin:21.0.5_11-jre
 {{/language.version}}
 
 
 WORKDIR /opt/web
 
-{{#fix}}
-  RUN {{{.}}}
-{{/fix}}
 
 {{#binaries}}
   COPY --from=build /usr/src/web/{{{.}}} {{{.}}}
@@ -52,7 +49,7 @@ WORKDIR /opt/web
   COPY '{{source}}' '{{target}}'
 {{/static_files}}
 
-RUN ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
+RUN  ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
 
 {{#bootstrap}}
   RUN {{{.}}}
@@ -62,4 +59,8 @@ RUN ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
   ENV {{{.}}}
 {{/environment}}
 
-CMD {{{command}}}
+RUN apt-get -qq update
+RUN apt-get -qy install curl
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+
+ENTRYPOINT {{{command}}}

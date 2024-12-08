@@ -1,4 +1,6 @@
-FROM dart:3.4 AS build
+FROM curlimages/curl AS curl
+
+FROM dart:3.5 AS build
 
 # Set the working directory
 WORKDIR /app
@@ -23,4 +25,7 @@ COPY --from=build /bin/sh /bin/sh
 COPY --from=build /runtime/ /
 COPY --from=build /app/server /app/server
 
-CMD {{command}}
+COPY --from=curl /usr/bin/curl curl
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+
+ENTRYPOINT {{command}}

@@ -12,6 +12,11 @@ language:
     turbo:
       environment:
         NODE_ENV: production
+      deps:
+        - python3
+        - make
+        - gcc
+        - g++
       bootstrap:
         - npm install
       command: node app.js
@@ -30,13 +35,17 @@ language:
         - npm
       bootstrap:
         - npm --location=global install pm2
-      command: nohup pm2-runtime start "deno run --allow-net --allow-read=. app.ts" -i max
-    bun:
-      command: bun run cluster.ts
+      command: nohup pm2-runtime start "deno run --allow-net --allow-read=. --allow-env app.ts" -i max
     happyx:
       bootstrap:
         - npm install
       command: node app.js
+    bun:
+      bootstrap:
+        - bun install
+      command: bun run cluster.ts
+      files:
+        - bunfig.toml
 
 framework:
   engines:

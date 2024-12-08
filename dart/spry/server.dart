@@ -1,17 +1,21 @@
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:spry/spry.dart' hide Platform;
+import 'package:spry/spry.dart';
 import 'package:spry/io.dart';
 
 Future<void> runServer([_]) async {
-  final app = Spry();
+  final app = createSpry();
 
   app.get('/', (event) {});
   app.post('/user', (event) {});
-  app.get('/user/:name', (event) => event.params('name'));
+  app.get('/user/:name', (event) {
+    final params = useParams(event);
 
-  final handler = const IOPlatform().createHandler(app);
+    return params['name'];
+  });
+
+  final handler = toIOHandler(app);
   final server = await HttpServer.bind('0.0.0.0', 3000, shared: true);
 
   server.listen(handler);

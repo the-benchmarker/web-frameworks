@@ -1,8 +1,13 @@
 framework:
   website: coresky.net
-  version: 0.508
+  version: 0.546
+
+  files:
+    - vendor/bin/sky
+    - main/config.yaml
 
   bootstrap:
     - mkdir -p var/cache && chown www-data var/cache
     - mkdir -p var/gate && chown www-data var/gate
-    - php main/warmcache.php
+    - chown www-data public
+    - php vendor/bin/sky warm # generate cache before start

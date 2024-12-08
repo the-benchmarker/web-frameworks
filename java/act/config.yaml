@@ -1,6 +1,6 @@
 language:
   version: 11
-  
+
 framework:
   github: actframework/actframework
   version: 1.9
@@ -8,9 +8,6 @@ framework:
   build:
     - mvn package
     - mv target/dist/benchmark-1.0.0-*.tar.gz target/dist/benchmark-1.0.0.tar.gz
-
-  fix:
-    - ln -sfv /usr/local/openjdk-11/bin/java /usr/bin/java
 
   binaries:
     - target/dist/benchmark-1.0.0.tar.gz

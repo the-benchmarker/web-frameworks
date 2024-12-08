@@ -1,4 +1,9 @@
-FROM sbtscala/scala-sbt:eclipse-temurin-alpine-22_36_1.10.0_3.4.2 AS build
+{{#language.image}}
+  FROM sbtscala/scala-sbt:eclipse-temurin-alpine-21.0.2_13_1.10.4_{{{.}}} AS build
+{{/language.image}}
+{{^language.image}}
+  FROM sbtscala/scala-sbt:eclipse-temurin-alpine-21.0.2_13_1.10.4_3.5.2 AS build
+{{/language.image}}
 
 WORKDIR /usr/src/app
 
@@ -8,7 +13,7 @@ COPY '{{source}}' '{{target}}'
 
 RUN sbt universal:packageZipTarball
 
-FROM eclipse-temurin:21.0.3_9-jre-jammy
+FROM eclipse-temurin:21.0.5_11-jre
 
 WORKDIR /usr/src/app
 
@@ -16,4 +21,9 @@ COPY --from=build /usr/src/app/target target
 
 RUN tar -xvzf target/universal/server-0.1.0-SNAPSHOT.tgz
 
-CMD {{command}}
+RUN apt-get -qq update
+RUN apt-get -qy install curl
+
+ENTRYPOINT {{command}}
+
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
