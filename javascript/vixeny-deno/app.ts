@@ -1,21 +1,20 @@
-import { wrap } from "jsr:@vixeny/core@0.1.42";
+import { wrap } from "jsr:@vixeny/core@0.1.53";
 
-const app  = wrap()()
-  .stdPetition({
+const app  = await wrap()()
+  .get({
     path: '/',
-    f: () => null
+    f: () => ''
   })
-  .stdPetition({
+  .get({
     path: '/user/:id',
     param: {
       unique: true
     },
     f: ctx => ctx.param
   })
-  .stdPetition({
-    method: 'POST',
+  .post({
     path: '/user',
-    f: () => null
+    f: () => ''
   })
   .compose()
 
