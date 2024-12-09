@@ -1,17 +1,13 @@
-{{#language.image}}
-  FROM gleamlang/gleam
-{{/language.image}}
-{{^language.image}}
-  FROM 
-{{/language.image}}
+FROM ghcr.io/gleam-lang/gleam:v1.6.3-erlang
 
-WORKDIR /usr/src/app
+WORKDIR /opt/web
 
 {{#files}}
 COPY '{{source}}' '{{target}}'
 {{/files}}
 
 RUN gleam build
+RUN gleam export erlang-shipment
 
 ENTRYPOINT {{command}}
 

@@ -24,10 +24,12 @@ pub fn main() {
       case request.path_segments(req) {
         [] -> index(req)
         ["user", name] -> handle_user(req, name)
+        ["user"] -> handle_user(req, "")
         _ -> not_found
       }
     }
     |> mist.new
+    |> mist.bind("0.0.0.0")
     |> mist.port(3000)
     |> mist.start_http
 
