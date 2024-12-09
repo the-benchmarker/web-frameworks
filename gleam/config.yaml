@@ -1,0 +1,11 @@
+language:
+  version: 1.6
+  website: gleam.run
+
+  engines:
+    default:
+      command: /opt/web/build/erlang-shipment/entrypoint.sh  run
+
+framework:
+  engines:
+    - default

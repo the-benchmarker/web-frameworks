@@ -23,9 +23,8 @@ while read line ; do
   echo "*********** ${line} *************"
   LANGUAGE=`echo $line | awk -F '/' '{print $(NF-2)}'`
   FRAMEWORK=`echo $line | awk -F '/' '{print $(NF-1)}'`
- # cd ${LANGUAGE}/${FRAMEWORK}
   make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile build
-#  cd ../..
+  sleep 30
   make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
   make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile clean
   docker ps -aq | xargs --no-run-if-empty docker rm -f;
@@ -33,6 +32,3 @@ while read line ; do
   sudo docker system prune -a -f
   sleep 1
 done < /tmp/list.txt
-
-#echo 'select label from frameworks' | psql -U postgres -d benchmark -t | sort > /tmp/done.txt
-#find . -mindepth 3 -type f -name config.yaml | awk -F '/' '{print $(NF-1)}' | sort > all.txt
