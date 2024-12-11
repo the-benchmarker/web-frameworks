@@ -25,6 +25,8 @@ language:
         - sockets
       command: php public/index.php start
     road-runner:
+      extensions:
+        - protobuf
       files:
         - .rr.yaml
       bootstrap:
