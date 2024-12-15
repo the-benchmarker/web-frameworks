@@ -1,7 +1,7 @@
 name: spry_app
 
 environment:
-  sdk: ">=3.5.0 <3.6.0"
+  sdk: "<3.6.1"
 
 dependencies:
   spry: ^5.0.0
