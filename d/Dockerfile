@@ -6,7 +6,7 @@ RUN apt-get install -yq curl zlib1g-dev libssl-dev clang libxml2 xz-utils tzdata
     ln -fs /usr/share/zoneinfo/Europe/Rome /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
 
-RUN curl -L -o ldc2.tar.xz https://github.com/ldc-developers/ldc/releases/download/v1.39.0/ldc2-1.39.0-linux-{{#arch}}{{{.}}}{{/arch}}.tar.xz
+RUN curl -L -o ldc2.tar.xz https://github.com/ldc-developers/ldc/releases/download/v1.40.0/ldc2-1.40.0-linux-{{#arch}}{{{.}}}{{/arch}}.tar.xz
 RUN tar xf ldc2.tar.xz
 RUN rm ldc2.tar.xz && mv ldc2* ldc2
 ENV PATH="$PATH:$CWD/ldc2/bin"
