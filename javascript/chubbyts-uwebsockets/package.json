@@ -3,7 +3,7 @@
     "@chubbyts/chubbyts-framework": "~1.9.0",
     "@chubbyts/chubbyts-framework-router-path-to-regexp": "*",
     "@chubbyts/chubbyts-http": "*",
-    "@chubbyts/chubbyts-uwebsockets-http-bridge": "*",
+    "@chubbyts/chubbyts-http-uwebsockets-bridge": "*",
     "@types/node": "22"
   }
 }
