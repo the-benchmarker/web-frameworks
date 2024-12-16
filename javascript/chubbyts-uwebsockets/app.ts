@@ -20,7 +20,7 @@ import {
 import {
   createResponseToUwebsocketsEmitter,
   createUwebsocketsToServerRequestFactory,
-} from "@chubbyts/chubbyts-uwebsockets-http-bridge/dist/uwebsocket-http";
+} from "@chubbyts/chubbyts-http-uwebsockets-bridge/dist/uwebsocket-http";
 import { App, HttpRequest, HttpResponse } from "uWebSockets.js";
 
 const responseFactory = createResponseFactory();
