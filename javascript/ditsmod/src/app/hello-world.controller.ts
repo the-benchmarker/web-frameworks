@@ -1,19 +1,20 @@
-import { controller, SingletonRequestContext, route } from '@ditsmod/core';
+import { controller, SingletonRequestContext } from '@ditsmod/core';
+import { route } from '@ditsmod/routing';
 
-@controller({ isSingleton: true })
+@controller({ scope: 'module' })
 export class HelloWorldController {
   @route('GET')
   empty(ctx: SingletonRequestContext) {
-    ctx.nodeRes.end();
+    ctx.rawRes.end();
   }
 
   @route('GET', 'user/:id')
   userId(ctx: SingletonRequestContext) {
-    ctx.nodeRes.end(ctx.pathParams!.id);
+    ctx.rawRes.end(ctx.pathParams!.id);
   }
 
   @route('POST', 'user')
   postHello(ctx: SingletonRequestContext) {
-    ctx.nodeRes.end();
+    ctx.rawRes.end();
   }
 }

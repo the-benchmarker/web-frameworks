@@ -15,9 +15,9 @@
   "author": "Your Name Here",
   "license": "MIT",
   "dependencies": {
-    "@ditsmod/body-parser": "~2.17.1",
-    "@ditsmod/core": "~2.61.1",
-    "@ditsmod/routing": "~2.7.0"
+    "@ditsmod/body-parser": "^3.0.0-alpha.2",
+    "@ditsmod/core": "^3.0.0-alpha.2",
+    "@ditsmod/routing": "^3.0.0-alpha.2"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",
