@@ -43,7 +43,7 @@ language:
     bun:
       bootstrap:
         - bun install --production
-      command: bun run cluster.ts
+       command: bun run pm2
       files:
         - bunfig.toml
 
