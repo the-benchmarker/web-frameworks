@@ -13,6 +13,7 @@
   ],
   "scripts": {
     "build": "durian build",
+    "pm2": "bun run build && pm2-runtime start ecosystem.config.js",
     "start": "durian start",
     "start:debug": "durian start:debug",
     "start:dev": "durian start:dev",
@@ -33,6 +34,7 @@
   },
   "dependencies": {
     "durian.js": "~1.1.0",
-    "@nestjs/platform-fastify": "~10.4.0"
+    "@nestjs/platform-fastify": "~10.4.0",
+    "pm2-beta": "^6.0.2"
   }
 }
