@@ -13,6 +13,7 @@
   ],
   "scripts": {
     "build": "durian build",
+    "pm2": "bun run build && pm2-runtime start ecosystem.config.js",
     "start": "durian start",
     "start:debug": "durian start:debug",
     "start:dev": "durian start:dev",
@@ -32,6 +33,7 @@
     "test:e2e": "durian test:e2e"
   },
   "dependencies": {
-    "durian.js": "~1.1.0"
+    "durian.js": "^1.2.0",
+    "pm2-beta": "^6.0.2"
   }
 }
