@@ -4,16 +4,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.struts.benchmarker</groupId>
     <artifactId>benchmark</artifactId>
-    <version>1.0.0</version>
+    <version>7.0.0</version>
     <packaging>jar</packaging>
     <name>benchmark</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jetty.version>9.4.56.v20240826</jetty.version>
-        <jetty-jsp.version>9.2.30.v20200428</jetty-jsp.version>
-        <glassfish.el.version>3.0.1-b12</glassfish.el.version>
         <maven.compiler.release>21</maven.compiler.release>
+        <jetty.version>11.0.24</jetty.version>
+        <log4j.version>2.24.2</log4j.version>
     </properties>
 
     <dependencies>
@@ -41,22 +40,19 @@
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-jsp</artifactId>
-            <version>${jetty-jsp.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.glassfish</groupId>
-                    <artifactId>javax.el</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>apache-jsp</artifactId>
+            <version>${jetty.version}</version>
         </dependency>
-
         <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.el</artifactId>
-            <version>${glassfish.el.version}</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
