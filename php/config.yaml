@@ -1,5 +1,5 @@
 language:
-  version: 8.3
+  version: 8.4
 
   files:
     - "**/*.php"
@@ -36,7 +36,7 @@ language:
       command: ./rr serve
     swoole:
       extensions:
-        - swoole/5.1.6
+        - swoole/6.0.0
       command: php public/index.php
       build_deps:
         - libbrotli-dev

@@ -13,6 +13,10 @@ ENV LD_PRELOAD=libjemalloc.so.2
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
+{{#build_deps}}
+  RUN apt-get -y install {{{.}}}
+{{/build_deps}}
+
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}

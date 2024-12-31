@@ -1,6 +1,6 @@
 framework:
   github: HapticX/happyx
-  version: 4.6
+  version: 4.7
 
 build_opts: "-d:disableApiDoc -d:noliveviews -d:disableComp -d:disableDefDeco -d:useMalloc --threads:on --opt:speed"
 build_with: nimble install -d -y
