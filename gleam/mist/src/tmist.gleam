@@ -3,9 +3,6 @@ import gleam/erlang/process
 import gleam/http
 import gleam/http/request.{type Request}
 import gleam/http/response.{type Response}
-import gleam/io
-import gleam/iterator
-import gleam/option.{None, Some}
 import gleam/otp/actor
 import gleam/result
 import gleam/string

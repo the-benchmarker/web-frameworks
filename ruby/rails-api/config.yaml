@@ -5,6 +5,10 @@ framework:
   bootstrap:
     - mkdir -p tmp/pids
 
+  build_deps:
+    - libsqlite3-dev
+    - pkg-config
+
   environment:
     RAILS_ENV: production
     RAILS_LOG_LEVEL: fatal

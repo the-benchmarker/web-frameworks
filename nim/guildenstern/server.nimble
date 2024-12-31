@@ -4,4 +4,4 @@ description   = "Modular multithreading Linux HTTP + WebSocket server"
 license       = "MIT"
 
 requires "nim >= 1.6"
-requires "guildenstern >= 7.2 & < 7.3"
+requires "guildenstern >= 7.3 & < 7.4"
