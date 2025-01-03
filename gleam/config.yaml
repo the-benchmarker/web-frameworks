@@ -2,6 +2,10 @@ language:
   version: 1.6
   website: gleam.run
 
+  files:
+    - gleam.toml
+    - "**/*.gleam"
+
   engines:
     default:
       command: /opt/web/build/erlang-shipment/entrypoint.sh  run
