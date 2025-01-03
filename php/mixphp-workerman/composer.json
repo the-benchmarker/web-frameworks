@@ -5,7 +5,11 @@
     }
   },
   "require": {
+<<<<<<< Updated upstream
     "workerman/workerman": "^5.0",
+=======
+    "workerman/workerman": "~5.0.0",
+>>>>>>> Stashed changes
     "mix/vega": "~3.0.0"
   }
 }
