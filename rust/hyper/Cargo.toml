@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 http-body-util = "0.1"
 hyper = { version = "1.5", features = ["http1", "server"] }
-hyper-util = { version = "1", features = ["http1", "server", "tokio"] }
+hyper-util = { version = "0.1", features = ["http1", "server", "tokio"] }
 tokio = { version = "1", features = ["rt", "rt-multi-thread", "net", "macros"] }
 
 [profile.release]
