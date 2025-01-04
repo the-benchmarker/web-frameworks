@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "vixeny": "jsr:@vixeny/core",
+    "vixeny-perspective": "https://deno.land/x/vixeny_prespective@v0.3.2/main.ts",
+    "vixeny-plugins": "jsr@vixeny/plugins@v0.0.2",
+    "@feathersjs/schema": "npm:@feathersjs/schema",
+    "@sinclair/typebox": "npm:@sinclair/typebox@latest"
+  }
+}

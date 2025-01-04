@@ -1,4 +1,4 @@
-import { wrap } from "jsr:@vixeny/core@0.1.42";
+import { wrap } from "vixeny";
 
 export default wrap()()
   .get({
@@ -16,5 +16,3 @@ export default wrap()()
     path: "/user",
     f: () => null
   });
-
-Deno.serve({fetch: await root.compose(), port: 3000}, app)
