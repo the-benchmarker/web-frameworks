@@ -4,7 +4,6 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-http = "*"
 http-body-util = "*"
 hyper = { version = "1.5", features = ["http1", "server"] }
 hyper-util = { version = "*", features = ["http1", "server", "tokio"] }

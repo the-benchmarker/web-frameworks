@@ -1,6 +1,5 @@
-use http::Method;
 use http_body_util::{combinators::BoxBody, BodyExt, Empty, Full};
-use hyper::{body::Bytes, server, service::service_fn, Request, Response};
+use hyper::{body::Bytes, http::Method, server, service::service_fn, Request, Response};
 use hyper_util::rt::TokioIo;
 use std::net::SocketAddr;
 use tokio::net::TcpListener;
