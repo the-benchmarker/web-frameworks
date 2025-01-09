@@ -4,7 +4,9 @@ use warp::Filter;
 async fn main() {
     let index = warp::path::end().and(warp::get()).map(|| "");
 
-    let user = warp::path!("user" / u32).and(warp::get()).map(|id: u32| id.to_string());
+    let user = warp::path!("user" / u32)
+        .and(warp::get())
+        .map(|id: u32| id.to_string());
 
     let user_post = warp::path("user").and(warp::post()).map(|| "");
 
