@@ -6,7 +6,17 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN cargo build --release && strip target/release/server
+RUN cargo build --release  \
+  --config  profile.release.opt-level = 3 \
+  --config  profile.release.debug = false \
+  --config  profile.release.debug-assertions = false \
+  --config  profile.release.lto = true \
+  --config  profile.release.panic = "abort" \
+  --config  profile.release.incremental = false \ 
+  --config  profile.release.codegen-units = 1 \
+  --config  profile.release.rpath = false \
+  --config  profile.release.strip = false \
+  && strip target/release/server
 
 FROM debian:stable-slim
 
