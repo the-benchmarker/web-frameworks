@@ -8,7 +8,7 @@ var app = builder.Build();
 app.UseFastEndpoints();
 app.Run();
 
-public class Home : Endpoint<object, object>
+public class Home : EndpointWithoutRequest
 {
     public override void Configure()
     {
@@ -16,14 +16,14 @@ public class Home : Endpoint<object, object>
         AllowAnonymous();
     }
 
-    public override Task HandleAsync(object _, CancellationToken __)
+    public override Task HandleAsync(CancellationToken __)
     {
         HttpContext.Response.StatusCode = StatusCodes.Status200OK;
         return HttpContext.Response.WriteAsync("");
     }
 }
 
-public class UserById : Endpoint<object, object>
+public class UserById : EndpointWithoutRequest
 {
     public override void Configure()
     {
@@ -31,7 +31,7 @@ public class UserById : Endpoint<object, object>
         AllowAnonymous();
     }
 
-    public override Task HandleAsync(object _, CancellationToken __)
+    public override Task HandleAsync(CancellationToken __)
     {
         HttpContext.Response.StatusCode = StatusCodes.Status200OK;
         return HttpContext.Response.WriteAsync(
@@ -39,16 +39,16 @@ public class UserById : Endpoint<object, object>
     }
 }
 
-public class User : Endpoint<object, object>
+public class User : EndpointWithoutRequest
 {
     public override void Configure()
     {
         Post("/user");
         AllowAnonymous();
-        Describe(x => x.Accepts<object>("*/*"));
+        Description(x => x.Accepts<object>("*/*"));
     }
 
-    public override Task HandleAsync(object _, CancellationToken __)
+    public override Task HandleAsync(CancellationToken __)
     {
         HttpContext.Response.StatusCode = StatusCodes.Status200OK;
         return HttpContext.Response.WriteAsync("");
