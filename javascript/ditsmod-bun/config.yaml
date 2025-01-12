@@ -7,7 +7,7 @@ framework:
     - bun
 
   bootstrap:
-    - bun install
+    - bun install --production
     - bun run build
 
   command: bun dist/main.js

@@ -6,9 +6,8 @@ language:
       environment:
         NODE_ENV: production
       bootstrap:
-        - npm --location=global install pm2
         - npm install
-      command: pm2-runtime start app.js -i max
+      command: node cluster.js
     turbo:
       environment:
         NODE_ENV: production
@@ -27,15 +26,12 @@ language:
         NODE_ENV: production
         EXPERIMENTAL_FASTCALL: 1
       bootstrap:
-        - npm --location=global install pm2
         - npm install
-      command: pm2-runtime start app.js -i max
+      command: node cluster.js
     deno:
-      deps:
-        - npm
       bootstrap:
         - deno install
-      command: deno run --allow-net --allow-read=. --allow-env app.ts
+      command: deno serve --parallel --allow-net --allow-read=. --allow-env app.ts
     happyx:
       bootstrap:
         - npm install
@@ -43,8 +39,7 @@ language:
     bun:
       bootstrap:
         - bun install --production
-        - bun add pm2-beta
-      command: bun run pm2 start app.ts -i max
+      command: bun run cluster.ts
       files:
         - bunfig.toml
 

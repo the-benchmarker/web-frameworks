@@ -10,9 +10,9 @@ export default wrap()()
     param: {
       unique: true,
     },
-    f: (f) => f.param
+    f: (f) => f.param,
   })
   .post({
     path: "/user",
-    f: () => null
+    f: () => null,
   });
