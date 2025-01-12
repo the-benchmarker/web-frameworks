@@ -1,6 +1,6 @@
-var express = require('express');
+import express  from 'express';
 
-var app = express();
+const app = express();
 app.set('etag', false);
 
 app.get('/', function (req, res) {
@@ -15,10 +15,4 @@ app.post('/user', function (req, res) {
   res.send('');
 });
 
-app.listen(3000, function (err, address) {
-  if (err) {
-    app.log.error(err);
-    process.exit(1);
-  }
-  console.info(`Worker PID ${process.pid} is listening at http://localhost:3000`);
-});
+export default app;

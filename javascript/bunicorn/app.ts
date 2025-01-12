@@ -8,7 +8,9 @@ app.addRoutes([
   router.post("/user", (ctx) => ctx.ok()),
 ]);
 
-app.serve({
-  port: 3000,
-	reusePort: true
-})
+Bun.serve({
+  fetch(req) {
+    return app.handleRequest(req);
+  },
+  port: 3000
+});

@@ -1,7 +1,7 @@
-import { Blaze } from '@busy-hour/blaze';
+import { Blaze } from "@busy-hour/blaze";
 
-import coreService from './services/core.js';
-import userService from './services/user.js';
+import coreService from "./services/core.js";
+import userService from "./services/user.js";
 
 const app = new Blaze();
 
@@ -10,4 +10,4 @@ app.import({
   services: [coreService, userService],
 });
 
-app.serve(3000);
+export default app;
