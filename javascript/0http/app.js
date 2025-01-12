@@ -1,4 +1,4 @@
-const cero = require('0http');
+import cero from "0http"
 const { router, server } = cero();
 
 router.on('GET', '/', (req, res) => {
@@ -13,4 +13,4 @@ router.on('POST', '/user', (req, res) => {
   res.end();
 });
 
-server.listen(3000);
+export default server;

@@ -1,3 +1,3 @@
 export default {
-  GET: ({ url }) => url.param('id'),
+  GET: ({ url }) => url.param("id"),
 };

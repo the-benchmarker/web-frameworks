@@ -1,20 +1,15 @@
-import gleam/bytes_builder
+import gleam/bytes_tree
 import gleam/erlang/process
 import gleam/http
 import gleam/http/request.{type Request}
 import gleam/http/response.{type Response}
-import gleam/otp/actor
 import gleam/result
-import gleam/string
 import mist.{type Connection, type ResponseData}
 
 pub fn main() {
-  let selector = process.new_selector()
-  let state = Nil
-
   let not_found =
     response.new(404)
-    |> response.set_body(mist.Bytes(bytes_builder.new()))
+    |> response.set_body(mist.Bytes(bytes_tree.new()))
 
   let assert Ok(_) =
     fn(req: Request(Connection)) -> Response(ResponseData) {
@@ -33,10 +28,6 @@ pub fn main() {
   process.sleep_forever()
 }
 
-pub type MyMessage {
-  Broadcast(String)
-}
-
 fn index(request: Request(Connection)) -> Response(ResponseData) {
   let content_type =
     request
@@ -44,7 +35,8 @@ fn index(request: Request(Connection)) -> Response(ResponseData) {
     |> result.unwrap("text/plain")
 
   response.new(200)
-  |> response.set_body(mist.Bytes(bytes_builder.new()))
+  |> response.set_body(mist.Bytes(bytes_tree.new()))
+  |> response.set_header("content-type", content_type)
 }
 
 fn handle_user(
@@ -59,13 +51,16 @@ fn handle_user(
   case request.method {
     http.Post ->
       response.new(200)
-      |> response.set_body(mist.Bytes(bytes_builder.new()))
+      |> response.set_body(mist.Bytes(bytes_tree.new()))
+      |> response.set_header("content-type", content_type)
     http.Get -> {
       response.new(200)
-      |> response.set_body(mist.Bytes(bytes_builder.from_string(name)))
+      |> response.set_body(mist.Bytes(bytes_tree.from_string(name)))
+      |> response.set_header("content-type", content_type)
     }
     _other ->
       response.new(404)
-      |> response.set_body(mist.Bytes(bytes_builder.new()))
+      |> response.set_body(mist.Bytes(bytes_tree.new()))
+      |> response.set_header("content-type", content_type)
   }
 }

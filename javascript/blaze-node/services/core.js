@@ -1,16 +1,16 @@
-import { BlazeCreator } from '@busy-hour/blaze';
+import { BlazeCreator } from "@busy-hour/blaze";
 
 const list = BlazeCreator.action({
-  rest: 'GET /',
+  rest: "GET /",
   async handler(ctx) {
-    ctx.response = 'text';
+    ctx.response = "text";
 
-    return '';
+    return "";
   },
 });
 
 const service = BlazeCreator.service({
-  name: '',
+  name: "",
   actions: {
     list,
   },

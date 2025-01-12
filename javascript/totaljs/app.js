@@ -1,15 +1,15 @@
-require('total5')
+require("total5");
 
-ROUTE('GET /', function($) {
-  $.text('');
+ROUTE("GET /", function ($) {
+  $.text("");
 });
 
-ROUTE('GET /user/{id}/', function($) {
+ROUTE("GET /user/{id}/", function ($) {
   $.text($.params.id);
 });
 
-ROUTE('POST /user/', function($) {
-  $.text('');
+ROUTE("POST /user/", function ($) {
+  $.text("");
 });
 
 Total.run({ port: 3000, release: true, watcher: false });

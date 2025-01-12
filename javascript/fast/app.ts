@@ -6,4 +6,9 @@ app.get("/", () => "");
 app.get("/user/:id", (req) => req.params.id);
 app.post("/user", () => "");
 
-await app.serve({ port: 3000 });
+export default {
+  reusePort: true,
+  port: 3000,       // Port to run the server on
+  fetch: app.serve, // Use the `app.serve` method to handle requests
+};
+

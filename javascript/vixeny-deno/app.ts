@@ -1,22 +1,20 @@
 import { wrap } from "jsr:@vixeny/core@0.1.42";
 
-const app  = wrap()()
-  .stdPetition({
-    path: '/',
-    f: () => null
+export default wrap()()
+  .get({
+    path: "/",
+    f: () => null,
   })
-  .stdPetition({
-    path: '/user/:id',
+  .get({
+    path: "/id/:id",
     param: {
-      unique: true
+      unique: true,
     },
-    f: ctx => ctx.param
+    f: (f) => f.param,
   })
-  .stdPetition({
-    method: 'POST',
-    path: '/user',
-    f: () => null
-  })
-  .compose()
+  .post({
+    path: "/user",
+    f: () => null,
+  });
 
-Deno.serve({port: 3000}, app)
+Deno.serve({ fetch: await root.compose(), port: 3000 }, app);

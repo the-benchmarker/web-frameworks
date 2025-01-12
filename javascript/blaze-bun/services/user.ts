@@ -1,25 +1,25 @@
-import { BlazeCreator } from '@busy-hour/blaze';
+import { BlazeCreator } from "@busy-hour/blaze";
 
 const find = BlazeCreator.action({
-  rest: 'GET /:id',
+  rest: "GET /:id",
   async handler(ctx) {
-    ctx.response = 'text';
+    ctx.response = "text";
 
     return ctx.request.params?.id;
   },
 });
 
 const create = BlazeCreator.action({
-  rest: 'POST /',
+  rest: "POST /",
   async handler(ctx) {
-    ctx.response = 'text';
+    ctx.response = "text";
 
-    return '';
+    return "";
   },
 });
 
 const service = BlazeCreator.service({
-  name: 'user',
+  name: "user",
   actions: {
     find,
     create,
