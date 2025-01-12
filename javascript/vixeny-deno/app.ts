@@ -10,11 +10,11 @@ export default wrap()()
     param: {
       unique: true,
     },
-    f: (f) => f.param
+    f: (f) => f.param,
   })
   .post({
     path: "/user",
-    f: () => null
+    f: () => null,
   });
 
-Deno.serve({fetch: await root.compose(), port: 3000}, app)
+Deno.serve({ fetch: await root.compose(), port: 3000 }, app);
