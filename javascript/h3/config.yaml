@@ -3,7 +3,6 @@ framework:
   version: 1.13
 
   files:
+    - cluster.js
     - app.mjs
     - package.json
-
-  command: pm2-runtime start app.mjs -i $(nproc)
