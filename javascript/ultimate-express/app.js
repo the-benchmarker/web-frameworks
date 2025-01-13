@@ -3,6 +3,7 @@ const express = require('ultimate-express');
 const app = express();
 
 app.set('etag', false);
+app.set('x-powered-by', false);
 
 app.get('/', function (req, res) {
   res.send('');
