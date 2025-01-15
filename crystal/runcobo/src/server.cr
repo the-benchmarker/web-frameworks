@@ -1,7 +1,7 @@
 require "runcobo"
 ENV["SKIP_LOG"] = "true"
 
-class Index < BaseAction
+class Home::Index < BaseAction
   get "/"
 
   call do
@@ -9,7 +9,7 @@ class Index < BaseAction
   end
 end
 
-class CreateUser < BaseAction
+class Users::CreateUser < BaseAction
   post "/user"
 
   call do
@@ -17,7 +17,7 @@ class CreateUser < BaseAction
   end
 end
 
-class ShowUser < BaseAction
+class Users::ShowUser < BaseAction
   get "/user/:id"
   url NamedTuple(id: Int32)
 
