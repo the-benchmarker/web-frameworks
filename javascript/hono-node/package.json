@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "@hono/node-server": "*",
     "hono": "~4.6.0"
   }
 }
