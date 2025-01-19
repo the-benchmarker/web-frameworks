@@ -16,7 +16,11 @@ import sync
 
 const tiny_bad_request_response = 'HTTP/1.1 400 Bad Request\r\nContent-Length: 0\r\nConnection: close\r\n\r\n'.bytes()
 
-#include <arpa/inet.h>
+$if windows {
+	#include <winsock2.h>
+} $else {
+	#include <arpa/inet.h>
+}
 #include <fcntl.h>
 #include <sys/epoll.h>
 #include <errno.h>
@@ -80,11 +84,12 @@ fn C.epoll_wait(__epfd int, __events &C.epoll_event, __maxevents int, __timeout 
 
 struct Server {
 mut:
-	server_socket int
-	epoll_fd      int
-	lock_flag     sync.Mutex
-	has_clients   int
-	threads       [max_thread_pool_size]thread
+	server_socket   int
+	epoll_fd        int
+	lock_flag       sync.Mutex
+	has_clients     int
+	threads         [max_thread_pool_size]thread
+	request_handler fn (HttpRequest) ![]u8 @[required]
 }
 
 fn C.fcntl(fd int, cmd int, arg int) int
@@ -235,7 +240,6 @@ fn handle_client_closure(server &Server, client_fd int) {
 	}
 }
 
-@[manualfree]
 fn process_events(server &Server) {
 	events := [max_connection_size]C.epoll_event{}
 	num_events := C.epoll_wait(server.epoll_fd, &events[0], max_connection_size, -1)
@@ -266,7 +270,7 @@ fn process_events(server &Server) {
 				// This lock is a workaround for avoiding race condition in router.params
 				// This slows down the server, but it's a temporary solution
 				(*server).lock_flag.lock()
-				response_buffer := handle_request(decoded_http_request) or {
+				response_buffer := (*server).request_handler(decoded_http_request) or {
 					eprintln('Error handling request ${err}')
 					C.send(unsafe { events[i].data.fd }, tiny_bad_request_response.data,
 						tiny_bad_request_response.len, 0)
