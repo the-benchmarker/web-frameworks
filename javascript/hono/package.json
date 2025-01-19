@@ -1,7 +1,12 @@
 {
-  "type": "module",
+  "name": "tot",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
   "dependencies": {
-    "@hono/node-server": "*",
-    "hono": "~4.6.0"
+    "hono": "^4.6.17"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
   }
 }
