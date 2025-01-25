@@ -16,5 +16,6 @@ rpath = false
 strip = false
 
 [dependencies]
-rama = "0.2.0-alpha.6"
+rama = { version = "0.2.0-alpha.6", features = ["http-full"] }
+serde = "1.0"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
