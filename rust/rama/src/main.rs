@@ -1,4 +1,3 @@
-use rama::extract::Path;
 use rama::{
     http::{
         matcher::HttpMatcher,
