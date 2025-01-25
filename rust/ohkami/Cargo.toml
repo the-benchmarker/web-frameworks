@@ -16,5 +16,5 @@ rpath = false
 strip = false
 
 [dependencies]
-ohkami = { version = "0.20", features = ["rt_tokio"] }
-tokio  = { version = "1", features = ["macros", "rt-multi-thread"] }
+ohkami = { version = "0.21", features = ["rt_tokio"] }
+nio    = { version = "0.0" }

@@ -1,6 +1,7 @@
 use ohkami::prelude::*;
 
-fn benchmark_ohkami() -> Ohkami {
+#[nio::main]
+async fn main() {
     Ohkami::new((
         "/"
             .GET(|| async {Response::OK()}),
@@ -8,13 +9,5 @@ fn benchmark_ohkami() -> Ohkami {
             .POST(|| async {Response::OK()}),
         "/user/:id"
             .GET(|id: String| async {id}),
-    ))
-}
-
-fn main() {
-    tokio::runtime::Builder::new_multi_thread()
-        .enable_all()
-        .event_interval(1)
-        .build().unwrap()
-        .block_on(benchmark_ohkami().howl("0.0.0.0:3000"))
+    )).howl("0.0.0.0:3000").await
 }
