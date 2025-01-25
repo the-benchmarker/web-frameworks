@@ -15,6 +15,8 @@ router
       ctx.body = '';
     });
 
-app
+const server = app
     .use(router.routes())
     .listen(3000);
+
+server.keepAliveTimeout = 0
