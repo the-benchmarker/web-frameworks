@@ -11,7 +11,6 @@ use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 struct GetUserParams {
-    #[expect(unused)]
     id: String,
 }
 
