@@ -5,15 +5,9 @@ edition = "2021"
 publish = false
 
 [profile.release]
-opt-level = 3
-debug = false
-debug-assertions = false
-lto = true
-panic = "abort"
-incremental = false
+lto           = true
+panic         = "abort"
 codegen-units = 1
-rpath = false
-strip = false
 
 [dependencies]
 ohkami = { version = "0.21", features = ["rt_nio"] }
