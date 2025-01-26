@@ -1,0 +1,10 @@
+[package]
+name = "server"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+rama = { version = "0.2.0-alpha.6", features = ["http-full"] }
+serde = "1.0"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
