@@ -5,9 +5,10 @@ language:
     node:
       environment:
         NODE_ENV: production
+        NODE_APP: app.mjs
       bootstrap:
         - npm install
-      command: node cluster.js
+      command: node cluster.mjs
     turbo:
       environment:
         NODE_ENV: production
@@ -25,9 +26,10 @@ language:
       environment:
         NODE_ENV: production
         EXPERIMENTAL_FASTCALL: 1
+        NODE_APP: app.mjs
       bootstrap:
         - npm install
-      command: node cluster.js
+      command: node cluster.mjs
     deno:
       bootstrap:
         - deno install
