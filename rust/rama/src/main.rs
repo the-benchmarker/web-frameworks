@@ -23,7 +23,7 @@ async fn main() {
             match_service!{
                 HttpMatcher::get("/") => StatusCode::OK,
                 HttpMatcher::post("/user") => StatusCode::OK,
-                HttpMatcher::get("/user/:id") => |Path(_): Path<GetUserParams>| async move { StatusCode::OK },
+                HttpMatcher::get("/user/:id") => |Path(GetUserParams{ id }): Path<GetUserParams>| async move { id },
                 _ => StatusCode::NOT_FOUND,
             }
         )
