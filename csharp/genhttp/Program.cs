@@ -1,12 +1,8 @@
-using GenHTTP.Engine.Kestrel;
-using GenHTTP.Modules.Functional;
+using GenHTTP.Engine.Internal;
 
-var empty = "";
+using web;
 
-var app = Inline.Create()
-                .Get(() => empty)
-                .Get("/user/:id", (string id) => id)
-                .Post("/user", () => empty);
+var app = new BenchmarkHandler();
 
 return await Host.Create()
                  .Handler(app)
