@@ -8,3 +8,8 @@ framework:
   environment:
     RACK_ENV: production
     AGOO_WORKER_COUNT: $(nproc)
+
+language:
+  engines:
+    agoo:
+      command: bundle exec ruby app.rb

@@ -12,5 +12,5 @@ Bun.serve({
   fetch(req) {
     return app.handleRequest(req);
   },
-  port: 3000
+  port: 3000, reusePort: true
 });

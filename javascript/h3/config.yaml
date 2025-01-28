@@ -3,6 +3,6 @@ framework:
   version: 1.15
 
   files:
-    - cluster.js
+    - cluster.mjs
     - app.mjs
     - package.json
