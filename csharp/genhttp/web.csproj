@@ -13,8 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GenHTTP.Core.Kestrel" Version="9.5.0" />
-    <PackageReference Include="GenHTTP.Modules.Functional" Version="9.5.0" />
+    <PackageReference Include="GenHTTP.Core" Version="9.6.*" />
   </ItemGroup>
 
 </Project>
