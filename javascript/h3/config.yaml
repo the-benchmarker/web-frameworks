@@ -1,8 +1,8 @@
 framework:
   github.com: unjs/h3
-  version: 1.13
+  version: 1.14
 
   files:
-    - cluster.js
+    - cluster.mjs
     - app.mjs
     - package.json

@@ -6,4 +6,4 @@ const app = router()
    .get('/user/*', (params) => params[0]);
 
 // Port 3000
-export default await jitc(app, { exposeStatic: true });
+export default await jitc(app);

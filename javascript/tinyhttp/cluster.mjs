@@ -1,6 +1,5 @@
 import cluster from 'node:cluster';
 import { availableParallelism } from 'node:os';
-import app from './app.js';
 
 const numCpus = availableParallelism();
 
@@ -9,5 +8,5 @@ if (numCpus > 1 && cluster.isPrimary) {
     cluster.fork();
   }
 } else {
-  app.start()
+  await import(`./${process.env.NODE_APP}`);
 }
