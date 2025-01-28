@@ -3,4 +3,10 @@ framework:
   version: 0.5
 
   engines:
-    - deno
+    - bun
+
+language:
+  engines:
+    bun:
+      environment:
+        NODE_APP: app.js

@@ -6,3 +6,8 @@ framework:
     - npm -g install typescript
     - npm install
     - tsc
+
+language:
+  engines:
+    node:
+      NODE_APP: app.js
