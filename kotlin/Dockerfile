@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 
 RUN gradle build
 
-FROM eclipse-temurin:21.0.5_11-jre
+FROM eclipse-temurin:21.0.6_7-jre
 
 WORKDIR /usr/src/app
 
