@@ -14,7 +14,7 @@
                  [metosin/muuntaja "0.6.11"]
                  [metosin/reitit "0.7.2"]
                  [metosin/ring-http-response "0.9.5"]
-                 [mount "0.1.20"]
+                 [mount "0.1.21"]
                  [nrepl "1.3.1"]
                  [org.clojure/clojure "1.12.0"]
                  [org.clojure/tools.cli "1.1.230"]
