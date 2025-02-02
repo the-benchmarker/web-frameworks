@@ -1,12 +1,12 @@
-import ServiceBroker from 'moleculer';
-import HTTPServer from 'moleculer-web';
+import { ServiceBroker } from "moleculer";
+import HTTPServer from "moleculer-web";
 
 const broker = new ServiceBroker({
   logger: false,
 });
 
 broker.createService({
-  name: 'api',
+  name: "api",
 
   mixins: [HTTPServer],
 
@@ -16,9 +16,9 @@ broker.createService({
     routes: [
       {
         aliases: {
-          'GET /': 'user.get',
-          'POST /user': 'user.post',
-          'GET /user/:id': 'user.getID',
+          "GET /": "user.get",
+          "POST /user": "user.post",
+          "GET /user/:id": "user.getID",
         },
       },
     ],
@@ -26,7 +26,7 @@ broker.createService({
 });
 
 broker.createService({
-  name: 'user',
+  name: "user",
 
   actions: {
     get() {},

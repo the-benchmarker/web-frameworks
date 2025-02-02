@@ -6,3 +6,10 @@ framework:
   bootstrap:
     - npm install
     - npm run build
+
+language:
+  engines:
+    node:
+      environment:
+        NODE_APP: dist/main.js
+        HOST: '0.0.0.0:3000'

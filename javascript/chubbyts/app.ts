@@ -7,10 +7,10 @@ import {
 } from "@chubbyts/chubbyts-framework/dist/router/route";
 import { createRoutesByName } from "@chubbyts/chubbyts-framework/dist/router/routes-by-name";
 import {
-  createResponseFactory,
   createServerRequestFactory,
   createStreamFromResourceFactory,
   createUriFactory,
+  createResponseFactory,
 } from "@chubbyts/chubbyts-http/dist/message-factory";
 import { createPathToRegexpRouteMatcher } from "@chubbyts/chubbyts-framework-router-path-to-regexp/dist/path-to-regexp-router";
 import {
@@ -60,21 +60,26 @@ const app = createApplication([
             return response;
           },
         }),
-      ]),
-    ),
+      ])
+    )
   ),
 ]);
 
 const nodeToServerRequestFactory = createNodeToServerRequestFactory(
   createUriFactory(),
   createServerRequestFactory(),
-  createStreamFromResourceFactory(),
+  createStreamFromResourceFactory()
 );
 
 const responseToNodeEmitter = createResponseToNodeEmitter();
 
-export const server = createServer(
+const server = createServer(
   async (req: IncomingMessage, res: ServerResponse) => {
     responseToNodeEmitter(await app(nodeToServerRequestFactory(req)), res);
-  },
+  }
 );
+
+const host = "0.0.0.0";
+const port = 3000;
+
+server.listen(port, host);

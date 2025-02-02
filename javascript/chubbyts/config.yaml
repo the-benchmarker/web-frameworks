@@ -10,4 +10,5 @@ framework:
 language:
   engines:
     node:
-      NODE_APP: app.js
+      environment:
+        NODE_APP: app.js

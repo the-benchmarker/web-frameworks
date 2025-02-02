@@ -1,5 +1,5 @@
-const { Router } = require('@routejs/router');
-const http = require('http');
+import { Router } from '@routejs/router';
+import http from 'http';
 
 const app = new Router();
 

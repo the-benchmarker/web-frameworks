@@ -1,3 +1,4 @@
+
 [build-system]
 build-backend = "flit_core.buildapi"
 requires = ["flit_core"]
@@ -6,5 +7,4 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["asgineer>=0.9,<0.10"]
-
+dependencies = ["responder==3.0.0.dev0"]

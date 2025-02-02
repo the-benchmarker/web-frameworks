@@ -6,7 +6,7 @@ export default wrap()()
     f: () => null,
   })
   .get({
-    path: "/id/:id",
+    path: "/user/:id",
     param: {
       unique: true,
     },
