@@ -1,4 +1,4 @@
-import 'fastify' from 'fastify';
+import fastify from 'fastify';
 
 // Workers can share any TCP connection
 const app = fastify();

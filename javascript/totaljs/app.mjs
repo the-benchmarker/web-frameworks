@@ -1,15 +1,15 @@
-import "total5";
+import 'total5'
 
-ROUTE("GET /", function ($) {
-  $.text("");
+ROUTE('GET /', function($) {
+  $.text('');
 });
 
-ROUTE("GET /user/{id}/", function ($) {
+ROUTE('GET /user/{id}/', function($) {
   $.text($.params.id);
 });
 
-ROUTE("POST /user/", function ($) {
-  $.text("");
+ROUTE('POST /user/', function($) {
+  $.text('');
 });
 
-export default Total
+Total.run({ port: 3000, release: true, watcher: false });

@@ -1,5 +1,6 @@
 import cluster from 'node:cluster';
 import { availableParallelism } from 'node:os';
+import { exec } from "child_process"
 
 const numCpus = availableParallelism();
 
@@ -8,5 +9,5 @@ if (numCpus > 1 && cluster.isPrimary) {
     cluster.fork();
   }
 } else {
-  await import(`./${process.env.NODE_APP}`);
+  exec('sails lift --prod')
 }

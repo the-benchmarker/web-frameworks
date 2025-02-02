@@ -1,16 +1,21 @@
-import { Yume } from 'yume-server';
+import { Yume } from "yume-server";
 
-const yume = new Yume();
+const app = new Yume();
+const PORT = 3000;
 
-yume.get('/', function (req, res) {
+app.get('/', function (req, res) {
   res.end('');
 });
 
-yume.get('/user/:id', function (req, res) {
+app.get('/user/:id', function (req, res) {
   res.end(req.getParams().id);
 });
 
-yume.post('/user', function (_req, res) {
+app.post('/user', function (_req, res) {
   res.end('');
 })
-yume.listen('0.0.0.0', 3000)
+
+app.listen(PORT, () => {
+  console.log(`> started @${PORT}`);
+});
+
