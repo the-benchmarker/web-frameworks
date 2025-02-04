@@ -42,8 +42,14 @@ class Application < Grip::Application
   def reuse_port : Bool
     true
   end
-
 end
 
 app = Application.new(environment: "production")
-app.run
+
+System.cpu_count.times do |i|
+  Process.fork do
+    app.run
+  end
+end
+
+sleep
