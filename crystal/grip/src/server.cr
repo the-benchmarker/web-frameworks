@@ -5,12 +5,14 @@ class IndexController < Grip::Controllers::Http
     context.put_status(200).text("").halt()
   end
 end
+
 class UserController < Grip::Controllers::Http
   def get(context : Context) : Context
     id = context.fetch_path_params.["id"]
 
     context.text(id).halt()
   end
+  
   def post(context : Context) : Context
     context.put_status(200).text("").halt()
   end
@@ -27,6 +29,10 @@ class Application < Grip::Application
 
     # Enable request/response logging.
     router.insert(0, Grip::Handlers::Log.new)
+  end
+
+  def router : Array(HTTP::Handler)
+    [@http_handler] of HTTP::Handler
   end
 
   def port : Int32
