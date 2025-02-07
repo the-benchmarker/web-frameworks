@@ -28,6 +28,7 @@ application {
 dependencies {
     implementation("com.hexagonkt:http_server_netty_epoll:$hexagonVersion")
     implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-aarch_64")
+    implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-x86_64")
 }
 
 jarAll {
