@@ -1,5 +1,3 @@
-# nim r -d:release -d:threadsafe server
-
 import guildenstern/[dispatcher, httpserver]
 
 const ThreadCount = 100

@@ -6,4 +6,4 @@ framework:
   engines:
     - bun
 
-  command: bun dist/main.js
+  command: bun run src/main.ts
