@@ -7,7 +7,7 @@ language:
         NODE_ENV: production
         NODE_APP: app.mjs
       bootstrap:
-        - npm install
+        - npm install --omit=dev
       command: node cluster.mjs
     turbo:
       environment:

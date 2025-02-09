@@ -6,4 +6,12 @@ framework:
   engines:
     - bun
 
-  command: bun run src/main.ts
+  command: bun run start
+
+language:
+  engines:
+    bun:
+      bootstrap:
+        - bun install -g typescript
+        - bun install
+        - bun run build

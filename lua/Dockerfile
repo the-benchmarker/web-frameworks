@@ -9,6 +9,10 @@ FROM curlimages/curl AS curl
 
 WORKDIR /usr/src/app
 
+{{#deps}}
+  RUN apk add {{{.}}}
+{{/deps}}
+
 {{#build}}
   RUN {{{.}}}
 {{/build}}

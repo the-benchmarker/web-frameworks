@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim AS build
+FROM debian:12-slim AS build
 
 # Set a non-root user for added security
 RUN useradd -m ziguser
@@ -35,7 +35,7 @@ USER ziguser
 
 RUN zig build -Doptimize=ReleaseFast
 
-FROM debian
+FROM debian:12-slim
 
 RUN apt-get -qq update 
 RUN apt-get -qy install ca-certificates curl

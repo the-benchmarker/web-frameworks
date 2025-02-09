@@ -4,15 +4,13 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npm run build && node dist/main.js",
+    "start": "npm run build",
     "build": "tsc -b",
     "clean": "rm -rf dist*"
   },
   "imports": {
     "#src/*": "./dist/*"
   },
-  "keywords": [],
-  "author": "Your Name Here",
   "license": "MIT",
   "dependencies": {
     "@ditsmod/body-parser": "3.0.0-alpha.3",

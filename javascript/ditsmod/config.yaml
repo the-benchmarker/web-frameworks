@@ -2,14 +2,12 @@ framework:
   github: ditsmod/ditsmod
   website: ditsmod.github.io/en
   version: 3
-
-  bootstrap:
-    - npm install
-    - npm run build
-
 language:
   engines:
     node:
       environment:
         NODE_APP: dist/main.js
         HOST: '0.0.0.0:3000'
+      bootstrap:
+        - npm install
+        - npm run build
