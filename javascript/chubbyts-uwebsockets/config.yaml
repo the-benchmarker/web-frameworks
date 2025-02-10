@@ -1,6 +1,6 @@
 framework:
   github: chubbyts/chubbyts-framework
-  version: 1.9
+  version: '1.10'
 
   engines:
     - uwebsockets
@@ -9,3 +9,9 @@ framework:
     - npm -g install typescript
     - npm install
     - tsc
+
+language:
+  engines:
+    uwebsockets:
+      environment:
+        NODE_APP: app.js

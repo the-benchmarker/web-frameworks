@@ -12,13 +12,14 @@ WORKDIR /usr/src/app
 
 {{/deps.length}}
 
-{{#bootstrap}}
-  RUN {{{.}}}
-{{/bootstrap}}
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
+
+{{#bootstrap}}
+  RUN {{{.}}}
+{{/bootstrap}}
 
 RUN apt-get -qq update
 RUN apt-get -qy install curl

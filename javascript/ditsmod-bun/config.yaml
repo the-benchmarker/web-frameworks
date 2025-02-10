@@ -6,8 +6,12 @@ framework:
   engines:
     - bun
 
-  bootstrap:
-    - bun install
-    - bun run build
+  command: bun run start
 
-  command: bun dist/main.js
+language:
+  engines:
+    bun:
+      bootstrap:
+        - bun install -g typescript
+        - bun install
+        - bun run build

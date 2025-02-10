@@ -6,5 +6,11 @@ framework:
     - config
     - .sailsrc
     - api
-    - app.js
+    - app.mjs
     - package.json
+    - cluster.mjs
+
+  bootstrap:
+    - npm -g install sails
+
+  command: sails lift --prod

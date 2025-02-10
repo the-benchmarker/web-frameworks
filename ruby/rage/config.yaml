@@ -3,7 +3,12 @@ framework:
   version: "1.10"
 
   engines:
-    - rage
+    - iodine
 
   environment:
     RAGE_ENV: production
+
+language:
+  engines:
+    iodine:
+      command: bundle exec rage s -p 3000 -b 0.0.0.0

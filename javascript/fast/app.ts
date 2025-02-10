@@ -1,9 +1,16 @@
 import fast from "https://deno.land/x/fast@6.0.0-alpha.1/mod.ts";
 
+// Create the Fast app
 const app = fast();
 
-app.get("/", () => "");
-app.get("/user/:id", (req) => req.params.id);
-app.post("/user", () => "");
+// Define routes
+app.get("/", () => new Response(""));
 
-await app.serve({ port: 3000 });
+app.post("/user", () => new Response("")
+);
+
+app.get("/user/:id", (req) => {
+  return new Response(req.params.id);
+});
+
+export default { fetch: app.handle };

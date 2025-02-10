@@ -12,9 +12,8 @@ framework:
     - ace.js
     - package.json
     - '**/*.ts'
+    - cluster.mjs
     - tsconfig.json
-
-  command: pm2-runtime start build/bin/server.js -i $(nproc)
 
 language:
   engines:
@@ -26,3 +25,4 @@ language:
         DRIVE_DISK: local
         SESSION_DRIVER: memory
         LOG_LEVEL: error
+        NODE_APP: build/bin/server.js

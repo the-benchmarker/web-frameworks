@@ -10,7 +10,7 @@ use App\Application\Exception\Handler;
 // settings for you.
 
 \mb_internal_encoding('UTF-8');
-\error_reporting(E_ALL | E_STRICT ^ E_DEPRECATED);
+\error_reporting(E_ALL ^ E_DEPRECATED);
 \ini_set('display_errors', 'stderr');
 
 // Register Composer's auto loader.

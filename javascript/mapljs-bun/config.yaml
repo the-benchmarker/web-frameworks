@@ -1,0 +1,12 @@
+framework:
+  github: mapljs/app
+  version: 0.5
+
+  engines:
+    - bun
+
+language:
+  engines:
+    bun:
+      environment:
+        NODE_APP: app.js

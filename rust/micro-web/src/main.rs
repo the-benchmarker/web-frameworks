@@ -35,4 +35,3 @@ async fn main() {
         .start()
         .await;
 }
-
