@@ -25,37 +25,14 @@ class Kernel extends \Spiral\Framework\Kernel
     ];
 
     protected const LOAD = [
-        // Logging and exceptions handling
-        MonologBootloader::class,
-        YiiErrorHandlerBootloader::class,
-        Bootloader\ExceptionHandlerBootloader::class,
-
-        // Application specific logs
-        Bootloader\LoggingBootloader::class,
-
         // RoadRunner
-        RoadRunnerBridge\LoggerBootloader::class,
         RoadRunnerBridge\HttpBootloader::class,
 
         // Core Services
         Framework\SnapshotsBootloader::class,
 
-        // Security and validation
-        Framework\Security\EncrypterBootloader::class,
-        Framework\Security\FiltersBootloader::class,
-        Framework\Security\GuardBootloader::class,
-
         // HTTP extensions
         Framework\Http\RouterBootloader::class,
-        Framework\Http\JsonPayloadsBootloader::class,
-        Framework\Http\CookiesBootloader::class,
-        Framework\Http\SessionBootloader::class,
-        Framework\Http\CsrfBootloader::class,
-        Framework\Http\PaginationBootloader::class,
-
-        ValidationBootloader::class,
-        ValidatorBootloader::class,
-
         NyholmBootloader::class,
 
         // Console commands
@@ -64,9 +41,6 @@ class Kernel extends \Spiral\Framework\Kernel
 
         // Configure route groups, middleware for route groups
         Bootloader\RoutesBootloader::class,
-
-        // Fast code prototyping
-        PrototypeBootloader::class,
     ];
 
     protected const APP = [];
