@@ -1,3 +1,3 @@
 module main
 
-require git.akyoto.dev/go/web 24b7c6ead79b
+require git.akyoto.dev/go/web a4177508f180
