@@ -3,11 +3,11 @@ rpc:
   listen: "tcp://127.0.0.1:6001"
 http:
   address: "0.0.0.0:3000"
-  middleware: [ "static" ]
+  middleware: ["static"]
   static:
     dir: "public"
     calculate_etag: false
-    allow: [ ".ico" ]
+    allow: [".ico"]
 server:
   command: "php public/index.php"
   relay: pipes

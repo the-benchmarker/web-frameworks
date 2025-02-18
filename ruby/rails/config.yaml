@@ -7,6 +7,7 @@ framework:
 
   build_deps:
     - libsqlite3-dev
+    - libyaml-dev
     - pkg-config
 
   environment:
