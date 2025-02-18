@@ -1,6 +1,6 @@
 framework:
   website: doc.networknt.com
-  version: 2.1
+  version: 2.2
 
   build:
     - mvn clean package -Prelease

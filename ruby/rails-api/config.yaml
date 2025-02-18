@@ -6,6 +6,7 @@ framework:
     - mkdir -p tmp/pids
 
   build_deps:
+    - libyaml-dev
     - libsqlite3-dev
     - pkg-config
 
