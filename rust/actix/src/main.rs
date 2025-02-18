@@ -1,4 +1,4 @@
-use actix_web::{get, web, App, HttpServer, Responder, HttpResponse};
+use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
 
 #[get("/user/{id}")]
 async fn get_user(id: web::Path<String>) -> String {

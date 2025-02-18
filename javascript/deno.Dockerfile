@@ -1,4 +1,4 @@
-FROM denoland/deno:2.1.9
+FROM denoland/deno:2.1.10
 
 WORKDIR /usr/src/app
 
@@ -12,13 +12,14 @@ WORKDIR /usr/src/app
 
 {{/deps.length}}
 
-{{#bootstrap}}
-  RUN {{{.}}}
-{{/bootstrap}}
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
+
+{{#bootstrap}}
+  RUN {{{.}}}
+{{/bootstrap}}
 
 RUN apt-get -qq update
 RUN apt-get -qy install curl

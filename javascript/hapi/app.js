@@ -1,36 +1,36 @@
-const Hapi = require('@hapi/hapi');
+const Hapi = require("@hapi/hapi");
 
 // Workers can share any TCP connection
 // In this case it is an HTTP server
 
 // Create a server with a host and port
 const server = Hapi.server({
-  host: '0.0.0.0',
+  host: "0.0.0.0",
   port: 3000,
 });
 
 // Add the route
 server.route({
-  method: 'GET',
-  path: '/',
+  method: "GET",
+  path: "/",
   handler: function (req, handler) {
-    return handler.response('').header('Content-Length', '0');
+    return handler.response("").header("Content-Length", "0");
   },
 });
 
 server.route({
-  method: 'GET',
-  path: '/user/{id}',
+  method: "GET",
+  path: "/user/{id}",
   handler: function (req, handler) {
     return req.params.id;
   },
 });
 
 server.route({
-  method: 'POST',
-  path: '/user',
+  method: "POST",
+  path: "/user",
   handler: function (req, handler) {
-    return handler.response('').header('Content-Length', '0');
+    return handler.response("").header("Content-Length", "0");
   },
 });
 

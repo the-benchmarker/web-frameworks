@@ -1,26 +1,6 @@
-import { wrap } from "vixeny";
+import app from "./server.ts"
 
-const app  = wrap()()
-  .stdPetition({
-    path: '/',
-    f: () => null
-  })
-  .stdPetition({
-    path: '/user/:id',
-    param: {
-      unique: true
-    },
-    f: ctx => ctx.param
-  })
-  .stdPetition({
-    method: 'POST',
-    path: '/user',
-    f: () => null
-  })
-  .compose()
-
-export default { 
-    port: 3000,
-    fetch: app,
-    reusePort: true
-} 
+Bun.serve({
+  fetch: await app.compose(),
+  reusePort: true
+});

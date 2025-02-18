@@ -1,12 +1,10 @@
-import cluster from "node:cluster";
-import os from "node:os";
+import { availableParallelism } from 'node:os';
 
-const cpus = os.availableParallelism();
+const numCpus = availableParallelism();
 
-if (cluster.isPrimary) {
-  for (let i = 0; i < cpus; i++) {
-    cluster.fork();
-  }
-} else {
-  await import("./app.ts");
+for (let i = 0; i < numCpus; i++) {
+  Bun.spawn(['bun', 'app.ts'], {
+    stdio: ['inherit', 'inherit', 'inherit'],
+    env: { ...process.env },
+  });
 }

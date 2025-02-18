@@ -2,5 +2,10 @@ framework:
   website: turbo.readthedocs.io
   version: 2.1
 
+  deps:
+    - luajit
+    - luarocks
+    - git
+
   build:
     - luarocks-5.4 install turbo

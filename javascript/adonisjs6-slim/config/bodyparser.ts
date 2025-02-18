@@ -1,11 +1,11 @@
-import { defineConfig } from '@adonisjs/core/bodyparser'
+import { defineConfig } from "@adonisjs/core/bodyparser";
 
 const bodyParserConfig = defineConfig({
   /**
    * The bodyparser middleware will parse the request body
    * for the following HTTP methods.
    */
-  allowedMethods: ['POST', 'PUT', 'PATCH', 'DELETE'],
+  allowedMethods: ["POST", "PUT", "PATCH", "DELETE"],
 
   /**
    * Config for the "application/x-www-form-urlencoded"
@@ -13,7 +13,7 @@ const bodyParserConfig = defineConfig({
    */
   form: {
     convertEmptyStringsToNull: true,
-    types: ['application/x-www-form-urlencoded'],
+    types: ["application/x-www-form-urlencoded"],
   },
 
   /**
@@ -22,10 +22,10 @@ const bodyParserConfig = defineConfig({
   json: {
     convertEmptyStringsToNull: true,
     types: [
-      'application/json',
-      'application/json-patch+json',
-      'application/vnd.api+json',
-      'application/csp-report',
+      "application/json",
+      "application/json-patch+json",
+      "application/vnd.api+json",
+      "application/csp-report",
     ],
   },
 
@@ -47,9 +47,9 @@ const bodyParserConfig = defineConfig({
      * Maximum limit of data to parse including all files
      * and fields
      */
-    limit: '20mb',
-    types: ['multipart/form-data'],
+    limit: "20mb",
+    types: ["multipart/form-data"],
   },
-})
+});
 
-export default bodyParserConfig
+export default bodyParserConfig;

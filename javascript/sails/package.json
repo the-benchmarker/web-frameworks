@@ -1,5 +1,12 @@
 {
   "dependencies": {
-    "sails": "~1.5.0"
+    "sails": "~1.5.14",
+    "grunt": "1.6.1",
+    "sails-hook-grunt": "*",
+    "sails-hook-orm": "*",
+    "sails-hook-sockets": "*",
+    "@sailshq/connect-redis": "*",
+    "@sailshq/socket.io-redis": "*",
+    "@sailshq/lodash": "*"
   }
 }

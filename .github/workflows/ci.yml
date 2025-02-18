@@ -61,9 +61,9 @@ jobs:
       - name: Wait
         run: |
           export CID=`cat ${LANGUAGE}/${FRAMEWORK}/cid-${ENGINE}.txt`
-          until [ "`docker inspect -f {{.State.Health.Status}} ${CID}`" = "healthy" ]; do 
+          until [ "`docker inspect -f {{.State.Health.Status}} ${CID}`" = "healthy" ]; do
             echo "Wait for container to be healthy"
-            sleep 1 
+            sleep 1
           done
         timeout-minutes: 2
         env:
