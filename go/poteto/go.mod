@@ -1,3 +1,3 @@
 module main
 
-require github.com/poteto-go/poteto v1.5.0
+require github.com/poteto-go/poteto v1.5.1
