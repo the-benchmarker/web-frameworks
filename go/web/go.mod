@@ -1,3 +1,3 @@
 module main
 
-require git.akyoto.dev/go/web a4177508f180
+require git.urbach.dev/go/web 4b3560d0cff1
