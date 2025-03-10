@@ -10,7 +10,7 @@ $worker->onMessage = static function ($connection, $request) {
     $path = $request->path();
     match ($path) {
         '/', '/user' => $connection->send(''),           
-        default => $connection->send( str_starts_with($path, '/user/') ? \substr($path, 6) : ''),
+        default => $connection->send( \str_starts_with($path, '/user/') ? \substr($path, 6) : ''),
     };
 };
 Worker::runAll();
