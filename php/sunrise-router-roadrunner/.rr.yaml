@@ -6,6 +6,6 @@ server:
 http:
   address: 0.0.0.0:3000
 rpc:
-  listen: tcp://0.0.0.0:6001
+  listen: tcp://127.0.0.1:6001
 logs:
   mode: production
