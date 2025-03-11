@@ -1,8 +1,32 @@
 {
+  "type": "project",
+  "name": "sunrise/awesome-skeleton",
+  "homepage": "https://github.com/sunrise-php/awesome-skeleton",
+  "description": "An awesome skeleton for modern PHP development.",
+  "keywords": [
+    "fenric",
+    "sunrise",
+    "skeleton",
+    "php-skeleton",
+    "api-skeleton",
+    "api-platform"
+  ],
   "require": {
-    "sunrise/http-router": "~2.16.0",
-    "sunrise/http-factory": "@stable",
-    "spiral/roadrunner-cli": "@stable",
-    "spiral/roadrunner-http": "@stable"
+    "php": ">=8.3",
+    "php-di/php-di": "^7.0",
+    "spiral/roadrunner-http": "^3.5",
+    "sunrise/http-message": "^3.4",
+    "sunrise/http-router": "^3.0",
+    "symfony/cache": "^7.2",
+    "symfony/console": "^7.2",
+    "symfony/dotenv": "^7.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "config": {
+    "sort-packages": true
   }
 }
