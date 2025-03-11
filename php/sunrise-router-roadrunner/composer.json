@@ -13,14 +13,14 @@
   ],
   "require": {
     "php": ">=8.3",
-    "php-di/php-di": "^7.0",
-    "spiral/roadrunner-cli": "^2.7",
-    "spiral/roadrunner-http": "^3.5",
-    "sunrise/http-message": "^3.4",
-    "sunrise/http-router": "^3.0",
-    "symfony/cache": "^7.2",
-    "symfony/console": "^7.2",
-    "symfony/dotenv": "^7.2"
+    "php-di/php-di": "@stable",
+    "spiral/roadrunner-cli": "@stable",
+    "spiral/roadrunner-http": "@stable",
+    "sunrise/http-message": "@stable",
+    "sunrise/http-router": "~3.0.0",
+    "symfony/cache": "@stable",
+    "symfony/console": "@stable",
+    "symfony/dotenv": "@stable"
   },
   "autoload": {
     "psr-4": {
