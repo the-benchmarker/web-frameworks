@@ -3,7 +3,3 @@ framework:
   version: 3.0
   engines:
     - road-runner
-language:
-  engines:
-    road-runner:
-      command: ./rr serve
