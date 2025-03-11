@@ -14,6 +14,7 @@
   "require": {
     "php": ">=8.3",
     "php-di/php-di": "^7.0",
+    "spiral/roadrunner-cli": "^2.7",
     "spiral/roadrunner-http": "^3.5",
     "sunrise/http-message": "^3.4",
     "sunrise/http-router": "^3.0",
