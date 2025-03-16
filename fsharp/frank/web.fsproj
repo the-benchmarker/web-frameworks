@@ -6,7 +6,6 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="7.0.*" />
-    <PackageReference Include="Frank" Version="6.2.*" />
+    <PackageReference Include="Frank" Version="6.3.*" />
   </ItemGroup>
 </Project>
