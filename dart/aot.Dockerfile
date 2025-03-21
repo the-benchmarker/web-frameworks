@@ -11,7 +11,7 @@ RUN dart pub get --no-precompile
 
 # Copy app source code and refetch dependencies to cache
 {{#files}}
-  COPY '{{source}}' '{{target}}'
+COPY '{{source}}' '{{target}}'
 {{/files}}
 RUN dart pub get --offline --no-precompile
 
