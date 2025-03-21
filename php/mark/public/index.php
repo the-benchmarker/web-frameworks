@@ -8,16 +8,10 @@ $api = new App('http://0.0.0.0:3000');
 
 $api->count = 7;
 
-$api->get('/', function ($requst) {
-    return '';
-});
+$api->get('/', fn() => '');
 
-$api->post('/user', function ($requst) {
-    return '';
-});
+$api->post('/user', fn() => '');
 
-$api->get('/user/{id}', function ($requst, $id) {
-    return $id;
-});
+$api->get('/user/{id}', fn($request, $id) => $id);
 
 $api->start();
