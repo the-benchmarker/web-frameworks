@@ -10,12 +10,11 @@ let emptyHandler: EndpointHandler = fun _ -> Task.CompletedTask
 
 let userIdHandler: EndpointHandler =
     fun ctx ->
-        match ctx.TryGetRouteValue<string>("id") with
-        | Some id -> ctx.WriteText(id)
-        | None -> Task.CompletedTask
+        let id = ctx.Request.RouteValues["id"] :?> string
+        ctx.WriteText(id)
 
 let endpoints =
-    [ GET [ route "/" emptyHandler; route "/user/{id?}" userIdHandler ]
+    [ GET [ route "/" emptyHandler; route "/user/{id}" userIdHandler ]
       POST [ route "/user" emptyHandler ] ]
 
 let configureLogging (log: ILoggingBuilder) = log.ClearProviders() |> ignore
