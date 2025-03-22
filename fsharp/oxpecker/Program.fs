@@ -13,9 +13,15 @@ let userIdHandler: EndpointHandler =
         let id = ctx.Request.RouteValues["id"] :?> string
         ctx.WriteText(id)
 
-let endpoints =
-    [ GET [ route "/" emptyHandler; route "/user/{id}" userIdHandler ]
-      POST [ route "/user" emptyHandler ] ]
+let endpoints = [
+    GET [
+        route "/" emptyHandler
+        route "/user/{id}" userIdHandler
+    ]
+    POST [
+        route "/user" emptyHandler
+    ]
+]
 
 let configureLogging (log: ILoggingBuilder) = log.ClearProviders() |> ignore
 
