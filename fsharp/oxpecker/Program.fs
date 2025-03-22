@@ -1,3 +1,4 @@
+open System.Threading.Tasks
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
@@ -5,11 +6,17 @@ open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
 open Oxpecker
 
-let userNameHandler (name: string) : EndpointHandler = _.WriteText(name)
+let emptyHandler: EndpointHandler = fun _ -> Task.CompletedTask
+
+let userIdHandler: EndpointHandler =
+    fun ctx ->
+        match ctx.TryGetRouteValue<string>("id") with
+        | Some id -> ctx.WriteText(id)
+        | None -> Task.CompletedTask
 
 let endpoints =
-    [ GET [ route "/" <| text ""; routef "/user/{%s}" text ]
-      POST [ route "/user" <| text "" ] ]
+    [ GET [ route "/" emptyHandler; route "/user/{id?}" userIdHandler ]
+      POST [ route "/user" emptyHandler ] ]
 
 let configureLogging (log: ILoggingBuilder) = log.ClearProviders() |> ignore
 
