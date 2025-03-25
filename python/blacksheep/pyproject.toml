@@ -6,4 +6,4 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["blacksheep>=2.0,<2.1"]
+dependencies = ["blacksheep>=2.1,<2.2"]
