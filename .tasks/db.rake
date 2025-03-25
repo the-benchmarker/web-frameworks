@@ -7,53 +7,73 @@ require 'etc'
 
 Dotenv.load
 
-SQL = %(
-    SELECT f.id, l.label AS language, f.label AS framework, c.level, k.label, avg(v.value) AS value
-        FROM frameworks AS f
-            JOIN metrics AS m ON f.id = m.framework_id
-            JOIN values AS v ON v.id = m.value_id
-            JOIN concurrencies AS c on c.id = m.concurrency_id
-            JOIN languages AS l on l.id = f.language_id
-            JOIN keys AS k ON k.id = v.key_id
-                GROUP BY 1,2,3,4,5
-).freeze
-
-def compute(data)
-  errors = data['http_errors'].to_d
-  duration = data['duration_ms'].to_d / 1_000_000
-  requests = data['total_requests'].to_d
-
-  (requests - errors) / duration
-end
+MAP = {
+  duration_ms: [],
+  total_requests: [],
+  total_requests_per_s: [:summary, :requestsPerSec],
+  total_bytes_received: [],
+  socket_connection_errors: [],
+  socket_read_errors: [],
+  socket_write_errors: [],
+  http_errors: [],
+  request_timeouts: [],
+  minimum_latency: [],
+  maximum_latency: [],
+  average_latency: [],
+ standard_deviation: [],
+ percentile_50: [:latencyPercentiles, :p50],
+ percentile_75: [:latencyPercentiles, :p75],
+percentile_90: [:latencyPercentiles,  :p90],
+percentile_99: [:latencyPercentiles, :p99],
+'percentile_99.999'.to_sym => [],
+}
 
 namespace :db do
   task :check_failures do
-    results = JSON.parse(File.read('data.json'))
-    results['frameworks'].map { _1['label'] }
-    failing_frameworks = results['metrics'].filter_map do |row|
-      row['framework_id'] if row['label'] == 'total_requests_per_s' && (row['value']).zero?
+    frameworks = []
+    Dir.glob('*/*/config.yaml') do |file|
+        language, framework, _ = file.split('/')
+      ENV['CONCURRENCIES'].split(',').each do |concurrency|
+      ENV['ROUTES'].split(',').each do |route|
+        _, uri = route.split(':')
+        pp "#{language}/#{framework}/#{concurrency}_#{uri.gsub('/','_')}.json"
+        row = JSON.parse(File.read("#{language}/#{framework}/#{concurrency}_#{uri.gsub('/','_')}.json"), symbolize_names: true)
+        frameworks << framework if row.dig(:summary, :successRate) < 1
+      end
     end
-    list_of = Dir.glob('*/*/config.yaml').map { _1.split('/')[1] }
-    $stdout.puts "Failing : #{results['frameworks'].filter_map do |row|
-      row['label'] if failing_frameworks.include?(row['id'])
-    end}"
-    $stdout.puts "Missing : #{list_of - results['frameworks'].map { _1['label'] }}"
+      pp frameworks.uniq
+    end
   end
-  task :raw_export do
-    raise 'Please provide a database' unless ENV['DATABASE_URL']
-
+  task :export do
     data = { metrics: [], frameworks: [], languages: [] }
-    db = PG.connect(ENV.fetch('DATABASE_URL', nil))
-    db.exec("select row_to_json(t) from (#{SQL}) as t") do |result|
-      result.each do |row|
-        info = JSON.parse(row['row_to_json'], symbolize_names: true)
-        framework_id = info.delete :id
-        info[:framework_id] = framework_id
-        language = info.delete :language
-        framework = info.delete :framework
-        main_config = YAML.safe_load_file(File.join('config.yaml'))
-        language_config = YAML.safe_load_file(File.join(language, 'config.yaml'))
-        framework_config = YAML.safe_load_file(File.join(language, framework, 'config.yaml'))
+    id = 0
+    Dir.glob('*/*/config.yaml') do |file|
+        language, framework, _ = file.split('/')
+      id += 1
+      ENV['CONCURRENCIES'].split(',').each do |concurrency|
+      info = {}
+      MAP.each do |key, value|
+        info[key] = 0
+      end
+      ENV['ROUTES'].split(',').each do |route|
+        _, uri = route.split(':')
+        data_path = "#{language}/#{framework}/#{concurrency}_#{uri.gsub('/','_')}.json"
+        begin
+          row = JSON.parse(File.read(data_path), symbolize_names: true)
+        rescue JSON::ParserError
+          next
+        else
+          next if row.dig(:summary, :successRate) < 1
+          MAP.each do |key, value|
+            if value.any?
+            pp key
+            info[key] += row.dig(*value)
+          end   
+        end
+        directory = File.dirname(file)
+        main_config = YAML.safe_load_file('config.yaml')
+        language_config = YAML.safe_load_file(File.join(directory,'..', 'config.yaml'))
+        framework_config = YAML.safe_load_file(File.join(directory,'..','..', 'config.yaml'))
         config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
         scheme = 'https'
         scheme = 'http' if config['framework'].key?('unsecure')
@@ -65,9 +85,10 @@ namespace :db do
                       "gitlab.com/#{config['framework']['gitlab']}"
                     end
         end
-        unless data[:frameworks].map { |row| row[:id] }.to_a.include?(framework_id)
+        unless data[:frameworks].map { |row| row[:id] }.to_a.include?(id)
+          pp config
           data[:frameworks] << {
-            id: framework_id,
+            id: id,
             version: config.dig('framework', 'version'),
             label: framework,
             language:,
@@ -80,9 +101,11 @@ namespace :db do
             version: config.dig('language', 'version')
           }
         end
-        data[:metrics] << info
-        next
       end
+      end
+    info.each do |key, value|
+      data[:metrics] << {level: concurrency, key: key, value: value/ENV['ROUTES'].split(',').count, framework_id: id}
+    end
     end
     data.merge!(updated_at: Time.now.utc, version: 1)
     data.merge!(hardware: { cpus: Etc.nprocessors, memory: 7_733_008, cpu_name: 'M1 Eight-Core Processor',
@@ -90,4 +113,5 @@ namespace :db do
     File.write('data.json', JSON.pretty_generate(data))
     File.write('data.min.json', data.to_json)
   end
+end
 end
