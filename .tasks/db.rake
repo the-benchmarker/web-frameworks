@@ -28,6 +28,10 @@ percentile_99: [:latencyPercentiles, :p99],
 'percentile_99.999'.to_sym => [],
 }
 
+def merge_recursively!(a, b)
+  a.merge!(b) {|key, a_item, b_item| merge_recursively!(a_item, b_item) }
+end
+
 namespace :db do
   task :check_failures do
     frameworks = []
@@ -36,9 +40,14 @@ namespace :db do
       ENV['CONCURRENCIES'].split(',').each do |concurrency|
       ENV['ROUTES'].split(',').each do |route|
         _, uri = route.split(':')
-        pp "#{language}/#{framework}/#{concurrency}_#{uri.gsub('/','_')}.json"
-        row = JSON.parse(File.read("#{language}/#{framework}/#{concurrency}_#{uri.gsub('/','_')}.json"), symbolize_names: true)
+        file = "#{language}/#{framework}/#{concurrency}_#{uri.gsub('/','_')}.json"
+        if File.exist?(file)
+          frameworks << framework
+          row = JSON.parse(File.read(file), symbolize_names: true)
         frameworks << framework if row.dig(:summary, :successRate) < 1
+        else
+        frameworks << framework
+        end
       end
     end
       pp frameworks.uniq
@@ -47,7 +56,7 @@ namespace :db do
   task :export do
     data = { metrics: [], frameworks: [], languages: [] }
     id = 0
-    Dir.glob('*/*/config.yaml') do |file|
+    Dir.glob('clojure/luminus/config.yaml') do |file|
         language, framework, _ = file.split('/')
       id += 1
       ENV['CONCURRENCIES'].split(',').each do |concurrency|
@@ -58,6 +67,7 @@ namespace :db do
       ENV['ROUTES'].split(',').each do |route|
         _, uri = route.split(':')
         data_path = "#{language}/#{framework}/#{concurrency}_#{uri.gsub('/','_')}.json"
+        next unless File.exist?(data_path)
         begin
           row = JSON.parse(File.read(data_path), symbolize_names: true)
         rescue JSON::ParserError
@@ -66,15 +76,15 @@ namespace :db do
           next if row.dig(:summary, :successRate) < 1
           MAP.each do |key, value|
             if value.any?
-            pp key
             info[key] += row.dig(*value)
           end   
         end
         directory = File.dirname(file)
-        main_config = YAML.safe_load_file('config.yaml')
+        config = YAML.safe_load_file(File.join(directory, 'config.yaml'))
         language_config = YAML.safe_load_file(File.join(directory,'..', 'config.yaml'))
-        framework_config = YAML.safe_load_file(File.join(directory,'..','..', 'config.yaml'))
-        config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
+        main_config = YAML.safe_load_file(File.join(directory,'..','..', 'config.yaml'))
+        config.deep_merge!(language_config)
+        config.deep_merge!(main_config)
         scheme = 'https'
         scheme = 'http' if config['framework'].key?('unsecure')
         website = config['framework']['website']
@@ -86,7 +96,6 @@ namespace :db do
                     end
         end
         unless data[:frameworks].map { |row| row[:id] }.to_a.include?(id)
-          pp config
           data[:frameworks] << {
             id: id,
             version: config.dig('framework', 'version'),
@@ -104,7 +113,7 @@ namespace :db do
       end
       end
     info.each do |key, value|
-      data[:metrics] << {level: concurrency, key: key, value: value/ENV['ROUTES'].split(',').count, framework_id: id}
+      data[:metrics] << {level: concurrency.to_i, label: key, value: (value/ENV['ROUTES'].split(',').count).to_f, framework_id: id}
     end
     end
     data.merge!(updated_at: Time.now.utc, version: 1)

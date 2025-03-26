@@ -9,6 +9,7 @@ gem 'mustache'
 gem 'open3'
 gem 'pg'
 gem 'rake'
+gem 'deep_merge'
 
 group :development, :test do
   gem 'rspec'
