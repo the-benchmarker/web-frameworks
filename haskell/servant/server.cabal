@@ -10,10 +10,11 @@ library
   hs-source-dirs:      src
   exposed-modules:     Lib
   build-depends:       base >= 4.7 && < 5
-                     , servant >= 0.18 && < 0.19
+                     , servant >= 0.20 && < 0.21
                      , servant-server
                      , wai
                      , warp
+                     , text
   default-language:    Haskell2010
 
 executable server
