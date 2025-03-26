@@ -12,12 +12,12 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Download the latest stable Zig binary from the official website
-ARG ZIG_VERSION=0.13.0
-RUN wget https://ziglang.org/download/0.13.0/zig-linux-{{arch}}-0.13.0.tar.xz
+ARG ZIG_VERSION=0.14.0
+RUN wget https://ziglang.org/download/0.14.0/zig-linux-{{arch}}-0.14.0.tar.xz
 
-RUN tar -xvf zig-linux-{{arch}}-0.13.0.tar.xz
+RUN tar -xvf zig-linux-{{arch}}-0.14.0.tar.xz
 
-RUN mv zig-linux-{{arch}}-0.13.0 /usr/local/zig 
+RUN mv zig-linux-{{arch}}-0.14.0 /usr/local/zig 
 
 # Add Zig to the PATH
 ENV PATH="/usr/local/zig:$PATH"
