@@ -100,6 +100,7 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   > /etc/nginx/conf.d/server.conf
   
   RUN echo 'opcache.enable=1\n\
+  opcache.enable_cli=1\n\
   opcache.memory_consumption=512\n\
   opcache.interned_strings_buffer=64\n\
   opcache.max_accelerated_sources=32531\n\

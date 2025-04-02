@@ -1,3 +1,3 @@
 module main
 
-require github.com/flamego/flamego v1.9.5
+require github.com/flamego/flamego v1.9.6

@@ -1,7 +1,7 @@
 (defproject luminus "0.1.0-SNAPSHOT"
 
   :dependencies [[luminus/lein-template "4.51"]
-                 [ch.qos.logback/logback-classic "1.5.17"]
+                 [ch.qos.logback/logback-classic "1.5.18"]
                  [cheshire "5.13.0"]
                  [clojure.java-time "1.4.3"]
                  [cprop "0.1.20"]
@@ -12,7 +12,7 @@
                  [luminus/ring-ttl-session "0.3.3"]
                  [markdown-clj "1.12.3"]
                  [metosin/muuntaja "0.6.11"]
-                 [metosin/reitit "0.7.2"]
+                 [metosin/reitit "0.8.0"]
                  [metosin/ring-http-response "0.9.5"]
                  [mount "0.1.21"]
                  [nrepl "1.3.1"]
@@ -23,7 +23,7 @@
                  [org.webjars.npm/material-icons "1.13.2"]
                  [org.webjars/webjars-locator "0.52"]
                  [ring-webjars "0.3.0"]
-                 [ring/ring-core "1.13.0"]
+                 [ring/ring-core "1.14.1"]
                  [ring/ring-defaults "0.6.0"]
                  [com.fasterxml.jackson.core/jackson-core "2.18.3"]]
 
@@ -50,7 +50,7 @@
    :project/dev  {:jvm-opts ["-Dconf=dev-config.edn" ]
                   :dependencies [[pjstadig/humane-test-output "0.11.0"]
                                  [prone "2021-04-23"]
-                                 [ring/ring-devel "1.13.0"]
+                                 [ring/ring-devel "1.14.1"]
                                  [ring/ring-mock "0.4.0"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.26.0"]
                                  [jonase/eastwood "1.4.3"]] 

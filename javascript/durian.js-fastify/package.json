@@ -33,10 +33,10 @@
     "test:e2e": "durian test:e2e"
   },
   "dependencies": {
-    "durian.js": "^1.2.1",
+    "durian.js": "^2.0.0",
     "@nestjs/platform-fastify": "^11.0.0",
     "@fastify/static": "^8.0.3",
-    "@fastify/view": "^10.0.1",
+    "@fastify/view": "^11.0.0",
     "pm2-beta": "^6.0.2"
   }
 }

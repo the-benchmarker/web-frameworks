@@ -2,6 +2,8 @@
 
 require "dotenv"
 require "active_support"
+require "yaml"
+require "mustache"
 
 MANIFESTS = {
   container: ".Dockerfile",
