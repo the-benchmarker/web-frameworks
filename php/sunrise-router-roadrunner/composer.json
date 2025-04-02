@@ -1,16 +1,4 @@
 {
-  "type": "project",
-  "name": "sunrise/awesome-skeleton",
-  "homepage": "https://github.com/sunrise-php/awesome-skeleton",
-  "description": "An awesome skeleton for modern PHP development.",
-  "keywords": [
-    "fenric",
-    "sunrise",
-    "skeleton",
-    "php-skeleton",
-    "api-skeleton",
-    "api-platform"
-  ],
   "require": {
     "php": ">=8.3",
     "php-di/php-di": "@stable",
