@@ -1,6 +1,6 @@
 # https://github.com/roadrunner-server/roadrunner/blob/master/.rr.yaml
 
-version: '3'
+version: "3"
 server:
   command: php bin/app rr:work
 http:
