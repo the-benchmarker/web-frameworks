@@ -41,7 +41,7 @@ FROM debian:12-slim
 RUN apt-get -qq update 
 RUN apt-get -qy install ca-certificates curl
 
-COPY --from=build zig-out/bin/httpz /server
+COPY --from=build /home/ziguser/zig-out/bin/httpz /server
 
 ENTRYPOINT {{command}}
 
