@@ -33,9 +33,8 @@ RUN chown -R ziguser src
 # Switch to the non-root user
 USER ziguser
 
-RUN ls
-
 RUN zig build -Doptimize=ReleaseFast
+RUN ls
 
 FROM debian:12-slim
 
