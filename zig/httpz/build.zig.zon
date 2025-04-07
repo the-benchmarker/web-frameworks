@@ -1,12 +1,13 @@
 .{
-    .name = "httpz",
+    .name = .httpz_bench,
+    .fingerprint = 0x6a17c1457c4979c6,
     .version = "0.1.0",
-    .minimum_zig_version = "0.13.0",
+    .minimum_zig_version = "0.14.0",
     .dependencies = .{
         .httpz = .{
             //.path = "../../../http.zig",
-            .url = "git+https://github.com/karlseguin/http.zig#zig-0.13",
-            .hash = "12208c1f2c5f730c4c03aabeb0632ade7e21914af03e6510311b449458198d0835d6",
+            .url = "git+https://github.com/karlseguin/http.zig.git#c16f21ebfc6d2896d50631cdc3ab6b4ece729361",
+            .hash = "httpz-0.0.0-PNVzrGu3BgBqTTlJulQxL7nOo3ljwA5MvtGpQ2L0GkHE",
         },
     },
     .paths = .{
