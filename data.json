@@ -1334,6 +1334,12 @@
     },
     {
       "level": 512,
+      "label": "http_errors",
+      "value": 0,
+      "framework_id": 604
+    },
+    {
+      "level": 512,
       "label": "socket_connection_errors",
       "value": 0,
       "framework_id": 537
@@ -3578,6 +3584,12 @@
     },
     {
       "level": 64,
+      "label": "percentile_75",
+      "value": 251,
+      "framework_id": 604
+    },
+    {
+      "level": 64,
       "label": "maximum_latency",
       "value": 16702.666666666668,
       "framework_id": 12
@@ -4441,6 +4453,12 @@
       "framework_id": 60
     },
     {
+      "level": 256,
+      "label": "standard_deviation",
+      "value": 913.6666666666666,
+      "framework_id": 604
+    },
+    {
       "level": 64,
       "label": "total_requests_per_s",
       "value": 179071.66666666666,
@@ -4487,6 +4505,12 @@
       "label": "percentile_90",
       "value": 2503.3333333333335,
       "framework_id": 290
+    },
+    {
+      "level": 512,
+      "label": "total_bytes_received",
+      "value": 311465025.6666667,
+      "framework_id": 604
     },
     {
       "level": 64,
@@ -8804,6 +8828,12 @@
     },
     {
       "level": 512,
+      "label": "percentile_75",
+      "value": 1306.6666666666667,
+      "framework_id": 604
+    },
+    {
+      "level": 512,
       "label": "percentile_90",
       "value": 14081.333333333334,
       "framework_id": 528
@@ -11771,6 +11801,12 @@
       "label": "percentile_90",
       "value": 980,
       "framework_id": 52
+    },
+    {
+      "level": 64,
+      "label": "percentile_99",
+      "value": 2209,
+      "framework_id": 604
     },
     {
       "level": 512,
@@ -16921,6 +16957,12 @@
       "framework_id": 30
     },
     {
+      "level": 512,
+      "label": "total_requests",
+      "value": 8571894.666666666,
+      "framework_id": 604
+    },
+    {
       "level": 64,
       "label": "percentile_50",
       "value": 99.66666666666667,
@@ -18133,6 +18175,12 @@
       "framework_id": 570
     },
     {
+      "level": 256,
+      "label": "total_requests_per_s",
+      "value": 511800.6666666667,
+      "framework_id": 604
+    },
+    {
       "level": 64,
       "label": "total_requests_per_s",
       "value": 199761.33333333334,
@@ -19088,6 +19136,12 @@
     },
     {
       "level": 64,
+      "label": "minimum_latency",
+      "value": 5.333333333333333,
+      "framework_id": 604
+    },
+    {
+      "level": 64,
       "label": "http_errors",
       "value": 0,
       "framework_id": 86
@@ -19103,6 +19157,12 @@
       "label": "percentile_99",
       "value": 250001.66666666666,
       "framework_id": 368
+    },
+    {
+      "level": 64,
+      "label": "duration_ms",
+      "value": 15042280.666666666,
+      "framework_id": 604
     },
     {
       "level": 512,
@@ -19739,6 +19799,12 @@
       "label": "socket_write_errors",
       "value": 0,
       "framework_id": 213
+    },
+    {
+      "level": 256,
+      "label": "duration_ms",
+      "value": 15062913.333333334,
+      "framework_id": 604
     },
     {
       "level": 64,
@@ -20729,6 +20795,12 @@
       "label": "percentile_99.999",
       "value": 165859.33333333334,
       "framework_id": 271
+    },
+    {
+      "level": 256,
+      "label": "socket_write_errors",
+      "value": 0,
+      "framework_id": 604
     },
     {
       "level": 256,
@@ -23185,6 +23257,12 @@
       "framework_id": 580
     },
     {
+      "level": 64,
+      "label": "average_latency",
+      "value": 254.33333333333334,
+      "framework_id": 604
+    },
+    {
       "level": 256,
       "label": "total_bytes_received",
       "value": 532650164,
@@ -24547,6 +24625,12 @@
       "framework_id": 88
     },
     {
+      "level": 256,
+      "label": "percentile_99",
+      "value": 4439.333333333333,
+      "framework_id": 604
+    },
+    {
       "level": 512,
       "label": "average_latency",
       "value": 1357.3333333333333,
@@ -24955,6 +25039,12 @@
       "framework_id": 596
     },
     {
+      "level": 64,
+      "label": "percentile_99.999",
+      "value": 7519,
+      "framework_id": 604
+    },
+    {
       "level": 256,
       "label": "minimum_latency",
       "value": 8.333333333333334,
@@ -25133,6 +25223,12 @@
       "label": "socket_connection_errors",
       "value": 0,
       "framework_id": 242
+    },
+    {
+      "level": 512,
+      "label": "standard_deviation",
+      "value": 1165.3333333333333,
+      "framework_id": 604
     },
     {
       "level": 512,
@@ -30259,6 +30355,12 @@
       "framework_id": 526
     },
     {
+      "level": 256,
+      "label": "socket_read_errors",
+      "value": 0,
+      "framework_id": 604
+    },
+    {
       "level": 64,
       "label": "percentile_50",
       "value": 168.66666666666666,
@@ -30788,6 +30890,12 @@
     },
     {
       "level": 256,
+      "label": "request_timeouts",
+      "value": 0,
+      "framework_id": 604
+    },
+    {
+      "level": 256,
       "label": "percentile_50",
       "value": 574.6666666666666,
       "framework_id": 376
@@ -31153,6 +31261,12 @@
       "framework_id": 223
     },
     {
+      "level": 256,
+      "label": "socket_connection_errors",
+      "value": 0,
+      "framework_id": 604
+    },
+    {
       "level": 64,
       "label": "total_requests_per_s",
       "value": 47365,
@@ -31235,6 +31349,12 @@
       "label": "total_bytes_received",
       "value": 98487973.33333333,
       "framework_id": 233
+    },
+    {
+      "level": 256,
+      "label": "percentile_99.999",
+      "value": 12674.666666666666,
+      "framework_id": 604
     },
     {
       "level": 256,
@@ -32657,6 +32777,12 @@
       "label": "standard_deviation",
       "value": 859.6666666666666,
       "framework_id": 242
+    },
+    {
+      "level": 64,
+      "label": "percentile_90",
+      "value": 595.6666666666666,
+      "framework_id": 604
     },
     {
       "level": 64,
@@ -38341,6 +38467,12 @@
       "framework_id": 565
     },
     {
+      "level": 512,
+      "label": "percentile_99.999",
+      "value": 15596.666666666666,
+      "framework_id": 604
+    },
+    {
       "level": 64,
       "label": "total_requests_per_s",
       "value": 155936.33333333334,
@@ -39043,6 +39175,12 @@
       "framework_id": 366
     },
     {
+      "level": 64,
+      "label": "total_requests_per_s",
+      "value": 403771.6666666667,
+      "framework_id": 604
+    },
+    {
       "level": 512,
       "label": "percentile_99",
       "value": 324777,
@@ -39625,6 +39763,12 @@
       "framework_id": 57
     },
     {
+      "level": 64,
+      "label": "socket_connection_errors",
+      "value": 0,
+      "framework_id": 604
+    },
+    {
       "level": 256,
       "label": "average_latency",
       "value": 1368.6666666666667,
@@ -40169,6 +40313,12 @@
       "label": "percentile_75",
       "value": 3303.3333333333335,
       "framework_id": 258
+    },
+    {
+      "level": 64,
+      "label": "http_errors",
+      "value": 0,
+      "framework_id": 604
     },
     {
       "level": 64,
@@ -41531,6 +41681,12 @@
       "label": "socket_read_errors",
       "value": 0,
       "framework_id": 402
+    },
+    {
+      "level": 512,
+      "label": "socket_write_errors",
+      "value": 0,
+      "framework_id": 604
     },
     {
       "level": 256,
@@ -44498,6 +44654,12 @@
     },
     {
       "level": 64,
+      "label": "percentile_50",
+      "value": 113,
+      "framework_id": 604
+    },
+    {
+      "level": 64,
       "label": "standard_deviation",
       "value": 607,
       "framework_id": 286
@@ -44693,6 +44855,12 @@
       "label": "percentile_99",
       "value": 1519,
       "framework_id": 89
+    },
+    {
+      "level": 512,
+      "label": "maximum_latency",
+      "value": 18023,
+      "framework_id": 604
     },
     {
       "level": 64,
@@ -50791,6 +50959,12 @@
       "framework_id": 377
     },
     {
+      "level": 256,
+      "label": "total_bytes_received",
+      "value": 280075121.3333333,
+      "framework_id": 604
+    },
+    {
       "level": 64,
       "label": "standard_deviation",
       "value": 636,
@@ -51497,6 +51671,12 @@
       "label": "socket_connection_errors",
       "value": 0,
       "framework_id": 233
+    },
+    {
+      "level": 64,
+      "label": "socket_write_errors",
+      "value": 0,
+      "framework_id": 604
     },
     {
       "level": 256,
@@ -53837,6 +54017,12 @@
       "label": "request_timeouts",
       "value": 0,
       "framework_id": 545
+    },
+    {
+      "level": 256,
+      "label": "maximum_latency",
+      "value": 17208.666666666668,
+      "framework_id": 604
     },
     {
       "level": 64,
@@ -60746,6 +60932,12 @@
     },
     {
       "level": 512,
+      "label": "socket_connection_errors",
+      "value": 0,
+      "framework_id": 604
+    },
+    {
+      "level": 512,
       "label": "total_bytes_received",
       "value": 532954818.3333333,
       "framework_id": 356
@@ -62599,6 +62791,12 @@
       "framework_id": 450
     },
     {
+      "level": 64,
+      "label": "socket_read_errors",
+      "value": 0,
+      "framework_id": 604
+    },
+    {
       "level": 256,
       "label": "percentile_99",
       "value": 8347.333333333334,
@@ -63679,6 +63877,12 @@
       "framework_id": 351
     },
     {
+      "level": 256,
+      "label": "average_latency",
+      "value": 667.6666666666666,
+      "framework_id": 604
+    },
+    {
       "level": 64,
       "label": "total_bytes_received",
       "value": 88021229.66666667,
@@ -64633,6 +64837,12 @@
       "framework_id": 224
     },
     {
+      "level": 512,
+      "label": "request_timeouts",
+      "value": 0,
+      "framework_id": 604
+    },
+    {
       "level": 64,
       "label": "average_latency",
       "value": 455,
@@ -65351,6 +65561,12 @@
       "label": "socket_connection_errors",
       "value": 0,
       "framework_id": 232
+    },
+    {
+      "level": 64,
+      "label": "total_bytes_received",
+      "value": 220606280.66666666,
+      "framework_id": 604
     },
     {
       "level": 64,
@@ -66083,6 +66299,12 @@
       "label": "maximum_latency",
       "value": 20829.333333333332,
       "framework_id": 35
+    },
+    {
+      "level": 256,
+      "label": "total_requests",
+      "value": 7709237.666666667,
+      "framework_id": 604
     },
     {
       "level": 256,
@@ -70027,6 +70249,12 @@
       "framework_id": 419
     },
     {
+      "level": 512,
+      "label": "total_requests_per_s",
+      "value": 569750.6666666666,
+      "framework_id": 604
+    },
+    {
       "level": 256,
       "label": "percentile_75",
       "value": 1011.3333333333334,
@@ -71657,6 +71885,12 @@
       "label": "percentile_50",
       "value": 2292,
       "framework_id": 48
+    },
+    {
+      "level": 256,
+      "label": "http_errors",
+      "value": 0,
+      "framework_id": 604
     },
     {
       "level": 512,
@@ -74150,6 +74384,12 @@
     },
     {
       "level": 512,
+      "label": "percentile_99",
+      "value": 5463.666666666667,
+      "framework_id": 604
+    },
+    {
+      "level": 512,
       "label": "request_timeouts",
       "value": 2,
       "framework_id": 388
@@ -74273,6 +74513,12 @@
       "label": "percentile_75",
       "value": 1877.3333333333333,
       "framework_id": 556
+    },
+    {
+      "level": 256,
+      "label": "percentile_50",
+      "value": 326,
+      "framework_id": 604
     },
     {
       "level": 512,
@@ -78650,6 +78896,12 @@
     },
     {
       "level": 64,
+      "label": "total_requests",
+      "value": 6074542.333333333,
+      "framework_id": 604
+    },
+    {
+      "level": 64,
       "label": "maximum_latency",
       "value": 8840.666666666666,
       "framework_id": 88
@@ -79142,6 +79394,12 @@
     },
     {
       "level": 64,
+      "label": "standard_deviation",
+      "value": 423.6666666666667,
+      "framework_id": 604
+    },
+    {
+      "level": 64,
       "label": "percentile_50",
       "value": 77.33333333333333,
       "framework_id": 587
@@ -79265,6 +79523,12 @@
       "label": "percentile_75",
       "value": 1197.3333333333333,
       "framework_id": 435
+    },
+    {
+      "level": 512,
+      "label": "minimum_latency",
+      "value": 5.333333333333333,
+      "framework_id": 604
     },
     {
       "level": 512,
@@ -81797,6 +82061,12 @@
       "label": "percentile_99.999",
       "value": 12087,
       "framework_id": 540
+    },
+    {
+      "level": 64,
+      "label": "maximum_latency",
+      "value": 9041.333333333334,
+      "framework_id": 604
     },
     {
       "level": 512,
@@ -85037,6 +85307,12 @@
       "label": "duration_ms",
       "value": 15095161.333333334,
       "framework_id": 418
+    },
+    {
+      "level": 256,
+      "label": "percentile_75",
+      "value": 765.3333333333334,
+      "framework_id": 604
     },
     {
       "level": 256,
@@ -95023,6 +95299,12 @@
       "framework_id": 86
     },
     {
+      "level": 512,
+      "label": "socket_read_errors",
+      "value": 0,
+      "framework_id": 604
+    },
+    {
       "level": 64,
       "label": "http_errors",
       "value": 0,
@@ -99589,6 +99871,12 @@
       "framework_id": 559
     },
     {
+      "level": 256,
+      "label": "minimum_latency",
+      "value": 5,
+      "framework_id": 604
+    },
+    {
       "level": 64,
       "label": "total_requests",
       "value": 1143291.3333333333,
@@ -102602,6 +102890,12 @@
     },
     {
       "level": 512,
+      "label": "percentile_50",
+      "value": 586.6666666666666,
+      "framework_id": 604
+    },
+    {
+      "level": 512,
       "label": "socket_read_errors",
       "value": 0,
       "framework_id": 236
@@ -104744,6 +105038,12 @@
     },
     {
       "level": 512,
+      "label": "average_latency",
+      "value": 1017.3333333333334,
+      "framework_id": 604
+    },
+    {
+      "level": 512,
       "label": "total_requests",
       "value": 2976993,
       "framework_id": 536
@@ -106151,6 +106451,12 @@
       "label": "percentile_50",
       "value": 123.66666666666667,
       "framework_id": 67
+    },
+    {
+      "level": 256,
+      "label": "percentile_90",
+      "value": 1710.6666666666667,
+      "framework_id": 604
     },
     {
       "level": 512,
@@ -107912,6 +108218,12 @@
     },
     {
       "level": 512,
+      "label": "percentile_90",
+      "value": 2474,
+      "framework_id": 604
+    },
+    {
+      "level": 512,
       "label": "total_requests_per_s",
       "value": 557622,
       "framework_id": 103
@@ -108761,6 +109073,12 @@
       "label": "http_errors",
       "value": 0,
       "framework_id": 584
+    },
+    {
+      "level": 512,
+      "label": "duration_ms",
+      "value": 15044959.333333334,
+      "framework_id": 604
     },
     {
       "level": 512,
@@ -110009,6 +110327,12 @@
       "label": "socket_read_errors",
       "value": 0,
       "framework_id": 197
+    },
+    {
+      "level": 64,
+      "label": "request_timeouts",
+      "value": 0,
+      "framework_id": 604
     },
     {
       "level": 256,
@@ -111302,6 +111626,13 @@
       "label": "jester",
       "language": "nim",
       "website": "https://github.com/dom96/jester"
+    },
+    {
+      "id": 604,
+      "version": null,
+      "label": "httpz",
+      "language": "zig",
+      "website": "https://github.com/karlseguin/http.zig"
     },
     {
       "id": 537,
@@ -112645,6 +112976,10 @@
       "version": 11
     },
     {
+      "label": "zig",
+      "version": 0.14
+    },
+    {
       "label": "julia",
       "version": 1.11
     },
@@ -112657,7 +112992,7 @@
       "version": 3.7
     }
   ],
-  "updated_at": "2025-04-06 20:02:29 UTC",
+  "updated_at": "2025-04-07 05:25:47 UTC",
   "version": 1,
   "hardware": {
     "cpus": 8,
