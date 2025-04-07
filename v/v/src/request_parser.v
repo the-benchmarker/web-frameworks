@@ -1,12 +1,13 @@
 module main
 
-struct Slice {
+pub struct Slice {
+pub:
 	start int
 	len   int
 }
 
-struct HttpRequest {
-mut:
+pub struct HttpRequest {
+pub mut:
 	buffer  []u8
 	method  Slice
 	path    Slice
@@ -14,7 +15,7 @@ mut:
 }
 
 @[direct_array_access]
-fn parse_request_line(mut req HttpRequest) ! {
+fn parse_http1_request_line(mut req HttpRequest) ! {
 	mut i := 0
 	// Parse HTTP method
 	for i < req.buffer.len && req.buffer[i] != ` ` {
@@ -55,17 +56,61 @@ fn parse_request_line(mut req HttpRequest) ! {
 	}
 }
 
-fn decode_http_request(buffer []u8) !HttpRequest {
+pub fn decode_http_request(buffer []u8) !HttpRequest {
 	mut req := HttpRequest{
 		buffer: buffer
 	}
 
-	parse_request_line(mut req)!
+	parse_http1_request_line(mut req)!
 
 	return req
 }
 
 // Helper function to convert Slice to string for debugging
-fn slice_to_string(buffer []u8, s Slice) string {
+pub fn slice_to_string(buffer []u8, s Slice) string {
 	return buffer[s.start..s.start + s.len].bytestr()
+}
+
+@[direct_array_access]
+pub fn (req HttpRequest) get_header_value_slice(name string) ?Slice {
+	mut pos := req.version.start + req.version.len + 2 // Start after request line (CRLF)
+	if pos >= req.buffer.len {
+		return none
+	}
+
+	for pos < req.buffer.len {
+		if unsafe {
+			vmemcmp(&req.buffer[pos], name.str, name.len)
+		} == 0 {
+			pos += name.len
+			if req.buffer[pos] != `:` {
+				return none
+			}
+			pos++
+			for pos < req.buffer.len && (req.buffer[pos] == ` ` || req.buffer[pos] == `\t`) {
+				pos++
+			}
+			if pos >= req.buffer.len {
+				return none
+			}
+			mut start := pos
+			for pos < req.buffer.len && req.buffer[pos] != `\r` {
+				pos++
+			}
+			return Slice{
+				start: start
+				len:   pos - start
+			}
+		}
+		if req.buffer[pos] == `\r` {
+			pos++
+			if pos < req.buffer.len && req.buffer[pos] == `\n` {
+				pos++
+			}
+		} else {
+			pos++
+		}
+	}
+
+	return none
 }
