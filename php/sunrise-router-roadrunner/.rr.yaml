@@ -1,8 +1,8 @@
 # https://github.com/roadrunner-server/roadrunner/blob/master/.rr.yaml
 
-version: '3'
+version: "3"
 server:
-  command: php bin/app rr:work
+  command: php app rr:work
 http:
   address: 0.0.0.0:3000
 rpc:
