@@ -20,3 +20,4 @@ lhl = Lihil[None](routes=[user, all_users])
 @lhl.get
 async def homepage() -> Text:
     return ""
+
