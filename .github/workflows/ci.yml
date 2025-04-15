@@ -65,7 +65,7 @@ jobs:
             echo "Wait for container to be healthy"
             sleep 1
           done
-        timeout-minutes: 2
+        timeout-minutes: 10
         env:
           LANGUAGE: ${{ matrix.language }}
           FRAMEWORK: ${{ matrix.framework }}
