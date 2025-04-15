@@ -1,5 +1,5 @@
-import express from "npm:express@4.21.0";
-var app = express();
+import express from "express";
+const app = express();
 app.set("etag", false);
 
 app.get("/", function (req, res) {
@@ -14,4 +14,4 @@ app.post("/user", function (req, res) {
   res.send("");
 });
 
-app.listen(3000, function () {});
+export default app;
