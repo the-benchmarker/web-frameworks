@@ -34,7 +34,7 @@ WORKDIR /usr/src/web
   FROM eclipse-temurin:{{{.}}}-jre
 {{/language.version}}
 {{^language.version}}
-  FROM eclipse-temurin:21.0.6_7-jre
+  FROM eclipse-temurin:21.0.7_6-jre
 {{/language.version}}
 
 
