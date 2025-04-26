@@ -1,10 +1,10 @@
 use rama::{
     http::{
-        matcher::HttpMatcher,
-        server::HttpServer,
-        service::web::{extract::Path, match_service},
         StatusCode,
+        server::HttpServer,
+        service::web::{Router, extract::Path},
     },
+    net::address::SocketAddress,
     rt::Executor,
 };
 use serde::Deserialize;
@@ -18,13 +18,14 @@ struct GetUserParams {
 async fn main() {
     HttpServer::auto(Executor::default())
         .listen(
-            "0.0.0.0:3000",
-            match_service!{
-                HttpMatcher::get("/") => StatusCode::OK,
-                HttpMatcher::post("/user") => StatusCode::OK,
-                HttpMatcher::get("/user/:id") => |Path(GetUserParams{ id }): Path<GetUserParams>| async move { id },
-                _ => StatusCode::NOT_FOUND,
-            }
+            SocketAddress::default_ipv4(3000),
+            Router::new()
+                .get("/", StatusCode::OK)
+                .post("/user", StatusCode::OK)
+                .get(
+                    "/user/:id",
+                    async |Path(GetUserParams { id }): Path<GetUserParams>| id,
+                ),
         )
         .await
         .unwrap();
