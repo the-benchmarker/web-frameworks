@@ -23,7 +23,7 @@ async fn main() {
                 .get("/", StatusCode::OK)
                 .post("/user", StatusCode::OK)
                 .get(
-                    "/user/:id",
+                    "/user/{id}",
                     async |Path(GetUserParams { id }): Path<GetUserParams>| id,
                 ),
         )
