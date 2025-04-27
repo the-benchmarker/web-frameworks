@@ -14,9 +14,9 @@ async def userinfo() -> Text:
     return ""
 
 
-lhl = Lihil[None](routes=[user, all_users])
+app = Lihil[None](routes=[user, all_users])
 
 
-@lhl.get
+@app.get
 async def homepage() -> Text:
     return ""
