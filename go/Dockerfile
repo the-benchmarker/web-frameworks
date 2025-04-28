@@ -13,9 +13,9 @@ ENV GOOS=linux
 ENV GOARCH={{#architecture}}{{{.}}}{{/architecture}}
 
 {{#if.architecture.amd64}}
-  # This compile with v3 micoarchitecture
+  # This compile with v2 micoarchitecture
   # See https://en.wikipedia.org/wiki/X86-64#Microarchitecture_levels 
-  ENV GOAMD64=v3
+  ENV GOAMD64=v2
 {{/if.architecture.amd64}}
 
 {{#if.architecture.arm64}}
