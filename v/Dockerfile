@@ -25,8 +25,6 @@ WORKDIR /app
   RUN {{{.}}}
 {{/bootstrap}}
 
-RUN v install https://github.com/enghitalo/vanilla_http_server
-
 RUN v . {{#build_flags}} {{{.}}} {{/build_flags}} -o server
 
 FROM debian
