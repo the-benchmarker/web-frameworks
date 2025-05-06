@@ -5,7 +5,6 @@ language:
     - server
   bootstrap:
     - cd /opt/vlang && git fetch --all --tags && git checkout master && make && v -version && cd /app
-    - v install https://github.com/enghitalo/vanilla_http_server
   build_flags:
     - -prod -cc gcc
 
