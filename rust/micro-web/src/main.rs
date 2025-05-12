@@ -29,6 +29,6 @@ async fn main() {
         .build();
 
     // Configure and start the server
-    Server::builder().router(router).bind("127.0.0.1:3000").default_handler(handler_fn(default_handler)).build().unwrap().start().await;
+    Server::builder().router(router).bind("0.0.0.0:3000").default_handler(handler_fn(default_handler)).build().unwrap().start().await;
 }
 
