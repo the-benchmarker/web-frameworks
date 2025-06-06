@@ -6,6 +6,6 @@ publish = false
 rust-version = "1.85"
 
 [dependencies]
-rama = { version = "0.2.0-alpha.13", features = ["http-full"] }
+rama = { version = "0.2.0", features = ["http-full"] }
 serde = "1.0"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
