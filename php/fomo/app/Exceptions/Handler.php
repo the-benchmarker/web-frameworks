@@ -3,21 +3,27 @@
 namespace App\Exceptions;
 
 use Fomo\Request\Request;
-use Fomo\Response\Response;
 
 class Handler
 {
-    public function notFoundHttpException(Request $request): Response
+    public function notFoundHttpException(Request $request): string
     {
         return response()->json([
             'message' => 'not found'
-        ], 404);
+        ] , 404);
     }
 
-    public function notAllowedHttpException(Request $request): Response
+    public function notAllowedHttpException(Request $request): string
     {
         return response()->json([
             'message' => "this is route supported {$request->method()} method"
-        ], 405);
+        ] , 405);
+    }
+
+    public function InternalErrorException(Request $request, Throwable $error): string
+    {     
+        return response()->json([
+            'message' => 'internal error'
+        ] , 500);
     }
 }

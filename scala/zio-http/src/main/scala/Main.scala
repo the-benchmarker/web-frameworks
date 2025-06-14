@@ -13,7 +13,7 @@ object HelloWorld extends ZIOAppDefault {
 
   val z = Method.POST / "user" -> handler(Response.ok)
 
-  val app = Routes(x, y, z).toHttpApp
+  val app = Routes(x, y, z)
 
   override val run =
     Server.serve(app).provide(Server.defaultWithPort(3000))

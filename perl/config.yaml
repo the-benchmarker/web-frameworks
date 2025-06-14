@@ -1,11 +1,13 @@
 language:
-  version: 5.39
+  version: 5.41
   files:
     - "**/*.psgi"
     - "**/*.pl"
     - cpanfile
   engines:
     gazelle:
+      bootstrap:
+        - cpanm --install Gazelle
       command: plackup -s Gazelle --port 3000 --env production --app d2app.psgi
 
 framework:

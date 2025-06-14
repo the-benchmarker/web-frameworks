@@ -6,7 +6,7 @@ builder.Logging.ClearProviders();
 
 var app = builder.Build();
 
-app.UseSimplifyWeb();
+app.UseSimplifyWeb(true);
 
 app.Run();
 

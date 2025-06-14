@@ -1,8 +1,14 @@
 framework:
   github: chubbyts/chubbyts-framework
-  version: 1.9
+  version: '1.10'
 
   bootstrap:
     - npm -g install typescript
     - npm install
     - tsc
+
+language:
+  engines:
+    node:
+      environment:
+        NODE_APP: app.js

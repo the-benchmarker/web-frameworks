@@ -7,10 +7,10 @@ import {
 } from "@chubbyts/chubbyts-framework/dist/router/route";
 import { createRoutesByName } from "@chubbyts/chubbyts-framework/dist/router/routes-by-name";
 import {
+  createResponseFactory,
   createServerRequestFactory,
   createStreamFromResourceFactory,
   createUriFactory,
-  createResponseFactory,
 } from "@chubbyts/chubbyts-http/dist/message-factory";
 import { createPathToRegexpRouteMatcher } from "@chubbyts/chubbyts-framework-router-path-to-regexp/dist/path-to-regexp-router";
 import {
@@ -20,7 +20,7 @@ import {
 import {
   createResponseToUwebsocketsEmitter,
   createUwebsocketsToServerRequestFactory,
-} from "@chubbyts/chubbyts-uwebsockets-http-bridge/dist/uwebsocket-http";
+} from "@chubbyts/chubbyts-http-uwebsockets-bridge/dist/uwebsocket-http";
 import { App, HttpRequest, HttpResponse } from "uWebSockets.js";
 
 const responseFactory = createResponseFactory();
@@ -60,8 +60,8 @@ const app = createApplication([
             return response;
           },
         }),
-      ])
-    )
+      ]),
+    ),
   ),
 ]);
 
@@ -69,7 +69,7 @@ const uwebsocketsToServerRequestFactory =
   createUwebsocketsToServerRequestFactory(
     createUriFactory(),
     createServerRequestFactory(),
-    createStreamFromResourceFactory()
+    createStreamFromResourceFactory(),
   );
 
 const responseToUwebsocketsEmitter = createResponseToUwebsocketsEmitter();
@@ -84,7 +84,7 @@ App()
     res.onAborted(() => {});
     responseToUwebsocketsEmitter(
       await app(uwebsocketsToServerRequestFactory(req, res)),
-      res
+      res,
     );
   })
   .listen(host, port, (listenSocket: unknown) => {

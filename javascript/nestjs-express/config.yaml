@@ -1,6 +1,6 @@
 framework:
   website: nestjs.com
-  version: 10.3
+  version: 11.1
 
   files:
     - nest-cli.json
@@ -8,10 +8,15 @@ framework:
     - tsconfig.build.json
     - tsconfig.json
     - package.json
+    - cluster.mjs
 
   bootstrap:
     - npm -g install @nestjs/cli
     - npm install
     - nest build
 
-  command: pm2-runtime start dist/app.js -i $(nproc)
+language:
+  engines:
+    node:
+      environment:
+        NODE_APP: dist/app.js

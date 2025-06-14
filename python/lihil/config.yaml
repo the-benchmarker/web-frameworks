@@ -1,0 +1,9 @@
+framework:
+  website: www.lihil.cc/lihil/
+  github: raceychan/lihil
+  version: 0.2
+
+  engines:
+    - uvicorn
+    - hypercorn
+    - daphne

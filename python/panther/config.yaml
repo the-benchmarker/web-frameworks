@@ -1,0 +1,12 @@
+language:
+  version: 3.12
+framework:
+  website: PantherPy.GitHub.io
+  github: AliRn76/Panther
+  version: 4.3
+
+  engines:
+    - uvicorn
+    - hypercorn
+    - daphne
+    - granian

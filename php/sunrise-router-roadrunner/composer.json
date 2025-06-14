@@ -1,8 +1,21 @@
 {
   "require": {
-    "sunrise/http-router": "~2.16.0",
-    "sunrise/http-factory": "@stable",
+    "php": ">=8.3",
+    "php-di/php-di": "@stable",
     "spiral/roadrunner-cli": "@stable",
-    "spiral/roadrunner-http": "@stable"
+    "spiral/roadrunner-http": "@stable",
+    "sunrise/http-message": "@stable",
+    "sunrise/http-router": "~3.1.0",
+    "symfony/cache": "@stable",
+    "symfony/console": "@stable",
+    "symfony/dotenv": "@stable"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

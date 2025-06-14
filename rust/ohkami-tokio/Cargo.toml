@@ -1,0 +1,14 @@
+[package]
+name = "server"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[profile.release]
+lto           = true
+panic         = "abort"
+codegen-units = 1
+
+[dependencies]
+ohkami = { version = "0.23", features = ["rt_tokio"] }
+tokio  = { version = "1.43", features = ["full"] }

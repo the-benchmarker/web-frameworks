@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "@nestjs/common": "~10.3.0",
-    "@nestjs/core": "~10.3.0",
-    "@nestjs/platform-express": "~10.3.0",
+    "@nestjs/common": "~11.1.0",
+    "@nestjs/core": "~11.1.0",
+    "@nestjs/platform-express": "~11.1.0",
     "rxjs": "*",
-    "@types/node": "*"
+    "@types/node": "22"
   }
 }

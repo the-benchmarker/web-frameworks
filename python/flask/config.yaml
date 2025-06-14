@@ -1,8 +1,15 @@
 framework:
   website: www.palletsprojects.com/p/flask/
-  version: 3.0
+  version: 3.1
 
   engines:
     - gunicorn
     - uwsgi
     - waitress
+    - granian
+
+language:
+  engines:
+    granian:
+      environment:
+        INTERFACE: wsgi

@@ -8,7 +8,7 @@ package org.restheart;
 import org.restheart.exchange.ByteArrayRequest;
 import org.restheart.exchange.ByteArrayResponse;
 import org.restheart.plugins.ByteArrayService;
-import static org.restheart.plugins.InterceptPoint.*;
+import static org.restheart.plugins.InterceptPoint.ANY;
 import org.restheart.plugins.RegisterPlugin;
 import org.restheart.utils.HttpStatus;
 
@@ -16,7 +16,7 @@ import org.restheart.utils.HttpStatus;
     description = "service for user resource",
     defaultURI = "/user",
     blocking = false,
-    dontIntercept = { REQUEST_BEFORE_EXCHANGE_INIT, REQUEST_BEFORE_AUTH, REQUEST_AFTER_AUTH, RESPONSE, RESPONSE_ASYNC  }
+    dontIntercept = ANY
     )
 public class UserService implements ByteArrayService {
   @Override
@@ -24,6 +24,7 @@ public class UserService implements ByteArrayService {
     switch(request.getMethod()) {
         case POST -> { /* nothing to do! this just sends 200 back */ }
         case GET -> response.setContent(request.getPathParam("/user/{id}", "id"));
+        case OPTIONS -> handleOptions();
         default -> response.setStatusCode(HttpStatus.SC_NOT_IMPLEMENTED);
     }
   }

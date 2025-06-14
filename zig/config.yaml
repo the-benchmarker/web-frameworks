@@ -1,0 +1,14 @@
+language:
+  version: 0.14
+
+  files:
+    - "**/*.zig"
+    - "build.zig.zon"
+
+  engines:
+    default:
+      command: /server
+
+framework:
+  engines:
+    - default

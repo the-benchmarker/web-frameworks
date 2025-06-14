@@ -5,13 +5,10 @@ framework:
   version: 2.6
 
   engines:
-    - uwsgi
     - gunicorn
-    - waitress
-
-  # TODO : override unused PYTHON_APP in generated dockerfile
-
 language:
+  version: 3.12
   engines:
-    uwsgi:
-      command: uwsgi --http 0.0.0.0:3000 --wsgi-file server.py --callable __hug_wsgi__
+    gunicorn:
+      environment:
+        PYTHON_APP: "server:__hug_wsgi__"

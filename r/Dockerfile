@@ -1,5 +1,11 @@
-FROM rocker/r-ver:4.3.3
+FROM r-base:4.5.0
 WORKDIR /usr/src/app
+
+RUN apt-get -qq update
+
+{{#deps}}
+  RUN apt-get -y install {{{.}}}
+{{/deps}}
 
 RUN R  -e 'install.packages("remotes")'
 
@@ -8,6 +14,9 @@ RUN R  -e 'install.packages("remotes")'
 {{/files}}
 
 RUN R -e 'remotes::install_deps()'
+RUN apt-get -qq update
+RUN apt-get -qy install curl
 
-CMD {{{command}}}
+ENTRYPOINT {{{command}}}
 
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1

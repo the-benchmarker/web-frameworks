@@ -11,14 +11,14 @@ let app: WebPart =
                         pathScan "/user/%s" (fun s -> Successful.OK s) ]
           POST >=> path "/user" >=> Successful.OK "" ]
 
-type NoopLogger() = 
-    interface Logger with 
+type NoopLogger() =
+    interface Logger with
         member this.name : string[] = [|"null-logger"|]
         member this.logWithAck (logLevel : LogLevel) (logLevelWithMessage : (LogLevel -> Message)): Async<unit> =
             async {
                 ()
             }
-        member this.log (loglevel : LogLevel) (logLevelWithMessage : (LogLevel -> Message)): unit = 
+        member this.log (loglevel : LogLevel) (logLevelWithMessage : (LogLevel -> Message)): unit =
             ()
 
 let config =

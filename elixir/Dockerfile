@@ -1,6 +1,6 @@
-ARG ELIXIR_VERSION=1.16.1
-ARG ERLANG_VERSION=26.2.2
-ARG DEBIAN_VERSION=bullseye-20240130
+ARG ELIXIR_VERSION=1.17.3
+ARG ERLANG_VERSION=27.0.1
+ARG DEBIAN_VERSION=bullseye-20240904
 
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${ERLANG_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
@@ -51,10 +51,17 @@ WORKDIR /app
 # Copy release from build container
 COPY --from=build /usr/src/app/release ./
 
+# Add utils for healtcheck
+RUN apt-get -qq update
+RUN apt-get -qy install curl
+
 # User
 RUN chown -R nobody: /app
 USER nobody
 ENV HOME /app
 
+# Check status
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+
 # Start release
-CMD {{command}}
+ENTRYPOINT {{command}}

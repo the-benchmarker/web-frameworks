@@ -1,0 +1,14 @@
+framework:
+  website: hleb2framework.ru
+  github: phphleb/hleb
+  version: 2.0
+
+  files:
+    - console
+
+  bootstrap:
+    - php console --generate-key
+    - php console --routes-upd
+
+  engines:
+    - road-runner

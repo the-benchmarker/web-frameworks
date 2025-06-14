@@ -1,8 +1,14 @@
 language:
-  version: latest
+  version: "latest"
   files:
     - "**/*.v"
     - server
+  bootstrap:
+    - cd /opt/vlang && git fetch --all --tags && git checkout master && make && v -version && cd /app
+    - v install enghitalo.vanilla
+  build_flags:
+    - -prod -cc gcc
+
   engines:
     default:
       command: /app/server

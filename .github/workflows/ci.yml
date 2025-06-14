@@ -12,9 +12,10 @@ jobs:
           fetch-depth: 0
       - id: file_changes
         uses: trilom/file-changes-action@v1.2.4
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0
+          ruby-version: "3.3"
           bundler-cache: true
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
@@ -29,7 +30,7 @@ jobs:
   test:
     needs: matrix
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: false
@@ -37,7 +38,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
 
@@ -55,7 +59,17 @@ jobs:
           ENGINE: ${{ matrix.engine }}
 
       - name: Wait
-        run: sleep 1
+        run: |
+          export CID=`cat ${LANGUAGE}/${FRAMEWORK}/cid-${ENGINE}.txt`
+          until [ "`docker inspect -f {{.State.Health.Status}} ${CID}`" = "healthy" ]; do
+            echo "Wait for container to be healthy"
+            sleep 1
+          done
+        timeout-minutes: 10
+        env:
+          LANGUAGE: ${{ matrix.language }}
+          FRAMEWORK: ${{ matrix.framework }}
+          ENGINE: ${{ matrix.engine }}
 
       - name: Test
         run: bundle exec rspec .spec

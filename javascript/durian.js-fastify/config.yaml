@@ -1,0 +1,6 @@
+framework:
+  github: mario-huang/durian.js
+  version: 2.0
+  engines:
+    - bun
+  command: bun run pm2

@@ -1,0 +1,14 @@
+framework:
+  github: rage-rb/rage
+  version: 1.15
+
+  engines:
+    - iodine
+
+  environment:
+    RAGE_ENV: production
+
+language:
+  engines:
+    iodine:
+      command: bundle exec rage s -p 3000 -b 0.0.0.0

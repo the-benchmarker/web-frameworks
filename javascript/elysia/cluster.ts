@@ -1,9 +1,10 @@
-import os from "node:os";
+import { availableParallelism } from 'node:os';
 
-const numCPUs = os.cpus().length;
-for (let i = 0; i < numCPUs; i++) {
-    Bun.spawn(["bun", "app.ts"], {
-        stdio: ["inherit", "inherit", "inherit"],
-        env: { ...process.env },
-    });
+const numCpus = availableParallelism();
+
+for (let i = 0; i < numCpus; i++) {
+  Bun.spawn(['bun', 'app.ts'], {
+    stdio: ['inherit', 'inherit', 'inherit'],
+    env: { ...process.env },
+  });
 }

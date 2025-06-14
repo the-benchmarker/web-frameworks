@@ -1,12 +1,15 @@
-import guildenstern/[ctxheader], uri
+import guildenstern/[dispatcher, httpserver]
 
-proc handleGet(ctx: HttpCtx) =
-  if ctx.isUri("/") or not ctx.isMethod("GET"): ctx.reply(Http200)
-  else:
-    let id = ctx.getUri()[6 .. ^1]
-    ctx.reply(id)
+const ThreadCount = 100
 
-var server = new GuildenServer
-server.initHeaderCtx(handleGet, 3000)
-
-server.serve(loglevel = NONE)
+proc handle() =
+  try:
+    if not isMethod("GET") or not startsUri("/user/"): reply(Http200)
+    else:
+      let id = getUri()[6 .. ^1]
+      reply(id)
+  except: reply(Http500)
+  
+let server = newHttpServer(handle, loglevel = NONE, contenttype = NoBody)
+if not dispatcher.start(server, 3000, ThreadCount, ThreadCount): quit()
+joinThread(server.thread)

@@ -5,7 +5,7 @@
     }
   },
   "require": {
-    "workerman/workerman": "^4.0",
+    "workerman/workerman": "~5.1.0",
     "mix/vega": "~3.0.0"
   }
 }

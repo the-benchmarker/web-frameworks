@@ -82,6 +82,8 @@ python:
     - abersheeran
   baize-asgi:
     - abersheeran
+  panther:
+    - alirn76
   blacksheep: RobertoPrevato
 swift:
   vapor-framework:
@@ -127,10 +129,6 @@ php:
     - mruz
   nano:
     - laylatichy
-  sunrise-router:
-    - fenric
-  sunrise-router-annotations:
-    - fenric
   sunrise-router-roadrunner:
     - fenric
 fsharp:
@@ -194,6 +192,8 @@ csharp:
     - jchannon
   simplify.web:
     - i4004
+  genhttp:
+    - Kaliumhexacyanoferrat
 cpp:
   drogon:
     - an-tao

@@ -1,10 +1,10 @@
 name := "server"
-scalaVersion := "2.13.13"
+scalaVersion := "2.13.16"
 
 lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++= Seq(
-      "com.twitter" %% "finatra-http-server" % "[23.11,23.12)"
+      "com.twitter" %% "finatra-http-server" % "[24.2,24.3)"
     )
   )
   .enablePlugins(JavaAppPackaging)

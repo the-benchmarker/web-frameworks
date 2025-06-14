@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.fs" />
-  </ItemGroup>  
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="7.0.*" />
-    <PackageReference Include="Falco" Version="3.1.*" />
+    <PackageReference Include="Falco" Version="5.*" />
   </ItemGroup>
 </Project>

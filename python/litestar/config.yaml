@@ -1,8 +1,12 @@
+language:
+  version: 3.12
 framework:
+  github: litestar-org/litestar
   website: litestar.dev
-  version: 2.7
+  version: 2.13
 
   engines:
     - uvicorn
     - hypercorn
     - daphne
+    - granian

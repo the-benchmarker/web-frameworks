@@ -1,0 +1,18 @@
+language:
+  version: 5.2
+
+  engines:
+    default:
+      bootstrap:
+        - opam install --deps-only --yes . --verbose
+      command: opam exec -- dune exec --root . ./server.exe
+
+framework:
+  engines:
+    - default
+
+  files:
+    - "**/*.opam"
+    - "**/*.ml"
+    - dune
+    - dune-project

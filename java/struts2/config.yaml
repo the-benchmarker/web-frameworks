@@ -1,11 +1,11 @@
 framework:
   website: struts.apache.org
-  version: 6.3
+  version: 7.0
 
   build:
     - mvn clean package
 
   binaries:
-    - target/benchmark-1.0.0-standalone.jar
+    - target/benchmark-7.0.0-standalone.jar
 
-  command: java -jar target/benchmark-1.0.0-standalone.jar --port 3000
+  command: java -jar target/benchmark-7.0.0-standalone.jar --port 3000

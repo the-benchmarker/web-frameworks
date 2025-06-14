@@ -1,5 +1,5 @@
 language:
-  version: 8.3
+  version: 8.4
 
   files:
     - "**/*.php"
@@ -25,6 +25,8 @@ language:
         - sockets
       command: php public/index.php start
     road-runner:
+      extensions:
+        - protobuf
       files:
         - .rr.yaml
       bootstrap:
@@ -34,8 +36,10 @@ language:
       command: ./rr serve
     swoole:
       extensions:
-        - swoole
+        - swoole/6.0.0
       command: php public/index.php
+      build_deps:
+        - libbrotli-dev
     reactphp:
       deps:
         - libevent-dev

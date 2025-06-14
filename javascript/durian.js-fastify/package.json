@@ -1,0 +1,42 @@
+{
+  "name": "durian.js",
+  "version": "1.0.0",
+  "description": "Run NestJS on Bun Blazingly Fast",
+  "author": "mario-huang",
+  "license": "MIT",
+  "keywords": [
+    "durian",
+    "durianjs",
+    "nest",
+    "nestjs",
+    "bun"
+  ],
+  "scripts": {
+    "build": "durian build",
+    "pm2": "bun run build && pm2-runtime start ecosystem.config.js",
+    "start": "durian start",
+    "start:debug": "durian start:debug",
+    "start:dev": "durian start:dev",
+    "start:prod": "durian start:prod",
+    "compile": "durian compile",
+    "compile:linux-x64": "durian compile:linux-x64",
+    "compile:linux-arm64": "durian compile:linux-arm64",
+    "compile:windows-x64": "durian compile:windows-x64",
+    "compile:darwin-x64": "durian compile:darwin-x64",
+    "compile:darwin-arm64": "durian compile:darwin-arm64",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "durian test",
+    "test:watch": "durian test:watch",
+    "test:cov": "durian test:cov",
+    "test:debug": "durian test:debug",
+    "test:e2e": "durian test:e2e"
+  },
+  "dependencies": {
+    "durian.js": "^2.0.0",
+    "@nestjs/platform-fastify": "^11.0.0",
+    "@fastify/static": "^8.0.3",
+    "@fastify/view": "^11.0.0",
+    "pm2-beta": "^6.0.2"
+  }
+}

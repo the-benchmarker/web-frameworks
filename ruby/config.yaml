@@ -1,5 +1,5 @@
 language:
-  version: 3.3
+  version: 3.4
 
   engines:
     puma:
@@ -14,8 +14,6 @@ language:
       bootstrap:
         - bundle add iodine
       command: bundle exec iodine -p 3000 -w $(nproc)
-    agoo:
-      command: bundler exec ruby app.rb
 
 framework:
   engines:
@@ -31,5 +29,7 @@ framework:
     - config.ru
 
   environment:
+    RUBY_YJIT_ENABLE: 1
     RACK_ENV: production
     BUNDLE_WITHOUT: "development,test"
+    SECRET_KEY_BASE: Awe$ome_Secret.

@@ -1,4 +1,8 @@
 framework:
   unsecure: true
   website: perldancer.org
-  version: 0.4
+  version: 1.1
+
+  bootstrap:
+    # This is temporary, see https://github.com/PerlDancer/Dancer2/issues/1720#issuecomment-2513150364
+    - cpanm --notest --force Module::Pluggable

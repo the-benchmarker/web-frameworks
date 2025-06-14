@@ -1,4 +1,4 @@
-FROM crystallang/crystal:1.11
+FROM 84codes/crystal:1.16.3-debian-bookworm
 
 WORKDIR /usr/src/app
 
@@ -30,4 +30,8 @@ COPY --from=0 /usr/src/app/bin/server /usr/bin/app
   ENV {{{.}}}
 {{/environment}}
 
-CMD {{command}}
+RUN apt-get -qq update
+RUN apt-get -qy install curl
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+
+ENTRYPOINT {{command}}

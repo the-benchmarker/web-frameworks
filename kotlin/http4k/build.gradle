@@ -5,8 +5,8 @@ buildscript {
     }
 
     ext {
-        kotlinVersion = "1.9.+"
-        http4kVersion = "5.14.+"
+        kotlinVersion = "2.1.+"
+        http4kVersion = "6.9.+"
         shadowVersion = "+"
     }
 

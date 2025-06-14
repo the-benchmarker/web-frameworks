@@ -8,7 +8,7 @@
 	<name>benchmark</name>
 	<description>Demo project for rapidoid</description>
 	<properties>
-		<java.version>21</java.version>
+        <maven.compiler.release>21</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>io.javalin</groupId>
 			<artifactId>javalin</artifactId>
-			<version>[6.1,6.2)</version>
+			<version>[6.6,6.7)</version>
 		</dependency>
 		<dependency>
 				<groupId>org.slf4j</groupId>
@@ -30,7 +30,7 @@
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.12.1</version>
+				<version>3.14.0</version>
 				<configuration>
 					<source>11</source>
 					<target>11</target>

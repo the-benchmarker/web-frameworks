@@ -1,0 +1,12 @@
+{
+  "require": {
+    "php": ">=8.2.0",
+    "phphleb/framework": "~2.0.0",
+    "workerman/workerman": "@stable"
+  },
+  "autoload": {
+    "classmap": [
+      "app/"
+    ]
+  }
+}

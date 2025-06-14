@@ -3,7 +3,7 @@
 {{/image}}
 
 {{^image}}
-  FROM clojure:temurin-21-tools-deps-jammy
+  FROM clojure:tools-deps-bookworm-slim
 {{/image}}
 
 WORKDIR /usr/src/app
@@ -20,7 +20,7 @@ WORKDIR /usr/src/app
   RUN clojure -Auberjar
 {{/build}}
 
-FROM eclipse-temurin:21.0.2_13-jre
+FROM eclipse-temurin:21.0.7_6-jre
 
 WORKDIR /opt/bin
 
@@ -32,6 +32,9 @@ WORKDIR /opt/bin
   COPY --from=0 /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
 {{/binaries}}
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+ENTRYPOINT {{command}}
+
+RUN apt-get -qq update
+RUN apt-get -qy install curl
+
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1

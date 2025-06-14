@@ -1,0 +1,5 @@
+name = "server"
+version = "1.0.0"
+
+[dependencies]
+mist = ">= 4.0.4 and < 4.1.0"

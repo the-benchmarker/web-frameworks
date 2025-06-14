@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.helidon.applications</groupId>
         <artifactId>helidon-se</artifactId>
-        <version>[4.0,4.1)</version>
+        <version>[4.0,4.2)</version>
         <relativePath/>
     </parent>
 
@@ -17,6 +17,7 @@
 
     <properties>
         <mainClass>web.helidon.Main</mainClass>
+        <maven.compiler.release>21</maven.compiler.release>
     </properties>
 
     <dependencies>

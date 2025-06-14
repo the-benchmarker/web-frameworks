@@ -10,42 +10,42 @@
 |
 */
 
-process.env.NODE_ENV = 'test'
+process.env.NODE_ENV = "test";
 
-import 'reflect-metadata'
-import { Ignitor, prettyPrintError } from '@adonisjs/core'
-import { configure, processCLIArgs, run } from '@japa/runner'
+import "reflect-metadata";
+import { Ignitor, prettyPrintError } from "@adonisjs/core";
+import { configure, processCLIArgs, run } from "@japa/runner";
 
 /**
  * URL to the application root. AdonisJS need it to resolve
  * paths to file and directories for scaffolding commands
  */
-const APP_ROOT = new URL('../', import.meta.url)
+const APP_ROOT = new URL("../", import.meta.url);
 
 /**
  * The importer is used to import files in context of the
  * application.
  */
 const IMPORTER = (filePath: string) => {
-  if (filePath.startsWith('./') || filePath.startsWith('../')) {
-    return import(new URL(filePath, APP_ROOT).href)
+  if (filePath.startsWith("./") || filePath.startsWith("../")) {
+    return import(new URL(filePath, APP_ROOT).href);
   }
-  return import(filePath)
-}
+  return import(filePath);
+};
 
 new Ignitor(APP_ROOT, { importer: IMPORTER })
   .tap((app) => {
     app.booting(async () => {
-      await import('#start/env')
-    })
-    app.listen('SIGTERM', () => app.terminate())
-    app.listenIf(app.managedByPm2, 'SIGINT', () => app.terminate())
+      await import("#start/env");
+    });
+    app.listen("SIGTERM", () => app.terminate());
+    app.listenIf(app.managedByPm2, "SIGINT", () => app.terminate());
   })
   .testRunner()
   .configure(async (app) => {
-    const { runnerHooks, ...config } = await import('../tests/bootstrap.js')
+    const { runnerHooks, ...config } = await import("../tests/bootstrap.js");
 
-    processCLIArgs(process.argv.splice(2))
+    processCLIArgs(process.argv.splice(2));
     configure({
       ...app.rcFile.tests,
       ...config,
@@ -53,10 +53,10 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
         setup: runnerHooks.setup,
         teardown: runnerHooks.teardown.concat([() => app.terminate()]),
       },
-    })
+    });
   })
   .run(() => run())
   .catch((error) => {
-    process.exitCode = 1
-    prettyPrintError(error)
-  })
+    process.exitCode = 1;
+    prettyPrintError(error);
+  });

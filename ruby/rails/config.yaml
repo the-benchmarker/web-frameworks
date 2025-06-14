@@ -1,10 +1,17 @@
 framework:
   website: rubyonrails.org
-  version: 7.1
+  version: 8.0
 
   bootstrap:
     - mkdir -p tmp/pids
 
+  build_deps:
+    - libsqlite3-dev
+    - libyaml-dev
+    - pkg-config
+
   environment:
     RAILS_ENV: production
     RAILS_LOG_LEVEL: fatal
+    # Rails enables YJIT after the app has initialized
+    RUBY_YJIT_ENABLE: 0

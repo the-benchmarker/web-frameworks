@@ -1,0 +1,18 @@
+core:
+  databases: false
+  timezone: Europe/Kiev
+
+  define:
+    DEV: false
+    DEBUG: 0
+    _PUBLIC: benchmarker.coresky
+    DEFAULT_LG: ""
+
+  ini_set:
+    log_errors: 0
+    display_errors: 0
+
+  profiles:
+    - Anonymous
+    - Root
+    - Mia

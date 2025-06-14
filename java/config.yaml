@@ -1,5 +1,6 @@
 language:
   version: 21
+  compiler: maven
 
   files:
     - src/**/*.java

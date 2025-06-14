@@ -1,0 +1,6 @@
+framework:
+  github: rawhat/mist
+  version: 4.0
+  files:
+    - "**/*.gleam"
+    - "gleam.toml"

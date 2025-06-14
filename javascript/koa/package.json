@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "koa": "~2.15.0",
+    "koa": "~3.0.0",
     "koa-router": "*"
-  }
+  },
+  "type": "module"
 }
