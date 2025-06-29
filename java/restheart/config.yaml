@@ -1,6 +1,6 @@
 framework:
   website: restheart.org
-  version: 8.4
+  version: 8.5
 
   build:
     - mvn package
