@@ -1,7 +1,7 @@
 {
   "name": "server",
   "dependencies": {
-    "arsd-official:cgi": "~>11.4.2"
+    "arsd-official:cgi": "~>12.0.0"
   },
   "dflags-ldc": ["-mcpu=native"],
   "subConfigurations": { "arsd-official:cgi": "embedded_httpd_hybrid" },

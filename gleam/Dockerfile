@@ -1,4 +1,4 @@
-FROM ghcr.io/gleam-lang/gleam:v1.10.0-erlang
+FROM ghcr.io/gleam-lang/gleam:v1.11.1-erlang
 
 WORKDIR /opt/web
 
