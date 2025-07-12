@@ -8,6 +8,9 @@ module Bench
   end
 
   class UserAPI < Grape::API
+    params do
+        requires :id, type: String, desc: 'User ID.'
+      end
     get '/user/:id' do
       params[:id]
     end
