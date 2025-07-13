@@ -1,22 +1,23 @@
-from lihil import Lihil, Route, Text
+from lihil import Lihil, Route
+from lihil.vendors import Response
 
-all_users = Route("/user")
-user = all_users / "{user_id}"
-
-
-@user.get
-async def get_user(user_id: str) -> Text:
-    return user_id
+root = Route()
+user_route = root / "user"
 
 
-@all_users.post
-async def userinfo() -> Text:
-    return ""
+@root.get
+async def homepage():
+    return Response(media_type="text/plain")
 
 
-app = Lihil[None](routes=[user, all_users])
+@user_route.post
+async def userinfo():
+    return Response(media_type="text/plain")
 
 
-@app.get
-async def homepage() -> Text:
-    return ""
+@user_route.sub("/{user_id}").get
+async def get_user(user_id: str):
+    return Response(content=user_id.encode(), media_type="text/plain")
+
+
+app = Lihil(root, user_route)
