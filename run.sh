@@ -13,11 +13,15 @@
 #doctl compute ssh --ssh-key-path ${DO_KEY} sieger
 
 # Clean database
-#dropdb -U postgres benchmark
-#createdb -U postgres benchmark
-#psql -U postgres -d benchmark < dump.sql
-
+if [[ $# -eq 0 ]]; then
+	dropdb -U postgres benchmark
+	createdb -U postgres benchmark
+	psql -U postgres -d benchmark < dump.sql
+find . -mindepth 3 -type f -name config.yaml | grep -v kore > /tmp/list.txt
+else
+	# TODO: remove all from current language
 find $1 -mindepth 2 -type f -name config.yaml | grep -v kore > /tmp/list.txt
+fi
 
 while read line ; do 
   echo "*********** ${line} *************"

@@ -1,6 +1,6 @@
 framework:
   website: jooby.io
-  version: 3.9
+  version: '3.10'
 
   command: >
     /opt/java/openjdk/bin/java -server
