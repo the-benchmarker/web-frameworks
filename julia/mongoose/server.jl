@@ -19,4 +19,5 @@ mg_register!("get", "/", getroot)
 mg_register!("get", "/user/:id", getuserid)
 mg_register!("post", "/user", postuser)
 
-mg_serve!(host = "0.0.0.0", port = 3000, blocking = true)
+mg_serve!(host = "0.0.0.0", port = 3000, async = false)
+# mg_shutdown!()
