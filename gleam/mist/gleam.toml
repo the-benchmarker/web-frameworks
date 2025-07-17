@@ -2,7 +2,7 @@ name = "server"
 version = "1.0.0"
 
 [dependencies]
-mist = ">= 5.0.2 and < 6.0.0"
 gleam_erlang = ">= 1.2.0 and < 2.0.0"
 gleam_http = ">= 4.1.0 and < 5.0.0"
 gleam_stdlib = ">= 0.62.0 and < 1.0.0"
+mist = ">= 5.0.1 and < 5.1.0"

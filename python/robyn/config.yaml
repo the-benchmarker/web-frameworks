@@ -1,7 +1,7 @@
 framework:
   website: robyn.tech
   github: sparckles/robyn
-  version: 0.69
+  version: 0.71
 
   engines:
     - robyn
@@ -19,7 +19,6 @@ framework:
     - rustup default nightly
 
 language:
-  version: 3.12
   engines:
     robyn:
       command: python /usr/src/app/server.py --workers=$(nproc) --processes=$(nproc) --log-level=CRITICAL
