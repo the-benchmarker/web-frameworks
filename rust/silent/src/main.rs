@@ -4,7 +4,8 @@ async fn index(_req: Request) -> Result<Response> {
     Ok(Response::empty())
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let route = Route::new("").get(index).append(
         Route::new("user")
             .append(
@@ -13,6 +14,7 @@ fn main() {
             .post(index),
     );
     Server::new()
-        .bind("0.0.0.0:3000".parse().unwrap())
-        .run(route);
+        .bind("0.0.0.0:30001".parse().unwrap())
+        .serve(route)
+        .await;
 }

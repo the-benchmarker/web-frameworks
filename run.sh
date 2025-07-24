@@ -12,6 +12,8 @@
 #scp -i ${DO_KEY} ${DO_KEY} root@${IP}:${DO_KEY}
 #doctl compute ssh --ssh-key-path ${DO_KEY} sieger
 
+BASEDIR=`pwd`
+
 # Clean database
 dropdb -U postgres benchmark
 createdb -U postgres benchmark
@@ -24,14 +26,14 @@ while read line ; do
   LANGUAGE=`echo $line | awk -F '/' '{print $(NF-2)}'`
   FRAMEWORK=`echo $line | awk -F '/' '{print $(NF-1)}'`
  # cd ${LANGUAGE}/${FRAMEWORK}
-  make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile build
+  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile build
 #  cd ../..
-  make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
-  make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile clean
+  sleep 60
+  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
+  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile clean
   docker ps -aq | xargs --no-run-if-empty docker rm -f;
   docker images -aq | xargs --no-run-if-empty docker rmi -f;
   sudo docker system prune -a -f
-  sleep 1
 done < /tmp/list.txt
 
 #echo 'select label from frameworks' | psql -U postgres -d benchmark -t | sort > /tmp/done.txt
