@@ -1,20 +1,12 @@
 framework:
   website: emmett.sh
-  version: 2.6
+  version: 2.7
 
   engines:
     - emmett
-    - gunicorn
-
-  build_deps:
-    - libffi-dev
-    - libssl-dev
 
 language:
-  version: 3.12
+  version: 3.13
   engines:
-    gunicorn:
-      environment:
-        WORKER_CLASS: emmett.asgi.workers.EmmettWorker
     emmett:
-      command: emmett serve --host 0.0.0.0 --port 3000 --workers $(nproc)
+      command: emmett serve --host 0.0.0.0 --port 3000 --http 1 --workers $(nproc)
