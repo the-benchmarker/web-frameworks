@@ -8,4 +8,4 @@ framework:
 language:
   engines:
     emmett:
-      command: emmett serve --host 0.0.0.0 --port 3000 --http 1 --workers $(nproc)
+      command: emmett serve --host 0.0.0.0 --port 3000 --workers $(nproc)
