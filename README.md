@@ -20,6 +20,15 @@ sudo dnf install postgresql{,-server}
 - `jq`, processing `docker` metadata
 - `docker-machine` if you are on `macos`
 
+You can start and configure a postgres from docker via
+
+```sh
+docker run  --name postgres -v /var/run/postgresql:/var/run/postgresql -e POSTGRES_PASSWORD=postgres -e POSTGRES_HOST_AUTH_METHOD=trust -d -p 5432:5432 postgres
+dropdb -U postgres benchmark
+createdb -U postgres benchmark
+psql -U postgres -d benchmark < dump.sql
+```
+
 ## Usage
 
 - Setup
