@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
   RUN apt-get -y update
 
     RUN apt-get -y install build-essential
-    RUN apt-get -y install gcc guile-3.0
+    RUN apt-get -y install gcc guile-3.0 guile-3.0-dev
 
 
   COPY server.scm server.scm
@@ -16,6 +16,7 @@ WORKDIR /usr/src/app
 
 RUN apt-get -qq update
 RUN apt-get -qy install curl
+RUN guild compile -O3 server.scm -o server.go
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT guile -L . -e '('"$GUILE_APP"')' -c '' $@
