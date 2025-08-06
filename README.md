@@ -50,15 +50,13 @@ eval $(docker-machine env default)
 ```
 
 ```
-export FRAMEWORK=php/lumen
-cd ${FRAMEWORK}
-make -f .Makefile build
+export FRAMEWORK=php/lumen; make -f $FRAMEWORK/.Makefile build
 ```
 
 - Run
 
 ```
-make -f ${FRAMEWORK}/.Makefile collect
+export FRAMEWORK=php/lumen; make -f $FRAMEWORK/.Makefile collect
 ```
 
 :warning: You need to be on the project main directory :warning:
