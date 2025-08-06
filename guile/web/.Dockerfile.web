@@ -1,0 +1,22 @@
+  FROM debian:trixie-slim
+
+WORKDIR /usr/src/app
+
+  ARG DEBIAN_FRONTEND=noninteractive
+  RUN apt-get -y update
+
+    RUN apt-get -y install build-essential
+    RUN apt-get -y install gcc guile-3.0
+
+
+  COPY server.scm server.scm
+
+  ENV WORKER_CLASS=sync
+  ENV GUILE_APP=server
+
+RUN apt-get -qq update
+RUN apt-get -qy install curl
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+
+ENTRYPOINT guile -L . -e '('"$GUILE_APP"')' -c '' $@
+

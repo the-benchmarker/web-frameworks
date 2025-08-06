@@ -1,0 +1,12 @@
+language:
+  engines:
+    fibers:
+      command: guile -L . -e '(server)' -c '' "$@"
+
+framework:
+  website: www.gnu.org/software/guile
+  version: 3.10
+  engines:
+    - web
+  files:
+    - "**/*.scm"
