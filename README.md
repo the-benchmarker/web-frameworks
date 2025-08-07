@@ -54,6 +54,10 @@ make -f ${FRAMEWORK}/.Makefile collect
 
 :warning: You need to be on the project main directory :warning:
 
+## Contributing a new benchmark
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Results
 
 Please take a look at https://web-frameworks-benchmark.netlify.app/result
