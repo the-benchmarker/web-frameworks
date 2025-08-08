@@ -15,7 +15,6 @@ framework:
     - fibers
   command: "guile -L . -e '('$GUILE_APP')' -c '' $@"
   # byte-compilation at O3 improves the requests/s by 10% (default is O2)
-  compile: "guild compile -O3 server.scm -o server.go"
   bootstrap:
     - guild compile -O3 server.scm -o server.go
   build_deps:
