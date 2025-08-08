@@ -2,9 +2,10 @@ FROM debian:trixie-slim
 
 WORKDIR /usr/src/app
 
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get -y update
+
 {{#build_deps.length}}
-  ARG DEBIAN_FRONTEND=noninteractive
-  RUN apt-get -y update
 
   {{#build_deps}}
     RUN apt-get -y install {{{.}}}
@@ -24,10 +25,7 @@ WORKDIR /usr/src/app
   ENV {{{.}}}
 {{/environment}}
 
-RUN pip install .
-
-RUN apt-get -qq update
-RUN apt-get -qy install curl guile
+RUN apt-get -qy install curl
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}
