@@ -51,7 +51,7 @@
                   :dependencies [[pjstadig/humane-test-output "0.11.0"]
                                  [prone "2021-04-23"]
                                  [ring/ring-devel "1.14.2"]
-                                 [ring/ring-mock "0.6.1"]]
+                                 [ring/ring-mock "0.6.2"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.26.0"]
                                  [jonase/eastwood "1.4.3"]] 
                   
