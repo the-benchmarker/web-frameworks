@@ -18,7 +18,10 @@ framework:
   bootstrap:
     - guild compile -O3 server.scm -o server.go
   build_deps:
-    - build-essential gcc guile-3.0 guile-3.0-dev
+    - build-essential 
+    - gcc 
+    - guile-3.0 
+    - guile-3.0-dev
   files:
     - "**/*.scm"
   environment:
