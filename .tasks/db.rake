@@ -27,6 +27,13 @@ def compute(data)
 end
 
 namespace :db do
+  task :md_export do
+    results = JSON.parse(File.read('data.json'))
+    results['metrics'].map { |m| m['framework'] = results['frameworks'].detect {|f| f['id'] == m['framework_id'] }['label']  }
+    results['metrics'].each do |metric|
+       pp "| #{metric['framework']} | #{metric['level']} | #{metric['value']} |" if metric['label'] == 'total_requests_per_s' 
+    end
+  end
   task :check_failures do
     results = JSON.parse(File.read('data.json'))
     results['frameworks'].map { _1['label'] }
