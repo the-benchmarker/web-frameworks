@@ -1,0 +1,29 @@
+language:
+  website: www.gnu.org/software/guile
+  version: 3.0
+
+  engines:
+    web:
+      command: ""
+    fibers:
+      build_deps:
+        - guile-fibers
+
+framework:
+  engines:
+    - web
+    - fibers
+  command: "guile -L . -e '('$GUILE_APP')' -c '' $@"
+  # byte-compilation at O3 improves the requests/s by 10% (default is O2)
+  bootstrap:
+    - guild compile -O3 server.scm -o server.go
+  build_deps:
+    - build-essential 
+    - gcc 
+    - guile-3.0 
+    - guile-3.0-dev
+  files:
+    - "**/*.scm"
+  environment:
+    WORKER_CLASS: sync
+    GUILE_APP: server
