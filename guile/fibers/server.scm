@@ -5,18 +5,17 @@
   (define method (request-method request))
   (define path (uri-path (request-uri request)))
   (define userpath "/user")
+  (define userpath? (string-prefix? userpath path))
   (values
    (build-response
     #:headers `((content-type . (text/plain)))
     #:code 200)
    (cond
     ((and (equal? method 'POST)
-          (string-prefix-ci? userpath path))
+          userpath?)
      "")
-    ((string-prefix-ci? userpath path)
+    (userpath?
      (string-drop path (1+ (string-length userpath))))
-    ((equal? "/" path)
-     "")
     (else ""))))
 
 (define (main args)
