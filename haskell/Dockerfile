@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 
 RUN stack build --install-ghc
 
-FROM debian:bookworm
+FROM debian:trixie
 
 WORKDIR /opt/web
 
