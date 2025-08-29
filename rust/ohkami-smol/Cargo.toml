@@ -10,5 +10,5 @@ panic         = "abort"
 codegen-units = 1
 
 [dependencies]
-ohkami = { version = "0.24", features = ["rt_nio"] }
-nio    = { version = "0.0" }
+ohkami = { version = "0.24", features = ["rt_smol"] }
+smol   = { version = "2.0" }
