@@ -1,12 +1,7 @@
-language:
-  engines:
-    fibers:
-      build_deps:
-        - guile-fibers
-
 framework:
   website: codeberg.org/fibers/fibers
-  engines:
-    - fibers
-  files:
-    - "**/*.scm"
+  version: 1.3
+language:
+  default:
+    build_deps:
+      - guile-fibers
