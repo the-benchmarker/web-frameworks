@@ -22,6 +22,7 @@ framework:
     - gcc 
     - guile-3.0 
     - guile-3.0-dev
+    - guile-fibers
   files:
     - "**/*.scm"
   environment:
