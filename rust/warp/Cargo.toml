@@ -19,5 +19,5 @@ rpath = false
 strip = false
 
 [dependencies]
-warp = "0.4"
+warp = {version = "0.4", features = ["server"]}
 tokio = { version = "1", features = ["full"] }

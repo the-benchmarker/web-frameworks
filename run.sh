@@ -15,11 +15,11 @@
 BASEDIR=`pwd`
 
 # Clean database
-dropdb -U postgres benchmark
-createdb -U postgres benchmark
-psql -U postgres -d benchmark < dump.sql
+#dropdb -U postgres benchmark
+#createdb -U postgres benchmark
+#psql -U postgres -d benchmark < dump.sql
 
-find . -mindepth 3 -type f -name config.yaml | grep -v kore > /tmp/list.txt
+find $1 -mindepth 1 -type f -name config.yaml > /tmp/list.txt
 
 while read line ; do 
   echo "*********** ${line} *************"
@@ -28,12 +28,17 @@ while read line ; do
  # cd ${LANGUAGE}/${FRAMEWORK}
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile build
 #  cd ../..
-  sleep 60
+rm -fr  ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results
+mkdir -p ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results/{64,256,512}
+
+  sleep 30
+  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile warmup
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
-  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile clean
-  docker ps -aq | xargs --no-run-if-empty docker rm -f;
-  docker images -aq | xargs --no-run-if-empty docker rmi -f;
-  sudo docker system prune -a -f
+  #make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile clean
+  #docker ps -aq | xargs --no-run-if-empty docker rm -f;
+  #docker images -aq | xargs --no-run-if-empty docker rmi -f;
+  #sudo docker system prune -a -f
+  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile unbuild
 done < /tmp/list.txt
 
 #echo 'select label from frameworks' | psql -U postgres -d benchmark -t | sort > /tmp/done.txt

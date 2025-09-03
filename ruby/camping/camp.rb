@@ -1,12 +1,12 @@
-require 'camping'
+require "camping"
 
 Camping.goes :App
 
 module App
   module Controllers
-    class Index < R '/'
+    class Index < R "/"
       def get
-        ''
+        ""
       end
     end
 
@@ -16,9 +16,9 @@ module App
       end
     end
 
-    class Creator < R '/user'
+    class Creator < R "/user"
       def post
-        ''
+        ""
       end
     end
   end

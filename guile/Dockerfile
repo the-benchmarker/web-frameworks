@@ -1,4 +1,4 @@
-FROM debian:trixie-slim
+FROM debian:13-slim
 
 WORKDIR /usr/src/app
 
