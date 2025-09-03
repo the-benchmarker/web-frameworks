@@ -42,6 +42,10 @@ providers:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}.{{{variant}}} | xargs docker
         rm -f
 
+    unbuild:
+      - docker stop `cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt`
+
+
   digitalocean:
     build:
       - rm -fr ~/.ssh/known_hosts
@@ -63,6 +67,9 @@ providers:
     exec: doctl compute ssh {{{language}}}.{{{framework}}} --ssh-key-path {{{DO_KEY}}} --ssh-command "cd /opt/web && {{{command}}}"
 
     reboot: doctl compute droplet-action reboot `cat id.txt`
+
+    unbuild: 
+    - ""
 
     clean:
       - doctl compute droplet delete {{{language}}}.{{{framework}}} --force

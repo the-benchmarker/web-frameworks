@@ -1,12 +1,8 @@
-buildscript {
-    System.setProperty("micronautVersion", "4.2.+")
-    System.setProperty("shadowVersion", "+")
-}
-
 plugins {
-    id("com.github.johnrengelman.shadow") version System.getProperty("shadowVersion")
-    id("io.micronaut.application") version System.getProperty("micronautVersion")
-    id("io.micronaut.aot") version System.getProperty("micronautVersion")
+    id("io.micronaut.application") version "4.5.+"
+    id("com.gradleup.shadow") version "8.3.+"
+    id("io.micronaut.aot") version "4.5.+"
+
 }
 
 version = "0.1"
@@ -25,14 +21,17 @@ dependencies {
 }
 
 application {
-    mainClass.set("com.example.Application")
+    mainClass = "com.example.Application"
+
 }
+
 java {
     sourceCompatibility = JavaVersion.toVersion("21")
     targetCompatibility = JavaVersion.toVersion("21")
 }
 
-graalvmNative.toolchainDetection.set(false)
+graalvmNative.toolchainDetection = false
+
 micronaut {
     runtime("netty")
     processing {
@@ -40,14 +39,18 @@ micronaut {
         annotations("com.example.*")
     }
     aot {
-        // Please review carefully the optimizations enabled below
-        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
-        optimizeServiceLoading.set(false)
-        convertYamlToJava.set(false)
-        precomputeOperations.set(true)
-        cacheEnvironment.set(true)
-        optimizeClassLoading.set(true)
-        deduceEnvironment.set(true)
-        optimizeNetty.set(true)
+        optimizeServiceLoading = false
+        convertYamlToJava = false
+        precomputeOperations = true
+        cacheEnvironment = true
+        optimizeClassLoading = true
+        deduceEnvironment = true
+        optimizeNetty = true
+        replaceLogbackXml = true
     }
+}
+
+
+tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
+    jdkVersion = "21"
 }

@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM debian:trixie-slim
 
 WORKDIR /usr/src/app
 
@@ -24,7 +24,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
    RUN {{{.}}}
 {{/build}}
 
-FROM debian:bookworm
+FROM debian:trixie-slim
 
 {{#environment}}
 ENV {{{.}}}
