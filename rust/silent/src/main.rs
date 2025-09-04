@@ -15,7 +15,7 @@ async fn main() {
             .post(index),
     );
     Server::new()
-        .bind("0.0.0.0:30001".parse().unwrap())
+        .bind("0.0.0.0:3000".parse().unwrap())
         .serve(route)
         .await;
 }
