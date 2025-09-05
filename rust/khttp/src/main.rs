@@ -19,5 +19,5 @@ fn main() {
     });
 
     // serve
-    app.build().serve_epoll().unwrap();
+    app.build().serve().unwrap();
 }
