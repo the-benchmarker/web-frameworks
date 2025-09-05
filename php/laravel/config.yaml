@@ -1,6 +1,10 @@
 framework:
   website: laravel.com
+<<<<<<< Updated upstream
   version: 12.27
+=======
+  version: 12.26
+>>>>>>> Stashed changes
 
   environment:
     APP_ENV: production
