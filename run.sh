@@ -19,15 +19,7 @@ BASEDIR=`pwd`
 #createdb -U postgres benchmark
 #psql -U postgres -d benchmark < dump.sql
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-find . -mindepth 3 -type f -name config.yaml | grep -vE "yada|grip|hunt|chubbyts|chubbyts-uwebsockets|nestjs-fastify|scorper|comet|hamlet|ice|phalcon|argan" > /tmp/list.txt
-=======
-find $1 -mindepth 1 -type f -name config.yaml | grep -vE "yada|grip|hunt|chubbyts|chubbyts-uwebsockets|nestjs-fastify|scorper|comet|hamlet|ice|phalcon|argan" > /tmp/list.txt
->>>>>>> Stashed changes
-=======
-find $1 -mindepth 1 -type f -name config.yaml | grep -vE "yada|grip|hunt|chubbyts|chubbyts-uwebsockets|nestjs-fastify|scorper|comet|hamlet|ice|phalcon|argan" > /tmp/list.txt
->>>>>>> Stashed changes
+find $1 -mindepth 1 -type f -name config.yaml > /tmp/list.txt
 
 while read line ; do 
   echo "*********** ${line} *************"
