@@ -1,6 +1,10 @@
 framework:
   website: fastify.dev
+<<<<<<< Updated upstream
+  version: 5.6
+=======
   version: 5.5
+>>>>>>> Stashed changes
 
   engines:
     - bun
