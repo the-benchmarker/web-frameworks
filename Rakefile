@@ -151,7 +151,6 @@ def commands_for(language, framework, variant, provider = "docker")
   duration = ENV.fetch("DURATION", 10)
   concurrencies = ENV.fetch("CONCURRENCIES", "10")
   routes = ENV.fetch("ROUTES", "GET:/")
-  hostname = ENV.fetch("HOSTNAME")
 
   hostname = File.join(directory, language, framework, "ip-#{variant}.txt")
   commands[:warmup] << File.expand_path("~/.cargo/bin/oha --wait-ongoing-requests-after-deadline --no-tui --disable-keepalive --latency-correction http://`cat #{hostname}`:3000/")
