@@ -10,7 +10,7 @@ end
 class UserController
   include Grip::Controllers::HTTP
 
-  def get(context: Context) : Context
+  def get(context : Context) : Context
  id = context.fetch_path_params.["id"]
   context.text(id).halt()
  end
