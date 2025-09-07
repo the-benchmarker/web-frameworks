@@ -2,5 +2,7 @@ framework:
   github: athena-framework/athena
   version: 0.21
 
+  build_deps:
+    - libmagic-dev
 environment:
   ATHENA_ENV: production
