@@ -60,11 +60,11 @@ results = {
   minimum_latency: -1,
   average_latency: -1,
   standard_deviation: -1,
-  percentile_50: data.dig(:latencyPercentiles, :p50),
-  percentile_75: data.dig(:latencyPercentiles, :p75),
-  percentile_90: data.dig(:latencyPercentiles, :p90),
-  percentile_99:data.dig(:latencyPercentiles, :p95),
-  'percentile_99.999': -1,
+  percentile50: data.dig(:latencyPercentiles, :p50),
+  percentile75: data.dig(:latencyPercentiles, :p75),
+  percentile90: data.dig(:latencyPercentiles, :p90),
+  percentile99:data.dig(:latencyPercentiles, :p95),
+  'percentile99.999': -1,
 }
 results.each do |key, value|
   insert(db, framework_id, key, value, concurrency_level_id)

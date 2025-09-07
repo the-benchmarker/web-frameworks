@@ -4,6 +4,9 @@
     "@chubbyts/chubbyts-framework-router-path-to-regexp": "*",
     "@chubbyts/chubbyts-http": "*",
     "@chubbyts/chubbyts-http-uwebsockets-bridge": "*",
-    "@types/node": "22"
+    "@types/node": "24"
+  },
+  "engines": {
+    "node": "24.x"
   }
 }
