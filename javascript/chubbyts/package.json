@@ -3,7 +3,8 @@
     "@chubbyts/chubbyts-framework": "~2.0.0",
     "@chubbyts/chubbyts-framework-router-path-to-regexp": "*",
     "@chubbyts/chubbyts-http": "*",
-    "@types/node": "24"
+    "@chubbyts/chubbyts-http-node-bridge": "^2.0.1",
+    "@types/node": "^24.3.1"
   },
   "engines": {
     "node": "24.x"
