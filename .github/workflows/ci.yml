@@ -59,7 +59,7 @@ jobs:
           ENGINE: ${{ matrix.engine }}
 
       - name: Wait
-        run: sleep 30
+        run: sleep 60
 
       - name: Test
         run: bundle exec rspec .spec
