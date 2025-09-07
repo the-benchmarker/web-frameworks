@@ -64,7 +64,7 @@ results = {
   percentile75: data.dig(:latencyPercentiles, :p75),
   percentile90: data.dig(:latencyPercentiles, :p90),
   percentile99:data.dig(:latencyPercentiles, :p95),
-  'percentile99.999': -1,
+  'percentile99999': -1,
 }
 results.each do |key, value|
   insert(db, framework_id, key, value, concurrency_level_id)
