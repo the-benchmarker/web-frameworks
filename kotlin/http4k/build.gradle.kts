@@ -56,19 +56,7 @@ tasks {
 }
 
 dependencies {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     implementation(platform("org.http4k:http4k-bom:6.17.+"))
-=======
-    implementation(platform("org.http4k:http4k-bom:6.15.+"))
->>>>>>> Stashed changes
-=======
-    implementation(platform("org.http4k:http4k-bom:6.15.+"))
->>>>>>> Stashed changes
-=======
-    implementation(platform("org.http4k:http4k-bom:6.15.+"))
->>>>>>> Stashed changes
     implementation("org.http4k:http4k-core")
     implementation("org.http4k:http4k-server-undertow")
 }
