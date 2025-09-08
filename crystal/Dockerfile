@@ -16,7 +16,7 @@ RUN shards lock
 RUN shards install --production
 RUN shards build --release --no-debug
 
-FROM debian:stable-slim
+FROM ubuntu:latest
 
 WORKDIR /usr/bin
 
