@@ -1,4 +1,3 @@
-import { createServer } from '@chubbyts/chubbyts-http-node-bridge';
 import { createApplication } from "@chubbyts/chubbyts-framework/dist/application";
 import { createErrorMiddleware } from "@chubbyts/chubbyts-framework/dist/middleware/error-middleware";
 import { createRouteMatcherMiddleware } from "@chubbyts/chubbyts-framework/dist/middleware/route-matcher-middleware";
