@@ -22,7 +22,7 @@ import { createServer, IncomingMessage, ServerResponse } from "http";
 import {
   createNodeToServerRequestFactory,
   createResponseToNodeEmitter,
-} from "@chubbyts/chubbyts-framework/dist/server/node-http";
+} from "@chubbyts/chubbyts-http-node-bridge/dist/node-http";
 
 const responseFactory = createResponseFactory();
 
