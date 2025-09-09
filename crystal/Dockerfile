@@ -1,4 +1,4 @@
-FROM crystallang/crystal:1.17
+FROM crystallang/crystal:1.17-alpine
 
 WORKDIR /usr/src/app
 
@@ -6,17 +6,17 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN apt-get -qq update
+RUN apk update
 
 {{#build_deps}}
-  RUN apt-get -qy install --no-install-recommends {{{.}}}
+  RUN apk add {{{.}}}
 {{/build_deps}}
 
 RUN shards lock
 RUN shards install --production
 RUN shards build --release --no-debug
 
-FROM ubuntu:latest
+FROM alpine:latest
 
 WORKDIR /usr/bin
 
@@ -30,8 +30,8 @@ COPY --from=0 /usr/src/app/bin/server /usr/bin/app
   ENV {{{.}}}
 {{/environment}}
 
-RUN apt-get -qq update
-RUN apt-get -qy install curl
+RUN apk update
+RUN apk add curl
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{command}}

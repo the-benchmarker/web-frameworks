@@ -3,7 +3,8 @@ framework:
   version: 1.4
 
   build_deps:
-    - libsqlite3-dev
+    - sqlite-dev
+    - sqlite-static
 
   static_files:
     - config/environments/production.yml
