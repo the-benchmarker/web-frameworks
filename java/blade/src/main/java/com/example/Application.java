@@ -8,7 +8,7 @@ public static void main(String[] args) {
         Blade.create()
           .get("/", ctx -> ctx.text(""))
           .get("/user/:id", ctx -> {
-            ctx.text(ctx.pathInt("id"));
+            ctx.text(ctx.pathString("id"));
           })
           .post("/user", ctx -> ctx.text(""))
           .start();
