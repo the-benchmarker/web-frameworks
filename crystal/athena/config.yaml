@@ -4,7 +4,6 @@ framework:
 
   build_deps:
     - libmagic-dev
-    - libyaml-0-2
 
 environment:
   ATHENA_ENV: production

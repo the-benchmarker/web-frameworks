@@ -6,25 +6,22 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-{{#deps.length}}
-  ARG DEBIAN_FRONTEND=noninteractive
-  RUN apt-get -qq update
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get -qq update
+
+{{#build_deps.length}}
 
   {{#deps}}
     RUN apt-get -qy install {{{.}}}
   {{/deps}}
 
-{{/deps.length}}
+{{/build_deps.length}}
+
+RUN apt-get -qy install curl
 
 RUN shards lock
 RUN shards install --production
 RUN shards build --release --no-debug
-
-FROM ubuntu:24.04
-
-WORKDIR /usr/bin
-
-COPY --from=0 /usr/src/app/bin/server /usr/bin/app
 
 {{#static_files}}
   COPY '{{source}}' '{{target}}'
@@ -34,9 +31,6 @@ COPY --from=0 /usr/src/app/bin/server /usr/bin/app
   ENV {{{.}}}
 {{/environment}}
 
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get -qq update
-RUN apt-get -y install curl
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{command}}
