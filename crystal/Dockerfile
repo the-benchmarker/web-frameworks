@@ -11,9 +11,9 @@ RUN apt-get -qq update
 
 {{#build_deps.length}}
 
-  {{#deps}}
+  {{#build_deps}}
     RUN apt-get -qy install {{{.}}}
-  {{/deps}}
+  {{/build_deps}}
 
 {{/build_deps.length}}
 
