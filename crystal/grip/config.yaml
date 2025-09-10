@@ -1,3 +1,7 @@
 framework:
   github: grip-framework/grip
   version: 3.0
+
+  environment:
+    PORT: 3000
+    ENVIRONMENT: PRODUCTIOB
