@@ -22,6 +22,10 @@ end
 class Application
   include Grip::Application
 
+property handlers : Array(HTTP::Handler) = [
+      Grip::Handlers::HTTP.new
+    ] of HTTP::Handler
+
   def initialize
 get "/", IndexController
     get "/user/:id", UserController
