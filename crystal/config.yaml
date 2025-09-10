@@ -5,7 +5,7 @@ language:
     - shard.yml
   engines:
     default:
-      command: /usr/bin/app
+      command: /usr/src/app/bin/server
 
 framework:
   engines:
