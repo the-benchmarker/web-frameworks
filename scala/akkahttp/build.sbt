@@ -1,5 +1,5 @@
 name := "server"
-scalaVersion := "3.7.2"
+scalaVersion := "3.7.3"
 resolvers += "Akka library repository".at("https://repo.akka.io/maven")
 val AkkaVersion = "2.9.3"
 val AkkaHttpVersion = "10.6.3"
