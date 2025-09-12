@@ -1,7 +1,7 @@
 {
   "name": "server",
   "dependencies": {
-    "serverino": "~>0.7.19"
+    "serverino": "~>0.7.20"
   },
   "dflags-ldc": ["-mcpu=native"],
   "subConfigurations": { "serverino": "disable_websockets" },
