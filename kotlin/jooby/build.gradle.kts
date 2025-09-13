@@ -3,9 +3,9 @@ plugins {
     val joobyVersion: String by System.getProperties()
     kotlin("jvm") version kotlinVersion
     id("io.jooby.run") version joobyVersion
-    id("io.spring.dependency-management") version "1.1.0"
-    id("com.google.osdetector") version "1.7.3"
-    id("com.gradleup.shadow") version "8.3.7"
+    id("io.spring.dependency-management") version "+"
+    id("com.google.osdetector") version "+"
+    id("com.gradleup.shadow") version "+"
 }
 
 repositories {
@@ -30,12 +30,8 @@ dependencyManagement {
 dependencies {
     implementation ("io.jooby:jooby-netty")
     implementation ("io.jooby:jooby-kotlin")
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.0")
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
     implementation ("io.jooby:jooby-logback")
-
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("io.jooby:jooby-test")
-    testImplementation("com.squareup.okhttp3:okhttp-jvm:5.1.0")
 }
 
 
@@ -48,9 +44,6 @@ kotlin {
 }
 
 tasks {
-    test {
-        useJUnitPlatform()
-    }
     shadowJar {
         mergeServiceFiles()
     }

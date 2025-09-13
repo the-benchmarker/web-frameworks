@@ -19,7 +19,7 @@ BASEDIR=`pwd`
 #createdb -U postgres benchmark
 #psql -U postgres -d benchmark < dump.sql
 
-find $1 -mindepth 1 -type f -name config.yaml > /tmp/list.txt # | grep -vE "yada|grip|hunt|nestjs-fastify|scorper|comet|hamlet|ice|phalcon|argan" > /tmp/list.txt
+#find . -mindepth 3 -type f -name config.yaml | grep -vE "yada|hunt|nestjs-fastify|scorper|comet|hamlet|ice|phalcon|argan|jooby" > /tmp/list.txt
 
 while read line ; do 
   echo "*********** ${line} *************"

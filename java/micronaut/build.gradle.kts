@@ -1,8 +1,7 @@
 plugins {
     id("io.micronaut.application") version "4.5.+"
-    id("com.gradleup.shadow") version "9.1.+"
+    id("com.gradleup.shadow") version "+"
     id("io.micronaut.aot") version "4.5.+"
-
 }
 
 version = "0.1"
@@ -22,7 +21,6 @@ dependencies {
 
 application {
     mainClass = "com.example.Application"
-
 }
 
 java {
@@ -38,6 +36,7 @@ micronaut {
         incremental(true)
         annotations("com.example.*")
     }
+
     aot {
         optimizeServiceLoading = false
         convertYamlToJava = false
@@ -49,7 +48,6 @@ micronaut {
         replaceLogbackXml = true
     }
 }
-
 
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
     jdkVersion = "21"
