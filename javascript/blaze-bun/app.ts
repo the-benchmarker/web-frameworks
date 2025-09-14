@@ -1,7 +1,7 @@
-import { Blaze } from "@busy-hour/blaze";
+import { Blaze } from '@busy-hour/blaze';
 
-import coreService from "./services/core";
-import userService from "./services/user";
+import coreService from './services/core';
+import userService from './services/user';
 
 const app = new Blaze();
 

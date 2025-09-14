@@ -1,17 +1,10 @@
 {
   "dependencies": {
-<<<<<<< HEAD
     "@chubbyts/chubbyts-framework": "^2.0.1",
     "@chubbyts/chubbyts-framework-router-path-to-regexp": "^2.0.2",
     "@chubbyts/chubbyts-http": "^2.0.1"
   },
   "engines": {
     "node": "24.x"
-=======
-    "@chubbyts/chubbyts-framework": "~3.0.0",
-    "@chubbyts/chubbyts-framework-router-path-to-regexp": "*",
-    "@chubbyts/chubbyts-http": "*",
-    "@types/node": "22"
->>>>>>> 6c5afab3 (fix(deps): update dependency @chubbyts/chubbyts-framework to v3 (#8662))
   }
 }
