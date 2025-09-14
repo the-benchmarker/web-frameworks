@@ -25,6 +25,7 @@ task :collect do
   database = ENV.fetch('DATABASE_URL')
   db = PG.connect(database)
  Dir.glob('*/*/.results/*/**.json').each do |file|
+   pp file
   info = file.split('/')
    language = info[0]
    framework = info[1]
