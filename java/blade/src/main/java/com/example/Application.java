@@ -1,27 +1,25 @@
-import com.blade.Blade;
-import com.blade.mvc.http.HttpMethod;
-import com.blade.mvc.http.Response;
+package com.example;
 
-public class BenchmarkApplication {
+import com.hellokaton.blade.Blade;
 
+public class Application {
     public static void main(String[] args) {
-        Blade.of()
-            // GET /
+        Blade.create()
             .get("/", ctx -> {
-                ctx.text(""); // returns empty response
+                ctx.text("");
             })
-
-            // GET /user/:id
             .get("/user/:id", ctx -> {
-                Integer id = ctx.pathInt("id");
-                ctx.text(String.valueOf(id));
+		Integer id = ctx.pathInt("id");
+		if (id == null) {
+			ctx.status(400);
+		} else {
+			ctx.text(id.toString());
+		}
             })
-
-            // POST /user
             .post("/user", ctx -> {
-                ctx.text(""); // empty response
+                ctx.text("");
             })
-
-            .start(BenchmarkApplication.class, args);
+            .start(Application.class, args);
     }
 }
+

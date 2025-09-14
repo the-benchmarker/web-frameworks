@@ -16,9 +16,7 @@ import {
   createNodeToServerRequestFactory,
   createResponseToNodeEmitter,
 } from '@chubbyts/chubbyts-http-node-bridge/dist/node-http';
-
 const responseFactory = createResponseFactory();
-
 const app = createApplication([
   createErrorMiddleware(responseFactory, true),
   createRouteMatcherMiddleware(
@@ -30,7 +28,6 @@ const app = createApplication([
           handler: async (): Promise<Response> => {
             const response = responseFactory(200);
             response.body.end();
-
             return response;
           },
         }),
@@ -40,7 +37,6 @@ const app = createApplication([
           handler: async (request: ServerRequest): Promise<Response> => {
             const response = responseFactory(200);
             response.body.end(request.attributes.id);
-
             return response;
           },
         }),
@@ -50,7 +46,6 @@ const app = createApplication([
           handler: async (): Promise<Response> => {
             const response = responseFactory(200);
             response.body.end();
-
             return response;
           },
         }),
@@ -58,20 +53,15 @@ const app = createApplication([
     ),
   ),
 ]);
-
 const nodeToServerRequestFactory = createNodeToServerRequestFactory(
   createUriFactory(),
   createServerRequestFactory(),
   createStreamFromResourceFactory(),
 );
-
 const responseToNodeEmitter = createResponseToNodeEmitter();
-
 const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
   responseToNodeEmitter(await app(nodeToServerRequestFactory(req)), res);
 });
-
 const host = '0.0.0.0';
 const port = 3000;
-
 server.listen(port, host);
