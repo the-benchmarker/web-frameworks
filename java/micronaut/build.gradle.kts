@@ -1,6 +1,6 @@
 plugins {
     id("io.micronaut.application") version "4.5.+"
-    id("com.gradleup.shadow") version "+"
+    id("com.gradleup.shadow") version "8.+"
     id("io.micronaut.aot") version "4.5.+"
 }
 
@@ -9,23 +9,25 @@ group = "com.example"
 
 repositories {
     mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
     annotationProcessor("io.micronaut:micronaut-http-validation")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    implementation("io.micronaut:micronaut-runtime")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
     compileOnly("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
 }
 
 application {
-    mainClass = "com.example.Application"
+    mainClass.set("com.example.Application")
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion("21")
-    targetCompatibility = JavaVersion.toVersion("21")
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 graalvmNative.toolchainDetection = false
@@ -33,10 +35,9 @@ graalvmNative.toolchainDetection = false
 micronaut {
     runtime("netty")
     processing {
-        incremental(true)
-        annotations("com.example.*")
+        incremental.set(true)
+        annotations.add("com.example.*")
     }
-
     aot {
         optimizeServiceLoading = false
         convertYamlToJava = false
