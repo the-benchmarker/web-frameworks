@@ -1,4 +1,4 @@
-import nhttp from "@nhttp/nhttp";
+import nhttp from '@nhttp/nhttp';
 
 const app = nhttp();
 
@@ -14,5 +14,4 @@ app.post('/user', () => {
   return new Response();
 });
 
-export default {fetch: app.handle };
-
+export default { fetch: app.handle };

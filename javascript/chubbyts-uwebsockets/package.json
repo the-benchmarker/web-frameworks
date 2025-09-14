@@ -1,9 +1,12 @@
 {
   "dependencies": {
-    "@chubbyts/chubbyts-framework": "~3.0.0",
-    "@chubbyts/chubbyts-framework-router-path-to-regexp": "*",
-    "@chubbyts/chubbyts-http": "*",
-    "@chubbyts/chubbyts-http-uwebsockets-bridge": "*",
-    "@types/node": "22"
+    "@chubbyts/chubbyts-framework": "^2.0.1",
+    "@chubbyts/chubbyts-framework-router-path-to-regexp": "^2.0.2",
+    "@chubbyts/chubbyts-http": "^2.0.1",
+    "@chubbyts/chubbyts-http-uwebsockets-bridge": "^2.0.1",
+    "@types/node": "^24.3.1"
+  },
+  "engines": {
+    "node": "24.x"
   }
 }

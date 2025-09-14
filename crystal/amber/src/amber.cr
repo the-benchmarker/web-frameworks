@@ -6,7 +6,7 @@ if ARGV.size > 0 && ARGV[0] == "--start-amber"
   Amber::Server.start
 else
   System.cpu_count.times do |i|
-    Process.new("/usr/bin/app", ["--start-amber"])
+    Process.new("/usr/src/app/bin/server", ["--start-amber"])
   end
 end
 

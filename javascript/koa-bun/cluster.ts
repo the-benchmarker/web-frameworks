@@ -1,5 +1,5 @@
-import cluster from "node:cluster";
-import os from "node:os";
+import cluster from 'node:cluster';
+import os from 'node:os';
 
 const cpus = os.availableParallelism();
 
@@ -8,5 +8,5 @@ if (cpus > 1 && cluster.isPrimary) {
     cluster.fork();
   }
 } else {
-  await import("./app.ts");
+  await import('./app.ts');
 }
