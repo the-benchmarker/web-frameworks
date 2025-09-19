@@ -6,35 +6,27 @@ process.env.NODE_ENV = 'production';
 
 // Create app with optimized config for benchmarking (clustering ENABLED for performance)
 const app = createApp({
+  server: {
+    port: 3000,        // Default benchmark port (can be overridden by PORT env var)
+    host: '0.0.0.0',  // Default benchmark host (can be overridden by HOST env var)
+    requestTracking: {
+        enabled: false, // Disable for fair comparison
+    },
+    errorBoundary: {
+        enabled: false, // Disable for fair comparison
+    },
+  },
+  // Minimal middleware for fair comparison
   performance: {
-    clustering: {
-      enabled: true, // Enable clustering for performance
-      workers: 'auto' 
-    },
-    compression: {
-      enabled: false  // Disable compression for fair comparison
-    },
-    circuitBreaker: {
-      enabled: false  // Disable circuit breaker overhead
-    }
+      clustering: {
+          enabled: true, // unleash the power of clustering to really see the power
+          workers: 'auto'
+      },
   },
-  cors: false,           // No CORS processing
-  helmet: false,         // No security headers
-  compression: false,    // No compression
-  // Disable some modules for maximum performance
-  modules: {
-    cache: {
-      enabled: true
-    },
-    rateLimit: {
-      enabled: false
-    },
-    validation: {
-      enabled: false
-    }
-  },
+
+  // Minimal logging for benchmarks
   logger: {
-    level: 'error'  // Only log errors, no debug/info overhead
+      level: 'warn'  // This will now work correctly without env var override
   }
 });
 
