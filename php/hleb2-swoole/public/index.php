@@ -17,7 +17,7 @@ $http->set([
 $config = [
     'common' => [
         'debug' => false,
-        'allowed.hosts' => ['0.0.0.0', 'localhost'],
+        'allowed.hosts' => [],
         'log.enabled' => false,
         'max.log.level' => 'info',
         'max.cli.log.level' => 'info',
