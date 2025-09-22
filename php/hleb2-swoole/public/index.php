@@ -14,7 +14,30 @@ $http->set([
     'log_level' => SWOOLE_LOG_ERROR,
 ]);
 
-$app = new Hleb\HlebAsyncBootstrap(__DIR__);
+$config = [
+    'common' => [
+        'debug' => false,
+        'allowed.hosts' => null,
+        'log.enabled' => false,
+        'max.log.level' => 'info',
+        'max.cli.log.level' => 'info',
+        'routes.auto-update' => true,
+        'container.mock.allowed' => false,
+        'app.cache.on' => false,
+        'show.request.id' => false,
+    ],
+    'main' => [
+        'session.enabled' => false,
+    ],
+    'system' => [
+        'classes.autoload' => true,
+        'classes.preload' => false,
+        'events.used' => false,
+        'async.clear.state' => false,
+    ],
+];
+
+$app = new Hleb\HlebAsyncBootstrap(__DIR__, $config);
 
 $http->on('request', function ($request, Response $response) use ($app) {
     $result = $app->load($request)->getResponse();
