@@ -9,7 +9,7 @@ include __DIR__ . "/../vendor/autoload.php";
 $config = [
     'common' => [
         'debug' => false,
-        'allowed.hosts' => [],
+        'allowed.hosts' => null,
         'log.enabled' => false,
         'max.log.level' => 'info',
         'max.cli.log.level' => 'info',
