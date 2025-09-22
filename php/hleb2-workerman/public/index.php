@@ -6,7 +6,32 @@ use Workerman\Protocols\Http\Response;
 
 include __DIR__ . "/../vendor/autoload.php";
 
-$framework = new Hleb\HlebAsyncBootstrap(__DIR__);
+$config = [
+    'common' => [
+        'debug' => false,
+        'allowed.hosts' => ['0.0.0.0', 'localhost'],
+        'log.enabled' => false,
+        'max.log.level' => 'info',
+        'max.cli.log.level' => 'info',
+        'error.reporting' => E_ALL,
+        'timezone' => 'UTC',
+        'routes.auto-update' => true,
+        'container.mock.allowed' => false,
+        'app.cache.on' => false,
+        'show.request.id' => false,
+    ],
+    'main' => [
+        'session.enabled' => false,
+    ],
+    'system' => [
+        'classes.autoload' => true,
+        'classes.preload' => false,
+        'events.used' => false,
+        'async.clear.state' => false,
+    ],
+];
+
+$framework = new Hleb\HlebAsyncBootstrap(__DIR__, $config);
 
 $server = new Worker( 'http://0.0.0.0:3000');
 
