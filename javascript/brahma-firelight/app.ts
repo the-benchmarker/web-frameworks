@@ -1,7 +1,7 @@
 import { useBrahma, startServer } from "brahma-firelight";
 
 useBrahma((req) => {
-    const { path, body } = req;
+    const { path } = req;
 
     // GET --> /
     if (path === "/") {
@@ -13,8 +13,7 @@ useBrahma((req) => {
     }
 
     // POST --> /user
-    const bodyLen = body ? (typeof body.length === "number" ? body.length : String(body).length) : 0;
-    if (path === "/user" && bodyLen > 0) {
+    if (path === "/user") {
         return {
             headers: { "Content-Type": "text/plain" },
             status: 200,
