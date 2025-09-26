@@ -1,9 +1,9 @@
 module.exports = {
   apps: [
     {
-      script: "dist/main.js",
-      instances: "max",
-      exec_mode: "cluster",
+      script: 'dist/main.js',
+      instances: 'max',
+      exec_mode: 'cluster',
     },
   ],
 };

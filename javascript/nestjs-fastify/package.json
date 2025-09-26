@@ -4,6 +4,9 @@
     "@nestjs/core": "~11.1.0",
     "@nestjs/platform-fastify": "~11.1.0",
     "rxjs": "*",
-    "@types/node": "22"
+    "@types/node": "^24.3.1"
+  },
+  "engines": {
+    "node": "24.x"
   }
 }
