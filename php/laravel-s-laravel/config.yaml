@@ -2,6 +2,9 @@ framework:
   github: hhxsv5/laravel-s
   version: 3.8
 
+  deps:
+    - libicu-dev
+
   modules:
     - intl
     - pcntl
