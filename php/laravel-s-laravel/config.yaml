@@ -3,6 +3,7 @@ framework:
   version: 3.8
 
   modules:
+    - intl
     - pcntl
 
   engines:

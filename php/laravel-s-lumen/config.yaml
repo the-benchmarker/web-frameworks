@@ -6,6 +6,7 @@ framework:
     - swoole
 
   modules:
+    - intl
     - pcntl
 
   environment:
