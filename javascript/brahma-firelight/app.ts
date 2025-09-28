@@ -1,45 +1,20 @@
-import { useBrahma, startServer } from "brahma-firelight";
+import { createApp } from 'brahma-firelight';
 
-useBrahma((req) => {
-    const { path } = req;
+const app = createApp();
 
-    // GET --> /
-    if (path === "/") {
-        return {
-            headers: { "Content-Type": "text/plain" },
-            status: 200,
-            body: "",
-        };
-    }
 
-    // POST --> /user
-    if (path === "/user") {
-        return {
-            headers: { "Content-Type": "text/plain" },
-            status: 200,
-            body: "",
-        };
-    }
-
-    // GET --> /user/:id
-    let id = null;
-    const m = path.match(/^\/user\/([^/]+)$/);
-    if (m) id = decodeURIComponent(m[1]);
-
-    if (id !== null) {
-        return {
-            headers: { "Content-Type": "text/plain" },
-            status: 200,
-            body: `${id}`,
-        };
-    }
-    // Fallback to 404 - Not Found
-    return {
-        status: 404,
-        body: "Route not found",
-    };
+// GET
+app.get('/', (req, res) => {
+    res.text('');
 });
 
-const port = 3000;
-const host = "0.0.0.0";
-startServer(host, +port);
+app.get('/user/:id', (req, res) => {
+    res.text(req.params.id)
+})
+
+// POST 
+app.post('/user', (req, res) => {
+    res.text('');
+});
+
+app.listen('0.0.0.0', 3000);
