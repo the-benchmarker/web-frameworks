@@ -2,8 +2,6 @@ framework:
   website: luminusweb.com
   version: "4.50"
 
-  image: "clojure:temurin-21-lein"
-
   files:
     - "**/*.clj"
     - "**/*.edn"
