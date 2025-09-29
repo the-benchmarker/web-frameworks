@@ -1,10 +1,4 @@
-{{#image}}
-  FROM {{{.}}}
-{{/image}}
-
-{{^image}}
-  FROM clojure:tools-deps-bookworm-slim
-{{/image}}
+FROM clojure:temurin-25-tools-deps-trixie-slim
 
 WORKDIR /usr/src/app
 
@@ -20,7 +14,7 @@ WORKDIR /usr/src/app
   RUN clojure -Auberjar
 {{/build}}
 
-FROM eclipse-temurin:21.0.7_6-jre
+FROM eclipse-temurin:25-jre
 
 WORKDIR /opt/bin
 

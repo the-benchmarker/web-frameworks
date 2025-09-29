@@ -1,14 +1,9 @@
 
 {{#language.compiler.gradle}}
-  FROM gradle:jdk21-jammy AS build
+  FROM gradle:9-jdk25 AS build
 {{/language.compiler.gradle}}
 {{#language.compiler.maven}}
-  {{#language.version}}
-    FROM maven:3-eclipse-temurin-{{{.}}} AS build
-  {{/language.version}}
-  {{^language.version}}
-    FROM maven:3-eclipse-temurin-21 AS build
-  {{/language.version}}
+  FROM maven:3-eclipse-temurin-25 AS build
 {{/language.compiler.maven}}
 
 WORKDIR /usr/src/web
@@ -30,12 +25,7 @@ WORKDIR /usr/src/web
   RUN mvn package
 {{/build}}
 
-{{#language.version}}
-  FROM eclipse-temurin:{{{.}}}-jre
-{{/language.version}}
-{{^language.version}}
-  FROM eclipse-temurin:21.0.7_6-jre
-{{/language.version}}
+FROM eclipse-temurin:25-jre
 
 
 WORKDIR /opt/web
