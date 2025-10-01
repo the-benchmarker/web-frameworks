@@ -9,3 +9,5 @@ framework:
     - target/uberjar/donkey.jar
 
   command: java -Xms2G -server -Xmx2G -XX:+UseStringDeduplication -XX:+UseParallelGC -Dvertx.disableMetrics=true -Dvertx.threadChecks=false -Dvertx.disableContextTimings=true -Dvertx.disableTCCL=true -Dvertx.disableH2c=true -Dvertx.disableWebsockets=true -Dvertx.disableHttpHeadersValidation=true -Dvertx.flashPolicyHandler=false -Djava.net.preferIPv4Stack=true -jar target/uberjar/donkey.jar 3000
+language:
+  compiler: lein

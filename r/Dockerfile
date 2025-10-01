@@ -1,8 +1,11 @@
 FROM r-base:4.5.1
+
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update
 
+RUN apt-get -qq update
+RUN apt -y modernize-sources
 {{#deps}}
   RUN apt-get -y install {{{.}}}
 {{/deps}}

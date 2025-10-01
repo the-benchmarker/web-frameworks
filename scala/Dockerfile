@@ -1,5 +1,5 @@
 {{#language.image}}
-  FROM sbtscala/eclipse-temurin-25_36_1.11.6_{{{.}}} AS build
+  FROM sbtscala/scala-sbt:eclipse-temurin-25_36_1.11.6_{{{.}}} AS build
 {{/language.image}}
 {{^language.image}}
   FROM sbtscala/scala-sbt:eclipse-temurin-25_36_1.11.6_3.7.3 AS build
