@@ -17,7 +17,7 @@
                  [mount "0.1.23"]
                  [nrepl "1.4.0"]
                  [org.clojure/clojure "1.12.3"]
-                 [org.clojure/tools.cli "1.1.230"]
+                 [org.clojure/tools.cli "1.2.245"]
                  [org.clojure/tools.logging "1.3.0"]
                  [org.webjars.npm/bulma "1.0.4"]
                  [org.webjars.npm/material-icons "1.13.2"]
