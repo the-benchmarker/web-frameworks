@@ -1,4 +1,19 @@
-FROM clojure:temurin-25-tools-deps-trixie-slim
+{{#language.compiler.lein}}
+  {{#language.java.version}}
+    FROM clojure:temurin-{{{.}}}-lein-trixie-slim AS build
+  {{/language.java.version}}
+  {{^language.java.version}}
+    FROM clojure:temurin-25-lein-trixie-slim AS build
+  {{/language.java.version}}
+{{/language.compiler.lein}}
+{{^language.compiler.lein}}
+  {{#language.java.version}}
+    FROM clojure:temurin-{{{.}}}-tools-deps-trixie-slim AS build
+  {{/language.java.version}}
+  {{^language.java.version}}
+    FROM clojure:temurin-25-tools-deps-trixie-slim AS build
+  {{/language.java.version}}
+{{/language.compiler.lein}}
 
 WORKDIR /usr/src/app
 
@@ -23,7 +38,7 @@ WORKDIR /opt/bin
 {{/environment}}
 
 {{#binaries}}
-  COPY --from=0 /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
+  COPY --from=build /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
 {{/binaries}}
 
 ENTRYPOINT {{command}}
