@@ -2,8 +2,6 @@ framework:
   website: luminusweb.com
   version: "4.50"
 
-  image: "clojure:temurin-21-lein"
-
   files:
     - "**/*.clj"
     - "**/*.edn"
@@ -17,3 +15,6 @@ framework:
     - target/uberjar/luminus.jar
 
   command: java -jar target/uberjar/luminus.jar 3000
+language:
+  compiler: lein
+  java: 21
