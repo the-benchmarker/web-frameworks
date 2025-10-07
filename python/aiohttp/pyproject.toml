@@ -6,4 +6,4 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["aiohttp>=3.12,<3.13"]
+dependencies = ["aiohttp>=3.13,<3.14"]
