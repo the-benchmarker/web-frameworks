@@ -7,4 +7,4 @@ requires = ["flit_core"]
 name = 'server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["lihil>=0.2, <0.3"]
+dependencies = ["lihil>=0.3, <0.4"]
