@@ -19,7 +19,11 @@ BASEDIR=`pwd`
 #createdb -U postgres benchmark
 #psql -U postgres -d benchmark < dump.sql
 
-find $1 -mindepth 1 -type f -name config.yaml | grep -Ev "yada|hunt" > /tmp/list.txt
+<<<<<<< HEAD
+find $1 -mindepth 1 -type f -name config.yaml > /tmp/list.txt
+=======
+find . -mindepth 3 -type f -name config.yaml > /tmp/list.txt
+>>>>>>> d51b680b (update)
 
 while read line ; do 
   echo "*********** ${line} *************"
