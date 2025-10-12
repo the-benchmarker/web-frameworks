@@ -11,6 +11,7 @@ Gemfile.lock
 # git temporary files
 *.orig
 
+
 # Temporary files
 FRAMEWORKS.yaml
 */*/.Dockerfile*
@@ -62,3 +63,4 @@ __pycache__/
 .vscode
 .idea
 .zed
+*.iml
