@@ -18,8 +18,7 @@ version "1.0.0"
 
 val kotlinVersion: String by System.getProperties()
 val joobyVersion: String by System.getProperties()
-
-val mainAppClassName = "app.AppKt"
+val mainAppClassName = "benchmark.AppKt"
 
 dependencyManagement {
     imports {
@@ -30,7 +29,7 @@ dependencyManagement {
 dependencies {
     implementation ("io.jooby:jooby-netty")
     implementation ("io.jooby:jooby-kotlin")
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
+    implementation(kotlin("stdlib"))
     implementation ("io.jooby:jooby-logback")
 }
 
@@ -45,14 +44,25 @@ kotlin {
 
 tasks {
     shadowJar {
+	archiveBaseName.set("server")
+        archiveClassifier = null
+        archiveVersion = null
         mergeServiceFiles()
+        isZip64 = true
+	manifest {
+            attributes["Main-Class"] = mainAppClassName
+        }
+    }
+
+    build {
+        dependsOn(shadowJar)
     }
 
     joobyRun {
         mainClass = mainAppClassName
         restartExtensions = listOf("conf", "properties", "class")
         compileExtensions = listOf("java", "kt")
-        port = 8080
+        port = 3000
     }
 }
 
