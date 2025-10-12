@@ -3,7 +3,12 @@
   FROM gradle:9-jdk25 AS build
 {{/language.compiler.gradle}}
 {{#language.compiler.maven}}
-  FROM maven:3-eclipse-temurin-25 AS build
+  {{#language.java}}
+    FROM maven:3-eclipse-temurin-{{{.}}} AS build
+  {{/language.java}}
+  {{^language.java}}
+    FROM maven:3-eclipse-temurin-25 AS build
+  {{/language.java}}
 {{/language.compiler.maven}}
 
 WORKDIR /usr/src/web
@@ -38,7 +43,12 @@ WORKDIR /usr/src/web
   RUN mvn package
 {{/build}}
 
-FROM eclipse-temurin:25-jre
+{{#language.java}}
+  FROM eclipse-temurin:{{{.}}}-jre
+{{/language.java}}
+{{^language.java}}
+  FROM eclipse-temurin:25-jre
+{{/language.java}}
 
 
 WORKDIR /opt/web
