@@ -2,6 +2,12 @@ framework:
   website: helidon.io
   version: 4.3
 
+  build_deps:
+    - openjdk-25-jdk-headless
+
+  build_fix:
+    - cp -fr /usr/lib/jvm/java-25-openjdk-amd64/jmods /opt/java/openjdk/
+
   build:
     - mvn clean install -Pjlink-image
 
