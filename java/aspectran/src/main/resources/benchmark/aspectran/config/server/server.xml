@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE aspectran PUBLIC "-//ASPECTRAN//DTD Aspectran 9.0//EN"
+        "https://aspectran.com/dtd/aspectran-9.dtd">
+<aspectran>
+
+    <append resource="benchmark/aspectran/config/server/undertow/tow-server.xml"/>
+    <append resource="benchmark/aspectran/config/server/undertow/tow-context-root.xml"/>
+
+</aspectran>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE aspectran PUBLIC "-//ASPECTRAN//DTD Aspectran 9.0//EN"
+        "https://aspectran.com/dtd/aspectran-9.dtd">
+<aspectran>
+
+    <description>
+        Defines the translets for the web framework benchmark test.
+        It includes three endpoints:
+        - GET /
+        - GET /user/${id} (for path variable tests)
+        - POST /user (for simple POST requests)
+    </description>
+
+    <translet name="/" method="get"/>
+
+    <translet name="/user/${id}" method="get">
+        <transform format="text">
+            <template>${id}</template>
+        </transform>
+    </translet>
+
+    <translet name="/user" method="post"/>
+
+</aspectran>

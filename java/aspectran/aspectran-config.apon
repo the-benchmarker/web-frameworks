@@ -1,0 +1,27 @@
+context: {
+    name: root
+    rules: classpath:benchmark/aspectran/config/root-context.xml
+    resources: [
+    ]
+    scan: [
+    ]
+    profiles: {
+        default: [
+            dev
+        ]
+    }
+    autoReload: {
+        scanIntervalSeconds: 5
+        enabled: false
+    }
+    singleton: false
+}
+web: {
+    uriDecoding: utf-8
+    defaultServletName: none
+    trailingSlashRedirect: true
+    legacyHeadHandling: true
+    acceptable: {
+        +: /**
+    }
+}

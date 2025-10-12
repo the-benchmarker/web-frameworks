@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE aspectran PUBLIC "-//ASPECTRAN//DTD Aspectran 9.0//EN"
+        "https://aspectran.com/dtd/aspectran-9.dtd">
+<aspectran>
+
+    <description>
+        Defines the servlet context for the root path ("/") and maps all requests to Aspectran's WebActivityServlet.
+    </description>
+
+    <environment>
+        <properties>
+            <item name="tow.context.root.name">root</item>
+        </properties>
+    </environment>
+
+    <bean id="tow.context.root.servletContext"
+          class="com.aspectran.undertow.server.servlet.TowServletContext"
+          scope="prototype">
+        <property name="deploymentName">%{tow.context.root.name}</property>
+        <property name="contextPath">/</property>
+        <property name="servlets" type="array">
+            <bean class="com.aspectran.undertow.server.servlet.DefaultJspServlet">
+                <property name="loadOnStartup" valueType="int">0</property>
+            </bean>
+            <bean class="com.aspectran.undertow.server.servlet.TowServlet">
+                <argument>webActivityServlet</argument>
+                <argument>com.aspectran.web.servlet.WebActivityServlet</argument>
+                <property name="mappings" type="array">
+                    <value>/</value>
+                </property>
+                <property name="loadOnStartup" valueType="int">1</property>
+            </bean>
+        </property>
+    </bean>
+
+</aspectran>
