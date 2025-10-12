@@ -9,8 +9,8 @@
     <version>1.0.0</version>
 
     <properties>
-        <blade-core.version>[2.1,2.2)</blade-core.version>
-        <maven.compiler.release>11</maven.compiler.release>
+	    <blade-core.version>2.1.2.RELEASE</blade-core.version>
+        <maven.compiler.release>25</maven.compiler.release>
     </properties>
 
     <dependencies>

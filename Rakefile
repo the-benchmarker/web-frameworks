@@ -270,9 +270,26 @@ task :config do
   end
 end
 
+desc "Get framework by success rate"
+task :by_success do
+  frameworks = {}
+  Dir.glob("*/**/.results/**/*.json").each do |file|
+    data = JSON.load_file(file, symbolize_names: true)
+    rate = data.dig(:summary, :successRate)
+    if rate < 1.0
+      unless frameworks[rate] 
+        frameworks[rate] = []
+      end
+      name = file.split("/")[1]
+      frameworks[rate] << name
+    end
+  end
+  pp frameworks.map { [_1, _2.uniq.join(',')]}
+end
+
 desc "Clean unused file"
 task :clean do
-  Dir.glob("d/serverino/.gitignore").each do |ignore_file|
+  Dir.glob("*/**/.gitignore").each do |ignore_file|
     directory = File.dirname(ignore_file)
 
     File.foreach(ignore_file) do |line|
