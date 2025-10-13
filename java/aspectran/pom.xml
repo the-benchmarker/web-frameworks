@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <aspectran.version>9.1.2-SNAPSHOT</aspectran.version>
+        <aspectran.version>9.1.2</aspectran.version>
     </properties>
 
     <dependencies>
