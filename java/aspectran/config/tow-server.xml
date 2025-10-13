@@ -10,7 +10,6 @@
     <environment>
         <property name="tow.server.listener.http.port" valueType="int">3000</property>
         <property name="tow.server.listener.http.host">0.0.0.0</property>
-        <property name="tow.server.domain">aspectran.com</property>
     </environment>
 
     <environment>
@@ -25,13 +24,14 @@
             most cases. If you see that new requests are being queued up, you should investigate the cause of it.
             If your application is working as expected, then you should increase this task-max-threads parameter.
         </description>
-        <properties profile="(!stage, !prod)">
+        <properties profile="!benchmark">
             <item name="tow.server.workerIoThreads" valueType="int">4</item>
             <item name="tow.server.workerTaskMaxThreads" valueType="int">32</item>
         </properties>
-        <properties profile="stage, prod">
-            <item name="tow.server.workerIoThreads" valueType="int">8</item>
-            <item name="tow.server.workerTaskMaxThreads" valueType="int">64</item>
+        <properties profile="benchmark">
+            <!-- For a 16-core CPU benchmark with a non-blocking workload -->
+            <item name="tow.server.workerIoThreads" valueType="int">16</item>
+            <item name="tow.server.workerTaskMaxThreads" valueType="int">16</item>
         </properties>
     </environment>
 
@@ -56,7 +56,7 @@
             </bean>
         </property>
         <property name="requestHandlerFactory">
-            <bean class="com.aspectran.undertow.server.handler.ServletRequestHandlerFactory"/>
+            <bean class="com.aspectran.undertow.server.handler.LightRequestHandlerFactory"/>
         </property>
     </bean>
 

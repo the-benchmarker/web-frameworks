@@ -6,9 +6,9 @@ framework:
     - mvn clean package
 
   files:
-    - aspectran-config.apon
+    - config
 
   binaries:
     - target/benchmark-jar-with-dependencies.jar
 
-  command: /usr/bin/java -jar /opt/web/target/benchmark-jar-with-dependencies.jar /opt/web/aspectran-config.apon
+  command: /usr/bin/java -Daspectran.profiles.active=benchmark -jar /opt/web/target/benchmark-jar-with-dependencies.jar /opt/web /config/aspectran-config.apon

@@ -47,7 +47,7 @@
                   </descriptorRefs>
                   <archive>
                     <manifest>
-                      <mainClass>benchmark.aspectran.Main</mainClass>
+                      <mainClass>com.aspectran.daemon.DefaultDaemon</mainClass>
                     </manifest>
                   </archive>
                 </configuration>

@@ -3,7 +3,7 @@
         "https://aspectran.com/dtd/aspectran-9.dtd">
 <aspectran>
 
-    <append resource="benchmark/aspectran/config/server/server.xml"/>
-    <append resource="benchmark/aspectran/config/web-context.xml"/>
+    <append file="/config/tow-server.xml"/>
+    <append file="/config/web-context.xml"/>
 
 </aspectran>
