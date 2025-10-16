@@ -1,34 +1,44 @@
-import vibe.core.core : runApplication, runWorkerTask, setupWorkerThreads;
+import vibe.core.core : runApplication, runWorkerTaskDist, setupWorkerThreads;
 import vibe.http.server;
-import std.parallelism: totalCPUs;
-import std.algorithm: startsWith;
+import vibe.http.router;
 
-void handleRequest(scope HTTPServerRequest req, scope HTTPServerResponse res)
+import std.parallelism: totalCPUs;
+
+void handleGetUser(scope HTTPServerRequest req, scope HTTPServerResponse res)
 {
-	if (req.requestURI == "/")
-		res.writeBody("", "text/plain");
-    else if (startsWith(req.requestURI,"/user")) {
-        if (req.method == HTTPMethod.POST)
-		    res.writeBody("", "text/plain");
-        else if (req.method == HTTPMethod.GET)
-            res.writeBody(req.requestURI[6..$], "text/plain");
-    }
+    res.writeBody(req.params["id"], "text/plain");
+}
+
+void handlePostUser(scope HTTPServerRequest req, scope HTTPServerResponse res)
+{
+    res.writeBody("", "text/plain");
+}
+
+void handleRoot(scope HTTPServerRequest req, scope HTTPServerResponse res)
+{
+    res.writeBody("", "text/plain");
 }
 
 void main()
 {
-    setupWorkerThreads(50);
-    runWorkerTask(&runServer);
-	runApplication();
-}
+    setupWorkerThreads(totalCPUs);
+    runWorkerTaskDist(() nothrow {
+		try {
+		    auto settings = new HTTPServerSettings;
+                settings.port = 3000;
+                settings.bindAddresses = ["0.0.0.0"];
+                settings.options |= HTTPServerOption.reusePort;
 
-void runServer() nothrow
-{
-    try {
-        auto settings = new HTTPServerSettings;
-        settings.options |= HTTPServerOption.reusePort;
-        settings.port = 3000;
-        settings.bindAddresses = ["0.0.0.0"];
-        listenHTTP(settings, &handleRequest);
-    } catch (Exception e) assert(false, e.msg);
+                auto router = new URLRouter;
+
+                router
+                    .post("/user", &handlePostUser)
+                    .get("/user/:id", &handleGetUser)
+                    .get("/", &handleRoot);
+
+                router.rebuild();
+                listenHTTP(settings, router);
+		} catch (Exception e) assert(false, e.msg);
+	});
+	runApplication();
 }

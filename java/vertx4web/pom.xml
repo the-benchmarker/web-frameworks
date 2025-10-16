@@ -12,7 +12,7 @@
 
     <properties>
         <vertx.version>4.5.21</vertx.version>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vertx.verticle>benchmark.vertx4web.BenchmarkApplication</vertx.verticle>
     </properties>
