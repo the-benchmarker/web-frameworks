@@ -1,4 +1,4 @@
-val CaskVersion = "[0.10,0.11)"
+val CaskVersion = "[0.11,0.12)"
 
 name := "server"
 
