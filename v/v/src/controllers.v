@@ -1,7 +1,7 @@
 module main
 
 import strings
-import enghitalo.vanilla.http_server
+import vanilla.http_server
 
 const http_ok_response = 'HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: 0\r\nConnection: keep-alive\r\n\r\n'.bytes()
 
