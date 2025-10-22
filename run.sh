@@ -19,7 +19,8 @@ BASEDIR=`pwd`
 #createdb -U postgres benchmark
 #psql -U postgres -d benchmark < dump.sql
 
-find $1 -mindepth 1 -type f -name config.yaml | grep -Ev 'yada|hunt|scorper' > /tmp/list.txt
+find $1 -mindepth 1 -type f -name config.yaml > ~/list.txt
+#find . -mindepth 3 -type f -name config.yaml | grep -Ev 'hunt|scorper|basolato|yada' > ~/list.txt
 
 while read line ; do 
   echo "*********** ${line} *************"
@@ -37,4 +38,4 @@ mkdir -p ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results/{64,256,512}
 #  yes|docker system prune --all --force
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile unbuild
   sleep 5
-done < /tmp/list.txt
+done < ~/list.txt

@@ -275,8 +275,8 @@ task :by_success do
   frameworks = {}
   Dir.glob("*/**/.results/**/*.json").each do |file|
     data = JSON.load_file(file, symbolize_names: true)
-    rate = data.dig(:summary, :successRate)
-    if rate < 1.0
+    rate = data.dig(:summary, :successRate).round(2)
+    if rate < 1
       unless frameworks[rate] 
         frameworks[rate] = []
       end
