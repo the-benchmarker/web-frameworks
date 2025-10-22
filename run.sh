@@ -19,11 +19,8 @@ BASEDIR=`pwd`
 #createdb -U postgres benchmark
 #psql -U postgres -d benchmark < dump.sql
 
-<<<<<<< HEAD
-find $1 -mindepth 1 -type f -name config.yaml > /tmp/list.txt
-=======
-find . -mindepth 3 -type f -name config.yaml > /tmp/list.txt
->>>>>>> d51b680b (update)
+find $1 -mindepth 1 -type f -name config.yaml > ~/list.txt
+#find . -mindepth 3 -type f -name config.yaml | grep -Ev 'hunt|scorper|basolato|yada' > ~/list.txt
 
 while read line ; do 
   echo "*********** ${line} *************"
@@ -38,12 +35,7 @@ mkdir -p ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results/{64,256,512}
   sleep 30
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile warmup
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
-  #make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile clean
-  #docker ps -aq | xargs --no-run-if-empty docker rm -f;
-  #docker images -aq | xargs --no-run-if-empty docker rmi -f;
-  #sudo docker system prune -a -f
+#  yes|docker system prune --all --force
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile unbuild
-done < /tmp/list.txt
-
-#echo 'select label from frameworks' | psql -U postgres -d benchmark -t | sort > /tmp/done.txt
-#find . -mindepth 3 -type f -name config.yaml | awk -F '/' '{print $(NF-1)}' | sort > all.txt
+  sleep 5
+done < ~/list.txt
