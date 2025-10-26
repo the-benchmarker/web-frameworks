@@ -35,7 +35,7 @@ providers:
       - cd {{{language}}}/{{{framework}}} && docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}}.{{{variant}}} . --no-cache && cd -
 
     metadata:
-      - docker run -td {{{language}}}.{{{framework}}}.{{{variant}}} > {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt
+      - docker run -td {{{language}}}.{{{framework}}}.{{{variant}}} --network host > {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt
       - docker inspect `cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt` | jq -r '.[0].NetworkSettings.IPAddress' > {{{language}}}/{{{framework}}}/ip-{{{variant}}}.txt
 
     clean:

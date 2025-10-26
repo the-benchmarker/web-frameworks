@@ -277,14 +277,14 @@ task :by_success do
     data = JSON.load_file(file, symbolize_names: true)
     rate = data.dig(:summary, :successRate).round(2)
     if rate < 1
-      unless frameworks[rate] 
+      unless frameworks[rate]
         frameworks[rate] = []
       end
       name = file.split("/")[1]
       frameworks[rate] << name
     end
   end
-  pp frameworks.map { [_1, _2.uniq.join(',')]}
+  pp frameworks.map { [_1, _2.uniq.join(",")] }
 end
 
 desc "Clean unused file"

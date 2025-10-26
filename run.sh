@@ -19,9 +19,9 @@ BASEDIR=`pwd`
 #createdb -U postgres benchmark
 #psql -U postgres -d benchmark < dump.sql
 
-#find $1 -mindepth 1 -type f -name config.yaml > ~/list.txt
-find $1 -mindepth 2 -type f -name config.yaml > ~/list.txt
-#find . -mindepth 3 -type f -name config.yaml | grep -Ev 'hunt|scorper|basolato|yada' > ~/list.txt
+find $1 -mindepth 1 -type f -name config.yaml > ~/list.txt
+#find $1 -mindepth 2 -type f -name config.yaml > ~/list.txt
+#find . -mindepth 3 -type f -name config.yaml | grep -Ev 'scorper|basolato' > ~/list.txt
 
 while read line ; do 
   echo "*********** ${line} *************"
