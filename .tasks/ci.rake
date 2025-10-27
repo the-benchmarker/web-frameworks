@@ -32,7 +32,6 @@ namespace :ci do
     end
 
     matrix[:include].uniq!
-    matrix[:include] = matrix[:include].take(256)
     puts matrix.to_json
   end
 end
