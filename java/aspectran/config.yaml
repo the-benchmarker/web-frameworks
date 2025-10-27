@@ -1,6 +1,6 @@
 framework:
   website: aspectran.com
-  version: 9.1.2-SNAPSHOT
+  version: 9.2.1
 
   build:
     - mvn clean package
