@@ -11,8 +11,8 @@
     <description>Demo project for Vertx Web</description>
 
     <properties>
-        <vertx.version>4.5.15</vertx.version>
-        <maven.compiler.release>21</maven.compiler.release>
+        <vertx.version>4.5.22</vertx.version>
+        <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vertx.verticle>benchmark.vertx4web.BenchmarkApplication</vertx.verticle>
     </properties>

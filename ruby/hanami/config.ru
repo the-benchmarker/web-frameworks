@@ -1,3 +1,3 @@
-require 'hanami/boot'
+require "hanami/boot"
 
 run Hanami.app

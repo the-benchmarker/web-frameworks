@@ -12,27 +12,31 @@
 #scp -i ${DO_KEY} ${DO_KEY} root@${IP}:${DO_KEY}
 #doctl compute ssh --ssh-key-path ${DO_KEY} sieger
 
-# Clean database
-dropdb -U postgres benchmark
-createdb -U postgres benchmark
-psql -U postgres -d benchmark < dump.sql
+BASEDIR=`pwd`
 
-find . -mindepth 3 -type f -name config.yaml | grep -v kore > /tmp/list.txt
+# Clean database
+#dropdb -U postgres benchmark
+#createdb -U postgres benchmark
+#psql -U postgres -d benchmark < dump.sql
+
+find $1 -mindepth 1 -type f -name config.yaml > ~/list.txt
+#find $1 -mindepth 2 -type f -name config.yaml > ~/list.txt
+#find . -mindepth 3 -type f -name config.yaml | grep -Ev 'scorper|basolato' > ~/list.txt
 
 while read line ; do 
   echo "*********** ${line} *************"
   LANGUAGE=`echo $line | awk -F '/' '{print $(NF-2)}'`
   FRAMEWORK=`echo $line | awk -F '/' '{print $(NF-1)}'`
  # cd ${LANGUAGE}/${FRAMEWORK}
-  make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile build
+  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile build
 #  cd ../..
-  make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
-  make -f ~/web-frameworks/${LANGUAGE}/${FRAMEWORK}/.Makefile clean
-  docker ps -aq | xargs --no-run-if-empty docker rm -f;
-  docker images -aq | xargs --no-run-if-empty docker rmi -f;
-  sudo docker system prune -a -f
-  sleep 1
-done < /tmp/list.txt
+rm -fr  ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results
+mkdir -p ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results/{64,256,512}
 
-#echo 'select label from frameworks' | psql -U postgres -d benchmark -t | sort > /tmp/done.txt
-#find . -mindepth 3 -type f -name config.yaml | awk -F '/' '{print $(NF-1)}' | sort > all.txt
+  sleep 30
+  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile warmup
+  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
+#  yes|docker system prune --all --force
+  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile unbuild
+  sleep 5
+done < ~/list.txt

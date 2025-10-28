@@ -1,0 +1,17 @@
+{
+  "name": "server",
+  "dependencies": {
+    "vibe-http-light": "0.1.0",
+    "vibe-stream-light:tls": "0.1.0"
+  },
+  "versions": [
+    "VibeManualMemoryManagement",
+    "VibeHighEventPriority",
+    "VibeDisableCommandLineParsing"
+  ],
+  "dflags-ldc": ["-mcpu=native"],
+  "subConfigurations": {
+    "vibe-stream-light:tls": "notls"
+  },
+  "license": "MIT"
+}

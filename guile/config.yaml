@@ -1,0 +1,17 @@
+framework:
+  website: www.gnu.org/software/guile
+  version: 3.0
+  engines:
+    - default
+  files:
+    - "**/*.scm"
+  environment:
+    GUILE_APP: server
+
+  # byte-compilation at O3 improves the requests/s by 10% (default is O2)
+  bootstrap:
+    - guild compile -O3 server.scm -o server.go
+language:
+  engines:
+    default:
+      command: "guile -L . -e '('$GUILE_APP')' -c '' $@"

@@ -11,8 +11,8 @@
     <description>Demo project for Vertx</description>
 
     <properties>
-        <vertx.version>4.5.15</vertx.version>
-        <maven.compiler.release>21</maven.compiler.release>
+        <vertx.version>4.5.22</vertx.version>
+        <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vertx.verticle>benchmark.vertx.BenchmarkApplication</vertx.verticle>
     </properties>
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-transport-native-epoll</artifactId>
-            <classifier>linux-aarch_64</classifier>
+            <classifier>linux-x86_64</classifier>
         </dependency>
     </dependencies>
 </project>

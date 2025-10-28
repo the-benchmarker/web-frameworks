@@ -1,10 +1,19 @@
-{{#image}}
-  FROM {{{.}}}
-{{/image}}
-
-{{^image}}
-  FROM clojure:tools-deps-bookworm-slim
-{{/image}}
+{{#language.compiler.lein}}
+  {{#language.java.version}}
+    FROM clojure:temurin-{{{.}}}-lein-trixie-slim AS build
+  {{/language.java.version}}
+  {{^language.java.version}}
+    FROM clojure:temurin-25-lein-trixie-slim AS build
+  {{/language.java.version}}
+{{/language.compiler.lein}}
+{{^language.compiler.lein}}
+  {{#language.java.version}}
+    FROM clojure:temurin-{{{.}}}-tools-deps-trixie-slim AS build
+  {{/language.java.version}}
+  {{^language.java.version}}
+    FROM clojure:temurin-25-tools-deps-trixie-slim AS build
+  {{/language.java.version}}
+{{/language.compiler.lein}}
 
 WORKDIR /usr/src/app
 
@@ -20,7 +29,7 @@ WORKDIR /usr/src/app
   RUN clojure -Auberjar
 {{/build}}
 
-FROM eclipse-temurin:21.0.7_6-jre
+FROM eclipse-temurin:25-jre
 
 WORKDIR /opt/bin
 
@@ -29,7 +38,7 @@ WORKDIR /opt/bin
 {{/environment}}
 
 {{#binaries}}
-  COPY --from=0 /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
+  COPY --from=build /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
 {{/binaries}}
 
 ENTRYPOINT {{command}}

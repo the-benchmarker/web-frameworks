@@ -23,7 +23,7 @@ pub fn main() {
     |> mist.new
     |> mist.bind("0.0.0.0")
     |> mist.port(3000)
-    |> mist.start_http
+    |> mist.start
 
   process.sleep_forever()
 }

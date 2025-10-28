@@ -3,7 +3,7 @@
 {{/language.version}}
 
 {{^language.version}}
-  FROM golang:1.24
+  FROM golang:1.25
 {{/language.version}}
 
 WORKDIR /go/src/app
@@ -13,9 +13,9 @@ ENV GOOS=linux
 ENV GOARCH={{#architecture}}{{{.}}}{{/architecture}}
 
 {{#if.architecture.amd64}}
-  # This compile with v2 micoarchitecture
+  # This compile with v3 micoarchitecture, since used proc is zen2 compatible ( AMD Ryzen 7 5700U)
   # See https://en.wikipedia.org/wiki/X86-64#Microarchitecture_levels 
-  ENV GOAMD64=v2
+  ENV GOAMD64=v3
 {{/if.architecture.amd64}}
 
 {{#if.architecture.arm64}}
