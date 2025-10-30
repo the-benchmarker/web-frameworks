@@ -30,9 +30,8 @@ while read line ; do
  # cd ${LANGUAGE}/${FRAMEWORK}
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile build
 #  cd ../..
-rm -fr  ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results
-mkdir -p ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results/{64,256,512}
-
+  rm -fr  ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results
+  mkdir -p ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results/{64,128,256}
   sleep 30
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile warmup
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
