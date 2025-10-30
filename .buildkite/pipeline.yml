@@ -1,0 +1,94 @@
+# .buildkite/pipeline.yml
+steps:
+  # --------------------------------------------------------
+  # STEP 1 — Get changed files
+  # --------------------------------------------------------
+  - label: ":git: Detect changed files"
+    key: detect-changes
+    commands:
+      - echo "--- Detecting changed files"
+      - git fetch origin main
+      - git diff --name-only origin/main...HEAD > changed_files.txt
+      - echo "Changed files:"
+      - cat changed_files.txt
+      # Save for later steps
+      - buildkite-agent artifact upload changed_files.txt
+
+  # --------------------------------------------------------
+  # STEP 2 — Determine languages based on changed files
+  # --------------------------------------------------------
+  - label: ":mag: Identify languages"
+    key: list-languages
+    depends_on: detect-changes
+    commands:
+      - buildkite-agent artifact download changed_files.txt .
+      - echo "--- Extracting top-level folders"
+      - awk -F/ '{print $1}' changed_files.txt | sort -u > languages.txt
+      - echo "Languages found:"
+      - cat languages.txt
+      - buildkite-agent artifact upload languages.txt
+
+  # --------------------------------------------------------
+  # STEP 3 — Discover frameworks per language
+  # --------------------------------------------------------
+  - label: ":gear: Discover frameworks"
+    key: list-frameworks
+    depends_on: list-languages
+    commands:
+      - buildkite-agent artifact download languages.txt .
+      - echo "--- Listing frameworks per language"
+      - mkdir frameworks
+      - |
+        while read lang; do
+          echo "Finding frameworks in $lang/"
+          find "$lang" -maxdepth 1 -type d ! -path "$lang" -printf "%f\n" \
+            | grep -v '^\.$' > "frameworks/${lang}.txt" || true
+          echo "$lang frameworks:"
+          cat "frameworks/${lang}.txt" || echo "(none)"
+        done < languages.txt
+
+      # Combine all into JSON pairs for clarity
+      - |
+        echo "[" > pairs.json
+        first=true
+        while read lang; do
+          while read fw; do
+            if [ -n "$fw" ]; then
+              if [ "$first" = false ]; then echo "," >> pairs.json; fi
+              echo "{\"language\":\"$lang\",\"framework\":\"$fw\"}" >> pairs.json
+              first=false
+            fi
+          done < "frameworks/${lang}.txt"
+        done < languages.txt
+        echo "]" >> pairs.json
+
+      - echo "Discovered pairs:"
+      - cat pairs.json
+      - buildkite-agent artifact upload pairs.json
+
+  # --------------------------------------------------------
+  # STEP 4 — Dynamically create one job per (language, framework)
+  # --------------------------------------------------------
+  - label: ":rocket: Expand pipeline dynamically"
+    key: expand
+    depends_on: list-frameworks
+    commands:
+      - buildkite-agent artifact download pairs.json .
+      - echo "--- Expanding pipeline dynamically"
+
+      # Split into individual steps and upload
+      - |
+        jq -c '.[]' pairs.json | while read pair; do
+          lang=$(echo "$pair" | jq -r '.language')
+          fw=$(echo "$pair" | jq -r '.framework')
+
+          cat <<YAML > step.yml
+steps:
+  - label: ":test_tube: Run tests - ${lang}/${fw}"
+    command:
+      - echo "Running tests for ${lang}/${fw}"
+      - ./scripts/run-tests.sh ${lang} ${fw}
+YAML
+          buildkite-agent pipeline upload step.yml
+        done
+
