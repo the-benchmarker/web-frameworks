@@ -28,9 +28,9 @@ while read line ; do
   LANGUAGE=`echo $line | awk -F '/' '{print $(NF-2)}'`
   FRAMEWORK=`echo $line | awk -F '/' '{print $(NF-1)}'`
   rm -fr  ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results
-  mkdir -p ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results/{64,128,256}
-  sleep 30
+  mkdir -p ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results/{64,256,512}
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile build
+  sleep 30
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile warmup
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile test
   ret=$?
