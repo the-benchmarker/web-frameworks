@@ -19,10 +19,6 @@ namespace :ci do
 
       language, framework, = file.split(File::SEPARATOR)
 
-      unless ['javascript', 'php', 'python ', 'nim', 'java', 'd', 'guile', 'julia', 'r', 'csharp', 'fsharp', 'gleam', 'lua', 'haskell', 'kotlin', 'v', 'zig', 'perl', 'clojure'].include?(language)
-        next
-      end
-
       config = get_config_from(File.join(Dir.pwd, language, framework))
 
       engine = config.dig('framework', 'engines')&.first
