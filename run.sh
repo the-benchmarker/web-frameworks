@@ -19,23 +19,26 @@ BASEDIR=`pwd`
 #createdb -U postgres benchmark
 #psql -U postgres -d benchmark < dump.sql
 
-find $1 -mindepth 1 -type f -name config.yaml > ~/list.txt
+#find $1 -mindepth 1 -type f -name config.yaml > ~/list.txt
 #find $1 -mindepth 2 -type f -name config.yaml > ~/list.txt
-#find . -mindepth 3 -type f -name config.yaml | grep -Ev 'scorper|basolato' > ~/list.txt
+find . -mindepth 3 -type f -name config.yaml > ~/list.txt
 
 while read line ; do 
   echo "*********** ${line} *************"
   LANGUAGE=`echo $line | awk -F '/' '{print $(NF-2)}'`
   FRAMEWORK=`echo $line | awk -F '/' '{print $(NF-1)}'`
- # cd ${LANGUAGE}/${FRAMEWORK}
-  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile build
-#  cd ../..
   rm -fr  ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results
   mkdir -p ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results/{64,128,256}
   sleep 30
+  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile build
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile warmup
-  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
-#  yes|docker system prune --all --force
+  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile test
+  ret=$?
+  if [ $ret -eq 0 ]; then
+    make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
+    sleep 5
+  else
+    echo "Failure in ${LANGUAGE}/${FRAMEWORK}"
+  fi
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile unbuild
-  sleep 5
 done < ~/list.txt
