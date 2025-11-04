@@ -19,9 +19,9 @@ BASEDIR=`pwd`
 #createdb -U postgres benchmark
 #psql -U postgres -d benchmark < dump.sql
 
-#find $1 -mindepth 1 -type f -name config.yaml > ~/list.txt
+find $1 -mindepth 1 -type f -name config.yaml > ~/list.txt
 #find $1 -mindepth 2 -type f -name config.yaml > ~/list.txt
-find . -mindepth 3 -type f -name config.yaml > ~/list.txt
+#find . -mindepth 3 -type f -name config.yaml > ~/list.txt
 
 while read line ; do 
   echo "*********** ${line} *************"
@@ -30,11 +30,11 @@ while read line ; do
   rm -fr  ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results
   mkdir -p ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results/{64,256,512}
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile build
-  sleep 30
-  make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile warmup
+  sleep 60
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile test
   ret=$?
   if [ $ret -eq 0 ]; then
+    make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile warmup
     make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
     sleep 5
   else
