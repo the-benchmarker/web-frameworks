@@ -112,7 +112,7 @@ def commands_for(language, framework, variant, provider = "docker")
   framework_config = YAML.safe_load(File.open(File.join(directory, language, framework, "config.yaml")))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
   options = { language: language, framework: framework, variant: variant, manifest: "#{MANIFESTS[:container]}.#{variant}" }
-  commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [] }
+  commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], test: [] }
 
   # Compile first, only for non containers
   if app_config.key?("binaries") && !(provider.start_with?("docker") || provider.start_with?("podman"))
@@ -154,6 +154,7 @@ def commands_for(language, framework, variant, provider = "docker")
 
   hostname = File.join(directory, language, framework, "ip-#{variant}.txt")
   commands[:warmup] << File.expand_path("~/.cargo/bin/oha --wait-ongoing-requests-after-deadline --no-tui --disable-keepalive --latency-correction http://`cat #{hostname}`:3000/")
+  commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
   routes.split(",").each do |route|
     method, uri = route.split(":")
 
