@@ -3,24 +3,18 @@ import { createErrorMiddleware } from '@chubbyts/chubbyts-framework/dist/middlew
 import { createRouteMatcherMiddleware } from '@chubbyts/chubbyts-framework/dist/middleware/route-matcher-middleware';
 import { createGetRoute, createPostRoute } from '@chubbyts/chubbyts-framework/dist/router/route';
 import { createRoutesByName } from '@chubbyts/chubbyts-framework/dist/router/routes-by-name';
-import {
-  createResponseFactory,
-  createServerRequestFactory,
-  createStreamFromResourceFactory,
-  createUriFactory,
-} from '@chubbyts/chubbyts-http/dist/message-factory';
 import { createPathToRegexpRouteMatcher } from '@chubbyts/chubbyts-framework-router-path-to-regexp/dist/path-to-regexp-router';
-import { Response, ServerRequest } from '@chubbyts/chubbyts-http-types/dist/message';
+import { createServer, STATUS_CODES } from 'http';
+import { Response, ServerRequest } from '@chubbyts/chubbyts-undici-server/dist/server';
+import type { HttpRequest, HttpResponse } from 'uWebSockets.js';
+import { App } from 'uWebSockets.js';
 import {
-  createResponseToUwebsocketsEmitter,
-  createUwebsocketsToServerRequestFactory,
-} from '@chubbyts/chubbyts-http-uwebsockets-bridge/dist/uwebsocket-http';
-import { App, HttpRequest, HttpResponse } from 'uWebSockets.js';
-
-const responseFactory = createResponseFactory();
+  createUWebSocketsRequestToUndiciRequestFactory,
+  createUndiciResponseToUWebSocketsResponseEmitter,
+} from '@chubbyts/chubbyts-undici-server-uwebsockets/dist/uwebsockets';
 
 const app = createApplication([
-  createErrorMiddleware(responseFactory, true),
+  createErrorMiddleware(true),
   createRouteMatcherMiddleware(
     createPathToRegexpRouteMatcher(
       createRoutesByName([
@@ -28,30 +22,30 @@ const app = createApplication([
           path: '/',
           name: 'index',
           handler: async (): Promise<Response> => {
-            const response = responseFactory(200);
-            response.body.end();
-
-            return response;
+            return new Response(null, {
+              status: 200,
+              statusText: STATUS_CODES[200],
+            });
           },
         }),
         createGetRoute({
           path: '/user/:id',
           name: 'user_view',
-          handler: async (request: ServerRequest): Promise<Response> => {
-            const response = responseFactory(200);
-            response.body.end(request.attributes.id);
-
-            return response;
+          handler: async (request: ServerRequest<{id: string}>): Promise<Response> => {
+            return new Response(request.attributes.id, {
+              status: 200,
+              statusText: STATUS_CODES[200],
+            });
           },
         }),
         createPostRoute({
           path: '/user',
           name: 'user_create',
           handler: async (): Promise<Response> => {
-            const response = responseFactory(200);
-            response.body.end();
-
-            return response;
+            return new Response(null, {
+              status: 200,
+              statusText: STATUS_CODES[200],
+            });
           },
         }),
       ]),
@@ -59,23 +53,15 @@ const app = createApplication([
   ),
 ]);
 
-const uwebsocketsToServerRequestFactory = createUwebsocketsToServerRequestFactory(
-  createUriFactory(),
-  createServerRequestFactory(),
-  createStreamFromResourceFactory(),
-);
-
-const responseToUwebsocketsEmitter = createResponseToUwebsocketsEmitter();
+const uWebSocketsRequestToUndiciRequestFactory = createUWebSocketsRequestToUndiciRequestFactory();
+const undiciResponseToUWebSocketsResponseEmitter = createUndiciResponseToUWebSocketsResponseEmitter();
 
 const host = '0.0.0.0';
 const port = 3000;
 
 App()
   .any('/*', async (res: HttpResponse, req: HttpRequest) => {
-    // function gets excuted on abort
-    // empty function means the request/response gets executed to its end
-    res.onAborted(() => {});
-    responseToUwebsocketsEmitter(await app(uwebsocketsToServerRequestFactory(req, res)), res);
+    undiciResponseToUWebSocketsResponseEmitter(await app(uWebSocketsRequestToUndiciRequestFactory(req, res)), res);
   })
   .listen(host, port, (listenSocket: unknown) => {
     if (listenSocket) {
