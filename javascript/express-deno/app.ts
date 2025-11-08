@@ -1,7 +1,8 @@
-import express from 'express';
-import { createFetchHandler } from './fetcher.ts'; // path to the code above
+import express from 'npm:express@5';
+
 const app = express();
-app.set('etag', false);
+
+app.disable('etag');
 
 app.get('/', function (req, res) {
   res.send('');
@@ -15,6 +16,4 @@ app.post('/user', function (req, res) {
   res.send('');
 });
 
-const fetchHandler = createFetchHandler(app);
-
-export default { fetch: fetchHandler };
+app.listen(3000);

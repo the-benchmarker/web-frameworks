@@ -1,4 +1,4 @@
-FROM nimlang/nim:2.2.4-ubuntu-regular AS build
+FROM nimlang/nim:2.2.6-ubuntu-regular AS build
 
 {{#build_deps.length}}
   ARG DEBIAN_FRONTEND=noninteractive
