@@ -1,3 +1,6 @@
 framework:
   website: ambiorix.dev
   version: 2.1
+
+  build_deps:
+    - libcurl4-openssl-dev
