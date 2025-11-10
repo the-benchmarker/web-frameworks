@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es2019",
-    "module": "commonjs",
+    "erasableSyntaxOnly": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "outDir": "./",
+    "skipLibCheck": true,
     "strict": true,
-    "declaration": true
+    "target": "esnext",
   },
   "exclude": ["node_modules"]
 }
