@@ -1,4 +1,12 @@
-// using high speed native addon written on top of Tokio And Hyper.
-// So no need cluster brahma-firelight runs multi-threaded by default 🔥
+// brahma-firelight v1.5.18 now supports true multi-core ⚡⚡
 
-import './app.ts';
+import { availableParallelism } from 'node:os';
+
+const numCpus = availableParallelism();
+
+for (let i = 0; i < numCpus; i++) {
+    Bun.spawn(['bun', 'app.ts'], {
+        stdio: ['inherit', 'inherit', 'inherit'],
+        env: { ...process.env },
+    });
+}
