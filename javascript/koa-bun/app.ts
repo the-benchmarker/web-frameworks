@@ -5,18 +5,16 @@ const app = new Koa();
 const router = new Router();
 
 router
-    .get('/', (ctx, next) => {
-      ctx.body = '';
-    })
-    .get('/user/:id', (ctx, next) => {
-      ctx.body = ctx.params.id;
-    })
-    .post('/user', (ctx, next) => {
-      ctx.body = '';
-    });
+  .get('/', (ctx, next) => {
+    ctx.body = '';
+  })
+  .get('/user/:id', (ctx, next) => {
+    ctx.body = ctx.params.id;
+  })
+  .post('/user', (ctx, next) => {
+    ctx.body = '';
+  });
 
-const server = app
-    .use(router.routes())
-    .listen(3000);
+const server = app.use(router.routes()).listen(3000);
 
-server.keepAliveTimeout = 0
+server.keepAliveTimeout = 0;

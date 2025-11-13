@@ -5,10 +5,11 @@ language:
   files:
     - src/**/*.java
     - pom.xml
-    - src/**/*.properties
     - src/**/*.xml
     - src/**/*.yml
     - src/**/*.jsp
+    - '**/*.kts'
+    - '**/*.properties'
 
   fix:
     - ln -sfv /usr/local/openjdk-21/bin/java /usr/bin/java

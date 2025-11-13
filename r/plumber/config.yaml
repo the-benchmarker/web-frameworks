@@ -4,4 +4,4 @@ framework:
 
   deps:
     - libsodium-dev
-    - libcurl4-openssl-dev
+    - libcurl4-gnutls-dev #    - libcurl4-openssl-dev

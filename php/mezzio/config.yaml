@@ -1,6 +1,6 @@
 framework:
   website: docs.mezzio.dev
-  version: "3.20"
+  version: 3.25
 
   bootstrap:
     - mkdir /usr/src/app/data

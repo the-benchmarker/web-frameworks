@@ -16,7 +16,7 @@ defmodule Server.MixProject do
 
   defp deps do
     [
-      {:phoenix, "~> 1.7.14"},
+      {:phoenix, "~> 1.8.0"},
       {:jason, "~> 1.4"},
       {:plug_cowboy, "~> 2.7.2"}
     ]
