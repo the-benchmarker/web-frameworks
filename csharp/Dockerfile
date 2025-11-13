@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0 as build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 as build
 
 WORKDIR /usr/src/app
 
