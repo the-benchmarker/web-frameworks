@@ -1,15 +1,15 @@
-require 'hanami/routes'
+require "hanami/routes"
 
 module Benchmark
   class Routes < Hanami::Routes
-    root to: ->(*) { [200, {}, ['']] }
+    root to: ->(*) { [200, {}, [""]] }
 
-    get '/user/:id' do
+    get "/user/:id" do
       params[:id]
     end
 
-    post '/user' do
-      ''
+    post "/user" do
+      ""
     end
   end
 end

@@ -1,17 +1,19 @@
-import express from "npm:express@4.21.0";
-var app = express();
-app.set("etag", false);
+import express from 'npm:express@5';
 
-app.get("/", function (req, res) {
-  res.send("");
+const app = express();
+
+app.disable('etag');
+
+app.get('/', function (req, res) {
+  res.send('');
 });
 
-app.get("/user/:id", function (req, res) {
+app.get('/user/:id', function (req, res) {
   res.send(req.params.id);
 });
 
-app.post("/user", function (req, res) {
-  res.send("");
+app.post('/user', function (req, res) {
+  res.send('');
 });
 
-app.listen(3000, function () {});
+app.listen(3000);

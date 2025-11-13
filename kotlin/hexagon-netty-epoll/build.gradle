@@ -1,13 +1,13 @@
-
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "2.1.+"
+    id "org.jetbrains.kotlin.jvm" version "2.2.+"
 }
 
 ext {
     hexagonVersion = "3.7.4"
-    nettyVersion = "4.1.+"
+    nettyVersion = "4.2.+"
 
     gradleScripts = "https://raw.githubusercontent.com/hexagontk/hexagon/$hexagonVersion/gradle"
+ arch = System.getProperty("os.arch");
 }
 
 apply(from: "$gradleScripts/kotlin.gradle")
@@ -27,7 +27,13 @@ application {
 
 dependencies {
     implementation("com.hexagonkt:http_server_netty_epoll:$hexagonVersion")
-    implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-aarch_64")
+    if (arch == "amd64" || arch == "x86_64") {
+        implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-x86_64")
+    } else if (arch == "aarch64") {
+        implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-aarch_64")
+    } else {
+	throw GradleException("Unsupported architecture: $arch")
+    }
 }
 
 jarAll {

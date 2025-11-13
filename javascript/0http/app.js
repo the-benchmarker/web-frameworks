@@ -1,4 +1,4 @@
-import cero from "0http"
+import cero from '0http';
 const { router, server } = cero();
 
 router.on('GET', '/', (req, res) => {

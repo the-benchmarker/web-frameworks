@@ -1,6 +1,6 @@
 framework:
   github: chubbyts/chubbyts-framework
-  version: '1.10'
+  version: 3.0
 
   bootstrap:
     - npm -g install typescript

@@ -1,8 +1,8 @@
 name := "server"
-scalaVersion := "3.6.3"
+scalaVersion := "3.7.4"
 
-val PekkoVersion = "1.1.3"
-val PekkoHttpVersion = "[1.1,1.2]"
+val PekkoVersion = "1.2.1"
+val PekkoHttpVersion = "[1.3,1.4]"
 libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-actor-typed" % PekkoVersion,
   "org.apache.pekko" %% "pekko-stream" % PekkoVersion,

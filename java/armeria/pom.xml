@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>21</java.version>
         <maven.compiler.release>21</maven.compiler.release>
-        <armeria.version>[1.31,1.32)</armeria.version>
+        <armeria.version>[1.33,1.34)</armeria.version>
         <slf4j.version>[1.7,)</slf4j.version>
     </properties>
 
@@ -22,7 +22,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.6.1</version>
                 <executions>
                     <execution>
                         <id>uber-jar</id>

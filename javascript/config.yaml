@@ -33,7 +33,7 @@ language:
     deno:
       bootstrap:
         - deno install
-      command: deno serve --parallel  --port 3000 --allow-net --allow-read=. --allow-env app.ts
+      command: deno serve --parallel  --port 3000 --allow-net --allow-read --allow-env app.ts
     happyx:
       bootstrap:
         - npm install

@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>io.javalin</groupId>
 			<artifactId>javalin</artifactId>
-			<version>[6.4,6.5)</version>
+			<version>[6.7,6.8)</version>
 		</dependency>
 		<dependency>
 				<groupId>org.slf4j</groupId>
@@ -30,10 +30,10 @@
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.13.0</version>
+				<version>3.14.1</version>
 				<configuration>
-					<source>11</source>
-					<target>11</target>
+					<source>25</source>
+					<target>25</target>
 					<optimize>true</optimize>
 					<debug>false</debug>
 				</configuration>

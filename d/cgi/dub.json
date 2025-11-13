@@ -1,9 +1,0 @@
-{
-  "name": "server",
-  "dependencies": {
-    "arsd-official:cgi": "~>11.4.2"
-  },
-  "dflags-ldc": ["-mcpu=native"],
-  "subConfigurations": { "arsd-official:cgi": "embedded_httpd_hybrid" },
-  "license": "MIT"
-}

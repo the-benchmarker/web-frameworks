@@ -35,12 +35,16 @@ providers:
       - cd {{{language}}}/{{{framework}}} && docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}}.{{{variant}}} . && cd -
 
     metadata:
-      - docker run -td {{{language}}}.{{{framework}}}.{{{variant}}} > {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt
+      - docker run -td {{{language}}}.{{{framework}}}.{{{variant}}} --network host > {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt
       - docker inspect `cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt` | jq -r '.[0].NetworkSettings.IPAddress' > {{{language}}}/{{{framework}}}/ip-{{{variant}}}.txt
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}.{{{variant}}} | xargs docker
         rm -f
+
+    unbuild:
+      - docker stop `cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt`
+
 
   digitalocean:
     build:
@@ -63,6 +67,9 @@ providers:
     exec: doctl compute ssh {{{language}}}.{{{framework}}} --ssh-key-path {{{DO_KEY}}} --ssh-command "cd /opt/web && {{{command}}}"
 
     reboot: doctl compute droplet-action reboot `cat id.txt`
+
+    unbuild: 
+    - ""
 
     clean:
       - doctl compute droplet delete {{{language}}}.{{{framework}}} --force

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"git.akyoto.dev/go/web"
+	"git.urbach.dev/go/web"
 )
 
 func main() {

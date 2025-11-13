@@ -1,8 +1,11 @@
+# https://github.com/roadrunner-server/roadrunner/blob/master/.rr.yaml
+
 version: "3"
-rpc:
-  listen: "tcp://127.0.0.1:6001"
-http:
-  address: "0.0.0.0:3000"
 server:
-  command: "php worker.php"
-  relay: pipes
+  command: php app rr:work
+http:
+  address: 0.0.0.0:3000
+rpc:
+  listen: tcp://127.0.0.1:6001
+logs:
+  mode: production

@@ -2,6 +2,8 @@
 
 require "dotenv"
 require "active_support"
+require "yaml"
+require "mustache"
 
 MANIFESTS = {
   container: ".Dockerfile",
@@ -17,18 +19,18 @@ class ::Hash
 end
 
 def architecture
-  if RUBY_PLATFORM.start_with?('aarch64')
-    'arm64'
+  if RUBY_PLATFORM.start_with?("aarch64")
+    "arm64"
   else
-    'amd64'
+    "amd64"
   end
 end
 
 def arch
-  if RUBY_PLATFORM.start_with?('aarch64')
-    'aarch64'
+  if RUBY_PLATFORM.start_with?("aarch64")
+    "aarch64"
   else
-    'x86_64'
+    "x86_64"
   end
 end
 
@@ -109,9 +111,9 @@ def commands_for(language, framework, variant, provider = "docker")
   language_config = YAML.safe_load(File.open(File.join(directory, language, "config.yaml")))
   framework_config = YAML.safe_load(File.open(File.join(directory, language, framework, "config.yaml")))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-  options = { language: language, framework: framework, variant: variant,  manifest: "#{MANIFESTS[:container]}.#{variant}" }
-  commands = { build: [], collect: [], clean: [] }
-  
+  options = { language: language, framework: framework, variant: variant, manifest: "#{MANIFESTS[:container]}.#{variant}" }
+  commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], test: [] }
+
   # Compile first, only for non containers
   if app_config.key?("binaries") && !(provider.start_with?("docker") || provider.start_with?("podman"))
     commands << "docker build -f #{MANIFESTS[:container]}.#{variant} -t #{language}.#{framework} ."
@@ -143,13 +145,28 @@ def commands_for(language, framework, variant, provider = "docker")
 
   if config.dig("providers", provider).key?("reboot")
     commands[:build] << config.dig("providers", provider, "reboot")
-    commands[:build] << "sleep 30"
   end
 
-  commands[:collect] << "HOSTNAME=`cat #{language}/#{framework}/ip-#{variant}.txt` ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} DATABASE_URL=#{ENV.fetch(
-    "DATABASE_URL", nil
-  )} bundle exec rake collect"
+  threads = ENV.fetch("THREADS") { Etc.nprocessors }
+  duration = ENV.fetch("DURATION", 10)
+  concurrencies = ENV.fetch("CONCURRENCIES", "10")
+  routes = ENV.fetch("ROUTES", "GET:/")
 
+  hostname = File.join(directory, language, framework, "ip-#{variant}.txt")
+  commands[:warmup] << File.expand_path("~/.cargo/bin/oha --wait-ongoing-requests-after-deadline --no-tui --disable-keepalive --latency-correction http://`cat #{hostname}`:3000/")
+  commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
+  routes.split(",").each do |route|
+    method, uri = route.split(":")
+
+    concurrencies.split(",").each do |concurrency|
+      hostname = File.join(directory, language, framework, "ip-#{variant}.txt")
+      output = File.join(directory, language, framework, ".results", concurrency, "#{uri.gsub("/", "_")}.json")
+      commands[:collect] << File.expand_path("~/.cargo/bin/oha --wait-ongoing-requests-after-deadline --no-tui --disable-keepalive --latency-correction -c #{concurrency} -z 15s -m #{method} --output-format json --output #{output} http://`cat #{hostname}`:3000#{uri}")
+    end
+  end
+  config["providers"][provider]["unbuild"].each do |cmd|
+    commands[:unbuild] << Mustache.render(cmd, options).to_s
+  end
   config.dig("providers", provider, "clean").each do |cmd|
     commands[:clean] << Mustache.render(cmd, options).to_s
   end
@@ -191,15 +208,15 @@ def create_dockerfile(directory, engine, config)
       static_files << { source: static_file.gsub("#{directory}/", ""), target: static_file.gsub("#{directory}/", "") }
     end
   end
-compiler = config.dig('language','compiler')
+  compiler = config.dig("language", "compiler")
   if compiler
-    config['language']['compiler'] = {compiler => true}
+    config["language"]["compiler"] = { compiler => true }
   end
 
   template = File.read(path)
-  config.merge!(template_variables).merge!({if: template_conditions}).merge!(files:, static_files:, environment: config["environment"]&.map do |k, v|
-    "#{k}=#{v}"
-  end)
+  config.merge!(template_variables).merge!({ if: template_conditions }).merge!(files:, static_files:, environment: config["environment"]&.map do |k, v|
+                                                                                 "#{k}=#{v}"
+                                                                               end)
   File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config))
 end
 
@@ -209,7 +226,7 @@ def template_variables
 end
 
 def template_conditions
-   template_variables.flat_map{|k,v| {k.to_s => {v => true}}}.reduce(:merge)
+  template_variables.flat_map { |k, v| { k.to_s => { v => true } } }.reduce(:merge)
 end
 
 desc "Create Dockerfiles"
@@ -254,9 +271,26 @@ task :config do
   end
 end
 
+desc "Get framework by success rate"
+task :by_success do
+  frameworks = {}
+  Dir.glob("*/**/.results/**/*.json").each do |file|
+    data = JSON.load_file(file, symbolize_names: true)
+    rate = data.dig(:summary, :successRate).round(2)
+    if rate < 1
+      unless frameworks[rate]
+        frameworks[rate] = []
+      end
+      name = file.split("/")[1]
+      frameworks[rate] << name
+    end
+  end
+  pp frameworks.map { [_1, _2.uniq.join(",")] }
+end
+
 desc "Clean unused file"
 task :clean do
-  Dir.glob("d/serverino/.gitignore").each do |ignore_file|
+  Dir.glob("*/**/.gitignore").each do |ignore_file|
     directory = File.dirname(ignore_file)
 
     File.foreach(ignore_file) do |line|

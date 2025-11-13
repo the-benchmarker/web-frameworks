@@ -3,7 +3,7 @@
 {{/language.version}}
 
 {{^language.version}}
-  FROM swift:6.0
+  FROM swift:6.2
 {{/language.version}}
 
 RUN apt -y update
@@ -25,7 +25,7 @@ RUN swift build -c release -Xswiftc -enforce-exclusivity=unchecked
 {{/language.version}}
 
 {{^language.version}}
-  FROM swift:6.0-slim
+  FROM swift:6.2-slim
 {{/language.version}}
 
 {{#environment}}

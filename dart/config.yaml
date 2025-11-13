@@ -1,12 +1,15 @@
 language:
-  version: 3.5
+  version: 3.9
 
   engines:
     aot:
       command: /app/server
+    vm:
+      command: dart run /app/server.dart
 
 framework:
   files:
     - "**/*.dart"
   engines:
     - aot
+    - vm

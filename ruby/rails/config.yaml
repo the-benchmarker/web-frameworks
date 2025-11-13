@@ -1,12 +1,13 @@
 framework:
   website: rubyonrails.org
-  version: 8.0
+  version: 8.1
 
   bootstrap:
     - mkdir -p tmp/pids
 
   build_deps:
     - libsqlite3-dev
+    - libyaml-dev
     - pkg-config
 
   environment:

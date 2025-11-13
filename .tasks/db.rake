@@ -27,11 +27,22 @@ def compute(data)
 end
 
 namespace :db do
+  task :md_export do
+    results = JSON.parse(File.read('data.json'))
+    results['metrics'].map { |m| m['framework'] = results['frameworks'].detect { |f| f['id'] == m['framework_id'] }['label'] }
+    reqs = []
+    results['metrics'].each do |metric|
+      if metric['label'] == 'total_requests_per_s'
+        reqs << { framework: metric['framework'], level: metric['level'], value: metric['value'] }
+      end
+    end
+    pp reqs.select { |i| i[:level] == 256 }.sort_by { |i| i[:value] }
+  end
   task :check_failures do
     results = JSON.parse(File.read('data.json'))
     results['frameworks'].map { _1['label'] }
     failing_frameworks = results['metrics'].filter_map do |row|
-      row['framework_id'] if row['label'] == 'total_requests_per_s' && (row['value']).zero?
+      row['framework_id'] if row['label'] == 'total_requests_per_s' && row['value'].zero?
     end
     list_of = Dir.glob('*/*/config.yaml').map { _1.split('/')[1] }
     $stdout.puts "Failing : #{results['frameworks'].filter_map do |row|
