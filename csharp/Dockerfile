@@ -10,7 +10,7 @@ RUN dotnet restore
 COPY . .
 RUN dotnet publish -c release -o out
 
-FROM mcr.microsoft.com/dotnet/aspnet:9.0
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
 
 WORKDIR /usr/src/app
 
