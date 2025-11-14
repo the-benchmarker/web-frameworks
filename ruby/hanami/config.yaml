@@ -1,3 +1,6 @@
 framework:
   website: hanamirb.org
-  version: 2.2
+  version: 2.3
+
+  build_deps:
+    - yaml-devel
