@@ -6,7 +6,10 @@ import { createRoutesByName } from '@chubbyts/chubbyts-framework/dist/router/rou
 import { createPathToRegexpRouteMatcher } from '@chubbyts/chubbyts-framework-router-path-to-regexp/dist/path-to-regexp-router';
 import { createServer, STATUS_CODES } from 'http';
 import { Response, ServerRequest } from '@chubbyts/chubbyts-undici-server/dist/server';
-import { createNodeRequestToUndiciRequestFactory, createUndiciResponseToNodeResponseEmitter } from '@chubbyts/chubbyts-undici-server-node/dist/node';
+import {
+  createNodeRequestToUndiciRequestFactory,
+  createUndiciResponseToNodeResponseEmitter,
+} from '@chubbyts/chubbyts-undici-server-node/dist/node';
 
 const app = createApplication([
   createErrorMiddleware(true),
@@ -26,7 +29,7 @@ const app = createApplication([
         createGetRoute({
           path: '/user/:id',
           name: 'user_view',
-          handler: async (request: ServerRequest<{id: string}>): Promise<Response> => {
+          handler: async (request: ServerRequest<{ id: string }>): Promise<Response> => {
             return new Response(request.attributes.id, {
               status: 200,
               statusText: STATUS_CODES[200],

@@ -2,6 +2,6 @@ framework:
   website: rplumber.io
   version: 1.3
 
-  deps:
+  build_deps:
     - libsodium-dev
-    - libcurl4-gnutls-dev #    - libcurl4-openssl-dev
+    - libcurl4-openssl-dev
