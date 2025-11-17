@@ -22,4 +22,5 @@ module Bench
   end
 end
 
+Bench::API.compile!
 run Bench::API

@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
-use Mezzio\Helper\ConfigProvider;
 
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
@@ -14,12 +13,12 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
-    \Mezzio\Helper\ConfigProvider::class,
+    \Mezzio\Tooling\ConfigProvider::class,
     \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
     \Laminas\HttpHandlerRunner\ConfigProvider::class,
     // Include cache configuration
     new ArrayProvider($cacheConfig),
-    ConfigProvider::class,
+    \Mezzio\Helper\ConfigProvider::class,
     \Mezzio\ConfigProvider::class,
     \Mezzio\Router\ConfigProvider::class,
     \Laminas\Diactoros\ConfigProvider::class,
@@ -30,6 +29,10 @@ $aggregator = new ConfigAggregator([
         : function (): array {
             return [];
         },
+
+    // Default App module config
+    App\ConfigProvider::class,
+
     // Load application config in a pre-defined order in such a way that local settings
     // overwrite global settings. (Loaded as first to last):
     //   - `global.php`

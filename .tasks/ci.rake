@@ -18,6 +18,7 @@ namespace :ci do
       next unless File.exist?(file)
 
       language, framework, = file.split(File::SEPARATOR)
+      next unless language == 'ruby'
 
       config = get_config_from(File.join(Dir.pwd, language, framework))
 
@@ -32,6 +33,7 @@ namespace :ci do
     end
 
     matrix[:include].uniq!
+    matrix[:include] = matrix[:include].take(256)
     puts matrix.to_json
   end
 end

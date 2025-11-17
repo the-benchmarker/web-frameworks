@@ -31,7 +31,7 @@ const app = createApplication([
         createGetRoute({
           path: '/user/:id',
           name: 'user_view',
-          handler: async (request: ServerRequest<{id: string}>): Promise<Response> => {
+          handler: async (request: ServerRequest<{ id: string }>): Promise<Response> => {
             return new Response(request.attributes.id, {
               status: 200,
               statusText: STATUS_CODES[200],
