@@ -7,7 +7,6 @@ pub fn build(b: *std.Build) void {
 
     const httpz_dep = b.dependency("httpz", .{
         .target = target,
-
         .optimize = optimize,
     });
     const httpz_mod = httpz_dep.module("httpz");
