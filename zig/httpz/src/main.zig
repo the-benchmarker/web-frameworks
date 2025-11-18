@@ -1,17 +1,19 @@
 const std = @import("std");
+const build_mode = @import("builtin").mode;
 const httpz = @import("httpz");
 
 pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    defer _ = gpa.deinit();
 
-    const allocator = gpa.allocator();
+    defer {
+        if (build_mode == .Debug) _ = gpa.deinit();
+    }
+
+    const allocator = if (build_mode == .Debug) gpa.allocator() else std.heap.smp_allocator;
     const cpu_count = try std.Thread.getCpuCount();
 
     var server = try httpz.Server(void).init(allocator, .{ .address = "0.0.0.0", .port = 3000, .workers = .{
         .count = @truncate(cpu_count),
-        .max_conn = 8192,
-        .retain_allocated_bytes = 0,
     }, .thread_pool = .{
         .count = @truncate(cpu_count),
     }, .request = .{
