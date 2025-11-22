@@ -4,7 +4,7 @@ const app = createApp();
 
 // GET
 app.get('/', (req, res) => {
-  res.text('');
+  res.send(200);
 });
 
 app.get('/user/:id', (req, res) => {
@@ -13,7 +13,7 @@ app.get('/user/:id', (req, res) => {
 
 // POST
 app.post('/user', (req, res) => {
-  res.text('');
+  res.send(200);
 });
 
 app.listen('0.0.0.0', 3000);
