@@ -16,9 +16,9 @@ namespace :ci do
       next if file.start_with?('.')
       next if file.count(File::SEPARATOR) < 2
       next unless File.exist?(file)
-      next unless language == 'ruby'
 
       language, framework, = file.split(File::SEPARATOR)
+      next unless language == 'ruby'
 
       config = get_config_from(File.join(Dir.pwd, language, framework))
 
