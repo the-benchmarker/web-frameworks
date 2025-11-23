@@ -1,6 +1,6 @@
-ARG ELIXIR_VERSION=1.17.3
-ARG ERLANG_VERSION=27.0.1
-ARG DEBIAN_VERSION=bullseye-20240904
+ARG ELIXIR_VERSION=1.19.3
+ARG ERLANG_VERSION=28.1.1
+ARG DEBIAN_VERSION=trixie-20251117
 
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${ERLANG_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
@@ -58,7 +58,7 @@ RUN apt-get -qy install curl
 # User
 RUN chown -R nobody: /app
 USER nobody
-ENV HOME /app
+ENV HOME=/app
 
 # Check status
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
