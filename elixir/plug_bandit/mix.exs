@@ -5,11 +5,11 @@ defmodule Server.MixProject do
     [
       app: :server,
       version: "0.1.0",
-      elixir: "~> 1.17",
+      elixir: "~> 1.19",
       start_permanent: Mix.env() == :prod,
       releases: [server: [include_executables_for: [:unix]]],
       deps: [
-        {:plug, "~> 1.18.0"},
+        {:plug, "~> 1.18.1"},
         {:bandit, "~> 1.8.0"}
       ]
     ]
