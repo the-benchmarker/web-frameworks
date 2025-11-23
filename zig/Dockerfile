@@ -1,4 +1,4 @@
-FROM debian:12-slim AS build
+FROM debian:13-slim AS build
 
 # Set a non-root user for added security
 RUN useradd -m ziguser
@@ -13,11 +13,11 @@ RUN apt-get update && \
 
 # Download the specified Zig binary from the official website
 ARG ZIG_VERSION=0.15.2
-RUN wget https://ziglang.org/download/$ZIG_VERSION/zig-linux-{{arch}}-$ZIG_VERSION.tar.xz
+RUN wget https://ziglang.org/download/$ZIG_VERSION/zig-{{arch}}-linux-$ZIG_VERSION.tar.xz
 
-RUN tar -xvf zig-linux-{{arch}}-$ZIG_VERSION.tar.xz
+RUN tar -xvf zig-{{arch}}-linux-$ZIG_VERSION.tar.xz
 
-RUN mv zig-linux-{{arch}}-$ZIG_VERSION /usr/local/zig 
+RUN mv zig-{{arch}}-linux-$ZIG_VERSION /usr/local/zig 
 
 # Add Zig to the PATH
 ENV PATH="/usr/local/zig:$PATH"
@@ -34,9 +34,8 @@ RUN chown -R ziguser src
 USER ziguser
 
 RUN zig build -Doptimize=ReleaseFast
-RUN ls
 
-FROM debian:12-slim
+FROM debian:13-slim
 
 RUN apt-get -qq update 
 RUN apt-get -qy install ca-certificates curl
