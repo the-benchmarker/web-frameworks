@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
+  <file src="src/MezzioInstaller/OptionalPackages.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$this->stabilityFlags]]></code>
+    </ArgumentTypeCoercion>
+    <MixedArgument>
+      <code><![CDATA[$answer]]></code>
+      <code><![CDATA[$constraint]]></code>
+      <code><![CDATA[$filename]]></code>
+      <code><![CDATA[$filename]]></code>
+      <code><![CDATA[$package]]></code>
+      <code><![CDATA[$target]]></code>
+      <code><![CDATA[$this->composerDefinition['autoload']]]></code>
+      <code><![CDATA[$this->composerDefinition['autoload-dev']]]></code>
+      <code><![CDATA[$word]]></code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[$package]]></code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAccess>
+      <code><![CDATA[$this->composerDefinition['autoload']['psr-4']]]></code>
+      <code><![CDATA[$this->composerDefinition['autoload']['psr-4']['MezzioInstaller\\']]]></code>
+      <code><![CDATA[$this->composerDefinition['autoload-dev']['psr-4']]]></code>
+      <code><![CDATA[$this->composerDefinition['autoload-dev']['psr-4']['MezzioInstallerTest\\']]]></code>
+      <code><![CDATA[$this->composerDefinition['scripts']['pre-install-cmd']]]></code>
+      <code><![CDATA[$this->composerDefinition['scripts']['pre-update-cmd']]]></code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment>
+      <code><![CDATA[$this->composerDefinition['autoload']['psr-4']]]></code>
+      <code><![CDATA[$this->composerDefinition['autoload']['psr-4']['App\\']]]></code>
+      <code><![CDATA[$this->composerDefinition['require'][$packageName]]]></code>
+      <code><![CDATA[$this->composerDefinition['require-dev'][$packageName]]]></code>
+      <code><![CDATA[$this->composerDefinition['scripts']['cs-check']]]></code>
+      <code><![CDATA[$this->composerDefinition['scripts']['cs-fix']]]></code>
+    </MixedArrayAssignment>
+    <MixedAssignment>
+      <code><![CDATA[$answer]]></code>
+      <code><![CDATA[$answer]]></code>
+      <code><![CDATA[$constraint]]></code>
+      <code><![CDATA[$fileInfo]]></code>
+      <code><![CDATA[$filename]]></code>
+      <code><![CDATA[$package]]></code>
+      <code><![CDATA[$target]]></code>
+      <code><![CDATA[$this->composerDefinition]]></code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code><![CDATA[isDir]]></code>
+    </MixedMethodCall>
+    <MixedPropertyTypeCoercion>
+      <code><![CDATA[$this->composerDefinition]]></code>
+      <code><![CDATA[$this->composerDefinition]]></code>
+      <code><![CDATA[$this->composerDefinition]]></code>
+    </MixedPropertyTypeCoercion>
+    <NoValue>
+      <code><![CDATA[$this->installType]]></code>
+    </NoValue>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$contents]]></code>
+      <code><![CDATA[$phpunitConfig]]></code>
+      <code><![CDATA[$psalmConfig]]></code>
+      <code><![CDATA[$this->projectRoot]]></code>
+      <code><![CDATA[file_get_contents($ignoreFile)]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyFalseOperand>
+      <code><![CDATA[realpath(__DIR__)]]></code>
+    </PossiblyFalseOperand>
+    <PossiblyFalsePropertyAssignmentValue>
+      <code><![CDATA[$projectRoot ?? realpath(dirname($composerFile))]]></code>
+    </PossiblyFalsePropertyAssignmentValue>
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$resource]]></code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidIterator>
+      <code><![CDATA[$question['options'][$answer][$this->installType]]]></code>
+    </PossiblyInvalidIterator>
+    <PossiblyNullArgument>
+      <code><![CDATA[$content]]></code>
+    </PossiblyNullArgument>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[install]]></code>
+    </PossiblyUnusedMethod>
+    <PropertyTypeCoercion>
+      <code><![CDATA[require __DIR__ . '/config.php']]></code>
+    </PropertyTypeCoercion>
+  </file>
+  <file src="test/AppTest/Handler/PingHandlerTest.php">
+    <MixedArgument>
+      <code><![CDATA[$json]]></code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code><![CDATA[$json]]></code>
+    </MixedAssignment>
+    <MixedPropertyFetch>
+      <code><![CDATA[$json->ack]]></code>
+    </MixedPropertyFetch>
+  </file>
+  <file src="test/MezzioInstallerTest/AddPackageTest.php">
+    <MixedArgument>
+      <code><![CDATA[$stabilityFlags]]></code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code><![CDATA[$stabilityFlags]]></code>
+    </MixedAssignment>
+  </file>
+  <file src="test/MezzioInstallerTest/ContainersTest.php">
+    <MixedArgument>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['router']]]></code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['router']]]></code>
+    </MixedArrayAccess>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$configFileContents]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyNullArgument>
+      <code><![CDATA[$configFileContents]]></code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="test/MezzioInstallerTest/ErrorHandlerTest.php">
+    <MixedArgument>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['error-handler']]]></code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$config['dependencies']]]></code>
+      <code><![CDATA[$config['dependencies']['factories']]]></code>
+      <code><![CDATA[$config['dependencies']['factories'][ErrorResponseGenerator::class]]]></code>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['error-handler']]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code><![CDATA[$config]]></code>
+    </MixedAssignment>
+  </file>
+  <file src="test/MezzioInstallerTest/HomePageResponseTest.php">
+    <MixedArgument>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['router']]]></code>
+      <code><![CDATA[$config['questions']['router']]]></code>
+      <code><![CDATA[$config['questions']['template-engine']]]></code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['router']]]></code>
+      <code><![CDATA[$config['questions']['router']]]></code>
+      <code><![CDATA[$config['questions']['template-engine']]]></code>
+    </MixedArrayAccess>
+    <MoreSpecificReturnType>
+      <code><![CDATA[Generator<string, array{
+     *     0: OptionalPackages::INSTALL_*,
+     *     1: int,
+     *     2: int,
+     *     3: class-string<TemplateRendererInterface>,
+     *     4: string,
+     *     5: string
+     * }>]]></code>
+      <code><![CDATA[Generator<string, array{
+     *     0: OptionalPackages::INSTALL_*,
+     *     1: int,
+     *     2: string,
+     *     3: string,
+     *     4: int,
+     *     5: class-string<RouterInterface>,
+     *     6: string,
+     *     7: string
+     * }>]]></code>
+    </MoreSpecificReturnType>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$contents]]></code>
+      <code><![CDATA[$contents]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyInvalidArrayOffset>
+      <code><![CDATA[self::$expectedContainerAttributes[$containerClass]]]></code>
+      <code><![CDATA[self::$expectedContainerAttributes[$containerClass]]]></code>
+      <code><![CDATA[self::$expectedRouterAttributes[$routerClass]]]></code>
+      <code><![CDATA[self::$rendererConfigProviders[$rendererClass]]]></code>
+      <code><![CDATA[self::$routerConfigProviders[$routerClass]]]></code>
+    </PossiblyInvalidArrayOffset>
+    <PossiblyNullArgument>
+      <code><![CDATA[$contents]]></code>
+      <code><![CDATA[$contents]]></code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="test/MezzioInstallerTest/OptionalPackagesTestCase.php">
+    <MixedArgument>
+      <code><![CDATA[$properties['devDependencies']]]></code>
+      <code><![CDATA[$r->getValue($installer)]]></code>
+      <code><![CDATA[$r->getValue($installer)]]></code>
+      <code><![CDATA[$whitelist]]></code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$composerJson['require']]]></code>
+      <code><![CDATA[$composerJson['require-dev']]]></code>
+      <code><![CDATA[$r->getValue($installer)['extra']]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code><![CDATA[$composerJson]]></code>
+      <code><![CDATA[$whitelist]]></code>
+    </MixedAssignment>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->getInstallerProperty($installer, 'composerDefinition')]]></code>
+      <code><![CDATA[$this->getInstallerProperty($installer, 'config')]]></code>
+    </MixedReturnStatement>
+    <PossiblyFalseArgument>
+      <code><![CDATA[file_get_contents($this->packageRoot . '/composer.json')]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyFalseOperand>
+      <code><![CDATA[$this->packageRoot]]></code>
+    </PossiblyFalseOperand>
+    <PossiblyFalsePropertyAssignmentValue>
+      <code><![CDATA[realpath(__DIR__ . '/../../')]]></code>
+    </PossiblyFalsePropertyAssignmentValue>
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$composerData]]></code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="test/MezzioInstallerTest/ProcessAnswersTest.php">
+    <MixedArgument>
+      <code><![CDATA[$question]]></code>
+      <code><![CDATA[$question]]></code>
+      <code><![CDATA[$question]]></code>
+      <code><![CDATA[$question]]></code>
+      <code><![CDATA[$question]]></code>
+      <code><![CDATA[$question]]></code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['template-engine']]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code><![CDATA[$question]]></code>
+      <code><![CDATA[$question]]></code>
+      <code><![CDATA[$question]]></code>
+      <code><![CDATA[$question]]></code>
+      <code><![CDATA[$question]]></code>
+      <code><![CDATA[$question]]></code>
+    </MixedAssignment>
+  </file>
+  <file src="test/MezzioInstallerTest/ProjectSandboxTrait.php">
+    <MixedArgument>
+      <code><![CDATA[$node]]></code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[$this->autoloader]]></code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment>
+      <code><![CDATA[$node]]></code>
+      <code><![CDATA[$this->container]]></code>
+    </MixedAssignment>
+    <PossiblyFalseIterator>
+      <code><![CDATA[scandir($target)]]></code>
+    </PossiblyFalseIterator>
+    <UnresolvableInclude>
+      <code><![CDATA[require $path]]></code>
+    </UnresolvableInclude>
+  </file>
+  <file src="test/MezzioInstallerTest/RemoveDevDependenciesTest.php">
+    <MixedAssignment>
+      <code><![CDATA[$this->devDependencies]]></code>
+    </MixedAssignment>
+  </file>
+  <file src="test/MezzioInstallerTest/RoutersTest.php">
+    <MixedArgument>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['router']]]></code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$config['dependencies']]]></code>
+      <code><![CDATA[$config['dependencies'][$dependencyKey]]]></code>
+      <code><![CDATA[$config['dependencies'][$dependencyKey][RouterInterface::class]]]></code>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['router']]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code><![CDATA[$config]]></code>
+    </MixedAssignment>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$contents]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyNullArgument>
+      <code><![CDATA[$contents]]></code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="test/MezzioInstallerTest/SetupDataAndCacheDirTest.php">
+    <PossiblyFalseArgument>
+      <code><![CDATA[fileperms($this->projectRoot . '/data')]]></code>
+      <code><![CDATA[fileperms($this->projectRoot . '/data/cache')]]></code>
+    </PossiblyFalseArgument>
+    <UnusedProperty>
+      <code><![CDATA[$project]]></code>
+    </UnusedProperty>
+  </file>
+  <file src="test/MezzioInstallerTest/TemplateRenderersTest.php">
+    <MixedArgument>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['router']]]></code>
+      <code><![CDATA[$config['questions']['template-engine']]]></code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$config['dependencies']]]></code>
+      <code><![CDATA[$config['dependencies']['factories']]]></code>
+      <code><![CDATA[$config['dependencies']['factories'][ErrorHandler::class]]]></code>
+      <code><![CDATA[$config['questions']['container']]]></code>
+      <code><![CDATA[$config['questions']['router']]]></code>
+      <code><![CDATA[$config['questions']['template-engine']]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code><![CDATA[$config]]></code>
+    </MixedAssignment>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$contents]]></code>
+      <code><![CDATA[$contents]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyNullArgument>
+      <code><![CDATA[$contents]]></code>
+      <code><![CDATA[$contents]]></code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="test/MezzioInstallerTest/UpdateRootPackageTest.php">
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[$property]]></code>
+    </MixedArgumentTypeCoercion>
+  </file>
+</files>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+
+    <arg name="basepath" value="."/>
+    <arg name="cache" value=".phpcs-cache"/>
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+    <arg name="parallel" value="80"/>
+
+    <!-- Show progress -->
+    <arg value="p"/>
+
+    <!-- Paths to check -->
+    <file>config</file>
+    <file>src</file>
+    <file>test</file>
+    <exclude-pattern>config/config.php</exclude-pattern>
+    <exclude-pattern>config/routes.php</exclude-pattern>
+
+    <!-- Include all rules from the Laminas Coding Standard -->
+    <rule ref="LaminasCodingStandard"/>
+
+    <rule ref="Squiz.Classes.ClassFileName.NoMatch">
+        <exclude-pattern>src/ConfigProvider.*.php</exclude-pattern>
+    </rule>
+
+    <rule ref="PSR12.Files.FileHeader.IncorrectOrder">
+        <exclude-pattern>config/pipeline.php</exclude-pattern>
+        <exclude-pattern>src/MezzioInstaller/Resources/config/routes-*.php</exclude-pattern>
+    </rule>
+</ruleset>
