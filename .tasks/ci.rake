@@ -16,7 +16,7 @@ namespace :ci do
       next if file.start_with?('.')
       next if file.count(File::SEPARATOR) < 2
       next unless File.exist?(file)
-      next unless lange == 'ruby'
+      next unless language == 'ruby'
 
       language, framework, = file.split(File::SEPARATOR)
 
