@@ -1,9 +1,4 @@
-{{#language.image}}
-  FROM sbtscala/scala-sbt:eclipse-temurin-25.0.1_8_1.11.7_{{{.}}} AS build
-{{/language.image}}
-{{^language.image}}
-  FROM sbtscala/scala-sbt:eclipse-temurin-25.0.1_8_1.11.7_3.7.4 AS build
-{{/language.image}}
+FROM sbtscala/scala-sbt:eclipse-temurin-25.0.1_8_1.11.7_3.7.4 AS build
 
 WORKDIR /usr/src/app
 
