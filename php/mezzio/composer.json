@@ -1,116 +1,23 @@
 {
-  "name": "mezzio/mezzio-skeleton",
-  "description": "Laminas mezzio skeleton. Begin developing PSR-15 middleware applications in seconds!",
-  "type": "project",
-  "license": "BSD-3-Clause",
-  "keywords": [
-    "laminas",
-    "mezzio",
-    "skeleton",
-    "middleware",
-    "psr",
-    "psr-7",
-    "psr-11",
-    "psr-15"
-  ],
-  "homepage": "https://mezzio.dev",
-  "support": {
-    "docs": "https://docs.mezzio.dev/mezzio/",
-    "issues": "https://github.com/mezzio/mezzio-skeleton/issues",
-    "source": "https://github.com/mezzio/mezzio-skeleton",
-    "rss": "https://github.com/mezzio/mezzio-skeleton/releases.atom",
-    "chat": "https://laminas.dev/chat",
-    "forum": "https://discourse.laminas.dev"
-  },
   "config": {
-    "sort-packages": true,
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
-      "composer/package-versions-deprecated": true,
       "laminas/laminas-component-installer": true
-    },
-    "platform": {
-      "php": "8.2.99"
-    }
-  },
-  "extra": {
-    "laminas": {
-      "component-whitelist": [
-        "mezzio/mezzio",
-        "mezzio/mezzio-helpers",
-        "mezzio/mezzio-router",
-        "laminas/laminas-httphandlerrunner",
-        "mezzio/mezzio-fastroute"
-      ]
     }
   },
   "require": {
-    "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
-    "composer/package-versions-deprecated": "^1.11.99.5",
-    "laminas/laminas-component-installer": "^2.6 || ^3.5",
-    "laminas/laminas-config-aggregator": "^1.18",
-    "laminas/laminas-diactoros": "^3.8.0",
-    "laminas/laminas-stdlib": "^3.21",
-    "mezzio/mezzio": "^3.23.1",
-    "mezzio/mezzio-helpers": "^5.20",
-    "laminas/laminas-servicemanager": "^4.0",
-    "mezzio/mezzio-fastroute": "^3.11.0"
-  },
-  "require-dev": {
-    "laminas/laminas-coding-standard": "^3.1.0",
-    "laminas/laminas-development-mode": "^3.14.0",
-    "mezzio/mezzio-tooling": "^2.12.0",
-    "phpunit/phpunit": "^12.0.0",
-    "psalm/plugin-phpunit": "^0.19.5",
-    "roave/security-advisories": "dev-master",
-    "vimeo/psalm": "^6.13.1",
-    "filp/whoops": "^2.15.4"
-  },
-  "conflict": {
-    "amphp/dns": "<2.4.0",
-    "amphp/socket": "<2.3.1",
-    "php-di/php-di": "<7.0.9"
+    "laminas/laminas-component-installer": "@stable",
+    "laminas/laminas-config-aggregator": "@stable",
+    "laminas/laminas-diactoros": "@stable",
+    "laminas/laminas-servicemanager": "@stable",
+    "laminas/laminas-stdlib": "@stable",
+    "mezzio/mezzio": "~3.25.0",
+    "mezzio/mezzio-fastroute": "@stable",
+    "mezzio/mezzio-helpers": "@stable"
   },
   "autoload": {
     "psr-4": {
-      "App\\": "src/App/"
+      "App\\": "src/App/src/"
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "AppTest\\": "test/AppTest/"
-    }
-  },
-  "scripts": {
-    "post-create-project-cmd": [
-      "@development-enable"
-    ],
-    "post-install-cmd": "@clear-config-cache",
-    "post-update-cmd": "@clear-config-cache",
-    "development-disable": "laminas-development-mode disable",
-    "development-enable": "laminas-development-mode enable",
-    "development-status": "laminas-development-mode status",
-    "mezzio": "laminas --ansi",
-    "check": [
-      "@cs-check",
-      "@test"
-    ],
-    "clear-config-cache": "php bin/clear-config-cache.php",
-    "enable-codestandard": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run",
-    "cs-check": "phpcs",
-    "cs-fix": "phpcbf",
-    "serve": [
-      "Composer\\Config::disableProcessTimeout",
-      "php -S 0.0.0.0:3000 -t public/"
-    ],
-    "static-analysis": "psalm --stats",
-    "static-analysis-update-baseline": "psalm --stats --update-baseline",
-    "test": "phpunit --colors=always",
-    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
-  },
-  "scripts-descriptions": {
-    "clear-config-cache": "Clears merged config cache. Required for config changes to be applied.",
-    "static-analysis": "Run static analysis tool Psalm.",
-    "static-analysis-update-baseline": "Run static analysis tool Psalm and update baseline."
   }
 }

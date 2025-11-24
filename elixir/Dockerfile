@@ -1,17 +1,10 @@
-ARG ELIXIR_VERSION=1.19.3
-ARG ERLANG_VERSION=28.1.1
-ARG DEBIAN_VERSION=trixie-20251117
-
-ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${ERLANG_VERSION}-debian-${DEBIAN_VERSION}"
-ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
-
 # ===============================================================================================
 
-FROM ${BUILDER_IMAGE} AS build
+FROM elixir:1.19-slim AS build
 
 # Update system deps
 RUN apt-get -qq update
-RUN apt-get -qy install --no-install-recommends build-essential \
+RUN apt-get -qy install --no-install-recommends build-essential ca-certificates \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -39,7 +32,7 @@ RUN mix release --path release
 
 # ===============================================================================================
 
-FROM ${RUNNER_IMAGE} AS app
+FROM debian:bookworm-slim AS app
 
 # Update system deps
 RUN apt-get -qq update && apt-get -qy install --no-install-recommends openssl

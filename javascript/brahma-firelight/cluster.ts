@@ -11,5 +11,5 @@
 //   });
 // }
 
-// disabled for now 
-import './app'
+// disabled for now
+import './app';
