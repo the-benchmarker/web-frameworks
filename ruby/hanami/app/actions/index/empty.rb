@@ -1,7 +1,7 @@
 module Benchmark
   module Actions
-    module Home
-      class Index < Benchmark::Action
+    module Index
+      class Empty < Benchmark::Action
         def handle(request, response)
           response.body = ""
         end
