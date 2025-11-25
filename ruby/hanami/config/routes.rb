@@ -6,6 +6,6 @@ module Benchmark
 
     get "/user/:id", to: "user.get"
 
-    post "/user", to "index.empty"
+    post "/user", to: "index.empty"
   end
 end
