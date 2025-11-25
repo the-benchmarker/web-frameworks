@@ -1,5 +1,3 @@
-require "hanami/routes"
-
 module Benchmark
   class Routes < Hanami::Routes
     root to: "index.empty"
