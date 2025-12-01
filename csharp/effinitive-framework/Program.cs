@@ -8,48 +8,38 @@ var app = EffinitiveApp
 
 await app.RunAsync();
 
-public class RootEndpoint : AsyncEndpointBase<EmptyRequest, EmptyResponse>
+public class RootEndpoint : NoRequestEndpointBase<string>
 {
     protected override string Method => "GET";
     protected override string Route => "/";
+    protected override string ContentType => "text/plain";
 
-    public override Task<EmptyResponse> HandleAsync(
-        EmptyRequest request,
-        CancellationToken cancellationToken = default)
+    public override ValueTask<string> HandleAsync(CancellationToken cancellationToken = default)
     {
-        return Task.FromResult(new EmptyResponse());
+        return ValueTask.FromResult(string.Empty);
     }
 }
 
-public class GetUserEndpoint : AsyncEndpointBase<UserIdRequest, string>
+public class GetUserEndpoint : NoRequestEndpointBase<string>
 {
-    protected override string Method => "GET";
+     protected override string Method => "GET";
     protected override string Route => "/user/{id}";
+    protected override string ContentType => "text/plain";
 
-    public override Task<string> HandleAsync(
-        UserIdRequest request,
-        CancellationToken cancellationToken = default)
+    public override ValueTask<string> HandleAsync(CancellationToken cancellationToken = default)
     {
-        return Task.FromResult(request.Id);
+        return ValueTask.FromResult(HttpContext?.RouteValues?["id"] ?? string.Empty);
     }
 }
 
-public class CreateUserEndpoint : AsyncEndpointBase<EmptyRequest, EmptyResponse>
+public class CreateUserEndpoint : NoRequestEndpointBase<string>
 {
     protected override string Method => "POST";
     protected override string Route => "/user";
+    protected override string ContentType => "text/plain";
 
-    public override Task<EmptyResponse> HandleAsync(
-        EmptyRequest request,
-        CancellationToken cancellationToken = default)
+    public override ValueTask<string> HandleAsync(CancellationToken cancellationToken = default)
     {
-        return Task.FromResult(new EmptyResponse());
+        return ValueTask.FromResult(string.Empty);
     }
-}
-
-public class EmptyRequest { }
-public class EmptyResponse { }
-public class UserIdRequest
-{
-    public string Id { get; set; } = string.Empty;
 }
