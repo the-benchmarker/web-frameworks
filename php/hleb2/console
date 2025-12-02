@@ -1,5 +1,23 @@
 <?php
 
+ use Hleb\HlebBootstrap;
+ use Hleb\HlebConsoleBootstrap;
+
 define('HLEB_PUBLIC_DIR', realpath(__DIR__ . '/public'));
 
-require realpath(__DIR__ . '/vendor/phphleb/framework/console.php');
+$config = [
+    'common' => [
+        'debug' => false,
+        'log.enabled' => true,
+        'max.cli.log.level' => 'debug',
+        'app.cache.on' => true,
+    ],
+    'system' => [
+        'classes.autoload' => true,
+    ],
+];
+
+\class_exists(HlebBootstrap::class) or require __DIR__ . '/vendor/phphleb/framework/HlebBootstrap.php';
+\class_exists(HlebConsoleBootstrap::class) or require __DIR__ . '/vendor/phphleb/framework/HlebConsoleBootstrap.php';
+
+(new HlebConsoleBootstrap(HLEB_PUBLIC_DIR, $config))->load();

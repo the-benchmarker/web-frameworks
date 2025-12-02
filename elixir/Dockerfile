@@ -1,17 +1,10 @@
-ARG ELIXIR_VERSION=1.17.3
-ARG ERLANG_VERSION=27.0.1
-ARG DEBIAN_VERSION=bullseye-20240904
-
-ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${ERLANG_VERSION}-debian-${DEBIAN_VERSION}"
-ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
-
 # ===============================================================================================
 
-FROM ${BUILDER_IMAGE} AS build
+FROM elixir:1.19-slim AS build
 
 # Update system deps
 RUN apt-get -qq update
-RUN apt-get -qy install --no-install-recommends build-essential \
+RUN apt-get -qy install --no-install-recommends build-essential ca-certificates \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -39,7 +32,7 @@ RUN mix release --path release
 
 # ===============================================================================================
 
-FROM ${RUNNER_IMAGE} AS app
+FROM debian:bookworm-slim AS app
 
 # Update system deps
 RUN apt-get -qq update && apt-get -qy install --no-install-recommends openssl
@@ -58,7 +51,7 @@ RUN apt-get -qy install curl
 # User
 RUN chown -R nobody: /app
 USER nobody
-ENV HOME /app
+ENV HOME=/app
 
 # Check status
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1

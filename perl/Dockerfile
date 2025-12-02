@@ -1,5 +1,6 @@
-FROM perl:5.40-slim
+FROM perl:5.43-slim
 
+ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends build-essential
 

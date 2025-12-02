@@ -4,11 +4,10 @@ version = "0.0.0"
 authors = [
     "zavakid <zava.kid@gmail.com>",
 ]
-edition = "2021"
+edition = "2024"
 
 [dependencies]
-micro-web="0.1.0-alpha.10"
-http = "1.1.0"
+micro-web="0.3"
 tokio = {version = "1", features = ["rt-multi-thread", "net", "io-util", "macros", "sync", "signal", "test-util"] }
 
 [profile.release]

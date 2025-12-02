@@ -3,7 +3,7 @@
 namespace App;
 
 use Cubex\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Packaged\Http\Response;
 
 class Application extends Controller
 {

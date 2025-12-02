@@ -1,9 +1,4 @@
-{{#language.image}}
-  FROM sbtscala/scala-sbt:eclipse-temurin-21.0.5_11_1.10.6_{{{.}}} AS build
-{{/language.image}}
-{{^language.image}}
-  FROM sbtscala/scala-sbt:eclipse-temurin-21.0.5_11_1.10.6_3.6.2 AS build
-{{/language.image}}
+FROM sbtscala/scala-sbt:eclipse-temurin-25.0.1_8_1.11.7_3.7.4 AS build
 
 WORKDIR /usr/src/app
 
@@ -13,7 +8,7 @@ COPY '{{source}}' '{{target}}'
 
 RUN sbt universal:packageZipTarball
 
-FROM eclipse-temurin:21.0.6_7-jre
+FROM eclipse-temurin:25-jre
 
 WORKDIR /usr/src/app
 

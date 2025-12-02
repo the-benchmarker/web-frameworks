@@ -1,11 +1,16 @@
-FROM r-base:4.5.0
+FROM r-base:4.5.2
+
 WORKDIR /usr/src/app
 
-RUN apt-get -qq update
+{{#build_deps.length}}
+  ARG DEBIAN_FRONTEND=noninteractive
+  RUN apt-get -y update
 
-{{#deps}}
-  RUN apt-get -y install {{{.}}}
-{{/deps}}
+  {{#build_deps}}
+    RUN apt-get -y install {{{.}}}
+  {{/build_deps}}
+
+{{/build_deps.length}}
 
 RUN R  -e 'install.packages("remotes")'
 
@@ -15,7 +20,7 @@ RUN R  -e 'install.packages("remotes")'
 
 RUN R -e 'remotes::install_deps()'
 RUN apt-get -qq update
-RUN apt-get -qy install curl
+#RUN apt-get install curl=8.16.0-4 libcurl4t64=8.16.0-4
 
 ENTRYPOINT {{{command}}}
 

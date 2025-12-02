@@ -5,7 +5,7 @@ using Strings = GenHTTP.Modules.IO.Strings;
 
 namespace web;
 
-internal class BenchmarkHandler : IHandler
+internal sealed class BenchmarkHandler : IHandler
 {
     private static readonly FlexibleContentType _TextType = FlexibleContentType.Get(ContentType.TextPlain);
 

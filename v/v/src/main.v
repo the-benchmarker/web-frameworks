@@ -1,9 +1,10 @@
 module main
 
-// handle_request finds and executes the handler for a given route.
-// It takes an HttpRequest object as an argument and returns the response as a byte array.
+import vanilla.http_server
+import vanilla.request_parser
+
 fn handle_request(req_buffer []u8, client_conn_fd int) ![]u8 {
-	req := decode_http_request(req_buffer)!
+	req := request_parser.decode_http_request(req_buffer)!
 
 	method := unsafe { tos(&req.buffer[req.method.start], req.method.len) }
 	path := unsafe { tos(&req.buffer[req.path.start], req.path.len) }
@@ -21,11 +22,11 @@ fn handle_request(req_buffer []u8, client_conn_fd int) ![]u8 {
 		}
 	}
 
-	return tiny_bad_request_response
+	return http_server.tiny_bad_request_response
 }
 
 fn main() {
-	mut vanilla := Server{
+	mut vanilla := http_server.Server{
 		request_handler: handle_request
 		port:            3000
 	}

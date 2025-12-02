@@ -8,10 +8,10 @@ module Bench
   end
 
   class UserAPI < Grape::API
-    get '/user/:id' do
+    get "/user/:id" do
       params[:id]
     end
-    post '/user' do
+    post "/user" do
       body false
     end
   end
@@ -22,4 +22,5 @@ module Bench
   end
 end
 
+Bench::API.compile!
 run Bench::API

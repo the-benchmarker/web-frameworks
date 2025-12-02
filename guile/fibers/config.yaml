@@ -1,0 +1,8 @@
+framework:
+  website: codeberg.org/fibers/fibers
+  build_deps:
+    - build-essential
+    - gcc
+    - guile-3.0
+    - guile-3.0-dev
+    - guile-fibers

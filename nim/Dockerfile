@@ -1,10 +1,14 @@
-FROM akito13/nim:2.0.8-alpine AS build
+FROM nimlang/nim:2.2.6-ubuntu-regular AS build
 
-RUN apk update
+{{#build_deps.length}}
+  ARG DEBIAN_FRONTEND=noninteractive
+  RUN apt-get -y update
 
-{{#deps}}
-  RUN apk add {{{.}}}
-{{/deps}}
+  {{#build_deps}}
+    RUN apt-get -y install {{{.}}}
+  {{/build_deps}}
+
+{{/build_deps.length}}
 
 ## set working directory
 WORKDIR /usr/src/app
@@ -13,7 +17,6 @@ WORKDIR /usr/src/app
 ENV NIM_ENV=production
 ENV NIMBLE_DIR=/home/nim/.nimble
 ENV PATH=$PATH:/home/nim/.nimble/bin
-
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
@@ -43,13 +46,13 @@ ENV PATH $PATH:/root/.nimble/bin
     server.nim
 {{/build_command}}
 
-FROM alpine:latest
+FROM ubuntu:latest
 
 WORKDIR /usr/src/app
 
-RUN apk update
-
-RUN apk add openssl-dev pcre-dev curl
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get -y update
+RUN apt-get -y install libssl-dev libpcre3-dev curl
 
 {{#custom_files}}
   COPY --from=build /usr/src/app/{{{.}}} /usr/src/app/{{{.}}}

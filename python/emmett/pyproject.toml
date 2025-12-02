@@ -7,5 +7,4 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["emmett>=2.7,<2.8"]
-
+dependencies = ["emmett[uvloop]>=2.7,<2.8"]

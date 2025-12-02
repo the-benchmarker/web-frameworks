@@ -1,0 +1,16 @@
+[package]
+name = "server"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+khttp = "0.2"
+
+[profile.release]
+opt-level = 3
+codegen-units = 1
+panic = 'abort'
+lto = true
+debug = false
+incremental = false
+overflow-checks = false
