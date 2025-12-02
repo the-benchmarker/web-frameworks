@@ -11,6 +11,16 @@ plugins {
 group = "com.example"
 version = "0.0.1"
 
+kotlin {
+    jvmToolchain(21)
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
 application {
     mainClass.set("com.example.ApplicationKt")
 }
