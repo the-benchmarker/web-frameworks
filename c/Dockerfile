@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 WORKDIR /usr/src/app
 
@@ -23,7 +23,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
    RUN {{{.}}}
 {{/build}}
 
-FROM debian:bullseye
+FROM debian:bookworm
 
 WORKDIR /opt/web
 
