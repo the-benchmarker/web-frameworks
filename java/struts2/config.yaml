@@ -3,7 +3,7 @@ framework:
   version: 7.0
 
   build:
-    - mvn clean package
+    - mvn -B clean package
 
   binaries:
     - target/benchmark-7.0.0-standalone.jar
