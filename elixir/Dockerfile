@@ -32,7 +32,7 @@ RUN mix release --path release
 
 # ===============================================================================================
 
-FROM debian:bookworm-slim AS app
+FROM debian:trixie-slim AS app
 
 # Update system deps
 RUN apt-get -qq update && apt-get -qy install --no-install-recommends openssl
