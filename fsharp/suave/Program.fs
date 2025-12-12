@@ -1,33 +1,22 @@
 open Suave
-open Suave.Filters
-open Suave.Logging
-open Suave.Operators
-open System.Net
+open Suave.Router
 
-let app: WebPart =
-    choose
-        [ GET >=> choose
-                      [ path "/" >=> Successful.OK ""
-                        pathScan "/user/%s" (fun s -> Successful.OK s) ]
-          POST >=> path "/user" >=> Successful.OK "" ]
+let getUser (ctx: HttpContext) =
+    match routeParam "id" ctx with
+    | Some idStr ->
+        Successful.OK idStr ctx
+    | None ->
+        RequestErrors.BAD_REQUEST "Missing user ID" ctx
 
-type NoopLogger() =
-    interface Logger with
-        member this.name : string[] = [|"null-logger"|]
-        member this.logWithAck (logLevel : LogLevel) (logLevelWithMessage : (LogLevel -> Message)): Async<unit> =
-            async {
-                ()
-            }
-        member this.log (loglevel : LogLevel) (logLevelWithMessage : (LogLevel -> Message)): unit =
-            ()
+let app  : WebPart = router {
+    get "/" (Successful.OK "")
+    get "/user/:id" getUser
+    post "/user" (Successful.OK "")
+}
 
 let config =
     { defaultConfig with
         bindings =
-            [ { scheme = HTTP
-                socketBinding =
-                    { ip = IPAddress.Parse "0.0.0.0"
-                      port = 3000us } } ];
-        logger = NoopLogger()}
+            [ HttpBinding.createSimple HTTP "127.0.0.1" 3000 ];}
 
 startWebServer config app
