@@ -1,4 +1,4 @@
-import { Ignisia } from '@ignisia/core';
+import { Ignisia } from 'ignisia';
 
 new Ignisia()
   .get('/', (c) => c.text(''))
