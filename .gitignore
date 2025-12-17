@@ -11,9 +11,6 @@ Gemfile.lock
 # git temporary files
 *.orig
 
-# GoLand IDE
-.idea
-
 # Temporary files
 FRAMEWORKS.yaml
 */*/.Dockerfile*
@@ -60,3 +57,8 @@ __pycache__/
 
 
 .results
+
+# IDEs configurations
+.vscode
+.idea
+.zed

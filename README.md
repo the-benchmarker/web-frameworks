@@ -67,4 +67,4 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Results
 
-Please take a look at https://web-frameworks-benchmark.netlify.app/result
+Please take a look at https://web-frameworks-benchmark.vercel.app/result

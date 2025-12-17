@@ -68,5 +68,5 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
   ENTRYPOINT {{{.}}}
 {{/command}}
 {{^command}}
-  ENTRYPOINT /usr/src/app/server
+  ENTRYPOINT ["/usr/src/app/server"]
 {{/command}}

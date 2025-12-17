@@ -36,7 +36,7 @@ RUN go get
 RUN go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
 
 
-FROM debian:stable
+FROM debian:trixie-slim
 
 WORKDIR /go/bin
 
