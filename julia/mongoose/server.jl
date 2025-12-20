@@ -3,21 +3,22 @@ Pkg.activate(pwd())
 
 using Mongoose
 
-function getroot(conn; kwargs...)
-    return mg_text_reply(conn, 200, "")
+server = SyncServer()
+
+function getroot(request::Request, params::Dict{String,String})
+    return Response(200, "Content-Type: text/plain\r\n", "")
 end
 
-function getuserid(conn; kwargs...)
-    return mg_text_reply(conn, 200, kwargs[:params][:id])
+function getuserid(request::Request, params::Dict{String,String})
+    return Response(200, "Content-Type: text/plain\r\n", params["id"])
 end
 
-function postuser(conn; kwargs...)
-    return mg_text_reply(conn, 200, "")
+function postuser(request::Request, params::Dict{String,String})
+    return Response(200, "Content-Type: text/plain\r\n", "")
 end
 
-mg_register!("get", "/", getroot)
-mg_register!("get", "/user/:id", getuserid)
-mg_register!("post", "/user", postuser)
+route!(server, :get, "/", getroot)
+route!(server, :get, "/user/:id", getuserid)
+route!(server, :post, "/user", postuser)
 
-mg_serve!(host = "0.0.0.0", port = 3000, async = false)
-# mg_shutdown!()
+start!(server, host = "0.0.0.0", port = 3000)

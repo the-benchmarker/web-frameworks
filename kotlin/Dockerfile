@@ -18,5 +18,5 @@ RUN apt-get -qq update
 RUN apt-get -qy install curl
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
-ENTRYPOINT java -server -jar /usr/src/app/build/libs/server.jar
+ENTRYPOINT ["java", "-server", "-jar", "/usr/src/app/build/libs/server.jar"]
 
