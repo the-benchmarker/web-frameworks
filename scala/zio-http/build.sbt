@@ -1,4 +1,4 @@
-val ZioHttpVersion = "3.7.2"
+val ZioHttpVersion = "3.7.4"
 
 name := "server"
 
