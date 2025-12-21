@@ -1,5 +1,5 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "2.2.+"
+    id "org.jetbrains.kotlin.jvm" version "2.3.+"
 }
 
 ext {
@@ -15,7 +15,7 @@ apply(from: "$gradleScripts/application.gradle")
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("21"))
+        languageVersion.set(JavaLanguageVersion.of("25"))
     }
 }
 

@@ -1,8 +1,0 @@
-framework:
-  website: yiiframework.com
-  version: 2.0
-
-  engines:
-    - swoole
-
-  command: php server/bootstrap.php

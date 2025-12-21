@@ -36,7 +36,7 @@ providers:
 
     metadata:
       - docker run -td {{{language}}}.{{{framework}}}.{{{variant}}} --network host > {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt
-      - docker inspect `cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt` | jq -r '.[0].NetworkSettings.IPAddress' > {{{language}}}/{{{framework}}}/ip-{{{variant}}}.txt
+      - docker inspect `cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt` | jq -r '.[0].NetworkSettings.Networks.bridge.IPAddress' > {{{language}}}/{{{framework}}}/ip-{{{variant}}}.txt
 
     clean:
       - docker ps -a -q  --filter ancestor={{{language}}}.{{{framework}}}.{{{variant}}} | xargs docker

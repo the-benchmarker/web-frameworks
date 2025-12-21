@@ -4,7 +4,7 @@ val kotlin_version: String by project
 val logback_version: String by project
 
 plugins {
-    kotlin("jvm") version "2.2.+"
+    kotlin("jvm") version "2.3.+"
     id("io.ktor.plugin") version "3.3.+"
 }
 
@@ -17,7 +17,7 @@ kotlin {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 }
 
