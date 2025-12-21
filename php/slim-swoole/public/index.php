@@ -30,7 +30,7 @@ $app->post('/user', function (Request $request, Response $response): Response {
     return $response;
 });
 
-$server = new Server('localhost', 3000);
+$server = new Server('0.0.0.0', 3000);
 
 $server->set([
     'worker_num' => swoole_cpu_num() * 2,
