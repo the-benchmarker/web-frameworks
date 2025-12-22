@@ -40,7 +40,7 @@ task :collect do
       ]
     )
     framework_id = res.first['id']
-    data = YAML.safe_load_file(file, symbolize_names: true)
+    data = YAML.load_file(file, symbolize_names: true)
 
     res = db.query(
       'INSERT INTO concurrencies (level) VALUES ($1) ON CONFLICT (level) DO UPDATE SET level = $1 RETURNING id', [concurrency]
