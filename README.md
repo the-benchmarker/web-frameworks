@@ -61,6 +61,24 @@ export FRAMEWORK=php/lumen; make -f $FRAMEWORK/.Makefile collect
 
 :warning: You need to be on the project main directory :warning:
 
+## CI/CD Matrix System
+
+This repository uses a comprehensive nested CI matrix system that tests frameworks across three levels:
+1. **Languages** (Python, JavaScript, Java, Go, Ruby, PHP, etc.)
+2. **Frameworks** (Django, Express, Spring Boot, Gin, etc.)
+3. **Runtime Versions** (Python 3.9-3.13, Node 18-22, Java 11-21, etc.)
+
+For detailed information:
+- 📖 [Complete Matrix System Documentation](.github/MATRIX_SYSTEM.md)
+- 🚀 [Quick Reference Guide](.github/MATRIX_QUICKREF.md)
+- 🔄 [Migration Guide](.github/MIGRATION_GUIDE.md)
+
+Key features:
+- **Selective Testing**: PRs test only default runtime versions by default
+- **Smart Caching**: Language-specific dependency caching
+- **Flexible Configuration**: Easy to add new languages, frameworks, and runtime versions
+- **Optimization**: Manages resources with parallel job limits and exclusions
+
 ## Contributing a new benchmark
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md).

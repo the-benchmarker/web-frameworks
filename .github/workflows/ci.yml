@@ -2,6 +2,8 @@ name: CI
 
 on:
   - pull_request
+  - push
+
 jobs:
   matrix:
     runs-on: ubuntu-latest
@@ -23,6 +25,8 @@ jobs:
         run: echo "matrix=$(bundle exec rake ci:matrix)" >> "$GITHUB_OUTPUT"
         env:
           FILES: ${{ steps.file_changes.outputs.files }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
 
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -38,10 +42,43 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: ruby/setup-ruby@v1
+      
+      # Setup runtime environment based on language and runtime version
+      - name: Setup Python
+        if: matrix.language == 'python' && matrix.runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.runtime }}
+          cache: 'pip'
+      
+      - name: Setup Node.js
+        if: matrix.language == 'javascript' && matrix.engine == 'node' && matrix.runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.runtime }}
+          cache: 'npm'
+      
+      - name: Setup Java
+        if: matrix.language == 'java' && matrix.runtime
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.runtime }}
+          cache: 'maven'
+      
+      - name: Setup Go
+        if: matrix.language == 'go' && matrix.runtime
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.runtime }}
+          cache: true
+      
+      - name: Setup Ruby Environment
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.4.8"
           bundler-cache: true
+      
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
 
@@ -57,6 +94,7 @@ jobs:
         env:
           DIRECTORY: ${{ matrix.directory }}
           ENGINE: ${{ matrix.engine }}
+          RUNTIME_VERSION: ${{ matrix.runtime }}
 
       - name: Wait
         run: sleep 120
@@ -67,3 +105,4 @@ jobs:
           LANGUAGE: ${{ matrix.language }}
           FRAMEWORK: ${{ matrix.framework }}
           ENGINE: ${{ matrix.engine }}
+          RUNTIME_VERSION: ${{ matrix.runtime }}
