@@ -24,9 +24,10 @@ WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/build/libs/server.jar /usr/src/app/build/libs/server.jar
 
-RUN apt-get -qq update
-RUN apt-get -qy install curl
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT ["java", "-server", "-jar", "/usr/src/app/build/libs/server.jar"]
-

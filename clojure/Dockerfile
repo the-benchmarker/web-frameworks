@@ -41,9 +41,10 @@ WORKDIR /opt/bin
   COPY --from=build /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
 {{/binaries}}
 
-ENTRYPOINT {{command}}
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get -qq update
-RUN apt-get -qy install curl
+ENTRYPOINT {{command}}
 
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1

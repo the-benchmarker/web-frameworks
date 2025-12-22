@@ -15,8 +15,9 @@ FROM debian:stable-slim
 
 COPY --from=build /usr/src/app/target/release/server /usr/src/app/target/release/server
 
-RUN apt-get -qq update
-RUN apt-get -qy install curl
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT {{command}}
 

@@ -1,9 +1,8 @@
-FROM debian as build
+FROM debian:trixie-slim as build
 
-RUN apt-get -qq update
-RUN apt-get -qy install --no-install-recommends build-essential git clang tcc \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends build-essential git clang tcc && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENV PATH=/opt/vlang:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
@@ -27,15 +26,15 @@ WORKDIR /app
 
 RUN v . {{#build_flags}} {{{.}}} {{/build_flags}} -o server
 
-FROM debian
+FROM debian:trixie-slim
 
 {{#build_deps.length}}
   ARG DEBIAN_FRONTEND=noninteractive
-  RUN apt-get -y update
-
+  RUN apt-get -qq update && \
   {{#build_deps}}
-    RUN apt-get -y install {{{.}}}
+      apt-get -qy install --no-install-recommends {{{.}}} && \
   {{/build_deps}}
+      apt-get clean && rm -rf /var/lib/apt/lists/*
 
 {{/build_deps.length}}
 
@@ -43,8 +42,9 @@ WORKDIR /app
 
 COPY --from=build /app /app
 
-RUN apt-get -qq update
-RUN apt-get -qy install curl
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT {{command}}
 

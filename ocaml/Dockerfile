@@ -3,8 +3,9 @@ FROM ocaml/opam:debian-12-ocaml-5.2
 WORKDIR /usr/src/app
 
 USER root
-RUN apt-get update -y && apt-get install pkg-config libev-dev libssl-dev libgmp-dev -y
-RUN apt-get -qy install curl
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends pkg-config libev-dev libssl-dev libgmp-dev curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 USER opam
 
 {{#files}}

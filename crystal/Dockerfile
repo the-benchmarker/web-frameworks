@@ -7,21 +7,25 @@ WORKDIR /usr/src/app
 {{/files}}
 
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get -qq update
 
 {{#build_deps.length}}
-
+RUN apt-get -qq update && \
   {{#build_deps}}
-    RUN apt-get -qy install {{{.}}}
+    apt-get -qy install --no-install-recommends {{{.}}} && \
   {{/build_deps}}
-
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 {{/build_deps.length}}
 
-RUN apt-get -qy install curl
+{{^build_deps.length}}
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+{{/build_deps.length}}
 
-RUN shards lock
-RUN shards install --production
-RUN shards build --release --no-debug
+RUN shards lock && \
+    shards install --production && \
+    shards build --release --no-debug
 
 {{#static_files}}
   COPY '{{source}}' '{{target}}'

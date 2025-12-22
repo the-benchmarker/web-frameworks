@@ -2,11 +2,10 @@ FROM ruby:3.4-slim
 
 WORKDIR /usr/src/app
 
-RUN apt-get -qq update
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends build-essential libjemalloc2 curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get -qy install --no-install-recommends build-essential
-
-RUN apt-get install -y --no-install-recommends libjemalloc2
 ENV LD_PRELOAD=libjemalloc.so.2
 
 {{#files}}
@@ -14,7 +13,7 @@ ENV LD_PRELOAD=libjemalloc.so.2
 {{/files}}
 
 {{#build_deps}}
-  RUN apt-get -y install {{{.}}}
+  RUN apt-get -qq update && apt-get -qy install --no-install-recommends {{{.}}} && apt-get clean && rm -rf /var/lib/apt/lists/*
 {{/build_deps}}
 
 {{#environment}}
@@ -26,9 +25,6 @@ RUN bundle install
 {{#bootstrap}}
   RUN {{{.}}}
 {{/bootstrap}}
-
-RUN apt-get -qq update
-RUN apt-get -qy install curl
 
 ENTRYPOINT {{{command}}}
 

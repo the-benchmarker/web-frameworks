@@ -32,8 +32,8 @@ ENV GOARCH={{#architecture}}{{{.}}}{{/architecture}}
   RUN {{{.}}}
 {{/bootstrap}}
 
-RUN go get
-RUN go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
+RUN go get && \
+    go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
 
 
 FROM debian:trixie-slim
@@ -50,8 +50,10 @@ COPY --from=0 /go/bin/app /go/bin/app
   COPY '{{source}}' '{{target}}'
 {{/static_files}}
 
-RUN apt-get -qq update
-RUN apt-get -qy install curl
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}

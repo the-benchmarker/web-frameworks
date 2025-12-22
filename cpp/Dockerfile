@@ -2,16 +2,15 @@ FROM debian:trixie-slim
 
 WORKDIR /usr/src/app
 
-RUN apt-get -qq update
-RUN apt-get -qy install --no-install-recommends build-essential git cmake
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends build-essential git cmake && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENV GIT_SSL_NO_VERIFY=1
 
 {{#build_deps}}
-  RUN apt-get -qy install --no-install-recommends {{{.}}}
+  RUN apt-get -qq update && apt-get -qy install --no-install-recommends {{{.}}} && apt-get clean && rm -rf /var/lib/apt/lists/*
 {{/build_deps}}
-
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
@@ -32,10 +31,8 @@ ENV {{{.}}}
 
 WORKDIR /opt/web
 
-RUN apt-get -qq update
-
 {{#bin_deps}}
-   RUN apt-get -qy install --no-install-recommends {{{.}}}
+   RUN apt-get -qq update && apt-get -qy install --no-install-recommends {{{.}}} && apt-get clean && rm -rf /var/lib/apt/lists/*
 {{/bin_deps}}
 
 {{#files}}
@@ -45,8 +42,10 @@ RUN apt-get -qq update
   COPY --from=0 /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
 
-RUN apt-get -qq update
-RUN apt-get -qy install curl
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}

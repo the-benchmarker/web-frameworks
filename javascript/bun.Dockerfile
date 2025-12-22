@@ -6,10 +6,8 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN apt-get -qq update
-
 {{#deps}}
-  RUN apt-get -qy install {{{.}}}
+  RUN apt-get -qq update && apt-get -qy install --no-install-recommends {{{.}}} && apt-get clean && rm -rf /var/lib/apt/lists/*
 {{/deps}}
 
 {{#bootstrap}}
@@ -24,8 +22,10 @@ RUN apt-get -qq update
   RUN {{{.}}}
 {{/fixes}}
 
-RUN apt-get -qq update
-RUN apt-get -qy install curl
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}

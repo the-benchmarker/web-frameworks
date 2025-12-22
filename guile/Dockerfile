@@ -3,14 +3,20 @@ FROM debian:13-slim
 WORKDIR /usr/src/app
 
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get -y update
 
 {{#build_deps.length}}
-
+RUN apt-get -qq update && \
   {{#build_deps}}
-    RUN apt-get -y install {{{.}}}
+    apt-get -qy install --no-install-recommends {{{.}}} && \
   {{/build_deps}}
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+{{/build_deps.length}}
 
+{{^build_deps.length}}
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 {{/build_deps.length}}
 
 {{#files}}
@@ -25,7 +31,6 @@ RUN apt-get -y update
   ENV {{{.}}}
 {{/environment}}
 
-RUN apt-get -qy install curl
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}

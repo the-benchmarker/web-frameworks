@@ -6,8 +6,9 @@
   FROM swift:6.2
 {{/language.version}}
 
-RUN apt -y update
-RUN apt -y install libssl-dev zlib1g-dev libcurl4-openssl-dev uuid-dev
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends libssl-dev zlib1g-dev libcurl4-openssl-dev uuid-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app
 
@@ -34,8 +35,9 @@ ENV {{{.}}}
 
 COPY --from=0 /usr/src/app/.build/release/server /usr/src/app/.build/release/server
 
-RUN apt-get -qq update
-RUN apt-get -qy install curl
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT {{command}} {{options}}
 

@@ -23,11 +23,11 @@ WORKDIR /usr/src/web
 
 {{#build_deps.length}}
   ARG DEBIAN_FRONTEND=noninteractive
-  RUN apt-get -y update
-
+  RUN apt-get -qq update && \
   {{#build_deps}}
-    RUN apt-get -y install {{{.}}}
+      apt-get -qy install --no-install-recommends {{{.}}} && \
   {{/build_deps}}
+      apt-get clean && rm -rf /var/lib/apt/lists/*
 
 {{/build_deps.length}}
 
@@ -72,8 +72,10 @@ RUN  ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
   ENV {{{.}}}
 {{/environment}}
 
-RUN apt-get -qq update
-RUN apt-get -qy install curl
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}

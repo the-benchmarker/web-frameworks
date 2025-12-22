@@ -2,18 +2,17 @@ FROM node:25.2-trixie-slim
 
 WORKDIR /usr/src/app
 
-RUN apt-get -qq update
-
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
 {{#deps.length}}
   ARG DEBIAN_FRONTEND=noninteractive
-  RUN apt-get -qq update
+  RUN apt-get -qq update && \
   {{#deps}}
-    RUN apt-get -qy install {{{.}}}
+      apt-get -qy install --no-install-recommends {{{.}}} && \
   {{/deps}}
+      apt-get clean && rm -rf /var/lib/apt/lists/*
 {{/deps.length}}
 
 {{#bootstrap}}
@@ -28,8 +27,10 @@ RUN apt-get -qq update
   RUN {{{.}}}
 {{/fixes}}
 
-RUN apt-get -qq update
-RUN apt-get -qy install curl
+RUN apt-get -qq update && \
+    apt-get -qy install --no-install-recommends curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}

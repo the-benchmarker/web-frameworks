@@ -4,11 +4,11 @@ WORKDIR /usr/src/app
 
 {{#build_deps.length}}
   ARG DEBIAN_FRONTEND=noninteractive
-  RUN apt-get -y update
-
+  RUN apt-get -qq update && \
   {{#build_deps}}
-    RUN apt-get -y install {{{.}}}
+      apt-get -qy install --no-install-recommends {{{.}}} && \
   {{/build_deps}}
+      apt-get clean && rm -rf /var/lib/apt/lists/*
 
 {{/build_deps.length}}
 
@@ -19,8 +19,6 @@ RUN R  -e 'install.packages("remotes")'
 {{/files}}
 
 RUN R -e 'remotes::install_deps()'
-RUN apt-get -qq update
-#RUN apt-get install curl=8.16.0-4 libcurl4t64=8.16.0-4
 
 ENTRYPOINT {{{command}}}
 
