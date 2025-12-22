@@ -36,6 +36,7 @@ providers:
 
     metadata:
       - docker run -td {{{language}}}.{{{framework}}}.{{{variant}}} --network host > {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt
+      - timeout 60 sh -c 'until docker inspect $(cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt) | grep -q "\"Status\": \"healthy\""; do sleep 1; done' || echo "Warning: Container health check timeout after 60 seconds"
       - docker inspect `cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt` | jq -r '.[0].NetworkSettings.Networks.bridge.IPAddress' > {{{language}}}/{{{framework}}}/ip-{{{variant}}}.txt
 
     clean:
