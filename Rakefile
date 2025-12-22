@@ -61,7 +61,7 @@ def get_config_from(directory, engines_as_list: true)
 end
 
 def custom_config(dict1, dict2, dict3)
-  keys = (dict1.keys + dict2.keys + dict3.keys).flatten.uniq
+  keys = (dict1.keys + dict2.keys + dict3.keys).uniq
   data = {}
   keys.each do |key|
     next if %w[version engines website github].include?(key)
@@ -136,7 +136,7 @@ def commands_for(language, framework, variant, provider = 'docker')
   end
 
   if app_config.key?('bootstrap') && config['providers'][provider].key?('exec')
-    remote_command = config['providers'][[provider]]['exec']
+    remote_command = config['providers'][provider]['exec']
     app_config['bootstrap'].each do |cmd|
       commands[:build] << Mustache.render(remote_command, options.merge!(command: cmd)).to_s
     end
