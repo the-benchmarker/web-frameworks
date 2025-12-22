@@ -32,6 +32,8 @@ namespace :ci do
       # If runtime paths not triggered and pr_default_runtime_only is true, only test default
       if !runtime_triggered && matrix_config.dig('optimization', 'pr_default_runtime_only')
         default_runtime = matrix_config.dig('default_runtimes', language)
+        # For Hash types (like JavaScript), return the hash so engine-specific processing can happen
+        return default_runtime if default_runtime.is_a?(Hash)
         return [default_runtime].compact
       end
     end
@@ -50,13 +52,14 @@ namespace :ci do
     # For JavaScript engines (node, deno, bun)
     if runtime_versions.is_a?(Hash)
       # Map engine to runtime type
-      engine_type = case engine
-                    when /^node/ then 'node'
-                    when /^deno/ then 'deno'
-                    when /^bun/ then 'bun'
+      engine_type = case engine.to_s
+                    when /node/ then 'node'
+                    when /deno/ then 'deno'
+                    when /bun/ then 'bun'
                     else 'node'
                     end
-      return runtime_versions[engine_type] if runtime_versions[engine_type]
+      versions = runtime_versions[engine_type]
+      return versions.is_a?(Array) ? versions : [versions].compact
     end
     
     runtime_versions.is_a?(Array) ? runtime_versions : [runtime_versions].compact
