@@ -230,7 +230,17 @@ framework_runtime_overrides:
 # Excluded Combinations
 # Framework/runtime combinations that are known to be incompatible
 exclusions:
-  # Example format:
+  # Examples (uncomment and modify as needed):
   # - language: python
   #   framework: django
   #   runtime: "3.9"
+  # - language: javascript
+  #   framework: express
+  #   engine: node
+  #   runtime: "16"
+  # - language: go
+  #   framework: old-framework
+  #   runtime: "1.21"
+  
+  # Note: Leave this list empty if there are no exclusions yet.
+  # Add exclusions as incompatibilities are discovered during testing.

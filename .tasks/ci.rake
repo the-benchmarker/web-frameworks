@@ -6,7 +6,7 @@ namespace :ci do
   def load_matrix_config
     config_path = File.join(Dir.pwd, '.github', 'matrix-config.yaml')
     if File.exist?(config_path)
-      YAML.safe_load(File.read(config_path), permitted_classes: [Symbol], aliases: true)
+      YAML.safe_load(File.read(config_path), permitted_classes: [Symbol], aliases: false)
     else
       {}
     end
