@@ -137,7 +137,7 @@ def commands_for(language, framework, variant, provider = "docker")
   end
 
   if app_config.key?("bootstrap") && config["providers"][provider].key?("exec")
-    remote_command = config["providers"][[provider]]["exec"]
+    remote_command = config["providers"][provider]["exec"]
     app_config["bootstrap"].each do |cmd|
       commands[:build] << Mustache.render(remote_command, options.merge!(command: cmd)).to_s
     end
