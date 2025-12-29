@@ -10,7 +10,7 @@ RUN apt-get -qy install --no-install-recommends libzip-dev {{#deps}} {{{.}}} {{/
 
 WORKDIR /usr/src/app
 
-RUN docker-php-ext-install zip opcache
+RUN docker-php-ext-install zip
 
 {{#environment}}
   ENV {{{.}}}
