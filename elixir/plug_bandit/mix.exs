@@ -10,7 +10,7 @@ defmodule Server.MixProject do
       releases: [server: [include_executables_for: [:unix]]],
       deps: [
         {:plug, "~> 1.19.0"},
-        {:bandit, "~> 1.8.0"}
+        {:bandit, "~> 1.10.0"}
       ]
     ]
   end
