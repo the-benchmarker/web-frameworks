@@ -20,9 +20,9 @@ async fn main() {
         .listen(
             SocketAddress::default_ipv4(3000),
             Router::new()
-                .get("/", StatusCode::OK)
-                .post("/user", StatusCode::OK)
-                .get(
+                .with_get("/", StatusCode::OK)
+                .with_post("/user", StatusCode::OK)
+                .with_get(
                     "/user/{id}",
                     async |Path(GetUserParams { id }): Path<GetUserParams>| id,
                 ),
