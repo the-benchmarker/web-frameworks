@@ -1,4 +1,4 @@
-FROM debian as build
+FROM debian:stable-slim as build
 
 RUN apt -qq update
 RUN apt -qy install --no-install-recommends build-essential git clang tcc \
@@ -40,7 +40,7 @@ WORKDIR /app
 
 RUN v {{#build_flags}} {{{.}}} {{/build_flags}} . -o server
 
-FROM debian
+FROM debian:stable-slim
 
 WORKDIR /app
 
