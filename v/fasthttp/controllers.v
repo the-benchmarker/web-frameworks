@@ -1,8 +1,10 @@
 module main
 
+import strings
+
 fn home_controller() ![]u8 {
-	response := 'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 0\r\n\r\n'
-	return response.bytes()
+	response := 'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 0\r\n\r\n'.bytes()
+	return response
 }
 
 fn get_user_controller(id string) ![]u8 {
