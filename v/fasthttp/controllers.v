@@ -10,8 +10,14 @@ fn home_controller() ![]u8 {
 fn get_user_controller(id string) ![]u8 {
 	body := id.str()
 	content_length := body.len
-	response := 'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content_length}\r\n\r\n${body}'
-	return response.bytes()
+	mut sb := strings.new_builder(128)
+	sb.write_string('HTTP/1.1 200 OK\r\n')
+	sb.write_string('Content-Type: text/plain\r\n')
+	sb.write_string('Content-Length: ')
+	sb.write_string(content_length.str())
+	sb.write_string('\r\n\r\n')
+	sb.write_string(body)
+	return sb
 }
 
 fn create_user_controller() ![]u8 {
