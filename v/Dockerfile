@@ -15,6 +15,10 @@ RUN git clone --depth 1 https://github.com/vlang/v /opt/vlang && make
 
 RUN ln -s /opt/vlang/v /usr/bin/v
 
+{{#download}}
+  RUN {{{.}}}
+{{/download}}
+
 WORKDIR /app
 
 {{#files}}
