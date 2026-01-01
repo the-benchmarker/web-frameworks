@@ -1,12 +1,11 @@
 FROM debian:stable-slim as build
 
-RUN apt -qq update
-RUN apt -qy install --no-install-recommends build-essential git clang tcc \
- && apt clean \
- && rm -rf /var/lib/apt/lists/*
+RUN apt -qq update && \
+    apt -qy install --no-install-recommends build-essential git && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
 
-ENV PATH=/opt/vlang:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
+ENV PATH=/opt/vlang:$PATH
 ENV GIT_SSL_NO_VERIFY=1
 
 WORKDIR /opt/vlang
@@ -44,13 +43,15 @@ FROM debian:stable-slim
 
 WORKDIR /app
 
+# Copy the built binary
 COPY --from=build /app /app
 
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt -y update
-RUN apt -qq update
-RUN apt -qy install curl
+RUN apt -y update && \
+    apt -y install curl liburing2 && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT {{command}}
 
-HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
+    CMD curl --fail http://0.0.0.0:3000 || exit 1
