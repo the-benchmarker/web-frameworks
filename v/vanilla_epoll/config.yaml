@@ -5,7 +5,7 @@ framework:
     - v install https://github.com/enghitalo/vanilla
 
   build_deps:
-    - liburing-dev linux-libc-dev
+    - liburing-dev linux-libc-dev liburing2
 
   build_flags:
     - -prod
