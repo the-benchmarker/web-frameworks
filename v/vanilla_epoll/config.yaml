@@ -1,0 +1,8 @@
+framework:
+  github: vlang/v
+
+  download:
+    -  v install https://github.com/enghitalo/vanilla
+
+  build_flags:
+    - -prod
