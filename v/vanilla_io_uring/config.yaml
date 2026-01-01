@@ -3,9 +3,9 @@ framework:
 
   download:
     - v install https://github.com/enghitalo/vanilla
-    - sudo apt-get update
-    - sudo apt-get install -y liburing-dev
+
+  build_deps:
+    - liburing-dev
 
   build_flags:
     - -prod
-
