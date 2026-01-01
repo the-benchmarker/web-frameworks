@@ -2,7 +2,10 @@ framework:
   github: vlang/v
 
   download:
-    -  v install https://github.com/enghitalo/vanilla
+    - v install https://github.com/enghitalo/vanilla
+    - sudo apt-get update
+    - sudo apt-get install -y liburing-dev
+
 
   build_flags:
     - -prod
