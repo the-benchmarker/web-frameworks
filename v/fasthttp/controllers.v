@@ -15,8 +15,8 @@ fn get_user_controller(id string) ![]u8 {
 }
 
 fn create_user_controller() ![]u8 {
-	response := 'HTTP/1.1 201 Created\r\nContent-Type: text/plain\r\nContent-Length: 0\r\n\r\n$'
-	return response.bytes()
+	response := 'HTTP/1.1 201 Created\r\nContent-Type: text/plain\r\nContent-Length: 0\r\n\r\n'.bytes()
+	return response
 }
 
 fn not_found_response() ![]u8 {
