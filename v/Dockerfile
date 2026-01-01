@@ -25,7 +25,7 @@ WORKDIR /app
   RUN {{{.}}}
 {{/bootstrap}}
 
-RUN v {{#build_flags}} {{{.}}} {{/build_flags}} -o server
+RUN v {{#build_flags}} {{{.}}} {{/build_flags}} . -o server
 
 FROM debian
 
