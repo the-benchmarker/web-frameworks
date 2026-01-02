@@ -17,6 +17,6 @@ let app  : WebPart = router {
 let config =
     { defaultConfig with
         bindings =
-            [ HttpBinding.createSimple HTTP "127.0.0.1" 3000 ];}
+            [ HttpBinding.createSimple HTTP "0.0.0.0" 3000 ];}
 
 startWebServer config app
