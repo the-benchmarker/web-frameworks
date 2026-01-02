@@ -3,6 +3,7 @@ import express from 'npm:express@5';
 const app = express();
 
 app.disable('etag');
+app.set('x-powered-by', false);
 
 app.get('/', function (req, res) {
   res.send('');
