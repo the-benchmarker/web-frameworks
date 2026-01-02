@@ -6,6 +6,7 @@ v
 *.so
 *.dylib
 *.dll
+vanilla_epoll
 
 # Ignore binary output folders
 bin/

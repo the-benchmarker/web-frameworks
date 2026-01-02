@@ -3,3 +3,6 @@ framework:
 
   build_deps:
     - libatomic1
+
+  build_flags:
+    - -prod -d new_veb
