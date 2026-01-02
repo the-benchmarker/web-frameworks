@@ -2,6 +2,7 @@ import express from 'express';
 
 const app = express();
 app.set('etag', false);
+app.set('x-powered-by', false);
 
 app.get('/', (req, res) => {
   res.send('');
