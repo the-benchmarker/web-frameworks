@@ -6,7 +6,7 @@ toolchain go1.25.5
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.10
-	github.com/gofiber/template/html/v3 v3.0.0
+	github.com/gofiber/template/html/v3 v3.0.1
 	github.com/goravel/fiber v1.4.0
 	github.com/goravel/framework v1.16.5
 )
