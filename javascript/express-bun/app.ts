@@ -5,15 +5,16 @@ app.set('etag', false);
 app.set('x-powered-by', false);
 
 app.get('/', (req, res) => {
-  res.send('');
+  res.end('');
 });
 
 app.get('/user/:id', (req, res) => {
-  res.send(req.params.id);
+  res.end(req.params.id);
 });
 
 app.post('/user', (req, res) => {
-  res.send('');
+  res.end('');
 });
 
-app.listen(3000);
+const server = app.listen(3000);
+server.keepAliveTimeout = 0;
