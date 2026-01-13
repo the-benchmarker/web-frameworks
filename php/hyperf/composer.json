@@ -9,7 +9,8 @@
     "hyperf/exception-handler": "@stable",
     "hyperf/framework": "~3.1.0",
     "hyperf/http-server": "@stable",
-    "hyperf/utils": "@stable"
+    "hyperf/utils": "@stable",
+    "hyperf/laminas-mime": "^3.0"
   },
   "autoload": {
     "psr-4": {
