@@ -7,6 +7,7 @@ package org.restheart;
 
 import org.restheart.exchange.ByteArrayRequest;
 import org.restheart.exchange.ByteArrayResponse;
+import org.restheart.exchange.Request;
 import org.restheart.plugins.ByteArrayService;
 import static org.restheart.plugins.InterceptPoint.ANY;
 import org.restheart.plugins.RegisterPlugin;
@@ -23,9 +24,19 @@ public class UserService implements ByteArrayService {
   public void handle(ByteArrayRequest request, ByteArrayResponse response) throws Exception {
     switch(request.getMethod()) {
         case POST -> { /* nothing to do! this just sends 200 back */ }
-        case GET -> response.setContent(request.getPathParam("/user/{id}", "id"));
+        case GET -> response.setContent(userName(request.getPath()));
         case OPTIONS -> handleOptions();
         default -> response.setStatusCode(HttpStatus.SC_NOT_IMPLEMENTED);
     }
   }
+
+	private static String userName(String path) {
+		return path.substring(Math.min(path.length(), 6));
+	}
+
+	@Override
+	public boolean corsEnabled(Request<?> r) {
+		// disable CORS headers
+		return false;
+	}
 }
