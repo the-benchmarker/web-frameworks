@@ -2,6 +2,7 @@ package org.restheart;
 
 import org.restheart.exchange.ByteArrayRequest;
 import org.restheart.exchange.ByteArrayResponse;
+import org.restheart.exchange.Request;
 import org.restheart.plugins.ByteArrayService;
 import static org.restheart.plugins.InterceptPoint.ANY;
 import org.restheart.plugins.RegisterPlugin;
@@ -18,4 +19,10 @@ public class RootService implements ByteArrayService {
   public void handle(ByteArrayRequest request, ByteArrayResponse response) throws Exception {
     // nothing to do! this just sends 200 back
   }
+
+	@Override
+	public boolean corsEnabled(Request<?> r) {
+		// disable CORS headers
+		return false;
+	}
 }
