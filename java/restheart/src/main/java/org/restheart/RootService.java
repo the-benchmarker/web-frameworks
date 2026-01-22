@@ -1,28 +1,32 @@
 package org.restheart;
 
+import static org.restheart.plugins.InterceptPoint.ANY;
+
 import org.restheart.exchange.ByteArrayRequest;
 import org.restheart.exchange.ByteArrayResponse;
 import org.restheart.exchange.Request;
 import org.restheart.plugins.ByteArrayService;
-import static org.restheart.plugins.InterceptPoint.ANY;
 import org.restheart.plugins.RegisterPlugin;
 import org.restheart.plugins.RegisterPlugin.MATCH_POLICY;
 
-@RegisterPlugin(name = "benchmarkRootService",
-    description = "service for root resource",
-    defaultURI = "/",
-    uriMatchPolicy = MATCH_POLICY.EXACT,
-    blocking = false,
-    dontIntercept = ANY)
+@RegisterPlugin(
+  name = "benchmarkRootService",
+  description = "service for root resource",
+  defaultURI = "/",
+  uriMatchPolicy = MATCH_POLICY.EXACT,
+  blocking = false,
+  dontIntercept = ANY
+)
 public class RootService implements ByteArrayService {
+
   @Override
-  public void handle(ByteArrayRequest request, ByteArrayResponse response) throws Exception {
+  public void handle(ByteArrayRequest request, ByteArrayResponse response) {
     // nothing to do! this just sends 200 back
   }
 
-	@Override
-	public boolean corsEnabled(Request<?> r) {
-		// disable CORS headers
-		return false;
-	}
+  @Override
+  public boolean corsEnabled(Request<?> r) {
+    // disable CORS headers
+    return false;
+  }
 }
