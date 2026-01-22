@@ -22,7 +22,8 @@ import org.restheart.utils.HttpStatus;
   dontIntercept = ANY
 )
 public class UserService implements ByteArrayService {
-	private static final int USER_ID_PREFIX_LENGTH = "/user/".length();
+
+  private static final int USER_ID_PREFIX_LENGTH = "/user/".length();
 
   @Override
   public void handle(ByteArrayRequest request, ByteArrayResponse response) {
@@ -38,8 +39,8 @@ public class UserService implements ByteArrayService {
 
   private static String userName(String path) {
     return path.length() <= USER_ID_PREFIX_LENGTH
-			? "" // no user id in uri
-			: path.substring(USER_ID_PREFIX_LENGTH);
+      ? "" // no user id in uri
+      : path.substring(USER_ID_PREFIX_LENGTH);
   }
 
   @Override
