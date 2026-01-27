@@ -5,7 +5,6 @@ language:
     - server
   bootstrap:
     - cd /opt/vlang && git fetch --all --tags && git checkout weekly.2026.06 && make && v -version && cd /app
-
   build_flags:
 
   engines:
