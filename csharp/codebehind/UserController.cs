@@ -7,6 +7,3 @@ public partial class user : CodeBehindController
         Write(Segment.GetValue(0)); // path: /user/{id}
     }
 }
-
-
-
