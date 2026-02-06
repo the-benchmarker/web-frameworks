@@ -6,7 +6,8 @@ builder.Services.AddCodeBehind();
 
 var app = builder.Build();
 
-app.UseCodeBehindRouteAsync();
+app.UseCodeBehindRoute();
 
 app.Run();
+
 
