@@ -4,10 +4,11 @@ WORKDIR /usr/src/app
 
 {{#build_deps.length}}
   ARG DEBIAN_FRONTEND=noninteractive
-  RUN apt-get -y update
+  RUN apt -y update
+  RUN apt -y install apt-utils ca-certificates
 
   {{#build_deps}}
-    RUN apt-get -y install {{{.}}}
+    RUN apt -y install {{{.}}}
   {{/build_deps}}
 
 {{/build_deps.length}}
