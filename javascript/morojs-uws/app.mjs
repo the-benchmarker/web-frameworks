@@ -9,6 +9,7 @@ const app = createApp({
   server: {
     port: 3000,        // Default benchmark port (can be overridden by PORT env var)
     host: '0.0.0.0',  // Default benchmark host (can be overridden by HOST env var)
+    useUWebSockets: true,
     requestTracking: {
         enabled: false, // Disable for fair comparison
     },
