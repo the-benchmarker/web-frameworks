@@ -12,25 +12,16 @@ repository = "https://github.com/hyperlane-dev/hyperlane.git"
 categories = ["network-programming", "web-programming"]
 exclude = ["target", "Cargo.lock", "sh", ".github", "logs", "**/*.log"]
 
-[profile.dev]
-incremental = false
-opt-level = 3
-lto = true
-panic = "abort"
-debug = false
-codegen-units = 1
-strip = "debuginfo"
-
-[profile.release]
-incremental = false
-opt-level = 3
-lto = true
-panic = "abort"
-debug = false
-codegen-units = 1
-strip = "debuginfo"
-overflow-checks = false
-rpath = false
-
 [dependencies]
 hyperlane = "=14.1.3"
+
+[profile.release]
+opt-level = 3
+debug = false
+debug-assertions = false
+lto = true
+panic = "abort"
+incremental = false
+codegen-units = 1
+rpath = false
+strip = false
