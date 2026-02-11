@@ -1,0 +1,35 @@
+[package]
+name = "web_frameworks_rust_hyperlane_server"
+version = "0.1.0"
+edition = "2024"
+readme = "README.md"
+authors = ["root@ltpp.vip"]
+license = "MIT"
+description = """A lightweight, high-performance, and cross-platform Rust HTTP server library built on Tokio. It simplifies modern web service development by providing built-in support for middleware, WebSocket, Server-Sent Events (SSE), and raw TCP communication. With a unified and ergonomic API across Windows, Linux, and MacOS, it enables developers to build robust, scalable, and event-driven network applications with minimal overhead and maximum flexibility."""
+keywords = ["http", "request", "response", "tcp", "redirect"]
+repository = "https://github.com/hyperlane-dev/hyperlane.git"
+categories = ["network-programming", "web-programming"]
+exclude = ["target", "Cargo.lock", "sh", ".github", "logs", "**/*.log"]
+
+[profile.dev]
+incremental = false
+opt-level = 3
+lto = true
+panic = 'abort'
+debug = false
+codegen-units = 1
+strip = "debuginfo"
+
+[profile.release]
+incremental = false
+opt-level = 3
+lto = true
+panic = 'abort'
+debug = false
+codegen-units = 1
+strip = "debuginfo"
+overflow-checks = false
+rpath = false
+
+[dependencies]
+hyperlane = "14.1.3"
