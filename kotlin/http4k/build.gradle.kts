@@ -44,15 +44,10 @@ tasks {
     withType<KotlinJvmCompile>().configureEach {
         compilerOptions {
             allWarningsAsErrors = false
-            jvmTarget.set(JVM_21)
             freeCompilerArgs.add("-Xjvm-default=all")
         }
     }
 
-    java {
-        sourceCompatibility = VERSION_21
-        targetCompatibility = VERSION_21
-    }
 }
 
 dependencies {

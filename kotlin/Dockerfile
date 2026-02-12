@@ -1,9 +1,4 @@
-{{#language.java.version}}
-  FROM gradle:jdk{{{.}}} AS build
-{{/language.java.version}}
-{{^language.java.version}}
-  FROM gradle:jdk25 AS build
-{{/language.java.version}}
+FROM gradle:jdk25 AS build
 
 WORKDIR /usr/src/app
 
@@ -13,12 +8,7 @@ WORKDIR /usr/src/app
 
 RUN gradle build
 
-{{#language.java.version}}
-  FROM eclipse-temurin:{{{.}}}-jre
-{{/language.java.version}}
-{{^language.java.version}}
-  FROM eclipse-temurin:25-jre
-{{/language.java.version}}
+FROM eclipse-temurin:25-jre
 
 WORKDIR /usr/src/app
 

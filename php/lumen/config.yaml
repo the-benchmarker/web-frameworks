@@ -2,14 +2,8 @@ framework:
   website: lumen.laravel.com
   version: 11.1
 
-  engines:
-    - php-fpm
-    - swoole
-
   files:
     - artisan
-    - .swoole/config/laravels.php
-    - .swoole/bin/laravels
 
 language:
   engines:

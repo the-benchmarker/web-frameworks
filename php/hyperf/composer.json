@@ -1,21 +1,25 @@
 {
   "require": {
-    "hyperf/command": "@stable",
-    "hyperf/config": "@stable",
-    "hyperf/contract": "@stable",
-    "hyperf/di": "@stable",
-    "hyperf/dispatcher": "@stable",
-    "hyperf/event": "@stable",
-    "hyperf/exception-handler": "@stable",
+    "php": ">=8.1",
+    "hyperf/cache": "~3.1.0",
+    "hyperf/command": "~3.1.0",
+    "hyperf/config": "~3.1.0",
+    "hyperf/db-connection": "~3.1.0",
+    "hyperf/engine": "^2.10",
     "hyperf/framework": "~3.1.0",
-    "hyperf/http-server": "@stable",
-    "hyperf/utils": "@stable"
+    "hyperf/guzzle": "~3.1.0",
+    "hyperf/http-server": "~3.1.0",
+    "hyperf/logger": "~3.1.0",
+    "hyperf/memory": "~3.1.0",
+    "hyperf/process": "~3.1.0",
+    "hyperf/database": "~3.1.0",
+    "hyperf/redis": "~3.1.0",
+    "hyperf/laminas-mime": "@stable"
   },
   "autoload": {
     "psr-4": {
       "App\\": "app/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    },
+    "files": []
+  }
 }

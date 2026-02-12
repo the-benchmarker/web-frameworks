@@ -1,11 +1,10 @@
 language:
-  version: '0.5'
+  version: "weekly.2026.07"
   files:
     - "**/*.v"
     - server
   bootstrap:
-    - cd /opt/vlang && git fetch --all --tags && git checkout 0.5 && make && v -version && cd /app
-
+    - cd /opt/vlang && git fetch --all --tags && git checkout weekly.2026.07 && make && v -version && cd /app
   build_flags:
 
   engines:
