@@ -13,7 +13,9 @@ categories = ["network-programming", "web-programming"]
 exclude = ["target", "Cargo.lock", "sh", ".github", "logs", "**/*.log"]
 
 [dependencies]
+futures = "=0.3.31"
 hyperlane = "=14.1.3"
+once_cell = "=1.21.3"
 
 [profile.release]
 opt-level = 3
