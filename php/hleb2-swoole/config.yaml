@@ -14,6 +14,7 @@ framework:
     - swoole
 
 language:
+  version: 8.4
   engines:
     swoole:
       command: php public/index.php

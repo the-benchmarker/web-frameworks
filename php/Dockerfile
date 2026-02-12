@@ -2,7 +2,7 @@
   FROM php:{{{.}}}-fpm
 {{/language.version}}
 {{^language.version}}
-  FROM php:8.4-fpm
+  FROM php:8.5-fpm
 {{/language.version}}
 
 RUN apt-get -qq update
@@ -10,7 +10,7 @@ RUN apt-get -qy install --no-install-recommends libzip-dev {{#deps}} {{{.}}} {{/
 
 WORKDIR /usr/src/app
 
-RUN docker-php-ext-install zip opcache
+RUN docker-php-ext-install zip
 
 {{#environment}}
   ENV {{{.}}}
@@ -66,7 +66,7 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   {{^slasheddocroot}}
     RUN sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /usr/local/etc/php-fpm.d/www.conf
   {{/slasheddocroot}}
-  RUN sed -i 's/\(listen =\).*/\1 \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
+  RUN sed -i 's/\;\(listen =\).*/\1 \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.owner.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.group.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf

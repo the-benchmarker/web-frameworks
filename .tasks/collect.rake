@@ -26,6 +26,7 @@ task :collect do
   db = PG.connect(database)
   Dir.glob('*/*/.results/*/**.json').each do |file|
     info = file.split('/')
+    pp file
     language = info[0]
     framework = info[1]
     concurrency = info[3]

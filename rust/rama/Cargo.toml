@@ -3,9 +3,9 @@ name = "server"
 version = "0.0.0"
 edition = "2024"
 publish = false
-rust-version = "1.85"
+rust-version = "1.91"
 
 [dependencies]
-rama = { version = "0.2.0", features = ["http-full"] }
-serde = "1.0"
+rama = { version = "0.3.0-alpha.4", features = ["http-full"] }
+serde = "1"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
