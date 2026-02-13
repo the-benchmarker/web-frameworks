@@ -1,9 +1,4 @@
-use futures::executor::block_on;
 use hyperlane::*;
-use once_cell::sync::Lazy;
-
-static REQUEST_CONFIG: Lazy<RequestConfigData> =
-    Lazy::new(|| block_on(async { init_request_config().await.get_data().await }));
 
 async fn init_server_config() -> ServerConfig {
     let server_config: ServerConfig = ServerConfig::new().await;
@@ -24,7 +19,6 @@ impl ServerHook for Index {
     }
 
     async fn handle(self, ctx: &Context) {
-        let request_config: RequestConfigData = *REQUEST_CONFIG;
         ctx.set_response_header(CONNECTION, KEEP_ALIVE).await;
         let run = || async {
             if ctx.get_request_method().await.is_get() {
@@ -38,7 +32,7 @@ impl ServerHook for Index {
             ctx.closed().await;
             return;
         }
-        while ctx.http_from_stream(&request_config).await.is_ok() {
+        while ctx.http_from_stream().await.is_ok() {
             if run().await {
                 ctx.closed().await;
                 break;
@@ -57,7 +51,6 @@ impl ServerHook for User {
     }
 
     async fn handle(self, ctx: &Context) {
-        let request_config: RequestConfigData = *REQUEST_CONFIG;
         ctx.set_response_header(CONNECTION, KEEP_ALIVE).await;
         let run = || async {
             if ctx.get_request_method().await.is_post() {
@@ -71,7 +64,7 @@ impl ServerHook for User {
             ctx.closed().await;
             return;
         }
-        while ctx.http_from_stream(&request_config).await.is_ok() {
+        while ctx.http_from_stream().await.is_ok() {
             if run().await {
                 ctx.closed().await;
                 break;
@@ -90,7 +83,6 @@ impl ServerHook for UserId {
     }
 
     async fn handle(self, ctx: &Context) {
-        let request_config: RequestConfigData = *REQUEST_CONFIG;
         ctx.set_response_header(CONNECTION, KEEP_ALIVE).await;
         let run = || async {
             if ctx.get_request_method().await.is_get() {
@@ -108,7 +100,7 @@ impl ServerHook for UserId {
             ctx.closed().await;
             return;
         }
-        while ctx.http_from_stream(&request_config).await.is_ok() {
+        while ctx.http_from_stream().await.is_ok() {
             if run().await {
                 ctx.closed().await;
                 break;
