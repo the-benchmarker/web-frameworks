@@ -10,7 +10,7 @@ async fn init_request_config() -> RequestConfig {
     RequestConfig::low_security().await
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default)]
 struct Index;
 
 impl ServerHook for Index {
@@ -42,7 +42,7 @@ impl ServerHook for Index {
     }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default)]
 struct User;
 
 impl ServerHook for User {
@@ -74,7 +74,7 @@ impl ServerHook for User {
     }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default)]
 struct UserId;
 
 impl ServerHook for UserId {
