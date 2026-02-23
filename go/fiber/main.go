@@ -3,16 +3,16 @@ package main
 import (
 	"log"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 )
 
 const id = "id"
 
 var (
-	handlerOK = func(c *fiber.Ctx) error {
+	handlerOK = func(c fiber.Ctx) error {
 		return nil
 	}
-	handlerID = func(c *fiber.Ctx) error {
+	handlerID = func(c fiber.Ctx) error {
 		return c.SendString(c.Params(id))
 	}
 )
