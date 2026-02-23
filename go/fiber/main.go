@@ -19,10 +19,8 @@ var (
 
 func main() {
 	app := fiber.New(fiber.Config{
-		Prefork:                  false,
 		CaseSensitive:            true,
 		StrictRouting:            true,
-		DisableStartupMessage:    true,
 		DisableHeaderNormalizing: true,
 	})
 
@@ -31,5 +29,8 @@ func main() {
 
 	app.Post("/user", handlerOK)
 
-	log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen(":3000", fiber.ListenConfig{
+		EnablePrefork:         false,
+		DisableStartupMessage: true,
+	}))
 }
