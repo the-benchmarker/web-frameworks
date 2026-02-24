@@ -32,7 +32,7 @@ ENV CGO_ENABLED=0 \
 {{/bootstrap}}
 
 RUN --mount=type=cache,id=gomod-{{language.version}},target=/go/pkg/mod \
-  go get
+  go mod download
 
 RUN --mount=type=cache,id=gomod-{{language.version}},target=/go/pkg/mod \
   --mount=type=cache,id=gobuild-{{language.version}},target=/root/.cache/go-build \

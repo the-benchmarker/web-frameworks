@@ -20,7 +20,11 @@ RUN --mount=type=cache,id=shards-lib-{{language.version}},target=lib \
   shards install --production
 
 RUN --mount=type=cache,id=shards-lib-{{language.version}},target=lib \
+<<<<<<< HEAD
   shards build --release --static --no-debug
+=======
+  shards build --release --no-debug
+>>>>>>> 72832c06 (refactor(docker): optimize dockerfiles)
 
 
 
