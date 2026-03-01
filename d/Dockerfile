@@ -10,7 +10,7 @@ RUN apt-get -qq update && \
     xz-utils && \
   rm -rf /var/lib/apt/lists/*
 
-RUN curl -L -o ldc2.tar.xz https://github.com/ldc-developers/ldc/releases/download/v1.41.0/ldc2-1.41.0-linux-{{#arch}}{{{.}}}{{/arch}}.tar.xz && \
+RUN curl -L -o ldc2.tar.xz https://github.com/ldc-developers/ldc/releases/download/v1.42.0/ldc2-1.42.0-linux-{{#arch}}{{{.}}}{{/arch}}.tar.xz && \
   tar xf ldc2.tar.xz && \
   rm ldc2.tar.xz && \
   mv ldc2* ldc2
