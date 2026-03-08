@@ -26,5 +26,7 @@ Layout/LineLength:
 
 Style/FrozenStringLiteralComment:
   Enabled: true
-  Exclude:
-    - ruby/**/*
+  EnforcedStyle: never
+
+Style/OneClassPerFile:
+  Enabled: false
