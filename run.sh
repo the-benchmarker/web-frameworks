@@ -7,7 +7,7 @@ else
 	if [ "$COUNT" -eq 0 ]; then
 		find $1 -mindepth 2 -type f -name config.yaml | grep -v fibers > ~/list.txt
 	elif [ "$COUNT" -eq 1 ] ; then
-		find $1 -mindepth 1 -type f -name config.yaml | grep -v fibers > ~/list.txt
+		find $1 -mindepth 1 -type f -name config.yaml > ~/list.txt
 	else
 		echo "Illegal number of parameters" >&2
 		exit 2
