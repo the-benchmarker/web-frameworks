@@ -36,10 +36,11 @@ language:
       command: ./rr serve
     swoole:
       extensions:
-        - swoole/6.1.7
+        - swoole/6.2.0
       command: php public/index.php
       build_deps:
         - libbrotli-dev
+        - libssl-dev
     reactphp:
       deps:
         - libevent-dev
