@@ -32,7 +32,7 @@ ENV CGO_ENABLED=0 \
 {{/bootstrap}}
 
 RUN --mount=type=cache,id=gomod-{{language.version}},target=/go/pkg/mod \
-  go mod download
+  go get
 
 RUN --mount=type=cache,id=gomod-{{language.version}},target=/go/pkg/mod \
   --mount=type=cache,id=gobuild-{{language.version}},target=/root/.cache/go-build \
@@ -61,3 +61,4 @@ COPY --from=build /go/bin/app /go/bin/app
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}
+

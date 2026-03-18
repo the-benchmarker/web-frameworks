@@ -2,6 +2,8 @@ framework:
   website: martenframework.com
   github: martenframework/marten
   version: 0.6
+  runtime_deps:
+    - libyaml-0-2
 
 environment:
   MARTEN_ENV: production
