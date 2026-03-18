@@ -70083,7 +70083,7 @@
     {
       "level": 64,
       "label": "duration_ms",
-      "value": 15014.887345333333,
+      "value": 15015.830960333333,
       "framework_id": 2062
     },
     {
@@ -70101,25 +70101,25 @@
     {
       "level": 64,
       "label": "percentile50",
-      "value": 0.029284088333333333,
+      "value": 0.029483129333333333,
       "framework_id": 2062
     },
     {
       "level": 64,
       "label": "percentile75",
-      "value": 0.03489029933333333,
+      "value": 0.035058401,
       "framework_id": 2062
     },
     {
       "level": 64,
       "label": "percentile90",
-      "value": 0.04134076,
+      "value": 0.043023124,
       "framework_id": 2062
     },
     {
       "level": 64,
       "label": "percentile99",
-      "value": 0.047389198333333334,
+      "value": 0.046778491666666665,
       "framework_id": 2062
     },
     {
@@ -70161,7 +70161,7 @@
     {
       "level": 64,
       "label": "total_bytes_received",
-      "value": 663960.0,
+      "value": 649546.0,
       "framework_id": 2062
     },
     {
@@ -70173,7 +70173,7 @@
     {
       "level": 64,
       "label": "total_requests_per_s",
-      "value": 2179.3875315318073,
+      "value": 2130.502648611773,
       "framework_id": 2062
     },
     {
@@ -70185,7 +70185,7 @@
     {
       "level": 256,
       "label": "duration_ms",
-      "value": 15043.951592666666,
+      "value": 15045.159082333334,
       "framework_id": 2062
     },
     {
@@ -70203,25 +70203,25 @@
     {
       "level": 256,
       "label": "percentile50",
-      "value": 0.091207913,
+      "value": 0.092792979,
       "framework_id": 2062
     },
     {
       "level": 256,
       "label": "percentile75",
-      "value": 0.11377249733333333,
+      "value": 0.114733647,
       "framework_id": 2062
     },
     {
       "level": 256,
       "label": "percentile90",
-      "value": 0.141329115,
+      "value": 0.143351357,
       "framework_id": 2062
     },
     {
       "level": 256,
       "label": "percentile99",
-      "value": 0.16058327466666666,
+      "value": 0.16222178,
       "framework_id": 2062
     },
     {
@@ -70263,7 +70263,7 @@
     {
       "level": 256,
       "label": "total_bytes_received",
-      "value": 802048.0,
+      "value": 789541.0,
       "framework_id": 2062
     },
     {
@@ -70275,7 +70275,7 @@
     {
       "level": 256,
       "label": "total_requests_per_s",
-      "value": 2618.6126125877886,
+      "value": 2576.666238596399,
       "framework_id": 2062
     },
     {
@@ -70287,7 +70287,7 @@
     {
       "level": 512,
       "label": "duration_ms",
-      "value": 15091.166579666666,
+      "value": 15108.400983,
       "framework_id": 2062
     },
     {
@@ -70305,25 +70305,25 @@
     {
       "level": 512,
       "label": "percentile50",
-      "value": 0.20584308166666668,
+      "value": 0.20212963066666667,
       "framework_id": 2062
     },
     {
       "level": 512,
       "label": "percentile75",
-      "value": 0.24095457833333334,
+      "value": 0.24057978366666666,
       "framework_id": 2062
     },
     {
       "level": 512,
       "label": "percentile90",
-      "value": 0.28469421133333334,
+      "value": 0.287375646,
       "framework_id": 2062
     },
     {
       "level": 512,
       "label": "percentile99",
-      "value": 0.31207172866666666,
+      "value": 0.3119900216666667,
       "framework_id": 2062
     },
     {
@@ -70365,7 +70365,7 @@
     {
       "level": 512,
       "label": "total_bytes_received",
-      "value": 763742.3333333334,
+      "value": 770314.6666666666,
       "framework_id": 2062
     },
     {
@@ -70377,7 +70377,7 @@
     {
       "level": 512,
       "label": "total_requests_per_s",
-      "value": 2477.8600786902184,
+      "value": 2495.377694651181,
       "framework_id": 2062
     },
     {
@@ -106259,7 +106259,7 @@
     },
     {
       "id": 2062,
-      "version": 12.54,
+      "version": 13.0,
       "label": "laravel",
       "language": "php",
       "website": "https://laravel.com"
@@ -107171,7 +107171,7 @@
       "version": 0.15
     }
   ],
-  "updated_at": "2026-03-18 06:43:28 UTC",
+  "updated_at": "2026-03-18 07:04:01 UTC",
   "version": 1,
   "hardware": {
     "cpus": 16,
