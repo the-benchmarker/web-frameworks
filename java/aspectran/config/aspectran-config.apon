@@ -1,6 +1,9 @@
 context: {
     name: root
-    rules: /config/root-context.xml
+    rules: [
+        /config/tow-server.xml
+        /config/web-rules.xml
+    ]
     resources: [
     ]
     scan: [
