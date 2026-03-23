@@ -1,11 +1,9 @@
-# frozen_string_literal: true
-
 require 'pg'
 require 'yaml'
 require 'active_support/number_helper'
 require 'etc'
 
-SQL = <<~SQL
+SQL = <<~SQL.freeze
   SELECT
     f.id,
     l.label AS language,

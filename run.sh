@@ -1,7 +1,7 @@
 BASEDIR=`pwd`
 
 if [ "$#" -eq 0 ]; then
-	find . -mindepth 3 -type f -name config.yaml | grep -v fibers > ~/list.txt
+	find . -mindepth 3 -type f -name config.yaml | grep -Ev 'fibers|vibed' > ~/list.txt
 else
 	COUNT=`echo $1 | grep -c "/"`
 	if [ "$COUNT" -eq 0 ]; then

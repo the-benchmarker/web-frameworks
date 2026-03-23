@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'json'
 
 def dockerfile_or_language_config?(path)

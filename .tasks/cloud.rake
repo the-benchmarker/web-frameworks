@@ -90,8 +90,8 @@ namespace :cloud do
   task :upload do
     language = ENV.fetch('LANG')
     framework = ENV.fetch('FRAMEWORK')
-    hostname = ENV.fetch('HOST', nil)
-    identity_file = File.expand_path(ENV.fetch('SSH_KEY', nil))
+    hostname = ENV.fetch('HOST')
+    identity_file = File.expand_path(ENV.fetch('SSH_KEY'))
 
     framework_dir = File.join(Dir.pwd, language, framework)
     config = load_config(language, framework)
@@ -109,50 +109,21 @@ namespace :cloud do
       end
     end
 
-<<<<<<< HEAD
     warn "Trying to connect on #{hostname} with #{identity_file}"
     Net::SCP.start(hostname, 'root', keys: [identity_file]) do |scp|
       binaries.each do |bin|
         remote_directory = File.dirname(bin).gsub!(framework_dir, '/opt/web')
         puts "Uploading #{bin} to #{remote_directory}"
         scp.upload!(bin, remote_directory, verbose: true, recursive: true)
-=======
-      warn "Trying to connect on #{hostname} with #{identity_file}"
-      Net::SSH.start(hostname, 'root', keys: [identity_file]) do |ssh|
-        binaries.each do |binary|
-          remote_directory = File.dirname(binary).gsub!(directory, '/opt/web')
-          $stdout.puts "Creating #{remote_directory}"
-          ssh.exec!("mkdir -p #{remote_directory}")
-        end
-      end
-
-      warn "Trying to connect on #{hostname} with #{identity_file}"
-      Net::SCP.start(hostname, 'root', keys: [identity_file]) do |scp|
-        config['binaries'].each do |pattern|
-          Dir.glob(File.join(directory, pattern)).each do |binary|
-            remote_directory = File.dirname(binary).gsub!(directory, '/opt/web')
-            $stdout.puts "Uploading #{binary} to #{remote_directory}"
-            scp.upload!(binary, remote_directory, verbose: true, recursive: true)
-          end
-        end
->>>>>>> 29d77e8c (update)
       end
     end
   end
 
   task :wait do
-<<<<<<< HEAD
     hostname = ENV.fetch('HOST')
     identity_file = File.expand_path(ENV.fetch('SSH_KEY'))
 
     ssh = nil
-=======
-    while true
-      hostname = ENV.fetch('HOST', nil)
-      identity_file = File.expand_path(ENV.fetch('SSH_KEY', nil))
-
-      warn "Trying to connect on #{hostname} with #{identity_file}"
->>>>>>> 29d77e8c (update)
 
     warn "Trying to connect on #{hostname} with #{identity_file}"
 
