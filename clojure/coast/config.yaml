@@ -11,5 +11,7 @@ framework:
 
   binaries:
     - coast.jar
-
-  command: java -jar coast.jar 3000
+language:
+  engines:
+    default:
+      command: java -jar coast.jar 3000
