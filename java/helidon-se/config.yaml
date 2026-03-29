@@ -17,4 +17,7 @@ framework:
   binaries:
     - target/helidon.webserver-jri
 
-  command: /opt/web/target/helidon.webserver-jri/bin/start
+language:
+  engines:
+    default:
+      command: /opt/web/target/helidon.webserver-jri/bin/start

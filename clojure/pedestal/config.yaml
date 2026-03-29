@@ -8,7 +8,9 @@ framework:
   binaries:
     - target/the-benchmarker-pedestal-0.0.1-SNAPSHOT-standalone.jar
 
-  command: java -jar target/the-benchmarker-pedestal-0.0.1-SNAPSHOT-standalone.jar
 language:
   compiler: lein
   java: 21
+  engines:
+    default:
+      command: java -jar target/the-benchmarker-pedestal-0.0.1-SNAPSHOT-standalone.jar

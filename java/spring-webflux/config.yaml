@@ -5,4 +5,7 @@ framework:
   binaries:
     - target/benchmark-webflux-1.0.0.jar
 
-  command: /usr/bin/java -jar /opt/web/target/benchmark-webflux-1.0.0.jar
+language:
+  engines:
+    default:
+      command: /usr/bin/java -jar /opt/web/target/benchmark-webflux-1.0.0.jar

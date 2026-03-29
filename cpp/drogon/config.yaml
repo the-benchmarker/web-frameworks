@@ -1,5 +1,9 @@
 language:
   version: 14/17
+  engines:
+    default:
+      command: /opt/web/build/drogon_benchmark /opt/web/config.json
+
 framework:
   github: drogonframework/drogon
   version: 1.9
@@ -32,5 +36,3 @@ framework:
 
   files:
     - config.json
-
-  command: /opt/web/build/drogon_benchmark /opt/web/config.json

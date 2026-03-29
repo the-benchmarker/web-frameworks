@@ -8,4 +8,7 @@ framework:
   binaries:
     - target/quarkus-1.0.0-runner.jar
 
-  command: java -jar /opt/web/target/quarkus-1.0.0-runner.jar
+language:
+  engines:
+    default:
+      command: java -jar /opt/web/target/quarkus-1.0.0-runner.jar

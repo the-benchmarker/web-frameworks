@@ -8,4 +8,7 @@ framework:
   binaries:
     - target/benchmark-7.0.0-standalone.jar
 
-  command: java -jar target/benchmark-7.0.0-standalone.jar --port 3000
+language:
+  engines:
+    default:
+      command: java -jar target/benchmark-7.0.0-standalone.jar --port 3000

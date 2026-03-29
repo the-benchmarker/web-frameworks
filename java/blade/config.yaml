@@ -9,6 +9,8 @@ framework:
   binaries:
     - target/benchmark-1.0.0-jar-with-dependencies.jar
 
-  command: /usr/bin/java -jar /opt/web/target/benchmark-1.0.0-jar-with-dependencies.jar
 language:
   java: 11
+  engines:
+    default:
+      command: /usr/bin/java -jar /opt/web/target/benchmark-1.0.0-jar-with-dependencies.jar

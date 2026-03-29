@@ -11,5 +11,7 @@ framework:
   files:
     - "src/**/*.yml"
 
-  command: >
-    /usr/bin/java -jar target/benchmark-1.0.0.jar
+language:
+  engines:
+    default:
+      command: /usr/bin/java -jar target/benchmark-1.0.0.jar
