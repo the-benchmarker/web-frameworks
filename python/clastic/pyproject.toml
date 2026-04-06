@@ -6,4 +6,4 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["clastic>=24,<24.1"]
+dependencies = ["clastic>=26,<26.1"]
