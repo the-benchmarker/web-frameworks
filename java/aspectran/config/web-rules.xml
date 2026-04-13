@@ -3,12 +3,12 @@
         "https://aspectran.com/dtd/aspectran-9.dtd">
 <aspectran>
 
-    <description>
-        Defines the translets for the web framework benchmark test.
-        It includes three endpoints:
-        - GET /
-        - GET /user/${id} (for path variable tests)
-        - POST /user (for simple POST requests)
+    <description style="apon">
+        |Defines the translets for the web framework benchmark test.
+        |It includes three endpoints:
+        |- GET /
+        |- GET /user/${id} (for path variable tests)
+        |- POST /user (for simple POST requests)
     </description>
 
     <translet name="/" method="get"/>
