@@ -87,7 +87,7 @@ def commands_for(language, framework, variant, provider = 'docker')
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
   options = { language: language, framework: framework, variant: variant, manifest: "#{MANIFESTS[:container]}.#{variant}" }
-  commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], test: [] }
+  commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], test: [], 'memory-idle': [] }
   prerequisites = Hash.new { |h, k| h[k] = [] }
 
   # Compile first, only for non containers

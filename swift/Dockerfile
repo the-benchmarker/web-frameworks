@@ -35,8 +35,10 @@ RUN swift build -c release -Xswiftc -enforce-exclusivity=unchecked
 WORKDIR /app
 
 RUN apt-get -qq update && \
-  apt-get -qy install --no-install-recommends curl && \
+  apt-get -qy install --no-install-recommends curl libjemalloc2 && \
   rm -rf /var/lib/apt/lists/*
+
+ENV LD_PRELOAD=libjemalloc.so.2
 
 {{#environment}}
   ENV {{{.}}}
