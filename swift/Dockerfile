@@ -35,8 +35,10 @@ RUN swift build -c release -Xswiftc -enforce-exclusivity=unchecked
 WORKDIR /app
 
 RUN apt-get -qq update && \
-  apt-get -qy install --no-install-recommends curl && \
+  apt-get -qy install --no-install-recommends curl libmimalloc2.0 && \
   rm -rf /var/lib/apt/lists/*
+
+ENV LD_PRELOAD=libmimalloc.so.2
 
 {{#environment}}
   ENV {{{.}}}
