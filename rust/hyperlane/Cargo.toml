@@ -13,7 +13,7 @@ categories = ["network-programming", "web-programming"]
 exclude = ["target", "Cargo.lock", "sh", ".github", "logs", "**/*.log"]
 
 [dependencies]
-hyperlane = "=21.2.1"
+hyperlane = "=21.2.6"
 
 [profile.release]
 opt-level = 3
