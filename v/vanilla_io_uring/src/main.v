@@ -33,7 +33,7 @@ fn main() {
 	mut server := http_server.new_server(http_server.ServerConfig{
 		port:            3000
 		request_handler: handle_request
-		io_multiplexing: unsafe { http_server.IOBackend.epoll }
+		io_multiplexing: unsafe { http_server.IOBackend.io_uring }
 	})!
 
 	server.run()
