@@ -1,6 +1,7 @@
 framework:
   website: nelthaarion.github.io/breeze
+ 
   version: 0.1
-
   engines:
-    - GNET
+    - gnet:
+        github: panjf2000/gnet
