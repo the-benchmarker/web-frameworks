@@ -14,7 +14,7 @@ func main() {
 	router.Handle(breeze.GET, "/user/", func(ctx *breeze.Context) {
 		ctx.WriteString("")
 	})
-	router.Handle(breeze.GET, "/user/:id", func(ctx *breeze.Context) {
+	router.Handle(breeze.POST, "/user/:id", func(ctx *breeze.Context) {
 		ctx.WriteString(ctx.GetParam("id"))
 	})
 	app := breeze.New(router, breeze.NewWorkerPool(runtime.NumCPU()))
