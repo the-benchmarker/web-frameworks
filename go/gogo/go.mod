@@ -1,3 +1,3 @@
 module main
 
-require github.com/Snocko-main/gogo v1.2.2
+require github.com/Snocko-main/gogo v1.4.0

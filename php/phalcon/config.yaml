@@ -1,9 +1,15 @@
 framework:
   website: phalcon.io
-  version: 5.13
+  version: 5.14
 
   extensions:
     - psr
+
+  before_build:
+    - mkdir -p /usr/src/php/ext/phalcon
+    - curl -fsSL https://github.com/phalcon/cphalcon/releases/download/v5.14.2/phalcon-pecl.tgz | tar xvz -C /usr/src/php/ext/phalcon --strip 1
+
+  modules:
     - phalcon
 
   nginx_conf:

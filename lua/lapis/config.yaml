@@ -11,4 +11,7 @@ framework:
     - /usr/local/openresty/luajit/bin/luarocks install lapis
     - lapis new
 
-  command: lapis server production
+language:
+  engines:
+    default:
+      command: lapis server production

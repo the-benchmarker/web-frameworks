@@ -55,7 +55,7 @@ def handle(message: Message) -> Message:
     if method == "POST" and path == "/user":
         return Message(b"")
     if method == "GET" and path.startswith(USER_PREFIX):
-        user_id = path[len(USER_PREFIX):]
+        user_id = path[len(USER_PREFIX) :]
         if user_id and "/" not in user_id:
             return Message(user_id.encode(), TEXT_META)
     return Message(b"Not Found", NOT_FOUND_META)

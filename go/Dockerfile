@@ -7,7 +7,14 @@
 
 WORKDIR /go/src/app
 
-ENV CGO_ENABLED=0 \
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get -qq update && \
+  apt-get -qy install --no-install-recommends \
+    build-essential \
+    zlib1g-dev && \
+  rm -rf /var/lib/apt/lists/*
+
+ENV CGO_ENABLED=1 \
   GOOS=linux \
   GOARCH={{#architecture}}{{{.}}}{{/architecture}}
 
@@ -36,7 +43,7 @@ RUN --mount=type=cache,id=gomod-{{language.version}},target=/go/pkg/mod \
 
 RUN --mount=type=cache,id=gomod-{{language.version}},target=/go/pkg/mod \
   --mount=type=cache,id=gobuild-{{language.version}},target=/root/.cache/go-build \
-  go build -a -ldflags '-extldflags "-static"' {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
+  go build -trimpath {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
 
 
 
@@ -45,7 +52,10 @@ FROM debian:trixie-slim
 WORKDIR /go/bin
 
 RUN apt-get -qq update && \
-  apt-get -qy install curl && \
+  apt-get -qy install --no-install-recommends \
+    curl \
+    libstdc++6 \
+    zlib1g && \
   rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /go/bin/app /go/bin/app
@@ -61,4 +71,3 @@ COPY --from=build /go/bin/app /go/bin/app
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}
-

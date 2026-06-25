@@ -1,4 +1,4 @@
-FROM nimlang/nim:2.2.6-ubuntu-regular AS build
+FROM nimlang/nim:2.2 AS build
 
 WORKDIR /usr/src/app
 
@@ -40,8 +40,7 @@ ENV NIM_ENV=production \
 {{/build_command}}
 
 
-
-FROM ubuntu:latest
+FROM debian:trixie-slim
 
 WORKDIR /usr/src/app
 

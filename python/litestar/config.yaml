@@ -1,8 +1,7 @@
 framework:
   github: litestar-org/litestar
   website: litestar.dev
-  version: 2.23
-
+  version: 2.24
   engines:
     - uvicorn
     - hypercorn

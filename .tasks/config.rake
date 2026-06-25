@@ -132,14 +132,11 @@ def commands_for(language, framework, variant, provider = 'docker')
   commands[:warmup] << "#{oha_path} --wait-ongoing-requests-after-deadline --no-tui --disable-keepalive --latency-correction -z 5s http://`cat #{hostname}`:3000/"
   commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
 
-  # commands[:'memory-idle'] << "ruby #{sampler} --cid #{cid_file} --out #{idle_out} --idle"
-  # idle_out = File.join(directory, language, framework, '.results', 'memory_idle.json')
-
   concurrencies.split(',').each do |concurrency|
     target = :"collect-#{concurrency}"
     commands[target] = [] unless commands.key?(target)
 
-    # memory_out = File.join(directory, language, framework, '.results', concurrency, 'memory.json')
+    File.join(directory, language, framework, '.results', concurrency, 'memory.json')
     oha_cmds = []
 
     routes.split(',').each do |route|
