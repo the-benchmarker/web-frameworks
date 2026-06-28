@@ -1,3 +1,23 @@
 framework:
+  name: Lute
   github: luau-lang/lute
   version: 1.0
+  description: |-
+    Production-grade Luau web framework from Roblox.
+    Lightweight, fast, and designed for high-performance applications.
+    Configured with security best practices and optimized for benchmarking.
+
+# Production environment settings
+production:
+  security:
+    enabled: true
+    headers:
+      - X-Content-Type-Options: nosniff
+      - X-Frame-Options: DENY
+      - X-XSS-Protection: "1; mode=block"
+      - Server: Lute
+  performance:
+    debug_disabled: true
+    logging_disabled: true
+    keepalive_enabled: true
+    optimized_for_benchmarking: true

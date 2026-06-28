@@ -1,5 +1,8 @@
 language:
+  name: Luau
   version: 1.0.0
+  runtime: Luau VM
+  description: Luau is a fast, small, safe scripting language derived from Lua
 
   files:
     - "**/*.luau"
@@ -7,7 +10,15 @@ language:
   engines:
     default:
       command: lute server.luau
+      # Production command with debug disabled
 
 framework:
   engines:
     - default
+
+# Production settings for Luau frameworks
+production:
+  debug: false
+  logging: false
+  security_headers: true
+  performance_optimized: true
