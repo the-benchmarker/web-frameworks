@@ -13,3 +13,13 @@ framework:
 
 environment:
   ATHENA_ENV: production
+  PORT: 3000
+  HOST: 0.0.0.0
+  WORKER_COUNT: 0
+
+logging:
+  level: none
+
+security:
+  debug: false
+  secure_headers: true

@@ -11,7 +11,8 @@ framework:
 
   binaries:
     - coast.jar
+
 language:
   engines:
     default:
-      command: java -jar coast.jar 3000
+      command: java -Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+DisableExplicitGC -Dclojure.compiler.direct-linking=true -Dcoast.env=production -jar coast.jar 3000

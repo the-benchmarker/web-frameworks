@@ -1,1 +1,7 @@
 requires 'Dancer2', '>= 1.1.0, < 1.2.0';
+requires 'Log::Log4perl', '>= 1.50';
+requires 'Data::Dumper';
+
+# For production performance
+recommends 'Plack', '>= 1.0048';
+recommends 'Starman', '>= 0.4014';

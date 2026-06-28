@@ -4,13 +4,22 @@ version: 0.1.0
 authors:
   - Jeremy Woertink <jeremywoertink@gmail.com>
 
+description: Production-ready Lucky Framework application with security best practices
+
 license: MIT
 
 targets:
   server:
     main: src/lucky.cr
 
+crystal: ">= 1.12.0"
+
 dependencies:
   lucky:
     github: luckyframework/lucky
     version: ~> 1.5.0
+
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    version: ~> 1.0.0

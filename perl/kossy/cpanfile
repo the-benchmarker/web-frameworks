@@ -1,1 +1,7 @@
 requires 'Kossy', '>= 0.60, < 0.61';
+requires 'Log::Log4perl', '>= 1.50';
+requires 'Data::Dumper';
+
+# For production performance
+recommends 'Plack', '>= 1.0048';
+recommends 'Starman', '>= 0.4014';

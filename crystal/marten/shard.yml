@@ -4,13 +4,22 @@ version: 0.1.0
 authors:
   - Morgan Aubert <me@morganaubert.name>
 
+description: Production-ready Marten Framework application with security best practices
+
 license: MIT
 
 targets:
   server:
     main: src/server.cr
 
+crystal: ">= 1.12.0"
+
 dependencies:
   marten:
     github: martenframework/marten
     version: ~> 0.6.0
+
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    version: ~> 1.0.0

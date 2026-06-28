@@ -1,5 +1,5 @@
 language:
-  version: 14/17
+  version: 17
   engines:
     default:
       command: /opt/web/build/drogon_benchmark /opt/web/config.json
@@ -26,13 +26,13 @@ framework:
     - build/drogon_benchmark
 
   download:
-    - git clone --branch v1.9.13 https://github.com/drogonframework/drogon
+    - git clone --branch v1.9.13 --depth=1 https://github.com/drogonframework/drogon
     - cd drogon && git submodule update --init
 
   build:
     - mkdir build
-    - cd build && cmake -DCMAKE_BUILD_TYPE=release ..
-    - cd build && make
+    - cd build && cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF ..
+    - cd build && make -j $(nproc)
 
   files:
     - config.json
