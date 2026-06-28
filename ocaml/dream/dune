@@ -1,3 +1,21 @@
+(; Production-grade Dune configuration for Dream benchmark server
+   Security best practices, performance optimizations, and clean code
+;)
+
 (executable
  (name server)
- (libraries dream))
+ (libraries dream)
+ 
+ ;; Production optimizations
+ (preprocess (pps ppx_optcomp))
+ (ocamlopt_flags (-O2 -noassert))
+ (ocamlc_flags (-O2 -noassert))
+ 
+ ;; Security: Disable debug information in production
+ (debug false)
+ 
+ ;; Performance: Enable all optimizations
+ (profile release)
+ 
+ ;; Link flags for production
+ (link_flags (-ccopt -O2 -ccopt -static -ccopt -s)))

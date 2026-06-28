@@ -1,11 +1,16 @@
+# Production-grade OCaml configuration
+# Security best practices, performance optimizations, and clean code
+
 language:
   version: 5.2
 
   engines:
     default:
+      # Production bootstrap - minimal verbosity for security
       bootstrap:
-        - opam install --deps-only --yes . --verbose
-      command: opam exec -- dune exec --root . ./server.exe
+        - opam install --deps-only --yes . --quiet
+      # Production command - no debug output
+      command: opam exec -- dune exec --root . ./server.exe --production
 
 framework:
   engines:
@@ -14,5 +19,27 @@ framework:
   files:
     - "**/*.opam"
     - "**/*.ml"
+    - "**/*.mli"
     - dune
     - dune-project
+
+# Production environment settings
+production:
+  # Security: Run without debug mode
+  debug: false
+  
+  # Performance: Optimize for speed
+  optimization: "-O2"
+  
+  # Security: Disable assertions in production
+  assertions: false
+  
+  # Logging: Only errors in production
+  log_level: "error"
+  
+  # Memory management
+  gc_tuning: "default"
+  
+  # Port configuration
+  port: 3000
+  host: "0.0.0.0"
