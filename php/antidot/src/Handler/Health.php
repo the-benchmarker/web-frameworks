@@ -10,28 +10,26 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * UserId Handler for Antidot Benchmark Server
+ * Health Check Handler for Antidot Benchmark Server
  * 
- * Handles user by ID endpoint for the benchmark server.
+ * Handles health check endpoint for the benchmark server.
  * Follows Antidot best practices including proper error handling and logging.
  */
-class UserId implements RequestHandlerInterface
+class Health implements RequestHandlerInterface
 {
     /**
      * Handle the request
      *
-     * GET /user/{id}
+     * GET /health
      *
      * @param ServerRequestInterface $request HTTP request object
-     * @return ResponseInterface User ID as plain text
+     * @return ResponseInterface Health status
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $id = $request->getAttribute('id');
-        
         // Log request for benchmarking
-        error_log('[' . date('Y-m-d H:i:s') . '] DEBUG - User endpoint accessed with ID: ' . $id);
+        error_log('[' . date('Y-m-d H:i:s') . '] DEBUG - Health check endpoint accessed');
         
-        return new Response(200, ['Content-Type' => 'text/plain'], $id);
+        return new Response(200, ['Content-Type' => 'text/plain'], 'OK');
     }
 }
