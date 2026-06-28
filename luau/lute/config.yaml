@@ -5,19 +5,91 @@ framework:
   description: |-
     Production-grade Luau web framework from Roblox.
     Lightweight, fast, and designed for high-performance applications.
-    Configured with security best practices and optimized for benchmarking.
+    Configured with security best practices, disabled debug/logging,
+    and optimized for production deployment and benchmarking.
 
 # Production environment settings
 production:
+  # Debug Configuration
+  debug:
+    enabled: false
+    distance: 0
+    linehook: false
+    sethook: false
+    traceback: "minimal"
+
+  # Logging Configuration
+  logging:
+    enabled: false
+    level: "none"
+    output: "none"
+    timestamps: false
+    colors: false
+
+  # Security Configuration
   security:
     enabled: true
+    strict_mode: true
+    sandbox: true
+    
+    # Security Headers
     headers:
-      - X-Content-Type-Options: nosniff
-      - X-Frame-Options: DENY
-      - X-XSS-Protection: "1; mode=block"
-      - Server: Lute
+      - "X-Content-Type-Options: nosniff"
+      - "X-Frame-Options: DENY"
+      - "X-XSS-Protection: 1; mode=block"
+      - "Server: Lute"
+      - "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"
+      - "Content-Security-Policy: default-src 'self'"
+      - "Referrer-Policy: strict-origin-when-cross-origin"
+      - "Permissions-Policy: geolocation=(), microphone=(), camera=()"
+      
+    # Input Validation
+    input_validation:
+      enabled: true
+      max_length: 10000
+      allowed_chars: "printable"
+      
+    # CORS Settings (disabled by default for security)
+    cors:
+      enabled: false
+      origins: []
+      methods: []
+      
+    # Rate Limiting
+    rate_limiting:
+      enabled: true
+      requests_per_minute: 100
+      burst_size: 10
+
+  # Performance Configuration
   performance:
     debug_disabled: true
     logging_disabled: true
     keepalive_enabled: true
     optimized_for_benchmarking: true
+    jit_enabled: true
+    gc_pause: 200
+    gc_step_mul: 200
+    
+    # Connection Settings
+    network:
+      keepalive: true
+      keepalive_timeout: 75
+      max_connections: 10000
+      connection_timeout: 30
+      reuse_port: true
+      backlog: 1024
+
+  # Threading Configuration
+  threading:
+    enabled: true
+    auto_scale: true
+    max_threads: 0  # 0 = use all available cores
+    thread_stack_size: 256
+
+  # Compliance and Best Practices
+  best_practices:
+    code_quality: "production"
+    maintainability: "high"
+    documentation: true
+    error_handling: "structured"
