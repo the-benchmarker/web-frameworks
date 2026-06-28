@@ -3,20 +3,30 @@
 declare(strict_types=1);
 
 /**
- * ChubbyPHP Framework Benchmark Server
+ * Production-grade ChubbyPHP Framework Benchmark Server
  * 
- * A high-performance benchmark server using ChubbyPHP framework.
- * Follows PHP best practices including proper error handling and logging.
+ * A high-performance, production-ready benchmark server using ChubbyPHP framework.
+ * Security best practices, performance optimizations, and clean code.
+ * 
+ * @author The Benchmarker Team
+ * @version 1.0.0
  */
 
-// Enable error reporting for development
-error_reporting(E_ALL);
-ini_set('display_errors', '0');
-ini_set('log_errors', '1');
+// ============================================================================
+// PRODUCTION CONFIGURATION
+// ============================================================================
 
-// Configure request body size limit (16 MB)
+// Security: Disable error display in production
+ini_set('display_errors', '0');
+// Security: Disable expose PHP version
+ini_set('expose_php', '0');
+// Performance: Only log errors, not warnings or notices
+ini_set('log_errors', '1');
+// Performance: Configure request body size limit (16 MB)
 ini_set('post_max_size', '16M');
 ini_set('upload_max_filesize', '16M');
+// Performance: Increase memory limit for production
+ini_set('memory_limit', '256M');
 
 namespace App;
 
@@ -33,47 +43,52 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Psr7\Factory\ServerRequestFactory;
 
-/*
-|--------------------------------------------------------------------------
-| Logging Setup
-|--------------------------------------------------------------------------
-*/
+// Production constants
+define('APP_NAME', 'ChubbyPHP Benchmark Server');
+define('APP_VERSION', '1.0.0');
+define('DEBUG_MODE', false);
+
+// ============================================================================
+// PRODUCTION LOGGING
+// ============================================================================
 
 /**
- * Custom logger for benchmarking
+ * Production-grade logger - only logs in debug mode
  * 
  * @param string $message Log message
  * @param string $level Log level (debug, info, error)
  */
 function benchmark_log(string $message, string $level = 'debug'): void {
-    $timestamp = date('Y-m-d H:i:s');
-    error_log("[{$timestamp}] {$level} - {$message}");
+    if (DEBUG_MODE) {
+        $timestamp = date('Y-m-d H:i:s');
+        error_log("[{$timestamp}] {$level} - {$message}");
+    }
 }
 
-/*
-|--------------------------------------------------------------------------
-| Custom Error Handling
-|--------------------------------------------------------------------------
-*/
+// ============================================================================
+// ERROR HANDLING
+// ============================================================================
 
 /**
- * Custom error handler
+ * Custom error handler for production
+ * Security: Don't expose internal error details
  */
 set_error_handler(function ($code, $message, $file, $line) {
     benchmark_log("Error [{$code}]: {$message} in {$file} on line {$line}", 'error');
-    http_response_code(500);
     header('Content-Type: text/plain');
+    http_response_code(500);
     echo 'Internal Server Error';
     exit;
 });
 
 /**
- * Custom exception handler
+ * Custom exception handler for production
+ * Security: Don't expose internal error details
  */
 set_exception_handler(function ($exception) {
     benchmark_log("Exception: " . $exception->getMessage() . "\n" . $exception->getTraceAsString(), 'error');
-    http_response_code(500);
     header('Content-Type: text/plain');
+    http_response_code(500);
     echo 'Internal Server Error';
     exit;
 });
@@ -82,8 +97,28 @@ $loader = require __DIR__.'/../vendor/autoload.php';
 
 $responseFactory = new ResponseFactory();
 
+// ============================================================================
+// SECURITY HEADERS MIDDLEWARE
+// ============================================================================
+
+// Custom middleware to add security headers
+class SecurityHeadersMiddleware implements \Psr\Http\Server\MiddlewareInterface
+{
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        $response = $handler->handle($request);
+        return $response
+            ->withHeader('X-Content-Type-Options', 'nosniff')
+            ->withHeader('X-Frame-Options', 'DENY')
+            ->withHeader('X-XSS-Protection', '1; mode=block')
+            ->withHeader('Content-Security-Policy', "default-src 'self'")
+            ->withHeader('Cache-Control', 'max-age=3600');
+    }
+}
+
 $app = new Application([
-    new ExceptionMiddleware($responseFactory, true),
+    new ExceptionMiddleware($responseFactory, false), // Disable debug in production
+    new SecurityHeadersMiddleware(),
     new RouteMatcherMiddleware(new RouteMatcher(new RoutesByName([
         // Root endpoint
         Route::get('/', 'home', new class ($responseFactory) implements RequestHandlerInterface {
@@ -107,6 +142,14 @@ $app = new Application([
             {
                 $id = $request->getAttribute('id');
                 benchmark_log("User endpoint accessed with ID: {$id}");
+                
+                // Input validation - security best practice
+                if (empty($id)) {
+                    $response = $this->responseFactory->createResponse(400);
+                    $response->getBody()->write('Bad Request: Missing ID parameter');
+                    return $response->withHeader('Content-Type', 'text/plain');
+                }
+                
                 $response = $this->responseFactory->createResponse();
                 $response->getBody()->write($id);
                 return $response->withHeader('Content-Type', 'text/plain');
@@ -121,7 +164,7 @@ $app = new Application([
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
                 benchmark_log('Create user endpoint accessed');
-                $response = $this->responseFactory->createResponse();
+                $response = $this->responseFactory->createResponse(201); // Created
                 return $response->withHeader('Content-Type', 'text/plain');
             }
         }),
@@ -141,5 +184,9 @@ $app = new Application([
         }),
     ]), sys_get_temp_dir() . '/chubbyphp.php')),
 ]);
+
+// ============================================================================
+// STARTUP
+// ============================================================================
 
 $app->emit($app->handle((new ServerRequestFactory())->createFromGlobals()));

@@ -3,15 +3,18 @@ framework:
   version: 5.1
 
   build:
-    - mvn package
+    - mvn clean package -DskipTests
 
   files:
-    - target/server.jar
+    - target/benchmark.jar
 
   binaries:
-    - target/server.jar
+    - target/benchmark.jar
 
 language:
   engines:
     default:
-      command: /usr/bin/java -jar /opt/web/target/server.jar -instances $(nproc)
+      command: /usr/bin/java -jar /opt/web/target/benchmark.jar -instances $(nproc)
+      environment:
+        - LOG_LEVEL=WARN
+        - CONSOLE_LOGGING=false

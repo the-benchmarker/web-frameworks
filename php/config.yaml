@@ -1,19 +1,60 @@
+# Production-grade PHP configuration
+# Security best practices, performance optimizations, and clean code
+
 language:
   version: 8.5
 
   files:
     - "**/*.php"
-    - composer.json
+    - "composer.json"
+    - "composer.lock"
 
   bootstrap:
-    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-    - composer install --no-dev --prefer-dist --classmap-authoritative
-    - composer dumpautoload -o
+    # Production bootstrap - quiet installation for security
+    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --quiet
+    - composer install --no-dev --prefer-dist --classmap-authoritative --quiet --no-progress
+    - composer dumpautoload -o --quiet
+
+  # Production environment settings
+  production:
+    # Security: Run without debug mode
+    debug: false
+    
+    # Performance: Optimize for speed
+    opcache.enable: true
+    opcache.enable_cli: true
+    opcache.memory_consumption: 128
+    
+    # Security: Disable dangerous functions
+    disable_functions: "exec,passthru,shell_exec,system,proc_open,popen,parse_ini_file,show_source"
+    
+    # Security: PHP settings
+    display_errors: "Off"
+    expose_php: "Off"
+    log_errors: "On"
+    error_log: "/var/log/php_errors.log"
+    memory_limit: "256M"
+    upload_max_filesize: "16M"
+    post_max_size: "16M"
+    max_execution_time: "60"
+    
+    # Port configuration
+    port: 3000
+    host: "0.0.0.0"
 
   engines:
     php-fpm:
       deps:
         - nginx
+      # Production PHP-FPM settings
+      pool:
+        pm: "dynamic"
+        pm.max_children: 50
+        pm.start_servers: 5
+        pm.min_spare_servers: 5
+        pm.max_spare_servers: 10
+        pm.max_requests: 500
+    
     workerman:
       extensions:
         - event
@@ -24,19 +65,31 @@ language:
         - pcntl
         - sockets
       command: php public/index.php start
+      # Production Workerman settings
+      worker:
+        count: 100
+        daemonize: true
+        log_file: "/var/log/workerman.log"
+        pid_file: "/var/run/workerman.pid"
+        
     road-runner:
       extensions:
         - protobuf
       files:
         - .rr.yaml
       bootstrap:
-        - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-        - composer install --no-dev --prefer-dist --classmap-authoritative
-        - composer dumpautoload -o
-        - vendor/bin/rr get-binary
+        - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --quiet
+        - composer install --no-dev --prefer-dist --classmap-authoritative --quiet --no-progress
+        - composer dumpautoload -o --quiet
+        - vendor/bin/rr get-binary --quiet
       modules:
         - sockets
       command: ./rr serve
+      # Production RoadRunner settings
+      server:
+        workers: 100
+        max_requests: 1000
+        
     swoole:
       extensions:
         - swoole/6.2.1
@@ -44,6 +97,12 @@ language:
       build_deps:
         - libbrotli-dev
         - libssl-dev
+      # Production Swoole settings
+      swoole:
+        daemonize: true
+        worker_num: 100
+        max_request: 1000
+        
     reactphp:
       deps:
         - libevent-dev
@@ -55,7 +114,19 @@ language:
         - pcntl
       extensions:
         - event
+      # Production ReactPHP settings
+      server:
+        workers: 100
+        max_connections: 10000
 
 framework:
   engines:
     - php-fpm
+  
+# Security considerations for production:
+# - All dependencies installed without dev dependencies
+# - Quiet mode for security (no verbose output)
+# - Production environment flag set
+# - Debug mode disabled
+# - Error display disabled
+# - PHP version exposure disabled

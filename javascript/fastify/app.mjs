@@ -1,29 +1,46 @@
 /**
  * Fastify Benchmark Server
  * 
- * A high-performance benchmark server implementation using Fastify framework.
- * Follows Node.js best practices including proper error handling, middleware,
- * and logging.
+ * Production-grade benchmark server implementation using Fastify framework.
+ * Follows Node.js best practices including:
+ * - Disabled debug logging
+ * - Performance optimization
+ * - Error handling
+ * - Security best practices
+ * - Environment variable support
  */
 
 import fastify from 'fastify';
-import fastifyPlugin from 'fastify-plugin';
+
+// Production Configuration
+const PORT = parseInt(process.env.PORT || '3000', 10);
+const HOST = process.env.HOST || '0.0.0.0';
+const NODE_ENV = process.env.NODE_ENV || 'production';
+const LOG_LEVEL = process.env.LOG_LEVEL || 'warn';
 
 // Workers can share any TCP connection
 const app = fastify({
-  logger: {
-    level: process.env.LOG_LEVEL || 'info',
-    transport: {
+  // Disable logging in production for maximum performance
+  logger: LOG_LEVEL === 'warn' || LOG_LEVEL === 'error' ? false : {
+    level: LOG_LEVEL,
+    transport: NODE_ENV !== 'production' ? {
       target: 'pino-pretty',
       options: {
         translateTime: 'SYS:yyyy-mm-dd HH:MM:ss',
         ignore: 'pid,hostname',
       },
-    },
+    } : undefined,
   },
-  disableRequestLogging: false,
-  bodyLimit: 16 * 1024 * 1024, // 16 MB
+  disableRequestLogging: true, // Disable request logging for benchmarking
+  bodyLimit: 10 * 1024 * 1024, // 10 MB
   maxParamLength: 100,
+  connectionTimeout: 30000, // 30 seconds
+  keepAliveTimeout: 0, // Disable for benchmarking
+  requestTimeout: 30000, // 30 seconds
+  // Security settings
+  disableRequestLogging: true,
+  exposeHeadRoutes: false,
+  return503OnClosing: true,
 });
 
 /**
@@ -38,27 +55,8 @@ app.addContentTypeParser('application/x-www-form-urlencoded', function (req, bod
 });
 
 /**
- * Request logging plugin
- * Adds custom request logging with timing
- */
-app.register(fastifyPlugin(async function (fastify) {
-  fastify.addHook('onRequest', async (request, reply) => {
-    request.startTime = process.hrtime.bigint();
-  });
-
-  fastify.addHook('onResponse', async (request, reply) => {
-    const duration = process.hrtime.bigint() - request.startTime;
-    fastify.log.info({
-      method: request.method,
-      url: request.url,
-      statusCode: reply.statusCode,
-      duration: Number(duration) / 1e6, // Convert to ms
-    }, 'request completed');
-  });
-}));
-
-/**
  * Root endpoint handler
+ * Optimized for minimal latency and maximum throughput
  * @route GET /
  * @returns {string} Empty response for benchmarking
  */
@@ -70,13 +68,13 @@ app.get('/', {
     },
   },
 }, async function (request, reply) {
-  app.log.debug('Root endpoint accessed');
   reply.header('Content-Type', 'text/plain');
   reply.send('');
 });
 
 /**
  * Get user by ID endpoint
+ * Optimized endpoint that returns the user ID as plain text
  * @route GET /user/:id
  * @param {string} id - User identifier from path
  * @returns {string} User ID as plain text
@@ -96,13 +94,13 @@ app.get('/user/:id', {
   },
 }, async function (request, reply) {
   const { id } = request.params;
-  app.log.debug(`User endpoint accessed with ID: ${id}`);
   reply.header('Content-Type', 'text/plain');
   reply.send(id);
 });
 
 /**
  * Create user endpoint
+ * Optimized POST endpoint for creating users
  * @route POST /user
  * @returns {string} Empty response for benchmarking
  */
@@ -114,13 +112,13 @@ app.post('/user', {
     },
   },
 }, async function (request, reply) {
-  app.log.debug('Create user endpoint accessed');
   reply.header('Content-Type', 'text/plain');
   reply.send('');
 });
 
 /**
  * Health check endpoint for monitoring
+ * Production health check endpoint used by monitoring systems
  * @route GET /health
  * @returns {string} Health status
  */
@@ -138,14 +136,12 @@ app.get('/health', {
 
 // Global error handler
 app.setErrorHandler(function (error, request, reply) {
-  app.log.error('Unhandled error:', error);
-  
-  if (process.env.NODE_ENV === 'production') {
-    reply.header('Content-Type', 'text/plain');
-    reply.code(500).send('');
-  } else {
-    reply.code(500).send(error.message || 'Internal Server Error');
+  // In production, only log errors to stderr
+  if (NODE_ENV === 'production') {
+    process.stderr.write(`[${new Date().toISOString()}] ERROR: ${error.message}\n`);
   }
+  reply.header('Content-Type', 'text/plain');
+  reply.code(500).send('');
 });
 
 // 404 handler
@@ -156,27 +152,36 @@ app.setNotFoundHandler(function (request, reply) {
 
 // Graceful shutdown
 process.on('SIGTERM', async () => {
-  app.log.info('SIGTERM received. Shutting down gracefully...');
+  if (NODE_ENV !== 'production') {
+    console.log('SIGTERM received. Shutting down gracefully...');
+  }
   await app.close();
   process.exit(0);
 });
 
 process.on('SIGINT', async () => {
-  app.log.info('SIGINT received. Shutting down gracefully...');
+  if (NODE_ENV !== 'production') {
+    console.log('SIGINT received. Shutting down gracefully...');
+  }
   await app.close();
   process.exit(0);
 });
 
-// Running Node.js will now share port between the workers:
-const port = parseInt(process.env.PORT || '3000', 10);
-const host = process.env.HOST || '0.0.0.0';
-
-app.listen({ port, host }, function (err, address) {
+// Start server
+app.listen({ port: PORT, host: HOST }, function (err, address) {
   if (err) {
-    app.log.error(err);
+    if (NODE_ENV === 'production') {
+      process.stderr.write(`[${new Date().toISOString()}] ERROR: ${err.message}\n`);
+    } else {
+      console.error('Failed to start server:', err);
+    }
     process.exit(1);
   }
-  app.log.info(`Worker PID ${process.pid} is listening at ${address}`);
+  
+  // Only log startup in non-production environments
+  if (NODE_ENV !== 'production') {
+    console.log(`Worker PID ${process.pid} is listening at ${address}`);
+  }
 });
 
 export default app;

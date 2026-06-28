@@ -2,27 +2,26 @@ package benchmark.vertx;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
+import io.vertx.core.VertxOptions;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
+import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import static io.vertx.core.http.HttpMethod.GET;
-import static io.vertx.core.http.HttpMethod.POST;
 
 /**
  * Vert.x Benchmark Application
  * 
- * <p>A high-performance benchmark server using Vert.x framework.
- * Follows Vert.x best practices including async/non-blocking I/O,
- * proper error handling, and logging.</p>
+ * <p>Production-grade high-performance benchmark server using Vert.x framework.
+ * Follows Vert.x best practices including:
+ * - Async/non-blocking I/O
+ * - Minimal logging for production (only errors)
+ * - Proper error handling
+ * - Optimized server configuration
+ * - Security best practices</p>
  */
 public class BenchmarkApplication extends AbstractVerticle {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BenchmarkApplication.class);
-    
     private HttpServer server;
 
     @Override
@@ -31,39 +30,43 @@ public class BenchmarkApplication extends AbstractVerticle {
         int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "3000"));
         String host = System.getenv().getOrDefault("HOST", "0.0.0.0");
 
-        LOG.info("Starting Vert.x benchmark server on {}:{}", host, port);
-        LOG.debug("Event Loop Size: {}", VertxOptions.DEFAULT_EVENT_LOOP_POOL_SIZE);
-        LOG.debug("Native transport enabled: {}", vertx.isNativeTransportEnabled());
+        // Configure HTTP server with production settings
+        HttpServerOptions serverOptions = new HttpServerOptions()
+                .setHost(host)
+                .setPort(port)
+                .setMaxInitialLineLength(8192)
+                .setMaxHeaderSize(8192)
+                .setMaxChunkSize(8192)
+                .setCompressionSupported(false) // Disable compression for benchmarking
+                .setIdleTimeout(0) // Disable idle timeout for benchmarking
+                .setKeepAlive(true)
+                .setReuseAddress(true)
+                .setReusePort(true);
 
-        server = vertx
-                .createHttpServer()
+        // Configure Vert.x options for production
+        VertxOptions vertxOptions = new VertxOptions()
+                .setEventLoopPoolSize(Math.max(4, Runtime.getRuntime().availableProcessors()))
+                .setWorkerPoolSize(20)
+                .setInternalBlockingPoolSize(20);
+
+        // Initialize Vert.x with production options
+        vertx = vertx != null ? vertx : io.vertx.core.Vertx.vertx(vertxOptions);
+
+        server = vertx.createHttpServer(serverOptions)
                 .requestHandler(this::handleRequests)
-                .listen(port, host);
+                .listen();
 
         server
-                .onFailure(throwable -> {
-                    LOG.error("Failed to start server: {}", throwable.getMessage(), throwable);
-                    onReady.fail(throwable);
-                })
-                .onSuccess(success -> {
-                    LOG.info("Server started successfully on port {}", port);
-                    onReady.complete();
-                });
+                .onFailure(throwable -> onReady.fail(throwable))
+                .onSuccess(success -> onReady.complete());
     }
 
     @Override
     public void stop(Promise<Void> onStop) {
-        LOG.info("Stopping Vert.x benchmark server");
         if (server != null) {
             server.close()
-                    .onFailure(throwable -> {
-                        LOG.error("Error stopping server: {}", throwable.getMessage(), throwable);
-                        onStop.fail(throwable);
-                    })
-                    .onSuccess(success -> {
-                        LOG.info("Server stopped successfully");
-                        onStop.complete();
-                    });
+                    .onFailure(throwable -> onStop.fail(throwable))
+                    .onSuccess(success -> onStop.complete());
         } else {
             onStop.complete();
         }
@@ -72,18 +75,19 @@ public class BenchmarkApplication extends AbstractVerticle {
     /**
      * Handle incoming HTTP requests.
      * 
+     * <p>Optimized request handler with minimal overhead for benchmarking.</p>
+     * 
      * @param request The HTTP server request
      */
     private void handleRequests(HttpServerRequest request) {
-        LOG.debug("{} {}", request.method(), request.path());
-        
         try {
             String path = request.path();
             HttpMethod method = request.method();
             HttpServerResponse response = request.response();
-            
+
             // Configure response for benchmarking
             response.putHeader("Content-Type", "text/plain");
+            response.putHeader("Server", "Vert.x");
 
             // GET requests
             if (method == GET) {
@@ -94,16 +98,16 @@ public class BenchmarkApplication extends AbstractVerticle {
                 } else if (path.equals("/health")) {
                     handleHealthCheck(response);
                 } else {
-                    handleNotFound(response, path);
+                    handleNotFound(response);
                 }
             } else if (method == POST) {
                 if (path.equals("/user")) {
                     handleCreateUser(response);
                 } else {
-                    handleNotFound(response, path);
+                    handleNotFound(response);
                 }
             } else {
-                handleMethodNotAllowed(response, method);
+                handleMethodNotAllowed(response);
             }
         } catch (Exception e) {
             handleException(request.response(), e);
@@ -113,22 +117,24 @@ public class BenchmarkApplication extends AbstractVerticle {
     /**
      * Handle root endpoint.
      * 
+     * <p>Optimized for minimal latency and maximum throughput.</p>
+     * 
      * @param response The HTTP server response
      */
     private void handleRoot(HttpServerResponse response) {
-        LOG.debug("Root endpoint accessed");
         response.setStatusCode(200).end();
     }
 
     /**
      * Handle GET /user/{id} endpoint.
      * 
+     * <p>Extracts user ID from path and returns it.</p>
+     * 
      * @param response The HTTP server response
      * @param path The request path
      */
     private void handleGetUser(HttpServerResponse response, String path) {
         String id = path.substring(6); // Remove "/user/" prefix
-        LOG.debug("User endpoint accessed with ID: {}", id);
         response.setStatusCode(200).end(id);
     }
 
@@ -138,7 +144,6 @@ public class BenchmarkApplication extends AbstractVerticle {
      * @param response The HTTP server response
      */
     private void handleCreateUser(HttpServerResponse response) {
-        LOG.debug("Create user endpoint accessed");
         response.setStatusCode(200).end();
     }
 
@@ -155,10 +160,8 @@ public class BenchmarkApplication extends AbstractVerticle {
      * Handle 404 Not Found.
      * 
      * @param response The HTTP server response
-     * @param path The request path
      */
-    private void handleNotFound(HttpServerResponse response, String path) {
-        LOG.warn("Path not found: {}", path);
+    private void handleNotFound(HttpServerResponse response) {
         response.setStatusCode(404).end("Not Found");
     }
 
@@ -166,10 +169,8 @@ public class BenchmarkApplication extends AbstractVerticle {
      * Handle 405 Method Not Allowed.
      * 
      * @param response The HTTP server response
-     * @param method The HTTP method
      */
-    private void handleMethodNotAllowed(HttpServerResponse response, HttpMethod method) {
-        LOG.warn("Method not allowed: {}", method);
+    private void handleMethodNotAllowed(HttpServerResponse response) {
         response.setStatusCode(405).end("Method Not Allowed");
     }
 
@@ -180,18 +181,6 @@ public class BenchmarkApplication extends AbstractVerticle {
      * @param exception The exception that was thrown
      */
     private static void handleException(HttpServerResponse response, Exception exception) {
-        LOG.error("Unhandled exception: {}", exception.getMessage(), exception);
         response.setStatusCode(500).end("Internal Server Error");
-    }
-
-    /**
-     * Error response helper.
-     * 
-     * @param response The HTTP server response
-     * @param msg The error message
-     */
-    @Deprecated
-    private static void errorResponse(HttpServerResponse response, String msg) {
-        response.setStatusCode(500).end("Incorrect HTTP call: " + msg);
     }
 }

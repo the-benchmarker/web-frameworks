@@ -1,5 +1,16 @@
 {
+  "name": "hono-benchmark",
+  "version": "1.0.0",
+  "description": "Production-grade Hono benchmark server",
+  "main": "app.ts",
+  "scripts": {
+    "start": "bun run app.ts",
+    "prod": "NODE_ENV=production bun run app.ts"
+  },
   "dependencies": {
     "hono": "~4.12.0"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
   }
 }

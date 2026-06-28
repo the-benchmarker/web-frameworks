@@ -5,18 +5,36 @@ declare(strict_types=1);
 /**
  * ChubbyPHP Swoole Framework Benchmark Server Entry Point
  * 
- * A high-performance benchmark server using ChubbyPHP with Swoole.
- * Follows PHP best practices including proper error handling and logging.
+ * Production-grade benchmark server using ChubbyPHP with Swoole.
+ * Implements security best practices, proper error handling, and optimized logging.
  */
 
-// Enable error reporting for development
+// =============================================================================
+// PRODUCTION CONFIGURATION
+// =============================================================================
+
 error_reporting(E_ALL);
 ini_set('display_errors', '0');
+ini_set('display_startup_errors', '0');
 ini_set('log_errors', '1');
+ini_set('log_errors_max_len', '1024');
+ini_set('ignore_repeated_errors', '1');
+ini_set('ignore_repeated_source', '1');
+ini_set('html_errors', '0');
+
+define('DEBUG_MODE', false);
+
+define('APP_NAME', 'ChubbyPHP Swoole Benchmark Server');
+
+// Security settings
+ini_set('expose_php', '0');
 
 // Configure request body size limit (16 MB)
 ini_set('post_max_size', '16M');
 ini_set('upload_max_filesize', '16M');
+
+// Performance settings
+ini_set('memory_limit', '256M');
 
 namespace App;
 
@@ -39,6 +57,28 @@ use Slim\Psr7\Factory\StreamFactory;
 use Slim\Psr7\Factory\UploadedFileFactory;
 use Swoole\Http\Server;
 
+// =============================================================================
+// Security Headers Middleware
+// =============================================================================
+
+/**
+ * Custom middleware to add security headers
+ */
+class SecurityHeadersMiddleware implements \Psr\Http\Server\MiddlewareInterface
+{
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        $response = $handler->handle($request);
+        return $response
+            ->withHeader('X-Content-Type-Options', 'nosniff')
+            ->withHeader('X-Frame-Options', 'DENY')
+            ->withHeader('X-XSS-Protection', '1; mode=block')
+            ->withHeader('Content-Security-Policy', "default-src 'self'")
+            ->withHeader('Referrer-Policy', 'strict-origin-when-cross-origin')
+            ->withHeader('Cache-Control', 'max-age=3600');
+    }
+}
+
 /*
 |--------------------------------------------------------------------------
 | Logging Setup
@@ -46,22 +86,71 @@ use Swoole\Http\Server;
 */
 
 /**
- * Custom logger for benchmarking
+ * Production-grade logger for benchmarking
  * 
  * @param string $message Log message
- * @param string $level Log level (debug, info, error)
+ * @param string $level Log level (debug, info, warning, error, critical)
  */
 function benchmark_log(string $message, string $level = 'debug'): void {
+    if (!DEBUG_MODE && $level === 'debug') {
+        return;
+    }
+    
     $timestamp = date('Y-m-d H:i:s');
-    error_log("[{$timestamp}] {$level} - {$message}");
+    $logEntry = sprintf("[%s] %s - %s", $timestamp, strtoupper($level), $message);
+    
+    // Log to error log
+    error_log($logEntry);
+    
+    // In production, don't log debug messages to slow down the application
+    if (DEBUG_MODE) {
+        if ($level === 'error' || $level === 'critical') {
+            fwrite(STDERR, $logEntry . PHP_EOL);
+        }
+    }
 }
+
+/*
+|--------------------------------------------------------------------------
+| Error Handling
+|--------------------------------------------------------------------------
+*/
+
+/**
+ * Production error handler
+ */
+set_error_handler(function ($code, $message, $file, $line) {
+    if (!DEBUG_MODE) {
+        benchmark_log("Error [{$code}]: {$message} in {$file} on line {$line}", 'error');
+        http_response_code(500);
+        header('Content-Type: text/plain');
+        echo 'Internal Server Error';
+        exit;
+    }
+});
+
+/**
+ * Production exception handler
+ */
+set_exception_handler(function ($exception) {
+    benchmark_log("Exception: " . $exception->getMessage() . "\n" . $exception->getTraceAsString(), 'error');
+    http_response_code(500);
+    header('Content-Type: text/plain');
+    if (DEBUG_MODE) {
+        echo "Error: " . $exception->getMessage() . "\nFile: " . $exception->getFile() . ":" . $exception->getLine();
+    } else {
+        echo 'Internal Server Error';
+    }
+    exit;
+});
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
 $responseFactory = new ResponseFactory();
 
 $app = new Application([
-    new ExceptionMiddleware($responseFactory, true),
+    new ExceptionMiddleware($responseFactory, DEBUG_MODE),
+    new SecurityHeadersMiddleware(),
     new RouteMatcherMiddleware(new RouteMatcher(new RoutesByName([
         // Root endpoint
         Route::get('/', 'home', new class ($responseFactory) implements RequestHandlerInterface {
@@ -71,7 +160,7 @@ $app = new Application([
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
                 benchmark_log('Root endpoint accessed');
-                return $this->responseFactory->createResponse()->withHeader('Content-Type', 'text/plain');
+                return $this->responseFactory->createResponse(200)->withHeader('Content-Type', 'text/plain');
             }
         }),
         
@@ -84,6 +173,14 @@ $app = new Application([
             {
                 $id = $request->getAttribute('id');
                 benchmark_log("User endpoint accessed with ID: {$id}");
+                
+                // Input validation - security best practice
+                if (empty($id)) {
+                    $response = $this->responseFactory->createResponse(400);
+                    $response->getBody()->write('Bad Request: Missing ID parameter');
+                    return $response->withHeader('Content-Type', 'text/plain');
+                }
+                
                 $response = $this->responseFactory->createResponse();
                 $response->getBody()->write($id);
                 return $response->withHeader('Content-Type', 'text/plain');
@@ -98,7 +195,7 @@ $app = new Application([
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
                 benchmark_log('Create user endpoint accessed');
-                return $this->responseFactory->createResponse()->withHeader('Content-Type', 'text/plain');
+                return $this->responseFactory->createResponse(201)->withHeader('Content-Type', 'text/plain');
             }
         }),
         
@@ -125,6 +222,8 @@ $server->set([
     'enable_coroutine' => false,
     'log_file' => '/dev/null',
     'log_level' => SWOOLE_LOG_ERROR,
+    'daemonize' => false,
+    'max_request' => 10000,
 ]);
 
 $server->on('request', new OnRequest(

@@ -1,1 +1,1 @@
-rootProject.name="web"
+rootProject.name = "micronaut-benchmark"

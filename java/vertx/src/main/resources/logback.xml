@@ -1,25 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Production-grade Logback configuration for Micronaut benchmark application
+  Production-grade Logback configuration for Vert.x benchmark application
   
   Features:
   - WARN level logging by default (minimal overhead)
-  - Errors logged to file only (no console output in production)
+  - Errors logged to both console and file
+  - Async logging for better performance
   - No debug logging in production
+  - Console output disabled by default (can be enabled via environment variable)
 -->
 <configuration scan="true" scanPeriod="30 seconds">
     
     <!-- Application name -->
-    <property name="APP_NAME" value="micronaut-benchmark" />
+    <property name="APP_NAME" value="vertx-benchmark" />
     
     <!-- Log level - can be overridden via system property -->
     <property name="LOG_LEVEL" value="${LOG_LEVEL:-WARN}" />
     
+    <!-- Enable console logging - can be overridden via environment variable -->
+    <property name="CONSOLE_LOGGING" value="${CONSOLE_LOGGING:-false}" />
+    
     <!-- Log file location -->
-    <property name="LOG_FILE" value="${LOG_FILE:-/var/log/micronaut-benchmark.log}" />
+    <property name="LOG_FILE" value="${LOG_FILE:-/var/log/vertx-benchmark.log}" />
     
     <!-- Log pattern -->
     <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
+    
+    <!-- Console appender - only enabled if CONSOLE_LOGGING is true -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <withJansi>false</withJansi>
+    </appender>
     
     <!-- File appender for errors only -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -42,19 +56,39 @@
         </filter>
     </appender>
     
+    <!-- Async appender for better performance -->
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- Include reference to Console appender -->
+        <appender-ref ref="CONSOLE" />
+        <!-- Include reference to File appender -->
+        <appender-ref ref="FILE" />
+        <!-- Queue size -->
+        <queueSize>1000</queueSize>
+        <!-- Discard events if queue is full -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- Include caller data -->
+        <includeCallerData>true</includeCallerData>
+    </appender>
+    
     <!-- Root logger -->
     <root level="${LOG_LEVEL}">
+        <!-- Console appender only if enabled -->
+        <if condition='property("CONSOLE_LOGGING").equalsIgnoreCase("true")'>
+            <then>
+                <appender-ref ref="ASYNC" />
+            </then>
+        </if>
         <!-- Always log errors to file -->
         <appender-ref ref="FILE" />
     </root>
     
-    <!-- Micronaut specific logger - minimal logging -->
-    <logger name="io.micronaut" level="${LOG_LEVEL}" additivity="false">
+    <!-- Vert.x specific logger - minimal logging -->
+    <logger name="io.vertx" level="${LOG_LEVEL}" additivity="false">
         <appender-ref ref="FILE" />
     </logger>
     
     <!-- Benchmark application logger -->
-    <logger name="com.example" level="${LOG_LEVEL}" additivity="false">
+    <logger name="benchmark" level="${LOG_LEVEL}" additivity="false">
         <appender-ref ref="FILE" />
     </logger>
     

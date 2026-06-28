@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Production-grade Logback configuration for Micronaut benchmark application
+  Production-grade Logback configuration for Javalin benchmark application
   
   Features:
   - WARN level logging by default (minimal overhead)
@@ -9,14 +9,11 @@
 -->
 <configuration scan="true" scanPeriod="30 seconds">
     
-    <!-- Application name -->
-    <property name="APP_NAME" value="micronaut-benchmark" />
-    
     <!-- Log level - can be overridden via system property -->
     <property name="LOG_LEVEL" value="${LOG_LEVEL:-WARN}" />
     
     <!-- Log file location -->
-    <property name="LOG_FILE" value="${LOG_FILE:-/var/log/micronaut-benchmark.log}" />
+    <property name="LOG_FILE" value="${LOG_FILE:-/var/log/javalin-benchmark.log}" />
     
     <!-- Log pattern -->
     <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
@@ -48,18 +45,18 @@
         <appender-ref ref="FILE" />
     </root>
     
-    <!-- Micronaut specific logger - minimal logging -->
-    <logger name="io.micronaut" level="${LOG_LEVEL}" additivity="false">
+    <!-- Javalin specific logger - minimal logging -->
+    <logger name="io.javalin" level="${LOG_LEVEL}" additivity="false">
         <appender-ref ref="FILE" />
     </logger>
     
     <!-- Benchmark application logger -->
-    <logger name="com.example" level="${LOG_LEVEL}" additivity="false">
+    <logger name="benchmark" level="${LOG_LEVEL}" additivity="false">
         <appender-ref ref="FILE" />
     </logger>
     
-    <!-- Netty logger - minimal logging -->
-    <logger name="io.netty" level="WARN" additivity="false">
+    <!-- Jetty logger - minimal logging -->
+    <logger name="org.eclipse.jetty" level="WARN" additivity="false">
         <appender-ref ref="FILE" />
     </logger>
     

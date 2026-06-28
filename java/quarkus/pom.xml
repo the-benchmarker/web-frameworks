@@ -2,9 +2,12 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>benchmarker.the</groupId>
-  <artifactId>quarkus</artifactId>
+  <groupId>benchmark.quarkus</groupId>
+  <artifactId>quarkus-benchmark</artifactId>
   <version>1.0.0</version>
+  <name>Quarkus Benchmark</name>
+  <description>Production-grade Quarkus benchmark application</description>
+  
   <properties>
     <compiler-plugin.version>3.15.0</compiler-plugin.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
@@ -12,7 +15,6 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
 
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
@@ -31,16 +33,44 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+    <!-- REST support -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-rest</artifactId>
     </dependency>
+    
+    <!-- Security -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-security</artifactId>
+    </dependency>
+    
+    <!-- Health & Monitoring -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-health</artifactId>
+    </dependency>
+    
+    <!-- Container support -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-container-image-docker</artifactId>
     </dependency>
+    
+    <!-- Performance optimizations -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-netty</artifactId>
+    </dependency>
+    
+    <!-- Logging -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-logging-json</artifactId>
+    </dependency>
   </dependencies>
   <build>
+    <finalName>benchmark</finalName>
     <plugins>
       <plugin>
         <groupId>io.quarkus.platform</groupId>
@@ -56,21 +86,22 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <skipTests>true</skipTests>
+          <skipTestDeploy>true</skipTestDeploy>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${compiler-plugin.version}</version>
-      </plugin>
-<!--       <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>${surefire-plugin.version}</version>
         <configuration>
-          <systemPropertyVariables>
-            <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-            <maven.home>${maven.home}</maven.home>
-          </systemPropertyVariables>
+          <source>25</source>
+          <target>25</target>
+          <encoding>UTF-8</encoding>
+          <showWarnings>true</showWarnings>
+          <showDeprecation>true</showDeprecation>
         </configuration>
-      </plugin> -->
+      </plugin>
     </plugins>
   </build>
   <profiles>
@@ -86,6 +117,18 @@
       </build>
       <properties>
         <quarkus.package.type>native</quarkus.package.type>
+      </properties>
+    </profile>
+    <profile>
+      <id>prod</id>
+      <activation>
+        <property>
+          <name>prod</name>
+        </property>
+      </activation>
+      <properties>
+        <quarkus.package.type>uber-jar</quarkus.package.type>
+        <quarkus.profile>prod</quarkus.profile>
       </properties>
     </profile>
   </profiles>

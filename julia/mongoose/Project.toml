@@ -1,5 +1,17 @@
+name = "MongooseBenchmark"
+uuid = "9d1c2e3f-4a5b-6c7d-8e9f-0f1a2b3c4d5e"
+authors = ["Benchmark Team"]
+version = "1.0.0"
+
 [deps]
 Mongoose = "494b707d-6180-4d60-8018-fdbee1ff8085"
 
 [compat]
+julia = "1.6"
 Mongoose = "~0.3.0"
+
+[extras]
+Test = "8dfed614-e22d-5e54-85a1-110775859804"
+
+[targets]
+test = ["Test"]

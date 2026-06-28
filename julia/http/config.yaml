@@ -1,3 +1,17 @@
 framework:
   github: JuliaWeb/HTTP.jl
   version: 2.0
+
+  build:
+    - julia --project -e "using Pkg; Pkg.resolve(); Pkg.instantiate()"
+
+  binaries:
+    - julia --project server.jl
+
+language:
+  engines:
+    default:
+      command: /usr/bin/julia --project /opt/web/server.jl
+      environment:
+        - JULIA_ENV=prod
+        - LOG_LEVEL=warn

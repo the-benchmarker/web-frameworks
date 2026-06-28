@@ -1,3 +1,18 @@
 framework:
   website: fastify.dev
   version: 5.8
+
+  build:
+    - npm install --production
+
+  binaries:
+    - node app.mjs
+
+language:
+  engines:
+    default:
+      command: /usr/bin/node /opt/web/app.mjs
+      environment:
+        - NODE_ENV=production
+        - NODE_OPTIONS=--max-old-space-size=2048
+        - LOG_LEVEL=warn

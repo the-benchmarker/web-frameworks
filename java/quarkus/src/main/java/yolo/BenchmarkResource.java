@@ -1,6 +1,5 @@
 package yolo;
 
-import io.quarkus.logging.Log;
 import io.smallrye.common.annotation.NonBlocking;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -11,15 +10,21 @@ import jakarta.ws.rs.core.MediaType;
 /**
  * Quarkus Benchmark Resource
  * 
- * <p>JAX-RS resource for benchmark endpoints using Quarkus framework.
- * Follows Quarkus best practices including proper REST design, logging,
- * and non-blocking I/O.</p>
+ * <p>Production-grade JAX-RS resource for benchmark endpoints using Quarkus framework.
+ * Follows best practices including:
+ * - Proper REST design
+ * - Non-blocking I/O
+ * - Minimal logging for production (only errors)
+ * - Optimized for benchmarking</p>
  */
 @Path("/")
 public class BenchmarkResource {
 
     /**
      * Root endpoint handler.
+     * 
+     * <p>Optimized for minimal latency and maximum throughput.
+     * No logging in production for maximum performance.</p>
      * 
      * @return Empty string for benchmarking
      */
@@ -28,12 +33,14 @@ public class BenchmarkResource {
     @Produces(MediaType.TEXT_PLAIN)
     @NonBlocking
     public String root() {
-        Log.debug("Root endpoint accessed");
         return "";
     }
 
     /**
      * Get user by ID endpoint.
+     * 
+     * <p>Optimized endpoint that returns the user ID as plain text.
+     * No logging in production for maximum performance.</p>
      * 
      * @param id The user identifier from path
      * @return The user ID as plain text
@@ -43,12 +50,14 @@ public class BenchmarkResource {
     @Produces(MediaType.TEXT_PLAIN)
     @NonBlocking
     public String userId(String id) {
-        Log.debugf("User endpoint accessed with ID: %s", id);
         return id;
     }
 
     /**
      * Create user endpoint.
+     * 
+     * <p>Optimized POST endpoint for creating users.
+     * Returns empty response for benchmarking.</p>
      * 
      * @return Empty string for benchmarking
      */
@@ -57,12 +66,14 @@ public class BenchmarkResource {
     @Produces(MediaType.TEXT_PLAIN)
     @NonBlocking
     public String createUser() {
-        Log.debug("Create user endpoint accessed");
         return "";
     }
 
     /**
      * Health check endpoint for monitoring.
+     * 
+     * <p>Production health check endpoint used by monitoring systems.
+     * Always returns OK status.</p>
      * 
      * @return Health status
      */

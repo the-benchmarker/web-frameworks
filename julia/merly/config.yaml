@@ -3,3 +3,16 @@ language:
 framework:
   github: codeneomatrix/Merly.jl
   version: 1.0
+
+  build:
+    - julia --project -e "using Pkg; Pkg.resolve(); Pkg.instantiate()"
+
+  binaries:
+    - julia --project server.jl
+
+engines:
+  default:
+    command: /usr/bin/julia --project /opt/web/server.jl
+    environment:
+      - JULIA_ENV=prod
+      - LOG_LEVEL=warn

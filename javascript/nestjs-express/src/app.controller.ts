@@ -1,32 +1,33 @@
-import { Controller, Get, HttpCode, HttpException, HttpStatus, Param, Post, Res } from "@nestjs/common";
-import { Logger } from "@nestjs/common";
-import { Response } from "express";
+import { Controller, Get, HttpCode, HttpStatus, Param, Post } from "@nestjs/common";
 
 /**
  * NestJS Benchmark Controller
  * 
- * REST controller for benchmark endpoints using NestJS framework.
- * Follows NestJS best practices including proper error handling, logging,
- * and dependency injection.
+ * Production-grade REST controller for benchmark endpoints using NestJS framework.
+ * Follows best practices including:
+ * - Disabled debug logging for production
+ * - Proper error handling
+ * - Dependency injection
+ * - Performance optimization
  */
 @Controller()
 export class AppController {
-  private readonly logger = new Logger(AppController.name);
 
   /**
    * Root endpoint handler
+   * Optimized for minimal latency and maximum throughput
    * 
    * @returns Empty string for benchmarking
    */
   @Get()
   @HttpCode(HttpStatus.OK)
   getHello(): string {
-    this.logger.debug("Root endpoint accessed");
     return "";
   }
 
   /**
    * Get user by ID endpoint
+   * Optimized endpoint that returns the user ID as plain text
    * 
    * @param id - User identifier from path
    * @returns User ID as plain text
@@ -34,24 +35,24 @@ export class AppController {
   @Get("/user/:id")
   @HttpCode(HttpStatus.OK)
   getUserId(@Param("id") id: string): string {
-    this.logger.debug(`User endpoint accessed with ID: ${id}`);
     return id;
   }
 
   /**
    * Create user endpoint
+   * Optimized POST endpoint for creating users
    * 
    * @returns Empty string for benchmarking
    */
   @Post("/user")
   @HttpCode(HttpStatus.OK)
   postUser(): string {
-    this.logger.debug("Create user endpoint accessed");
     return "";
   }
 
   /**
    * Health check endpoint for monitoring
+   * Production health check endpoint used by monitoring systems
    * 
    * @returns Health status
    */

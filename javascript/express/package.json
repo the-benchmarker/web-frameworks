@@ -1,6 +1,17 @@
 {
+  "name": "express-benchmark",
+  "version": "1.0.0",
+  "description": "Production-grade Express.js benchmark server",
+  "main": "app.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node app.mjs",
+    "prod": "NODE_ENV=production node app.mjs"
+  },
   "dependencies": {
     "express": "~5.2.0"
   },
-  "type": "module"
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
