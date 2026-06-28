@@ -38,5 +38,14 @@ dependencies {
 ktor {
     fatJar {
         archiveFileName.set("server.jar")
+        exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    compilerOptions {
+        allWarningsAsErrors = false
+        freeCompilerArgs.addAll("-Xjvm-default=all", "-opt")
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
     }
 }

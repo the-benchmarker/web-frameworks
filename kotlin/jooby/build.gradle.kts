@@ -49,6 +49,7 @@ tasks {
         archiveVersion = null
         mergeServiceFiles()
         isZip64 = true
+        exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
 	manifest {
             attributes["Main-Class"] = mainAppClassName
         }
@@ -63,6 +64,14 @@ tasks {
         restartExtensions = listOf("conf", "properties", "class")
         compileExtensions = listOf("java", "kt")
         port = 3000
+    }
+
+    withType<KotlinCompile>().configureEach {
+        kotlinOptions {
+            allWarningsAsErrors = false
+            freeCompilerArgs += "-Xjvm-default=all"
+            jvmTarget = "25"
+        }
     }
 }
 

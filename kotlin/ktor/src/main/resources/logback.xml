@@ -1,18 +1,29 @@
 <configuration>
+    <!-- Production logging configuration - minimal output for performance -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
+    
+    <!-- Async appender for better performance -->
     <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-         <neverBlock>true</neverBlock>
-         <appender-ref ref="STDOUT" />
-     </appender>
+        <neverBlock>true</neverBlock>
+        <queueSize>1000</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <includeCallerData>false</includeCallerData>
+        <appender-ref ref="STDOUT" />
+    </appender>
 
-
+    <!-- Production: ERROR level only to minimize overhead -->
     <root level="ERROR">
         <appender-ref ref="ASYNC"/>
     </root>
+    
+    <!-- Suppress verbose framework logging in production -->
     <logger name="org.eclipse.jetty" level="ERROR"/>
     <logger name="io.netty" level="ERROR"/>
+    <logger name="io.ktor" level="ERROR"/>
+    <logger name="org.yaml" level="ERROR"/>
+    <logger name="ch.qos.logback" level="ERROR"/>
 </configuration>

@@ -24,6 +24,21 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 }
 
-tasks.bootJar {
-	archiveFileName.set("server.jar")
+tasks {
+	bootJar {
+		archiveFileName.set("server.jar")
+		layered {
+			application {
+				intoLayer("spring-boot")
+			}
+		}
+	}
+	
+	withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+		compilerOptions {
+			allWarningsAsErrors = false
+			freeCompilerArgs.addAll("-Xjvm-default=all", "-opt")
+			jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+		}
+	}
 }
