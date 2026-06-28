@@ -1,15 +1,64 @@
+# RestHeart Benchmark Configuration Overrides
+# This file provides production-optimized settings for benchmarking
+# Values here override the default configuration
+
+# HTTP Listener Configuration
 /http-listener:
   enabled: true
-  host: "0.0.0.0"
-  port: 3000
+  host: "0.0.0.0"           # Listen on all network interfaces
+  port: 3000                # Standard benchmark port
+  connection-timeout: 30000 # 30 seconds connection timeout
+  idle-timeout: 60000      # 60 seconds idle timeout
+  
+# Core Configuration
+/core:
+  name: restheart-benchmarker
+  threads: 0               # Use Netty's default thread pool (optimal for benchmarking)
+  buffer-size: 16384       # 16KB buffer size for request/response handling
 
-/core/name: restheart-benchmarker
+# Logging Configuration - Disabled for benchmarking
+/logging:
+  log-level: "OFF"            # Disable all logging for maximum performance
+  requests-log-mode: 0      # 0 = no request logging
+  access-log-enabled: false  # Disable access logging
+  
+# Security Configuration
+/fullAuthorizer:
+  enabled: true             # Enable full authorization (benchmark baseline)
 
-/logging/log-level: "OFF"
-/logging/requests-log-mode: 0
+# Performance Optimization - Disable unnecessary features
+/ping:
+  enabled: false           # Disable ping endpoint
 
-/fullAuthorizer/enabled: true
+/xPoweredBy:
+  enabled: false           # Disable X-Powered-By header
 
-/ping/enabled: false
-/xPoweredBy/enabled: false
-/dateHeader/enabled: false
+/dateHeader:
+  enabled: false           # Disable Date header
+
+/etag:
+  enabled: false           # Disable ETag generation
+
+/cORS:
+  enabled: false           # Disable CORS handling (handled by services)
+
+# JSON Processing Optimization
+/json:
+  # Use simplest JSON processing for benchmarking
+  simple-mode: true
+  
+# GZIP Compression - Disabled for raw performance testing
+/gzip:
+  enabled: false
+
+# Static Resources - Disabled for benchmarking
+/static-resources:
+  enabled: false
+
+# Health Check - Disabled for benchmarking
+/health-check:
+  enabled: false
+
+# Metrics - Disabled to minimize overhead
+/metrics:
+  enabled: false

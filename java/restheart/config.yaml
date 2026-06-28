@@ -1,18 +1,61 @@
+# RestHeart Benchmark Configuration
+# This file configures the RestHeart benchmark application for the the-benchmarker platform
+
 framework:
-  website: restheart.org
-  version: 9.4
+  name: RestHeart
+  website: https://restheart.org
+  version: "9.4"
+  description: Lightweight REST API server benchmark
 
+  # Build configuration
   build:
-    - mvn package
+    - mvn clean package -DskipTests
 
+  # Binaries to be copied to the container
   binaries:
     - etc/conf-overrides.yml
-    - target/benchmark.jar
+    - target/restheart-benchmark.jar
 
+  # Additional files to include
   files:
     - etc/conf-overrides.yml
 
+  # Environment variables (optional)
+  env:
+    JAVA_OPTS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+
+# Language/Engine configuration for the-benchmarker
 language:
   engines:
     default:
-      command: /usr/bin/java --sun-misc-unsafe-memory-access=allow -jar /opt/web/target/benchmark.jar -o /opt/web/etc/conf-overrides.yml
+      # Java command to run the benchmark
+      # Using container-aware JVM settings for optimal performance in Docker
+      command: /usr/bin/java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 --sun-misc-unsafe-memory-access=allow -jar /opt/web/target/restheart-benchmark.jar -o /opt/web/etc/conf-overrides.yml
+      
+  # Multiple Java versions can be configured for different benchmark scenarios
+  versions:
+    java21:
+      command: /usr/bin/java --version:21 -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 --sun-misc-unsafe-memory-access=allow -jar /opt/web/target/restheart-benchmark.jar -o /opt/web/etc/conf-overrides.yml
+    java25:
+      command: /usr/bin/java --version:25 -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 --sun-misc-unsafe-memory-access=allow -jar /opt/web/target/restheart-benchmark.jar -o /opt/web/etc/conf-overrides.yml
+
+# Benchmark specific settings
+benchmark:
+  # Warmup configuration
+  warmup:
+    duration: 30s
+    iterations: 1000
+  
+  # Test configuration
+  test:
+    duration: 60s
+    iterations: 10000
+    concurrency: 100
+  
+  # Metrics to collect
+  metrics:
+    - requests_per_second
+    - response_time_p99
+    - response_time_mean
+    - memory_usage
+    - cpu_usage

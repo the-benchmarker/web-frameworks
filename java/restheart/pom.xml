@@ -1,71 +1,289 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>benchmark</artifactId>
-  <groupId>org.restheart</groupId>
-  <version>1.0.0</version>
-  <packaging>jar</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <properties>
-    <maven.compiler.release>25</maven.compiler.release>
-    <restheart.version>9.4.2</restheart.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
+    <!-- Project Identification -->
+    <groupId>benchmark.restheart</groupId>
+    <artifactId>restheart-benchmark</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
 
-  <dependencies>
-    <dependency>
-        <groupId>org.restheart</groupId>
-        <artifactId>restheart</artifactId>
-        <version>${restheart.version}</version>
-      </dependency>
-  </dependencies>
+    <!-- Project Metadata -->
+    <name>RestHeart Benchmark</name>
+    <description>Benchmark application for RestHeart web framework - a lightweight, high-performance REST API server</description>
+    <url>https://restheart.org</url>
 
-  <build>
-    <finalName>${project.artifactId}</finalName>
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>3.6.2</version>
-            <configuration>
-              <createDependencyReducedPom>true</createDependencyReducedPom>
-              <filters>
-                <filter>
-                  <artifact>*:*</artifact>
-                  <excludes>
-                    <exclude>META-INF/MANIFEST.MF</exclude>
-                    <exclude>module-info.class</exclude>
-                    <exclude>META-INF/versions/*/module-info.class</exclude>
-                    <exclude>META-INF/LICENSE</exclude>
-                    <exclude>META-INF/LICENSE.txt</exclude>
-                    <exclude>META-INF/NOTICE</exclude>
-                    <exclude>META-INF/NOTICE.txt</exclude>
-                    <exclude>META-INF/*.SF</exclude>
-                    <exclude>META-INF/*.DSA</exclude>
-                    <exclude>META-INF/*.RSA</exclude>
-                    <exclude>**/package-info.class</exclude>
-                    <exclude>META-INF/native-image/**</exclude>
-                  </excludes>
-                </filter>
-              </filters>
-            </configuration>
-            <executions>
-              <execution>
-                <phase>package</phase>
-                <goals>
-                  <goal>shade</goal>
-                </goals>
-                <configuration>
-                  <transformers>
-                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                      <mainClass>org.restheart.Bootstrapper</mainClass>
-                    </transformer>
-                  </transformers>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-    </plugins>
-  </build>
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>The Benchmarker Team</name>
+            <email>team@the-benchmarker.org</email>
+            <organization>The Benchmarker</organization>
+            <organizationUrl>https://the-benchmarker.org</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/the-benchmarker/the-benchmarker.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/the-benchmarker/the-benchmarker.git</developerConnection>
+        <url>https://github.com/the-benchmarker/the-benchmarker/tree/master/java/restheart</url>
+    </scm>
+
+    <!-- Properties -->
+    <properties>
+        <!-- Java Version -->
+        <maven.compiler.release>25</maven.compiler.release>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+        
+        <!-- Project Encoding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        
+        <!-- Dependency Versions -->
+        <restheart.version>9.4.2</restheart.version>
+        
+        <!-- Plugin Versions -->
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <maven-shade-plugin.version>3.6.2</maven-shade-plugin.version>
+        <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
+        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+        
+        <!-- Build Configuration -->
+        <finalName>restheart-benchmark</finalName>
+        <mainClass>org.restheart.Bootstrapper</mainClass>
+    </properties>
+
+    <!-- Dependency Management -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.restheart</groupId>
+                <artifactId>restheart</artifactId>
+                <version>${restheart.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.restheart</groupId>
+            <artifactId>restheart</artifactId>
+        </dependency>
+
+        <!-- Testing Dependencies -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.11.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.11.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.13.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.26.3</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- Build Configuration -->
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Maven Compiler Plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <release>${maven.compiler.release}</release>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <parameters>true</parameters>
+                        <compilerArgs>
+                            <arg>--parameters</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+
+                <!-- Maven Shade Plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven-shade-plugin.version}</version>
+                    <configuration>
+                        <createDependencyReducedPom>true</createDependencyReducedPom>
+                        <shadedArtifactAttached>true</shadedArtifactAttached>
+                        <shadedClassifierName>all</shadedClassifierName>
+                        
+                        <filters>
+                            <filter>
+                                <artifact>*:*</artifact>
+                                <excludes>
+                                    <exclude>META-INF/MANIFEST.MF</exclude>
+                                    <exclude>module-info.class</exclude>
+                                    <exclude>META-INF/versions/*/module-info.class</exclude>
+                                    <exclude>META-INF/LICENSE</exclude>
+                                    <exclude>META-INF/LICENSE.txt</exclude>
+                                    <exclude>META-INF/NOTICE</exclude>
+                                    <exclude>META-INF/NOTICE.txt</exclude>
+                                    <exclude>META-INF/*.SF</exclude>
+                                    <exclude>META-INF/*.DSA</exclude>
+                                    <exclude>META-INF/*.RSA</exclude>
+                                    <exclude>**/package-info.class</exclude>
+                                    <exclude>META-INF/native-image/**</exclude>
+                                </excludes>
+                            </filter>
+                        </filters>
+                        
+                        <transformers>
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <mainClass>${mainClass}</mainClass>
+                                <addDefaultImplementationEntries>false</addDefaultImplementationEntries>
+                            </transformer>
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                        </transformers>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>shade-jar</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- Maven Jar Plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>false</addDefaultImplementationEntries>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+
+                <!-- Maven Surefire Plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <includes>
+                            <include>**/*Test.java</include>
+                            <include>**/*Tests.java</include>
+                        </includes>
+                        <excludes>
+                            <exclude>**/IT*.java</exclude>
+                            <exclude>**/*IT.java</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+
+                <!-- Maven Failsafe Plugin for Integration Tests -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.5.2</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <includes>
+                            <include>**/IT*.java</include>
+                            <include>**/*IT.java</include>
+                        </includes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- Profiles -->
+    <profiles>
+        <!-- Production Profile -->
+        <profile>
+            <id>production</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>prod</value>
+                </property>
+            </activation>
+            <properties>
+                <restheart.version>[9.4,9.5)</restheart.version>
+            </properties>
+        </profile>
+
+        <!-- Development Profile -->
+        <profile>
+            <id>development</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>dev</value>
+                </property>
+                <or>
+                    <activeByDefault>true</activeByDefault>
+                </or>
+            </activation>
+            <properties>
+                <restheart.version>9.4.2</restheart.version>
+            </properties>
+        </profile>
+
+        <!-- Debug Profile -->
+        <profile>
+            <id>debug</id>
+            <properties>
+                <maven.compiler.debug>true</maven.compiler.debug>
+                <maven.compiler.debuglevel>lines,vars,source</maven.compiler.debuglevel>
+            </properties>
+        </profile>
+    </profiles>
 </project>
