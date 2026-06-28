@@ -1,3 +1,22 @@
 framework:
-  website: ninenines.eu/docs/en/cowboy/2.14/guide/
-  version: "2.14"
+  name: cowboy
+  website: https://ninenines.eu/docs/en/cowboy/2.14/guide/
+  version: "2.14.2"
+  description: "Small, fast, modular HTTP server"
+  production_ready: true
+  
+features:
+  - http/1.1
+  - http/2
+  - websockets
+  
+security:
+  - compression_disabled: true
+  - security_headers: true
+  - connection_timeout: 5000
+  
+performance:
+  - max_connections: 16384
+  - num_acceptors: 100
+  - nodelay: true
+  - reuseport: true

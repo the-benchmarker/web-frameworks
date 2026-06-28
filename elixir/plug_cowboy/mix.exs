@@ -1,23 +1,59 @@
 defmodule Server.MixProject do
   use Mix.Project
 
+  @version "1.0.0"
+  @source_url "https://github.com/your-org/server"
+
   def project do
     [
       app: :server,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.19",
+      elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      releases: [server: [include_executables_for: [:unix]]]
+      releases: releases(),
+      
+      description: "Production-grade Plug Cowboy web server",
+      package: package(),
+      elixirc_options: elixirc_options(Mix.env())
     ]
   end
 
-  def application, do: [mod: {Server.Application, []}]
+  def application do
+    [
+      mod: {Server.Application, []},
+      extra_applications: [:logger, :plug]
+    ]
+  end
 
   defp deps do
     [
       {:plug, "~> 1.19.0"},
       {:plug_cowboy, "~> 2.8.0"}
+    ]
+  end
+
+  defp releases do
+    [
+      server: [
+        include_executables_for: [:unix],
+        steps: [:assemble]
+      ]
+    ]
+  end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
+  defp elixirc_options(:prod), do: [optimize: true, warnings_as_errors: true]
+  defp elixirc_options(_), do: []
+
+  defp package do
+    [
+      licenses: ["MIT"],
+      links: %{"GitHub" => @source_url},
+      maintainers: ["Your Name <your.email@example.com>"]
     ]
   end
 end

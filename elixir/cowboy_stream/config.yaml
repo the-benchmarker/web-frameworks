@@ -1,3 +1,22 @@
 framework:
-  website: ninenines.eu/docs/en/cowboy/2.14/guide/streams/
-  version: "2.14"
+  name: cowboy_stream
+  website: https://ninenines.eu/docs/en/cowboy/2.14/guide/streams/
+  version: "2.14.2"
+  description: "Cowboy HTTP server with stream handlers"
+  production_ready: true
+  
+features:
+  - http/1.1
+  - http/2
+  - stream_handlers
+  
+security:
+  - compression_disabled: true
+  - security_headers: true
+  - connection_timeout: 5000
+  
+performance:
+  - max_connections: 16384
+  - num_acceptors: 100
+  - nodelay: true
+  - reuseport: true
