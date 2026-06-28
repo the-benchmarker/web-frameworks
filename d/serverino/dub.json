@@ -1,9 +1,46 @@
 {
   "name": "server",
+  "targetType": "executable",
   "dependencies": {
     "serverino": "~>0.7.20"
   },
-  "dflags-ldc": ["-mcpu=native"],
+  "dflags-ldc": [
+    "-mcpu=native",
+    "-release",
+    "-O3",
+    "-boundscheck=off",
+    "-dip1000",
+    "-g"
+  ],
+  "dflags": [
+    "-release",
+    "-O",
+    "-boundscheck=off"
+  ],
+  "lflags": [
+    "-release",
+    "-O"
+  ],
   "subConfigurations": { "serverino": "disable_websockets" },
-  "license": "MIT"
+  "license": "MIT",
+  "buildTypes": {
+    "production": {
+      "dflags-ldc": [
+        "-mcpu=native",
+        "-release",
+        "-O3",
+        "-boundscheck=off",
+        "-dip1000",
+        "-g",
+        "-gs"
+      ],
+      "dflags": [
+        "-release",
+        "-O",
+        "-boundscheck=off",
+        "-g",
+        "-gs"
+      ]
+    }
+  }
 }

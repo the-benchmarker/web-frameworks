@@ -1,9 +1,46 @@
 {
   "name": "server",
+  "targetType": "executable",
   "dependencies": {
     "arsd-official:cgi": "~>12.0.0"
   },
-  "dflags-ldc": ["-mcpu=native"],
+  "dflags-ldc": [
+    "-mcpu=native",
+    "-release",
+    "-O3",
+    "-boundscheck=off",
+    "-dip1000",
+    "-g"
+  ],
+  "dflags": [
+    "-release",
+    "-O",
+    "-boundscheck=off"
+  ],
+  "lflags": [
+    "-release",
+    "-O"
+  ],
   "subConfigurations": { "arsd-official:cgi": "embedded_httpd_processes" },
-  "license": "MIT"
+  "license": "MIT",
+  "buildTypes": {
+    "production": {
+      "dflags-ldc": [
+        "-mcpu=native",
+        "-release",
+        "-O3",
+        "-boundscheck=off",
+        "-dip1000",
+        "-g",
+        "-gs"
+      ],
+      "dflags": [
+        "-release",
+        "-O",
+        "-boundscheck=off",
+        "-g",
+        "-gs"
+      ]
+    }
+  }
 }

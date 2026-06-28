@@ -1,5 +1,6 @@
 {
   "name": "server",
+  "targetType": "executable",
   "dependencies": {
     "vibe-d": "~>0.10",
     "vibe-http": "*",
@@ -8,11 +9,49 @@
   "versions": [
     "VibeManualMemoryManagement",
     "VibeHighEventPriority",
-    "VibeDisableCommandLineParsing"
+    "VibeDisableCommandLineParsing",
+    "VibeDisableLogging",
+    "VibeNoDebug"
   ],
-  "dflags-ldc": ["-mcpu=native"],
+  "dflags-ldc": [
+    "-mcpu=native",
+    "-release",
+    "-O3",
+    "-boundscheck=off",
+    "-dip1000",
+    "-g"
+  ],
+  "dflags": [
+    "-release",
+    "-O",
+    "-boundscheck=off"
+  ],
+  "lflags": [
+    "-release",
+    "-O"
+  ],
   "subConfigurations": {
     "vibe-stream:tls": "notls"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "buildTypes": {
+    "production": {
+      "dflags-ldc": [
+        "-mcpu=native",
+        "-release",
+        "-O3",
+        "-boundscheck=off",
+        "-dip1000",
+        "-g",
+        "-gs"
+      ],
+      "dflags": [
+        "-release",
+        "-O",
+        "-boundscheck=off",
+        "-g",
+        "-gs"
+      ]
+    }
+  }
 }

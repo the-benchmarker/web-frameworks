@@ -1,8 +1,45 @@
 {
   "name": "server",
+  "targetType": "executable",
   "dependencies": {
     "lighttp": "~>0.5.4"
   },
-  "dflags-ldc": ["-mcpu=native"],
-  "license": "MIT"
+  "dflags-ldc": [
+    "-mcpu=native",
+    "-release",
+    "-O3",
+    "-boundscheck=off",
+    "-dip1000",
+    "-g"
+  ],
+  "dflags": [
+    "-release",
+    "-O",
+    "-boundscheck=off"
+  ],
+  "lflags": [
+    "-release",
+    "-O"
+  ],
+  "license": "MIT",
+  "buildTypes": {
+    "production": {
+      "dflags-ldc": [
+        "-mcpu=native",
+        "-release",
+        "-O3",
+        "-boundscheck=off",
+        "-dip1000",
+        "-g",
+        "-gs"
+      ],
+      "dflags": [
+        "-release",
+        "-O",
+        "-boundscheck=off",
+        "-g",
+        "-gs"
+      ]
+    }
+  }
 }
