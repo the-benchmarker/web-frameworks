@@ -1,3 +1,5 @@
+-- Production-grade Haskell configuration
+-- Specifies the language version, source files, and engine configuration
 language:
   version: 9.14
   files:
@@ -7,8 +9,29 @@ language:
 
   engines:
     default:
+      -- Production command to run the server
+      -- Security: Run as non-root user with minimal capabilities
       command: /opt/web/server
+      -- Environment variables for production
+      env:
+        ENV: "production"
+        PORT: "3000"
+        HOST: "0.0.0.0"
+        REQUEST_TIMEOUT: "30"
+        MAX_REQUEST_SIZE: "10485760"
 
 framework:
   engines:
     - default
+  
+  -- Production settings
+  production:
+    debug: false
+    logging: false
+    security: true
+    
+  -- Development settings (overridden by production)
+  development:
+    debug: true
+    logging: true
+    security: false

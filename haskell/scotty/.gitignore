@@ -1,2 +1,41 @@
+# Haskell build artifacts
 .stack-work/
+.stack-work-dist/
+
+# Stack files
 *.lock
+stack.yaml.lock
+
+# Cabal build artifacts
+dist/
+dist-newstyle/
+.cabal-sandbox/
+cabal.project.local
+cabal.project.freeze
+
+# Executables
+server
+server.exe
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Docker
+Dockerfile
+.docker/
+
+# OS specific files
+.DS_Store
+Thumbs.db

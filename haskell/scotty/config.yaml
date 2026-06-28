@@ -1,3 +1,22 @@
+-- Scotty framework configuration
+-- Production-grade settings for the Scotty web framework
 framework:
+  name: "scotty"
   website: hackage.haskell.org/package/scotty
-  version: 0.22
+  version: "0.22"
+  
+  -- Production settings
+  production:
+    port: 3000
+    host: "0.0.0.0"
+    timeout: 30
+    max_request_size: 10485760
+    environment: "production"
+    
+  -- Development settings
+  development:
+    port: 3000
+    host: "localhost"
+    timeout: 60
+    max_request_size: 10485760
+    environment: "development"

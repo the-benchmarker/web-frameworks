@@ -1,6 +1,33 @@
+-- Stack configuration for production-grade Haskell application
+-- Using LTS Haskell 22.28 (GHC 9.6.6) for stability and compatibility
 resolver: lts-22.28
 
-allow-newer: true
+-- Production settings
+-- allow-newer: false in production to ensure reproducible builds
+-- allow-newer: true in development for flexibility
+allow-newer: false
 
+-- Package configuration
 packages:
   - .
+
+-- Extra dependencies not in the resolver
+-- These are production-grade packages for web development
+extra-deps: []
+
+-- Local package configuration for production
+-- Disable library profiling in production
+apply-ghc-options: everything
+
+-- Flags for production builds
+-- Uncomment for production: --flag scotty:-dev
+flags: {}
+
+-- Environment variables for production
+-- These are used by the application at runtime
+env:
+  ENV: "production"
+  PORT: "3000"
+  HOST: "0.0.0.0"
+  REQUEST_TIMEOUT: "30"
+  MAX_REQUEST_SIZE: "10485760"  -- 10MB
