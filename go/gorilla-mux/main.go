@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
@@ -14,16 +15,31 @@ import (
 // BenchmarkServer represents the benchmark HTTP server using Gorilla Mux framework
 type BenchmarkServer struct {
 	Router *mux.Router
+	Server *http.Server
+}
+
+// newBenchmarkServer creates a new production-ready Gorilla Mux server
+func newBenchmarkServer() *BenchmarkServer {
+	router := mux.NewRouter()
+
+	return &BenchmarkServer{
+		Router: router,
+	}
+}
+
+// addSecurityHeaders adds security headers to the response
+func (s *BenchmarkServer) addSecurityHeaders(w http.ResponseWriter) {
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.Header().Set("X-Frame-Options", "DENY")
+	w.Header().Set("X-XSS-Protection", "1; mode=block")
+	w.Header().Set("Content-Security-Policy", "default-src 'self'")
+	w.Header().Set("Referrer-Policy", "strict-origin-when-cross-origin")
+	w.Header().Set("Permissions-Policy", "geolocation=(), microphone=(), camera=()")
 }
 
 func main() {
-	// Create Gorilla Mux router with production configuration
-	router := mux.NewRouter()
-	
-	// Configure server
-	server := &BenchmarkServer{
-		Router: router,
-	}
+	// Create server instance
+	server := newBenchmarkServer()
 
 	// Register routes
 	server.registerRoutes()
@@ -34,10 +50,10 @@ func main() {
 		port = "3000"
 	}
 
-	// Create HTTP server
-	httpServer := &http.Server{
+	// Create HTTP server with production-grade configuration
+	server.Server = &http.Server{
 		Addr:              ":" + port,
-		Handler:          router,
+		Handler:          server.Router,
 		ReadHeaderTimeout: 10 * time.Second,
 		WriteTimeout:     30 * time.Second,
 		IdleTimeout:      30 * time.Second,
@@ -47,7 +63,7 @@ func main() {
 	// Start server in a goroutine
 	go func() {
 		log.Printf("Starting Gorilla Mux benchmark server on port %s", port)
-		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err := server.Server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("Server error: %v", err)
 		}
 	}()
@@ -60,10 +76,10 @@ func main() {
 	log.Println("Shutting down server...")
 	
 	// Give the server a grace period to finish active connections
-	ctx, cancel := signal.NotifyContext(quit, syscall.SIGINT, syscall.SIGTERM)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	
-	if err := httpServer.Shutdown(ctx); err != nil {
+	if err := server.Server.Shutdown(ctx); err != nil {
 		log.Printf("Server shutdown error: %v", err)
 	}
 	
@@ -94,6 +110,7 @@ func (s *BenchmarkServer) registerRoutes() {
 // @Router / [get]
 func (s *BenchmarkServer) rootHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
+	s.addSecurityHeaders(w)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(""))
 }
@@ -108,6 +125,7 @@ func (s *BenchmarkServer) rootHandler(w http.ResponseWriter, r *http.Request) {
 func (s *BenchmarkServer) getUserHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	w.Header().Set("Content-Type", "text/plain")
+	s.addSecurityHeaders(w)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(vars["id"]))
 }
@@ -120,6 +138,7 @@ func (s *BenchmarkServer) getUserHandler(w http.ResponseWriter, r *http.Request)
 // @Router /user [post]
 func (s *BenchmarkServer) createUserHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
+	s.addSecurityHeaders(w)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(""))
 }
@@ -132,6 +151,8 @@ func (s *BenchmarkServer) createUserHandler(w http.ResponseWriter, r *http.Reque
 // @Router /health [get]
 func (s *BenchmarkServer) healthCheckHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	s.addSecurityHeaders(w)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("OK"))
 }
@@ -143,6 +164,7 @@ func (s *BenchmarkServer) healthCheckHandler(w http.ResponseWriter, r *http.Requ
 // @Success 404 {string} string "Not Found"
 func (s *BenchmarkServer) notFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
+	s.addSecurityHeaders(w)
 	w.WriteHeader(http.StatusNotFound)
 	w.Write([]byte("Not Found"))
 }

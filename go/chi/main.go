@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
@@ -15,20 +16,26 @@ import (
 // BenchmarkServer represents the benchmark HTTP server using Chi framework
 type BenchmarkServer struct {
 	Router *chi.Mux
+	Server *http.Server
+}
+
+// newBenchmarkServer creates a new production-ready Chi server
+func newBenchmarkServer() *BenchmarkServer {
+	// Create Chi router with production configuration
+	router := chi.NewRouter()
+
+	return &BenchmarkServer{
+		Router: router,
+	}
 }
 
 func main() {
-	// Create Chi router with production configuration
-	router := chi.NewRouter()
-	
-	// Configure server
-	server := &BenchmarkServer{
-		Router: router,
-	}
+	// Create server instance
+	server := newBenchmarkServer()
 
 	// Configure middleware
 	server.configureMiddleware()
-	
+
 	// Register routes
 	server.registerRoutes()
 
@@ -38,20 +45,21 @@ func main() {
 		port = "3000"
 	}
 
-	// Create HTTP server
-	httpServer := &http.Server{
+	// Create HTTP server with production-grade configuration
+	server.Server = &http.Server{
 		Addr:              ":" + port,
-		Handler:          router,
+		Handler:          server.Router,
 		ReadHeaderTimeout: 10 * time.Second,
+		ReadTimeout:      30 * time.Second,
 		WriteTimeout:     30 * time.Second,
-		IdleTimeout:      30 * time.Second,
-		MaxHeaderBytes:   16 * 1024, // 16 KB
+		IdleTimeout:      120 * time.Second,
+		MaxHeaderBytes:   1 << 20, // 1 MB
 	}
 
 	// Start server in a goroutine
 	go func() {
 		log.Printf("Starting Chi benchmark server on port %s", port)
-		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err := server.Server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("Server error: %v", err)
 		}
 	}()
@@ -64,18 +72,31 @@ func main() {
 	log.Println("Shutting down server...")
 	
 	// Give the server a grace period to finish active connections
-	ctx, cancel := signal.NotifyContext(quit, syscall.SIGINT, syscall.SIGTERM)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	
-	if err := httpServer.Shutdown(ctx); err != nil {
+	if err := server.Server.Shutdown(ctx); err != nil {
 		log.Printf("Server shutdown error: %v", err)
 	}
 	
 	log.Println("Server stopped")
 }
 
-// configureMiddleware configures Chi middleware
+// configureMiddleware configures production-grade Chi middleware
 func (s *BenchmarkServer) configureMiddleware() {
+	// Security headers middleware
+	s.Router.Use(func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("X-Content-Type-Options", "nosniff")
+			w.Header().Set("X-Frame-Options", "DENY")
+			w.Header().Set("X-XSS-Protection", "1; mode=block")
+			w.Header().Set("Content-Security-Policy", "default-src 'self'")
+			w.Header().Set("Referrer-Policy", "strict-origin-when-cross-origin")
+			w.Header().Set("Permissions-Policy", "geolocation=(), microphone=(), camera=()")
+			next.ServeHTTP(w, r)
+		})
+	})
+
 	// Recovery middleware for panic handling
 	s.Router.Use(middleware.Recoverer)
 
@@ -83,9 +104,12 @@ func (s *BenchmarkServer) configureMiddleware() {
 	s.Router.Use(middleware.RequestID)
 
 	// Real IP middleware for proper client IP detection
-	s.Router.Use(middleware.RealIP)
+	s.Router.Use(middleware.RealIPWithConfig(middleware.RealIPConfig{
+		TrustProxy: true,
+		TrustXForwardedFor: true,
+	}))
 
-	// Logger middleware (skip health check for benchmarking)
+	// Logger middleware (skip health check for benchmarking performance)
 	s.Router.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Log: func(msg string) {
 			log.Println(msg)
@@ -104,6 +128,7 @@ func (s *BenchmarkServer) configureMiddleware() {
 			defer func() {
 				if err := recover(); err != nil {
 					log.Printf("PANIC: %v", err)
+					w.Header().Set("Content-Type", "text/plain")
 					w.WriteHeader(http.StatusInternalServerError)
 					w.Write([]byte("Internal Server Error"))
 				}
@@ -137,6 +162,7 @@ func (s *BenchmarkServer) registerRoutes() {
 // @Router / [get]
 func (s *BenchmarkServer) rootHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
+	w.Header().Set("Cache-Control", "no-cache")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(""))
 }
@@ -175,6 +201,7 @@ func (s *BenchmarkServer) createUserHandler(w http.ResponseWriter, r *http.Reque
 // @Router /health [get]
 func (s *BenchmarkServer) healthCheckHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("OK"))
 }
