@@ -1,7 +1,28 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>suave-web</AssemblyName>
+    <RootNamespace>SuaveWeb</RootNamespace>
+    
+    <!-- Production optimizations -->
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <Deterministic>true</Deterministic>
+    
+    <!-- Security -->
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    
+    <!-- Docker support -->
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileFastBuild>True</DockerfileFastBuild>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)' = 'Release'">
+    <NoWarn>$(NoWarn);40;1701;1702;1705;3572</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,5 +32,16 @@
   <ItemGroup>
     <PackageReference Include="Suave" Version="3.4.*" />
   </ItemGroup>
-
+  
+  <!-- Metadata -->
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <Description>Production-grade Suave web server with security best practices</Description>
+    <Authors>Your Organization</Authors>
+    <Company>Your Company</Company>
+    <Product>Suave Web Server</Product>
+    <Copyright>Copyright © $(GetCurrentDateTime:"yyyy") Your Company</Copyright>
+    <RepositoryUrl>https://github.com/your-org/suave-web</RepositoryUrl>
+    <PackageTags>web;server;suave;fsharp;production</PackageTags>
+  </PropertyGroup>
 </Project>

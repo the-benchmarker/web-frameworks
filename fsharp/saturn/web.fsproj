@@ -1,15 +1,52 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>saturn-web</AssemblyName>
+    <RootNamespace>SaturnWeb</RootNamespace>
+    
+    <!-- Production optimizations -->
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <Deterministic>true</Deterministic>
+    
+    <!-- Security -->
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    
+    <!-- Docker support -->
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileFastBuild>True</DockerfileFastBuild>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)' = 'Release'">
+    <NoWarn>$(NoWarn);40;1701;1702;1705;3572</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="Program.fs" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="7.0.*" />
     <PackageReference Include="Saturn" Version="0.14.*" />
+    <PackageReference Include="Giraffe" Version="6.0.*" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="10.0.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="10.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.*" />
   </ItemGroup>
+  
+  <!-- Metadata -->
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <Description>Production-grade Saturn web server with security best practices</Description>
+    <Authors>Your Organization</Authors>
+    <Company>Your Company</Company>
+    <Product>Saturn Web Server</Product>
+    <Copyright>Copyright © $(GetCurrentDateTime:"yyyy") Your Company</Copyright>
+    <RepositoryUrl>https://github.com/your-org/saturn-web</RepositoryUrl>
+    <PackageTags>web;server;saturn;giraffe;fsharp;production</PackageTags>
+  </PropertyGroup>
 </Project>

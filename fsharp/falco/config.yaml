@@ -1,3 +1,29 @@
 framework:
-  website: www.falcoframework.com
-  version: 5.0
+  name: falco
+  website: https://www.falcoframework.com
+  version: 5.0.0
+  description: "High-performance, low-level HTTP library for F#"
+  production_ready: true
+  
+features:
+  - http_server
+  - routing
+  - middleware
+  - type_safe
+  
+security:
+  - security_headers: true
+  - request_size_limit: 8MB
+  - server_header_removed: true
+  - https_redirect: true
+  
+performance:
+  - max_connections: 16384
+  - optimized_build: true
+  - deterministic_build: true
+  
+best_practices:
+  - proper_error_handling: true
+  - structured_logging: true
+  - health_checks: true
+  - environment_configuration: true

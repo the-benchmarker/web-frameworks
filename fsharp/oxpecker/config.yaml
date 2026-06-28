@@ -1,3 +1,28 @@
 framework:
-  github: Lanayx/Oxpecker
-  version: 1.2
+  name: oxpecker
+  github: https://github.com/Lanayx/Oxpecker
+  version: 1.2.0
+  description: "Functional and type-safe web framework for F#"
+  production_ready: true
+  
+features:
+  - type_safe_routing
+  - functional_composition
+  - aspnetcore_integration
+  
+security:
+  - security_headers: true
+  - request_size_limit: 8MB
+  - server_header_removed: true
+  - error_handling: true
+  
+performance:
+  - max_connections: 16384
+  - optimized_build: true
+  - deterministic_build: true
+  
+best_practices:
+  - proper_error_handling: true
+  - structured_logging: true
+  - health_checks: true
+  - environment_configuration: true
