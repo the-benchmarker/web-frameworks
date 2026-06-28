@@ -1,5 +1,14 @@
+# Benchmark Routes Configuration
+# 
+# Defines all routes for the benchmark Rails application.
+# Follows Rails RESTful routing conventions.
+
 Rails.application.routes.draw do
-  get "/" => "application#index"
-  get "/user/:id" => "application#user"
-  post "/user" => "application#register_user"
+  # Benchmark endpoints
+  get "/", to: "application#index", as: :root
+  get "/user/:id", to: "application#user", as: :get_user
+  post "/user", to: "application#register_user", as: :create_user
+  
+  # Health check endpoint for monitoring
+  get "/health", to: "application#health_check", as: :health_check
 end

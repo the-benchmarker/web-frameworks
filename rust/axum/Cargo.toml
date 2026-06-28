@@ -16,5 +16,21 @@ rpath = false
 strip = false
 
 [dependencies]
+# Web framework
 axum = "0.8"
-tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+
+# Async runtime
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+
+# Error handling
+thiserror = "1.0"
+
+# System utilities
+num_cpus = "1.16"
