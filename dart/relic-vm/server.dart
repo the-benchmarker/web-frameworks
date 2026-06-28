@@ -3,7 +3,14 @@ import 'dart:io';
 import 'package:relic/relic.dart';
 
 Future<void> main() async {
-  final app = RelicApp()
+  // Configure for production performance
+  final app = RelicApp(
+    configuration: RelicConfiguration(
+      shouldCompressResponse: true,
+      maxConnectionPoolSize: 1000,
+      requestTimeout: const Duration(seconds: 30),
+    ),
+  )
     ..get('/', (_) => Response.ok())
     ..post('/user', (_) => Response.ok())
     ..get('/user/:user', (Request request) {
@@ -15,5 +22,6 @@ Future<void> main() async {
     address: InternetAddress.anyIPv4,
     port: 3000,
     noOfIsolates: Platform.numberOfProcessors,
+    shared: true, // Share the same HTTP server socket across isolates
   );
 }

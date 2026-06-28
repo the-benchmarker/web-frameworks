@@ -25,6 +25,7 @@ let package = Package(
                 // the `.unsafeFlags` construct required by SwiftPM, this flag is recommended for Release
                 // builds. See <https://github.com/swift-server/guides#building-for-production> for details.
                 .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release)),
+                .unsafeFlags(["-Osize"], .when(configuration: .release)), // Optimize for size in release
                 .swiftLanguageMode(.v6)
             ])
     ]
