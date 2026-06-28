@@ -2,3 +2,44 @@
 # Created by `dart pub`
 .dart_tool/
 pubspec.lock
+
+# Production build artifacts
+*.exe
+*.dill
+*.app.dill
+*.d
+*.o
+*.so
+*.a
+
+# IDE/Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+core
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Dart VM files
+.dart_tool/build/
+.dart_tool/packages/
+.dart_tool/test/
+
+# Debug files
+*.stacktrace
+*.json
+
+# Environment files
+.env
+.env.local
+.env.*.local

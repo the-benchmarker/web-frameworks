@@ -1,7 +1,27 @@
 name: spry_app
 
+description: Production-grade Spry VM server with security best practices and performance optimizations
+
+publish_to: none
+
 environment:
   sdk: ^3.12.0
 
 dependencies:
   spry: ^8.1.0
+
+# Production optimizations
+dart:
+  # Disable debug mode for production
+  # dart run --release for optimized execution
+  # dart compile exe --release for AOT compilation
+
+# Analysis options for production
+analyzer:
+  errors:
+    unused_local_variable: warning
+    unused_import: warning
+    dead_code: warning
+  exclude:
+    - '**/*.g.dart'
+    - '**/*.freezed.dart'
