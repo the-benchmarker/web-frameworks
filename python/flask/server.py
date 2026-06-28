@@ -22,7 +22,7 @@ import signal
 import sys
 import time
 import uuid
-from typing import Union, Optional
+from typing import Union, Optional, Dict
 from functools import wraps
 
 from flask import Flask, Response, request, g
@@ -35,24 +35,34 @@ from werkzeug.middleware.gzip import GzipMiddleware
 from werkzeug.middleware.https_redirect import HTTPSRedirectMiddleware
 from werkzeug.middleware.proxy_fix import ProxyFix
 
+# =============================================================================
+# PRODUCTION CONFIGURATION
+# =============================================================================
+
+DEBUG_MODE = os.getenv("DEBUG", "false").lower() == "true"
+
 # Configure structured logging for production
 logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=logging.WARNING if not DEBUG_MODE else logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
         logging.StreamHandler(sys.stdout),
     ],
 )
 logger = logging.getLogger("benchmark.flask")
 
+# Suppress framework logs in production for performance
+if not DEBUG_MODE:
+    logging.getLogger("flask").setLevel(logging.WARNING)
+    logging.getLogger("werkzeug").setLevel(logging.WARNING)
 
 # Environment configuration
 class Config:
     """Production configuration from environment variables."""
     HOST = os.getenv("HOST", "0.0.0.0")
     PORT = int(os.getenv("PORT", 3000))
-    DEBUG = os.getenv("DEBUG", "false").lower() == "true"
-    LOG_LEVEL = os.getenv("LOG_LEVEL", "info").upper()
+    DEBUG = DEBUG_MODE  # Use consistent DEBUG_MODE variable
+    LOG_LEVEL = os.getenv("LOG_LEVEL", "warning" if not DEBUG_MODE else "debug").upper()
     RATE_LIMIT = os.getenv("RATE_LIMIT", "1000 per minute")
     MAX_CONTENT_LENGTH = int(os.getenv("MAX_CONTENT_LENGTH", 16 * 1024 * 1024))  # 16 MB
     TIMEOUT = int(os.getenv("TIMEOUT", 30))  # seconds
@@ -381,7 +391,10 @@ logger.info(f"Configuration: HOST={config.HOST}, PORT={config.PORT}, DEBUG={conf
 
 
 if __name__ == "__main__":
-    logger.info(f"Starting Flask benchmark server on {config.HOST}:{config.PORT}")
+    if not DEBUG_MODE:
+        logger.warning(f"Starting Flask benchmark server in production mode on {config.HOST}:{config.PORT}")
+    else:
+        logger.info(f"Starting Flask benchmark server on {config.HOST}:{config.PORT}")
     
     try:
         app.run(
@@ -392,7 +405,10 @@ if __name__ == "__main__":
             use_reloader=False,
         )
     except KeyboardInterrupt:
-        logger.info("Server stopped by user")
+        if DEBUG_MODE:
+            logger.info("Server stopped by user")
+        else:
+            logger.warning("Server stopped by user")
     except Exception as e:
-        logger.error(f"Server failed: {e}", exc_info=True)
+        logger.error(f"Server failed: {e}", exc_info=True if DEBUG_MODE else False)
         sys.exit(1)

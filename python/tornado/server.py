@@ -1,8 +1,15 @@
 """
-Tornado Benchmark Server
+Tornado Benchmark Server - Production-Grade Implementation
 
 A high-performance benchmark server implementation using Tornado framework.
-Follows Python best practices including type hints, proper error handling, and async networking.
+Implements security best practices, performance optimizations, and clean code.
+
+Security Features:
+- Disabled debug mode and excessive logging
+- Security headers on all responses
+- Input validation
+- Minimal error logging
+- Proper HTTP status codes
 """
 
 from __future__ import annotations
@@ -11,26 +18,52 @@ import logging
 import os
 import signal
 import sys
-from typing import Any, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 
-# Configure logging
+# =============================================================================
+# PRODUCTION CONFIGURATION
+# =============================================================================
+
+DEBUG_MODE = os.getenv("DEBUG", "false").lower() == "true"
+
+# Configure logging for production
 logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=logging.WARNING if not DEBUG_MODE else logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger("benchmark.tornado")
+
+# Suppress framework logs in production for performance
+if not DEBUG_MODE:
+    logging.getLogger("tornado").setLevel(logging.WARNING)
+
+# =============================================================================
+# SECURITY HEADERS UTILITY
+# =============================================================================
+
+SECURITY_HEADERS: Dict[str, str] = {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Content-Security-Policy": "default-src 'self'",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+}
 
 
 class BaseHandler(tornado.web.RequestHandler):
     """Base handler with common functionality for all endpoints."""
 
     def set_default_headers(self) -> None:
-        """Set default response headers."""
+        """Set default response headers including security headers."""
         self.set_header("Content-Type", "text/plain")
+        # Add security headers
+        for header, value in SECURITY_HEADERS.items():
+            self.set_header(header, value)
 
     def write_error(self, status_code: int, **kwargs: Any) -> None:
         """
@@ -42,10 +75,13 @@ class BaseHandler(tornado.web.RequestHandler):
         """
         if "exc_info" in kwargs and kwargs["exc_info"]:
             exc_info = kwargs["exc_info"]
-            logger.error(
-                f"Error {status_code}: {exc_info[1]}",
-                exc_info=exc_info,
-            )
+            if DEBUG_MODE:
+                logger.error(
+                    f"Error {status_code}: {exc_info[1]}",
+                    exc_info=exc_info,
+                )
+            else:
+                logger.warning(f"Error {status_code}: {exc_info[1]}")
         super().write_error(status_code, **kwargs)
 
 
@@ -73,7 +109,11 @@ class UserHandler(BaseHandler):
         Returns:
             None: Writes empty response.
         """
-        logger.debug("Create user endpoint accessed")
+        if DEBUG_MODE:
+            logger.debug("Create user endpoint accessed")
+        
+        # Security: Return 201 Created for POST requests
+        self.set_status(201)
         self.write("")
 
 
@@ -89,8 +129,18 @@ class UserInfoHandler(BaseHandler):
         
         Returns:
             None: Writes user ID as response.
+            
+        Raises:
+            ValueError: If ID is empty or invalid (security validation).
         """
-        logger.debug(f"User endpoint accessed with ID: {id}")
+        # Security: Validate input - reject empty IDs
+        if not id or not id.strip():
+            if DEBUG_MODE:
+                logger.debug("Invalid user ID: empty")
+            raise ValueError("Missing or invalid ID parameter")
+        
+        if DEBUG_MODE:
+            logger.debug(f"User endpoint accessed with ID: {id}")
         self.write(id)
 
 
@@ -107,6 +157,19 @@ class HealthCheckHandler(BaseHandler):
         self.write("OK")
 
 
+class ErrorHandler(BaseHandler):
+    """Handler for triggering errors."""
+
+    async def get(self) -> None:
+        """
+        Endpoint to trigger an error for testing error handling.
+        
+        Returns:
+            None: This should not be reached as it raises an exception.
+        """
+        raise RuntimeError("Test error for error handling")
+
+
 def make_app() -> tornado.web.Application:
     """
     Create and configure the Tornado application.
@@ -120,14 +183,15 @@ def make_app() -> tornado.web.Application:
         (r"/user", UserHandler),
         (r"/user/(\d+)", UserInfoHandler),
         (r"/health", HealthCheckHandler),
+        (r"/error", ErrorHandler),
     ]
 
     # Application settings
     settings = {
         "max_buffer_size": 16 * 1024 * 1024,  # 16 MB
         "gzip": False,  # Disable for benchmarking
-        "log_function": logger.info,
-        "debug": False,
+        "log_function": logger.warning if not DEBUG_MODE else logger.info,
+        "debug": DEBUG_MODE,
     }
 
     return tornado.web.Application(handlers=handlers, **settings)
@@ -169,8 +233,14 @@ class BenchmarkServer:
 
 def main() -> None:
     """Main entry point for the benchmark server."""
-    # Get port from environment or command line
+    # Get configuration from environment or command line
+    host = os.getenv("HOST", "0.0.0.0")
     port = int(os.getenv("PORT", sys.argv[1] if len(sys.argv) > 1 else "3000"))
+    
+    if not DEBUG_MODE:
+        logger.warning(f"Starting Tornado benchmark server in production mode on {host}:{port}")
+    else:
+        logger.info(f"Starting Tornado benchmark server on {host}:{port}")
 
     # Create application
     app = make_app()
@@ -181,7 +251,10 @@ def main() -> None:
     # Handle graceful shutdown
     def signal_handler(sig: int, frame: Any) -> None:
         """Handle SIGINT and SIGTERM for graceful shutdown."""
-        logger.info("Shutting down gracefully...")
+        if DEBUG_MODE:
+            logger.info("Shutting down gracefully...")
+        else:
+            logger.warning("Shutting down gracefully...")
         server.stop()
         sys.exit(0)
 

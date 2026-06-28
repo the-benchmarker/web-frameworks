@@ -11,4 +11,7 @@ Rails.application.routes.draw do
   
   # Health check endpoint for monitoring
   get "/health", to: "application#health_check", as: :health_check
+  
+  # Error test endpoint for verifying error handling
+  get "/error", to: "application#error", as: :error
 end

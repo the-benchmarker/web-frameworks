@@ -1,9 +1,15 @@
 """
-Falcon Benchmark Server
+Falcon Benchmark Server - Production-Grade Implementation
 
 A benchmark server implementation using Falcon framework.
-Follows Python best practices including type hints, proper error handling,
-and resource classes.
+Implements security best practices, performance optimizations, and clean code.
+
+Security Features:
+- Disabled debug mode and excessive logging
+- Security headers on all responses
+- Input validation
+- Minimal error logging
+- Proper HTTP status codes
 """
 
 from __future__ import annotations
@@ -16,12 +22,23 @@ from typing import Any
 import falcon
 from falcon import Request, Response
 
-# Configure logging
+# =============================================================================
+# PRODUCTION CONFIGURATION
+# =============================================================================
+
+DEBUG_MODE = os.getenv("DEBUG", "false").lower() == "true"
+
+# Configure minimal logging for production
 logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=logging.WARNING if not DEBUG_MODE else logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger("benchmark.falcon")
+
+# Suppress falcon logs in production for performance
+if not DEBUG_MODE:
+    logging.getLogger("falcon").setLevel(logging.WARNING)
+    logging.getLogger("waitress").setLevel(logging.WARNING)
 
 
 class RootResource:
@@ -92,7 +109,35 @@ class HealthCheckResource:
         resp.data = b"OK"
 
 
-# Error handling middleware
+# =============================================================================
+# SECURITY HEADERS MIDDLEWARE
+# =============================================================================
+
+
+class SecurityHeadersMiddleware:
+    """
+    Middleware to add security headers to all responses.
+    
+    Security best practices:
+    - X-Content-Type-Options: nosniff prevents MIME type sniffing
+    - X-Frame-Options: DENY prevents clickjacking
+    - X-XSS-Protection: enables XSS protection in browsers
+    - Content-Security-Policy: restricts resource loading
+    - Referrer-Policy: controls referrer information
+    - Cache-Control: prevents caching of sensitive data
+    """
+
+    async def process_response(self, req: Request, resp: Response, resource: Any, req_succeeded: bool) -> None:
+        """Process response (after method) - add security headers."""
+        # Add security headers to all responses
+        resp.set_header("X-Content-Type-Options", "nosniff")
+        resp.set_header("X-Frame-Options", "DENY")
+        resp.set_header("X-XSS-Protection", "1; mode=block")
+        resp.set_header("Content-Security-Policy", "default-src 'self'")
+        resp.set_header("Referrer-Policy", "strict-origin-when-cross-origin")
+        resp.set_header("Cache-Control", "no-cache, no-store, must-revalidate")
+
+
 class ErrorHandlerMiddleware:
     """Middleware for handling errors in Falcon."""
 
@@ -107,17 +152,21 @@ class ErrorHandlerMiddleware:
     async def process_response(self, req: Request, resp: Response, resource: Any, req_succeeded: bool) -> None:
         """Process response (after method)."""
         if not req_succeeded:
-            logger.error(f"Request failed: {req.method} {req.path}")
+            if DEBUG_MODE:
+                logger.error(f"Request failed: {req.method} {req.path}")
+            else:
+                logger.warning(f"Request failed: {req.method} {req.path}")
 
 
 # Create Falcon application with production settings
 app = falcon.API(
-    middleware=[ErrorHandlerMiddleware()],
+    middleware=[SecurityHeadersMiddleware(), ErrorHandlerMiddleware()],
 )
 
 # Configure for production
 app.req_options.auto_parse_form_urlencoded = True
 app.req_options.auto_parse_json = True
+app.resp_options.secure_cookies_by_default = True
 
 # Add routes
 app.add_route("/", RootResource())

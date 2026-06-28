@@ -1,11 +1,11 @@
 //! Axum Benchmark Server
 //!
-//! A high-performance benchmark server implementation using Axum framework.
-//! Follows Rust best practices including proper error handling, logging, and async/await.
+//! A production-grade benchmark server implementation using Axum framework.
+//! Implements security best-practices, proper error handling, and environment-based configuration.
 
 use axum::{
     extract::Path,
-    http::StatusCode,
+    http::{HeaderMap, HeaderValue, StatusCode},
     response::IntoResponse,
     routing::{get, post},
     Router,
@@ -14,6 +14,23 @@ use std::{env, net::SocketAddr, time::Duration};
 use thiserror::Error;
 use tracing::{debug, error, info, Level};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
+
+// Configuration - Environment-based settings for production vs development
+static DEBUG_MODE: once_cell::sync::Lazy<bool> = once_cell::sync::Lazy::new(|| {
+    env::var("DEBUG").unwrap_or_else(|_| "false".to_string()) == "true"
+});
+
+// Security headers configuration
+fn security_headers() -> HeaderMap {
+    let mut headers = HeaderMap::new();
+    headers.insert("X-Content-Type-Options", HeaderValue::from_static("nosniff"));
+    headers.insert("X-Frame-Options", HeaderValue::from_static("DENY"));
+    headers.insert("X-XSS-Protection", HeaderValue::from_static("1; mode=block"));
+    headers.insert("Content-Security-Policy", HeaderValue::from_static("default-src 'self'"));
+    headers.insert("Referrer-Policy", HeaderValue::from_static("strict-origin-when-cross-origin"));
+    headers.insert("Cache-Control", HeaderValue::from_static("no-cache, no-store, must-revalidate"));
+    headers
+}
 
 /// Server configuration
 #[derive(Debug)]
@@ -75,14 +92,25 @@ impl IntoResponse for ServerError {
     }
 }
 
+/// Apply security headers to response
+fn apply_security_headers(mut response: axum::response::Response) -> axum::response::Response {
+    for (key, value) in security_headers() {
+        response.headers_mut().insert(key, value);
+    }
+    response
+}
+
 /// Root endpoint handler
 /// 
 /// # Returns
 /// Empty response for benchmarking
 #[get("/")]
 async fn root_handler() -> impl IntoResponse {
-    debug!("Root endpoint accessed");
-    (StatusCode::OK, "")
+    if *DEBUG_MODE {
+        debug!("Root endpoint accessed");
+    }
+    let response = (StatusCode::OK, "").into_response();
+    apply_security_headers(response)
 }
 
 /// Get user by ID endpoint
@@ -94,8 +122,11 @@ async fn root_handler() -> impl IntoResponse {
 /// User ID as plain text
 #[get("/user/{id}")]
 async fn get_user_handler(Path(id): Path<String>) -> impl IntoResponse {
-    debug!("User endpoint accessed with ID: {}", id);
-    (StatusCode::OK, id)
+    if *DEBUG_MODE {
+        debug!("User endpoint accessed with ID: {}", id);
+    }
+    let response = (StatusCode::OK, id).into_response();
+    apply_security_headers(response)
 }
 
 /// Create user endpoint
@@ -104,8 +135,11 @@ async fn get_user_handler(Path(id): Path<String>) -> impl IntoResponse {
 /// Empty response for benchmarking
 #[post("/user")]
 async fn create_user_handler() -> impl IntoResponse {
-    debug!("Create user endpoint accessed");
-    (StatusCode::OK, "")
+    if *DEBUG_MODE {
+        debug!("Create user endpoint accessed");
+    }
+    let response = (StatusCode::CREATED, "").into_response();
+    apply_security_headers(response)
 }
 
 /// Health check endpoint for monitoring
@@ -114,7 +148,27 @@ async fn create_user_handler() -> impl IntoResponse {
 /// Health status
 #[get("/health")]
 async fn health_check_handler() -> impl IntoResponse {
-    (StatusCode::OK, "OK")
+    if *DEBUG_MODE {
+        debug!("Health check endpoint accessed");
+    }
+    let response = (StatusCode::OK, "OK").into_response();
+    apply_security_headers(response)
+}
+
+/// Error test endpoint for verifying error handling
+/// 
+/// # Returns
+/// Error response
+#[get("/error")]
+async fn error_test_handler() -> impl IntoResponse {
+    if *DEBUG_MODE {
+        error!("Error endpoint accessed");
+        let response = (StatusCode::INTERNAL_SERVER_ERROR, "Internal Server Error").into_response();
+        apply_security_headers(response)
+    } else {
+        let response = (StatusCode::INTERNAL_SERVER_ERROR, "").into_response();
+        apply_security_headers(response)
+    }
 }
 
 /// Create the Axum router with all benchmark endpoints
@@ -129,10 +183,15 @@ fn create_router() -> Router {
         .route("/user", post(create_user_handler))
         // Health check endpoint
         .route("/health", get(health_check_handler))
+        // Error test endpoint
+        .route("/error", get(error_test_handler))
         // Fallback for 404
         .fallback(|| async {
-            error!("Route not found");
-            (StatusCode::NOT_FOUND, "Not Found")
+            if *DEBUG_MODE {
+                error!("Route not found");
+            }
+            let response = (StatusCode::NOT_FOUND, if *DEBUG_MODE { "Not Found" } else { "" }).into_response();
+            apply_security_headers(response)
         })
 }
 
@@ -141,8 +200,11 @@ fn create_router() -> Router {
 /// # Returns
 /// Result indicating success or failure
 fn init_tracing() -> Result<(), Box<dyn std::error::Error>> {
+    // Configure log level based on environment
+    let log_level = if *DEBUG_MODE { Level::DEBUG } else { Level::WARN };
+    
     tracing_subscriber::registry()
-        .with(EnvFilter::from_default_env().add_directive(Level::DEBUG.into()))
+        .with(EnvFilter::from_default_env().add_directive(log_level.into()))
         .with(tracing_subscriber::fmt::layer().pretty().without_time())
         .init();
     
@@ -157,12 +219,36 @@ fn init_tracing() -> Result<(), Box<dyn std::error::Error>> {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialize tracing
     init_tracing()?;
-    
-    info!("Starting Axum benchmark server");
 
     // Load configuration
     let config = Config::from_env();
+
+    // Startup message with configuration summary
+    if *DEBUG_MODE {
+        info!("\n=== Axum Framework Benchmark Server (Development Mode) ===");
+        info!("Environment: development");
+        info!("Host: {}", config.host);
+        info!("Port: {}", config.port);
+        info!("Workers: {}", config.workers);
+        info!("Debug: true");
+        info!("Security headers: Enabled");
+        info!("Logging: Enabled (debug level)");
+        info!("Endpoints: /, /user/:id, /user, /health, /error");
+        info!("========================================================\n");
+    } else {
+        info!("\n=== Axum Framework Benchmark Server (Production Mode) ===");
+        info!("Environment: production");
+        info!("Host: {}", config.host);
+        info!("Port: {}", config.port);
+        info!("Workers: {}", config.workers);
+        info!("Debug: false");
+        info!("Security headers: Enabled");
+        info!("Logging: Disabled (production mode)");
+        info!("========================================================\n");
+    }
     
+    info!("Starting Axum benchmark server");
+
     info!("Configuration: host={}, port={}, workers={}", 
         config.host, config.port, config.workers);
 
@@ -267,5 +353,19 @@ mod tests {
         ).await.unwrap();
         
         assert_eq!(response.status(), StatusCode::NOT_FOUND);
+    }
+
+    #[tokio::test]
+    async fn test_error_endpoint() {
+        let app = create_router();
+        let response = app.oneshot(
+            Request::builder()
+                .uri("/error")
+                .method("GET")
+                .body(Body::empty())
+                .unwrap()
+        ).await.unwrap();
+        
+        assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
     }
 }

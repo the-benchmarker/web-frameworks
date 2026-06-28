@@ -22,7 +22,7 @@ import signal
 import sys
 import time
 from contextlib import asynccontextmanager
-from typing import Annotated
+from typing import Annotated, Dict
 
 import prometheus_client
 from fastapi import FastAPI, Path, Request
@@ -36,18 +36,29 @@ from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 
+# =============================================================================
+# PRODUCTION CONFIGURATION
+# =============================================================================
+
+DEBUG_MODE = os.getenv("DEBUG", "false").lower() == "true"
+
 # Configure production-optimized logging - minimal and security-focused
 # Disabled: DEBUG logs (too verbose for production)
 # Enabled: WARNING and ERROR logs for security monitoring
 logging.basicConfig(
-    level=logging.WARNING,  # Production: only warnings and errors
+    level=logging.WARNING if not DEBUG_MODE else logging.DEBUG,  # Production: only warnings and errors
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
         logging.StreamHandler(sys.stdout),
     ],
 )
 logger = logging.getLogger("benchmark.fastapi")
-logger.setLevel(logging.WARNING)  # Ensure logger level matches config
+logger.setLevel(logging.WARNING if not DEBUG_MODE else logging.DEBUG)  # Ensure logger level matches config
+
+# Suppress framework logs in production for performance
+if not DEBUG_MODE:
+    logging.getLogger("fastapi").setLevel(logging.WARNING)
+    logging.getLogger("uvicorn").setLevel(logging.WARNING)
 
 # Environment configuration - Production Security Settings
 class Config:
@@ -58,10 +69,10 @@ class Config:
     WORKERS = int(os.getenv("WORKERS", 4))
     
     # Security: Always disable debug in production
-    DEBUG = False  # Hardcoded to False for production security
+    DEBUG = DEBUG_MODE  # Use environment variable for consistency
     
     # Logging: Minimal for production (WARNING level only)
-    LOG_LEVEL = os.getenv("LOG_LEVEL", "warning").upper()
+    LOG_LEVEL = os.getenv("LOG_LEVEL", "warning" if not DEBUG_MODE else "debug").upper()
     
     # Rate limiting for DDoS protection
     RATE_LIMIT = os.getenv("RATE_LIMIT", "1000/minute")
@@ -502,12 +513,18 @@ if __name__ == "__main__":
         "forwarded_allow_ips": "*",  # Allow all forwarded IPs (configure properly in production)
     }
     
-    logger.warning(f"Security: Starting FastAPI server with {config.WORKERS} workers on {config.HOST}:{config.PORT}")
+    if not DEBUG_MODE:
+        logger.warning(f"Starting FastAPI benchmark server in production mode with {config.WORKERS} workers on {config.HOST}:{config.PORT}")
+    else:
+        logger.info(f"Starting FastAPI benchmark server with {config.WORKERS} workers on {config.HOST}:{config.PORT}")
     
     try:
         uvicorn.run(**uvicorn_config)
     except KeyboardInterrupt:
-        logger.warning("Security: Server stopped by user")
+        if DEBUG_MODE:
+            logger.info("Server stopped by user")
+        else:
+            logger.warning("Server stopped by user")
     except Exception as e:
-        logger.error(f"Security: Server failed - {e}")
+        logger.error(f"Server failed - {e}")
         sys.exit(1)
