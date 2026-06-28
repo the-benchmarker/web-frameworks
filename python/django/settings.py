@@ -1,17 +1,39 @@
-import os
+"""
+Django Benchmark Settings
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+Django configuration for benchmark server.
+Follows Django best practices for production settings.
+"""
+
+import os
+from pathlib import Path
+
+# Build paths inside the project like this: BASE_DIR / ...
+BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "3f51&0k++@_2u24_v@f)_-n7a0y&hc8^wmru)q^_flty9%!@er"
+# For benchmarking, we use a static key (not suitable for production)
+SECRET_KEY: str = os.getenv(
+    "DJANGO_SECRET_KEY",
+    "3f51&0k++@_2u24_v@f)_-n7a0y&hc8^wmru)q^_flty9%!@er",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG: bool = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = ["127.0.0.1", "::1", "localhost"]
-ALLOWED_HOSTS += ["172.17.%s.%s" % (i, j) for i in range(256) for j in range(256)]
+# Application hosts configuration
+# For benchmarking, allow all hosts in Docker network ranges
+ALLOWED_HOSTS: list[str] = [
+    "127.0.0.1",
+    "::1",
+    "localhost",
+]
+
+# Docker default bridge network (172.17.0.0/16)
+ALLOWED_HOSTS.extend(
+    f"172.17.{i}.{j}" for i in range(256) for j in range(256)
+)
 
 
 # Application definition
