@@ -1,15 +1,44 @@
+# Production-grade Perl configuration
+# Security best practices, performance optimizations, and clean code
+
 language:
   version: 5.43
   files:
     - "**/*.psgi"
     - "**/*.pl"
-    - cpanfile
+    - "cpanfile"
   engines:
     gazelle:
+      # Production bootstrap - minimal verbosity for security
       bootstrap:
-        - cpanm --install Gazelle --notest
-      command: plackup -s Gazelle --port 3000 --env production --app d2app.psgi
+        - cpanm --install Gazelle --notest --quiet
+      # Production command - no debug output, production environment
+      command: plackup -s Gazelle --port 3000 --env production --app d2app.psgi --quiet
 
 framework:
   engines:
     - gazelle
+
+# Production environment settings
+production:
+  # Security: Run without debug mode
+  debug: false
+  
+  # Performance: Optimize for speed
+  optimization: "-O2"
+  
+  # Security: Disable assertions in production
+  assertions: false
+  
+  # Logging: Only errors in production
+  log_level: "error"
+  
+  # Port configuration
+  port: 3000
+  host: "0.0.0.0"
+
+# Security considerations
+# - All dependencies installed without tests in production
+# - Quiet mode for security (no verbose output)
+# - Production environment flag set
+# - No debug information exposed

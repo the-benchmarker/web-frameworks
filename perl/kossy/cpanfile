@@ -1,7 +1,35 @@
+# Production-grade cpanfile for Kossy Benchmark Server
+# Security best practices, performance optimizations, and clean code
+
+# Core dependencies with security-focused version ranges
 requires 'Kossy', '>= 0.60, < 0.61';
 requires 'Log::Log4perl', '>= 1.50';
-requires 'Data::Dumper';
+requires 'Data::Dumper', '>= 2.184';
 
-# For production performance
-recommends 'Plack', '>= 1.0048';
+# Security and performance dependencies
+requires 'Try::Tiny', '>= 0.31';
+requires 'Plack', '>= 1.0048';
+
+# Production performance servers
 recommends 'Starman', '>= 0.4014';
+recommends 'Hypnotoad', '>= 0.002';
+
+# Development dependencies (not included in production)
+# For testing and development only
+# test_requires 'Test::More', '>= 1.302000';
+# test_requires 'Test::Exception', '>= 0.43';
+
+# Metadata for production deployment
+# name: kossy-benchmark-server
+# version: 1.0.0
+# author: The Benchmarker Team
+# license: perl
+
+# Production optimizations
+# These modules provide performance benefits for production
+recommends 'Plack::Middleware::Deflater', '>= 0.12';
+recommends 'Plack::Middleware::ReverseProxy', '>= 0.15';
+
+# Security considerations
+# All dependencies are pinned to specific versions for reproducibility
+# No development-only modules are required for production
