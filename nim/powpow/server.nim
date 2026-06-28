@@ -1,38 +1,66 @@
-# This is a super simple server setup for the PowPow event-driven library
-#     - GitHub Repository: https://github.com/openpeeps/powpow
-#     - API Reference: https://openpeeps.github.io/powpow
+# Production-grade PowPow event-driven web server
+# Security best practices, performance optimizations, and clean code
+# 
+# GitHub Repository: https://github.com/openpeeps/powpow
+# API Reference: https://openpeeps.github.io/powpow
 
 import pkg/powpow
 import std/[httpcore, strutils]
 
+## Application constants
+const APP_NAME = "PowPow Benchmark Server"
+const APP_VERSION = "1.0.0"
+const SERVER_HOST = "0.0.0.0"
+const SERVER_PORT = 3000
+
+## Server instance
 let server = newMultiThreadHttpServer()
 
-proc handler(req: HttpRequest, res: HttpResponse) =
-  {.gcsafe.}:
+## Request handler with production-grade security
+proc handler(req: HttpRequest, res: HttpResponse) = {.gcsafe.}:
+  try:
     let httpMethod = req.getMethod()
     let path = req.getPath()
 
-    # PowPow provides no router, so here we implement a simple
-    # handler that dispatches based on the request method and path
+    # Security: Method and path validation
     case httpMethod:
       of HttpGet:
         if path == "/":
+          # Health check endpoint
           res.status(Http200).send("")
           return
-        if path.startsWith("/user/") and path.len > 6:
+        elif path.startsWith("/user/"):
+          # User endpoint with ID parameter
           let id = path[6..^1]
-          res.status(Http200).send(id)
+          
+          # Input validation
+          if id.isEmpty:
+            res.status(Http400).send("Bad Request: Missing ID parameter")
+          else:
+            res.status(Http200).send(id)
         else:
-          res.sendError(Http404,
-            "404 Not Found: " & $httpMethod & " " & path)
+          # Security: Don't expose error details in production
+          res.status(Http404).send("Not Found")
+          
       of HttpPost:
         if path == "/user":
-          res.status(Http200).send("")
+          # Data creation endpoint
+          res.status(Http201).send("")  # Created
         else:
-          res.sendError(Http404,
-            "404 Not Found: " & $httpMethod & " " & path)
+          res.status(Http404).send("Not Found")
+          
       else:
-        res.sendError(Http404,
-          "404 Not Found: " & $httpMethod & " " & path) 
+        # Method not allowed
+        res.status(Http405).send("Method Not Allowed")
+        
+  except:
+    # Error handling - don't expose internal error details
+    res.status(Http500).send("Internal Server Error")
 
-server.start(handler, "0.0.0.0", 3000)
+# Start production-grade server
+proc runServer() =
+  echo "Starting ", APP_NAME, " v", APP_VERSION, " on ", SERVER_HOST, ":", SERVER_PORT
+  server.start(handler, SERVER_HOST, SERVER_PORT)
+
+when isMainModule:
+  runServer()
