@@ -39,6 +39,7 @@ jobs:
     needs: matrix
     if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] != null }}
 
+    name: "${{ matrix.language }} / ${{ matrix.framework }} / ${{ matrix.engine }}"
     runs-on: ubuntu-latest
 
     strategy:

@@ -51,7 +51,9 @@ namespace :ci do
       end
     end
 
-    matrix = matrix.uniq.take(256)
+    matrix = matrix.uniq
+               .sort_by { |entry| [entry[:language], entry[:framework], entry[:engine]] }
+               .take(256)
 
     puts({ include: matrix }.to_json)
   end
