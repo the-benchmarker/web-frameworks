@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'roda'
 
 # Configuration - Environment-based settings for production vs development
@@ -6,17 +8,25 @@ ENVIRONMENT = DEBUG_MODE ? 'development' : 'production'
 HOST = ENV.fetch('HOST', '0.0.0.0')
 PORT = ENV.fetch('PORT', '3000').to_i
 
-# Security headers plugin for Roda
+# Security headers configuration - frozen for performance
+SECURITY_HEADERS = {
+  'X-Content-Type-Options' => 'nosniff',
+  'X-Frame-Options' => 'DENY',
+  'X-XSS-Protection' => '1; mode=block',
+  'Content-Security-Policy' => "default-src 'self'",
+  'Referrer-Policy' => 'strict-origin-when-cross-origin',
+  'Cache-Control' => 'no-cache, no-store, must-revalidate'
+}.freeze
+
+# Content type constant
+CONTENT_TYPE = 'text/plain'.freeze
+
+# Security headers plugin for Roda - optimized with frozen constants
 class SecurityHeaders < Roda
   route do |r|
     # Apply security headers to all responses
-    response.headers['X-Content-Type-Options'] = 'nosniff'
-    response.headers['X-Frame-Options'] = 'DENY'
-    response.headers['X-XSS-Protection'] = '1; mode=block'
-    response.headers['Content-Security-Policy'] = "default-src 'self'"
-    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
-    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    response.headers['Content-Type'] = 'text/plain'
+    SECURITY_HEADERS.each { |key, value| response.headers[key] = value }
+    response.headers['Content-Type'] = CONTENT_TYPE
     
     # Call the main app
     r.run App.new
@@ -26,34 +36,19 @@ end
 # Custom logger for Roda - disabled in production
 class DebugLogger
   def call(env)
-    if DEBUG_MODE
-      puts "[DEBUG] #{env['REQUEST_METHOD']} - #{env['PATH_INFO']}"
-    end
+    puts "[DEBUG] #{env['REQUEST_METHOD']} - #{env['PATH_INFO']}" if DEBUG_MODE
     @app.call(env)
   end
 end
 
 # Startup message with configuration summary
-if DEBUG_MODE
-  puts "\n=== Roda Framework Benchmark Server (Development Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Host: #{HOST}"
-  puts "Port: #{PORT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Enabled (debug level)"
-  puts "Endpoints: /, /user/:id, /user, /health, /error"
-  puts "===========================================================\n\n"
-else
-  puts "\n=== Roda Framework Benchmark Server (Production Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Host: #{HOST}"
-  puts "Port: #{PORT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Disabled (production mode)"
-  puts "===========================================================\n\n"
-end
+puts "\n=== Roda Framework Benchmark Server (#{DEBUG_MODE ? 'Development' : 'Production'} Mode) ==="
+puts "Environment: #{ENVIRONMENT}"
+puts "Host: #{HOST}, Port: #{PORT}"
+puts "Debug: #{DEBUG_MODE}, Security headers: Enabled"
+puts "Logging: #{DEBUG_MODE ? 'Enabled' : 'Disabled'}"
+puts "Endpoints: /, /user/:id, /user, /health, /error"
+puts "===========================================================\n\n"
 
 class App < Roda
   # Apply logging middleware
@@ -61,44 +56,34 @@ class App < Roda
   
   route do |r|
     r.root do
-      if DEBUG_MODE
-        puts "[DEBUG] Root endpoint accessed"
-      end
-      response.headers['Content-Type'] = 'text/plain'
+      puts "[DEBUG] Root endpoint accessed" if DEBUG_MODE
+      response.headers['Content-Type'] = CONTENT_TYPE
       ''
     end
 
     r.get 'health' do
-      if DEBUG_MODE
-        puts "[DEBUG] Health check endpoint accessed"
-      end
-      response.headers['Content-Type'] = 'text/plain'
+      puts "[DEBUG] Health check endpoint accessed" if DEBUG_MODE
+      response.headers['Content-Type'] = CONTENT_TYPE
       'OK'
     end
 
     r.get 'error' do
-      if DEBUG_MODE
-        puts "[ERROR] Error endpoint accessed"
-      end
-      response.headers['Content-Type'] = 'text/plain'
+      puts "[ERROR] Error endpoint accessed" if DEBUG_MODE
+      response.headers['Content-Type'] = CONTENT_TYPE
       response.status = 500
       DEBUG_MODE ? 'Internal Server Error' : ''
     end
 
     r.on 'user' do
       r.get String do |id|
-        if DEBUG_MODE
-          puts "[DEBUG] User endpoint accessed with ID: #{id}"
-        end
-        response.headers['Content-Type'] = 'text/plain'
+        puts "[DEBUG] User endpoint accessed with ID: #{id}" if DEBUG_MODE
+        response.headers['Content-Type'] = CONTENT_TYPE
         id
       end
 
       r.post true do
-        if DEBUG_MODE
-          puts "[DEBUG] Create user endpoint accessed"
-        end
-        response.headers['Content-Type'] = 'text/plain'
+        puts "[DEBUG] Create user endpoint accessed" if DEBUG_MODE
+        response.headers['Content-Type'] = CONTENT_TYPE
         response.status = 201
         ''
       end

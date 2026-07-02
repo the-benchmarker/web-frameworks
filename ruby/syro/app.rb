@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'syro'
 
 # Configuration - Environment-based settings for production vs development
@@ -6,7 +8,7 @@ ENVIRONMENT = DEBUG_MODE ? 'development' : 'production'
 HOST = ENV.fetch('HOST', '0.0.0.0')
 PORT = ENV.fetch('PORT', '3000').to_i
 
-# Security headers configuration
+# Security headers configuration - frozen for performance
 SECURITY_HEADERS = {
   'X-Content-Type-Options' => 'nosniff',
   'X-Frame-Options' => 'DENY',
@@ -14,29 +16,19 @@ SECURITY_HEADERS = {
   'Content-Security-Policy' => "default-src 'self'",
   'Referrer-Policy' => 'strict-origin-when-cross-origin',
   'Cache-Control' => 'no-cache, no-store, must-revalidate'
-}
+}.freeze
+
+# Content type constant
+CONTENT_TYPE = { 'Content-Type' => 'text/plain' }.freeze
 
 # Startup message with configuration summary
-if DEBUG_MODE
-  puts "\n=== Syro Framework Benchmark Server (Development Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Host: #{HOST}"
-  puts "Port: #{PORT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Enabled (debug level)"
-  puts "Endpoints: /, /user/:id, /user, /health, /error"
-  puts "=========================================================\n\n"
-else
-  puts "\n=== Syro Framework Benchmark Server (Production Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Host: #{HOST}"
-  puts "Port: #{PORT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Disabled (production mode)"
-  puts "=========================================================\n\n"
-end
+puts "\n=== Syro Framework Benchmark Server (#{DEBUG_MODE ? 'Development' : 'Production'} Mode) ==="
+puts "Environment: #{ENVIRONMENT}"
+puts "Host: #{HOST}, Port: #{PORT}"
+puts "Debug: #{DEBUG_MODE}, Security headers: Enabled"
+puts "Logging: #{DEBUG_MODE ? 'Enabled' : 'Disabled'}"
+puts "Endpoints: /, /user/:id, /user, /health, /error"
+puts "=========================================================\n\n"
 
 # Custom middleware for security headers and logging
 class SecurityHeaders
@@ -46,13 +38,8 @@ class SecurityHeaders
 
   def call(env)
     status, headers, body = @app.call(env)
-    
-    # Add security headers
-    SECURITY_HEADERS.each do |key, value|
-      headers[key] = value
-    end
-    headers['Content-Type'] = 'text/plain'
-    
+    headers.merge!(SECURITY_HEADERS)
+    headers.merge!(CONTENT_TYPE)
     [status, headers, body]
   end
 end
@@ -64,9 +51,7 @@ class DebugLogger
   end
 
   def call(env)
-    if DEBUG_MODE
-      puts "[DEBUG] #{env['REQUEST_METHOD']} - #{env['PATH_INFO']}"
-    end
+    puts "[DEBUG] #{env['REQUEST_METHOD']} - #{env['PATH_INFO']}" if DEBUG_MODE
     @app.call(env)
   end
 end
@@ -77,46 +62,31 @@ App = Syro.new do
   use SecurityHeaders
   
   get do
-    if DEBUG_MODE
-      puts "[DEBUG] Root endpoint accessed"
-    end
-    res.status = 200
-    res.write ''
+    puts "[DEBUG] Root endpoint accessed" if DEBUG_MODE
+    [200, {}, '']
   end
 
   get 'health' do
-    if DEBUG_MODE
-      puts "[DEBUG] Health check endpoint accessed"
-    end
-    res.status = 200
-    res.write 'OK'
+    puts "[DEBUG] Health check endpoint accessed" if DEBUG_MODE
+    [200, {}, 'OK']
   end
 
   get 'error' do
-    if DEBUG_MODE
-      puts "[ERROR] Error endpoint accessed"
-    end
-    res.status = 500
-    res.write DEBUG_MODE ? 'Internal Server Error' : ''
+    puts "[ERROR] Error endpoint accessed" if DEBUG_MODE
+    [500, {}, DEBUG_MODE ? 'Internal Server Error' : '']
   end
 
   on 'user' do
     on :id do
       get do
-        if DEBUG_MODE
-          puts "[DEBUG] User endpoint accessed with ID: #{inbox[:id]}"
-        end
-        res.status = 200
-        res.write inbox[:id]
+        puts "[DEBUG] User endpoint accessed with ID: #{inbox[:id]}" if DEBUG_MODE
+        [200, {}, inbox[:id]]
       end
     end
 
     post do
-      if DEBUG_MODE
-        puts "[DEBUG] Create user endpoint accessed"
-      end
-      res.status = 201
-      res.write ''
+      puts "[DEBUG] Create user endpoint accessed" if DEBUG_MODE
+      [201, {}, '']
     end
   end
 end

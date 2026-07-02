@@ -4,7 +4,7 @@ class ApiController < ActionController::API
   
   private
   
-  # Security headers configuration
+  # Security headers configuration - frozen for performance
   SECURITY_HEADERS = {
     'X-Content-Type-Options' => 'nosniff',
     'X-Frame-Options' => 'DENY',
@@ -15,20 +15,15 @@ class ApiController < ActionController::API
   }.freeze
   
   def set_security_headers
-    SECURITY_HEADERS.each do |key, value|
-      response.headers[key] = value
-    end
+    SECURITY_HEADERS.each { |key, value| response.headers[key] = value }
   end
   
   def debug_log(message, level = 'debug')
-    return unless DEBUG_MODE
+    return unless DEBUG_MODE && Rails.logger
     case level
-    when 'error'
-      Rails.logger.error(message) if Rails.logger
-    when 'info'
-      Rails.logger.info(message) if Rails.logger
-    else
-      Rails.logger.debug(message) if Rails.logger
+    when 'error' then Rails.logger.error(message)
+    when 'info' then Rails.logger.info(message)
+    else Rails.logger.debug(message)
     end
   end
 

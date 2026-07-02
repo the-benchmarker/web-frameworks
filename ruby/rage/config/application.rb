@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "bundler/setup"
 require "rage"
 Bundler.require(*Rage.groups)
@@ -11,26 +13,13 @@ HOST = ENV.fetch('HOST', '0.0.0.0')
 PORT = ENV.fetch('PORT', '3000').to_i
 
 # Startup message with configuration summary
-if DEBUG_MODE
-  puts "\n=== Rage Framework Benchmark Server (Development Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Host: #{HOST}"
-  puts "Port: #{PORT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Enabled (debug level)"
-  puts "Endpoints: /, /user/:id, /user, /health, /error"
-  puts "============================================================\n\n"
-else
-  puts "\n=== Rage Framework Benchmark Server (Production Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Host: #{HOST}"
-  puts "Port: #{PORT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Disabled (production mode)"
-  puts "============================================================\n\n"
-end
+puts "\n=== Rage Framework Benchmark Server (#{DEBUG_MODE ? 'Development' : 'Production'} Mode) ==="
+puts "Environment: #{ENVIRONMENT}"
+puts "Host: #{HOST}, Port: #{PORT}"
+puts "Debug: #{DEBUG_MODE}, Security headers: Enabled"
+puts "Logging: #{DEBUG_MODE ? 'Enabled' : 'Disabled'}"
+puts "Endpoints: /, /user/:id, /user, /health, /error"
+puts "============================================================\n\n"
 
 Rage.configure do
   # use this to add settings that are constant across all environments

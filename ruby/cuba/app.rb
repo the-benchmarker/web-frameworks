@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cuba'
 
 # Configuration - Environment-based settings for production vs development
@@ -6,7 +8,7 @@ ENVIRONMENT = DEBUG_MODE ? 'development' : 'production'
 HOST = ENV.fetch('HOST', '0.0.0.0')
 PORT = ENV.fetch('PORT', '3000').to_i
 
-# Security headers configuration
+# Security headers configuration - frozen for performance
 SECURITY_HEADERS = {
   'X-Content-Type-Options' => 'nosniff',
   'X-Frame-Options' => 'DENY',
@@ -14,76 +16,53 @@ SECURITY_HEADERS = {
   'Content-Security-Policy' => "default-src 'self'",
   'Referrer-Policy' => 'strict-origin-when-cross-origin',
   'Cache-Control' => 'no-cache, no-store, must-revalidate'
-}
+}.freeze
 
 # Custom logger for Cuba - disabled in production
-if DEBUG_MODE
-  Cuba.plugin Cuba::Logger
-end
+Cuba.plugin Cuba::Logger if DEBUG_MODE
 
 # Startup message with configuration summary
-if DEBUG_MODE
-  puts "\n=== Cuba Framework Benchmark Server (Development Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Host: #{HOST}"
-  puts "Port: #{PORT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Enabled (debug level)"
-  puts "Endpoints: /, /user/:id, /user, /health, /error"
-  puts "===========================================================\n\n"
-else
-  puts "\n=== Cuba Framework Benchmark Server (Production Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Host: #{HOST}"
-  puts "Port: #{PORT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Disabled (production mode)"
-  puts "===========================================================\n\n"
-end
+puts "\n=== Cuba Framework Benchmark Server (#{DEBUG_MODE ? 'Development' : 'Production'} Mode) ==="
+puts "Environment: #{ENVIRONMENT}"
+puts "Host: #{HOST}, Port: #{PORT}"
+puts "Debug: #{DEBUG_MODE}, Security headers: Enabled"
+puts "Logging: #{DEBUG_MODE ? 'Enabled' : 'Disabled'}"
+puts "Endpoints: /, /user/:id, /user, /health, /error"
+puts "===========================================================\n\n"
 
 Cuba.define do
   # Apply security headers to all responses
   before do
-    SECURITY_HEADERS.each do |key, value|
-      res[key] = value
-    end
+    SECURITY_HEADERS.each { |key, value| res[key] = value }
     res['Content-Type'] = 'text/plain'
   end
 
   on get do
     on root do
-      if DEBUG_MODE
-        puts "[DEBUG] Root endpoint accessed"
-      end
+      puts "[DEBUG] Root endpoint accessed" if DEBUG_MODE
       res.write ''
     end
+    
     on 'user/:id' do |id|
-      if DEBUG_MODE
-        puts "[DEBUG] User endpoint accessed with ID: #{id}"
-      end
+      puts "[DEBUG] User endpoint accessed with ID: #{id}" if DEBUG_MODE
       res.write id
     end
+    
     on 'health' do
-      if DEBUG_MODE
-        puts "[DEBUG] Health check endpoint accessed"
-      end
+      puts "[DEBUG] Health check endpoint accessed" if DEBUG_MODE
       res.write 'OK'
     end
+    
     on 'error' do
-      if DEBUG_MODE
-        puts "[ERROR] Error endpoint accessed"
-      end
+      puts "[ERROR] Error endpoint accessed" if DEBUG_MODE
       res.status = 500
       res.write DEBUG_MODE ? 'Internal Server Error' : ''
     end
   end
+  
   on post do
-    on 'user' do |_id|
-      if DEBUG_MODE
-        puts "[DEBUG] Create user endpoint accessed"
-      end
+    on 'user' do
+      puts "[DEBUG] Create user endpoint accessed" if DEBUG_MODE
       res.status = 201
       res.write ''
     end

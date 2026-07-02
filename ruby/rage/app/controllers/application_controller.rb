@@ -1,27 +1,28 @@
 class ApplicationController < RageController::API
-  # Security headers for all responses
+  # Security headers for all responses - frozen for performance
+  SECURITY_HEADERS = {
+    'X-Content-Type-Options' => 'nosniff',
+    'X-Frame-Options' => 'DENY',
+    'X-XSS-Protection' => '1; mode=block',
+    'Content-Security-Policy' => "default-src 'self'",
+    'Referrer-Policy' => 'strict-origin-when-cross-origin',
+    'Cache-Control' => 'no-cache, no-store, must-revalidate'
+  }.freeze
+  
   before_action :set_security_headers
   
   private
   
   def set_security_headers
-    response.headers['X-Content-Type-Options'] = 'nosniff'
-    response.headers['X-Frame-Options'] = 'DENY'
-    response.headers['X-XSS-Protection'] = '1; mode=block'
-    response.headers['Content-Security-Policy'] = "default-src 'self'"
-    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
-    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    SECURITY_HEADERS.each { |key, value| response.headers[key] = value }
   end
   
   def debug_log(message, level = 'debug')
-    return unless DEBUG_MODE
+    return unless DEBUG_MODE && defined?(Rails) && Rails.logger
     case level
-    when 'error'
-      Rails.logger.error(message) if defined?(Rails) && Rails.logger
-    when 'info'
-      Rails.logger.info(message) if defined?(Rails) && Rails.logger
-    else
-      Rails.logger.debug(message) if defined?(Rails) && Rails.logger
+    when 'error' then Rails.logger.error(message)
+    when 'info' then Rails.logger.info(message)
+    else Rails.logger.debug(message)
     end
   end
 

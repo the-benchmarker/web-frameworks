@@ -1,28 +1,25 @@
+#![allow(clippy::unused_unit)]
+
+use once_cell::sync::Lazy;
 use poem::listener::TcpListener;
 use poem::web::{header, Path};
-use poem::{get, handler, post, IntoResponse, Route, Server};
-use std::{env, sync::OnceLock};
+use poem::{get, handler, post, IntoResponse, Response, Route, Server};
+use std::env;
 
 // Configuration - Environment-based settings for production vs development
-static DEBUG_MODE: OnceLock<bool> = OnceLock::new();
+static DEBUG_MODE: Lazy<bool> = Lazy::new(|| {
+    env::var("DEBUG").unwrap_or_else(|_| "false".to_string()) == "true"
+});
 
-fn get_debug_mode() -> bool {
-    *DEBUG_MODE.get_or_init(|| {
-        env::var("DEBUG").unwrap_or_else(|_| "false".to_string()) == "true"
-    })
-}
-
-// Security headers configuration
-fn security_headers() -> Vec<(&'static str, &'static str)> {
-    vec![
-        ("X-Content-Type-Options", "nosniff"),
-        ("X-Frame-Options", "DENY"),
-        ("X-XSS-Protection", "1; mode=block"),
-        ("Content-Security-Policy", "default-src 'self'"),
-        ("Referrer-Policy", "strict-origin-when-cross-origin"),
-        ("Cache-Control", "no-cache, no-store, must-revalidate"),
-    ]
-}
+// Security headers configuration - pre-allocated for performance
+static SECURITY_HEADERS: &[(&'static str, &'static str)] = &[
+    ("X-Content-Type-Options", "nosniff"),
+    ("X-Frame-Options", "DENY"),
+    ("X-XSS-Protection", "1; mode=block"),
+    ("Content-Security-Policy", "default-src 'self'"),
+    ("Referrer-Policy", "strict-origin-when-cross-origin"),
+    ("Cache-Control", "no-cache, no-store, must-revalidate"),
+];
 
 // Apply security headers middleware
 struct SecurityHeaders;
@@ -31,7 +28,7 @@ struct SecurityHeaders;
 impl poem::Middleware for SecurityHeaders {
     async fn transform(&self, req: poem::Request, next: poem::Next) -> poem::Result<poem::Response> {
         let mut resp = next.run(req).await;
-        for (key, value) in security_headers() {
+        for &(key, value) in SECURITY_HEADERS {
             resp.headers.insert(
                 header::HeaderName::from_static(key),
                 header::HeaderValue::from_static(value)
@@ -47,14 +44,14 @@ impl poem::Middleware for SecurityHeaders {
 
 #[handler]
 async fn index() {
-    if get_debug_mode() {
+    if *DEBUG_MODE {
         eprintln!("[DEBUG] Root endpoint accessed");
     }
 }
 
 #[handler]
 async fn get_user(Path(id): Path<String>) -> impl IntoResponse {
-    if get_debug_mode() {
+    if *DEBUG_MODE {
         eprintln!("[DEBUG] User endpoint accessed with ID: {}", id);
     }
     id
@@ -62,14 +59,14 @@ async fn get_user(Path(id): Path<String>) -> impl IntoResponse {
 
 #[handler]
 async fn post_user() {
-    if get_debug_mode() {
+    if *DEBUG_MODE {
         eprintln!("[DEBUG] Create user endpoint accessed");
     }
 }
 
 #[handler]
 async fn health() {
-    if get_debug_mode() {
+    if *DEBUG_MODE {
         eprintln!("[DEBUG] Health check endpoint accessed");
     }
     "OK"
@@ -77,18 +74,12 @@ async fn health() {
 
 #[handler]
 async fn error() -> impl IntoResponse {
-    if get_debug_mode() {
+    if *DEBUG_MODE {
         eprintln!("[ERROR] Error endpoint accessed");
     }
-    if get_debug_mode() {
-        poem::Response::builder()
-            .status(500)
-            .body("Internal Server Error")
-    } else {
-        poem::Response::builder()
-            .status(500)
-            .body("")
-    }
+    Response::builder()
+        .status(500)
+        .body(if *DEBUG_MODE { "Internal Server Error" } else { "" })
 }
 
 #[tokio::main]
@@ -99,26 +90,16 @@ async fn main() -> std::io::Result<()> {
     let addr = format!("{}:{}", host, port);
 
     // Startup message with configuration summary
-    if get_debug_mode() {
-        eprintln!("\n=== Poem Framework Benchmark Server (Development Mode) ===");
-        eprintln!("Environment: development");
-        eprintln!("Host: {}", host);
-        eprintln!("Port: {}", port);
-        eprintln!("Debug: true");
-        eprintln!("Security headers: Enabled");
-        eprintln!("Logging: Enabled (debug level)");
-        eprintln!("Endpoints: /, /user/:id, /user, /health, /error");
-        eprintln!("==========================================================\n");
-    } else {
-        eprintln!("\n=== Poem Framework Benchmark Server (Production Mode) ===");
-        eprintln!("Environment: production");
-        eprintln!("Host: {}", host);
-        eprintln!("Port: {}", port);
-        eprintln!("Debug: false");
-        eprintln!("Security headers: Enabled");
-        eprintln!("Logging: Disabled (production mode)");
-        eprintln!("==========================================================\n");
-    }
+    let mode = if *DEBUG_MODE { "Development" } else { "Production" };
+    let log_status = if *DEBUG_MODE { "Enabled" } else { "Disabled" };
+    
+    eprintln!("\n=== Poem Framework Benchmark Server ({} Mode) ===", mode);
+    eprintln!("Environment: {}", if *DEBUG_MODE { "development" } else { "production" });
+    eprintln!("Host: {}, Port: {}", host, port);
+    eprintln!("Debug: {}, Security headers: Enabled", *DEBUG_MODE);
+    eprintln!("Logging: {} ({} level)", log_status, if *DEBUG_MODE { "debug" } else { "warn" });
+    eprintln!("Endpoints: /, /user/:id, /user, /health, /error");
+    eprintln!("==========================================================\n");
 
     let app = Route::new()
         .at("/", get(index))

@@ -4,12 +4,17 @@
 //! Follows Rust best practices including proper error handling, logging, and async/await.
 
 use std::{convert::Infallible, env, net::SocketAddr};
-use thiserror::Error;
+use once_cell::sync::Lazy;
 use tracing::{debug, error, info, Level};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
 use warp::{
     Filter, Rejection, Reply,
 };
+
+// Configuration - Environment-based settings for production vs development
+static DEBUG_MODE: Lazy<bool> = Lazy::new(|| {
+    env::var("DEBUG").unwrap_or_else(|_| "false".to_string()) == "true"
+});
 
 /// Server configuration
 #[derive(Debug, Clone)]
@@ -28,6 +33,7 @@ impl Default for Config {
 }
 
 impl Config {
+    #[inline]
     fn from_env() -> Self {
         let mut config = Self::default();
         
@@ -42,76 +48,47 @@ impl Config {
         config
     }
 
+    #[inline]
     fn socket_addr(&self) -> SocketAddr {
         format!("{}:{}", self.host, self.port).parse().unwrap()
     }
 }
 
-/// Custom error type for benchmark server
-#[derive(Error, Debug)]
-pub enum ServerError {
-    #[error("Internal server error")]
-    InternalServerError,
-    
-    #[error("Not found")]
-    NotFound,
-}
 
-impl Reply for ServerError {
-    fn into_response(self) -> warp::reply::Response {
-        let status = match self {
-            ServerError::InternalServerError => warp::http::StatusCode::INTERNAL_SERVER_ERROR,
-            ServerError::NotFound => warp::http::StatusCode::NOT_FOUND,
-        };
-        
-        error!("{}", self);
-        warp::reply::with_status(self.to_string(), status)
-    }
-}
 
 /// Convert Rejection to ServerError
+#[inline]
 async fn handle_rejection(err: Rejection) -> Result<impl Reply, Infallible> {
     error!("Request rejection: {:?}", err);
     Ok(warp::reply::with_status(
-        "Not Found",
+        if *DEBUG_MODE { "Not Found" } else { "" },
         warp::http::StatusCode::NOT_FOUND,
     ))
 }
 
 /// Root endpoint handler
-/// 
-/// # Returns
-/// Empty response for benchmarking
+#[inline]
 async fn root_handler() -> Result<impl Reply, Infallible> {
     debug!("Root endpoint accessed");
     Ok("")
 }
 
 /// Get user by ID endpoint
-/// 
-/// # Arguments
-/// * `id` - User identifier from path (as u32)
-/// 
-/// # Returns
-/// User ID as plain text
+#[inline]
 async fn get_user_handler(id: u32) -> Result<impl Reply, Infallible> {
     debug!("User endpoint accessed with ID: {}", id);
     Ok(id.to_string())
 }
 
 /// Create user endpoint
-/// 
-/// # Returns
-/// Empty response for benchmarking
+#[inline]
 async fn create_user_handler() -> Result<impl Reply, Infallible> {
     debug!("Create user endpoint accessed");
     Ok("")
 }
 
 /// Health check endpoint for monitoring
-/// 
-/// # Returns
-/// Health status
+#[inline]
 async fn health_check_handler() -> Result<impl Reply, Infallible> {
     Ok("OK")
 }
@@ -146,13 +123,11 @@ fn create_routes() -> impl Filter<Extract = impl Reply, Error = Rejection> + Clo
 }
 
 /// Initialize tracing subscriber
-/// 
-/// # Returns
-/// Result indicating success or failure
+#[inline]
 fn init_tracing() -> Result<(), Box<dyn std::error::Error>> {
     tracing_subscriber::registry()
-        .with(EnvFilter::from_default_env().add_directive(Level::DEBUG.into()))
-        .with(tracing_subscriber::fmt::layer().pretty().without_time())
+        .with(EnvFilter::from_default_env().add_directive(if *DEBUG_MODE { Level::DEBUG } else { Level::WARN }.into()))
+        .with(tracing_subscriber::fmt::layer().without_time())
         .init();
     
     Ok(())
@@ -167,21 +142,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialize tracing
     init_tracing()?;
     
-    info!("Starting Warp benchmark server");
-
     // Load configuration
     let config = Config::from_env();
     
-    info!("Configuration: host={}, port={}", 
-        config.host, config.port);
+    info!("Starting Warp benchmark server");
+    info!("Server listening on {}", config.socket_addr());
 
     // Create routes
     let routes = create_routes()
         .recover(handle_rejection);
 
     // Start server
-    info!("Server listening on {}", config.socket_addr());
-    
     warp::serve(routes)
         .run(config.socket_addr())
         .await;

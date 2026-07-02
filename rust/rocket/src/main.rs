@@ -1,19 +1,18 @@
+#![allow(clippy::unused_unit)]
+
+use once_cell::sync::Lazy;
 use rocket::fairing::{Fairing, Info, Kind};
 use rocket::http::{ContentType, Header};
 use rocket::{Request, Response};
-use std::{env, net::Ipv4Addr, sync::OnceLock};
+use std::{env, net::Ipv4Addr};
 
 #[macro_use]
 extern crate rocket;
 
 // Configuration - Environment-based settings for production vs development
-static DEBUG_MODE: OnceLock<bool> = OnceLock::new();
-
-fn get_debug_mode() -> bool {
-    *DEBUG_MODE.get_or_init(|| {
-        env::var("DEBUG").unwrap_or_else(|_| "false".to_string()) == "true"
-    })
-}
+static DEBUG_MODE: Lazy<bool> = Lazy::new(|| {
+    env::var("DEBUG").unwrap_or_else(|_| "false".to_string()) == "true"
+});
 
 // Security headers configuration
 struct SecurityHeaders;
@@ -27,7 +26,8 @@ impl Fairing for SecurityHeaders {
         }
     }
 
-    async fn on_response<'r>(&self, request: &'r Request<'_>, response: &mut Response<'r>) {
+    #[inline]
+    async fn on_response<'r>(&self, _request: &'r Request<'_>, response: &mut Response<'r>) {
         response.set_header(Header::new("X-Content-Type-Options", "nosniff"));
         response.set_header(Header::new("X-Frame-Options", "DENY"));
         response.set_header(Header::new("X-XSS-Protection", "1; mode=block"));
@@ -40,7 +40,7 @@ impl Fairing for SecurityHeaders {
 
 #[get("/")]
 fn index() -> &'static str {
-    if get_debug_mode() {
+    if *DEBUG_MODE {
         eprintln!("[DEBUG] Root endpoint accessed");
     }
     ""
@@ -48,7 +48,7 @@ fn index() -> &'static str {
 
 #[get("/user/<id>")]
 fn get_user(id: &str) -> &str {
-    if get_debug_mode() {
+    if *DEBUG_MODE {
         eprintln!("[DEBUG] User endpoint accessed with ID: {}", id);
     }
     id
@@ -56,7 +56,7 @@ fn get_user(id: &str) -> &str {
 
 #[post("/user")]
 fn post_user() -> &'static str {
-    if get_debug_mode() {
+    if *DEBUG_MODE {
         eprintln!("[DEBUG] Create user endpoint accessed");
     }
     ""
@@ -64,7 +64,7 @@ fn post_user() -> &'static str {
 
 #[get("/health")]
 fn health() -> &'static str {
-    if get_debug_mode() {
+    if *DEBUG_MODE {
         eprintln!("[DEBUG] Health check endpoint accessed");
     }
     "OK"
@@ -72,44 +72,29 @@ fn health() -> &'static str {
 
 #[get("/error")]
 fn error() -> String {
-    if get_debug_mode() {
+    if *DEBUG_MODE {
         eprintln!("[ERROR] Error endpoint accessed");
     }
-    if get_debug_mode() {
-        "Internal Server Error".to_string()
-    } else {
-        String::new()
-    }
+    if *DEBUG_MODE { "Internal Server Error" } else { "" }.to_string()
 }
 
 #[launch]
 fn rocket() -> _ {
     // Get configuration from environment
     let host = env::var("HOST").unwrap_or_else(|_| "0.0.0.0".to_string());
-    let port_str = env::var("PORT").unwrap_or_else(|_| "3000".to_string());
-    let port = port_str.parse().unwrap_or(3000);
+    let port = env::var("PORT").unwrap_or_else(|_| "3000".to_string()).parse().unwrap_or(3000);
     
     // Startup message with configuration summary
-    if get_debug_mode() {
-        eprintln!("\n=== Rocket Framework Benchmark Server (Development Mode) ===");
-        eprintln!("Environment: development");
-        eprintln!("Host: {}", host);
-        eprintln!("Port: {}", port);
-        eprintln!("Debug: true");
-        eprintln!("Security headers: Enabled");
-        eprintln!("Logging: Enabled (debug level)");
-        eprintln!("Endpoints: /, /user/:id, /user, /health, /error");
-        eprintln!("==========================================================\n");
-    } else {
-        eprintln!("\n=== Rocket Framework Benchmark Server (Production Mode) ===");
-        eprintln!("Environment: production");
-        eprintln!("Host: {}", host);
-        eprintln!("Port: {}", port);
-        eprintln!("Debug: false");
-        eprintln!("Security headers: Enabled");
-        eprintln!("Logging: Disabled (production mode)");
-        eprintln!("==========================================================\n");
-    }
+    let mode = if *DEBUG_MODE { "Development" } else { "Production" };
+    let log_status = if *DEBUG_MODE { "Enabled" } else { "Disabled" };
+    
+    eprintln!("\n=== Rocket Framework Benchmark Server ({} Mode) ===", mode);
+    eprintln!("Environment: {}", if *DEBUG_MODE { "development" } else { "production" });
+    eprintln!("Host: {}, Port: {}", host, port);
+    eprintln!("Debug: {}, Security headers: Enabled", *DEBUG_MODE);
+    eprintln!("Logging: {} ({} level)", log_status, if *DEBUG_MODE { "debug" } else { "warn" });
+    eprintln!("Endpoints: /, /user/:id, /user, /health, /error");
+    eprintln!("==========================================================\n");
 
     let mut config = rocket::config::Config::default();
     config.address = host.parse().unwrap_or_else(|_| Ipv4Addr::new(0, 0, 0, 0).into());

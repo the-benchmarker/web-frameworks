@@ -30,35 +30,34 @@ class ApplicationController < ActionController::API
   }.freeze
   
   def set_security_headers
-    SECURITY_HEADERS.each do |key, value|
-      response.headers[key] = value
-    end
+    SECURITY_HEADERS.each { |key, value| response.headers[key] = value }
   end
 
   # Root endpoint
   # GET /
   def index
-    Rails.logger.debug("Root endpoint accessed")
+    Rails.logger.debug("Root endpoint accessed") if DEBUG_MODE && Rails.logger
     head :ok, content_type: "text/plain"
   end
 
   # Get user by ID endpoint
   # GET /user/:id
   def user
-    Rails.logger.debug("User endpoint accessed with ID: #{params[\"id\"]}")
+    Rails.logger.debug("User endpoint accessed with ID: #{params[\"id\"]}") if DEBUG_MODE && Rails.logger
     render plain: params["id"], content_type: "text/plain", status: :ok
   end
 
   # Create user endpoint
   # POST /user
   def register_user
-    Rails.logger.debug("Create user endpoint accessed")
-    head :ok, content_type: "text/plain"
+    Rails.logger.debug("Create user endpoint accessed") if DEBUG_MODE && Rails.logger
+    head :created, content_type: "text/plain"
   end
 
   # Health check endpoint
   # GET /health
   def health_check
+    Rails.logger.debug("Health check endpoint accessed") if DEBUG_MODE && Rails.logger
     render plain: "OK", content_type: "text/plain", status: :ok
   end
 
@@ -66,20 +65,18 @@ class ApplicationController < ActionController::API
 
   # Log request access for debugging
   def log_request_access
-    if DEBUG_MODE
-      Rails.logger.debug("#{request.method} #{request.path}")
-    end
+    Rails.logger.debug("#{request.method} #{request.path}") if DEBUG_MODE && Rails.logger
   end
 
   # Handle standard errors
   def handle_standard_error(error)
-    if DEBUG_MODE
+    if DEBUG_MODE && Rails.logger
       Rails.logger.error("Unhandled error: #{error.message}")
       Rails.logger.error(error.backtrace.join("\n"))
     end
     
     # For benchmarking, return empty response on error in production
-    if Rails.env.production? || !DEBUG_MODE
+    if !DEBUG_MODE
       head :internal_server_error, content_type: "text/plain"
     else
       render plain: "Internal Server Error: #{error.message}", 
@@ -89,49 +86,11 @@ class ApplicationController < ActionController::API
   end
 
 public
-  
-  # Root endpoint
-  # GET /
-  def index
-    if DEBUG_MODE
-      Rails.logger.debug("Root endpoint accessed")
-    end
-    head :ok, content_type: "text/plain"
-  end
-
-  # Get user by ID endpoint
-  # GET /user/:id
-  def user
-    if DEBUG_MODE
-      Rails.logger.debug("User endpoint accessed with ID: #{params[\"id\"]}")
-    end
-    render plain: params["id"], content_type: "text/plain", status: :ok
-  end
-
-  # Create user endpoint
-  # POST /user
-  def register_user
-    if DEBUG_MODE
-      Rails.logger.debug("Create user endpoint accessed")
-    end
-    head :created, content_type: "text/plain"
-  end
-
-  # Health check endpoint
-  # GET /health
-  def health_check
-    if DEBUG_MODE
-      Rails.logger.debug("Health check endpoint accessed")
-    end
-    render plain: "OK", content_type: "text/plain", status: :ok
-  end
 
   # Error test endpoint
   # GET /error
   def error
-    if DEBUG_MODE
-      Rails.logger.error("Error endpoint accessed")
-    end
+    Rails.logger.error("Error endpoint accessed") if DEBUG_MODE && Rails.logger
     if DEBUG_MODE
       render plain: "Internal Server Error", content_type: "text/plain", status: :internal_server_error
     else

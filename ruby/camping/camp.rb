@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'camping'
 
 # Configuration - Environment-based settings for production vs development
@@ -6,18 +8,21 @@ ENVIRONMENT = DEBUG_MODE ? 'development' : 'production'
 HOST = ENV.fetch('HOST', '0.0.0.0')
 PORT = ENV.fetch('PORT', '3000').to_i
 
+# Security headers configuration - frozen for performance
+SECURITY_HEADERS = {
+  'X-Content-Type-Options' => 'nosniff',
+  'X-Frame-Options' => 'DENY',
+  'X-XSS-Protection' => '1; mode=block',
+  'Content-Security-Policy' => "default-src 'self'",
+  'Referrer-Policy' => 'strict-origin-when-cross-origin',
+  'Cache-Control' => 'no-cache, no-store, must-revalidate'
+}.freeze
+
 # Security headers middleware for Camping
 module SecurityHeaders
   def self.included(controller)
     controller.before do
-      @headers.merge!(
-        'X-Content-Type-Options' => 'nosniff',
-        'X-Frame-Options' => 'DENY',
-        'X-XSS-Protection' => '1; mode=block',
-        'Content-Security-Policy' => "default-src 'self'",
-        'Referrer-Policy' => 'strict-origin-when-cross-origin',
-        'Cache-Control' => 'no-cache, no-store, must-revalidate'
-      )
+      @headers.merge!(SECURITY_HEADERS)
     end
   end
 end
@@ -26,34 +31,19 @@ end
 module CampingLogger
   def self.included(controller)
     controller.before do
-      if DEBUG_MODE
-        puts "[#{Time.now}] #{@headers['REQUEST_METHOD']} - #{@env['PATH_INFO']}"
-      end
+      puts "[DEBUG] #{@headers['REQUEST_METHOD']} - #{@env['PATH_INFO']}" if DEBUG_MODE
     end
   end
 end
 
 # Startup message with configuration summary
-if DEBUG_MODE
-  puts "\n=== Camping Framework Benchmark Server (Development Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Host: #{HOST}"
-  puts "Port: #{PORT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Enabled (debug level)"
-  puts "Endpoints: /, /user/:id, /user, /health, /error"
-  puts "===============================================================\n\n"
-else
-  puts "\n=== Camping Framework Benchmark Server (Production Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Host: #{HOST}"
-  puts "Port: #{PORT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Disabled (production mode)"
-  puts "===============================================================\n\n"
-end
+puts "\n=== Camping Framework Benchmark Server (#{DEBUG_MODE ? 'Development' : 'Production'} Mode) ==="
+puts "Environment: #{ENVIRONMENT}"
+puts "Host: #{HOST}, Port: #{PORT}"
+puts "Debug: #{DEBUG_MODE}, Security headers: Enabled"
+puts "Logging: #{DEBUG_MODE ? 'Enabled' : 'Disabled'}"
+puts "Endpoints: /, /user/:id, /user, /health, /error"
+puts "===============================================================\n\n"
 
 Camping.goes :App
 
@@ -105,11 +95,7 @@ module App
       def get
         @headers['Content-Type'] = 'text/plain'
         @headers['Status'] = 500
-        if DEBUG_MODE
-          'Internal Server Error'
-        else
-          ''
-        end
+        DEBUG_MODE ? 'Internal Server Error' : ''
       end
     end
   end

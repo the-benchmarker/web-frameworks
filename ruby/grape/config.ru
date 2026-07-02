@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Bundler.require :default
 
 # Configuration - Environment-based settings for production vs development
@@ -6,7 +8,7 @@ ENVIRONMENT = DEBUG_MODE ? 'development' : 'production'
 HOST = ENV.fetch('HOST', '0.0.0.0')
 PORT = ENV.fetch('PORT', '3000').to_i
 
-# Security headers configuration
+# Security headers configuration - frozen for performance
 SECURITY_HEADERS = {
   'X-Content-Type-Options' => 'nosniff',
   'X-Frame-Options' => 'DENY',
@@ -14,7 +16,7 @@ SECURITY_HEADERS = {
   'Content-Security-Policy' => "default-src 'self'",
   'Referrer-Policy' => 'strict-origin-when-cross-origin',
   'Cache-Control' => 'no-cache, no-store, must-revalidate'
-}
+}.freeze
 
 # Custom error handlers
 module Bench
@@ -26,38 +28,26 @@ module Bench
     
     # Apply security headers to all responses
     before do
-      header 'X-Content-Type-Options', 'nosniff'
-      header 'X-Frame-Options', 'DENY'
-      header 'X-XSS-Protection', '1; mode=block'
-      header 'Content-Security-Policy', "default-src 'self'"
-      header 'Referrer-Policy', 'strict-origin-when-cross-origin'
-      header 'Cache-Control', 'no-cache, no-store, must-revalidate'
+      SECURITY_HEADERS.each { |key, value| header key, value }
       header 'Content-Type', 'text/plain'
     end
 
     # Root endpoint
     get do
-      if DEBUG_MODE
-        puts "[DEBUG] Root endpoint accessed"
-      end
+      puts "[DEBUG] Root endpoint accessed" if DEBUG_MODE
       body false
     end
 
     # Health check endpoint
     get '/health' do
-      if DEBUG_MODE
-        puts "[DEBUG] Health check endpoint accessed"
-      end
+      puts "[DEBUG] Health check endpoint accessed" if DEBUG_MODE
       'OK'
     end
 
     # Error test endpoint
     get '/error' do
-      if DEBUG_MODE
-        puts "[ERROR] Error endpoint accessed"
-      end
-      error!('Internal Server Error', 500) if DEBUG_MODE
-      error!('', 500)
+      puts "[ERROR] Error endpoint accessed" if DEBUG_MODE
+      error!(DEBUG_MODE ? 'Internal Server Error' : '', 500)
     end
   end
 
@@ -68,26 +58,17 @@ module Bench
     
     # Apply security headers
     before do
-      header 'X-Content-Type-Options', 'nosniff'
-      header 'X-Frame-Options', 'DENY'
-      header 'X-XSS-Protection', '1; mode=block'
-      header 'Content-Security-Policy', "default-src 'self'"
-      header 'Referrer-Policy', 'strict-origin-when-cross-origin'
-      header 'Cache-Control', 'no-cache, no-store, must-revalidate'
+      SECURITY_HEADERS.each { |key, value| header key, value }
       header 'Content-Type', 'text/plain'
     end
 
     get "/user/:id" do
-      if DEBUG_MODE
-        puts "[DEBUG] User endpoint accessed with ID: #{params[:id]}"
-      end
+      puts "[DEBUG] User endpoint accessed with ID: #{params[:id]}" if DEBUG_MODE
       params[:id]
     end
     
     post "/user" do
-      if DEBUG_MODE
-        puts "[DEBUG] Create user endpoint accessed"
-      end
+      puts "[DEBUG] Create user endpoint accessed" if DEBUG_MODE
       status 201
       body false
     end
@@ -100,26 +81,13 @@ module Bench
 end
 
 # Startup message with configuration summary
-if DEBUG_MODE
-  puts "\n=== Grape Framework Benchmark Server (Development Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Host: #{HOST}"
-  puts "Port: #{PORT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Enabled (debug level)"
-  puts "Endpoints: /, /user/:id, /user, /health, /error"
-  puts "============================================================\n\n"
-else
-  puts "\n=== Grape Framework Benchmark Server (Production Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Host: #{HOST}"
-  puts "Port: #{PORT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Disabled (production mode)"
-  puts "============================================================\n\n"
-end
+puts "\n=== Grape Framework Benchmark Server (#{DEBUG_MODE ? 'Development' : 'Production'} Mode) ==="
+puts "Environment: #{ENVIRONMENT}"
+puts "Host: #{HOST}, Port: #{PORT}"
+puts "Debug: #{DEBUG_MODE}, Security headers: Enabled"
+puts "Logging: #{DEBUG_MODE ? 'Enabled' : 'Disabled'}"
+puts "Endpoints: /, /user/:id, /user, /health, /error"
+puts "============================================================\n\n"
 
 Bench::API.compile!
 run Bench::API

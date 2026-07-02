@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails"
 require "active_model/railtie"
 require "active_job/railtie"
 require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_view/railtie"
-require "action_cable/engine"
-require "rails/test_unit/railtie"
+# require "action_mailer/railtie"
+# require "action_view/railtie"
+# require "action_cable/engine"
+# require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -18,44 +20,36 @@ DEBUG_MODE = ENV.fetch('DEBUG', 'false') == 'true'
 ENVIRONMENT = DEBUG_MODE ? 'development' : 'production'
 
 # Startup message with configuration summary
-if DEBUG_MODE
-  puts "\n=== Rails API Framework Benchmark Server (Development Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Enabled (debug level)"
-  puts "Endpoints: /, /user/:id, /user, /health, /error"
-  puts "==============================================================\n\n"
-else
-  puts "\n=== Rails API Framework Benchmark Server (Production Mode) ==="
-  puts "Environment: #{ENVIRONMENT}"
-  puts "Debug: #{DEBUG_MODE}"
-  puts "Security headers: Enabled"
-  puts "Logging: Disabled (production mode)"
-  puts "==============================================================\n\n"
-end
+puts "\n=== Rails API Framework Benchmark Server (#{DEBUG_MODE ? 'Development' : 'Production'} Mode) ==="
+puts "Environment: #{ENVIRONMENT}"
+puts "Debug: #{DEBUG_MODE}, Security headers: Enabled"
+puts "Logging: #{DEBUG_MODE ? 'Enabled' : 'Disabled'}"
+puts "Endpoints: /, /user/:id, /user, /health, /error"
+puts "==============================================================\n\n"
 
 module Benchmark
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
-    # Please, add to the `ignore` list any other `lib` subdirectories that do
-    # not contain `.rb` files, or that should not be reloaded or eager loaded.
-    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    # Optimize for benchmarking - disable unnecessary features
     config.autoload_lib(ignore: %w[assets tasks])
-
-    # Remove some middleware that is not needed for an API-only Rails app
+    
+    # Remove middleware that is not needed for an API-only Rails app
     config.middleware.delete ActionDispatch::Cookies
     config.middleware.delete ActionDispatch::Session::CookieStore
-
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.middleware.delete ActionDispatch::RemoteIp
+    config.middleware.delete ActionDispatch::RequestId
+    config.middleware.delete ActionDispatch::ShowExceptions
+    
+    # API only configuration
     config.api_only = true
+    config.action_controller.allow_forgery_protection = false
+    
+    # Performance optimizations for benchmarking
+    config.eager_load = true
+    config.cache_classes = true
+    config.consider_all_requests_local = true
+    config.public_file_server.enabled = false
   end
 end

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require "hanami/action"
 
-# Security headers configuration
+# Security headers configuration - frozen for performance
 SECURITY_HEADERS = {
   'X-Content-Type-Options' => 'nosniff',
   'X-Frame-Options' => 'DENY',
@@ -18,9 +20,7 @@ module Benchmark
     private
     
     def apply_security_headers
-      SECURITY_HEADERS.each do |key, value|
-        response.headers[key] = value
-      end
+      SECURITY_HEADERS.each { |key, value| response.headers[key] = value }
     end
   end
 end
