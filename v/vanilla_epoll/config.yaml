@@ -5,7 +5,7 @@ framework:
   # now namespaces by owner (~/.vmodules/enghitalo/vanilla), so clone to the
   # expected path instead.
   download:
-    - mkdir -p $HOME/.vmodules && git clone --depth 1 https://github.com/enghitalo/vanilla $HOME/.vmodules/vanilla
+    - mkdir -p $HOME/.vmodules && git clone https://github.com/enghitalo/vanilla $HOME/.vmodules/vanilla && git -C $HOME/.vmodules/vanilla checkout 1822cbb4b5316f433df4805bb68560fadd4df385
 
   build_deps:
     - liburing-dev linux-libc-dev liburing2

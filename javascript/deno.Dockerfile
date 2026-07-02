@@ -1,7 +1,4 @@
-# Production-grade Deno Dockerfile
-# Optimized for security, performance, and minimal image size
-
-FROM denoland/deno:2.8.3
+FROM denoland/deno:2.9.1
 
 WORKDIR /usr/src/app
 

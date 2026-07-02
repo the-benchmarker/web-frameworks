@@ -31,7 +31,7 @@ defmodule Server.MixProject do
     [
       {:phoenix, "~> 1.8.1"},
       {:jason, "~> 1.4"},
-      {:plug_cowboy, "~> 2.8.0"}
+      {:plug_cowboy, "~> 2.9.0"}
     ]
   end
 

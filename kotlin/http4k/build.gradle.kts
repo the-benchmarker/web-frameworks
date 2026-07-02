@@ -61,7 +61,7 @@ tasks {
 }
 
 dependencies {
-    implementation(platform("org.http4k:http4k-bom:6.53.+"))
+    implementation(platform("org.http4k:http4k-bom:6.54.+"))
     implementation("org.http4k:http4k-core")
     implementation("org.http4k:http4k-server-undertow")
 }
