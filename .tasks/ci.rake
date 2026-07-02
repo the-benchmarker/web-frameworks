@@ -19,7 +19,7 @@ end
 
 namespace :ci do
   task :matrix do
-    matrix = input_files.filter_map do |file|
+    matrix = input_files.flat_map do |file|
       next if file.start_with?('.')
       next if file.count(File::SEPARATOR) < 2
       next unless File.exist?(file)
@@ -34,22 +34,24 @@ namespace :ci do
       next if language == 'v' && framework == 'vanilla_io_uring'
 
       config = get_config_from(File.join(Dir.pwd, language, framework))
-      engine = config.dig('framework', 'engines')&.first
+      engines = config.dig('framework', 'engines')
 
-      unless engine
+      unless engines&.any?
         warn "Configuration for #{language}/#{framework} is not correct"
         next
       end
 
-      {
-        language:,
-        framework:,
-        directory: File.join(language, framework),
-        engine:
-      }
+      engines.map do |engine|
+        {
+          language:,
+          framework:,
+          directory: File.join(language, framework),
+          engine:
+        }
+      end
     end
 
-    matrix = matrix.uniq.take(256)
+    matrix = matrix.compact.uniq.take(256)
 
     puts({ include: matrix }.to_json)
   end
