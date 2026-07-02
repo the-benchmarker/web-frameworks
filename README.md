@@ -1,631 +1,665 @@
-# Breeze — Feature Documentation
+# Web Frameworks Benchmark
 
-> A high-performance HTTP framework for Go, built on top of [gnet](https://github.com/panjf2000/gnet) (an event-driven, non-blocking networking library). Breeze is designed around zero-allocation hot paths, a composable middleware chain, and a batteries-included middleware suite.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Code of Conduct](https://img.shields.io/badge/Code%20of%20Conduct-Contributor%20Covenant-blue)](CODE_OF_CONDUCT.md)
+[![Contributing](https://img.shields.io/badge/Contributions-Welcome-brightgreen)](CONTRIBUTING.md)
+
+**Web Frameworks Benchmark** is a comprehensive performance comparison of web frameworks across multiple programming languages. This project tests and benchmarks HTTP request handling, routing, and response performance for 100+ frameworks.
+
+> **Note**: This repository contains the benchmark implementations. The results and interactive comparisons are available at [https://web-frameworks-benchmark.netlify.app](https://web-frameworks-benchmark.netlify.app) or [the-benchmarker.github.io](https://the-benchmarker.github.io)
 
 ---
 
 ## Table of Contents
 
-1. [Architecture Overview](#architecture-overview)
-2. [Core Server (`Breeze`)](#core-server-breeze)
-3. [Router](#router)
-4. [Context](#context)
-5. [HTTP Request Parsing](#http-request-parsing)
-6. [HTTP Response Serialization](#http-response-serialization)
-7. [Worker Pool](#worker-pool)
-8. [File & Multipart Upload Handling](#file--multipart-upload-handling)
-9. [Middlewares](#middlewares)
-   - [Logger](#logger)
-   - [Panic Recovery](#panic-recovery)
-   - [CORS](#cors)
-   - [Security Headers (Helmet)](#security-headers-helmet)
-   - [JWT Authentication](#jwt-authentication)
-   - [Rate Limiter](#rate-limiter)
-   - [ETag Cache](#etag-cache)
-   - [Compression](#compression)
-   - [Swagger / OpenAPI](#swagger--openapi)
-10. [Static File Serving](#static-file-serving)
-11. [Performance Design Decisions](#performance-design-decisions)
-12. [Quick Start Example](#quick-start-example)
+1. [Supported Languages & Frameworks](#supported-languages--frameworks)
+2. [How It Works](#how-it-works)
+3. [Installation](#installation)
+4. [Running Benchmarks](#running-benchmarks)
+5. [Project Structure](#project-structure)
+6. [Contributing](#contributing)
+7. [Benchmark Methodology](#benchmark-methodology)
+8. [Internal Architecture](#internal-architecture)
+9. [Viewing Results](#viewing-results)
+10. [License](#license)
 
 ---
 
-## Architecture Overview
+## Supported Languages & Frameworks
 
-```
-┌─────────────────────────────────────────────────────┐
-│                   gnet event loop                   │
-│  (non-blocking, multicore, round-robin balancing)   │
-└────────────────────┬────────────────────────────────┘
-                     │ raw TCP bytes
-                     ▼
-            ┌────────────────┐
-            │  ParseHTTPRequest  │  zero-alloc scanner
-            └───────┬────────┘
-                    │ *HTTPRequest
-                    ▼
-            ┌────────────────┐
-            │    Router.Find │  pre-computed segment matching
-            └───────┬────────┘
-                    │ handler + middlewares + params
-                    ▼
-            ┌────────────────┐
-            │  WorkerPool /  │  off-loads from event loop
-            │  goroutine     │
-            └───────┬────────┘
-                    │ Context.Next() chain
-                    ▼
-            ┌────────────────┐
-            │  Middlewares → │  CORS, JWT, Rate-limit, etc.
-            │  Handler       │
-            └───────┬────────┘
-                    │ *HTTPResponse
-                    ▼
-            ┌────────────────┐
-            │  Response.Bytes│  strconv, no fmt.Sprintf
-            └───────┬────────┘
-                    │ raw bytes
-                    ▼
-             c.AsyncWrite()
-```
+Currently benchmarking **40+ languages** with **100+ frameworks**:
+
+| Language | Frameworks | Language | Frameworks |
+|----------|------------|----------|------------|
+| **Go** | aero, air, apirouter, atreugo, aurora, beego, breeze, bunrouter, chi, clevergo, echo, fasthttp, fiber, gin, gofiber, gorilla, h3, hertz, httprouter, iris, lapix, macaron, Martini, negroni, pure, revel, rocket, router, sard, scale, server, standard, tango, tiger, tollbooth, traffic, uadmin, vintage, wUnderTheC | **JavaScript/Node.js** | express, fastify, foxify, hapi, http, koa, nestjs, restana, restify, route, serverless, tseds, typestack |
+| **Python** | aiohttp, blacksheep, bottle, cherrypy, django, falcon, fastapi, flask, hug, quart, pyramid, sanic, starlette, tornado, uvicorn, vibora | **Java** | act, avaje, blink, joby, jodd, light, nio, play, prime, quarkus, raw, spring, spark, undertow, vertx |
+| **Ruby** | agnostic, camp, cubit, CuttingRoom, em, grape, hanami, nyinyi, puma, rack, rails, roda, cinta, sinatra, syro | **PHP** | aura, cousin, fatfree, fuel, laravel, lemming, lumen, native, nikic, phalcon, phpx, pp, psx, react, slim, symfony, yaf, zend |
+| **Rust** | actix, axum, conduit, gouge, hyper, nickel, rouille, rocket, salvo, tide, warp | **C#/.NET** | aspnet, aspnetmvc, carter, dotnet, dotnetcore, Nancy, raw |
+| **Crystal** | amber, athena, lucky, prism | **Elixir** | bandit, phoenix, plug, raxx |
+| **Clojure** | compojure, pedestal, ring | **Scala** | akka, http4s, play, scalatra |
+| **Kotlin** | http4k, kTor, spring, vertx | **Swift** | kitura, vapor |
+| **Dart** | shelf, start | **Julia** | genie, http |
+| **C** | civetweb, libsoup | **C++** | cppcms, crow, drogon, evhtp, pistache, qdj, restbed, treefrog |
+| **Objective-C** | perfect | **Zig** | bun |
+| **Nim** | jester, single | **OCaml** | dream, httpaf, opium |
+| **Haskell** | scotty, servant, spock, wai | **Erlang** | cowboy |
+| **Lua** | lapis, openresty | **Perl** | dancer, mojolicious |
+| **D** | hunt, vibe | **F#** | giraffe, saturn, suave |
+
+*...and more! See the [language directories](#project-structure).*
 
 ---
 
-## Core Server (`Breeze`)
+## How It Works
 
-**File:** `breeze.go`
+This project benchmarks web frameworks by testing them with a standardized set of HTTP endpoints. Each framework implementation must:
 
-`Breeze` is the main server struct. It embeds `gnet.BuiltinEventEngine` and wires raw TCP traffic into the HTTP pipeline.
+1. **Handle specific routes** with defined responses
+2. **Run in a Docker container** for isolation and consistency
+3. **Be tested** with the same methodology across all frameworks
 
-### Key Behaviours
+### Test Endpoints
 
-| Feature | Detail |
-|---|---|
-| Per-connection buffering | Uses `sync.Map` keyed by file descriptor (`fd`) to store partial request bytes. Eliminates a single global mutex bottleneck under multicore mode. |
-| Buffer compaction | After consuming a request, leftover bytes smaller than `compactThreshold` (512 bytes) are copied to a fresh slice so the large backing receive buffer can be GC'd. |
-| Pipelined requests | The `OnTraffic` loop processes multiple HTTP requests from a single read call. |
-| 400 Bad Request | Returned inline (no handler dispatch) when `ParseHTTPRequest` returns an error. |
-| 404 Not Found | Returned inline when `Router.Find` returns no handler. |
-| Connection cleanup | `OnClose` deletes the per-connection buffer map entry on disconnect. |
+Each framework must implement these endpoints:
 
-### Starting the Server
+| Method | Route | Status Code | Response Body |
+|--------|-------|-------------|---------------|
+| `GET` | `/` | `200` | Empty body |
+| `GET` | `/user/:id` | `200` | The `id` parameter value |
+| `POST` | `/user` | `200` | Empty body |
 
-```go
-app := breeze.New(router, pool)
-app.Run(3000, true)  // port, multiCore
-```
-
-Options passed to gnet:
-- `TCPNoDelay` — reduces latency for small messages.
-- `Multicore` — spawns one event-loop goroutine per CPU core.
-- `RoundRobin` — distributes connections evenly across loops.
+This ensures a fair comparison of routing, parameter handling, and basic request/response performance.
 
 ---
 
-## Router
+## Installation
 
-**File:** `router.go`, `router_static.go`
+### Prerequisites
 
-### Route Registration
+To run benchmarks locally, you need:
 
-```go
-router := breeze.NewRouter()
-router.Handle(breeze.GET, "/users/:id", handlerFn, optionalMiddleware...)
+- **Docker** (for containerized testing) - [Install Docker](https://docs.docker.com/get-docker/)
+- **Git** (for version control)
+- **Make** (for build automation)
+- **Python 3** (for data processing scripts)
+- **Ruby** (for some build scripts - optional)
+- **wrk** or **bombardier** (for load testing - optional)
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/the-benchmarker/web-frameworks.git
+cd web-frameworks
 ```
 
-Supported HTTP methods (defined in `types.go`): `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `OPTION`.
+### Install Python Dependencies
 
-### Path Matching
-
-Routes are matched segment-by-segment with early bail-out on count mismatch:
-
-- **Static segments** — exact string comparison (`/users`, `/health`).
-- **Named parameters** — `:param` captures a single path segment (e.g. `/users/:id`).
-- **Wildcard** — `*name` at the end of a pattern captures zero or more remaining segments (e.g. `/files/*filepath`).
-
-Path parameter index (`paramIndex[]`) and count (`paramCount`) are pre-computed at registration, so the hot match loop avoids `strings.HasPrefix` calls and only allocates a `map[string]string` when the route actually has params.
-
-### Global Middleware
-
-```go
-router.Use(middleware.LoggingMiddleware())
-router.Use(middleware.CORSMiddleware(opts))
-```
-
-Global middlewares run before every route handler.
-
-### Per-Route Middleware
-
-```go
-router.Handle(breeze.POST, "/upload", handler, authMiddleware, rateLimitMiddleware)
-```
-
-Per-route middlewares are captured at registration into an immutable slice (copied so callers cannot mutate them later).
-
-### Auto-Serve Root
-
-When `autoServeRoot` is `true` (default), a `GET /` request automatically serves `./public/index.html` if the file exists, without requiring an explicit route.
-
----
-
-## Context
-
-**File:** `context.go`
-
-`Context` is passed to every handler and middleware. It carries the connection, parsed request, response, route params, and the middleware chain index.
-
-### Response Helpers
-
-| Method | Content-Type | Status |
-|---|---|---|
-| `ctx.JSON(v any)` | `application/json` | 200 |
-| `ctx.WriteString(s)` | `text/plain` | 200 |
-| `ctx.HTML(data []byte)` | `text/html; charset=utf-8` | 200 |
-| `ctx.Status(code int)` | — | custom |
-| `ctx.SetHeader(key, value)` | — | — |
-
-`JSON`, `WriteString`, and `HTML` reuse shared package-level header maps for zero allocation. `SetHeader` performs **copy-on-write** — the first mutation upgrades the shared map to a private copy so the package-level maps are never clobbered.
-
-### Parameter Helpers
-
-```go
-ctx.Param("id")          // read a :param value
-ctx.GetParam("id")       // alias
-ctx.Query("page")        // read a query string value (?page=2)
-ctx.SetParam("key", "v") // write a param (useful in middleware)
-ctx.GetParams()          // returns a copy of all params
-```
-
-### Middleware Chain
-
-```go
-ctx.Next()   // advance to the next middleware/handler
-ctx.Abort()  // short-circuit — skip all remaining handlers
+```bash
+pip install pyyaml requests  # Required for data processing
 ```
 
 ---
 
-## HTTP Request Parsing
+## Running Benchmarks
 
-**File:** `request.go`
+### Quick Start
 
-`ParseHTTPRequest(data []byte)` is a from-scratch HTTP/1.1 parser that returns `(*HTTPRequest, bytesConsumed, error)`.
+List all available frameworks and run benchmarks:
 
-### Performance Techniques
+```bash
+# List all available frameworks
+find . -mindepth 3 -type f -name config.yaml | grep -v excluded > ~/list.txt
 
-| Technique | Why |
-|---|---|
-| `unsafe.String` (`b2s`) | Converts `[]byte → string` without allocation. Safe because the byte slice lives in the per-connection buffer for the full request lifetime. |
-| Manual request-line scan | Uses `bytes.IndexByte` instead of `bytes.Split`, avoiding a `[][]byte` allocation. |
-| `toLowerASCII` fast path | Only allocates a lowercase buffer when a header key actually contains uppercase characters. |
-| `splitPathQuery` | Splits path/query at `?` using `bytes.IndexByte` — no allocation, no `net/url` overhead for the common no-query case. |
-| Pre-sized header map | `make(map[string]string, 8)` avoids rehash for the typical 4–8 header case. |
-| Incremental body | Returns `nil, 0, nil` when `Content-Length` bytes haven't arrived yet; caller retries on next read. |
+# Run benchmarks for all frameworks (this will take hours!)
+./run.sh
+```
+
+### Benchmark Specific Frameworks
+
+```bash
+# Run benchmarks for a specific language
+./run.sh go
+
+# Run benchmarks for a specific framework
+./run.sh go/gin
+```
+
+### Manual Testing
+
+Each framework has its own build and test process:
+
+```bash
+# Navigate to a framework directory
+cd go/gin
+
+# Build the Docker image
+make build
+
+# Start the container
+make start
+
+# Run functional tests
+make test
+
+# Warm up the server
+make warmup
+
+# Collect benchmark data
+make collect
+
+# Stop and clean up
+make unbuild
+```
+
+### Available Make Commands
+
+Each framework directory typically has a `.Makefile` with these targets:
+
+| Command | Description |
+|---------|-------------|
+| `build` | Build the Docker image |
+| `start` | Start the container |
+| `stop` | Stop the container |
+| `test` | Run functional tests |
+| `warmup` | Warm up the server (60 seconds) |
+| `collect` | Collect benchmark data using load testing |
+| `unbuild` | Remove the container and image |
+| `memory-idle` | Test memory usage at idle |
 
 ---
 
-## HTTP Response Serialization
-
-**File:** `response.go`
-
-`(*HTTPResponse).Bytes()` serializes a response to raw HTTP/1.1 wire bytes.
-
-### Performance Techniques
-
-- **No `fmt.Sprintf`** — status code and `Content-Length` are written with `strconv.AppendInt` directly into the buffer.
-- **Pre-sized buffer** — estimated capacity `32 + len(status) + headers×48 + body` avoids growth reallocations for typical responses.
-- **Array-indexed status text** — `statusTexts[code]` is an O(1) array lookup (a `[600]string`), not a map hash.
-
----
-
-## Worker Pool
-
-**File:** `workerpool.go`
-
-```go
-pool := breeze.NewWorkerPool(runtime.NumCPU())
-```
-
-A fixed goroutine pool with a buffered task channel (`concurrency × 16`) absorbs request bursts without blocking gnet's event loop.
-
-### Behaviour
-
-| Scenario | Behaviour |
-|---|---|
-| Queue has capacity | Task is enqueued normally. |
-| Queue is full (burst) | Falls back to `go task()` — never blocks the event-loop goroutine. |
-| Graceful shutdown | `pool.Shutdown(ctx)` waits for all in-flight tasks to complete, or until the context expires. |
-
-When `pool` is `nil`, the server falls back to `go exec()` per request.
-
----
-
-## File & Multipart Upload Handling
-
-**File:** `file.go`
-
-### Parse Multipart Form
-
-```go
-files, fields, err := ctx.ParseMultipart(10 << 20) // 10 MB per file limit
-```
-
-Returns:
-- `files map[string][]*UploadedFile` — keyed by form field name.
-- `fields map[string][]string` — non-file form fields.
-
-`UploadedFile` carries: `Field`, `Filename`, `Header` (MIME headers), `ContentType` (from header or auto-sniffed), `Size`, and `Content []byte`.
-
-Content-type detection falls back to `http.DetectContentType` when the part header is absent.
-
-### Save Uploaded File
-
-```go
-savedName, err := ctx.SaveUploadedFile("avatar", "/uploads/user-123.jpg", 5<<20)
-```
-
-Parses the multipart body, picks the first file from `fieldName`, creates the destination directory if needed, and writes the file to disk.
-
----
-
-## Middlewares
-
-All middlewares live in the `middlewares/` package and implement `breeze.HandlerFunc`.
-
-### Logger
-
-**File:** `middlewares/logger.go`
-
-```go
-router.Use(middleware.LoggingMiddleware())
-```
-
-Logs each request in the format:
+## Project Structure
 
 ```
-[Breeze][2026-06-23T12:00:00Z] GET /users -> 200 (1.2ms)
+web-frameworks/
+├── README.md                    # Project documentation (this file)
+├── CONTRIBUTING.md              # Contribution guidelines
+├── CODE_OF_CONDUCT.md           # Code of conduct
+├── LICENSE                      # MIT License
+├── Makefile                     # Global make commands
+├── config.yaml                  # Global configuration
+├── data.json                    # Full benchmark results
+├── data.min.json                # Minified benchmark results
+├── run.sh                       # Main benchmark runner script
+├── changelog.py                 # Change log generator
+├── sqash.py                     # Data processing script
+├── pipeline.lua                 # CI/CD pipeline configuration
+├── .github/
+│   └── workflows/
+│       └── ci.yaml              # GitHub Actions CI workflow
+├── .tasks/                      # Task configurations
+├── bench/                       # Benchmarking tools and scripts
+├── src/                         # Source code for benchmark tools
+│
+├── LANGUAGE/
+│   └── FRAMEWORK/
+│       ├── Dockerfile           # Container configuration
+│       ├── config.yaml          # Framework-specific metadata
+│       ├── main.go (or equiv)   # Framework implementation
+│       ├── go.mod (etc.)        # Language-specific files
+│       ├── .Makefile            # Framework build/test commands
+│       └── .results/            # Benchmark results (auto-generated)
+│
+└── ... (40+ language directories: go, python, ruby, php, java, javascript, rust, etc.)
 ```
 
-Captures timing by recording `time.Now()` before calling `ctx.Next()` and measuring `time.Since` after.
+### Framework Configuration
 
----
+Each framework has a `config.yaml` file with metadata:
 
-### Panic Recovery
-
-**File:** `middlewares/panic_recovery.go`
-
-```go
-router.Use(middleware.RecoveryMiddleware())
-```
-
-Wraps the entire handler chain in a `defer/recover`. On panic:
-1. Prints the panic value and full stack trace (`debug.Stack()`).
-2. Sets response status 500 with body `"Internal Server Error"`.
-3. Calls `ctx.Abort()` to stop further middleware execution.
-
----
-
-### CORS
-
-**File:** `middlewares/cors.go`
-
-```go
-router.Use(middleware.CORSMiddleware(middleware.CORSOptions{
-    AllowOrigins:     "*",
-    AllowMethods:     "GET,POST,PUT,DELETE",
-    AllowHeaders:     "Content-Type,Authorization",
-    AllowCredentials: "true",
-    MaxAge:           "86400",
-}))
-```
-
-Sets `Access-Control-*` response headers. Handles preflight `OPTIONS` requests by returning `204 No Content` immediately without continuing the chain.
-
-All fields are optional — only non-empty values produce headers.
-
----
-
-### Security Headers (Helmet)
-
-**File:** `middlewares/helmet.go`
-
-```go
-// Opinionated safe defaults
-router.Use(middleware.DefaultSecurityMiddleware())
-
-// Custom configuration
-router.Use(middleware.SecurityMiddleware(middleware.SecurityOptions{
-    ContentSecurityPolicy:   "default-src 'self'",
-    XFrameOptions:           "SAMEORIGIN",
-    StrictTransportSecurity: "max-age=31536000",
-}))
-```
-
-Supported headers:
-
-| Header | Default |
-|---|---|
-| `Content-Security-Policy` | `default-src 'self'` |
-| `X-Frame-Options` | `DENY` |
-| `X-Content-Type-Options` | `nosniff` |
-| `Referrer-Policy` | `no-referrer` |
-| `Strict-Transport-Security` | `max-age=63072000; includeSubDomains; preload` |
-| `Permissions-Policy` | `geolocation 'none'; microphone 'none'; camera 'none'` |
-| `X-XSS-Protection` | `1; mode=block` |
-| `Expect-CT` | `max-age=86400, enforce` |
-| `Cross-Origin-Embedder-Policy` | `require-corp` |
-| `Cross-Origin-Opener-Policy` | `same-origin` |
-| `Cross-Origin-Resource-Policy` | `same-origin` |
-| `Cache-Control` | `no-store, no-cache, must-revalidate` |
-
-Convenience constructors: `WithContentSecurityPolicy`, `WithXFrameOptions`, `WithReferrerPolicy`.
-
----
-
-### JWT Authentication
-
-**File:** `middlewares/jwt.go`
-
-```go
-router.Use(middleware.JWTAuthMiddleware(middleware.JWTOptions{
-    AccessSecret:       "my-access-secret",
-    RefreshSecret:      "my-refresh-secret",
-    SigningMethod:      jwt.SigningMethodHS256,
-    RequiredRoles:      []string{"admin"},
-    EnableRefreshToken: true,
-    ClaimsValidator: func(claims jwt.MapClaims) bool {
-        return claims["active"] == true
-    },
-}))
-```
-
-#### Features
-
-- **Token extraction** — defaults to `Authorization: Bearer <token>`. Override via `TokenLookup func(*Context) (accessToken, refreshToken, error)`.
-- **Refresh token support** — when `EnableRefreshToken: true` and the access token is expired, the middleware validates the refresh token, issues a new access token, and returns it in the `X-New-Access-Token` response header.
-- **Role-based access control** — `RequiredRoles` checks the `role` claim; returns 401 if no match.
-- **Custom claims validation** — `ClaimsValidator` runs arbitrary logic against the parsed `jwt.MapClaims`.
-- **Claims in context** — validated claims are stored as `ctx.SetParam(UserContextKey, ...)` for use downstream.
-- **Custom 401 handler** — override `OnUnauthorized` to return custom error shapes.
-
-#### Helper Functions
-
-```go
-// Generate tokens
-token, err := middleware.GenerateJWT(secret, jwt.MapClaims{"user_id": "123"}, 15*time.Minute, nil)
-refresh, err := middleware.GenerateRefreshToken(secret, claims, 7*24*time.Hour, nil)
+```yaml
+framework:
+  website: https://github.com/owner/repo
+  version: 1.9.0
+  engines:
+    - gnet
+    - fasthttp
+  docker_image: golang:1.21  # Optional: custom base image
+  port: 3000                # Optional: port number
 ```
 
 ---
 
-### Rate Limiter
+## Contributing
 
-**File:** `middlewares/rate_limiter.go`
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
 
-```go
-router.Use(middleware.NewRateLimiter(middleware.RateLimiterOptions{
-    Requests: 100,
-    Per:      time.Minute,
-    Message:  "Slow down!",
-}))
-```
+### Quick Contribution Guide
 
-Tracks request counts per remote IP address using a `sync.Mutex`-protected in-memory map. Resets the counter when the `Per` duration elapses. Returns `429 Too Many Requests` when the limit is exceeded.
+1. **Fork** the repository on GitHub
+2. **Create a feature branch** (`git checkout -b feature/add-new-framework`)
+3. **Make your changes**
+4. **Test** your changes (`./run.sh LANGUAGE/FRAMEWORK`)
+5. **Commit** your changes with descriptive messages
+6. **Push** to the branch (`git push origin feature/add-new-framework`)
+7. **Open a Pull Request**
+
+### Adding a New Framework
+
+To add a new framework:
+
+1. **Create the directory structure**:
+   ```bash
+   mkdir -p LANGUAGE/FRAMEWORK
+   cd LANGUAGE/FRAMEWORK
+   ```
+
+2. **Add required files**:
+   - `Dockerfile` - Container configuration
+   - `config.yaml` - Framework metadata (website, version)
+   - `main.go` (or equivalent in your language) - Framework implementation
+   - `.Makefile` - Build and test commands
+
+3. **Implement the required endpoints** (example for Go with Gin):
+   ```go
+   package main
+   
+   import (
+       "github.com/gin-gonic/gin"
+   )
+   
+   func main() {
+       r := gin.Default()
+       
+       // Required: GET / returns 200 with empty body
+       r.GET("/", func(c *gin.Context) {
+           c.Status(200)
+       })
+       
+       // Required: GET /user/:id returns 200 with id as body
+       r.GET("/user/:id", func(c *gin.Context) {
+           c.String(200, c.Param("id"))
+       })
+       
+       // Required: POST /user returns 200 with empty body
+       r.POST("/user", func(c *gin.Context) {
+           c.Status(200)
+       })
+       
+       r.Run(":3000")
+   }
+   ```
+
+4. **Create a Dockerfile**:
+   ```dockerfile
+   FROM golang:1.21-alpine
+   
+   WORKDIR /app
+   
+   RUN go mod init github.com/the-benchmarker/web-frameworks/go/gin
+   COPY go.mod go.sum ./
+   RUN go mod download
+   
+   COPY . .
+   RUN go build -o app .
+   
+   EXPOSE 3000
+   
+   CMD ["./app"]
+   ```
+
+5. **Create a .Makefile**:
+   ```makefile
+   build:
+   	docker build -t the-benchmarker/go-gin .
+   
+   start:
+   	docker run -d -p 3000:3000 --name go-gin the-benchmarker/go-gin
+   
+   stop:
+   	docker stop go-gin || true
+   
+   test:
+   	@echo "Testing GET /"
+   	@curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/ | grep -q "200"
+   	@echo "Testing GET /user/123"
+   	@curl -s http://localhost:3000/user/123 | grep -q "123"
+   	@echo "Testing POST /user"
+   	@curl -s -o /dev/null -w "%{http_code}" -X POST http://localhost:3000/user | grep -q "200"
+   
+   collect:
+   	# Use wrk or other tool to benchmark
+   	@echo "Collecting benchmark data..."
+   
+   unbuild:
+   	docker stop go-gin || true
+   	docker rm go-gin || true
+   	docker rmi the-benchmarker/go-gin || true
+   
+   warmup:
+   	@echo "Warming up for 60 seconds..."
+   	@sleep 60
+   ```
+
+6. **Test your framework**:
+   ```bash
+   cd LANGUAGE/FRAMEWORK
+   make build
+   make start
+   make test
+   make stop
+   make unbuild
+   ```
+
+7. **Update global Makefile** (optional but recommended):
+   Add targets for your framework in the root `Makefile`
+
+8. **Submit a PR** with your changes
+
+### Framework Requirements
+
+- [x] Must follow the [endpoint specification](#test-endpoints)
+- [x] Must have a `Dockerfile`
+- [x] Must have a `config.yaml` with website and version
+- [x] Must have a `.Makefile` with required targets
+- [x] Should be referenced in root `Makefile`
+
+### Code of Conduct
+
+Please follow our [Code of Conduct](CODE_OF_CONDUCT.md) to help maintain a welcoming and inclusive community.
 
 ---
 
-### ETag Cache
+## Benchmark Methodology
 
-**File:** `middlewares/cache.go`
+### Testing Process
 
-```go
-cache := middleware.NewETagCache()
-router.Use(cache.ETagMiddleware())
-```
+The benchmark process follows these steps for each framework:
 
-After a handler sets a response body, the middleware:
-1. Computes an MD5 hash of the body.
-2. Sets the `ETag` response header.
-3. Stores the body + ETag in an in-memory map keyed by request path.
-4. Checks the `If-None-Match` request header — if it matches, returns `304 Not Modified` with an empty body.
+1. **Build**: Docker image is built for the framework
+2. **Start**: Container is started and server begins listening
+3. **Warmup**: Server is warmed up with initial requests (60 seconds)
+4. **Test**: Functional tests verify endpoints work correctly
+5. **Collect**: Benchmark data is collected using load testing tools
+6. **Cleanup**: Container is stopped and removed
+
+### Metrics Collected
+
+| Metric | Description |
+|--------|-------------|
+| **Requests per second (RPS)** | Throughput - how many requests can be handled per second |
+| **Average Latency** | Mean response time in milliseconds |
+| **p50 Latency** | Median response time |
+| **p95 Latency** | 95th percentile - 95% of requests complete within this time |
+| **p99 Latency** | 99th percentile - 99% of requests complete within this time |
+| **Memory Usage (RSS)** | Resident Set Size - physical memory used |
+| **Peak Memory** | Maximum memory used during testing |
+| **CPU Usage** | CPU percentage during load |
+| **Startup Time** | Time from start to first successful response |
+
+### Load Testing Tools
+
+- **[wrk](https://github.com/wg/wrk)** - Modern HTTP benchmarking tool (primary)
+- **[bombardier](https://github.com/codesenven/bombardier)** - Fast cross-platform HTTP benchmarking
+- Custom Python scripts for data aggregation and analysis
+
+### Test Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Concurrency levels | 64, 256, 512 connections |
+| Test duration | 30-60 seconds per concurrency level |
+| Warmup period | 60 seconds before testing |
+| Requests | GET /, GET /user/:id, POST /user |
+| Multiple runs | 3-5 runs for statistical significance |
+
+### Test Environment
+
+- **Hardware**: Standardized across all tests
+- **Network**: Local Docker network (no external network latency)
+- **OS**: Linux (Ubuntu latest)
+- **Docker**: Latest stable version
 
 ---
 
-### Compression
+## Internal Architecture
 
-**File:** `middlewares/compression.go`
+### Data Flow
 
-```go
-router.Use(middleware.CompressionMiddleware())
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│  Framework Code  │────▶│   Dockerfile    │────▶│    .Makefile    │
+│  (main.go, etc.) │     │   (Container)   │     │  (build, test)  │
+└─────────────────┘     └─────────────────┘     └────────┬────────┘
+                                                      │
+                                                      ▼
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   run.sh        │◀────│   make test     │     │   Benchmark    │
+│  (Orchestrator)  │     │   (Validation)   │     │   Tools        │
+└─────────────────┘     └─────────────────┘     │  (wrk, etc.)    │
+                                                      └────────┬────────┘
+                                                               │
+                                                               ▼
+                                                        ┌─────────────────┐
+                                                        │   data.json     │
+                                                        │  (Results)      │
+                                                        └─────────────────┘
 ```
 
-Inspects the `Accept-Encoding` request header and compresses the response body with the best supported algorithm (priority: `br` > `gzip` > `deflate`). Sets the corresponding `Content-Encoding` response header. Falls through silently if no supported encoding is advertised or if compression fails.
+### Key Components
 
-| Encoding | Library |
-|---|---|
-| Brotli (`br`) | `github.com/andybalholm/brotli` |
-| Gzip | `compress/gzip` (stdlib) |
-| Deflate | `compress/flate` (stdlib) |
+1. **run.sh** - Main orchestrator script
+   - Discovers all frameworks via `config.yaml` files
+   - Runs build, test, warmup, and collect for each framework
+   - Manages errors and retries failed tests
+   - Aggregates results into `data.json`
 
----
+2. **Pipeline** - CI/CD workflow (GitHub Actions)
+   - Runs benchmarks on pull requests
+   - Validates new framework additions
+   - Updates results data automatically
+   - Deploys to the benchmark website
 
-### Swagger / OpenAPI
+3. **Data Processing** - Python scripts
+   - `changelog.py` - Generates change logs
+   - `sqash.py` - Processes and minifies data
+   - Custom scripts for visualization generation
 
-**Files:** `middlewares/swagger.go`, `swagger/`
+4. **Website** - Result display
+   - Interactive charts and graphs
+   - Framework comparisons
+   - Historical trends
+   - Detailed per-framework metrics
 
-Breeze includes a full OpenAPI 3.1 documentation system that introspects Go structs via reflection at startup — no code generation step required.
+### Result Storage Format
 
-#### Enabling Swagger
+**data.json** contains full benchmark results:
 
-```go
-router.Use(middleware.SwaggerMiddleware(router, middleware.SwaggerOptions{
-    Title:       "My API",
-    Version:     "1.0.0",
-    Description: "Optional long description.",
-    JSONPath:    "/swagger.json",  // raw OpenAPI JSON
-    UIPath:      "/swagger",       // Swagger UI (HTML)
-}))
-```
-
-This registers two endpoints and activates doc collection. The middleware itself is a transparent pass-through at request time — all real work happens at startup.
-
-#### Documenting Routes
-
-```go
-router.Handle(breeze.POST, "/users", createUser,
-    middleware.DocPOST("/users", swagger.RouteDoc{
-        Title:       "Create user",
-        Tags:        []string{"Users"},
-        Description: "Creates a new user account.",
-        Input: []swagger.InputGroup{
-            {
-                Type:     swagger.InputBody,
-                Fields:   CreateUserRequest{},
-                Required: true,
-            },
+```json
+{
+  "frameworks": {
+    "go-gin": {
+      "name": "Gin",
+      "language": "Go",
+      "language_link": "https://golang.org",
+      "framework_link": "https://github.com/gin-gonic/gin",
+      "version": "1.9.0",
+      "maturity": "Production",
+      "last_update": "2026-07-01",
+      "stars": 65000,
+      "results": {
+        "64": {
+          "rps": 1234567,
+          "mean": 85.2,
+          "std": 12.3,
+          "min": 50.0,
+          "max": 200.0,
+          "p50": 80.0,
+          "p90": 120.0,
+          "p99": 180.0,
+          "memory": 45.6,
+          "cpu": 85.2
         },
-        Output:       UserResponse{},
-        OutputStatus: 201,
-    }),
-)
-```
-
-#### Input Types
-
-| Constant | Source | OpenAPI `in` |
-|---|---|---|
-| `swagger.InputBody` | JSON request body | `requestBody` |
-| `swagger.InputQuery` | URL query string | `query` |
-| `swagger.InputParams` | Path parameters | `path` |
-| `swagger.InputHeader` | Request headers | `header` |
-
-#### Schema Inference
-
-`swagger.InferSchema(v any)` uses `reflect` to derive a full OpenAPI `Schema` from any Go value:
-
-- Structs → `object` with `properties` and `required` list (fields without `omitempty` are required).
-- Slices/Arrays → `array` with inferred `items` schema.
-- Maps → `object` (no fixed properties).
-- Primitives → `string`, `integer` (with `int32`/`int64` format), `number` (`float`/`double`), `boolean`.
-- Struct field tags `description:"..."` and `example:"..."` are reflected into the schema.
-- JSON field name comes from the `json:"..."` tag; fields tagged `json:"-"` are excluded.
-
-#### Convenience Helpers
-
-```go
-// Per-method doc helpers
-middleware.DocGET(path, doc)
-middleware.DocPOST(path, doc)
-middleware.DocPUT(path, doc)
-middleware.DocPATCH(path, doc)
-middleware.DocDELETE(path, doc)
-
-// Tag helper
-middleware.Tag("Users", swagger.RouteDoc{...})
-```
-
----
-
-## Static File Serving
-
-**File:** `router_static.go`
-
-```go
-router.ServeStatic("/static", "./public")
-```
-
-Registers a wildcard route `GET /static/*filepath` that:
-1. Resolves the request path relative to `root`.
-2. Sanitizes against directory traversal (`filepath.Clean`).
-3. Detects content type from file extension (`mime.TypeByExtension`), falling back to `http.DetectContentType`.
-4. Returns `404` for missing files and directories.
-
-Auto-serve root (`GET /`) serves `./public/index.html` without needing an explicit `ServeStatic` call.
-
----
-
-## Performance Design Decisions
-
-| Decision | Rationale |
-|---|---|
-| `gnet` event loop | Non-blocking I/O avoids per-connection goroutine overhead at massive concurrency. |
-| `sync.Map` for buffers | Replaces `map + Mutex`, eliminating cross-reactor mutex contention in multicore mode. |
-| Buffer compaction (`compactThreshold`) | Prevents a large 64KB receive buffer from being pinned alive by a 10-byte leftover slice. |
-| Stack-allocated segment array (`[16]string`) | Avoids heap allocation for path matching on routes with ≤ 16 segments. |
-| Pre-computed `paramIndex[]` / `paramCount` | Eliminates `strings.HasPrefix` and conditional map allocation from the hot-path match loop. |
-| Shared header maps + copy-on-write | `JSON`/`WriteString`/`HTML` never allocate a new header map; `SetHeader` upgrades lazily. |
-| `unsafe.String` zero-copy parse | Removes the `[]byte → string` copy during request line and header parsing. |
-| `strconv.AppendInt` in response serializer | Avoids `fmt.Sprintf` formatting overhead for status code and content-length. |
-| Array-indexed status text | O(1) status-to-text lookup versus map hash. |
-| Worker pool channel `× 16` | Absorbs burst traffic without blocking the event-loop goroutine. |
-| `go-json` for JSON | Faster JSON marshal than `encoding/json` from stdlib. |
-
----
-
-## Quick Start Example
-
-```go
-package main
-
-import (
-    "runtime"
-    "time"
-
-    "github.com/nelthaarion/breeze"
-    middleware "github.com/nelthaarion/breeze/middlewares"
-)
-
-func main() {
-    router := breeze.NewRouter()
-
-    // Global middleware stack
-    router.Use(middleware.RecoveryMiddleware())
-    router.Use(middleware.LoggingMiddleware())
-    router.Use(middleware.CORSMiddleware(middleware.CORSOptions{
-        AllowOrigins: "*",
-        AllowMethods: "GET,POST,DELETE",
-        AllowHeaders: "Content-Type,Authorization",
-    }))
-    router.Use(middleware.DefaultSecurityMiddleware())
-
-    // Rate limiting: 60 requests per minute per IP
-    router.Use(middleware.NewRateLimiter(middleware.RateLimiterOptions{
-        Requests: 60,
-        Per:      time.Minute,
-    }))
-
-    // Protected route group
-    protected := middleware.JWTAuthMiddleware(middleware.JWTOptions{
-        AccessSecret: "super-secret",
-    })
-
-    router.Handle(breeze.GET, "/", func(ctx *breeze.Context) {
-        ctx.WriteString("Hello from Breeze!")
-    })
-
-    router.Handle(breeze.GET, "/users/:id", getUser, protected)
-
-    router.Handle(breeze.POST, "/upload", func(ctx *breeze.Context) {
-        name, err := ctx.SaveUploadedFile("file", "./uploads/file.bin", 10<<20)
-        if err != nil {
-            ctx.Status(400)
-            ctx.WriteString(err.Error())
-            return
-        }
-        ctx.JSON(map[string]string{"saved": name})
-    }, protected)
-
-    // Static assets
-    router.ServeStatic("/assets", "./public")
-
-    app := breeze.New(router, breeze.NewWorkerPool(runtime.NumCPU()))
-    app.Run(3000, true)
-}
-
-func getUser(ctx *breeze.Context) {
-    ctx.JSON(map[string]string{
-        "id":   ctx.Param("id"),
-        "name": "Alice",
-    })
+        "256": { ... },
+        "512": { ... }
+      }
+    }
+  },
+  "metadata": {
+    "generated_at": "2026-07-01T12:00:00Z",
+    "total_frameworks": 120,
+    "total_languages": 42
+  }
 }
 ```
+
+### Directory Structure Explanation
+
+- **Language directories** (`go/`, `python/`, etc.) - Group frameworks by language
+- **Framework directories** (`go/gin/`, `python/flask/`, etc.) - Individual framework implementations
+- **Dockerfile** - Defines the container environment for each framework
+- **config.yaml** - Contains framework metadata and configuration
+- **.Makefile** - Defines build, test, and benchmark commands specific to each framework
+- **.results/** - Directory for storing raw benchmark results
+
+---
+
+## Viewing Results
+
+### Online Dashboards
+
+- **Main Website**: [https://web-frameworks-benchmark.netlify.app](https://web-frameworks-benchmark.netlify.app)
+- **Alternative Dashboard**: [https://the-benchmarker.github.io](https://the-benchmarker.github.io)
+
+Features:
+- Sort and filter frameworks by language, RPS, latency, etc.
+- Compare frameworks side-by-side
+- View historical performance trends
+- Detailed per-framework metrics
+- Export data as JSON/CSV
+
+### Local Viewing
+
+To view and analyze results locally:
+
+```bash
+# Query top 10 frameworks by RPS at 64 connections
+python3 << 'EOF'
+import json
+
+with open('data.json') as f:
+    data = json.load(f)
+
+frameworks = []
+for name, fw in data['frameworks'].items():
+    if '64' in fw['results']:
+        rps = fw['results']['64'].get('rps', 0)
+        frameworks.append((name, rps, fw['language']))
+
+frameworks.sort(key=lambda x: x[1], reverse=True)
+
+print("Top 10 Frameworks by RPS (64 connections):")
+print("-" * 60)
+for name, rps, lang in frameworks[:10]:
+    print(f"{lang:15} {name:30} {rps:>10,} req/s")
+EOF
+```
+
+### Generate Summary Report
+
+```bash
+python3 << 'EOF'
+import json
+from collections import defaultdict
+
+with open('data.json') as f:
+    data = json.load(f)
+
+# Group by language
+languages = defaultdict(list)
+for name, fw in data['frameworks'].items():
+    languages[fw['language']].append((name, fw))
+
+print("Framework Count by Language:")
+print("-" * 40)
+for lang in sorted(languages.keys()):
+    count = len(languages[lang])
+    print(f"{lang:20} {count:3} frameworks")
+
+print(f"\nTotal: {len(data['frameworks'])} frameworks")
+EOF
+```
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+**Docker build fails**:
+- Check the Dockerfile syntax
+- Ensure all required files are included
+- Verify base image exists and is accessible
+
+**Tests fail**:
+- Verify endpoints are implemented correctly
+- Check that the server is listening on the correct port
+- Ensure the Docker container is running
+
+**Benchmark collection fails**:
+- Install required benchmarking tools (wrk, bombardier)
+- Check that the server can handle the load
+- Increase warmup time if needed
+
+### Debugging
+
+```bash
+# View logs for a running container
+cd LANGUAGE/FRAMEWORK
+docker logs <container_name>
+
+# Run tests manually
+curl -v http://localhost:3000/
+curl -v http://localhost:3000/user/123
+
+# Test with wrk manually
+wrk -t12 -c400 -d30s http://localhost:3000/
+```
+
+---
+
+## License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+You are free to:
+- Use, copy, modify, merge, publish, distribute
+- Sublicense and/or sell copies
+- Use for commercial purposes
+
+Under the following conditions:
+- Include the copyright notice and license in all copies
+- The software is provided "AS IS" without warranty
+
+---
+
+## Support & Community
+
+- **Issues**: [GitHub Issues](https://github.com/the-benchmarker/web-frameworks/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/the-benchmarker/web-frameworks/discussions)
+- **Email**: the-benchmarker@googlegroups.com
+- **Website**: [https://the-benchmarker.github.io](https://the-benchmarker.github.io)
+
+---
+
+## Acknowledgments
+
+### Contributors
+
+Thank you to all contributors who have helped make this project possible! See the full list on [GitHub Contributors](https://github.com/the-benchmarker/web-frameworks/graphs/contributors).
+
+### Framework Authors
+
+Special thanks to all framework maintainers who create and maintain these amazing tools. Without your work, this comparison would not be possible.
+
+### Inspiration
+
+This project is inspired by:
+- [TechEmpower Web Framework Benchmarks](https://www.techempower.com/benchmarks/) - The original web framework benchmark
+- [Go Web Framework Benchmark](https://github.com/smallnest/go-web-framework-benchmark)
+
+---
+
+*Last updated: July 1, 2026*
+
+*Maintained with care by the Web Frameworks Benchmark Team*

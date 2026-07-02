@@ -80,7 +80,6 @@ namespace :db do
         framework_config = YAML.safe_load_file(File.join(language, framework, 'config.yaml'))
 
         config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-        pp config
         scheme = config['framework'].key?('unsecure') ? 'http' : 'https'
         website = if config['framework']['website']
                     config['framework']['website']
