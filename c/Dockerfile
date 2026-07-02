@@ -4,10 +4,12 @@ WORKDIR /usr/src/app
 
 # Security best practices for Docker builds
 ARG DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && \
   apt-get -y install --no-install-recommends \
     build-essential \
     wget \
+    ca-certificates \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
   rm -rf /var/lib/apt/lists/* && \
   apt-get clean
@@ -31,9 +33,11 @@ FROM debian:trixie-slim
 WORKDIR /opt/web
 
 # Security hardening for production runtime
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends \
     curl \
+    ca-certificates \
     {{#bin_deps}}{{{.}}} {{/bin_deps}} && \
   rm -rf /var/lib/apt/lists/* && \
   apt-get clean
@@ -56,9 +60,9 @@ USER nobody:nobody
 # Run as non-root user for security
 RUN chown nobody:nobody /opt/web
 
-# Health check for production monitoring
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl --fail http://0.0.0.0:3000 || exit 1
+# Health check with production settings
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000 || exit 1
 
 # Production entrypoint
 ENTRYPOINT ["/opt/web/simple"]

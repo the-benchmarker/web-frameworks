@@ -2,14 +2,17 @@ FROM debian:stable-slim AS build
 
 WORKDIR /opt/vlang
 
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends \
     build-essential \
-    git && \
+    git \
+    ca-certificates && \
   {{#build_deps.length}}
   apt-get -y install {{#build_deps}}{{.}} {{/build_deps}} && \
   {{/build_deps.length}}
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* && \
+  apt-get clean
 
 ENV PATH=/opt/vlang:$PATH \
   GIT_SSL_NO_VERIFY=1
@@ -59,14 +62,28 @@ FROM debian:stable-slim
 
 WORKDIR /app
 
+# Install minimal runtime dependencies
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && \
-  apt-get -y install --no-install-recommends curl liburing2 && \
-  rm -rf /var/lib/apt/lists/*
+  apt-get -y install --no-install-recommends \
+    curl \
+    ca-certificates \
+    liburing2 && \
+  rm -rf /var/lib/apt/lists/* && \
+  apt-get clean
 
 # Copy the built binary
 COPY --from=build /app /app
 
-HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=40s \
-  CMD curl --fail http://0.0.0.0:3000 || exit 1
+# Security: Create non-root user for production
+RUN useradd -r -u 1000 -g 1000 -m -d /app -s /bin/false appuser && \
+    chown -R appuser:appuser /app
+
+# Security: Drop all privileges
+USER appuser
+
+# Health check with production settings
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}

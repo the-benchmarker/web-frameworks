@@ -1,3 +1,6 @@
+# Production-grade C++ Dockerfile
+# Optimized for security, performance, and minimal image size
+
 FROM debian:trixie-slim AS build
 
 WORKDIR /usr/src/app
@@ -8,8 +11,10 @@ RUN apt-get -qq update && \
     build-essential \
     git \
     cmake \
+    ca-certificates \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* && \
+  apt-get clean
 
 ENV GIT_SSL_NO_VERIFY=1
 
@@ -25,17 +30,19 @@ ENV GIT_SSL_NO_VERIFY=1
   RUN {{{.}}}
 {{/build}}
 
-
-
+# Runtime stage
 FROM debian:trixie-slim
 
 WORKDIR /opt/web
 
+# Install minimal runtime dependencies
 RUN apt-get -qq update && \
   apt-get -y install --no-install-recommends \
     curl \
+    ca-certificates \
     {{#bin_deps}}{{.}} {{/bin_deps}} && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* && \
+  apt-get clean
 
 {{#environment}}
   ENV {{{.}}}
@@ -49,6 +56,15 @@ RUN apt-get -qq update && \
   COPY --from=build /usr/src/app/{{{.}}} {{{.}}}
 {{/binaries}}
 
-HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+# Security: Create non-root user for production
+RUN useradd -r -u 1000 -g 1000 -m -d /opt/web -s /bin/false appuser && \
+    chown -R appuser:appuser /opt/web
+
+# Security: Drop all privileges
+USER appuser
+
+# Health check with production settings
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}
