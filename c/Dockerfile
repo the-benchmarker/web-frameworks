@@ -60,9 +60,9 @@ USER nobody:nobody
 # Run as non-root user for security
 RUN chown nobody:nobody /opt/web
 
-# Health check with production settings
+# Production health check with /health endpoint
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000 || exit 1
+  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000/health || exit 1
 
 # Production entrypoint
 ENTRYPOINT ["/opt/web/simple"]

@@ -73,9 +73,9 @@ COPY --from=build --chown=appuser:appuser /app/publish .
 # Switch to non-root user
 USER appuser
 
-# Health check
+# Production health check with /health endpoint
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-    CMD curl --fail --silent http://0.0.0.0:3000/ || exit 1
+    CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000/health || exit 1
 
 # Runtime configuration for production
 ENV Kestrel__EndPoints__Http__Url=http://*:3000 \

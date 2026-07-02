@@ -75,9 +75,9 @@ COPY --from=build /usr/src/app/out out
 # Security: Set proper permissions
 RUN chown -R nextjs:nodejs /usr/src/app/out
 
-# Health Check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl --fail --silent http://0.0.0.0:3000/health || exit 1
+# Production health check with /health endpoint
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+    CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000/health || exit 1
 
 # Template placeholders for environment variables
 {{#environment}}

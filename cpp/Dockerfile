@@ -63,8 +63,8 @@ RUN useradd -r -u 1000 -g 1000 -m -d /opt/web -s /bin/false appuser && \
 # Security: Drop all privileges
 USER appuser
 
-# Health check with production settings
+# Production health check with /health endpoint
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000 || exit 1
+  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000/health || exit 1
 
 ENTRYPOINT {{{command}}}

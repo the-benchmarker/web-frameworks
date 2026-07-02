@@ -84,8 +84,8 @@ WORKDIR /usr/src/app
 # Security: Make filesystem read-only by default (comment out if writes are needed)
 # RUN chmod -R a-w /usr/src/app
 
-# Health check for container orchestration
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+# Production health check with /health endpoint
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
     CMD lute --health-check || exit 1
 
 # Production entrypoint with security context

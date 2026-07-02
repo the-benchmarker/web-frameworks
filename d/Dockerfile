@@ -66,9 +66,9 @@ COPY --from=build --chown=appuser:appuser /usr/src/app/server /opt/web/server
 # Security: Drop all privileges
 USER appuser
 
-# Health check
+# Production health check with /health endpoint
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000 || exit 1
+  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000/health || exit 1
 
 # Run as non-root user
 ENTRYPOINT ["/opt/web/server"]

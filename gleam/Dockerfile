@@ -54,9 +54,9 @@ COPY --from=build --chown=appuser:appgroup /opt/web/build/erlang-shipment .
 # Switch to non-root user
 USER appuser:appgroup
 
-# Health check with improved configuration
+# Production health check with /health endpoint
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD curl --fail --silent --max-time 3 http://0.0.0.0:3000/ || exit 1
+    CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000/health || exit 1
 
 {{#environment}}
     ENV {{{.}}}

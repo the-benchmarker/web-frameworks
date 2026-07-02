@@ -61,9 +61,9 @@ USER appuser
 # Performance: Set ulimit for production
 RUN ulimit -n 65536
 
-# Health check with security considerations
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD curl --fail --silent --show-error http://127.0.0.1:3000/health || exit 1
+# Production health check with /health endpoint
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000/health || exit 1
 
 # Security: Run as non-root user with minimal privileges
 # Note: We use exec to replace the shell process with the application
