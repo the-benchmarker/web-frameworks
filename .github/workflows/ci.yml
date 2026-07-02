@@ -3,8 +3,11 @@ name: CI
 on:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
-  matrix:
+  languages:
     runs-on: ubuntu-latest
 
     outputs:
@@ -31,72 +34,18 @@ jobs:
 
       - name: Set matrix
         id: set-matrix
-        run: echo "matrix=$(bundle exec rake ci:matrix)" >> "$GITHUB_OUTPUT"
+        run: echo "matrix=$(bundle exec rake ci:languages)" >> "$GITHUB_OUTPUT"
         env:
           FILES: ${{ steps.file_changes.outputs.files }}
 
-  test:
-    needs: matrix
-    if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] != null }}
-
-    runs-on: ubuntu-latest
+  frameworks:
+    needs: languages
+    if: ${{ fromJson(needs.languages.outputs.matrix).language[0] != null }}
 
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.languages.outputs.matrix) }}
 
-    name: "${{ matrix.language }} / ${{ matrix.framework }} / ${{ matrix.engine }}"
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "4.0.5"
-          bundler-cache: true
-
-      - name: Install deps
-        run: bundle install --jobs 4 --retry 3
-
-      - name: Docker version
-        run: docker -v
-
-      - name: Configure
-        run: bundle exec rake config
-
-      - name: Build
-        run: make "build" -f "${DIRECTORY}/.Makefile"
-        env:
-          DIRECTORY: ${{ matrix.directory }}
-          ENGINE: ${{ matrix.engine }}
-
-      - name: Wait for framework HTTP readiness
-        run: |
-          IP_FILE="${{ matrix.directory }}/ip-${{ matrix.engine }}.txt"
-          CID_FILE="${{ matrix.directory }}/cid-${{ matrix.engine }}.txt"
-          IP=$(cat $IP_FILE | tr -d '[:space:]')
-
-          echo "Waiting for http://$IP:3000/ to respond (timeout 30s)..."
-
-          SECONDS_WAITED=0
-          MAX_WAIT=120
-
-          until curl -s -f "http://$IP:3000/" > /dev/null; do
-            sleep 1
-            SECONDS_WAITED=$((SECONDS_WAITED+1))
-            if [ $SECONDS_WAITED -ge $MAX_WAIT ]; then
-              echo "Container did not become ready in $MAX_WAIT seconds!"
-              echo "---- Container logs ----"
-              docker logs $(cat $CID_FILE) || true
-              exit 1
-            fi
-          done
-
-      - name: Test
-        run: bundle exec rspec .spec
-        env:
-          LANGUAGE: ${{ matrix.language }}
-          FRAMEWORK: ${{ matrix.framework }}
-          ENGINE: ${{ matrix.engine }}
+    uses: ./.github/workflows/test-framework.yml
+    with:
+      language: ${{ matrix.language }}
