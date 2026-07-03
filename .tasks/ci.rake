@@ -7,7 +7,7 @@ end
 def input_files
   files = JSON.parse(ENV.fetch('FILES'))
 
-  return Dir.glob(File.join('*', '*', 'config.yaml')) if files.include?('data.json')
+  return Dir.glob(File.join('*', '*', 'config.yaml')) if files.intersect?(%w[data.json data.min.json])
 
   languages = files
               .select { |path| dockerfile_or_language_config?(path) }
