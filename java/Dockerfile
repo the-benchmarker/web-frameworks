@@ -46,7 +46,7 @@ WORKDIR /usr/src/web
   FROM eclipse-temurin:{{{.}}}-jre
 {{/language.java}}
 {{^language.java}}
-  FROM eclipse-temurin:25.0.2_10-jre
+  FROM eclipse-temurin:25.0.3_9-jre
 {{/language.java}}
 
 RUN apt-get -qq update && \

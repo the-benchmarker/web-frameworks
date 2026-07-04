@@ -1,5 +1,3 @@
-language:
-  version: 8.4
 framework:
   website: hyperf.io
   version: 3.1
@@ -14,7 +12,12 @@ framework:
     - pcntl
 
   bootstrap:
+    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
     - echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
     - php sbin/hyperf.php
-
-  command: php sbin/hyperf.php start
+language:
+  engines:
+    swoole:
+      command: php sbin/hyperf.php start

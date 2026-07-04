@@ -1,3 +1,3 @@
 module main
 
-require github.com/zeromicro/go-zero v1.10.1
+require github.com/zeromicro/go-zero v1.10.2

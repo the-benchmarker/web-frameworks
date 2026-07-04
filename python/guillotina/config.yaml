@@ -1,6 +1,6 @@
 framework:
   website: guillotina.io
-  version: 7.0
+  version: 7.1
 
   engines:
     - uvicorn
@@ -20,3 +20,4 @@ framework:
 
   environment:
     RUSTFLAGS: -C target-feature=-crt-static
+    PYTHON_APP: server:app

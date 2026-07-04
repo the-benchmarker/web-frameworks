@@ -1,3 +1,11 @@
+language:
+  engines:
+    road-runner:
+      bootstrap:
+        - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+        - composer install --no-dev --prefer-dist --classmap-authoritative
+        - composer dumpautoload -o
+        - vendor/bin/rr get-binary
 framework:
   github: chubbyphp/chubbyphp-framework
   version: 6.0

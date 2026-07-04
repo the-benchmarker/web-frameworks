@@ -7,6 +7,9 @@ framework:
     - console
 
   bootstrap:
+    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
     - php console --generate-key
     - php console --routes-upd
 

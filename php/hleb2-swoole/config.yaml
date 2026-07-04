@@ -3,18 +3,20 @@ framework:
   github: phphleb/hleb
   version: 2.0
 
+  engines:
+    - swoole
+
   files:
     - console
 
   bootstrap:
+    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
     - php console --generate-key
     - php console --routes-upd
 
-  engines:
-    - swoole
-
 language:
-  version: 8.4
   engines:
     swoole:
       command: php public/index.php

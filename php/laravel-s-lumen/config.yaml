@@ -1,5 +1,7 @@
 language:
-  version: 8.4
+  engines:
+    swoole:
+      command: php bin/laravels start
 framework:
   github: hhxsv5/laravel-s
   version: 3.8
@@ -25,5 +27,3 @@ framework:
   files:
     - artisan
     - bin/laravels
-
-  command: php bin/laravels start

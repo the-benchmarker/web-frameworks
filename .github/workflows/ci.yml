@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -23,7 +23,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "4.0.2"
+          ruby-version: "4.0.5"
           bundler-cache: true
 
       - name: Install deps
@@ -47,12 +47,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "4.0.2"
+          ruby-version: "4.0.5"
           bundler-cache: true
 
       - name: Install deps
@@ -73,18 +73,21 @@ jobs:
       - name: Wait for framework HTTP readiness
         run: |
           IP_FILE="${{ matrix.directory }}/ip-${{ matrix.engine }}.txt"
-          IP=$(cat "$IP_FILE" | tr -d '[:space:]')
+          CID_FILE="${{ matrix.directory }}/cid-${{ matrix.engine }}.txt"
+          IP=$(cat $IP_FILE | tr -d '[:space:]')
 
           echo "Waiting for http://$IP:3000/ to respond (timeout 30s)..."
 
           SECONDS_WAITED=0
-          MAX_WAIT=30
+          MAX_WAIT=120
 
           until curl -s -f "http://$IP:3000/" > /dev/null; do
             sleep 1
             SECONDS_WAITED=$((SECONDS_WAITED+1))
             if [ $SECONDS_WAITED -ge $MAX_WAIT ]; then
               echo "Container did not become ready in $MAX_WAIT seconds!"
+              echo "---- Container logs ----"
+              docker logs $(cat $CID_FILE) || true
               exit 1
             fi
           done

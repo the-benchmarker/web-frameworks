@@ -1,4 +1,4 @@
-FROM nimlang/nim:2.2.6-ubuntu-regular AS build
+FROM nimlang/nim:2.2 AS build
 
 WORKDIR /usr/src/app
 
@@ -40,8 +40,7 @@ ENV NIM_ENV=production \
 {{/build_command}}
 
 
-
-FROM ubuntu:latest
+FROM debian:trixie-slim
 
 WORKDIR /usr/src/app
 
@@ -49,7 +48,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends \
     libssl-dev \
-    libpcre3-dev \
+    libpcre2-dev \
     curl \
     {{#runtime_deps}}{{{.}}} {{/runtime_deps}} && \
   rm -rf /var/lib/apt/lists/*

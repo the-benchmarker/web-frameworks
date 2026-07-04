@@ -9,6 +9,6 @@ framework:
     - target/benchmark.jar
 
 language:
-  default:
-    engines:
+  engines:
+    default:
       command: /usr/bin/java -jar target/benchmark.jar benchmark.App

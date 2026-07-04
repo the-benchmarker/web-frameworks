@@ -1,7 +1,7 @@
 #
 # Build stage
 #
-FROM elixir:1.19-slim AS build
+FROM elixir:1.20-slim AS build
 
 # Update system deps
 RUN apt-get -qq update && \

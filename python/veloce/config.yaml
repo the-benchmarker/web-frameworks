@@ -1,0 +1,9 @@
+framework:
+  website: veloceframework.com
+  version: 0.9
+
+  engines:
+    - uvicorn
+    - hypercorn
+    - daphne
+    - granian

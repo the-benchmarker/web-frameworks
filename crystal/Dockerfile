@@ -1,4 +1,4 @@
-FROM crystallang/crystal:1.19 AS build
+FROM crystallang/crystal:1.20 AS build
 
 {{#build_deps.length}}
   ARG DEBIAN_FRONTEND=noninteractive

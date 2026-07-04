@@ -1,6 +1,6 @@
 framework:
   website: laravel.com
-  version: 13.2
+  version: 13.18
   environment:
     APP_ENV: production
     APP_DEBUG: false
@@ -10,6 +10,9 @@ framework:
     - artisan
 
   bootstrap:
+    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
     - mkdir bootstrap/cache -p
     - mkdir storage/framework/sessions -p
     - mkdir storage/framework/views -p

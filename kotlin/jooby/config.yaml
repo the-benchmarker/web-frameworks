@@ -1,8 +1,6 @@
-language:
-  version: 2.2
 framework:
   website: jooby.io
-  version: 4.0
+  version: 4.5
 
   command: >
     /opt/java/openjdk/bin/java -server

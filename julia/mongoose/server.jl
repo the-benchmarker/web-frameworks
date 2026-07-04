@@ -3,18 +3,18 @@ Pkg.activate(pwd())
 
 using Mongoose
 
-server = SyncServer()
+server = Server()
 
-function getroot(request::Request, params::Dict{String,String})
-    return Response(200, "Content-Type: text/plain\r\n", "")
+function getroot(request::Request)
+    return Response("")
 end
 
-function getuserid(request::Request, params::Dict{String,String})
-    return Response(200, "Content-Type: text/plain\r\n", params["id"])
+function getuserid(request::Request, id::String)
+    return Response(id)
 end
 
-function postuser(request::Request, params::Dict{String,String})
-    return Response(200, "Content-Type: text/plain\r\n", "")
+function postuser(request::Request)
+    return Response("")
 end
 
 route!(server, :get, "/", getroot)

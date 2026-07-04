@@ -1,3 +1,3 @@
 module main
 
-require github.com/cloudwego/hertz v0.10.4
+require github.com/cloudwego/hertz v0.10.5

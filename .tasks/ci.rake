@@ -26,6 +26,13 @@ namespace :ci do
 
       language, framework, = file.split(File::SEPARATOR)
 
+      # Skip v/vanilla_io_uring in CI: io_uring_setup/io_uring_enter are blocked by
+      # Docker's default seccomp profile on the GitHub Actions runners, so the
+      # server builds but never becomes HTTP-ready. The framework code is kept in
+      # the tree; remove this line once io_uring is allowed under the CI sandbox.
+      # See https://github.com/the-benchmarker/web-frameworks/issues/9467
+      next if language == 'v' && framework == 'vanilla_io_uring'
+
       config = get_config_from(File.join(Dir.pwd, language, framework))
       engine = config.dig('framework', 'engines')&.first
 

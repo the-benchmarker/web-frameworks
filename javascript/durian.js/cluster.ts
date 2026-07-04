@@ -5,7 +5,7 @@ const buns = new Array(cpus);
 
 for (let i = 0; i < cpus; i++) {
   buns[i] = spawn({
-    cmd: ['bun', 'src', 'main.ts'],
+    cmd: ['bun', 'src/main.ts'],
     stdio: ['inherit', 'inherit', 'inherit'],
   });
 

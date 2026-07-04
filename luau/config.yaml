@@ -1,0 +1,13 @@
+language:
+  version: 1.0.0
+
+  files:
+    - "**/*.luau"
+
+  engines:
+    default:
+      command: lute server.luau
+
+framework:
+  engines:
+    - default

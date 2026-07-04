@@ -1,0 +1,34 @@
+# the-benchmarker/web-frameworks entry for mq-bridge-py (Python).
+#
+# mq-bridge-py is a Rust-backed binding (like robyn): it runs its own HTTP server
+# loop rather than exposing a WSGI/ASGI `app`, so it declares a custom engine
+# whose command runs `server.py` directly. The wheel is not on PyPI, so the
+# `bootstrap` steps install Rust + maturin and build it from a pinned git tag
+# with the `http` feature (mirroring scripts/techempower's Python image). Bump
+# the `-b` tag to benchmark a newer release.
+framework:
+  website: github.com/marcomq/mq-bridge
+  github: marcomq/mq-bridge
+  version: 0.2
+
+  engines:
+    - mq-bridge
+
+  build_deps:
+    - gcc
+    - git
+    - curl
+    - build-essential
+    - ca-certificates
+
+  bootstrap:
+    - curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal
+    - . "$HOME/.cargo/env" && pip install maturin
+    - git clone --depth 1 -b v0.2.17 https://github.com/marcomq/mq-bridge /tmp/mqb
+    - . "$HOME/.cargo/env" && cd /tmp/mqb/python/mq-bridge-py && maturin build --release --no-default-features -F http -F pyo3/extension-module -o /tmp/wheels
+    - pip install /tmp/wheels/*.whl
+
+language:
+  engines:
+    mq-bridge:
+      command: python /usr/src/app/server.py

@@ -1,5 +1,3 @@
-language:
-  version: 8.4
 framework:
   website: kuiper-framework.github.io
   version: 0.8
@@ -7,4 +5,7 @@ framework:
   engines:
     - swoole
 
-  command: php src/index.php start
+language:
+  engines:
+    swoole:
+      command: php src/index.php start

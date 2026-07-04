@@ -1,0 +1,33 @@
+# the-benchmarker/web-frameworks entry for mq-bridge (Rust).
+#
+# the-benchmarker's language-level `rust/Dockerfile` copies only this framework
+# directory into the build context and runs `cargo build --release`, then runs
+# the produced `target/release/server` binary. The build context therefore has
+# no access to the surrounding mq-bridge checkout, so we depend on mq-bridge via
+# a pinned git reference (not a path dependency). Bump `tag` to benchmark a newer
+# release.
+#
+# The binary MUST be named `server` to match the language engine command
+# (`/usr/src/app/target/release/server`).
+[package]
+name = "server"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "server"
+path = "src/main.rs"
+
+[dependencies]
+mq-bridge = { git = "https://github.com/marcomq/mq-bridge", tag = "v0.3.2", default-features = false, features = ["http"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+anyhow = "1"
+
+# Release profile knobs are also passed on the command line by the language
+# Dockerfile (`--config profile.release.*`); we set them here too so a plain
+# `cargo build --release` in this directory matches the benchmarked build.
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"

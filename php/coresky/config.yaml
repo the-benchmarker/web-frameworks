@@ -1,12 +1,15 @@
 framework:
   website: coresky.net
-  version: 0.546
+  version: 0.54
 
   files:
     - vendor/bin/sky
     - main/config.yaml
 
   bootstrap:
+    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
     - mkdir -p var/cache && chown www-data var/cache
     - mkdir -p var/gate && chown www-data var/gate
     - chown www-data public

@@ -21,6 +21,10 @@ RUN docker-php-ext-install zip
   ENV {{{.}}}
 {{/environment}}
 
+{{#before_build}}
+  RUN {{{.}}}
+{{/before_build}}
+
 {{#modules}}
   RUN docker-php-ext-install {{{.}}}
 {{/modules}}
@@ -36,9 +40,6 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
   sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
 
-{{#before_build}}
-  RUN {{{.}}}
-{{/before_build}}
 
 {{#files}}
   COPY '{{source}}' '{{target}}'

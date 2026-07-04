@@ -1,7 +1,7 @@
 BASEDIR=`pwd`
 
 if [ "$#" -eq 0 ]; then
-	find . -mindepth 3 -type f -name config.yaml | grep -Ev 'fibers|vibed' > ~/list.txt
+	find . -mindepth 3 -type f -name config.yaml | grep -Ev 'fibers|lapis|caprese|imi-swoole|laravel-s-laravel|sunrise-router-roadrunner|sw-fw-less|fastpysgi-asgi' > ~/list.txt
 else
 	COUNT=`echo $1 | grep -c "/"`
 	if [ "$COUNT" -eq 0 ]; then
@@ -26,6 +26,7 @@ while read line ; do
   ret=$?
   if [ $ret -eq 0 ]; then
     make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile warmup
+#    make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile memory-idle
     make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile collect
     sleep 5
   else

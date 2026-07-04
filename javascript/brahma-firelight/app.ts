@@ -1,19 +1,19 @@
-import { createApp } from 'brahma-firelight';
+import { createApp, reply } from 'brahma-firelight';
 
 const app = createApp();
 
 // GET
-app.get('/', (req, res) => {
-  res.send(200);
+app.get('/', (req) => {
+  return reply.text('');
 });
 
-app.get('/user/:id', (req, res) => {
-  res.text(req.params.id);
+app.get('/user/:id', (req) => {
+  return reply.text(req.params.id);
 });
 
 // POST
-app.post('/user', (req, res) => {
-  res.send(200);
+app.post('/user', (req) => {
+  return reply.text('');
 });
 
-app.listen('0.0.0.0', 3000);
+app.listen('0.0.0.0:3000');

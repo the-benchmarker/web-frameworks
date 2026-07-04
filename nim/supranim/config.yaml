@@ -2,15 +2,13 @@ framework:
   github: supranim/supranim
   version: 0.1
   build_opts:
-    - "--mm:arc"
+    - "--mm:atomicArc"
     - "-d:webapp"
     - "-d:httpbench"
 
 build_deps:
-  - libpcre3-dev
   - libevent-dev
   - libsodium23
 
 runtime_deps:
-  - libpcre3-dev
   - libsodium23

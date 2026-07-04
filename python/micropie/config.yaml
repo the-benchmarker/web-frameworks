@@ -1,0 +1,17 @@
+framework:
+  website: patx.gitman.io/micropie
+  github: patx/micropie
+  version: 0.31
+
+  engines:
+    - granian
+    - uvicorn
+    - hypercorn
+    - daphne
+    - gunicorn
+
+language:
+  engines:
+    gunicorn:
+      environment:
+        WORKER_CLASS: asgi

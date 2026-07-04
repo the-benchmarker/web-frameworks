@@ -30,13 +30,16 @@ language:
       files:
         - .rr.yaml
       bootstrap:
+        - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+        - composer install --no-dev --prefer-dist --classmap-authoritative
+        - composer dumpautoload -o
         - vendor/bin/rr get-binary
       modules:
         - sockets
       command: ./rr serve
     swoole:
       extensions:
-        - swoole/6.2.0
+        - swoole/6.2.1
       command: php public/index.php
       build_deps:
         - libbrotli-dev

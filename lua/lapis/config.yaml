@@ -1,6 +1,6 @@
 framework:
   website: leafo.net/lapis/
-  version: 1.17
+  version: 1.18
 
   image: openresty/openresty:alpine-fat
 
@@ -11,4 +11,7 @@ framework:
     - /usr/local/openresty/luajit/bin/luarocks install lapis
     - lapis new
 
-  command: lapis server production
+language:
+  engines:
+    default:
+      command: lapis server production

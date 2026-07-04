@@ -15,7 +15,10 @@ ENV PATH=/opt/vlang:$PATH \
   GIT_SSL_NO_VERIFY=1
 
 
-RUN git clone --depth 1 https://github.com/vlang/v /opt/vlang && make
+RUN git clone https://github.com/vlang/v /opt/vlang && \
+    cd /opt/vlang && \
+    git checkout {{language.version}} && \
+    make
 
 RUN ln -s /opt/vlang/v /usr/bin/v
 
