@@ -71,4 +71,3 @@ COPY --from=build /go/bin/app /go/bin/app
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}
-
