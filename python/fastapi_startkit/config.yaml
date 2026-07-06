@@ -8,6 +8,3 @@ framework:
     - hypercorn
     - daphne
     - granian
-
-language:
-  version: 3.13
