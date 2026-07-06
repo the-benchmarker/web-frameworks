@@ -1,0 +1,13 @@
+framework:
+  website: fastapi-startkit.github.io
+  github: fastapi-startkit/fastapi-startkit-framework
+  version: 0.46
+
+  engines:
+    - uvicorn
+    - hypercorn
+    - daphne
+    - granian
+
+language:
+  version: 3.13
