@@ -16,8 +16,10 @@ FRAMEWORKS.yaml
 */*/.Dockerfile*
 */*/.Makefile
 */*/ip.txt
+*/*/ip-*.txt
 venv
 */*/cid.txt
+*/*/cid-*.txt
 */.Makefile
 
 /lib/**/*.cr
@@ -62,3 +64,7 @@ __pycache__/
 .vscode
 .idea
 .zed
+
+# Claude Code local config
+.claude/
+.mcp.json
