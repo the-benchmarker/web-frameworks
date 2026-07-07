@@ -5,8 +5,11 @@ WORKDIR /usr/src/app
 {{#build_deps.length}}
   ARG DEBIAN_FRONTEND=noninteractive
   RUN apt-get -qq update && \
-    apt-get -y install {{#build_deps}}{{{.}}} {{/build_deps}} && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get -y install --no-install-recommends \
+      ca-certificates \
+      {{#build_deps}}{{{.}}} {{/build_deps}} && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
 {{/build_deps.length}}
 
 ENV NIM_ENV=production \
@@ -50,8 +53,10 @@ RUN apt-get -qq update && \
     libssl-dev \
     libpcre2-dev \
     curl \
+    ca-certificates \
     {{#runtime_deps}}{{{.}}} {{/runtime_deps}} && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* && \
+  apt-get clean
 
 {{#custom_files}}
   COPY --from=build /usr/src/app/{{{.}}} /usr/src/app/{{{.}}}
@@ -60,6 +65,15 @@ RUN apt-get -qq update && \
   COPY --from=build /usr/src/app/server /usr/src/app/server
 {{/custom_files}}
 
-HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+# Security: Create non-root user for production
+RUN useradd -r -u 1000 -g 1000 -m -d /usr/src/app -s /bin/false appuser && \
+    chown -R appuser:appuser /usr/src/app
+
+# Security: Drop all privileges
+USER appuser
+
+# Production health check with /health endpoint
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000/health || exit 1
 
 ENTRYPOINT {{{command}}}

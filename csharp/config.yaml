@@ -9,7 +9,12 @@ language:
     default:
       command: dotnet /usr/src/app/out/web.dll
       environment:
+        ASPNETCORE_ENVIRONMENT: Production
         ASPNETCORE_URLS: http://*:3000
+        DOTNET_PRINT_TELEMETRY_MESSAGE: false
+        DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: false
+        DOTNET_TIERED_PGO: true
+        DOTNET_ReadyToRun: true
 
 framework:
   engines:

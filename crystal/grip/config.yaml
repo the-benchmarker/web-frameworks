@@ -4,4 +4,13 @@ framework:
 
   environment:
     PORT: 3000
+    HOST: 0.0.0.0
     ENVIRONMENT: PRODUCTION
+    WORKER_COUNT: 0
+
+logging:
+  level: none
+
+security:
+  secure_headers: true
+  debug: false

@@ -19,4 +19,4 @@ language:
   java: 21
   engines:
     default:
-      command: java -jar target/uberjar/luminus.jar 3000
+      command: java -Xms512m -Xmx1G -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+DisableExplicitGC -Dconf=prod-config.edn -Dluminus.env=production -jar target/uberjar/luminus.jar 3000

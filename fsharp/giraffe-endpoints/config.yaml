@@ -1,3 +1,28 @@
 framework:
-  github: giraffe-fsharp/Giraffe
-  version: 6.0
+  name: giraffe_endpoints
+  github: https://github.com/giraffe-fsharp/Giraffe
+  version: 6.0.0
+  description: "Giraffe with ASP.NET Core Endpoint Routing integration"
+  production_ready: true
+  
+features:
+  - endpoint_routing
+  - giraffe_integration
+  - aspnetcore
+  
+security:
+  - security_headers: true
+  - request_size_limit: 8MB
+  - server_header_removed: true
+  - error_handling: true
+  
+performance:
+  - max_connections: 16384
+  - optimized_build: true
+  - deterministic_build: true
+  
+best_practices:
+  - proper_error_handling: true
+  - structured_logging: true
+  - health_checks: true
+  - environment_configuration: true

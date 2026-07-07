@@ -15,6 +15,11 @@ kotlin {
     jvmToolchain {
         languageVersion.set(JavaLanguageVersion.of("25"))
     }
+    
+    compilerOptions {
+        allWarningsAsErrors = false
+        freeCompilerArgs.addAll(["-Xjvm-default=all", "-opt"])
+    }
 }
 
 defaultTasks("installDist")
@@ -29,6 +34,16 @@ dependencies {
 
 jarAll {
     archiveFileName = "server.jar"
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 assemble.dependsOn("jarAll")
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "25"
+    }
+}

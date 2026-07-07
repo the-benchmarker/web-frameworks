@@ -1,3 +1,15 @@
 framework:
   github: obsidian/orion
   version: 3.0
+
+environment:
+  PORT: 3000
+  HOST: 0.0.0.0
+  ENVIRONMENT: production
+  WORKER_COUNT: 0  # 0 = auto-detect based on CPU count
+
+logging:
+  level: none
+
+security:
+  debug: false

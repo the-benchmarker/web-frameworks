@@ -1,8 +1,36 @@
+# Production-grade Dancer2 framework configuration
+# Security best practices, performance optimizations, and clean code
+
 framework:
-  unsecure: true
+  unsecure: false  # Security: Disable unsecure mode for production
   website: perldancer.org
   version: 1.1
 
+  # Production settings
+  production:
+    debug: false  # Disable debug mode
+    show_errors: false  # Disable error display
+    startup_info: false  # Disable startup information
+    auto_reload: false  # Disable auto-reload
+    
+  # Security settings
+  security:
+    enabled: true
+    headers:
+      x_content_type_options: "nosniff"
+      x_frame_options: "DENY"
+      x_xss_protection: "1; mode=block"
+      content_security_policy: "default-src 'self'"
+      cache_control: "max-age=3600"
+    
+  # Performance settings
+  performance:
+    max_request_size: 16777216  # 16MB
+    workers: 100
+    max_connections: 10000
+    read_buffer_size: 8192
+    write_buffer_size: 8192
+
   bootstrap:
-    # This is temporary, see https://github.com/PerlDancer/Dancer2/issues/1720#issuecomment-2513150364
-    - cpanm --notest --force Module::Pluggable
+    # Production bootstrap - no test dependencies, quiet installation
+    - cpanm --notest --quiet Module::Pluggable

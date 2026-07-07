@@ -1,10 +1,28 @@
 {
+  "name": "nestjs-express-benchmark",
+  "version": "1.0.0",
+  "description": "Production-grade NestJS Express benchmark server",
+  "author": "Benchmark Team",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "prod": "NODE_ENV=production nest start",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
+  },
   "dependencies": {
     "@nestjs/common": "~11.1.0",
     "@nestjs/core": "~11.1.0",
     "@nestjs/platform-express": "~11.1.0",
-    "rxjs": "*",
+    "rxjs": "^7.8.0",
     "@types/node": "24"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "~11.1.0",
+    "@nestjs/testing": "~11.1.0",
+    "typescript": "~5.6.0"
   },
   "engines": {
     "node": "24.x"

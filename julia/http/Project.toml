@@ -1,5 +1,17 @@
+name = "HTTPBenchmark"
+uuid = "5e8e5621-34b7-49a1-a817-6d85e5748c1e"
+authors = ["Benchmark Team"]
+version = "1.0.0"
+
 [deps]
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 
 [compat]
+julia = "1.6"
 HTTP = "2.0"
+
+[extras]
+Test = "8dfed614-e22d-5e54-85a1-110775859804"
+
+[targets]
+test = ["Test"]

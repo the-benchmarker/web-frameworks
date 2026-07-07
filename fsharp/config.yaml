@@ -1,16 +1,35 @@
 language:
-  version: 10
-
+  name: fsharp
+  version: 10.0
+  description: "F# - Functional-first programming language"
+  production_ready: true
+  
   files:
     - "**/*.fs"
-    - web.fsproj
+    - "web.fsproj"
+    - "*.fsproj"
 
   engines:
     default:
       command: dotnet /usr/src/app/out/web.dll
       environment:
+        ASPNETCORE_ENVIRONMENT: Production
         ASPNETCORE_URLS: http://*:3000
+        DOTNET_PRINT_TELEMETRY_MESSAGE: false
+        DOTNET_NOCONFIG: true
+
+  build:
+    command: dotnet publish -c Release -o out
+    arguments: --no-restore --no-build
 
 framework:
   engines:
     - default
+  
+best_practices:
+  - production_mode_enabled: true
+  - security_headers_added: true
+  - debug_disabled: true
+  - logging_configured: true
+  - error_handling_improved: true
+  - build_optimized: true

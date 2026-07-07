@@ -1,3 +1,30 @@
+# Production-grade Dream framework configuration
+# Security best practices, performance optimizations, and clean code
+
 framework:
   website: camlworks.github.io/dream/
   version: 1.0
+
+# Production settings for Dream server
+production:
+  # Server configuration
+  host: "0.0.0.0"
+  port: 3000
+  
+  # Security settings
+  debug: false
+  log_level: "error"
+  
+  # Performance settings
+  workers: 100
+  max_connections: 10000
+  read_buffer_size: 8192
+  write_buffer_size: 8192
+  
+  # Security headers
+  security:
+    x_content_type_options: "nosniff"
+    x_frame_options: "DENY"
+    x_xss_protection: "1; mode=block"
+    content_security_policy: "default-src 'self'"
+    cache_control: "max-age=3600"

@@ -12,11 +12,18 @@ framework:
 
   bootstrap:
     - npm -g install @nestjs/cli
-    - npm install
+    - npm install --production
     - nest build
+
+  binaries:
+    - cluster.mjs
+    - dist/app.js
 
 language:
   engines:
     node:
+      command: node cluster.mjs
       environment:
-        NODE_APP: dist/app.js
+        - NODE_ENV=production
+        - NODE_OPTIONS=--max-old-space-size=2048
+        - NODE_APP=dist/app.js

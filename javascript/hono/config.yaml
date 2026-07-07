@@ -2,5 +2,20 @@ framework:
   website: hono.dev
   version: 4.12
 
+  build:
+    - npm install --production
+
+  binaries:
+    - app.js
+    - app.ts
+
   engines:
     - bun
+
+language:
+  engines:
+    default:
+      command: bun run app.ts
+      environment:
+        - NODE_ENV=production
+        - PORT=3000

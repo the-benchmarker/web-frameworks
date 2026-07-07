@@ -1,3 +1,32 @@
+# Production build artifacts
 .dub/
 server
+*.exe
+*.o
+*.obj
+*.lib
+*.dll
+*.pdb
+*.il
+*.map
+
+# Dependency management
 dub.selections.json
+.dub/build/
+.dub/packages/
+
+# IDE/Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+core
+
+# OS-specific files
+.DS_Store
+Thumbs.db

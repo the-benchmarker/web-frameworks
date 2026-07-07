@@ -1,5 +1,17 @@
 {
+  "name": "polka-benchmark",
+  "version": "1.0.0",
+  "description": "Production-grade Polka benchmark server",
+  "main": "app.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node app.mjs",
+    "prod": "NODE_ENV=production node app.mjs"
+  },
   "dependencies": {
     "polka": "~0.5.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

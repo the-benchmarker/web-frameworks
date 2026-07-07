@@ -8,30 +8,80 @@
 		<version>[4.0,4.2)</version>
 		<relativePath/>
 	</parent>
-	<groupId>framework</groupId>
+	<groupId>benchmark.spring</groupId>
 	<artifactId>benchmark-webflux</artifactId>
 	<version>1.0.0</version>
-	<name>benchmark-webflux</name>
-	<description>Benchmark for Spring WebFlux</description>
+	<name>spring-webflux-benchmark</name>
+	<description>Production-grade Benchmark for Spring WebFlux</description>
 	<properties>
 		<maven.compiler.release>25</maven.compiler.release>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<dependencies>
+		<!-- Spring Boot WebFlux Starter -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
+
+		<!-- Spring Boot Actuator for production monitoring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- Spring Security for production-grade security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- Reactive caching support -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<finalName>benchmark</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<image>
-						<builder>paketobuildpacks/builder-jammy-base:latest</builder>
-					</image>
+					<excludes>
+						<exclude>
+							<groupId>info</groupId>
+							<artifactId>*</artifactId>
+						</exclude>
+						<exclude>
+							<groupId>debug</groupId>
+							<artifactId>*</artifactId>
+						</exclude>
+					</excludes>
+					<layout>ZIP</layout>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Maven Compiler Plugin with production settings -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>25</source>
+					<target>25</target>
+					<encoding>UTF-8</encoding>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
 				</configuration>
 			</plugin>
 		</plugins>

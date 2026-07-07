@@ -1,17 +1,53 @@
 framework:
+  name: Lapis
   website: leafo.net/lapis/
   version: 1.18
+  description: |-
+    Production-grade Lua web framework based on OpenResty and LuaJIT.
+    Features include ORM, etlua templates, and full-featured routing.
+    Configured for production deployment with security best practices
+    and optimized performance for benchmarking.
 
   image: openresty/openresty:alpine-fat
 
   build_deps:
     - openssl-dev
+    - luajit-dev
+    - pcre-dev
+    - zlib-dev
 
   build:
     - /usr/local/openresty/luajit/bin/luarocks install lapis
     - lapis new
 
+  # Production environment settings
+  env:
+    LAPIS_ENV: production
+    LAPIS_DEBUG: "false"
+    LAPIS_LOGGING: "false"
+
 language:
   engines:
     default:
       command: lapis server production
+      # Production command with optimized settings
+      # Disables debug, enables code cache, and uses auto-scaled workers
+  
+  # Version and runtime
+  version: luajit-2.1
+  runtime: openresty
+
+# Security best practices for production
+production:
+  security:
+    enabled: true
+    headers:
+      - X-Content-Type-Options: nosniff
+      - X-Frame-Options: DENY
+      - X-XSS-Protection: "1; mode=block"
+      - Server: Lapis
+  performance:
+    code_cache: true
+    jit_optimization: true
+    logging_disabled: true
+    debug_disabled: true

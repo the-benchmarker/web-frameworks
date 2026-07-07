@@ -4,13 +4,22 @@ version: 0.1.0
 authors:
   - Marwan <waghanza@gmail.com>
 
+description: Production-ready Toro Framework application with security best practices
+
+license: MIT
+
 targets:
   server:
     main: src/toro.cr
+
+crystal: ">= 1.12.0"
 
 dependencies:
   toro:
     github: soveran/toro
     version: ~> 0.5.0
 
-license: MIT
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    version: ~> 1.0.0

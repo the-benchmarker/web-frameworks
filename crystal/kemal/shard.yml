@@ -4,13 +4,22 @@ version: 0.1.0
 authors:
   - tbrand <taichiro0709@gmail.com>
 
+description: Production-ready Kemal Framework application with security best practices
+
+license: MIT
+
 targets:
   server:
     main: src/server.cr
+
+crystal: ">= 1.12.0"
 
 dependencies:
   kemal:
     github: kemalcr/kemal
     version: ~> 1.11.0
 
-license: MIT
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    version: ~> 1.0.0

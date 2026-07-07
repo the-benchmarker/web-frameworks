@@ -1,20 +1,49 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
+  
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <DebugType>portable</DebugType>
-    <AssemblyName>web</AssemblyName>
     <OutputType>Exe</OutputType>
+    <AssemblyName>giraffe-endpoints-web</AssemblyName>
+    <RootNamespace>GiraffeEndpointsWeb</RootNamespace>
+    <DebugType>pdbonly</DebugType>
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    
+    <!-- Production optimizations -->
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <Deterministic>true</Deterministic>
+    
+    <!-- Docker support -->
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileFastBuild>True</DockerfileFastBuild>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)' = 'Release'">
+    <NoWarn>$(NoWarn);40;1701;1702;1705;3572</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="7.0.*" />
     <PackageReference Include="Giraffe" Version="6.0.*" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="10.0.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="10.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.*" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="Program.fs" />
   </ItemGroup>
-
+  
+  <!-- Metadata -->
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <Description>Production-grade Giraffe Endpoints web server with security best practices</Description>
+    <Authors>Your Organization</Authors>
+    <Company>Your Company</Company>
+    <Product>Giraffe Endpoints Web Server</Product>
+    <Copyright>Copyright © $(GetCurrentDateTime:"yyyy") Your Company</Copyright>
+    <RepositoryUrl>https://github.com/your-org/giraffe-endpoints-web</RepositoryUrl>
+    <PackageTags>web;server;giraffe;endpoints;fsharp;production</PackageTags>
+  </PropertyGroup>
 </Project>

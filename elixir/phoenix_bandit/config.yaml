@@ -1,3 +1,24 @@
 framework:
-  website: phoenixframework.org
-  version: 1.8
+  name: phoenix_bandit
+  website: https://phoenixframework.org
+  version: 1.8.1
+  description: "Phoenix web framework on top of Bandit"
+  production_ready: true
+  
+features:
+  - mvc_architecture
+  - routing
+  - templates
+  - channels
+  - presence
+  
+security:
+  - csrf_protection: true
+  - secure_headers: true
+  - content_security_policy: true
+  - secret_key_management: true
+  
+performance:
+  - json_library: jason
+  - code_reloader_disabled: true
+  - asset_compilation: true

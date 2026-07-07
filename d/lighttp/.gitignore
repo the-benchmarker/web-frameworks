@@ -1,0 +1,14 @@
+.dub/
+server
+dub.selections.json
+*.o
+*.obj
+*.exe
+*.lib
+*.dll
+*.pdb
+*.il
+*.map
+*.log
+*.tmp
+*.bak

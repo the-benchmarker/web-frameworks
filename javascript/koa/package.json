@@ -1,7 +1,18 @@
 {
+  "name": "koa-benchmark",
+  "version": "1.0.0",
+  "description": "Production-grade Koa benchmark server",
+  "main": "app.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node app.mjs",
+    "prod": "NODE_ENV=production node app.mjs"
+  },
   "dependencies": {
     "koa": "~3.2.0",
-    "koa-router": "*"
+    "koa-router": "^12.0.0"
   },
-  "type": "module"
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }

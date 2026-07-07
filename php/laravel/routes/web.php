@@ -13,6 +13,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'ApplicationController@index');
-Route::get('/user/{id}', 'UserController@show');
-Route::post('/user', 'UserController@create');
+// Benchmark endpoints
+Route::get('/', ['uses' => 'ApplicationController@index', 'as' => 'root']);
+Route::get('/user/{id}', ['uses' => 'UserController@show', 'as' => 'user.show']);
+Route::post('/user', ['uses' => 'UserController@create', 'as' => 'user.create']);
+
+// Health check endpoint for monitoring
+Route::get('/health', ['uses' => 'ApplicationController@healthCheck', 'as' => 'health.check']);

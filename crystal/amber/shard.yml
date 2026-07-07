@@ -4,13 +4,22 @@ version: 0.1.0
 authors:
   - Marwan Rabbâa <waghanza@gmail.com>
 
+description: Production-ready Amber Framework application with security best practices
+
 license: MIT
 
 targets:
   server:
     main: src/amber.cr
 
+crystal: ">= 1.12.0"
+
 dependencies:
   amber:
     github: amberframework/amber
     version: ~> 1.4.0
+
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    version: ~> 1.0.0

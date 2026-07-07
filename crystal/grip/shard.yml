@@ -4,13 +4,22 @@ version: 0.2.0
 authors:
   - grkek <giorgi.kavrelishvili@pm.me>
 
+description: Production-ready Grip Framework application with security best practices
+
+license: MIT
+
 targets:
   server:
     main: src/server.cr
+
+crystal: ">= 1.12.0"
 
 dependencies:
   grip:
     github: grip-framework/grip
     version: ~> 4.1.0
 
-license: MIT
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    version: ~> 1.0.0

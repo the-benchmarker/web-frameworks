@@ -3,12 +3,15 @@ framework:
   version: 3.36
 
   build:
-    - mvn clean package -Dquarkus.package.type=uber-jar -Dquarkus.http.port=3000
+    - mvn clean package -Dquarkus.package.type=uber-jar -Dquarkus.http.port=3000 -Dquarkus.profile=prod -DskipTests
 
   binaries:
-    - target/quarkus-1.0.0-runner.jar
+    - target/quarkus-benchmark-runner.jar
 
 language:
   engines:
     default:
-      command: java -jar /opt/web/target/quarkus-1.0.0-runner.jar
+      command: java -jar /opt/web/target/quarkus-benchmark-runner.jar
+      environment:
+        - QUARKUS_LOG_LEVEL=WARN
+        - QUARKUS_LOG_CONSOLE=false

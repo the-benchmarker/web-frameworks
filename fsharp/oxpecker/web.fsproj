@@ -1,13 +1,49 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
+  
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>oxpecker-web</AssemblyName>
+    <RootNamespace>OxpeckerWeb</RootNamespace>
     <IsPackable>false</IsPackable>
     <Nullable>enable</Nullable>
+    
+    <!-- Production optimizations -->
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <Deterministic>true</Deterministic>
+    
+    <!-- Docker support -->
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileFastBuild>True</DockerfileFastBuild>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)' = 'Release'">
+    <NoWarn>$(NoWarn);40;1701;1702;1705;3572</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="Program.fs" />
   </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="Oxpecker" Version="1.2.*" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="10.0.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="10.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.*" />
   </ItemGroup>
+  
+  <!-- Metadata -->
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <Description>Production-grade Oxpecker web server with security best practices</Description>
+    <Authors>Your Organization</Authors>
+    <Company>Your Company</Company>
+    <Product>Oxpecker Web Server</Product>
+    <Copyright>Copyright © $(GetCurrentDateTime:"yyyy") Your Company</Copyright>
+    <RepositoryUrl>https://github.com/your-org/oxpecker-web</RepositoryUrl>
+    <PackageTags>web;server;oxpecker;fsharp;production</PackageTags>
+  </PropertyGroup>
 </Project>

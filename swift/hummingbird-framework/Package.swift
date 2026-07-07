@@ -15,6 +15,11 @@ let package = Package(
             dependencies: [
                 .product(name: "Hummingbird", package: "hummingbird"),
             ],
+            swiftSettings: [
+                // Enable production optimizations
+                .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release)),
+                .unsafeFlags(["-Osize"], .when(configuration: .release)), // Optimize for size
+            ]
         ),
     ]
 )

@@ -5,13 +5,16 @@
   FROM php:8.5-fpm
 {{/language.version}}
 
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && \
   apt-get -y install --no-install-recommends \
     libzip-dev \
     curl \
+    ca-certificates \
     {{#deps}}{{{.}}} {{/deps}} \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* && \
+  apt-get clean
 
 WORKDIR /usr/src/app
 
@@ -51,7 +54,16 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   {{/bootstrap}}
 {{/framework.standalone}}
 
-HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+# Security: Create non-root user for production
+RUN useradd -r -u 1000 -g 1000 -m -d /usr/src/app -s /bin/false appuser && \
+    chown -R appuser:appuser /usr/src/app /var/run/php-fpm.sock
+
+# Security: Drop all privileges
+USER appuser
+
+# Production health check with /health endpoint
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000/health || exit 1
 
 {{#command}}
   ENTRYPOINT {{{.}}}

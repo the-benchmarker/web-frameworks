@@ -2,5 +2,19 @@ framework:
   github: oven-sh/bun
   version: 1.2.5
 
+  build:
+    - bun install --production
+
+  binaries:
+    - cluster.ts
+
   engines:
     - bun
+
+language:
+  engines:
+    default:
+      command: bun run cluster.ts
+      environment:
+        - NODE_ENV=production
+        - PORT=3000

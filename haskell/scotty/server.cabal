@@ -1,13 +1,48 @@
-name:          server
-version:       0.0.0
-cabal-version: >= 1.8
-build-type:    Simple
+name:                server
+version:             0.1.0.0
+synopsis:            Production-grade Scotty web server
+description:         A Scotty web application with production best practices
+category:            Web
+license:             MIT
+license-file:       LICENSE
+author:              The Benchmarker Team
+maintainer:          team@benchmark.com
+build-type:          Simple
+cabal-version:       >=1.10
 
-executable          server
-    hs-source-dirs: .
-    main-is:        Main.hs
-    ghc-options:    -Wall -threaded -O2 -rtsopts -with-rtsopts=-N
-    extensions:     OverloadedStrings
-    build-depends:  base   >= 4      && < 5
-                  , scotty >= 0.22 && < 0.23
-                  , text
+executable server
+  hs-source-dirs:      .
+  main-is:             Main.hs
+  
+  -- Production-grade GHC options
+  -- -Wall: Enable all warnings
+  -- -Werror: Treat warnings as errors for production
+  -- -threaded: Enable threaded runtime for better performance
+  -- -O2: Maximum optimization
+  -- -rtsopts: Enable runtime system options
+  -- -with-rtsopts=-N: Use number of processors as capabilities
+  -- -with-rtsopts=-A64M: Generational GC with 64MB allocation area
+  -- -funbox-strict-fields: Optimize strict fields
+  ghc-options:         -Wall -Werror -threaded -O2 -rtsopts -with-rtsopts=-N -with-rtsopts=-A64M -funbox-strict-fields
+  
+  -- Language extensions for modern Haskell
+  default-extensions:  OverloadedStrings
+                      NoImplicitPrelude
+  
+  -- Production dependencies with version bounds
+  build-depends:       base >= 4.15 && < 5
+                  , scotty >= 0.22 && < 0.24
+                  , wai >= 3.2 && < 4
+                  , warp >= 3.3 && < 4
+                  , text >= 1.2 && < 3
+                  , aeson >= 2.0 && < 3
+                  , bytestring >= 0.11 && < 0.12
+                  , wai-cors >= 0.2 && < 0.3
+                  , wai-middleware-gzip >= 0.0 && < 0.1
+                  , wai-middleware-request-size-limit >= 0.1 && < 0.2
+  
+  -- Enable detailed profiling in production builds
+  -- Uncomment for profiling: ghc-options: -prof -fprof-auto -rtsopts -with-rtsopts=-p
+  
+  -- Source files
+  hs-source-dirs:      .

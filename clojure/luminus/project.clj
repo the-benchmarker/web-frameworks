@@ -1,4 +1,5 @@
 (defproject luminus "0.1.0-SNAPSHOT"
+  :description "Production-grade Luminus web application"
 
   :dependencies [[luminus/lein-template "4.52"]
                  [ch.qos.logback/logback-classic "1.5.37"]
@@ -19,14 +20,15 @@
                  [org.clojure/clojure "1.12.5"]
                  [org.clojure/tools.logging "1.3.1"]
                  [org.clojure/tools.cli "1.4.256"]
-                 [org.webjars.npm/bulma "1.0.4"]
-                 [org.webjars.npm/material-icons "1.13.2"]
+                 [org.webjars/npm/bulma "1.0.4"]
+                 [org.webjars/npm/material-icons "1.13.2"]
                  [org.webjars/webjars-locator "0.52"]
                  [ring-webjars "0.3.1"]
                  [ring/ring-core "1.15.5"]
                  [ring/ring-defaults "0.7.1"]
-                 [com.fasterxml.jackson.core/jackson-core "2.22.0"]]
-
+                 [com.fasterxml.jackson.core/jackson-core "2.22.0"]
+                 [buddy/buddy-core "1.10.1"] ; For security utilities
+                 [buddy/buddy-hashers "1.8.1"]] ; For secure password hashing
   :min-lein-version "2.0.0"
   
   :source-paths ["src/clj"]
@@ -35,14 +37,15 @@
   :target-path "target/%s/"
   :main ^:skip-aot luminus.core
 
-  :plugins [] 
+  :plugins []
 
   :profiles
   {:uberjar {:omit-source true
              :aot :all
              :uberjar-name "luminus.jar"
-             :source-paths ["env/prod/clj" ]
-             :resource-paths ["env/prod/resources"]}
+             :source-paths ["env/prod/clj"]
+             :resource-paths ["env/prod/resources"]
+             :jvm-opts ["-Dconf=prod-config.edn"]}
 
    :dev           [:project/dev :profiles/dev]
    :test          [:project/dev :project/test :profiles/test]
@@ -53,15 +56,17 @@
                                  [ring/ring-devel "1.15.5"]
                                  [ring/ring-mock "0.6.2"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.26.0"]
-                                 [jonase/eastwood "1.4.3"]] 
+                                 [jonase/eastwood "1.4.3"]]
                   
-                  :source-paths ["env/dev/clj" ]
+                  :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
                   :repl-options {:init-ns user
                                  :timeout 120000}
                   :injections [(require 'pjstadig.humane-test-output)
                                (pjstadig.humane-test-output/activate!)]}
-   :project/test {:jvm-opts ["-Dconf=test-config.edn" ]
-                  :resource-paths ["env/test/resources"] }
+   :project/test {:jvm-opts ["-Dconf=test-config.edn"]
+                  :resource-paths ["env/test/resources"]}
    :profiles/dev {}
    :profiles/test {}})
+  
+  :jvm-opts ["-XX:+UseG1GC" "-XX:MaxGCPauseMillis=200" "-XX:+DisableExplicitGC"]

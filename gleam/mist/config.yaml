@@ -1,6 +1,34 @@
 framework:
-  github: rawhat/mist
-  version: 6.0
-  files:
-    - "**/*.gleam"
-    - "gleam.toml"
+  name: mist
+  github: https://github.com/rawhat/mist
+  version: 6.0.3
+  description: "Gleam HTTP server and framework"
+  production_ready: true
+  website: https://hex.pm/packages/mist
+  
+features:
+  - functional_programming
+  - type_safety
+  - middleware_support
+  - routing
+  - http2_support
+
+security:
+  - security_headers: true
+  - server_header_removed: true
+  - error_handling: true
+  - content_security_policy: "default-src 'self'"
+
+performance:
+  - optimized_build: true
+  - deterministic_build: true
+
+best_practices:
+  - proper_error_handling: true
+  - security_headers: true
+  - health_checks: true
+  - environment_configuration: true
+
+files:
+  - "**/*.gleam"
+  - "gleam.toml"

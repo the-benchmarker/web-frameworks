@@ -1,5 +1,16 @@
 {
+  "name": "bun-benchmark",
+  "version": "1.0.0",
+  "description": "Production-grade Bun benchmark server",
+  "main": "cluster.ts",
+  "scripts": {
+    "start": "bun run cluster.ts",
+    "prod": "NODE_ENV=production bun run cluster.ts"
+  },
   "devDependencies": {
     "@types/bun": "^1.2.5"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
   }
 }

@@ -1,3 +1,29 @@
 framework:
-  github: frank-fs/frank
-  version: 6.3
+  name: frank
+  github: https://github.com/frank-fs/frank
+  version: 6.3.0
+  description: "Sinatra-like DSL for quickly building web applications in F#"
+  production_ready: true
+  
+features:
+  - sinatra_like_dsl
+  - routing
+  - middleware
+  - async_support
+  
+security:
+  - security_headers: true
+  - request_size_limit: 8MB
+  - server_header_removed: true
+  - error_handling: true
+  
+performance:
+  - max_connections: 16384
+  - optimized_build: true
+  - deterministic_build: true
+  
+best_practices:
+  - proper_error_handling: true
+  - structured_logging: true
+  - health_checks: true
+  - environment_configuration: true

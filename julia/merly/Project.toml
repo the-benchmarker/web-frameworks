@@ -1,4 +1,19 @@
+name = "MerlyBenchmark"
+uuid = "7c1a2b3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d"
+authors = ["Benchmark Team"]
+version = "1.0.0"
+
 [deps]
 Merly = "5b70daea-9db9-5a46-aedf-2142e553ecc5"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+
 [compat]
+julia = "1.6"
 Merly = "~1.0.2"
+HTTP = "2.0"
+
+[extras]
+Test = "8dfed614-e22d-5e54-85a1-110775859804"
+
+[targets]
+test = ["Test"]

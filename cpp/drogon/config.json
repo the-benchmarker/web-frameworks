@@ -3,17 +3,38 @@
     {
       "address": "0.0.0.0",
       "port": 3000,
-      "https": false
+      "https": false,
+      "use_ssl": false,
+      "ssl_cert_file": "",
+      "ssl_key_file": ""
     }
   ],
   "app": {
     "threads_num": 0,
+    "max_concurrency_per_thread": 1000,
+    "max_connections": 10000,
+    "max_request_size": 8388608,
+    "client_max_body_size": 8388608,
+    "keepalive_timeout": 30,
+    "idle_connection_timeout": 300,
+    "connection_timeout": 5,
     "log": {
-      "log_level": "WARN"
+      "log_level": "WARN",
+      "log_path": ".",
+      "log_file_name": "drogon",
+      "log_file_size": 104857600,
+      "log_file_number": 10,
+      "enable_log_to_file": false,
+      "enable_log_to_console": true,
+      "enable_color_log": false
     },
-    "idle_connection_timeout": 0,
     "enable_server_header": false,
-    "enable_date_header": false
+    "enable_date_header": false,
+    "gzip_compression": false,
+    "brotli_compression": false,
+    "upload_path": "/tmp",
+    "static_file_path": "./static",
+    "document_root": "."
   },
   "plugins": [
     {
@@ -21,5 +42,27 @@
       "dependencies": [],
       "config": {}
     }
-  ]
+  ],
+  "database": {
+    "db_type": "none",
+    "connections_num": 1,
+    "connection_timeout": 5,
+    "query_timeout": 10
+  },
+  "session": {
+    "store_type": "none",
+    "timeout": 3600,
+    "cookie_name": "session_id",
+    "http_only": true,
+    "secure": false
+  },
+  "security": {
+    "enable_csrf": false,
+    "csrf_token_timeout": 3600,
+    "enable_cors": false,
+    "cors_headers": "Content-Type,Authorization",
+    "cors_methods": "GET,POST,PUT,DELETE,OPTIONS",
+    "enable_rate_limiting": false,
+    "rate_limit": 100
+  }
 }

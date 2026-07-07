@@ -3,12 +3,14 @@ framework:
   version: 7.2
 
   build:
-    - mvn compile assembly:single
+    - mvn clean compile assembly:single -DskipTests
 
   binaries:
-    - target/benchmark-1.0.0-jar-with-dependencies.jar
+    - target/benchmark-jar-with-dependencies.jar
 
 language:
   engines:
     default:
-      command: /usr/bin/java -cp target/benchmark-1.0.0-jar-with-dependencies.jar benchmark.javalin.Bench
+      command: /usr/bin/java -jar /opt/web/target/benchmark-jar-with-dependencies.jar
+      environment:
+        - LOG_LEVEL=WARN

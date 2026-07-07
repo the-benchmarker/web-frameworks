@@ -1,5 +1,28 @@
 <?php
 
+// =============================================================================
+// PRODUCTION CONFIGURATION FOR IMWORKERMAN FRAMEWORK
+// =============================================================================
+
+error_reporting(E_ALL);
+ini_set('display_errors', '0');
+ini_set('display_startup_errors', '0');
+ini_set('log_errors', '1');
+ini_set('log_errors_max_len', '1024');
+ini_set('ignore_repeated_errors', '1');
+ini_set('ignore_repeated_source', '1');
+ini_set('html_errors', '0');
+
+define('DEBUG_MODE', false);
+
+// Security settings
+ini_set('expose_php', '0');
+ini_set('session.cookie_httponly', '1');
+ini_set('session.cookie_secure', '1');
+
+// Performance settings
+ini_set('memory_limit', '256M');
+
 return [
     // 项目根命名空间
     'namespace'    =>    'ImiApp',
@@ -9,7 +32,7 @@ return [
         'beans'        =>    __DIR__ . '/beans.php',
     ],
 
-    // Workerman 服务器配置
+    // Workerman 服务器配置 - Production optimizations
     'workermanServer' => [
         // 服务器名，http 也可以改成 abc 等等，完全自定义
         'http' => [
@@ -24,6 +47,7 @@ return [
             'configs'   => [
                 // 支持设置 Workerman 参数
                 'count' => shell_exec('nproc') ?: 32,
+                'name' => 'Imi Workerman Benchmark Server',
             ],
         ],
     ],

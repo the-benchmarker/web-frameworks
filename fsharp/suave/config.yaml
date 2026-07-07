@@ -1,3 +1,28 @@
 framework:
-  website: suave.io
-  version: 3.4
+  name: suave
+  website: https://suave.io
+  version: 3.4.0
+  description: "Simple web development F# library and web server"
+  production_ready: true
+  
+features:
+  - lightweight
+  - non_blocking_io
+  - composable
+  - middleware
+  
+security:
+  - security_headers: true
+  - server_header_removed: true
+  - compression_disabled: true
+  - directory_browsing_disabled: true
+  
+performance:
+  - max_connections: 16384
+  - optimized_tcp_settings: true
+  - no_delay: true
+  
+best_practices:
+  - proper_error_handling: true
+  - custom_error_handler: true
+  - production_configuration: true

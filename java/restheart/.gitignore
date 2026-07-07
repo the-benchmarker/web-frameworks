@@ -1,6 +1,64 @@
-target
-.vscode
+# Maven build output
+target/
+target/*
+
+# Maven dependency reduced POM
+dependency-reduced-pom.xml
+
+# IDE specific files
+.vscode/
 .project
 .classpath
-.settings
-dependency-reduced-pom.xml
+.settings/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Java compiled files
+*.class
+*.jar
+*.war
+*.ear
+
+# Log files
+*.log
+logs/
+
+# Local configuration files that should not be committed
+*.local
+*.properties.local
+
+# Environment specific files
+.env
+.env.local
+.env.*.local
+
+# Coverage reports
+coverage/
+.coverage
+
+# Test results
+TEST-*.xml
+surefire-reports/
+failsafe-reports/
+
+# Dependency directories (if created manually)
+lib/
+
+# Backup files
+*.backup
+*.bak
+*.orig
+
+# Temporary files
+*.tmp
+*.swp
+
+# Build tool specific
+.mvn/
+.mvn/timing.properties

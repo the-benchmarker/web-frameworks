@@ -1,31 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<!-- Production logback configuration with security and performance optimizations -->
+<configuration debug="false">
+    <!-- Disable status messages in production -->
     <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+    
+    <!-- Application logs with rotation -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/luminus.log</file>
+        <file>log/application.log</file>
+        <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/luminus.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>100MB</maxFileSize>
+            <fileNamePattern>log/application.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy 
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
-            <!-- keep 30 days of history -->
+            <!-- Keep 7 days of history for production -->
+            <maxHistory>7</maxHistory>
+            <!-- Total size cap -->
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%date{ISO8601} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- Error logs separate file -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/errors.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/errors.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
             <charset>UTF-8</charset>
-            <pattern>%date{ISO8601} [%thread] %-5level %logger{36} - %msg %n</pattern>
+            <pattern>%date{ISO8601} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <!-- Only accept ERROR level and above -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    
+    <!-- JSON console appender for structured logging -->
+    <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+                <jsonFormatter class="ch.qos.logback.contrib.json.classic.JsonFormatter">
+                    <fieldNames>
+                        <timestamp>timestamp</timestamp>
+                        <logger>logger</logger>
+                        <logLevel>level</logLevel>
+                        <message>message</message>
+                        <thread>thread</thread>
+                        <mdc>mdc</mdc>
+                    </fieldNames>
+                </jsonFormatter>
+            </layout>
         </encoder>
     </appender>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%-5relative %-5level %logger{35} - %msg%n</pattern>
-        </encoder>
-    </appender>
-    <logger name="org.apache.http" level="warn" />
-    <logger name="org.xnio.nio" level="warn" />
-    <logger name="org.eclipse.jetty" level="warn" />
+    
+    <!-- Suppress noisy library logs -->
+    <logger name="org.apache.http" level="WARN" />
+    <logger name="org.xnio.nio" level="WARN" />
+    <logger name="org.eclipse.jetty" level="WARN" />
+    <logger name="sun.rmi" level="WARN" />
+    <logger name="java.sql" level="WARN" />
+    <logger name="org.hibernate" level="WARN" />
+    <logger name="com.zaxxer.hikari" level="INFO" />
+    
+    <!-- Root logger configuration -->
     <root level="INFO">
         <appender-ref ref="FILE" />
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="ERROR" />
+        <!-- Uncomment for JSON logging: <appender-ref ref="JSON" /> -->
     </root>
 </configuration>

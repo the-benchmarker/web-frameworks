@@ -1,3 +1,29 @@
 framework:
-  website: websharper.com
-  version: 9.0
+  name: websharper
+  website: https://websharper.com
+  version: 9.1.0
+  description: "Web programming framework for F# with client-server integration"
+  production_ready: true
+  
+features:
+  - client_server_integration
+  - type_providers
+  - sitelets
+  - reactive
+  
+security:
+  - security_headers: true
+  - request_size_limit: 8MB
+  - server_header_removed: true
+  - error_handling: true
+  
+performance:
+  - max_connections: 16384
+  - optimized_build: true
+  - deterministic_build: true
+  
+best_practices:
+  - proper_error_handling: true
+  - structured_logging: true
+  - health_checks: true
+  - environment_configuration: true

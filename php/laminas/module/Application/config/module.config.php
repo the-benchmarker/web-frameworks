@@ -6,6 +6,11 @@ use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 
+/**
+ * Laminas Framework Module Configuration
+ * 
+ * Benchmark server routes following PHP best practices.
+ */
 return [
     'router' => [
         'routes' => [
@@ -16,6 +21,16 @@ return [
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action'     => 'index',
+                    ],
+                ],
+            ],
+            'health' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route'    => '/health',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'health',
                     ],
                 ],
             ],

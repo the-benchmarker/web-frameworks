@@ -1,22 +1,167 @@
 package main
 
 import (
+	"context"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
 	beego "github.com/beego/beego/v2/server/web"
 	"github.com/beego/beego/v2/server/web/context"
 )
 
+// BenchmarkServer represents the benchmark HTTP server using Beego framework
+type BenchmarkServer struct {
+	App    *beego.ControllerRegister
+	Server *http.Server
+}
+
+// newBenchmarkServer creates a new production-ready Beego server
+func newBenchmarkServer() *BenchmarkServer {
+	// Configure Beego for production
+	beego.BConfig.RunMode = beego.PROD
+	beego.BConfig.Listen.EnableHTTP = true
+	beego.BConfig.Listen.HTTPPort = 3000
+	beego.BConfig.Log.AccessLogs = false
+	beego.BConfig.Log.FileLineNum = true
+	beego.BConfig.Log.Outputs = map[string]string{"console": ""}
+
+	app := beego.NewControllerRegister()
+
+	return &BenchmarkServer{
+		App: app,
+	}
+}
+
+// addSecurityHeaders adds security headers to the response
+func (s *BenchmarkServer) addSecurityHeaders(ctx *context.Context) {
+	ctx.Output.Header("X-Content-Type-Options", "nosniff")
+	ctx.Output.Header("X-Frame-Options", "DENY")
+	ctx.Output.Header("X-XSS-Protection", "1; mode=block")
+	ctx.Output.Header("Content-Security-Policy", "default-src 'self'")
+	ctx.Output.Header("Referrer-Policy", "strict-origin-when-cross-origin")
+	ctx.Output.Header("Permissions-Policy", "geolocation=(), microphone=(), camera=()")
+}
+
+// registerRoutes registers all benchmark endpoints
+func (s *BenchmarkServer) registerRoutes() {
+	// Root endpoint
+	s.App.Get("/", s.rootHandler)
+
+	// User endpoints
+	s.App.Get("/user/:id", s.getUserHandler)
+	s.App.Post("/user", s.createUserHandler)
+
+	// Health check endpoint
+	s.App.Get("/health", s.healthCheckHandler)
+}
+
+// rootHandler handles requests to the root endpoint
+// @Summary Root endpoint
+// @Description Root endpoint for benchmarking
+// @Produce plain
+// @Success 200 {string} string "Empty response"
+// @Router / [get]
+func (s *BenchmarkServer) rootHandler(ctx *context.Context) {
+	ctx.Output.SetStatus(http.StatusOK)
+	ctx.Output.Header("Content-Type", "text/plain")
+	s.addSecurityHeaders(ctx)
+	ctx.WriteString("")
+}
+
+// getUserHandler handles GET requests to /user/:id
+// @Summary Get user by ID
+// @Description Retrieve user information by ID
+// @Produce plain
+// @Param id path string true "User ID"
+// @Success 200 {string} string "User ID"
+// @Router /user/{id} [get]
+func (s *BenchmarkServer) getUserHandler(ctx *context.Context) {
+	id := ctx.Input.Param(":id")
+	ctx.Output.SetStatus(http.StatusOK)
+	ctx.Output.Header("Content-Type", "text/plain")
+	s.addSecurityHeaders(ctx)
+	ctx.WriteString(id)
+}
+
+// createUserHandler handles POST requests to /user
+// @Summary Create user
+// @Description Create a new user
+// @Produce plain
+// @Success 200 {string} string "Empty response"
+// @Router /user [post]
+func (s *BenchmarkServer) createUserHandler(ctx *context.Context) {
+	ctx.Output.SetStatus(http.StatusOK)
+	ctx.Output.Header("Content-Type", "text/plain")
+	s.addSecurityHeaders(ctx)
+	ctx.WriteString("")
+}
+
+// healthCheckHandler handles health check requests
+// @Summary Health check
+// @Description Health check endpoint for monitoring
+// @Produce plain
+// @Success 200 {string} string "OK"
+// @Router /health [get]
+func (s *BenchmarkServer) healthCheckHandler(ctx *context.Context) {
+	ctx.Output.SetStatus(http.StatusOK)
+	ctx.Output.Header("Content-Type", "text/plain")
+	ctx.Output.Header("Cache-Control", "no-cache, no-store, must-revalidate")
+	s.addSecurityHeaders(ctx)
+	ctx.WriteString("OK")
+}
+
 func main() {
-	beego.Get("/", func(ctx *context.Context) {
-		ctx.WriteString("")
-	})
+	// Create server instance
+	server := newBenchmarkServer()
 
-	beego.Get("/user/:id", func(ctx *context.Context) {
-		ctx.WriteString(ctx.Input.Param(":id"))
-	})
+	// Register routes
+	server.registerRoutes()
 
-	beego.Post("/user", func(ctx *context.Context) {
-		ctx.WriteString("")
-	})
+	// Get port from environment or use default
+	port := os.Getenv("PORT")
+	if port != "" {
+		beego.BConfig.Listen.HTTPPort = 0 // Disable beego's built-in server
+	} else {
+		port = "3000"
+	}
 
-	beego.Run(":3000")
+	// Create HTTP server with production-grade configuration
+	server.Server = &http.Server{
+		Addr:              ":" + port,
+		Handler:          server.App,
+		ReadHeaderTimeout: 10 * time.Second,
+		ReadTimeout:      30 * time.Second,
+		WriteTimeout:     30 * time.Second,
+		IdleTimeout:      120 * time.Second,
+		MaxHeaderBytes:   1 << 20, // 1 MB
+	}
+
+	// Start server in a goroutine
+	go func() {
+		log.Printf("Starting Beego benchmark server on port %s", port)
+		if err := server.Server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("Server error: %v", err)
+		}
+	}()
+
+	// Graceful shutdown
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+
+	log.Println("Shutting down server...")
+
+	// Give the server a grace period to finish active connections
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	if err := server.Server.Shutdown(ctx); err != nil {
+		log.Printf("Server shutdown error: %v", err)
+	}
+
+	log.Println("Server stopped")
 }

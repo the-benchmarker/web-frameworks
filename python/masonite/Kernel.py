@@ -15,13 +15,14 @@ from masonite.configuration.Configuration import Configuration
 from masonite.configuration import config
 from config.filesystem import STATICFILES
 from app.middlewares.VerifyCsrfToken import VerifyCsrfToken
+from app.middlewares.SecurityHeadersMiddleware import SecurityHeadersMiddleware
 
 
 class Kernel:
-    http_middleware = [MaintenanceModeMiddleware, EncryptCookies]
+    http_middleware = [MaintenanceModeMiddleware, EncryptCookies, SecurityHeadersMiddleware]
 
     route_middleware = {
-        "web": [SessionMiddleware, LoadUserMiddleware, VerifyCsrfToken],
+        "web": [SessionMiddleware, LoadUserMiddleware, VerifyCsrfToken, SecurityHeadersMiddleware],
     }
 
     def __init__(self, app):

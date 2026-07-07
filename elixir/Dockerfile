@@ -4,11 +4,13 @@
 FROM elixir:1.20-slim AS build
 
 # Update system deps
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends \
     build-essential \
     ca-certificates && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* && \
+  apt-get clean
 
 # Instal Hex, Rebar and Rebar3
 RUN mix local.rebar --force && \
@@ -45,25 +47,33 @@ FROM debian:trixie-slim
 WORKDIR /app
 
 # Update system deps
+# Install minimal runtime dependencies
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && \
-  apt-get -qy install --no-install-recommends openssl curl && \
-  rm -rf /var/lib/apt/lists/*
+  apt-get -qy install --no-install-recommends \
+    openssl \
+    curl \
+    ca-certificates && \
+  rm -rf /var/lib/apt/lists/* && \
+  apt-get clean
 
 # Set environment
 ENV LANG=C.UTF-8 \
   LANGUAGE=C.UTF-8 \
   MIX_ENV="prod"
 
-# User
-RUN chown nobody /app
+# Security: Create non-root user for production
+RUN useradd -r -u 1000 -g 1000 -m -d /app -s /bin/false appuser
 
 # Copy release from build container
-COPY --from=build --chown=nobody:root /usr/src/app/release ./
+COPY --from=build --chown=appuser:appuser /usr/src/app/release ./
 
-USER nobody
+# Security: Drop all privileges
+USER appuser
 
-# Check status
-HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+# Production health check with /health endpoint
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD curl --fail --silent --max-time 5 http://0.0.0.0:3000/health || exit 1
 
 # Start release
 ENTRYPOINT {{{command}}}

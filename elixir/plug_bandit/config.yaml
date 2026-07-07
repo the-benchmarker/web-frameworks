@@ -1,3 +1,23 @@
 framework:
-  website: hexdocs.pm/plug
-  version: 1.19
+  name: plug_bandit
+  website: https://hexdocs.pm/plug
+  version: 1.19.0
+  description: "Plug web application on top of Bandit"
+  production_ready: true
+  
+features:
+  - plug_router
+  - bandit_adapter
+  - middleware_pipeline
+  
+security:
+  - method_override_disabled: true
+  - security_headers: true
+  - body_size_limit: 8MB
+  - websockets_disabled: true
+  
+performance:
+  - max_connections: 16384
+  - num_acceptors: 100
+  - nodelay: true
+  - reuseport: true

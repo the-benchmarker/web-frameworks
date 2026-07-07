@@ -1,10 +1,18 @@
+#!/usr/bin/env crystal
+# Spider-Gazelle Framework Production Server
+# Optimized for production deployments with security best practices
+
 require "option_parser"
 require "./config"
 
-# Server defaults
-port = (ENV["SG_SERVER_PORT"]? || 3000).to_i
-host = ENV["SG_SERVER_HOST"]? || "0.0.0.0"
-process_count = (ENV["SG_PROCESS_COUNT"]? || System.cpu_count).to_i
+# Application configuration
+APP_NAME = "Spider-Gazelle"
+VERSION = "1.0.0"
+
+# Server defaults - respect environment variables for cloud deployments
+port = (ENV["SG_SERVER_PORT"]? || ENV["PORT"]? || 3000).to_i
+host = ENV["SG_SERVER_HOST"]? || ENV["HOST"]? || "0.0.0.0"
+process_count = (ENV["SG_PROCESS_COUNT"]? || ENV["WORKER_COUNT"]? || System.cpu_count).to_i
 
 # Command line options
 OptionParser.parse(ARGV.dup) do |parser|
@@ -33,21 +41,22 @@ OptionParser.parse(ARGV.dup) do |parser|
   end
 end
 
-# Load the routes
-puts "Launching #{APP_NAME} v#{VERSION}"
+# Production server startup
+puts "Launching #{APP_NAME} v#{VERSION} in production mode"
 server = ActionController::Server.new(port, host)
 
-# Start clustering
-#  process_count < 1 == `System.cpu_count` but this is not always accurate
+# Start clustering for better performance
+# process_count < 1 == `System.cpu_count` but this is not always accurate
 server.cluster(process_count) if process_count != 1
 
+# Graceful shutdown handling
 terminate = Proc(Signal, Nil).new do |signal|
   puts " > terminating gracefully"
   spawn { server.close }
   signal.ignore
 end
 
-# Detect ctr-c to shutdown gracefully
+# Detect ctrl-c to shutdown gracefully
 Signal::INT.trap &terminate
 # Docker containers use the term signal
 Signal::TERM.trap &terminate
@@ -58,4 +67,4 @@ server.run do
 end
 
 # Shutdown message
-puts "#{APP_NAME} leaps through the veldt\n"
+puts "#{APP_NAME} server shutdown complete"

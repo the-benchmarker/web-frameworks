@@ -44,10 +44,20 @@ tasks {
     withType<KotlinJvmCompile>().configureEach {
         compilerOptions {
             allWarningsAsErrors = false
-            freeCompilerArgs.add("-Xjvm-default=all")
+            freeCompilerArgs.addAll("-Xjvm-default=all", "-opt")
+            jvmTarget.set(JVM_21)
         }
     }
 
+    shadowJar {
+        archiveBaseName.set("server")
+        archiveClassifier = null
+        archiveVersion = null
+        mergeServiceFiles()
+        dependsOn(distTar, distZip)
+        isZip64 = true
+        exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
+    }
 }
 
 dependencies {

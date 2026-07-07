@@ -1,3 +1,18 @@
 framework:
   github: lukeed/polka
   version: 0.5
+
+  build:
+    - npm install --production
+
+  binaries:
+    - app.mjs
+
+language:
+  engines:
+    default:
+      command: /usr/bin/node /opt/web/app.mjs
+      environment:
+        - NODE_ENV=production
+        - NODE_OPTIONS=--max-old-space-size=2048
+        - LOG_LEVEL=warn

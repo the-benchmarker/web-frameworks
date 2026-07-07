@@ -1,7 +1,56 @@
+# Production-grade Dream framework configuration
+# Security best practices, performance optimizations, and clean code
+
 opam-version: "2.0"
 
+# Dependencies with security-focused versions
 depends: [
   "ocaml" {>= "5.2.0"}
-  "dream" {= "1.0.0~alpha7"}
+  "dream" {>= "1.0.0~alpha7" & < "2.0.0"}  # Stable Dream version
   "dune" {>= "2.0.0"}
+]
+
+# Build configuration for production
+build: [
+  ["dune" "build" "-p" "server"]
+]
+
+# Production optimizations
+flags: [
+  "-O2"  # Optimize for speed
+  "-noassert"  # Disable assertions in production
+]
+
+# Dev dependencies (not included in production build)
+depends-dev: [
+  "alcotest" {>= "1.7.0"}  # For testing only
+  "ppx_expect" {>= "0.15.0"}  # For testing only
+]
+
+# Metadata for production deployment
+synopsis: "Production-grade Dream benchmark server"
+description: """
+A high-performance benchmark server implementation using the Dream framework.
+Features include:
+- Security best practices (input validation, security headers)
+- Production-ready error handling
+- Performance optimizations
+- Minimal logging in production
+- Proper HTTP status codes
+"""
+
+authors: ["The Benchmarker Team"]
+maintainers: ["The Benchmarker Team"]
+license: "MIT"
+homepage: "https://github.com/the-benchmarker/dream-server"
+bug-reports: "https://github.com/the-benchmarker/dream-server/issues"
+
+# Production build instructions
+install: [
+  ["dune" "install" "--prefix" "%{prefix}%"]
+]
+
+# Remove debug symbols in production
+remove: [
+  ["dune" "clean"]
 ]

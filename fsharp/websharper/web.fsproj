@@ -4,6 +4,24 @@
     <TargetFramework>net10.0</TargetFramework>
     <WebSharperProject>Website</WebSharperProject>
     <WebProjectOutputDir>$(MSBuildThisFileDirectory)/wwwroot</WebProjectOutputDir>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>websharper-web</AssemblyName>
+    <RootNamespace>WebSharperWeb</RootNamespace>
+    
+    <!-- Production optimizations -->
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <Deterministic>true</Deterministic>
+    
+    <!-- Docker support -->
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileFastBuild>True</DockerfileFastBuild>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)' = 'Release'">
+    <NoWarn>$(NoWarn);40;1701;1702;1705;3572</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +33,20 @@
     <PackageReference Include="WebSharper.Core" Version="9.1.*" />
     <PackageReference Include="WebSharper" Version="9.1.*" />
     <PackageReference Include="WebSharper.AspNetCore" Version="9.1.*" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="10.0.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="10.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.*" />
   </ItemGroup>
 
+  <!-- Metadata -->
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <Description>Production-grade WebSharper web server with security best practices</Description>
+    <Authors>Your Organization</Authors>
+    <Company>Your Company</Company>
+    <Product>WebSharper Web Server</Product>
+    <Copyright>Copyright © $(GetCurrentDateTime:"yyyy") Your Company</Copyright>
+    <RepositoryUrl>https://github.com/your-org/websharper-web</RepositoryUrl>
+    <PackageTags>web;server;websharper;fsharp;production</PackageTags>
+  </PropertyGroup>
 </Project>

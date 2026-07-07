@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Production-grade Logback configuration for Javalin benchmark application
+  
+  Features:
+  - WARN level logging by default (minimal overhead)
+  - Errors logged to file only (no console output in production)
+  - No debug logging in production
+-->
+<configuration scan="true" scanPeriod="30 seconds">
+    
+    <!-- Log level - can be overridden via system property -->
+    <property name="LOG_LEVEL" value="${LOG_LEVEL:-WARN}" />
+    
+    <!-- Log file location -->
+    <property name="LOG_FILE" value="${LOG_FILE:-/var/log/javalin-benchmark.log}" />
+    
+    <!-- Log pattern -->
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
+    
+    <!-- File appender for errors only -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Daily rollover -->
+            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Keep logs for 7 days -->
+            <maxHistory>7</maxHistory>
+            <!-- Total size cap -->
+            <totalSizeCap>100MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <!-- Only log ERROR and above to file -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+    
+    <!-- Root logger -->
+    <root level="${LOG_LEVEL}">
+        <!-- Always log errors to file -->
+        <appender-ref ref="FILE" />
+    </root>
+    
+    <!-- Javalin specific logger - minimal logging -->
+    <logger name="io.javalin" level="${LOG_LEVEL}" additivity="false">
+        <appender-ref ref="FILE" />
+    </logger>
+    
+    <!-- Benchmark application logger -->
+    <logger name="benchmark" level="${LOG_LEVEL}" additivity="false">
+        <appender-ref ref="FILE" />
+    </logger>
+    
+    <!-- Jetty logger - minimal logging -->
+    <logger name="org.eclipse.jetty" level="WARN" additivity="false">
+        <appender-ref ref="FILE" />
+    </logger>
+    
+    <!-- Disable JUL to Logback bridge to avoid duplicate logging -->
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+</configuration>
