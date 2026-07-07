@@ -7,4 +7,4 @@ requires = ["flit_core"]
 name = 'server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["fastapi-startkit[fastapi]>=0.46,<0.47"]
+dependencies = ["fastapi-startkit[fastapi]==0.46.0"]
