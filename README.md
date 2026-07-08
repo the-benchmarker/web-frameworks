@@ -734,11 +734,15 @@ Disclaimer (verbatim):
 > registration, so the benchmark shows this representative cost rather than
 > hiding it (e.g. via flat `add_api_route`).
 >
-> `include_router`'s overhead is a long-standing, acknowledged FastAPI topic —
-> see [fastapi/fastapi#5343](https://github.com/fastapi/fastapi/issues/5343),
-> which reported `include_router` performance cost and requested a top-level
-> `FastAPI(router=…)` bypass; the 0.139 `_IncludedRouter` design is the current
-> shape of that trade-off.
+> `include_router`'s overhead is a long-standing, acknowledged FastAPI topic.
+> A related upstream discussion,
+> [fastapi/fastapi#5343](https://github.com/fastapi/fastapi/issues/5343),
+> reports `include_router` performance cost and requests a top-level
+> `FastAPI(router=…)` bypass — though that report concerns `include_router`'s
+> *construction-time* cost (per-route introspection in the app-factory pattern),
+> a different mechanism from the *per-request* `_IncludedRouter` resolution
+> measured here. Both reflect the same theme: `include_router` carries overhead
+> that flat registration avoids.
 
 > ⚠️ **Benchmarking caveat.** Reliable *absolute* numbers under the harness's
 > standard `--disable-keepalive` were not obtainable on macOS (ephemeral-port /
