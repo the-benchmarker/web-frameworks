@@ -666,16 +666,17 @@ artifacts):
 
 | | **fastapi** | **fastapi-startkit** |
 |---|---|---|
-| Declared dependency | `fastapi>=0.139,<0.140` | `fastapi-startkit[fastapi]==0.46.0` (pinned in PR #4) |
-| Underlying FastAPI | direct | `fastapi[standard]>=0.124.4,<0.125.0` (transitive) |
+| Declared dependency | `fastapi>=0.139,<0.140` | `fastapi-startkit[fastapi]==0.47.0` |
+| Underlying FastAPI | `0.139.0` | `0.139.0` (transitive, via `fastapi-startkit==0.47.0`) |
 | App composition | single `FastAPI()` in `server.py` | `Application` + `FastAPIProvider` (providers / config / bootstrap) |
 | Engines | uvicorn (default), hypercorn, daphne, granian | uvicorn (default), hypercorn, daphne, granian |
 | Default build | `.Dockerfile.uvicorn` | `.Dockerfile.uvicorn` |
-| Python | 3.13 | 3.13 |
+| Python | 3.14 | 3.14 |
 
-The `fastapi-startkit` dependency is pinned to the exact known-good release
-`==0.46.0` for reproducible rebuilds; both frameworks are built and run from the
-same default `.Dockerfile.uvicorn` engine.
+The `fastapi-startkit` dependency is pinned to `==0.47.0`, which resolves the
+**same FastAPI 0.139.0 / Starlette 1.3.1** the baseline uses, so both Python
+entries benchmark on an identical FastAPI/Starlette stack; both are built and run
+from the same default `.Dockerfile.uvicorn` engine.
 
 ### Performance
 
@@ -716,11 +717,22 @@ Disclaimer (verbatim):
 > authoritative numbers require run.sh on Linux. Requires fastapi-startkit 0.47
 > so both run FastAPI 0.139.
 
-> ⚠️ **Version note.** This relative comparison was run with
-> **fastapi-startkit 0.47.0** so both sides run FastAPI 0.139.0. The committed
-> benchmark pins **`fastapi-startkit==0.46.0`** for reproducibility (PR #4), so
-> treat these deltas as indicative of framework overhead, not a measurement of
-> the pinned build.
+> ✅ **Both sides match the committed build.** The committed benchmark pins
+> **`fastapi-startkit==0.47.0`**, which resolves the same **FastAPI 0.139.0 /
+> Starlette 1.3.1** the baseline uses. These deltas therefore reflect the
+> committed, apples-to-apples build — not a version-skewed comparison.
+>
+> **Why `POST /user` is slower.** It is *not* `fastapi-startkit` per-request
+> code — the hot path is stock FastAPI / Starlette. The gap comes from
+> **FastAPI 0.139's `include_router`**: unlike FastAPI ≤ 0.124 (which flattened
+> included routes into the app router), 0.139 keeps a nested
+> `fastapi.routing._IncludedRouter` node on `app.router.routes`, adding a
+> per-request resolution layer. This is **intended FastAPI behavior** (cached
+> candidate resolution / router-identity), and it is **reproducible in plain
+> FastAPI** — any app that registers routes via `include_router` on 0.139 pays
+> it. `fastapi-startkit` uses `include_router` as its idiomatic route-module
+> registration, so the benchmark shows this representative cost rather than
+> hiding it (e.g. via flat `add_api_route`).
 
 > ⚠️ **Benchmarking caveat.** Reliable *absolute* numbers under the harness's
 > standard `--disable-keepalive` were not obtainable on macOS (ephemeral-port /
