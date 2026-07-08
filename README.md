@@ -629,3 +629,123 @@ func getUser(ctx *breeze.Context) {
     })
 }
 ```
+
+---
+
+## FastAPI vs FastAPI-StartKit (Python benchmark)
+
+Two Python ASGI entries in this harness implement the **same three benchmark
+routes** with identical handlers (`GET /` → empty, `GET /user/{id}` → the id as
+plain text, `POST /user` → empty). This section compares them.
+
+### Overview
+
+| | **fastapi** | **fastapi-startkit** |
+|---|---|---|
+| What it is | The raw [FastAPI](https://fastapi.tiangolo.com) micro-framework (Starlette + Pydantic). | A batteries-included application framework built **on top of** FastAPI (Laravel-style providers / config / service container). |
+| Benchmark app | A single `FastAPI()` instance in `server.py` with three route handlers. | An `Application` booted with a `FastAPIProvider`; the same three routes are registered through the framework's router (`providers/`, `config/`, `bootstrap/`). |
+| Directory | `python/fastapi` | `python/fastapi_startkit` |
+
+Both wrap the same underlying FastAPI / Starlette request path — `fastapi-startkit`
+adds a thin framework layer around it.
+
+### Correctness
+
+Both pass the shared route spec (`.spec/route_spec.rb`) **6/6**, verified through
+the standard Docker + rspec harness and confirmed in-container
+(`docker exec … curl localhost:3000`, so it is immune to host-networking
+artifacts):
+
+| Route | Expected | fastapi | fastapi-startkit |
+|---|---|---|---|
+| `GET /` | `200`, empty body | ✅ | ✅ |
+| `GET /user/0` | `200`, body `0` | ✅ | ✅ |
+| `POST /user` | `200`, empty body | ✅ | ✅ |
+
+### Setup / dependencies
+
+| | **fastapi** | **fastapi-startkit** |
+|---|---|---|
+| Declared dependency | `fastapi>=0.139,<0.140` | `fastapi-startkit[fastapi]==0.47.0` |
+| Underlying FastAPI | `0.139.0` | `0.139.0` (transitive, via `fastapi-startkit==0.47.0`) |
+| App composition | single `FastAPI()` in `server.py` | `Application` + `FastAPIProvider` (providers / config / bootstrap) |
+| Engines | uvicorn (default), hypercorn, daphne, granian | uvicorn (default), hypercorn, daphne, granian |
+| Default build | `.Dockerfile.uvicorn` | `.Dockerfile.uvicorn` |
+| Python | 3.14 | 3.14 |
+
+The `fastapi-startkit` dependency is pinned to `==0.47.0`, which resolves the
+**same FastAPI 0.139.0 / Starlette 1.3.1** the baseline uses, so both Python
+entries benchmark on an identical FastAPI/Starlette stack; both are built and run
+from the same default `.Dockerfile.uvicorn` engine.
+
+### Performance
+
+Both serve identical handlers over the **same ASGI server (uvicorn)** in the
+**same container recipe**, so the per-request hot path is the same FastAPI /
+Starlette routing; `fastapi-startkit` adds framework wiring at **boot** (provider
+/ router / container setup), not on the per-request path.
+
+A controlled, same-host relative comparison (from the Benchmark Runner) shows the
+two are **close on the GET routes** (within a few percent) with a **larger
+framework overhead on `POST /user`** at higher concurrency.
+
+**Relative, same-host comparison — NOT official benchmark figures.**
+
+Method (verbatim):
+
+> macOS + OrbStack; Docker python:3.14-slim; uvicorn --workers=nproc (11
+> workers); load = oha 1.14, keepalive/connection-reuse, latency-correction;
+> 8s × 4 reps averaged; concurrency 64 and 256; 100% success every cell. Matched
+> stack both sides: Python 3.14.6, fastapi 0.139.0, starlette 1.3.1
+> (fastapi_startkit built from fastapi-startkit 0.47.0).
+
+Relative delta (fastapi-startkit vs fastapi; negative = fastapi-startkit slower):
+
+| Route | Δ @ c64 | Δ @ c256 |
+|---|---|---|
+| `GET /` | −2.9% | −6.4% |
+| `GET /user/0` | −1.5% | −6.2% |
+| `POST /user` | −17.3% | −18.8% |
+
+Absolute throughput (host-specific, for context only): `fastapi` ≈ 41–47k rps,
+`fastapi-startkit` ≈ 33–40k rps, 100% success across all cells.
+
+Disclaimer (verbatim):
+
+> Relative, same-host comparison (macOS/OrbStack), NOT official benchmark
+> figures. Load uses keepalive, not the harness's --disable-keepalive;
+> authoritative numbers require run.sh on Linux. Requires fastapi-startkit 0.47
+> so both run FastAPI 0.139.
+
+> ✅ **Both sides match the committed build.** The committed benchmark pins
+> **`fastapi-startkit==0.47.0`**, which resolves the same **FastAPI 0.139.0 /
+> Starlette 1.3.1** the baseline uses. These deltas therefore reflect the
+> committed, apples-to-apples build — not a version-skewed comparison.
+>
+> **Why `POST /user` is slower.** It is *not* `fastapi-startkit` per-request
+> code — the hot path is stock FastAPI / Starlette. The gap comes from
+> **FastAPI 0.139's `include_router`**: unlike FastAPI ≤ 0.124 (which flattened
+> included routes into the app router), 0.139 keeps a nested
+> `fastapi.routing._IncludedRouter` node on `app.router.routes`, adding a
+> per-request resolution layer. This is **intended FastAPI behavior** (cached
+> candidate resolution / router-identity), and it is **reproducible in plain
+> FastAPI** — any app that registers routes via `include_router` on 0.139 pays
+> it. `fastapi-startkit` uses `include_router` as its idiomatic route-module
+> registration, so the benchmark shows this representative cost rather than
+> hiding it (e.g. via flat `add_api_route`).
+>
+> `include_router`'s overhead is a long-standing, acknowledged FastAPI topic.
+> A related upstream discussion,
+> [fastapi/fastapi#5343](https://github.com/fastapi/fastapi/issues/5343),
+> reports `include_router` performance cost and requests a top-level
+> `FastAPI(router=…)` bypass — though that report concerns `include_router`'s
+> *construction-time* cost (per-route introspection in the app-factory pattern),
+> a different mechanism from the *per-request* `_IncludedRouter` resolution
+> measured here. Both reflect the same theme: `include_router` carries overhead
+> that flat registration avoids.
+
+> ⚠️ **Benchmarking caveat.** Reliable *absolute* numbers under the harness's
+> standard `--disable-keepalive` were not obtainable on macOS (ephemeral-port /
+> `TIME_WAIT` exhaustion), so the figures above use keepalive and are host-
+> specific. Authoritative absolute throughput/latency requires the Linux
+> harness (`run.sh`).
