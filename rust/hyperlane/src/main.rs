@@ -12,83 +12,60 @@ fn init_request_config() -> RequestConfig {
     RequestConfig::low_security()
 }
 
-#[derive(Clone, Copy, Default)]
 struct Index;
 
 impl ServerHook for Index {
-    async fn new(_: &mut Context) -> Self {
+    async fn new(_: &mut Stream, _: &mut Context) -> Self {
         Self
     }
 
-    async fn handle(self, ctx: &mut Context) {
+    async fn handle(self, stream: &mut Stream, ctx: &mut Context) -> Status {
         ctx.get_mut_response().set_header(CONNECTION, KEEP_ALIVE);
         if ctx.get_request().get_method().is_get() {
             ctx.get_mut_response().set_status_code(200);
         } else {
             ctx.get_mut_response().set_status_code(404);
         }
-        if ctx.try_send().await.is_err() {
-            ctx.set_closed(true);
-            return;
+        let data: Vec<u8> = ctx.get_mut_response().build();
+        if stream.try_send(data).await.is_err() {
+            stream.set_closed(true);
+            return Status::Reject;
         }
-        while ctx.http_from_stream().await.is_ok() {
-            if ctx.get_request().get_method().is_get() {
-                ctx.get_mut_response().set_status_code(200);
-            } else {
-                ctx.get_mut_response().set_status_code(404);
-            }
-            if ctx.try_send().await.is_err() {
-                ctx.set_closed(true);
-                return;
-            }
-        }
-        ctx.set_closed(true);
+        Status::Continue
     }
 }
 
-#[derive(Clone, Copy, Default)]
 struct User;
 
 impl ServerHook for User {
-    async fn new(_: &mut Context) -> Self {
+    async fn new(_: &mut Stream, _: &mut Context) -> Self {
         Self
     }
 
-    async fn handle(self, ctx: &mut Context) {
+    async fn handle(self, stream: &mut Stream, ctx: &mut Context) -> Status {
         ctx.get_mut_response().set_header(CONNECTION, KEEP_ALIVE);
         if ctx.get_request().get_method().is_post() {
             ctx.get_mut_response().set_status_code(200);
         } else {
             ctx.get_mut_response().set_status_code(404);
         }
-        if ctx.try_send().await.is_err() {
-            ctx.set_closed(true);
-            return;
+        let data: Vec<u8> = ctx.get_mut_response().build();
+        if stream.try_send(data).await.is_err() {
+            stream.set_closed(true);
+            return Status::Reject;
         }
-        while ctx.http_from_stream().await.is_ok() {
-            if ctx.get_request().get_method().is_post() {
-                ctx.get_mut_response().set_status_code(200);
-            } else {
-                ctx.get_mut_response().set_status_code(404);
-            }
-            if ctx.try_send().await.is_err() {
-                ctx.set_closed(true);
-                return;
-            }
-        }
-        ctx.set_closed(true);
+        Status::Continue
     }
 }
 
-#[derive(Clone, Copy, Default)]
 struct UserId;
 
 impl ServerHook for UserId {
-    async fn new(_: &mut Context) -> Self {
+    async fn new(_: &mut Stream, _: &mut Context) -> Self {
         Self
     }
 
-    async fn handle(self, ctx: &mut Context) {
+    async fn handle(self, stream: &mut Stream, ctx: &mut Context) -> Status {
         ctx.get_mut_response().set_header(CONNECTION, KEEP_ALIVE);
         if ctx.get_request().get_method().is_get() {
             let id: String = ctx.try_get_route_param("id").unwrap_or_default();
@@ -96,23 +73,12 @@ impl ServerHook for UserId {
         } else {
             ctx.get_mut_response().set_status_code(404);
         }
-        if ctx.try_send().await.is_err() {
-            ctx.set_closed(true);
-            return;
+        let data: Vec<u8> = ctx.get_mut_response().build();
+        if stream.try_send(data).await.is_err() {
+            stream.set_closed(true);
+            return Status::Reject;
         }
-        while ctx.http_from_stream().await.is_ok() {
-            if ctx.get_request().get_method().is_get() {
-                let id: String = ctx.try_get_route_param("id").unwrap_or_default();
-                ctx.get_mut_response().set_status_code(200).set_body(id);
-            } else {
-                ctx.get_mut_response().set_status_code(404);
-            }
-            if ctx.try_send().await.is_err() {
-                ctx.set_closed(true);
-                return;
-            }
-        }
-        ctx.set_closed(true);
+        Status::Continue
     }
 }
 
