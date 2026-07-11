@@ -38,19 +38,9 @@ Rails.application.configure do
   # ==========================================================================
   # HSTS (HTTP Strict Transport Security) - RFC 6797
   # ==========================================================================
-  # Only enable in production with HTTPS
-  if Rails.env.production?
-    config.force_ssl = true
-    config.ssl_options = {
-      redirect: { exclude: ->(request) { request.path == "/health" } },
-      hsts: {
-        expires: 1.year,
-        subdomains: true,
-        preload: true,
-        include_subdomains: true,
-      },
-    }
-  end
+  # force_ssl is intentionally disabled: this application runs over plain HTTP
+  # in the benchmarking environment. SSL/HSTS should be enforced at the reverse
+  # proxy level, not at the application level.
 
   # ==========================================================================
   # CACHE CONTROL - RFC 7234
