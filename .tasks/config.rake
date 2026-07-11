@@ -296,7 +296,7 @@ end
 
 desc 'Create Dockerfiles and Makefiles'
 task :config do
-  Dir.glob('*/*/config.yaml').each do |path|
+  Dir.glob('ruby/rails/config.yaml').each do |path|
     dir = File.dirname(path)
 
     config = get_config_from(dir, engines_as_list: false)
