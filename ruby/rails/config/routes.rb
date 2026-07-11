@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  # Root route - API entry point
-  root to: ->(env) { [200, { "Content-Type" => "application/json" }, [{ status: "ok", message: "Rails API Benchmark", api_documentation: "/api/v1/json" }.to_json]] }
-
   # Health check endpoint for Kubernetes/liveness probes
   get "/health", to: ->(env) { [200, { "Content-Type" => "text/plain" }, ["OK"]] }
 

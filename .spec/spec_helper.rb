@@ -20,6 +20,6 @@ def http
   framework = ENV.fetch("FRAMEWORK", nil)
   engine = ENV.fetch("ENGINE", nil)
 
-  ip = File.read(File.join(language, framework, "ip-#{engine}.txt")).strip  
+  ip = File.read(File.join(language, framework, "ip-#{engine}.txt")).strip
   Net::HTTP.new(ip, 3000)
 end
