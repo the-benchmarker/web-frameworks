@@ -102,6 +102,8 @@ framework:
   # GET /api/v1/external - External API simulation (200 OK)
   
   bootstrap:
+    - mkdir -p storage
+    - bundle exec rake db:migrate
     - mkdir -p tmp/pids
 
   build_deps:

@@ -7,4 +7,10 @@ class ApplicationController < ActionController::API
 
   # Error handling - delegated to concerns
   include ErrorHandler
+
+  private
+
+  def set_request_id
+    response.headers["X-Request-ID"] ||= request.request_id if request.request_id.present?
+  end
 end
