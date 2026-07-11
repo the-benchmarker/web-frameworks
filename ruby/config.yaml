@@ -19,9 +19,10 @@ language:
 
 framework:
   engines:
+    - falcon
     - puma
     - iodine
-    - falcon
+    
 
   files:
     - "**/*.rb"
