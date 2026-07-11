@@ -1,6 +1,6 @@
-require 'agoo'
+require "agoo"
 
-Agoo::Log.configure(dir: '',
+Agoo::Log.configure(dir: "",
                     console: true,
                     classic: true,
                     colorize: true,
@@ -11,12 +11,12 @@ Agoo::Log.configure(dir: '',
                       request: false,
                       response: false,
                       eval: false,
-                      push: false
+                      push: false,
                     })
 
 worker_count = `nproc`.to_i
 worker_count = 1 if worker_count < 1
-Agoo::Server.init(3000, '.', thread_count: 0, worker_count:, poll_timeout: 0.1)
+Agoo::Server.init(3000, ".", thread_count: 0, worker_count:, poll_timeout: 0.1)
 
 # Empty response.
 class Empty
@@ -32,7 +32,7 @@ end
 # Reflects the id as the returned value.
 class Reflect
   def self.call(req)
-    [200, {}, [req['PATH_INFO'][6..]]]
+    [200, {}, [req["PATH_INFO"][6..]]]
   end
 end
 
@@ -43,8 +43,8 @@ class Post
   end
 end
 
-Agoo::Server.handle(:GET, '/', Empty)
-Agoo::Server.handle(:GET, '/user/*', Reflect)
-Agoo::Server.handle(:POST, '/user', Post)
+Agoo::Server.handle(:GET, "/", Empty)
+Agoo::Server.handle(:GET, "/user/*", Reflect)
+Agoo::Server.handle(:POST, "/user", Post)
 
 Agoo::Server.start

@@ -1,31 +1,23 @@
 Rails.application.routes.draw do
-  # Category 1: Core Framework Requirements
-  # HTTP Foundation - Request Routing, HTTP Method Support, Response Building
-  get "/" => "application#index"
-  get "/user/:id" => "application#user"
-  post "/user" => "application#register_user"
-  
-  # Category 6: API & Integration
-  # JSON API Support - JSON response endpoints
-  get "/api/json" => "application#api_json"
-  
-  # External API Integration - External service consumption
-  get "/api/external" => "application#external_api"
-  
-  # Category 3: Performance & Scalability
-  # Caching - Response caching demonstration
-  get "/api/cached" => "application#cached_response"
-  
-  # Category 4: Security
-  # Authentication & Authorization - Bearer token authentication
-  get "/api/secure" => "application#secure_endpoint"
-  get "/api/protected" => "application#protected_resource"
-  
-  # Category 5: Data Management - Database ORM Testing
-  # Full CRUD operations for database testing
-  post "/api/db/users" => "application#create_user_db"
-  get "/api/db/users" => "application#list_users_db"
-  get "/api/db/users/:id" => "application#get_user_db"
-  patch "/api/db/users/:id" => "application#update_user_db"
-  delete "/api/db/users/:id" => "application#destroy_user_db"
+  # Health check endpoint for Kubernetes/liveness probes
+  get "/health", to: ->(env) { [200, { "Content-Type" => "text/plain" }, ["OK"]] }
+
+  # API v1 routes
+  namespace :api do
+    namespace :v1 do
+      # Category 6: API & Integration
+      get "/json", to: "system#info"
+      get "/external", to: "system#external"
+
+      # Category 3: Performance & Scalability
+      get "/cached", to: "system#cached"
+
+      # Category 4: Security
+      get "/secure", to: "security#secure"
+      get "/protected", to: "security#protected"
+
+      # Category 5: Data Management (Database ORM)
+      resources :users, only: [:index, :show, :create, :update, :destroy], path: "/db/users"
+    end
+  end
 end
