@@ -1,6 +1,6 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary YAML files.
 #
 # To use the locales, use `I18n.t`:
 #
@@ -16,16 +16,26 @@
 #
 # This would use the information in config/locales/es.yml.
 #
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
 #
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
+# true, false, on, off, yes, no
 #
-#     en:
-#       "yes": yup
-#       enabled: "ON"
+# Instead, surround them with single quotes.
+#
+# en:
+#   "true": "'true'"
+#   "false": "'false'"
+#
+# Be aware that YAML has a boolean type that is similar to Ruby's
+# true and false. If you want to use these words as strings,
+# always use single or double quotes around them.
+#
+# When you have a string that starts with a quote, you need to escape it
+# with another quote at the beginning. For example:
+#
+# en:
+#   "'Quote'": "'""
 
 en:
   hello: "Hello world"

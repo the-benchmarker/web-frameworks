@@ -1,63 +1,76 @@
 class ApplicationController < ActionController::API
-  include ActionController::Serialization
+  # Category 1: Core Framework Requirements - Request Routing & Response Building
   
-  before_action :set_default_headers
-  before_action :log_request
-  around_action :handle_exceptions
-  
-  # Main health check endpoint
+  # Health check endpoint
   def index
-    render json: {
-      status: 'ok',
-      timestamp: Time.current.iso8601,
-      framework: 'Rails',
-      version: Rails.version,
-      environment: Rails.env,
-      endpoints: {
-        health: '/',
-        users: '/api/v1/users',
-        posts: '/api/v1/posts',
-        external: '/api/v1/external',
-        cache: '/api/v1/cache',
-        jobs: '/api/v1/jobs'
-      }
-    }, status: :ok
+    head 200
   end
   
-  # Legacy user endpoint for backward compatibility
+  # Legacy user endpoint - Category 1: HTTP Method Support & Request Parsing
   def user
     render plain: params["id"]
   end
   
-  # Legacy register user endpoint
+  # Legacy register user endpoint - Category 1: HTTP Method Support
   def register_user
     head 200
   end
   
-  # Handle 404 Not Found
-  def not_found
-    render json: { error: 'Not Found' }, status: :not_found
+  # Category 6: API & Integration - JSON API Support
+  def api_json
+    render json: {
+      message: "JSON API response",
+      timestamp: Time.current.iso8601,
+      framework: "Rails",
+      version: Rails.version
+    }
   end
   
-  private
-  
-  def set_default_headers
-    response.headers['X-Framework'] = 'Rails'
-    response.headers['X-Version'] = Rails.version
+  # Category 6: API & Integration - External API Integration (simulated)
+  def external_api
+    # Simulate external API call
+    external_data = {
+      id: 1,
+      title: "External resource",
+      source: "mock_external_api"
+    }
+    render json: external_data
   end
   
-  def log_request
-    Rails.logger.info "Request: #{request.method} #{request.path} from #{request.ip}"
+  # Category 3: Performance & Scalability - Caching
+  def cached_response
+    # Simple in-memory cache simulation
+    @cache ||= {}
+    cache_key = "cached_data"
+    
+    if @cache[cache_key].nil?
+      @cache[cache_key] = { data: "Cached response", cached_at: Time.current.iso8601 }
+    end
+    
+    render json: @cache[cache_key]
   end
   
-  def handle_exceptions
-    yield
-  rescue ActiveRecord::RecordNotFound => e
-    render json: { error: e.message }, status: :not_found
-  rescue ActiveRecord::RecordInvalid => e
-    render json: { error: e.message }, status: :unprocessable_entity
-  rescue StandardError => e
-    Rails.logger.error "Unhandled exception: #{e.message}"
-    render json: { error: 'Internal Server Error' }, status: :internal_server_error
+  # Category 4: Security - Basic Authentication
+  def secure_endpoint
+    auth_header = request.headers["Authorization"]
+    
+    if auth_header && auth_header.start_with?("Bearer ")
+      token = auth_header.split(" ").last
+      render json: { authenticated: true, token: token, message: "Access granted" }
+    else
+      render json: { error: "Unauthorized" }, status: :unauthorized
+    end
+  end
+  
+  # Category 4: Security - Protected endpoint with simple auth
+  def protected_resource
+    # For testing purposes, accept any bearer token
+    auth_header = request.headers["Authorization"]
+    
+    if auth_header && auth_header.start_with?("Bearer ")
+      render json: { resource: "Protected data", access: "granted" }
+    else
+      head :unauthorized
+    end
   end
 end

@@ -4,29 +4,5 @@ gem "rails", "~> 8.1.0"
 gem "sqlite3", "< 3"
 gem "tzinfo-data"
 
-# Database and ORM
-gem "activerecord", "~> 8.1.0"
-
-# Serialization
-gem "fast_jsonapi"
-gem "active_model_serializers"
-
-# HTTP client for external APIs
+# Category 6: API & Integration - HTTP Client Library
 gem "httparty"
-
-# Background jobs
-gem "sidekiq"
-gem "redis"
-
-# Pagination
-gem "kaminari"
-
-# Caching
-gem "redis-rails"
-
-# Authentication and security
-gem "bcrypt"
-gem "jwt"
-
-# Validation
-gem "active_model"
