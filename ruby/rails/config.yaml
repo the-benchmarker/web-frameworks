@@ -2,24 +2,39 @@ framework:
   website: rubyonrails.org
   version: 8.1
   
-  # Minimal Rails implementation covering categories 1, 3, 4, 6
+  # Production-grade Rails implementation covering categories 1, 3, 4, 5, 6
   # Category 1: Core Framework Requirements
   # Category 3: Performance & Scalability  
   # Category 4: Security
+  # Category 5: Data Management
   # Category 6: API & Integration
   
   # Available endpoints:
-  # GET / - Health check (Category 1: HTTP Foundation)
-  # GET /user/:id - Get user ID (Category 1: Request Routing & Response Building)
-  # POST /user - Register user (Category 1: HTTP Method Support)
-  # GET /api/json - JSON API response (Category 6: API & Integration)
-  # GET /api/external - External API simulation (Category 6: API & Integration)
-  # GET /api/cached - Cached response (Category 3: Performance & Scalability)
-  # GET /api/secure - Bearer token auth (Category 4: Security)
-  # GET /api/protected - Protected endpoint (Category 4: Security)
-  # POST /api/db/users - Create user in database (Category 5: Data Management)
-  # GET /api/db/users - List all users from database (Category 5: Data Management)
-  # GET /api/db/users/:id - Get specific user from database (Category 5: Data Management)
+  #
+  # Category 1: Core Framework Requirements
+  # GET / - Health check (200 OK, empty body)
+  # GET /user/:id - Get user ID as plain text (200 OK)
+  # POST /user - Register user (200 OK, empty body)
+  #
+  # Category 3: Performance & Scalability
+  # GET /api/cached - Cached response with proper cache headers (200 OK)
+  #
+  # Category 4: Security
+  # GET /api/secure - Bearer token auth with WWW-Authenticate header (401/200)
+  # GET /api/protected - Protected resource with Bearer token (401/200)
+  # OPTIONS / - CORS preflight (204 No Content)
+  # OPTIONS /api/db/users - CORS preflight for specific path (204 No Content)
+  #
+  # Category 5: Data Management (Database ORM)
+  # POST /api/db/users - Create user (201 Created with Location header)
+  # GET /api/db/users - List all users with pagination (200 OK)
+  # GET /api/db/users/:id - Get specific user (200 OK / 404 Not Found)
+  # PATCH /api/db/users/:id - Update user (200 OK / 404 / 422)
+  # DELETE /api/db/users/:id - Delete user (204 No Content / 404 Not Found)
+  #
+  # Category 6: API & Integration
+  # GET /api/json - JSON API information (200 OK)
+  # GET /api/external - External API simulation (200 OK)
   
   bootstrap:
     - mkdir -p tmp/pids

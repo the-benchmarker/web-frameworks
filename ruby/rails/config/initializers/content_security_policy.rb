@@ -1,24 +1,55 @@
 # Be sure to restart your server when you modify this file.
 
-# Define an application-wide content security policy
+# Production-grade Content Security Policy
 # For further information about the following directives, see https://content-security-policy.com/
 Rails.application.configure do
   config.content_security_policy do |policy|
+    # Default: Only allow from self and HTTPS
     policy.default_src :self, :https
-    policy.font_src    :self, :https, :data
-    policy.img_src     :self, :https, :data
-    policy.object_src  :none
-    policy.script_src  :self, :https
-    policy.style_src   :self, :https
-    # Specify URI for violation reports
+    
+    # Script sources
+    policy.script_src :self, :https
+    
+    # Style sources
+    policy.style_src :self, :https, :unsafe_inline
+    
+    # Image sources
+    policy.img_src :self, :https, :data
+    
+    # Font sources
+    policy.font_src :self, :https, :data
+    
+    # Object, embed, applet sources - none for security
+    policy.object_src :none
+    
+    # Media sources
+    policy.media_src :self, :https
+    
+    # Frame sources
+    policy.frame_src :none
+    
+    # Form action targets
+    policy.form_action :self, :https
+    
+    # Base URI restriction
+    policy.base_uri :self
+    
+    # Frame ancestors - prevent clickjacking
+    policy.frame_ancestors :none
+    
+    # Specify URI for violation reports (uncomment in production)
     # policy.report_uri "/csp-violation-report-endpoint"
+    
+    # Worker sources
+    policy.worker_src :self, :https
+    
+    # Manifest sources
+    policy.manifest_src :self
   end
 
-  # Generate nonces for meta tags that allow script execution
-  # config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
-
-  # Enable the report-only mode. The policy will be sent with Content-Security-Policy-Report-Only header
-  # instead of Content-Security-Policy header, and the browser will not block loading of resources.
-  # This is useful for testing the policy without breaking the application.
-  # config.content_security_policy_report_only = true
+  # Enable report-only mode in development for testing
+  # In production, use enforce mode (default)
+  if Rails.env.development?
+    config.content_security_policy_report_only = true
+  end
 end

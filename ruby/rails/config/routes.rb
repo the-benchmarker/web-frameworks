@@ -22,7 +22,10 @@ Rails.application.routes.draw do
   get "/api/protected" => "application#protected_resource"
   
   # Category 5: Data Management - Database ORM Testing
+  # Full CRUD operations for database testing
   post "/api/db/users" => "application#create_user_db"
   get "/api/db/users" => "application#list_users_db"
   get "/api/db/users/:id" => "application#get_user_db"
+  patch "/api/db/users/:id" => "application#update_user_db"
+  delete "/api/db/users/:id" => "application#destroy_user_db"
 end
