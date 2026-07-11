@@ -73,4 +73,56 @@ class ApplicationController < ActionController::API
       head :unauthorized
     end
   end
+  
+  # Category 5: Data Management - Database ORM Testing
+  # Create a user in the database
+  def create_user_db
+    user = User.new(user_params)
+    
+    if user.save
+      render json: {
+        status: "created",
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          created_at: user.created_at.iso8601
+        }
+      }, status: :created
+    else
+      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+  
+  # Get all users from database
+  def list_users_db
+    users = User.all.order(created_at: :desc)
+    
+    render json: {
+      count: users.count,
+      users: users.map { |u| { id: u.id, name: u.name, email: u.email } }
+    }
+  end
+  
+  # Get a specific user from database
+  def get_user_db
+    user = User.find_by(id: params[:id])
+    
+    if user
+      render json: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        created_at: user.created_at.iso8601
+      }
+    else
+      render json: { error: "User not found" }, status: :not_found
+    end
+  end
+  
+  private
+  
+  def user_params
+    params.require(:user).permit(:name, :email)
+  end
 end

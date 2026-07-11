@@ -17,6 +17,9 @@ framework:
   # GET /api/cached - Cached response (Category 3: Performance & Scalability)
   # GET /api/secure - Bearer token auth (Category 4: Security)
   # GET /api/protected - Protected endpoint (Category 4: Security)
+  # POST /api/db/users - Create user in database (Category 5: Data Management)
+  # GET /api/db/users - List all users from database (Category 5: Data Management)
+  # GET /api/db/users/:id - Get specific user from database (Category 5: Data Management)
   
   bootstrap:
     - mkdir -p tmp/pids

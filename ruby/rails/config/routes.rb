@@ -20,4 +20,9 @@ Rails.application.routes.draw do
   # Authentication & Authorization - Bearer token authentication
   get "/api/secure" => "application#secure_endpoint"
   get "/api/protected" => "application#protected_resource"
+  
+  # Category 5: Data Management - Database ORM Testing
+  post "/api/db/users" => "application#create_user_db"
+  get "/api/db/users" => "application#list_users_db"
+  get "/api/db/users/:id" => "application#get_user_db"
 end

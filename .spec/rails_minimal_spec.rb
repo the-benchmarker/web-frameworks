@@ -203,4 +203,109 @@ RSpec.describe 'Rails Minimal Implementation' do
       end
     end
   end
+
+  # Category 5: Data Management
+  describe 'Data Management - Database ORM' do
+    describe 'User CRUD Operations' do
+      context 'POST : /api/db/users - Create user' do
+        let!(:request) do
+          req = Net::HTTP::Post.new('/api/db/users')
+          req['Content-Type'] = 'application/json'
+          req.body = { user: { name: 'Test User', email: 'test@example.com' } }.to_json
+          req
+        end
+
+        subject(:response) { http.request(request) }
+
+        it 'returns created status' do
+          expect(response).to be_a(Net::HTTPCreated)
+        end
+
+        it 'returns user data' do
+          json = JSON.parse(response.body)
+          expect(json['status']).to eq('created')
+          expect(json['user']['name']).to eq('Test User')
+          expect(json['user']['email']).to eq('test@example.com')
+          expect(json['user']).to have_key('id')
+          expect(json['user']).to have_key('created_at')
+        end
+      end
+
+      context 'GET : /api/db/users - List users' do
+        subject(:response) { http.request(Net::HTTP::Get.new('/api/db/users')) }
+
+        it 'returns successfully' do
+          expect(response).to be_a(Net::HTTPSuccess)
+        end
+
+        it 'returns users array' do
+          json = JSON.parse(response.body)
+          expect(json).to have_key('count')
+          expect(json).to have_key('users')
+          expect(json['users']).to be_an(Array)
+        end
+      end
+
+      context 'GET : /api/db/users/:id - Get user' do
+        # First create a user, then get it
+        let!(:create_request) do
+          req = Net::HTTP::Post.new('/api/db/users')
+          req['Content-Type'] = 'application/json'
+          req.body = { user: { name: 'Get Test User', email: 'gettest@example.com' } }.to_json
+          req
+        end
+
+        let(:create_response) { http.request(create_request) }
+        let(:user_id) { JSON.parse(create_response.body)['user']['id'] }
+
+        subject(:response) { http.request(Net::HTTP::Get.new("/api/db/users/#{user_id}")) }
+
+        it 'returns successfully' do
+          expect(response).to be_a(Net::HTTPSuccess)
+        end
+
+        it 'returns user data' do
+          json = JSON.parse(response.body)
+          expect(json['name']).to eq('Get Test User')
+          expect(json['email']).to eq('gettest@example.com')
+          expect(json).to have_key('id')
+          expect(json).to have_key('created_at')
+        end
+      end
+
+      context 'GET : /api/db/users/:id - Not found' do
+        subject(:response) { http.request(Net::HTTP::Get.new('/api/db/users/99999')) }
+
+        it 'returns not found' do
+          expect(response).to be_a(Net::HTTPNotFound)
+        end
+
+        it 'returns error message' do
+          json = JSON.parse(response.body)
+          expect(json['error']).to eq('User not found')
+        end
+      end
+
+      context 'POST : /api/db/users - Validation error' do
+        let!(:request) do
+          req = Net::HTTP::Post.new('/api/db/users')
+          req['Content-Type'] = 'application/json'
+          req.body = { user: { name: '', email: 'invalid' } }.to_json
+          req
+        end
+
+        subject(:response) { http.request(request) }
+
+        it 'returns unprocessable entity' do
+          expect(response).to be_a(Net::HTTPUnprocessableEntity)
+        end
+
+        it 'returns validation errors' do
+          json = JSON.parse(response.body)
+          expect(json).to have_key('errors')
+          expect(json['errors']).to be_an(Array)
+        end
+      end
+    end
+  end
 end
