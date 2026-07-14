@@ -7,7 +7,7 @@ end
 def input_files
   files = JSON.parse(ENV.fetch('FILES'))
 
-  return Dir.glob(File.join('*', '*', 'config.yaml')) if files.include?('data.json')
+  return Dir.glob(File.join('*', '*', 'config.yaml')) if files.intersect?(%w[data.json data.min.json])
 
   languages = files
               .select { |path| dockerfile_or_language_config?(path) }
@@ -18,39 +18,52 @@ def input_files
 end
 
 namespace :ci do
-  task :matrix do
-    matrix = input_files.filter_map do |file|
+  desc 'Output list of affected languages (level 0)'
+  task :languages do
+    languages = input_files.filter_map do |file|
       next if file.start_with?('.')
-      next if file.count(File::SEPARATOR) < 2
+      next if file.count(File::SEPARATOR) < 1
       next unless File.exist?(file)
 
-      language, framework, = file.split(File::SEPARATOR)
+      file.split(File::SEPARATOR).first
+    end
+
+    languages = languages.uniq.select { |lang| Dir.exist?(lang) && !lang.start_with?('.') }
+
+    puts({ language: languages }.to_json)
+  end
+
+  desc 'Output list of frameworks for a given language (level 1)'
+  task :frameworks do
+    language = ENV.fetch('LANGUAGE')
+    frameworks = Dir.glob(File.join(language, '*', 'config.yaml')).filter_map do |path|
+      framework = path.split(File::SEPARATOR)[1]
 
       # Skip v/vanilla_io_uring in CI: io_uring_setup/io_uring_enter are blocked by
       # Docker's default seccomp profile on the GitHub Actions runners, so the
-      # server builds but never becomes HTTP-ready. The framework code is kept in
-      # the tree; remove this line once io_uring is allowed under the CI sandbox.
+      # server builds but never becomes HTTP-ready.
       # See https://github.com/the-benchmarker/web-frameworks/issues/9467
       next if language == 'v' && framework == 'vanilla_io_uring'
 
       config = get_config_from(File.join(Dir.pwd, language, framework))
-      engine = config.dig('framework', 'engines')&.first
+      engines = config.dig('framework', 'engines')
 
-      unless engine
-        warn "Configuration for #{language}/#{framework} is not correct"
-        next
-      end
+      next unless engines&.any?
 
-      {
-        language:,
-        framework:,
-        directory: File.join(language, framework),
-        engine:
-      }
+      framework
     end
 
-    matrix = matrix.uniq.take(256)
+    puts({ framework: frameworks.uniq }.to_json)
+  end
 
-    puts({ include: matrix }.to_json)
+  desc 'Output list of engines for a given language/framework (level 2)'
+  task :engines do
+    language = ENV.fetch('LANGUAGE')
+    framework = ENV.fetch('FRAMEWORK')
+
+    config = get_config_from(File.join(Dir.pwd, language, framework))
+    engines = config.dig('framework', 'engines') || []
+
+    puts({ engine: engines }.to_json)
   end
 end
