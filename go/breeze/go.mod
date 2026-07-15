@@ -7,5 +7,5 @@ require (
 	github.com/panjf2000/gnet/v2 v2.9.4 // indirect
 )
 
-require github.com/nelthaarion/breeze v1.3.4
+require github.com/nelthaarion/breeze v1.3.5
 
