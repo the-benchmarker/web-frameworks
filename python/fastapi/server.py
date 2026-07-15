@@ -1,19 +1,23 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from starlette.responses import PlainTextResponse
 
-app = FastAPI()
+router = APIRouter()
 
 
-@app.get("/")
+@router.get("/")
 async def index():
     return PlainTextResponse(content="")
 
 
-@app.get("/user/{id}")
+@router.get("/user/{id}")
 async def get_user(id: int):
     return PlainTextResponse(content=f"{id}".encode())
 
 
-@app.post("/user")
+@router.post("/user")
 async def create_user():
     return PlainTextResponse(content="")
+
+
+app = FastAPI()
+app.include_router(router)
