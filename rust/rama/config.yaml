@@ -1,3 +1,10 @@
 framework:
   github: plabayo/rama
-  version: 0.3.0-alpha.4
+  version: 0.3
+  build_deps:
+    - build-essential
+    - clang
+    - cmake
+    - libclang-dev
+    - perl
+    - pkg-config
