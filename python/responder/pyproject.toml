@@ -7,4 +7,4 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["responder>=9,<9.3"]
+dependencies = ["responder>=9.2,<9.3"]
