@@ -1,19 +1,19 @@
-import { createApp, reply } from 'brahma-firelight';
+import { createApp, type Context, type App } from 'brahma-firelight';
 
-const app = createApp();
+const app: App = createApp();
 
 // GET
-app.get('/', (req) => {
-  return reply.text('');
+app.get('/', (ctx: Context) => {
+  return ctx.status(200);
 });
 
-app.get('/user/:id', (req) => {
-  return reply.text(req.params.id);
+app.get('/user/:id', (ctx: Context) => {
+  return ctx.text(ctx.req.params?.id);
 });
 
 // POST
-app.post('/user', (req) => {
-  return reply.text('');
+app.post('/user', (ctx: Context) => {
+  return ctx.text('');
 });
 
-app.listen('0.0.0.0:3000');
+app.listen(3000, "0.0.0.0", true)
