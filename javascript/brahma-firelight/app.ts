@@ -4,7 +4,7 @@ const app: App = createApp();
 
 // GET
 app.get('/', (ctx: Context) => {
-  return ctx.status(200);
+  ctx.status(200);
 });
 
 app.get('/user/:id', (ctx: Context) => {
