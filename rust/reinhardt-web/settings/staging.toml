@@ -1,0 +1,27 @@
+# Staging Environment Settings for server
+#
+# Copy this file to staging.toml and fill in the values for your staging environment.
+# Do not commit real secrets. Add a project-specific ignore rule for private copies.
+#
+# Uncomment and adjust the settings below as needed.
+
+# [core]
+# debug = false
+# secret_key = "uncomment-this-line-and-replace-with-a-long-random-string"
+# allowed_hosts = ["staging.example.com"]
+
+# [static]
+# url = "https://cdn-staging.example.com/static/"
+# root = "/var/www/server/staticfiles"
+
+# [media]
+# url = "https://cdn-staging.example.com/media/"
+# root = "/var/www/server/media"
+
+# [core.security]
+# session_cookie_secure = true
+# csrf_cookie_secure = true
+# secure_ssl_redirect = true
+# secure_hsts_seconds = 3600
+# secure_hsts_include_subdomains = false
+# secure_hsts_preload = false

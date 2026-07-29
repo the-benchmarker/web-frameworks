@@ -4,6 +4,10 @@ version = "0.0.0"
 edition = "2024"
 publish = false
 
+[profile.dev]
+codegen-units = 16
+debug = 0
+
 [profile.release]
 opt-level = 3
 debug = false
@@ -15,10 +19,22 @@ codegen-units = 1
 rpath = false
 strip = false
 
+[features]
+default = []
+management = ["reinhardt/conf", "dep:reinhardt-commands", "dep:serde"]
+
+[[bin]]
+name = "manage"
+path = "src/bin/manage.rs"
+required-features = ["management"]
+
 [[bin]]
 name = "server"
-path = "src/main.rs"
+path = "src/bin/server.rs"
 
 [dependencies]
-reinhardt = { package = "reinhardt-web", version = "0.3.0", default-features = false, features = ["minimal"] }
+reinhardt = { version = "0.3.0", package = "reinhardt-web", default-features = false, features = ["minimal"] }
+reinhardt-commands = { version = "0.3.0", default-features = false, features = ["server"], optional = true }
+ctor = "0.6"
+serde = { version = "1.0", features = ["derive"], optional = true }
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
