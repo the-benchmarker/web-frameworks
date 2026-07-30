@@ -33,3 +33,7 @@ append_slash = true
 [static]
 url = "/static/"
 root = "staticfiles"
+
+[contacts]
+admins = []
+managers = []

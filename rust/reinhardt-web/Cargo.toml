@@ -4,10 +4,6 @@ version = "0.0.0"
 edition = "2024"
 publish = false
 
-[profile.dev]
-codegen-units = 16
-debug = 0
-
 [profile.release]
 opt-level = 3
 debug = false
