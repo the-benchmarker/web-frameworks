@@ -160,7 +160,8 @@ async fn main() -> std::io::Result<()> {
         empty_slot_meta(),
     );
 
-    let zl_content = std::fs::read_to_string("app.zl").expect("Failed to read app.zl");
+    let zl_content = std::fs::read_to_string("app.zl")
+        .unwrap_or_else(|_| include_str!("../app.zl").to_string());
     let main_node = parse_string(&zl_content, "app.zl").expect("Failed to parse app.zl");
 
     let parent_scope = Scope::new(None);

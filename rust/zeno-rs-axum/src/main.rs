@@ -127,8 +127,9 @@ async fn main() {
         empty_slot_meta(),
     );
 
-    // Load & Parse app.zl
-    let zl_content = std::fs::read_to_string("app.zl").expect("Failed to read app.zl");
+    // Load & Parse app.zl (with compile-time fallback for container runtime)
+    let zl_content = std::fs::read_to_string("app.zl")
+        .unwrap_or_else(|_| include_str!("../app.zl").to_string());
     let main_node = parse_string(&zl_content, "app.zl").expect("Failed to parse app.zl");
 
     let parent_scope = Scope::new(None);
