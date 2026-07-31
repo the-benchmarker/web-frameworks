@@ -1,0 +1,11 @@
+[package]
+name = "zeno-rs-actix"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+zenocore = "0.2.3"
+zenoengine = "0.2.3"
+zeno-std = "0.2.3"
+matchit = "0.8"
+actix-web = "4"
