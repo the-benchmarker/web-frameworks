@@ -7,4 +7,4 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["micropie>=0.31,<0.32"]
+dependencies = ["micropie>=0.32,<0.33"]
