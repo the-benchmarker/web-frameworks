@@ -1,4 +1,4 @@
-FROM python:{{#language.version}}{{.}}{{/language.version}}-slim
+FROM python:{{language.version}}-slim
 
 WORKDIR /usr/src/app
 

@@ -1,4 +1,4 @@
-FROM ruby:{{#language.version}}{{.}}{{/language.version}}-slim
+FROM ruby:{{language.version}}-slim
 
 WORKDIR /usr/src/app
 

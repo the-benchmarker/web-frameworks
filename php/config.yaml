@@ -39,7 +39,7 @@ language:
       command: ./rr serve
     swoole:
       extensions:
-        - swoole/6.2.1
+        - swoole/6.2.2
       command: php public/index.php
       build_deps:
         - libbrotli-dev
