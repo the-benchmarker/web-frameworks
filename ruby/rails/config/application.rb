@@ -1,18 +1,11 @@
 require_relative "boot"
 
 require "rails"
-# Pick the frameworks you want:
+
+# Minimal framework requirements for API-only backend
 require "active_model/railtie"
-require "active_job/railtie"
-# require "active_record/railtie"
-# require "active_storage/engine"
+require "active_record/railtie"
 require "action_controller/railtie"
-require "action_mailer/railtie"
-# require "action_mailbox/engine"
-# require "action_text/engine"
-require "action_view/railtie"
-require "action_cable/engine"
-require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -23,22 +16,30 @@ module Benchmark
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
-    # Please, add to the `ignore` list any other `lib` subdirectories that do
-    # not contain `.rb` files, or that should not be reloaded or eager loaded.
-    # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w[assets tasks])
+    # API-only mode - no frontend, no templates, no assets
+    config.api_only = true
 
-    # Remove some middleware that is not needed for an API-only Rails app
+    # Don't load middleware we don't need
     config.middleware.delete ActionDispatch::Cookies
     config.middleware.delete ActionDispatch::Session::CookieStore
+    config.middleware.delete ActionDispatch::Flash
+    config.middleware.delete Rack::MethodOverride
 
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
-    config.api_only = true
+    # Keep Head, ConditionalGet, and ETag for HTTP standards compliance
+    # Rack::ConditionalGet and Rack::ETag are required for RFC 7232 (Conditional Requests)
+    # ActionDispatch::Head is required for RFC 7231 (Semantics and Content)
+
+    # Add our custom CORS middleware (must come before ActionDispatch::Head)
+    require_relative "../app/middleware/cors_middleware"
+    config.middleware.use CorsMiddleware
+
+    # Auto-loading configuration
+    config.autoload_lib(ignore: %w[assets tasks])
+
+    # Configuration for security headers (controlled via initializers)
+    # All headers are configured in config/initializers/security.rb
+
+    # Time zone
+    config.time_zone = "UTC"
   end
 end

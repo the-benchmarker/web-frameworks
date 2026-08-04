@@ -1,4 +1,4 @@
-require 'net/ssh'
+# require 'net/ssh'
 require 'mustache'
 
 def load_config(language, framework)

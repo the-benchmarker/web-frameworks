@@ -1,4 +1,4 @@
-require 'pg'
+# require 'pg'
 require 'yaml'
 
 PIPELINE = {

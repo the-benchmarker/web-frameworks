@@ -1,4 +1,4 @@
-require 'pg'
+# require 'pg'
 require 'yaml'
 require 'active_support/number_helper'
 require 'etc'

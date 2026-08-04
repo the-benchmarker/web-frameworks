@@ -3,3 +3,6 @@ source "https://rubygems.org"
 gem "rails", "~> 8.1.0"
 gem "sqlite3", "< 3"
 gem "tzinfo-data"
+
+# Category 6: API & Integration - HTTP Client Library
+gem "httparty"

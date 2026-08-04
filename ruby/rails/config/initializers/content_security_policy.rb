@@ -1,25 +1,13 @@
-# Be sure to restart your server when you modify this file.
+# Content Security Policy for API-only Rails application
+# Since this is an API backend with no frontend, CSP is simplified
 
-# Define an application-wide content security policy.
-# See the Securing Rails Applications Guide for more information:
-# https://guides.rubyonrails.org/security.html#content-security-policy-header
+Rails.application.configure do
+  # For API-only applications, we mainly need to prevent clickjacking
+  # and other basic protections. Full CSP is more relevant for frontend apps.
 
-# Rails.application.configure do
-#   config.content_security_policy do |policy|
-#     policy.default_src :self, :https
-#     policy.font_src    :self, :https, :data
-#     policy.img_src     :self, :https, :data
-#     policy.object_src  :none
-#     policy.script_src  :self, :https
-#     policy.style_src   :self, :https
-#     # Specify URI for violation reports
-#     # policy.report_uri "/csp-violation-report-endpoint"
-#   end
-#
-#   # Generate session nonces for permitted importmap, inline scripts, and inline styles.
-#   config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
-#   config.content_security_policy_nonce_directives = %w(script-src style-src)
-#
-#   # Report violations without enforcing the policy.
-#   # config.content_security_policy_report_only = true
-# end
+  # CSP frame-ancestors replaces X-Frame-Options (which was removed for proxy compatibility)
+  # frame-ancestors :none is equivalent to X-Frame-Options: DENY
+  config.content_security_policy do |policy|
+    policy.frame_ancestors :none
+  end
+end

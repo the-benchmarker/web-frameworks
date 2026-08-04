@@ -1,13 +1,16 @@
+# Base application controller for Rails API
+# Clean implementation with minimal functionality
+
 class ApplicationController < ActionController::API
-  def index
-    head 200
-  end
+  # Security: Set request ID for tracing
+  before_action :set_request_id
 
-  def user
-    render plain: params["id"]
-  end
+  # Error handling - delegated to concerns
+  include ErrorHandler
 
-  def register_user
-    head 200
+  private
+
+  def set_request_id
+    response.headers["X-Request-ID"] ||= request.request_id if request.request_id.present?
   end
 end

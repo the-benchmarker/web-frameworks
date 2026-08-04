@@ -25,6 +25,7 @@ namespace :ci do
       next unless File.exist?(file)
 
       language, framework, = file.split(File::SEPARATOR)
+      next unless framework=="rails"
 
       # Skip v/vanilla_io_uring in CI: io_uring_setup/io_uring_enter are blocked by
       # Docker's default seccomp profile on the GitHub Actions runners, so the

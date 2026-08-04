@@ -36,6 +36,6 @@ RUN --mount=type=cache,id=bundler-gems-{{language.version}},target=${BUNDLE_PATH
   RUN {{{.}}}
 {{/bootstrap}}
 
-HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000/health || exit 1
 
 ENTRYPOINT {{{command}}}
