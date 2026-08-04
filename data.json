@@ -92115,7 +92115,7 @@
     {
       "level": 64,
       "label": "duration_ms",
-      "value": 15004.649708333332,
+      "value": 15004.655022666668,
       "framework_id": 2710
     },
     {
@@ -92133,25 +92133,25 @@
     {
       "level": 64,
       "label": "percentile50",
-      "value": 0.030589163666666665,
+      "value": 0.03049134766666667,
       "framework_id": 2710
     },
     {
       "level": 64,
       "label": "percentile75",
-      "value": 0.032102295333333336,
+      "value": 0.03199018133333333,
       "framework_id": 2710
     },
     {
       "level": 64,
       "label": "percentile90",
-      "value": 0.034623725,
+      "value": 0.034677820666666664,
       "framework_id": 2710
     },
     {
       "level": 64,
       "label": "percentile99",
-      "value": 0.035944927,
+      "value": 0.03609304033333333,
       "framework_id": 2710
     },
     {
@@ -92193,7 +92193,7 @@
     {
       "level": 64,
       "label": "total_bytes_received",
-      "value": 10511.666666666666,
+      "value": 10497.0,
       "framework_id": 2710
     },
     {
@@ -92205,7 +92205,7 @@
     {
       "level": 64,
       "label": "total_requests_per_s",
-      "value": 2103.771649350763,
+      "value": 2113.4341951263873,
       "framework_id": 2710
     },
     {
@@ -92217,7 +92217,7 @@
     {
       "level": 256,
       "label": "duration_ms",
-      "value": 15007.694588333334,
+      "value": 15008.29471,
       "framework_id": 2710
     },
     {
@@ -92235,25 +92235,25 @@
     {
       "level": 256,
       "label": "percentile50",
-      "value": 0.017567943333333332,
+      "value": 0.016800733,
       "framework_id": 2710
     },
     {
       "level": 256,
       "label": "percentile75",
-      "value": 0.021122272666666667,
+      "value": 0.05653553066666667,
       "framework_id": 2710
     },
     {
       "level": 256,
       "label": "percentile90",
-      "value": 0.06017748466666667,
+      "value": 0.06047659933333333,
       "framework_id": 2710
     },
     {
       "level": 256,
       "label": "percentile99",
-      "value": 0.06275687133333334,
+      "value": 0.063071954,
       "framework_id": 2710
     },
     {
@@ -92295,7 +92295,7 @@
     {
       "level": 256,
       "label": "total_bytes_received",
-      "value": 80065.0,
+      "value": 84378.33333333333,
       "framework_id": 2710
     },
     {
@@ -92307,7 +92307,7 @@
     {
       "level": 256,
       "label": "total_requests_per_s",
-      "value": 11241.553136808518,
+      "value": 10614.738728883554,
       "framework_id": 2710
     },
     {
@@ -92319,7 +92319,7 @@
     {
       "level": 512,
       "label": "duration_ms",
-      "value": 15014.641238666665,
+      "value": 15015.551229,
       "framework_id": 2710
     },
     {
@@ -92337,25 +92337,25 @@
     {
       "level": 512,
       "label": "percentile50",
-      "value": 0.07459222866666666,
+      "value": 0.12423014033333334,
       "framework_id": 2710
     },
     {
       "level": 512,
       "label": "percentile75",
-      "value": 0.13136595566666667,
+      "value": 0.134537592,
       "framework_id": 2710
     },
     {
       "level": 512,
       "label": "percentile90",
-      "value": 0.14338841,
+      "value": 0.14379199066666667,
       "framework_id": 2710
     },
     {
       "level": 512,
       "label": "percentile99",
-      "value": 0.151648504,
+      "value": 0.14959280666666666,
       "framework_id": 2710
     },
     {
@@ -92397,7 +92397,7 @@
     {
       "level": 512,
       "label": "total_bytes_received",
-      "value": 30364.0,
+      "value": 15752.333333333332,
       "framework_id": 2710
     },
     {
@@ -92409,7 +92409,7 @@
     {
       "level": 512,
       "label": "total_requests_per_s",
-      "value": 10742.353176179653,
+      "value": 10089.642826881813,
       "framework_id": 2710
     },
     {
@@ -110927,7 +110927,7 @@
       "version": 0.16
     }
   ],
-  "updated_at": "2026-08-04 17:35:05 UTC",
+  "updated_at": "2026-08-04 18:35:05 UTC",
   "version": 1,
   "hardware": {
     "cpus": 16,
