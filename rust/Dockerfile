@@ -1,6 +1,13 @@
-FROM rust:1.96-slim AS build
+FROM rust:1.97-slim AS build
 
 WORKDIR /usr/src/app
+
+{{#build_deps.length}}
+  ARG DEBIAN_FRONTEND=noninteractive
+  RUN apt-get -qq update && \
+    apt-get -y install --no-install-recommends {{#build_deps}}{{{.}}} {{/build_deps}} && \
+    rm -rf /var/lib/apt/lists/*
+{{/build_deps.length}}
 
 {{#files}}
   COPY '{{source}}' '{{target}}'

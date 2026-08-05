@@ -11,8 +11,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>25</maven.compiler.release>
-        <jetty.version>12.1.10</jetty.version>
-        <log4j.version>2.26.0</log4j.version>
+        <jetty.version>12.1.11</jetty.version>
+        <log4j.version>2.26.1</log4j.version>
     </properties>
 
     <dependencies>
@@ -68,7 +68,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.5.1</version>
                 <executions>
                     <execution>
                         <id>default-jar</id>
