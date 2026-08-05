@@ -3,4 +3,4 @@ author        = "Olli"
 description   = "Modular multithreading Linux HTTP + WebSocket server"
 license       = "MIT"
 
-requires "guildenstern >= 8.1 & < 8.2"
+requires "guildenstern >= 9.0 & < 9.1"
