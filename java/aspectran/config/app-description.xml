@@ -14,7 +14,7 @@
         |{{bold,MAGENTA}}Aspectran Benchmark Project{{reset}}
         |
         |{{CYAN}}Undertow Server is active and listening at:{{reset}}
-        |   {{bold,BLUE}}http://localhost:%{system:tow.server.listener.http.port:3000}/{{reset}}
+        |   {{bold,BLUE}}http://localhost:%{tow.server.listener.http.port:3000}/{{reset}}
         |
         |Use the '{{bold,GREEN}}undertow{{reset}}' command to manage server operations.
         |
