@@ -9,6 +9,7 @@ const app = await createApp({
   server: {
     port: 3000, // Default benchmark port (can be overridden by PORT env var)
     host: '0.0.0.0', // Default benchmark host (can be overridden by HOST env var)
+    engine: 'moro', // force Moro's native engine
     requestTracking: {
       enabled: false, // Disable for fair comparison
     },
