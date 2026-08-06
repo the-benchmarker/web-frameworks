@@ -20,7 +20,7 @@ const app = await createApp({
   // Minimal middleware for fair comparison
   performance: {
     clustering: {
-      enabled: true, // unleash the power of clustering to really see the power
+      enabled: false, // unleash the power of clustering to really see the power
       workers: 'auto'
     },
   },
