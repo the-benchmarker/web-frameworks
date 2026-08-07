@@ -55,13 +55,11 @@ pub fn main(init: std.process.Init) !void {
     std.posix.sigaction(std.posix.SIG.INT, &act, null);
     std.posix.sigaction(std.posix.SIG.TERM, &act, null);
 
-    const allocator = std.heap.c_allocator;
-
-    var t = try Tardy.init(allocator, init.io, .{ .threading = .auto });
+    var t = try Tardy.init(init.gpa, init.io, .{ .threading = .auto });
     defer t.deinit();
 
-    var router = try Router.init(allocator, &.{ Route.init("/").get({}, base_handler).layer(), Route.init("/user/%s").get({}, user_id).layer(), Route.init("/user").get({}, user).layer() }, .{});
-    defer router.deinit(allocator);
+    var router = try Router.init(init.gpa, &.{ Route.init("/").get({}, base_handler).layer(), Route.init("/user/%s").get({}, user_id).layer(), Route.init("/user").get({}, user).layer() }, .{});
+    defer router.deinit(init.gpa);
 
     var socket = try Socket.init(init.io, .{ .tcp = .{ .host = host, .port = port } });
     defer socket.close_blocking();
