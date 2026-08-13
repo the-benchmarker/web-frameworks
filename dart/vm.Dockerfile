@@ -1,4 +1,4 @@
-FROM dart:3.12
+FROM dart:3.13
 
 WORKDIR /app
 
