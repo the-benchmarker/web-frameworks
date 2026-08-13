@@ -5,4 +5,7 @@ framework:
   engines:
     - uwebsockets
 
-  command: node app.mjs
+language:
+  engines:
+    uwebsockets:
+      command: node app.mjs
