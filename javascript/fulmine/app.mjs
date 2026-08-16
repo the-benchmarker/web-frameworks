@@ -1,6 +1,10 @@
 import express from 'fulmine.js';
 
-const app = express();
+// One worker per usable core, forked by the framework: each of them binds port 3000 with
+// uWebSockets.js's shared flag, which is SO_REUSEPORT, so the kernel hands each connection to one
+// of them and the primary process is not in the path. "auto" reads the cgroup quota before the
+// machine, so a container gets its own cores and not the host's.
+const app = express({ cluster: 'auto' });
 
 app.set('etag', false);
 
@@ -16,4 +20,6 @@ app.post('/user', function (req, res) {
   res.send('');
 });
 
+// this file runs again in every worker, and the primary only forks: the listen below happens once
+// per worker
 app.listen(3000);
