@@ -6,6 +6,6 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Frank" Version="6.3.*" />
+    <PackageReference Include="Frank" Version="7.3.*" />
   </ItemGroup>
 </Project>
