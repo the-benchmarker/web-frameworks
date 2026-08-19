@@ -12,15 +12,10 @@ end
 handler.add "new_user", ART::Route.new("/user", methods: "POST") do
 end
 
-System.cpu_count.times do
-  Process.fork do
-    server = HTTP::Server.new([
-      handler.compile,
-    ])
+Fiber::ExecutionContext.default.resize(
+  maximum: Fiber::ExecutionContext.default_workers_count,
+)
 
-    server.bind_tcp host: "0.0.0.0", port: 3000, reuse_port: true
-    server.listen
-  end
-end
-
-sleep
+server = HTTP::Server.new([handler.compile])
+server.bind_tcp host: "0.0.0.0", port: 3000, reuse_port: true
+server.listen
