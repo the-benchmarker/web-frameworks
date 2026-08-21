@@ -10,7 +10,7 @@ node = "latest"
 clojure = "latest"
 bun = "latest"
 dotnet = "latest"
-crystal = "latest"
+crystal = "1.21"
 
 [settings]
 auto_install = false
