@@ -36,4 +36,5 @@ class Application
   end
 end
 
+Fiber::ExecutionContext.default.resize(maximum: System.cpu_count)
 Application.new.run

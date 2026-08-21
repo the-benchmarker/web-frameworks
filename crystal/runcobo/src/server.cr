@@ -26,4 +26,5 @@ class Users::ShowUser < BaseAction
   end
 end
 
+Fiber::ExecutionContext.default.resize(maximum: System.cpu_count)
 Runcobo.start(reuse_port: true)

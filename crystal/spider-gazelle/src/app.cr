@@ -33,6 +33,8 @@ OptionParser.parse(ARGV.dup) do |parser|
   end
 end
 
+Fiber::ExecutionContext.default.resize(maximum: System.cpu_count)
+
 # Load the routes
 puts "Launching #{APP_NAME} v#{VERSION}"
 server = ActionController::Server.new(port, host)

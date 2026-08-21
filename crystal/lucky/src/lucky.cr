@@ -9,4 +9,6 @@ server = HTTP::Server.new([
   Lucky::RouteHandler.new,
 ])
 
+Fiber::ExecutionContext.default.resize(maximum: System.cpu_count)
+
 server.listen host, port, reuse_port: true
