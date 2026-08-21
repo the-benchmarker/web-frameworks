@@ -16,7 +16,7 @@ framework:
   bootstrap:
     - curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal
     - . "$HOME/.cargo/env" && pip install maturin
-    - git clone --depth 1 -b v0.3.9 https://github.com/marcomq/mq-bridge /tmp/mqb
+    - git clone --depth 1 -b v0.3.10 https://github.com/marcomq/mq-bridge /tmp/mqb
     - . "$HOME/.cargo/env" && cd /tmp/mqb/python/mq-bridge-py && maturin build --release --no-default-features -F http -F pyo3/extension-module -o /tmp/wheels
     - pip install /tmp/wheels/*.whl
 

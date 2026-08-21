@@ -17,7 +17,7 @@ ENV PATH=/opt/vlang:$PATH \
 
 RUN git clone https://github.com/vlang/v /opt/vlang && \
     cd /opt/vlang && \
-    git checkout {{language.version}} && \
+    git checkout 7647ce1c6fad63b5578bc07883139906de74b2f8 && \
     make
 
 RUN ln -s /opt/vlang/v /usr/bin/v

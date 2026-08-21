@@ -58,7 +58,7 @@ pub fn main(init: std.process.Init) !void {
     var t = try Tardy.init(init.gpa, init.io, .{ .threading = .auto });
     defer t.deinit();
 
-    var router = try Router.init(init.gpa, &.{ Route.init("/").get({}, base_handler).layer(), Route.init("/user/%s").get({}, user_id).layer(), Route.init("/user").get({}, user).layer() }, .{});
+    var router = try Router.init(init.gpa, &.{ Route.init("/").get({}, base_handler).layer(), Route.init("/user/%s").get({}, user_id).layer(), Route.init("/user").post({}, user).layer() }, .{});
     defer router.deinit(init.gpa);
 
     var socket = try Socket.init(init.io, .{ .tcp = .{ .host = host, .port = port } });

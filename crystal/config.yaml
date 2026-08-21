@@ -1,8 +1,10 @@
 language:
-  version: '1.20'
+  version: 1.21
   files:
     - "**/*.cr"
     - shard.yml
+  environment:
+    CRYSTAL_WORKERS: $(nproc)
   engines:
     default:
       command: /app/bin/server
