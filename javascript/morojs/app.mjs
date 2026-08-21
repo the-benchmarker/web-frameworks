@@ -13,6 +13,9 @@ const app = await createApp({
     requestTracking: {
       enabled: false, // Disable for fair comparison
     },
+    requestLogging: {
+      enabled: false, // Disable for fair comparison - no other entry logs requests
+    },
     errorBoundary: {
       enabled: false, // Disable for fair comparison
     },
@@ -32,15 +35,15 @@ const app = await createApp({
 });
 
 app.get('/').handler((_, res) => {
-  res.send('');
+  res.end();
 });
 
 app.get('/user/:id').handler(({params}, res) => {
-  res.send(params.id);
+  res.end(params.id);
 });
 
 app.post('/user').handler((_, res) => {
-  res.send('');
+  res.end();
 });
 
 app.listen(() => {
