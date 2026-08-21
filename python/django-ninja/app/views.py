@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from ninja import NinjaAPI
 
-
 api = NinjaAPI()
 
 

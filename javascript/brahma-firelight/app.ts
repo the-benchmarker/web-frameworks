@@ -16,4 +16,4 @@ app.post('/user', (ctx: Context) => {
   return ctx.text('');
 });
 
-app.listen(3000, "0.0.0.0", true)
+app.listen(3000, '0.0.0.0', true);

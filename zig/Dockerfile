@@ -42,7 +42,7 @@ RUN apt-get -qq update && \
   apt-get -y install --no-install-recommends ca-certificates curl && \
   rm -rf /var/lib/apt/lists/*
 
-COPY --from=build /home/ziguser/zig-out/bin/httpz /server
+COPY --from=build /home/ziguser/zig-out/bin/server /server
 
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit
 

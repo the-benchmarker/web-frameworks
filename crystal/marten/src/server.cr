@@ -1,9 +1,6 @@
 require "./project"
 
-System.cpu_count.times do |i|
-  Process.fork do
-    Marten.start
-  end
-end
-
-sleep
+Fiber::ExecutionContext.default.resize(
+  maximum: Fiber::ExecutionContext.default_workers_count,
+)
+Marten.start

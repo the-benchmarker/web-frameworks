@@ -9,7 +9,7 @@ proc handle() =
       let id = getUri()[6 .. ^1]
       reply(id)
   except: reply(Http500)
-  
-let server = newHttpServer(handle, loglevel = NONE, contenttype = NoBody)
+
+let server = newHttpServer(handle, loglevel = lvlNone, contenttype = NoBody)
 if not dispatcher.start(server, 3000, ThreadCount, ThreadCount): quit()
 joinThread(server.thread)
