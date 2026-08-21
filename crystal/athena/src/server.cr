@@ -16,8 +16,5 @@ class BenchmarkController < ATH::Controller
     id
   end
 end
-Fiber::ExecutionContext.default.resize(
-  maximum: Fiber::ExecutionContext.default_workers_count,
-)
 
 ATH.run reuse_port: true

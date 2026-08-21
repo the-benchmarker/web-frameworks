@@ -17,4 +17,4 @@ app.post('/user', function (req, res) {
   res.send('');
 });
 
-export default { fetch: app.listen };
+app.listen(3000, function () {});
