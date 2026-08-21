@@ -36,5 +36,4 @@ class Application
   end
 end
 
-Fiber::ExecutionContext.default.resize(maximum: Fiber::ExecutionContext.default_workers_count)
 Application.new.run

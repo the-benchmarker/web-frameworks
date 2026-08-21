@@ -20,7 +20,6 @@ class App < Toro::Router
   end
 end
 
-Fiber::ExecutionContext.default.resize(maximum: Fiber::ExecutionContext.default_workers_count)
 App.run do |server|
   server.listen "0.0.0.0", 3000, true
 end

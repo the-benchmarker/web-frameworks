@@ -4,6 +4,5 @@ framework:
 
 language:
   environment:
-    CRYSTAL_WORKERS: $(nproc)
     PORT: 3000
     ENVIRONMENT: PRODUCTION

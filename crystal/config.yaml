@@ -3,8 +3,6 @@ language:
   files:
     - "**/*.cr"
     - shard.yml
-  environment:
-    CRYSTAL_WORKERS: $(nproc)
   engines:
     default:
       command: /app/bin/server

@@ -36,5 +36,4 @@ struct Server
   include Router
 end
 
-Fiber::ExecutionContext.default.resize(maximum: Fiber::ExecutionContext.default_workers_count)
 Server.new.run
