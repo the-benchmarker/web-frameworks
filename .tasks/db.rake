@@ -43,6 +43,33 @@ namespace :db do
     pp reqs.sort_by { it[:value] }
   end
 
+  desc 'Report runs where the server was not the bottleneck (invalid measurements)'
+  task :check_saturation do
+    results = JSON.load_file('data.json', symbolize_names: true)
+    frameworks = results[:frameworks].to_h { [it[:id], "#{it[:language]}/#{it[:label]}"] }
+
+    rows = results[:metrics].filter_map do |m|
+      next unless m[:label] == 'server_cpu_saturation'
+
+      { name: frameworks[m[:framework_id]], level: m[:level], saturation: m[:value] }
+    end
+
+    if rows.empty?
+      puts 'No saturation data. Re-run collect with .tasks/saturation.rb wired in (rake config).'
+      next
+    end
+
+    idle = rows.select { it[:saturation] < 0.5 }
+    puts format('%<bad>d of %<all>d measurements ran with the server below 50%% of its allotted CPU.',
+                bad: idle.size, all: rows.size)
+    puts 'Those numbers describe the load generator, not the framework:' unless idle.empty?
+
+    idle.sort_by { it[:saturation] }.first(40).each do |row|
+      puts format('  %<name>-40s c=%<level>-5s server used %<pct>5.1f%% of its CPU',
+                  name: row[:name], level: row[:level], pct: row[:saturation] * 100)
+    end
+  end
+
   task :check_failures do
     results = JSON.load_file('data.json', symbolize_names: true)
 
