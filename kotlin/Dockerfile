@@ -10,7 +10,7 @@ RUN gradle build
 
 
 
-FROM eclipse-temurin:25.0.3_9-jre
+FROM eclipse-temurin:25.0.4_7-jre
 
 WORKDIR /usr/src/app
 
