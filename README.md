@@ -146,7 +146,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request, and follo
 
 Sponsors help cover benchmark infrastructure, repeated test runs, result hosting, and the maintenance involved in keeping hundreds of implementations current.
 
-![Alt text](./.assets/neon.svg) <img src="./.assets/neon.svg">
+![Neon](./.assets/neon.svg)
 
 To sponsor hardware, cloud credits, hosting, or ongoing development, [start a sponsorship discussion](https://github.com/the-benchmarker/web-frameworks/discussions/new?category=general). Sponsor names and links can be added here with the sponsor's approval; support never affects benchmark rankings or inclusion decisions.
 
