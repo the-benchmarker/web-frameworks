@@ -69,7 +69,7 @@ task :collect do
       percentile50: data.dig(:latencyPercentiles, :p50),
       percentile75: data.dig(:latencyPercentiles, :p75),
       percentile90: data.dig(:latencyPercentiles, :p90),
-      percentile99: data.dig(:latencyPercentiles, :p95),
+      percentile99: data.dig(:latencyPercentiles, :p99),
       percentile99999: -1
     }
 
