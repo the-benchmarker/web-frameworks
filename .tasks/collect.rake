@@ -1,10 +1,6 @@
 require 'pg'
 require 'yaml'
-
-PIPELINE = {
-  GET: File.join(Dir.pwd, 'pipeline.lua'),
-  POST: File.join(Dir.pwd, 'pipeline_post.lua')
-}.freeze
+require 'json'
 
 def insert_metric(db, framework_id, metric, value, concurrency_level_id)
   res = db.query('INSERT INTO keys (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id', [metric])
@@ -40,6 +36,10 @@ task :collect do
   database = ENV.fetch('DATABASE_URL')
   db = PG.connect(database)
 
+  # zrk --closed (see config.rake) sends each connection's next request the
+  # instant its previous response completes, so achieved_rate is already the
+  # framework's real max sustained throughput at this concurrency -- one file
+  # per route, no picking among multiple runs needed.
   Dir.glob('*/*/.results/*/**.json').each do |file|
     next if File.basename(file) == 'memory.json'
     next if File.basename(file) == 'memory_idle.json'
