@@ -134,7 +134,7 @@ def commands_for(language, framework, variant, provider = 'docker')
   hostname = File.join(directory, language, framework, "ip-#{variant}.txt")
   File.join(directory, language, framework, "cid-#{variant}.txt")
   File.join(File.dirname(__FILE__), 'memory_sampler.rb')
-  zrk_path = command_available?('zrk') ? 'zrk' : File.expand_path('~/.cargo/bin/zrk')
+  zrk_path = 'zrk'
 
   commands[:warmup] << "#{zrk_path} --plain -c 50 --closed -d 5s http://`cat #{hostname}`:3000/"
   commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
