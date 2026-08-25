@@ -36,6 +36,7 @@ jobs:
     needs: matrix
     if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] != null }}
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
@@ -53,34 +54,13 @@ jobs:
         run: docker -v
       - name: Configure
         run: bundle exec rake config
-      - name: Build
-        run: make "build" -f "${DIRECTORY}/.Makefile"
+      - name: Run framework with retry
+        run: bash .github/scripts/run-framework-with-retry.sh
         env:
           DIRECTORY: ${{ matrix.directory }}
           ENGINE: ${{ matrix.engine }}
-      - name: Wait for framework HTTP readiness
-        run: |
-          IP_FILE="${{ matrix.directory }}/ip-${{ matrix.engine }}.txt"
-          CID_FILE="${{ matrix.directory }}/cid-${{ matrix.engine }}.txt"
-          IP=$(cat $IP_FILE | tr -d '[:space:]')
-
-          echo "Waiting for http://$IP:3000/ to respond (timeout 30s)..."
-          SECONDS_WAITED=0
-          MAX_WAIT=120
-
-          until curl -s -f "http://$IP:3000/" > /dev/null; do
-            sleep 1
-            SECONDS_WAITED=$((SECONDS_WAITED+1))
-            if [ $SECONDS_WAITED -ge $MAX_WAIT ]; then
-              echo "Container did not become ready in $MAX_WAIT seconds!"
-              echo "---- Container logs ----"
-              docker logs $(cat $CID_FILE) || true
-              exit 1
-            fi
-          done
-      - name: Test
-        run: bundle exec rspec .spec
-        env:
+          MAX_ATTEMPTS: 2
+          COMMAND_TIMEOUT_SECONDS: 2700
+          RETRY_DELAY_SECONDS: 15
           LANGUAGE: ${{ matrix.language }}
           FRAMEWORK: ${{ matrix.framework }}
-          ENGINE: ${{ matrix.engine }}

@@ -1,11 +1,11 @@
 BASEDIR=`pwd`
 
 if [ "$#" -eq 0 ]; then
-	find . -mindepth 3 -type f -name config.yaml | grep -Ev 'fibers|lapis|caprese|imi-swoole|laravel-s-laravel|sunrise-router-roadrunner|sw-fw-less|fastpysgi-asgi|happyx' > ~/list.txt
+	find . -mindepth 3 -type f -name config.yaml | grep -Ev 'imi-swoole' > ~/list.txt
 else
 	COUNT=`echo $1 | grep -c "/"`
 	if [ "$COUNT" -eq 0 ]; then
-		find $1 -mindepth 2 -type f -name config.yaml | grep -v fibers > ~/list.txt
+		find $1 -mindepth 2 -type f -name config.yaml > ~/list.txt
 	elif [ "$COUNT" -eq 1 ] ; then
 		find $1 -mindepth 1 -type f -name config.yaml > ~/list.txt
 	else
