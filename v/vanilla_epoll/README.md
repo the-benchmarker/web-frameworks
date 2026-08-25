@@ -38,8 +38,8 @@ curl -X POST --verbose http://localhost:3000/user &&
 curl -X GET --verbose http://localhost:3000/user/1
 ```
 
-### WRK
+### ZRK
 
 ```sh
-wrk --connection 512 --threads 16 --duration 10s http://localhost:3000
+zrk --connections 512 --threads 16 --duration 10s --rate 1000000 http://localhost:3000
 ```
