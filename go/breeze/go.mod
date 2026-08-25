@@ -1,3 +1,3 @@
 module main
 
-require github.com/nelthaarion/breeze v1.6.1
+require github.com/nelthaarion/breeze v1.6.2
