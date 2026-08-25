@@ -1,0 +1,31 @@
+framework:
+  github: gabearro/cps-http
+  version: 1.0.0
+  engines:
+    - multiprocess
+
+# The CPS event loop is deliberately single-threaded. Run one independent,
+# SO_REUSEPORT-backed worker per visible CPU, as production process managers do.
+# CPS_WORKERS remains available for CPU-quota-aware benchmark environments.
+language:
+  engines:
+    multiprocess:
+      command:
+        - /bin/sh
+        - -c
+        - 'workers="${CPS_WORKERS:-$(getconf _NPROCESSORS_ONLN)}"; pids=""; trap ''kill $pids 2>/dev/null; wait'' TERM INT; i=0; while [ "$i" -lt "$workers" ]; do /usr/src/app/server & pids="$pids $!"; i=$((i + 1)); done; wait'
+
+# The suite's Nim image already adds release mode, speed optimization, and LTO.
+# Danger mode removes runtime checks from the hot path, ARC avoids tracing-GC
+# work, and native CPU tuning lets the compiler use the benchmark host ISA.
+build_opts:
+  - "-d:danger"
+  - "--mm:arc"
+  - "--passC:-march=native"
+  - "--passC:-mtune=native"
+
+build_with:
+  - "nimble install -y https://github.com/gabearro/cps-runtime@#dbacd9d0e96db5b5ecf80f64362a0026bd3ec4da"
+  - "nimble install -y https://github.com/gabearro/cps-tls@#a97a50593d920f1331563382b41189394115e5ca"
+  - "nimble install -y https://github.com/gabearro/cps-quic@#e11fac12e4906a8e31d2c29fcd24d50cd3c0a428"
+  - "nimble install -y https://github.com/gabearro/cps-http@#b22542cc1d7f6c55bf29c6bf1e6ed88de3365f4c"
