@@ -1,4 +1,4 @@
-version = "1.0.0"
+version = "1.0.1"
 author = "Gabriel Arroyo"
 description = "CPS HTTP implementation for web-frameworks"
 license = "MIT"
