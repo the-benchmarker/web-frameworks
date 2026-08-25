@@ -15,8 +15,14 @@ jobs:
         with:
           fetch-depth: 0
       - name: File changes
-        uses: trilom/file-changes-action@v1.2.4
         id: file_changes
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          files=$(git diff --name-only -z "$BASE_SHA" "$HEAD_SHA" | jq -Rsc 'split("\u0000") | map(select(length > 0))')
+          echo "files=$files" >> "$GITHUB_OUTPUT"
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
