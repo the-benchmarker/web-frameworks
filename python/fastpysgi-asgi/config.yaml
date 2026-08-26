@@ -1,0 +1,11 @@
+framework:
+  github: remittor/fastpysgi
+  version: 0.6
+
+  engines:
+    - fastpysgi
+
+language:
+  engines:
+    fastpysgi:
+      command: python server.py --host 0.0.0.0 --port 3000 --workers $(nproc)
