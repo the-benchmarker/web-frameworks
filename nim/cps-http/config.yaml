@@ -23,7 +23,7 @@ build_opts:
   - "--passC:-mtune=native"
 
 build_with:
-  - "nimble install -y https://github.com/gabearro/cps-runtime@#v1.1.0"
-  - "nimble install -y https://github.com/gabearro/cps-tls@#v1.0.1"
-  - "nimble install -y https://github.com/gabearro/cps-quic@#v1.0.1"
-  - "nimble install -y https://github.com/gabearro/cps-http@#v1.0.1"
+  - "nimble install -y https://github.com/gabearro/cps-runtime@#v1.1.1"
+  - "nimble install -y https://github.com/gabearro/cps-tls@#v1.0.2"
+  - "nimble install -y https://github.com/gabearro/cps-quic@#v1.0.2"
+  - "nimble install -y https://github.com/gabearro/cps-http@#v1.0.2"
