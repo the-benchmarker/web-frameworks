@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This configuration file defines the global identity and description for the application.
+    The <description> element in the first loaded rule file is used as the representative
+    description of the entire ActivityContext, typically displayed in shell greetings
+    or used for system-wide identification.
+-->
+<!DOCTYPE aspectran PUBLIC "-//ASPECTRAN//DTD Aspectran 9.0//EN"
+        "https://aspectran.com/dtd/aspectran-9.dtd">
+<aspectran>
+
+    <description style="apon">
+        |
+        |{{bold,MAGENTA}}Aspectran Benchmark Project{{reset}}
+        |
+        |{{CYAN}}Undertow Server is active and listening at:{{reset}}
+        |   {{bold,BLUE}}http://localhost:%{tow.server.listener.http.port:3000}/{{reset}}
+        |
+        |Use the '{{bold,GREEN}}undertow{{reset}}' command to manage server operations.
+        |
+        |{{gray}}Current Environment:{{reset}} #{currentEnvironment^currentProfiles}
+        |
+    </description>
+
+</aspectran>

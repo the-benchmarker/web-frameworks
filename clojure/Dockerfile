@@ -30,7 +30,7 @@ WORKDIR /usr/src/app
 
 
 
-FROM eclipse-temurin:25.0.3_9-jre
+FROM eclipse-temurin:25.0.4_7-jre
 
 RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends curl && \

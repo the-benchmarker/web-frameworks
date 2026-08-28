@@ -1,5 +1,5 @@
 use axum::{
-    extract::{Request, State},
+    extract::Request,
     response::Response,
     routing::any,
     Router,
@@ -13,7 +13,7 @@ use zenocore::{parser::parse_string, Context, Engine, Node, Scope, SlotMeta, Val
 #[derive(Clone)]
 struct HttpResponseData {
     status: u16,
-    content_type: String,
+    content_type: &'static str,
     body: String,
 }
 
@@ -21,7 +21,7 @@ impl Default for HttpResponseData {
     fn default() -> Self {
         Self {
             status: 200,
-            content_type: "text/plain".to_string(),
+            content_type: "text/plain",
             body: String::new(),
         }
     }
@@ -67,7 +67,7 @@ async fn main() {
         "http.response",
         Arc::new(|engine, ctx, node, scope| {
             let mut status = 200u16;
-            let mut content_type = "text/plain".to_string();
+            let mut content_type = "text/plain";
             let mut body = String::new();
 
             for child in &node.children {
@@ -75,17 +75,25 @@ async fn main() {
                 if child.name == "status" {
                     status = val.to_int() as u16;
                 } else if child.name == "type" {
-                    content_type = val.to_string_coerce();
+                    let t = val.to_string_coerce();
+                    if t == "text/plain" {
+                        content_type = "text/plain";
+                    } else if t == "application/json" {
+                        content_type = "application/json";
+                    } else if t == "text/html" {
+                        content_type = "text/html";
+                    }
                 } else if child.name == "body" {
                     body = val.to_string_coerce();
                 }
             }
 
-            if let Some(resp_store) = ctx.get::<Arc<Mutex<HttpResponseData>>>("http_response_data") {
-                let mut store = resp_store.lock().unwrap();
-                store.status = status;
-                store.content_type = content_type;
-                store.body = body;
+            if let Some(resp_store) = ctx.get::<Mutex<HttpResponseData>>("http_response_data") {
+                if let Ok(mut store) = resp_store.lock() {
+                    store.status = status;
+                    store.content_type = content_type;
+                    store.body = body;
+                }
             }
             Ok(())
         }),
@@ -93,7 +101,7 @@ async fn main() {
     );
 
     // Dynamic Route Collector from app.zl
-    let routes = Arc::new(Mutex::new(Vec::<(String, String, Node)>::new()));
+    let routes = Arc::new(std::sync::Mutex::new(Vec::<(String, String, Node)>::new()));
 
     let r_get = routes.clone();
     engine.register(
@@ -140,7 +148,7 @@ async fn main() {
     let mut route_map: HashMap<String, MethodHandler> = HashMap::new();
     for (method, path, node) in routes.lock().unwrap().drain(..) {
         let matchit_path = convert_path_to_matchit(&path);
-        println!("📌 Registered route: {} {} -> matchit: {}", method, path, matchit_path);
+        println!("Registered route: {} {} -> matchit: {}", method, path, matchit_path);
         let entry = route_map
             .entry(matchit_path)
             .or_insert(MethodHandler { get: None, post: None });
@@ -156,30 +164,40 @@ async fn main() {
         let _ = matchit_router.insert(&path, handler);
     }
 
-    let state = AppState {
+    let state = Arc::new(AppState {
         engine: Arc::new(engine),
         router: Arc::new(matchit_router),
         parent_scope,
-    };
+    });
 
     let app = Router::new()
-        .fallback(any(zeno_route_handler))
-        .with_state(state);
+        .fallback(any({
+            let state = state.clone();
+            move |req: Request| {
+                let state = state.clone();
+                async move { handle_request(state, req) }
+            }
+        }));
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
-    println!("🚀 zeno-rs-axum benchmark server running on http://{}", addr);
+    println!("zeno-rs-axum server running on http://{}", addr);
 
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
 
-async fn zeno_route_handler(State(state): State<AppState>, req: Request) -> Response {
+fn handle_request(state: Arc<AppState>, req: Request) -> Response {
     let path = req.uri().path();
     let method = req.method().as_str();
 
     let matched = match state.router.at(path) {
         Ok(m) => m,
-        Err(_) => return Response::builder().status(404).body(axum::body::Body::from("Not Found")).unwrap(),
+        Err(_) => {
+            return Response::builder()
+                .status(axum::http::StatusCode::NOT_FOUND)
+                .body(axum::body::Body::from("Not Found"))
+                .unwrap();
+        }
     };
 
     let node = match method {
@@ -190,7 +208,12 @@ async fn zeno_route_handler(State(state): State<AppState>, req: Request) -> Resp
 
     let handler_node = match node {
         Some(n) => n,
-        None => return Response::builder().status(405).body(axum::body::Body::from("Method Not Allowed")).unwrap(),
+        None => {
+            return Response::builder()
+                .status(axum::http::StatusCode::METHOD_NOT_ALLOWED)
+                .body(axum::body::Body::from("Method Not Allowed"))
+                .unwrap();
+        }
     };
 
     let mut ctx = Context::new();
@@ -201,18 +224,23 @@ async fn zeno_route_handler(State(state): State<AppState>, req: Request) -> Resp
         req_scope.set(k, Value::String(v.to_string()));
     }
 
-    let resp_store = Arc::new(Mutex::new(HttpResponseData::default()));
-    ctx.set("http_response_data", resp_store.clone());
+    let resp_store = Mutex::new(HttpResponseData::default());
+    ctx.set("http_response_data", resp_store);
 
     // Execute the statements inside the route block
     for child in &handler_node.children {
         let _ = state.engine.execute(&mut ctx, child, &req_scope);
     }
 
-    let resp_data = resp_store.lock().unwrap().clone();
+    let resp_store = ctx.get::<Mutex<HttpResponseData>>("http_response_data").unwrap();
+    let mut resp_data = resp_store.lock().unwrap();
+    let status_code = axum::http::StatusCode::from_u16(resp_data.status)
+        .unwrap_or(axum::http::StatusCode::OK);
+
     Response::builder()
-        .status(resp_data.status)
-        .header("Content-Type", resp_data.content_type)
-        .body(axum::body::Body::from(resp_data.body))
+        .status(status_code)
+        .header(axum::http::header::CONTENT_TYPE, resp_data.content_type)
+        .body(axum::body::Body::from(std::mem::take(&mut resp_data.body)))
         .unwrap()
 }
+
