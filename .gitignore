@@ -11,6 +11,9 @@ Gemfile.lock
 # git temporary files
 *.orig
 
+# IntelliJ / GoLand IDE
+.idea/
+*.iml
 
 # Temporary files
 FRAMEWORKS.yaml
@@ -27,7 +30,7 @@ venv
 /bin/*
 
 # Specific to AdonisJS
-!/javascript/adonisjs-slim/bin
+!/javascript/adonisjs6-slim/bin
 
 # Rust build directories
 rust/*/target
@@ -58,9 +61,3 @@ __pycache__/
 
 
 .results
-
-# IDEs configurations
-.vscode
-.idea
-.zed
-*.iml
