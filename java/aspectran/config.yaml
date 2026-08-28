@@ -1,7 +1,7 @@
 framework:
   website: aspectran.com
   github: aspectran/aspectran
-  version: 9.6.5
+  version: "9.6"
 
   build:
     - mvn clean package
@@ -18,4 +18,4 @@ framework:
 language:
   engines:
     default:
-      command: /usr/bin/java -Daspectran.profiles.active=benchmark -jar /opt/web/target/benchmark-jar-with-dependencies.jar /opt/web /config/aspectran-config.apon
+      command: /usr/bin/java -jar /opt/web/target/benchmark-jar-with-dependencies.jar /opt/web /config/aspectran-config.apon

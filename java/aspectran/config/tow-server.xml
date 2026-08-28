@@ -4,35 +4,12 @@
 <aspectran>
 
     <description>
-        Defines the core settings for the Undertow embedded web server, including the HTTP listener and worker threads.
+        Defines the core settings for the Undertow embedded web server, including the HTTP listener.
     </description>
 
     <environment>
         <property name="tow.server.listener.http.port" valueType="int">3000</property>
         <property name="tow.server.listener.http.host">0.0.0.0</property>
-    </environment>
-
-    <environment>
-        <description>
-            Undertow uses XNIO as the default connector. XNIO can be configured through the following settings:
-            - workerIoThreads: which is the number of IO threads to create. These threads are shared between multiple
-            connections therefore they mustn’t perform blocking operations as while the operation is blocking,
-            other connections will essentially hang. If not specified, a default will be chosen, which is
-            calculated by Math.max(Runtime.getRuntime().availableProcessors(), 2).
-            - workerTaskMaxThreads: This is the maximum number workers allowed to run blocking tasks such as Servlet
-            requests. In general terms, the default value of it (workerIoThreads * 8) is reasonable default for
-            most cases. If you see that new requests are being queued up, you should investigate the cause of it.
-            If your application is working as expected, then you should increase this task-max-threads parameter.
-        </description>
-        <properties profile="!benchmark">
-            <item name="tow.server.workerIoThreads" valueType="int">4</item>
-            <item name="tow.server.workerTaskMaxThreads" valueType="int">32</item>
-        </properties>
-        <properties profile="benchmark">
-            <!-- For a 16-core CPU benchmark with a non-blocking workload -->
-            <item name="tow.server.workerIoThreads" valueType="int">16</item>
-            <item name="tow.server.workerTaskMaxThreads" valueType="int">16</item>
-        </properties>
     </environment>
 
     <bean id="tow.server" class="com.aspectran.undertow.server.DefaultTowServer">
@@ -51,8 +28,6 @@
         <property name="workerOptions">
             <bean class="com.aspectran.undertow.server.TowOptions">
                 <property name="workerName">TOW</property>
-                <property name="workerIoThreads">%{tow.server.workerIoThreads}</property>
-                <property name="workerTaskMaxThreads">%{tow.server.workerTaskMaxThreads}</property>
             </bean>
         </property>
         <property name="requestHandlerFactory">
