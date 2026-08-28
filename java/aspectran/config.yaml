@@ -1,12 +1,16 @@
 framework:
   website: aspectran.com
+  github: aspectran/aspectran
   version: 9.6.5
 
   build:
     - mvn clean package
 
   files:
-    - config
+    - config/**/*
+
+  static_files:
+    - config/**/*
 
   binaries:
     - target/benchmark-jar-with-dependencies.jar
