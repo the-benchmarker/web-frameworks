@@ -1,5 +1,20 @@
 BASEDIR=`pwd`
 
+# zrk is the load generator every `collect` target shells out to, and nothing
+# in this repo installs it. Without this check a missing zrk surfaces as a
+# "command not found" per framework, hours into a run, with empty .results and
+# a `make` that kept going -- so fail here instead, before the first build.
+if ! command -v zrk > /dev/null 2>&1; then
+	echo "zrk not found on PATH." >&2
+	echo "" >&2
+	echo "Install it with one of:" >&2
+	echo "  brew install zoxy-io/tap/zrk" >&2
+	echo "  https://github.com/zoxy-io/zrk/releases (static binaries)" >&2
+	echo "" >&2
+	echo "--closed (used by the collect targets) needs zrk >= 2.2.0." >&2
+	exit 1
+fi
+
 if [ "$#" -eq 0 ]; then
 	find . -mindepth 3 -type f -name config.yaml | grep -Ev 'imi-swoole|guildenstern' > ~/list.txt
 else

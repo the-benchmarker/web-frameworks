@@ -124,12 +124,19 @@ def commands_for(language, framework, variant, provider = 'docker')
   # threads = ENV.fetch('THREADS') { Etc.nprocessors } # unused
   # duration = ENV.fetch('DURATION', 10) # unused
 
+  # --closed drops zrk's open-loop schedule and sends each connection's next
+  # request the instant its previous response completes (the wrk/ab model):
+  # -c is the only knob, and achieved_rate finds the framework's real max
+  # sustained throughput instead of chasing a guessed -R target. Requires
+  # zrk >= the release carrying --closed (zoxy-io/zrk).
+  duration = ENV.fetch('DURATION', '15s')
+
   hostname = File.join(directory, language, framework, "ip-#{variant}.txt")
   File.join(directory, language, framework, "cid-#{variant}.txt")
   File.join(File.dirname(__FILE__), 'memory_sampler.rb')
-  oha_path = command_available?('oha') ? 'oha' : File.expand_path('~/.cargo/bin/oha')
+  zrk_path = 'zrk'
 
-  commands[:warmup] << "#{oha_path} --wait-ongoing-requests-after-deadline --no-tui --disable-keepalive --latency-correction -z 5s http://`cat #{hostname}`:3000/"
+  commands[:warmup] << "#{zrk_path} --plain -c 50 --closed -d 5s http://`cat #{hostname}`:3000/"
   commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
 
   concurrencies.split(',').each do |concurrency|
@@ -137,17 +144,17 @@ def commands_for(language, framework, variant, provider = 'docker')
     commands[target] = [] unless commands.key?(target)
 
     File.join(directory, language, framework, '.results', concurrency, 'memory.json')
-    oha_cmds = []
+    zrk_cmds = []
 
     routes.split(',').each do |route|
       method, uri = route.split(':')
       output = File.join(directory, language, framework, '.results', concurrency, "#{uri.tr('/', '_')}.json")
-      oha_cmds << "#{oha_path} --wait-ongoing-requests-after-deadline --no-tui --disable-keepalive --latency-correction -c #{concurrency} -z 15s -m #{method} --output-format json --output #{output} http://`cat #{hostname}`:3000#{uri}"
+      zrk_cmds << "#{zrk_path} --plain -c #{concurrency} --closed -d #{duration} -m #{method} --format json --output #{output} http://`cat #{hostname}`:3000#{uri}"
     end
 
-    # Start memory sampler in background, run all oha calls, then stop sampler
-    # commands[target] << "ruby #{sampler} --cid #{cid_file} --out #{memory_out} & SAMPLER_PID=$$!; #{oha_cmds.join('; ')}; kill $$SAMPLER_PID"
-    commands[target] << oha_cmds.join('; ')
+    # Start memory sampler in background, run all zrk calls, then stop sampler
+    # commands[target] << "ruby #{sampler} --cid #{cid_file} --out #{memory_out} & SAMPLER_PID=$$!; #{zrk_cmds.join('; ')}; kill $$SAMPLER_PID"
+    commands[target] << zrk_cmds.join('; ')
   end
 
   concurrencies.split(',').each do |c|
@@ -311,9 +318,12 @@ task :by_success do
   frameworks = Hash.new { |h, k| h[k] = Set.new }
 
   Dir.glob('*/**/.results/**/*.json').each do |file|
+    next if File.basename(file) == 'memory.json'
+    next if File.basename(file) == 'memory_idle.json'
+
     data = JSON.load_file(file, symbolize_names: true)
-    rate = data.dig(:summary, :successRate)&.round(2)
-    next unless rate && rate < 1
+    rate = (1 - data[:error_rate].to_f).round(2)
+    next unless rate < 1
 
     name = file.split('/').first
     frameworks[rate] << name

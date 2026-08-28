@@ -1,10 +1,6 @@
 require 'pg'
 require 'yaml'
-
-PIPELINE = {
-  GET: File.join(Dir.pwd, 'pipeline.lua'),
-  POST: File.join(Dir.pwd, 'pipeline_post.lua')
-}.freeze
+require 'json'
 
 def insert_metric(db, framework_id, metric, value, concurrency_level_id)
   res = db.query('INSERT INTO keys (label) VALUES ($1) ON CONFLICT (label) DO UPDATE SET label = $1 RETURNING id', [metric])
@@ -40,6 +36,10 @@ task :collect do
   database = ENV.fetch('DATABASE_URL')
   db = PG.connect(database)
 
+  # zrk --closed (see config.rake) sends each connection's next request the
+  # instant its previous response completes, so achieved_rate is already the
+  # framework's real max sustained throughput at this concurrency -- one file
+  # per route, no picking among multiple runs needed.
   Dir.glob('*/*/.results/*/**.json').each do |file|
     next if File.basename(file) == 'memory.json'
     next if File.basename(file) == 'memory_idle.json'
@@ -54,23 +54,23 @@ task :collect do
     data = YAML.safe_load_file(file, symbolize_names: true)
 
     results = {
-      duration_ms: data.dig(:summary, :total) * 1000,
-      total_requests: -1,
-      total_requests_per_s: data.dig(:summary, :requestsPerSec),
-      total_bytes_received: data.dig(:summary, :totalData),
-      socket_connection_errors: -1,
-      socket_read_errors: -1,
-      socket_write_errors: -1,
-      http_errors: -1,
-      request_timeouts: -1,
-      minimum_latency: -1,
-      average_latency: -1,
-      standard_deviation: -1,
-      percentile50: data.dig(:latencyPercentiles, :p50),
-      percentile75: data.dig(:latencyPercentiles, :p75),
-      percentile90: data.dig(:latencyPercentiles, :p90),
-      percentile99: data.dig(:latencyPercentiles, :p99),
-      percentile99999: -1
+      duration_ms: data[:duration_s] * 1000,
+      total_requests: data[:requests],
+      total_requests_per_s: data[:achieved_rate],
+      total_bytes_received: data[:bytes],
+      socket_connection_errors: data.dig(:errors, :connect),
+      socket_read_errors: data.dig(:errors, :read),
+      socket_write_errors: data.dig(:errors, :write),
+      http_errors: data.dig(:errors, :non_2xx_3xx),
+      request_timeouts: data.dig(:errors, :timeout),
+      minimum_latency: data.dig(:latency_us, :min) / 1_000_000.0,
+      average_latency: data.dig(:latency_us, :mean) / 1_000_000.0,
+      standard_deviation: data.dig(:latency_us, :stdev) / 1_000_000.0,
+      percentile50: data.dig(:latency_us, :p50) / 1_000_000.0,
+      percentile75: data.dig(:latency_us, :p75) / 1_000_000.0,
+      percentile90: data.dig(:latency_us, :p90) / 1_000_000.0,
+      percentile99: data.dig(:latency_us, :p99) / 1_000_000.0,
+      percentile99999: data.dig(:latency_us, :p99_99) / 1_000_000.0
     }
 
     results.each do |key, value|
