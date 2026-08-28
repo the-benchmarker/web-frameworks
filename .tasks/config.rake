@@ -210,12 +210,9 @@ def create_dockerfile(directory, engine, config)
   config['options'] = shell_to_json_array(config['options']) if config['options']
 
   template = File.read(path)
-  config
-    .merge!(template_variables)
-    .merge!({ if: template_conditions })
-    .merge!(files:, static_files:, environment: config['environment']&.map do |k, v|
-                                                  "#{k}=#{v}"
-                                                end)
+  config.merge!(template_variables).merge!({ if: template_conditions }).merge!(files:, static_files:, environment: config['environment']&.map do |k, v|
+    "#{k}=#{v}"
+  end)
 
   File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config))
 end

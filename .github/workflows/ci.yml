@@ -4,97 +4,44 @@ on:
   pull_request:
 
 jobs:
-  matrix:
+  changes:
     runs-on: ubuntu-latest
-
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-
+      files: ${{ steps.file_changes.outputs.files }}
+      languages: ${{ steps.set-languages.outputs.languages }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
-
       - name: File changes
-        uses: trilom/file-changes-action@v1.2.4
         id: file_changes
-
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          files=$(git diff --name-only -z "$BASE_SHA" "$HEAD_SHA" | jq -Rsc 'split("\u0000") | map(select(length > 0))')
+          echo "files=$files" >> "$GITHUB_OUTPUT"
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "4.0.6"
           bundler-cache: true
-
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
-
-      - name: Set matrix
-        id: set-matrix
-        run: echo "matrix=$(bundle exec rake ci:matrix)" >> "$GITHUB_OUTPUT"
+      - name: Set languages
+        id: set-languages
+        run: echo "languages=$(bundle exec rake ci:languages)" >> "$GITHUB_OUTPUT"
         env:
           FILES: ${{ steps.file_changes.outputs.files }}
 
-  test:
-    needs: matrix
-    if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] != null }}
-
-    runs-on: ubuntu-latest
-
+  frameworks:
+    needs: changes
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "4.0.6"
-          bundler-cache: true
-
-      - name: Install deps
-        run: bundle install --jobs 4 --retry 3
-
-      - name: Docker version
-        run: docker -v
-
-      - name: Configure
-        run: bundle exec rake config
-
-      - name: Build
-        run: make "build" -f "${DIRECTORY}/.Makefile"
-        env:
-          DIRECTORY: ${{ matrix.directory }}
-          ENGINE: ${{ matrix.engine }}
-
-      - name: Wait for framework HTTP readiness
-        run: |
-          IP_FILE="${{ matrix.directory }}/ip-${{ matrix.engine }}.txt"
-          CID_FILE="${{ matrix.directory }}/cid-${{ matrix.engine }}.txt"
-          IP=$(cat $IP_FILE | tr -d '[:space:]')
-
-          echo "Waiting for http://$IP:3000/ to respond (timeout 30s)..."
-
-          SECONDS_WAITED=0
-          MAX_WAIT=120
-
-          until curl -s -f "http://$IP:3000/" > /dev/null; do
-            sleep 1
-            SECONDS_WAITED=$((SECONDS_WAITED+1))
-            if [ $SECONDS_WAITED -ge $MAX_WAIT ]; then
-              echo "Container did not become ready in $MAX_WAIT seconds!"
-              echo "---- Container logs ----"
-              docker logs $(cat $CID_FILE) || true
-              exit 1
-            fi
-          done
-
-      - name: Test
-        run: bundle exec rspec .spec
-        env:
-          LANGUAGE: ${{ matrix.language }}
-          FRAMEWORK: ${{ matrix.framework }}
-          ENGINE: ${{ matrix.engine }}
+      matrix: ${{ fromJson(needs.changes.outputs.languages) }}
+    uses: ./.github/workflows/ci-language.yml
+    with:
+      language: ${{ matrix.language }}
+      files: ${{ needs.changes.outputs.files }}

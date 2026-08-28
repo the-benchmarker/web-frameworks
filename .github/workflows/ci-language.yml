@@ -1,0 +1,66 @@
+name: CI language
+
+on:
+  workflow_call:
+    inputs:
+      language:
+        required: true
+        type: string
+      files:
+        required: true
+        type: string
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0.6"
+          bundler-cache: true
+      - name: Install deps
+        run: bundle install --jobs 4 --retry 3
+      - name: Set framework matrix
+        id: set-matrix
+        run: echo "matrix=$(bundle exec rake ci:matrix)" >> "$GITHUB_OUTPUT"
+        env:
+          FILES: ${{ inputs.files }}
+          LANGUAGE: ${{ inputs.language }}
+
+  test:
+    needs: matrix
+    if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] != null }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0.6"
+          bundler-cache: true
+      - name: Install deps
+        run: bundle install --jobs 4 --retry 3
+      - name: Docker version
+        run: docker -v
+      - name: Configure
+        run: bundle exec rake config
+      - name: Run framework with retry
+        run: bash .github/scripts/run-framework-with-retry.sh
+        env:
+          DIRECTORY: ${{ matrix.directory }}
+          ENGINE: ${{ matrix.engine }}
+          MAX_ATTEMPTS: 2
+          COMMAND_TIMEOUT_SECONDS: 2700
+          RETRY_DELAY_SECONDS: 15
+          LANGUAGE: ${{ matrix.language }}
+          FRAMEWORK: ${{ matrix.framework }}
