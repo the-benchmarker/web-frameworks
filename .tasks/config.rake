@@ -84,7 +84,15 @@ def commands_for(language, framework, variant, provider = 'docker')
   framework_config = YAML.safe_load_file(File.join(directory, language, framework, 'config.yaml'))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
 
-  options = { language: language, framework: framework, variant: variant, manifest: "#{MANIFESTS[:container]}.#{variant}" }
+  # CPU isolation between the server under test and the load generator. Both
+  # unset => no pinning, byte-identical to previous behaviour. See the PR notes
+  # for the ratio that actually produces a server-bound measurement.
+  server_cpus = ENV.fetch('SERVER_CPUS', nil)
+  load_cpus = ENV.fetch('LOAD_CPUS', nil)
+  cpuset = server_cpus ? "--cpuset-cpus=#{server_cpus} " : ''
+  taskset = load_generator_prefix(load_cpus)
+
+  options = { language: language, framework: framework, variant: variant, cpuset: cpuset, manifest: "#{MANIFESTS[:container]}.#{variant}" }
   commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], test: [], 'memory-idle': [] }
   prerequisites = Hash.new { |h, k| h[k] = [] }
 
@@ -125,29 +133,34 @@ def commands_for(language, framework, variant, provider = 'docker')
   # duration = ENV.fetch('DURATION', 10) # unused
 
   hostname = File.join(directory, language, framework, "ip-#{variant}.txt")
-  File.join(directory, language, framework, "cid-#{variant}.txt")
-  File.join(File.dirname(__FILE__), 'memory_sampler.rb')
+  cid_file = File.join(directory, language, framework, "cid-#{variant}.txt")
+  saturation_probe = File.join(File.dirname(__FILE__), 'saturation.rb')
   oha_path = command_available?('oha') ? 'oha' : File.expand_path('~/.cargo/bin/oha')
 
-  commands[:warmup] << "#{oha_path} --wait-ongoing-requests-after-deadline --no-tui --disable-keepalive --latency-correction -z 5s http://`cat #{hostname}`:3000/"
+  commands[:warmup] << "#{taskset}#{oha_path} --wait-ongoing-requests-after-deadline --no-tui --disable-keepalive --latency-correction -z 5s http://`cat #{hostname}`:3000/"
   commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
 
   concurrencies.split(',').each do |concurrency|
     target = :"collect-#{concurrency}"
     commands[target] = [] unless commands.key?(target)
 
-    File.join(directory, language, framework, '.results', concurrency, 'memory.json')
+    results_dir = File.join(directory, language, framework, '.results', concurrency)
+    saturation_out = File.join(results_dir, 'saturation.json')
+    saturation_state = File.join(results_dir, '.saturation-state.json')
     oha_cmds = []
 
     routes.split(',').each do |route|
       method, uri = route.split(':')
       output = File.join(directory, language, framework, '.results', concurrency, "#{uri.tr('/', '_')}.json")
-      oha_cmds << "#{oha_path} --wait-ongoing-requests-after-deadline --no-tui --disable-keepalive --latency-correction -c #{concurrency} -z 15s -m #{method} --output-format json --output #{output} http://`cat #{hostname}`:3000#{uri}"
+      oha_cmds << "#{taskset}#{oha_path} --wait-ongoing-requests-after-deadline --no-tui --disable-keepalive --latency-correction -c #{concurrency} -z 15s -m #{method} --output-format json --output #{output} http://`cat #{hostname}`:3000#{uri}"
     end
 
-    # Start memory sampler in background, run all oha calls, then stop sampler
-    # commands[target] << "ruby #{sampler} --cid #{cid_file} --out #{memory_out} & SAMPLER_PID=$$!; #{oha_cmds.join('; ')}; kill $$SAMPLER_PID"
+    # Bracket the run with the measurement-validity probe: two reads of the
+    # container's cumulative CPU counter, so it adds no sampling load of its own
+    # to the host whose contention it exists to detect.
+    commands[target] << "ruby #{saturation_probe} --cid #{cid_file} --start --state #{saturation_state}"
     commands[target] << oha_cmds.join('; ')
+    commands[target] << "ruby #{saturation_probe} --cid #{cid_file} --stop --state #{saturation_state} --out #{saturation_out}"
   end
 
   concurrencies.split(',').each do |c|
