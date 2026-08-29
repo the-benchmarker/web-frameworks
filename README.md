@@ -68,7 +68,7 @@ The project is evolving from a focused HTTP performance benchmark into a broader
 - Git
 - Docker
 - Ruby and Bundler (CI currently uses Ruby 4)
-- [`oha`](https://github.com/hatoo/oha) on `PATH` or at `~/.cargo/bin/oha`
+- [`zrk`](https://github.com/zoxy-io/zrk) on `PATH`
 - `jq`
 
 Install the Ruby dependencies and generate the Dockerfiles and Makefiles:
