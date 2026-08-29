@@ -70,7 +70,7 @@ task :collect do
       percentile75: data.dig(:latency_us, :p75) / 1_000_000.0,
       percentile90: data.dig(:latency_us, :p90) / 1_000_000.0,
       percentile99: data.dig(:latency_us, :p99) / 1_000_000.0,
-      percentile99999: data.dig(:latency_us, :p99_99) / 1_000_000.0
+      percentile99999: data.dig(:latency_us, 'p99_99') / 1_000_000.0
     }
 
     results.each do |key, value|
