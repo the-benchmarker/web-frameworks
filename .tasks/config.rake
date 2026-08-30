@@ -131,12 +131,28 @@ def commands_for(language, framework, variant, provider = 'docker')
   # zrk >= the release carrying --closed (zoxy-io/zrk).
   duration = ENV.fetch('DURATION', '15s')
 
+  # --disable-keepalive (zrk >= 2.4.0) puts every request on its own TCP
+  # connection, restoring what oha's flag of the same name did before the move
+  # to zrk -- without it the numbers are not comparable to any run before
+  # 76ac1aed4.
+  #
+  # It has to be the flag and not `-H 'Connection: close'`: zrk decides whether
+  # to reuse a socket from the RESPONSE, so the header reconnects only against
+  # frameworks that honour it and leaves the ones that ignore it -- the
+  # httpbeast-derived Nim frameworks, the Workerman/Swoole PHP ones, agoo-c,
+  # may_minihttp, httpz, mist -- running at full keep-alive speed. Those are
+  # among the fastest entries here, so the header would flatter exactly the
+  # wrong ones. The flag closes from the client side regardless.
+  #
+  # Each result file records the mode it was produced under in its own
+  # config.disable_keepalive.
+
   hostname = File.join(directory, language, framework, "ip-#{variant}.txt")
   File.join(directory, language, framework, "cid-#{variant}.txt")
   File.join(File.dirname(__FILE__), 'memory_sampler.rb')
   zrk_path = 'zrk'
 
-  commands[:warmup] << "#{zrk_path} --plain -c 50 --closed -d 5s http://`cat #{hostname}`:3000/"
+  commands[:warmup] << "#{zrk_path} --plain -c 50 --closed --disable-keepalive -d 5s http://`cat #{hostname}`:3000/"
   commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
 
   concurrencies.split(',').each do |concurrency|
@@ -149,7 +165,7 @@ def commands_for(language, framework, variant, provider = 'docker')
     routes.split(',').each do |route|
       method, uri = route.split(':')
       output = File.join(directory, language, framework, '.results', concurrency, "#{uri.tr('/', '_')}.json")
-      zrk_cmds << "#{zrk_path} --plain -c #{concurrency} --closed -d #{duration} -m #{method} --format json --output #{output} http://`cat #{hostname}`:3000#{uri}"
+      zrk_cmds << "#{zrk_path} --plain -c #{concurrency} --closed --disable-keepalive -d #{duration} -m #{method} --format json --output #{output} http://`cat #{hostname}`:3000#{uri}"
     end
 
     # Start memory sampler in background, run all zrk calls, then stop sampler
