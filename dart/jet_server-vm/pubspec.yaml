@@ -4,6 +4,4 @@ environment:
   sdk: "^3.13.0"
 
 dependencies:
-  jet_server:
-    git:
-      url: https://github.com/Wdestroier/jet_server.git
+  jet_server: ^0.1.0
