@@ -7,4 +7,4 @@ requires = ["flit_core"]
 name='app.asgi'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = ["django-ninja>=1.6,<1.7"]
+dependencies = ["django-ninja>=1.7,<1.8"]
