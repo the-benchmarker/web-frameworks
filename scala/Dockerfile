@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN sbt universal:packageZipTarball
+RUN sbt "Universal / packageZipTarball"
 
 
 
@@ -25,4 +25,3 @@ RUN tar -xvzf target/universal/server-0.1.0-SNAPSHOT.tgz
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}
-

@@ -1,12 +1,13 @@
 framework:
   github: gabearro/cps-http
-  version: 1.0
+  website: github.com/gabearro/cps-http
+  version: 2.0
   engines:
     - multithreaded
 
-# Each reactor thread owns its event loop, router, listener, and connections.
-# SO_REUSEPORT distributes accepts across the shard-local reactors without a
-# shared scheduler or cross-thread work on the HTTP data path.
+# The work-stealing runtime starts one I/O shard per worker. Each shard owns its
+# event loop, router, listener, and connections; SO_REUSEPORT distributes
+# accepts without putting a shared scheduler on the HTTP data path.
 language:
   engines:
     multithreaded:

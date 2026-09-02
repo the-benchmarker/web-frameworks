@@ -12,6 +12,13 @@ def dockerfile?(path)
   File.basename(path).match?(/(?:^|\.)Dockerfile(?:\.|$)/i)
 end
 
+def language_shared_file?(path, language)
+  parts = path.split(File::SEPARATOR)
+  return false unless parts.length == 2 && parts.first == language
+
+  dockerfile?(path) || File.basename(path) == 'config.yaml'
+end
+
 def all_languages
   Dir.glob(File.join('*', 'config.yaml')).map { |path| language_for(path) }.sort
 end
@@ -42,7 +49,7 @@ def selected_frameworks(language)
   return all_frameworks(language) if files.intersect?(%w[data.json data.min.json])
 
   return all_frameworks(language) if language_files.any? do |path|
-    dockerfile?(path) || path == "#{language}/config.yaml"
+    language_shared_file?(path, language)
   end
 
   language_files.filter_map do |path|
