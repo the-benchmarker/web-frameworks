@@ -1,0 +1,11 @@
+framework:
+  github: nigrosimone/fulmine.js
+  version: 5.19
+
+  engines:
+    - uwebsockets
+
+language:
+  engines:
+    uwebsockets:
+      command: node app.mjs

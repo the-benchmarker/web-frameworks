@@ -41,7 +41,7 @@ config.yaml                  # provider and global settings
 
 ## 📊 Results
 
-The latest published results are available on the [Web Frameworks Benchmark dashboard](https://web-frameworks-benchmark.netlify.app/). Each result should be read in the context of its framework version, runtime or server variant, concurrency, benchmark revision, and hardware.
+The latest published results are available on the [Web Frameworks Benchmark dashboard](https://web-frameworks-benchmark.vercel.app). Each result should be read in the context of its framework version, runtime or server variant, concurrency, benchmark revision, and hardware.
 
 For a fair interpretation:
 
