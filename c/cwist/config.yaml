@@ -2,6 +2,11 @@
 # This file is maintained here and mirrored into the benchmark repository as
 # `c/cwist/config.yaml`. The matching application source is `main.c`.
 
+language:
+  engines:
+    default:
+      command: /opt/web/cwist_bench
+
 framework:
   github: Religiya-Serdtsa/CWIST
   version: 3.3
@@ -37,4 +42,3 @@ framework:
   binaries:
     - cwist_bench
 
-  command: /opt/web/cwist_bench
