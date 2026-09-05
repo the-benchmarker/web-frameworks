@@ -4,10 +4,11 @@
 
 framework:
   github: Religiya-Serdtsa/CWIST
-  version: 3.2
+  version: 3.3
 
   build_deps:
     - git
+    - ca-certificates
     - cmake
     - pkg-config
     - libzstd-dev
@@ -16,7 +17,7 @@ framework:
     - libnghttp2-dev
 
   download:
-    - git clone --depth 1 --branch v3.2 --recurse-submodules --shallow-submodules https://github.com/Religiya-Serdtsa/CWIST.git cwist
+    - git clone --depth 1 --branch v3.3 --recurse-submodules --shallow-submodules https://github.com/Religiya-Serdtsa/CWIST.git cwist
 
   build:
     - cd cwist && make -j$(nproc)
