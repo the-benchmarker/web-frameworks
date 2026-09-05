@@ -21,7 +21,7 @@ framework:
 
   build:
     - cd cwist && make -j$(nproc)
-    - gcc -O2 -Icwist/include -o cwist_bench main.c
+    - gcc -O2 -Icwist/include -Icwist/lib -o cwist_bench main.c
         -Lcwist
         -Lcwist/lib/boringssl/build
         -Lcwist/lib/lsquic/build/src/liblsquic
