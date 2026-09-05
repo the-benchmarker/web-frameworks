@@ -26,7 +26,10 @@ framework:
 
   build:
     - cd cwist && make -j$(nproc)
-    - gcc -O2 -Icwist/include -Icwist/lib -o cwist_bench main.c
+    - gcc -O2 -Icwist/include -Icwist/lib -Icwist/lib/libttak/include -Icwist/lib/cjson
+        -Icwist/lib/sqlite3 -Icwist/lib/uriparser/include -Icwist/lib/cnats/src
+        -Icwist/lib/boringssl/include -Icwist/lib/lsquic/include -Icwist/lib/multipart-parser-c
+        -o cwist_bench main.c
         -Lcwist
         -Lcwist/lib/boringssl/build
         -Lcwist/lib/lsquic/build/src/liblsquic
