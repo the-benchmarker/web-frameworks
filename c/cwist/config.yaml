@@ -1,0 +1,39 @@
+# the-benchmarker/web-frameworks implementation config.
+# This file is maintained here and mirrored into the benchmark repository as
+# `c/cwist/config.yaml`. The matching application source is `main.c`.
+
+framework:
+  github: Religiya-Serdtsa/CWIST
+  version: 3.2
+
+  build_deps:
+    - git
+    - cmake
+    - pkg-config
+    - libzstd-dev
+    - libbrotli-dev
+    - libcurl4-openssl-dev
+    - libnghttp2-dev
+
+  download:
+    - git clone --depth 1 --branch v3.2 --recurse-submodules --shallow-submodules https://github.com/Religiya-Serdtsa/CWIST.git cwist
+
+  build:
+    - cd cwist && make -j$(nproc)
+    - gcc -O2 -Icwist/include -o cwist_bench main.c
+        -Lcwist
+        -Lcwist/lib/boringssl/build
+        -Lcwist/lib/lsquic/build/src/liblsquic
+        -Lcwist/lib/libttak/lib
+        -Lcwist/lib/cnats/build/lib
+        -Lcwist/lib/cjson
+        -Lcwist/lib/uriparser/build
+        -lcwist -lnats_static -lttak -lcjson -luriparser -llsquic
+        -lssl -lcrypto
+        $(pkg-config --libs libcurl libnghttp2 libbrotlienc libbrotlicommon libbrotlidec libzstd)
+        -lz -ldl -lpthread -lm -lstdc++
+
+  binaries:
+    - cwist_bench
+
+  command: /opt/web/cwist_bench
