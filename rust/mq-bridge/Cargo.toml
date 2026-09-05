@@ -20,7 +20,7 @@ name = "server"
 path = "src/main.rs"
 
 [dependencies]
-mq-bridge = { git = "https://github.com/marcomq/mq-bridge", tag = "v0.4.9", default-features = false, features = ["http"] }
+mq-bridge = { git = "https://github.com/marcomq/mq-bridge", tag = "v0.4.11", default-features = false, features = ["http"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 anyhow = "1"
 
