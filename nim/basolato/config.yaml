@@ -2,22 +2,30 @@ framework:
   github: dumblepy/nim-basolato/
   version: 0.16
 
+  build_image: nimlang/nim:2.2.0
+  runtime_image: debian:bookworm-slim
+
   build_deps:
     - gcc
     - openssl
     - openssh-client
-    - libpcre2-dev
+    - libpcre3-dev
 
-  build_command: "ducere build -p 3000"
+  build_command: nim c --mm:orc --threads:off -d:ssl -d:release --opt:speed -o:main main.nim
 
-  command: "./startServer.sh"
+  runtime_deps:
+    - libpcre3
+
+  command: ./main
 
   custom_files:
     - main
-    - startServer.sh
     - .env
 
 language:
+  engines:
+    default:
+      command: ./main
   files:
     - main
     - "**/*.json"
