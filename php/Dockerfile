@@ -15,6 +15,7 @@ RUN apt-get -qq update && \
 
 WORKDIR /usr/src/app
 
+
 RUN docker-php-ext-install zip
 
 {{#environment}}
@@ -30,9 +31,8 @@ RUN docker-php-ext-install zip
 {{/modules}}
 
 {{#extensions}}
-  RUN mkdir -p /usr/src/php/ext/{{{.}}}
-  RUN curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
-  RUN docker-php-ext-install {{{.}}}
+  RUN --mount=type=bind,from=ghcr.io/php/pie:bin,source=/pie,target=/usr/local/bin/pie \
+    pie install {{{.}}}
 {{/extensions}}
 
 ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini

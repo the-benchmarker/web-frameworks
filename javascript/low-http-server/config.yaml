@@ -1,3 +1,6 @@
+language:
+  node:
+    version: 22-slim
 framework:
   github: jkyberneees/low-http-server
   version: 4.2

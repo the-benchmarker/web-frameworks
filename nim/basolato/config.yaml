@@ -1,12 +1,12 @@
 framework:
-  github: itsumura-h/nim-basolato
-  version: 0.15
+  github: dumblepy/nim-basolato/
+  version: 0.16
 
   build_deps:
     - gcc
     - openssl
     - openssh-client
-    - libpcre3-dev
+    - libpcre2-dev
 
   build_command: "ducere build -p 3000"
 
