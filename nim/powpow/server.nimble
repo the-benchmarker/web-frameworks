@@ -8,4 +8,4 @@ bin           = @["server"]
 # Dependencies
 
 requires "nim >= 2.0.0"
-requires "powpow  >= 0.1.2"
+requires "powpow  >= 0.1.12"
