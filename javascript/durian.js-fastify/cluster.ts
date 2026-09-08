@@ -1,23 +1,17 @@
-import { spawn } from 'bun';
+import cluster from 'node:cluster';
+import { availableParallelism } from 'node:os';
 
-const cpus = navigator.hardwareConcurrency;
-const buns = new Array(cpus);
-
-for (let i = 0; i < cpus; i++) {
-  buns[i] = spawn({
-    cmd: ['bun', 'src/main.ts'],
-    stdio: ['inherit', 'inherit', 'inherit'],
-  });
-
-  console.log(`Worker ${buns[i].pid} started`);
-}
-
-function kill() {
-  for (const bun of buns) {
-    bun.kill();
+if (cluster.isPrimary) {
+  for (let i = 0; i < availableParallelism(); i++) {
+    cluster.fork();
   }
-}
 
-process.on('SIGINT', kill);
-process.on('SIGTERM', kill);
-process.on('exit', kill);
+  function shutdown() {
+    cluster.disconnect(() => process.exit(0));
+  }
+
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
+} else {
+  await import('./src/main');
+}

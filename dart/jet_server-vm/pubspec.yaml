@@ -1,0 +1,7 @@
+name: jet_server_api
+
+environment:
+  sdk: "^3.13.0"
+
+dependencies:
+  jet_server: ^0.1.0

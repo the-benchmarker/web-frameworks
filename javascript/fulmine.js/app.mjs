@@ -7,6 +7,9 @@ import express from 'fulmine.js';
 const app = express({ cluster: 'auto' });
 
 app.set('etag', false);
+// keep-alive is implicit on HTTP/1.1, so the Connection and Keep-Alive headers carry no
+// information: off, which is also what the engine itself answers.
+app.set('connection headers', false);
 
 app.get('/', function (req, res) {
   res.send('');

@@ -136,7 +136,7 @@ def commands_for(language, framework, variant, provider = 'docker')
   File.join(File.dirname(__FILE__), 'memory_sampler.rb')
   zrk_path = 'zrk'
 
-  commands[:warmup] << "#{zrk_path} --plain -c 50 --closed -d 5s http://`cat #{hostname}`:3000/"
+  commands[:warmup] << "#{zrk_path} --plain -c 50 -R1000:100000 -d 5s http://`cat #{hostname}`:3000/"
   commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
 
   concurrencies.split(',').each do |concurrency|
@@ -149,7 +149,7 @@ def commands_for(language, framework, variant, provider = 'docker')
     routes.split(',').each do |route|
       method, uri = route.split(':')
       output = File.join(directory, language, framework, '.results', concurrency, "#{uri.tr('/', '_')}.json")
-      zrk_cmds << "#{zrk_path} --plain -c #{concurrency} --closed -d #{duration} -m #{method} --format json --output #{output} http://`cat #{hostname}`:3000#{uri}"
+      zrk_cmds << "#{zrk_path} --plain -c #{concurrency} -d #{duration} -m #{method} --format json --output #{output} -R1000:100000 --interval 1s --timeout 8s --latency --format json http://`cat #{hostname}`:3000#{uri}"
     end
 
     # Start memory sampler in background, run all zrk calls, then stop sampler
