@@ -1,5 +1,7 @@
 language:
   version: ES2019
+  node:
+    version: 26-slim
 
   engines:
     node:

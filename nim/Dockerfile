@@ -1,4 +1,4 @@
-FROM nimlang/nim:2.2 AS build
+FROM {{#build_image}}{{{.}}}{{/build_image}}{{^build_image}}nimlang/nim:2.2{{/build_image}} AS build
 
 WORKDIR /usr/src/app
 
@@ -40,7 +40,7 @@ ENV NIM_ENV=production \
 {{/build_command}}
 
 
-FROM debian:trixie-slim
+FROM {{#runtime_image}}{{{.}}}{{/runtime_image}}{{^runtime_image}}debian:trixie-slim{{/runtime_image}}
 
 WORKDIR /usr/src/app
 

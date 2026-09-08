@@ -5,6 +5,7 @@ framework:
     - "**/*.gradle"
     - "**/*.scala"
     - "**/*.sbt"
+    - project/build.properties
     - "**/*.conf"
     - conf/routes
     - conf/logback.xml

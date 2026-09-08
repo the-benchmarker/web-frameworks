@@ -1,5 +1,5 @@
 {{#language.version}}
-  FROM php:{{{.}}}-fpm
+  FROM php:{{{.}}}-fpm{{#language.distro}}-{{{.}}}{{/language.distro}}
 {{/language.version}}
 {{^language.version}}
   FROM php:8.5-fpm

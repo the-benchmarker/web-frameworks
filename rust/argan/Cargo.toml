@@ -18,4 +18,4 @@ strip = false
 [dependencies]
 argan = "0.1"
 hyper-util = { version = "0.1", features = ["server-auto"] }
-tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net"] }

@@ -1,7 +1,6 @@
 framework:
   website: veloceframework.com
-  version: 0.17
-
+  version: "0.20"
   engines:
     - uvicorn
     - hypercorn
