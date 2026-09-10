@@ -2,9 +2,6 @@ framework:
   github: dumblepy/nim-basolato/
   version: 0.16
 
-  build_image: nimlang/nim:2.2.0
-  runtime_image: debian:bookworm-slim
-
   build_deps:
     - gcc
     - openssl
