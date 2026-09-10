@@ -4,6 +4,8 @@ framework:
   version: 2.0
   engines:
     - multithreaded
+  build_deps:
+    - zlib1g-dev
 
 # The work-stealing runtime starts one I/O shard per worker. Each shard owns its
 # event loop, router, listener, and connections; SO_REUSEPORT distributes

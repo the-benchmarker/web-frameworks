@@ -136,7 +136,7 @@ def commands_for(language, framework, variant, provider = 'docker')
   File.join(File.dirname(__FILE__), 'memory_sampler.rb')
   zrk_path = 'zrk'
 
-  commands[:warmup] << "#{zrk_path} --plain -c 50 -R1000:100000 -d 5s http://`cat #{hostname}`:3000/"
+  commands[:warmup] << "#{zrk_path} -c 50 -d 5s --plain http://`cat #{hostname}`:3000/"
   commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
 
   concurrencies.split(',').each do |concurrency|
