@@ -43,7 +43,7 @@ if [ "`printf '%s\n%s\n' "$ZRK_MIN" "$ZRK_VERSION" | sort -V | head -n1`" != "$Z
 fi
 
 if [ "$#" -eq 0 ]; then
-	find . -mindepth 3 -type f -name config.yaml | grep -Ev 'imi-swoole|guildenstern' > ~/list.txt
+	find . -mindepth 3 -type f -name config.yaml | grep -Ev 'imi-swoole' > ~/list.txt
 else
 	COUNT=`echo $1 | grep -c "/"`
 	if [ "$COUNT" -eq 0 ]; then
