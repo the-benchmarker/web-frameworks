@@ -5,6 +5,12 @@ on:
 
 jobs:
   changes:
+    # Do not run on sync PSs
+    # Sync PRs only contain changes already tested on master.
+    if: >-
+      ${{ !(github.event.pull_request.base.ref == 'develop' &&
+            github.event.pull_request.head.ref == 'master' &&
+            github.event.pull_request.head.repo.full_name == github.repository) }}
     runs-on: ubuntu-latest
     outputs:
       files: ${{ steps.file_changes.outputs.files }}
