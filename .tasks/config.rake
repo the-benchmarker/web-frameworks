@@ -121,9 +121,6 @@ def commands_for(language, framework, variant, provider = 'docker')
     commands[:build] << main_config.dig('providers', provider, 'reboot')
   end
 
-  # threads = ENV.fetch('THREADS') { Etc.nprocessors } # unused
-  # duration = ENV.fetch('DURATION', 10) # unused
-
   # --closed drops zrk's open-loop schedule and sends each connection's next
   # request the instant its previous response completes (the wrk/ab model):
   # -c is the only knob, and achieved_rate finds the framework's real max
@@ -149,7 +146,7 @@ def commands_for(language, framework, variant, provider = 'docker')
     routes.split(',').each do |route|
       method, uri = route.split(':')
       output = File.join(directory, language, framework, '.results', concurrency, "#{uri.tr('/', '_')}.json")
-      zrk_cmds << "#{zrk_path} --plain -c #{concurrency} -d #{duration} -m #{method} --format json --output #{output} -R1000:100000 --interval 1s --timeout 8s --latency --format json http://`cat #{hostname}`:3000#{uri}"
+      zrk_cmds << "#{zrk_path} --plain -c #{concurrency} -d #{duration} -m #{method} --format json --output #{output} -R1000:500000 --interval 1s --timeout 8s --latency --format json http://`cat #{hostname}`:3000#{uri}"
     end
 
     # Start memory sampler in background, run all zrk calls, then stop sampler
