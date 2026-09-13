@@ -93,6 +93,20 @@ language:
           --port 3000 \
           --workers $(nproc) \
           ${PYTHON_APP}
+    peregrine:
+      bootstrap:
+        - pip install 'peregrine-server>=1.0,<1.1'
+      environment:
+        INTERFACE: asgi
+        PYTHON_APP: server:app
+      command: >
+        peregrine \
+          --log-level error \
+          --protocol ${INTERFACE} \
+          --host 0.0.0.0 \
+          --port 3000 \
+          --workers $(nproc) \
+          ${PYTHON_APP}
 
 framework:
   engines:

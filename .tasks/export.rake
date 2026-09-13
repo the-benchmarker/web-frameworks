@@ -3,7 +3,7 @@ require 'kramdown'
 
 class MarkdownTableConverter < Kramdown::Converter::Kramdown
   def convert_table(elt, opts)
-    opts[:alignment] = el.options[:alignment]
+    opts[:alignment] = elt.options[:alignment]
     inner(elt, opts)
   end
 
@@ -29,8 +29,8 @@ class MarkdownTableConverter < Kramdown::Converter::Kramdown
     inner(elt, opts)
   end
 
-  def convert_tr(_elt, opts)
-    "| #{el.children.map { |child| convert(child, opts) }.join(' | ')} |\n"
+  def convert_tr(elt, opts)
+    "| #{elt.children.map { |child| convert(child, opts) }.join(' | ')} |\n"
   end
 
   def convert_td(elt, opts)
