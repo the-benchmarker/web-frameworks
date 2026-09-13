@@ -121,9 +121,6 @@ def commands_for(language, framework, variant, provider = 'docker')
     commands[:build] << main_config.dig('providers', provider, 'reboot')
   end
 
-  # threads = ENV.fetch('THREADS') { Etc.nprocessors } # unused
-  # duration = ENV.fetch('DURATION', 10) # unused
-
   # --closed drops zrk's open-loop schedule and sends each connection's next
   # request the instant its previous response completes (the wrk/ab model):
   # -c is the only knob, and achieved_rate finds the framework's real max
