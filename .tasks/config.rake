@@ -170,6 +170,8 @@ def commands_for(language, framework, variant, provider = 'docker')
 end
 
 def create_dockerfile(directory, engine, config)
+  # Rendering compiler flags must not alter the next engine's configuration.
+  config = config.merge('language' => config['language'].dup)
   path = File.join(Dir.pwd, directory, '..', "#{engine}.Dockerfile")
   path = File.readlink(path) if File.symlink?(path)
   path = File.join(Dir.pwd, directory, '..', 'Dockerfile') unless File.exist?(path)

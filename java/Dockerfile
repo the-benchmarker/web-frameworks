@@ -42,6 +42,12 @@ WORKDIR /usr/src/web
 
 
 
+{{#graalvm}}
+  FROM ghcr.io/graalvm/jdk-community:25
+
+  RUN microdnf install -y curl tar && microdnf clean all
+{{/graalvm}}
+{{^graalvm}}
 {{#language.java}}
   FROM eclipse-temurin:{{{.}}}-jre
 {{/language.java}}
@@ -53,6 +59,8 @@ RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends curl && \
   rm -rf /var/lib/apt/lists/*
 
+{{/graalvm}}
+
 WORKDIR /opt/web
 
 {{#binaries}}
@@ -63,7 +71,7 @@ WORKDIR /opt/web
   COPY '{{source}}' '{{target}}'
 {{/static_files}}
 
-RUN ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
+RUN ln -sfv "$JAVA_HOME/bin/java" /usr/bin/java
 
 {{#bootstrap}}
   RUN {{{.}}}

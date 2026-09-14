@@ -24,6 +24,14 @@ open a pull request.
 
 ## Adding a framework
 
+Java benchmarks support the `default` (Temurin) and `graalvm` (GraalVM Community
+JDK 25) engines. Both run the same application on the JVM. Generate the manifests
+with `bundle exec rake config`, then use, for example,
+`make -f java/javalin/.Makefile build.graalvm test.graalvm` from the repository root.
+Run `make -f java/javalin/.Makefile clean.graalvm` when finished.
+Blade remains on Java 11, and Helidon SE uses its bundled jlink runtime, so these
+frameworks currently expose only `default`.
+
 - All frameworks **SHOULD** follow this rules :
 
 | HTTP   | Route       | Status code | Response body         |
