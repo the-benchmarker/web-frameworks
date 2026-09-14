@@ -1,8 +1,7 @@
 framework:
   website: aspectran.com
   github: aspectran/aspectran
-  version: "9.6"
-
+  version: 9.7
   build:
     - mvn clean package
 

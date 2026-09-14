@@ -25,7 +25,7 @@ jobs:
           bundler-cache: true
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
-      - name: Set framework matrix
+      - name: Set framework and variant matrix
         id: set-matrix
         run: echo "matrix=$(bundle exec rake ci:matrix)" >> "$GITHUB_OUTPUT"
         env:
@@ -33,6 +33,7 @@ jobs:
           LANGUAGE: ${{ inputs.language }}
 
   test:
+    name: ${{ matrix.framework }} (${{ matrix.engine }})
     needs: matrix
     if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] != null }}
     runs-on: ubuntu-latest

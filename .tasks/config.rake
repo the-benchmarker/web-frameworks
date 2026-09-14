@@ -276,19 +276,19 @@ def create_makefile(language, framework, engines)
   path = File.join(language, framework, MANIFESTS[:build])
 
   File.open(path, 'w') do |makefile|
-    engine = engines.first.keys.first
-
-    result = commands_for(language, framework, engine)
-    commands = result[:commands]
-    prerequisites = result[:prerequisites]
-
-    commands.each do |target, cmds|
-      prereqs = prerequisites[target]
-      makefile.puts "#{target}: #{prereqs.join(' ')}".rstrip
-      cmds.each { |cmd| makefile.puts("\t#{cmd}") }
+    names = engines.flat_map(&:keys)
+    names.each_with_index do |engine, index|
+      result = commands_for(language, framework, engine)
+      result[:commands].each do |target, cmds|
+        # Preserve the first engine as the default for existing callers.
+        makefile.puts "#{target}: #{target}.#{engine}" if index.zero?
+        prereqs = result[:prerequisites][target].map { |prereq| "#{prereq}.#{engine}" }
+        makefile.puts ".PHONY: #{target} #{target}.#{engine}"
+        makefile.puts "#{target}.#{engine}: #{prereqs.join(' ')}".rstrip
+        cmds.each { |cmd| makefile.puts("\t#{cmd}") }
+      end
     end
 
-    names = engines.flat_map(&:keys)
     command = names.flat_map { |n| ["build.#{n}", "collect.#{n}", "clean.#{n}"] }.join(' ')
 
     makefile.puts "run-all: #{command}"
