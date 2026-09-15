@@ -1,52 +1,40 @@
+import { availableParallelism } from 'node:os';
 import { createApp } from '@morojs/moro';
 
-// Set minimal logging via environment variables
 process.env.LOG_LEVEL = 'error';
 process.env.NODE_ENV = 'production';
 
-// Create app with optimized config for benchmarking (clustering ENABLED for performance)
 const app = await createApp({
   server: {
-    port: 3000, // Default benchmark port (can be overridden by PORT env var)
-    host: '0.0.0.0', // Default benchmark host (can be overridden by HOST env var)
-    engine: 'moro', // force Moro's native engine
-    requestTracking: {
-      enabled: false, // Disable for fair comparison
-    },
-    requestLogging: {
-      enabled: false, // Disable for fair comparison - no other entry logs requests
-    },
-    errorBoundary: {
-      enabled: false, // Disable for fair comparison
-    },
+    port: 3000,
+    host: '0.0.0.0',
+    engine: 'moro', // Moro's native engine (@morojs/engine)
+    requestTracking: { enabled: false }, // no other entry tracks requests
+    requestLogging: { enabled: false }, // no other entry logs requests
+    errorBoundary: { enabled: false },
   },
-  // Minimal middleware for fair comparison
   performance: {
     clustering: {
-      enabled: false, // unleash the power of clustering to really see the power
-      workers: 'auto'
+      enabled: true,
+      // One worker per core the container may actually run on. Moro's 'auto'
+      // counts os.cpus(), which is the whole host even under --cpuset-cpus;
+      // availableParallelism() honours the affinity mask, the same source the
+      // other Node entries' cluster.mjs use.
+      workers: availableParallelism(),
     },
   },
-
-  // Minimal logging for benchmarks
-  logger: {
-    level: 'warn'  // This will now work correctly without env var override
-  }
+  logger: { level: 'warn' },
 });
 
-app.get('/').handler((_, res) => {
-  res.end();
-});
+// A literal body in place of a handler is answered inside @morojs/engine
+// without entering JS, the same way elysia-bun's literal handlers are served
+// by Bun's static routes.
+app.get('/').handler('');
 
-app.get('/user/:id').handler(({params}, res) => {
+app.get('/user/:id').handler(({ params }, res) => {
   res.end(params.id);
 });
 
-app.post('/user').handler((_, res) => {
-  res.end();
-});
+app.post('/user').handler('');
 
-app.listen(() => {
-  const config = app.getConfig();
-  console.log(`🚀 MoroJS running on port ${config.server.port}`);
-});
+app.listen();
