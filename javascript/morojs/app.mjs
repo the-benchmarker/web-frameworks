@@ -26,16 +26,15 @@ const app = await createApp({
   logger: { level: 'warn' },
 });
 
-app.get('/').handler((_, res) => {
-  res.end();
-});
+// A literal body in place of a handler is answered inside @morojs/engine
+// without entering JS, the same way elysia-bun's literal handlers are served
+// by Bun's static routes.
+app.get('/').handler('');
 
 app.get('/user/:id').handler(({ params }, res) => {
   res.end(params.id);
 });
 
-app.post('/user').handler((_, res) => {
-  res.end();
-});
+app.post('/user').handler('');
 
 app.listen();
