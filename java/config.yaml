@@ -11,13 +11,13 @@ language:
     - '**/*.kts'
     - '**/*.properties'
 
-  fix:
-    - ln -sfv /usr/local/openjdk-21/bin/java /usr/bin/java
-
   engines:
-    default:
-      command: /usr/bin/java -jar /opt/web/target/benchmark-1.0.0.jar
+    default: {}
+    graalvm:
+      graalvm: true
 
 framework:
+  command: /usr/bin/java -jar /opt/web/target/benchmark-1.0.0.jar
   engines:
     - default
+    - graalvm
