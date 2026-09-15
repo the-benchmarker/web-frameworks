@@ -1,6 +1,6 @@
 {
   "name": "durian.js",
-  "version": "1.0.0",
+  "version": "12.0.0",
   "description": "Run NestJS on Bun Blazingly Fast",
   "author": "mario-huang",
   "license": "MIT",
@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "build": "durian build",
-    "pm2": "bun run build && pm2-runtime start ecosystem.config.js",
+    "pm2": "bun --bun pm2-runtime start src/main.ts -i max",
     "start": "durian start",
     "start:debug": "durian start:debug",
     "start:dev": "durian start:dev",
@@ -33,7 +33,6 @@
     "test:e2e": "durian test:e2e"
   },
   "dependencies": {
-    "durian.js": "^2.0.0",
-    "pm2-beta": "^6.0.2"
+    "durian.js": "^12.0.0"
   }
 }
