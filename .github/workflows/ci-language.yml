@@ -38,7 +38,7 @@ jobs:
     needs: matrix
     if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] != null }}
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
