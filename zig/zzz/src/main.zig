@@ -1,6 +1,8 @@
 const std = @import("std");
 const log = std.log.scoped(.@"examples/basic");
 
+pub const std_options: std.Options = .{ .log_level = .err };
+
 const zzz = @import("zzz");
 const http = zzz.HTTP;
 
@@ -70,6 +72,9 @@ pub fn main(init: std.process.Init) !void {
         router: *const Router,
         socket: Socket,
     };
+
+
+
     const stdout = std.Io.File.stdout();
     try stdout.writeStreamingAll(init.io, "Ready to serve!\n");
 
@@ -81,7 +86,7 @@ pub fn main(init: std.process.Init) !void {
                     .stack_size = 1024 * 1024 * 4,
                     .socket_buffer_bytes = 1024 * 2,
                     .keepalive_count_max = null,
-                    .connection_count_max = 1024,
+                    .connection_count_max = 512,
                 });
                 server.serve(rt, p.router, .{ .normal = p.socket }) catch |err| {
                     if (err == error.FileDescriptorClosed or err == error.OperationAborted) {
