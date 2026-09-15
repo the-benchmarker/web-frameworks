@@ -43,6 +43,7 @@ task :collect do
   Dir.glob('*/*/.results/*/**.json').each do |file|
     next if File.basename(file) == 'memory.json'
     next if File.basename(file) == 'memory_idle.json'
+    next if File.basename(file) == 'saturation.json'
 
     pp file
 
@@ -87,6 +88,22 @@ task :collect do
 
     data = JSON.load_file(file, symbolize_names: true)
     insert_metric(db, framework_id, :memory_idle_bytes, data[:idle_bytes], concurrency_level_id)
+  end
+
+  # Import measurement validity: how much of its allotted CPU the SERVER
+  # actually burned during the run. A low value means the server was never the
+  # constraint, so the throughput number describes whatever was - most often the
+  # load generator - rather than the framework.
+  Dir.glob('*/*/.results/*/saturation.json').each do |file|
+    language, framework, _, concurrency = file.split('/')
+
+    data = JSON.load_file(file, symbolize_names: true)
+    next unless data[:saturation]
+
+    framework_id = upsert_framework(db, language, framework)
+    concurrency_level_id = upsert_concurrency(db, concurrency)
+
+    insert_metric(db, framework_id, :server_cpu_saturation, data[:saturation], concurrency_level_id)
   end
 
   # Import per-concurrency memory (peak + average under load)

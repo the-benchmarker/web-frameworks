@@ -1,5 +1,22 @@
 # frozen_string_literal: true
 
+# Prefix that pins the load generator to a CPU set so it cannot contend with the
+# server under test. Empty string when LOAD_CPUS is unset, which leaves the
+# command byte-identical to the unpinned form.
+#
+# The probe runs through a real shell: `command` is a builtin, so system() with
+# a single string would exec a binary named "command" and always report false.
+def load_generator_prefix(load_cpus)
+  return '' unless load_cpus
+
+  unless system('sh', '-c', 'command -v taskset', out: File::NULL, err: File::NULL)
+    warn "LOAD_CPUS=#{load_cpus} was set but taskset is not available; load generator will NOT be pinned."
+    return ''
+  end
+
+  "taskset -c #{load_cpus} "
+end
+
 def normalize_shell(shell)
   shell
     .gsub(/\\\s*\n/, " ") # escape newlines
