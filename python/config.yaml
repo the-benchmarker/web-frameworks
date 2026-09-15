@@ -39,7 +39,7 @@ language:
         PYTHON_APP: server:app
       build_deps:
         - gcc
-        - libpcre3-dev
+        - libpcre2-dev
       bootstrap:
         - pip install uwsgi
       command: uwsgi --http 0.0.0.0:3000 --module ${PYTHON_APP}

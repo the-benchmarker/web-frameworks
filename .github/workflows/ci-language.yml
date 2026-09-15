@@ -13,6 +13,7 @@ on:
 jobs:
   matrix:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -37,7 +38,7 @@ jobs:
     needs: matrix
     if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] != null }}
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
