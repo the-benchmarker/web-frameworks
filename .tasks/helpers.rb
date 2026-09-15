@@ -17,6 +17,20 @@ def load_generator_prefix(load_cpus)
   "taskset -c #{load_cpus} "
 end
 
+# Number of CPUs named by a cpuset spec such as "0-3,8" (the syntax of both
+# --cpuset-cpus and taskset -c). nil when the spec is unset or unreadable, so
+# the caller can fall back rather than pin a wrong thread count.
+def cpuset_size(spec)
+  return nil if spec.nil? || spec.strip.empty?
+
+  spec.split(',').sum do |part|
+    first, last = part.strip.split('-', 2)
+    return nil unless first&.match?(/\A\d+\z/) && (last.nil? || last.match?(/\A\d+\z/))
+
+    last ? last.to_i - first.to_i + 1 : 1
+  end
+end
+
 def normalize_shell(shell)
   shell
     .gsub(/\\\s*\n/, " ") # escape newlines

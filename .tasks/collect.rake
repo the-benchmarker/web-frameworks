@@ -39,7 +39,10 @@ task :collect do
   # zrk --closed (see config.rake) sends each connection's next request the
   # instant its previous response completes, so achieved_rate is already the
   # framework's real max sustained throughput at this concurrency -- one file
-  # per route, no picking among multiple runs needed.
+  # per route, no picking among multiple runs needed. Under an open-loop ramp
+  # (-R A:B) zrk >= 2.4.2 makes achieved_rate the last --interval only, so a
+  # file from such a run is imported but flagged instead of silently ranked
+  # on one second of data.
   Dir.glob('*/*/.results/*/**.json').each do |file|
     next if File.basename(file) == 'memory.json'
     next if File.basename(file) == 'memory_idle.json'
@@ -53,6 +56,11 @@ task :collect do
     concurrency_level_id = upsert_concurrency(db, concurrency)
 
     data = YAML.safe_load_file(file, symbolize_names: true)
+
+    if data.dig(:config, :closed) == false
+      warn "#{file}: produced by an open-loop zrk run (config.closed=false); " \
+           'achieved_rate covers only the final interval. Re-run `rake config` and collect again.'
+    end
 
     results = {
       duration_ms: data[:duration_s] * 1000,

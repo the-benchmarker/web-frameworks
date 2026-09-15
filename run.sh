@@ -9,7 +9,8 @@ BASEDIR=`pwd`
 # fail loudly: it rejects the unknown flag per invocation, which is the same
 # "empty .results, make kept going" outcome the presence check exists to
 # prevent -- and the check used to claim a minimum it never enforced.
-ZRK_MIN=2.4.0  # --closed (2.2.0) and --disable-keepalive (2.4.0)
+ZRK_MIN=2.4.0  # --closed needs 2.2.0; 2.4.x is what the harness was validated on and
+               # carries the 2.2.2 fix that halved the generator's per-request overhead
 
 zrk_install_help() {
 	echo "" >&2
@@ -37,7 +38,7 @@ fi
 # (equal versions sort either way and both satisfy it).
 if [ "`printf '%s\n%s\n' "$ZRK_MIN" "$ZRK_VERSION" | sort -V | head -n1`" != "$ZRK_MIN" ]; then
 	echo "zrk ${ZRK_VERSION} is too old; the collect targets need >= ${ZRK_MIN}." >&2
-	echo "(The collect targets run --disable-keepalive, added in 2.4.0.)" >&2
+	echo "(The collect targets run --closed; the harness is validated on 2.4.x.)" >&2
 	zrk_install_help
 	exit 1
 fi

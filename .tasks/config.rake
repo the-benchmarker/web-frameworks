@@ -3,6 +3,7 @@ require 'yaml'
 require 'mustache'
 require 'shellwords'
 require 'json'
+require 'etc'
 
 MANIFESTS = {
   container: '.Dockerfile',
@@ -130,20 +131,34 @@ def commands_for(language, framework, variant, provider = 'docker')
     commands[:build] << main_config.dig('providers', provider, 'reboot')
   end
 
-  # --closed drops zrk's open-loop schedule and sends each connection's next
-  # request the instant its previous response completes (the wrk/ab model):
-  # -c is the only knob, and achieved_rate finds the framework's real max
-  # sustained throughput instead of chasing a guessed -R target. Requires
-  # zrk >= the release carrying --closed (zoxy-io/zrk).
+  # --closed: each connection sends its next request the instant its previous
+  # response completes (the wrk/ab model). -c is the only load knob and
+  # achieved_rate is the framework's real sustained throughput over the whole
+  # run. The open-loop ramp this replaces (-R1000:500000) was not a throughput
+  # test: zrk >= 2.4.2 reports a ramp's achieved_rate as the LAST --interval
+  # only, so the headline was one second out of fifteen, and every latency
+  # figure was schedule backlog measured from the intended send time (p50 in
+  # the hundreds of ms for servers whose real p50 is about 1 ms).
+  #
+  # Keep-alive stays on, which is zrk's default. Whether the headline should
+  # instead reopen a connection per request (--disable-keepalive, as the oha
+  # harness did) is a project decision about the workload, not a harness bug.
   duration = ENV.fetch('DURATION', '15s')
+
+  # zrk drives load from 2 threads unless told otherwise, whatever the host,
+  # and two threads cap out below what the fast servers deliver. Give it every
+  # core it was pinned to (LOAD_CPUS), or THREADS, or the whole host.
+  threads = ENV.fetch('THREADS') { cpuset_size(load_cpus) || Etc.nprocessors }
 
   hostname = File.join(directory, language, framework, "ip-#{variant}.txt")
   cid_file = File.join(directory, language, framework, "cid-#{variant}.txt")
   sampler = File.join(File.dirname(__FILE__), 'memory_sampler.rb')
   saturation_probe = File.join(File.dirname(__FILE__), 'saturation.rb')
-  zrk_path = 'zrk'
+  zrk = "#{taskset}zrk --plain --closed -t #{threads}"
 
-  commands[:warmup] << "#{taskset}#{zrk_path} -c 50 -d 5s --plain http://`cat #{hostname}`:3000/"
+  # Warm up at full throttle, like the collect runs. JIT runtimes need real
+  # load to reach steady state; zrk's paced default of 1000 req/s does not.
+  commands[:warmup] << "#{zrk} -c 50 -d 5s http://`cat #{hostname}`:3000/"
   commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
 
   concurrencies.split(',').each do |concurrency|
@@ -159,7 +174,7 @@ def commands_for(language, framework, variant, provider = 'docker')
     routes.split(',').each do |route|
       method, uri = route.split(':')
       output = File.join(directory, language, framework, '.results', concurrency, "#{uri.tr('/', '_')}.json")
-      zrk_cmds << "#{taskset}#{zrk_path} --plain -c #{concurrency} -d #{duration} -m #{method} --format json --output #{output} -R1000:500000 --interval 1s --timeout 8s --latency --format json http://`cat #{hostname}`:3000#{uri}"
+      zrk_cmds << "#{zrk} -c #{concurrency} -d #{duration} -m #{method} --timeout 8s --format json --output #{output} http://`cat #{hostname}`:3000#{uri}"
     end
 
     # Bracket the run with the measurement-validity probe: two reads of the
