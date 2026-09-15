@@ -39,10 +39,14 @@ task :collect do
   # zrk --closed (see config.rake) sends each connection's next request the
   # instant its previous response completes, so achieved_rate is already the
   # framework's real max sustained throughput at this concurrency -- one file
-  # per route, no picking among multiple runs needed.
+  # per route, no picking among multiple runs needed. Under an open-loop ramp
+  # (-R A:B) zrk >= 2.4.2 makes achieved_rate the last --interval only, so a
+  # file from such a run is imported but flagged instead of silently ranked
+  # on one second of data.
   Dir.glob('*/*/.results/*/**.json').each do |file|
     next if File.basename(file) == 'memory.json'
     next if File.basename(file) == 'memory_idle.json'
+    next if File.basename(file) == 'saturation.json'
 
     pp file
 
@@ -52,6 +56,11 @@ task :collect do
     concurrency_level_id = upsert_concurrency(db, concurrency)
 
     data = YAML.safe_load_file(file, symbolize_names: true)
+
+    if data.dig(:config, :closed) == false
+      warn "#{file}: produced by an open-loop zrk run (config.closed=false); " \
+           'achieved_rate covers only the final interval. Re-run `rake config` and collect again.'
+    end
 
     results = {
       duration_ms: data[:duration_s] * 1000,
@@ -87,6 +96,22 @@ task :collect do
 
     data = JSON.load_file(file, symbolize_names: true)
     insert_metric(db, framework_id, :memory_idle_bytes, data[:idle_bytes], concurrency_level_id)
+  end
+
+  # Import measurement validity: how much of its allotted CPU the SERVER
+  # actually burned during the run. A low value means the server was never the
+  # constraint, so the throughput number describes whatever was - most often the
+  # load generator - rather than the framework.
+  Dir.glob('*/*/.results/*/saturation.json').each do |file|
+    language, framework, _, concurrency = file.split('/')
+
+    data = JSON.load_file(file, symbolize_names: true)
+    next unless data[:saturation]
+
+    framework_id = upsert_framework(db, language, framework)
+    concurrency_level_id = upsert_concurrency(db, concurrency)
+
+    insert_metric(db, framework_id, :server_cpu_saturation, data[:saturation], concurrency_level_id)
   end
 
   # Import per-concurrency memory (peak + average under load)

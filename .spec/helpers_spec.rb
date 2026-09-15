@@ -28,3 +28,19 @@ RSpec.describe Hash do
     end
   end
 end
+
+RSpec.describe 'cpuset_size' do
+  it 'counts single cpus and ranges' do
+    expect(cpuset_size('0-3,8,10-11')).to eq(7)
+  end
+
+  it 'is nil when unset' do
+    expect(cpuset_size(nil)).to be_nil
+    expect(cpuset_size('')).to be_nil
+  end
+
+  it 'is nil for a spec it cannot count' do
+    expect(cpuset_size('0-')).to be_nil
+    expect(cpuset_size('a')).to be_nil
+  end
+end
