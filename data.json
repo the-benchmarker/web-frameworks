@@ -69,7 +69,7 @@
     {
       "level": 64,
       "label": "percentile50",
-      "value": 2.076672,
+      "value": 2.1850453333333335,
       "framework_id": 1225
     },
     {
@@ -4971,7 +4971,7 @@
     {
       "level": 64,
       "label": "percentile99",
-      "value": 6.165162666666666,
+      "value": 6.4273066666666665,
       "framework_id": 1225
     },
     {
@@ -9555,7 +9555,7 @@
     {
       "level": 256,
       "label": "minimum_latency",
-      "value": 0.000042,
+      "value": 0.000052333333333333336,
       "framework_id": 1216
     },
     {
@@ -10209,7 +10209,7 @@
     {
       "level": 512,
       "label": "percentile50",
-      "value": 1.0884266666666667,
+      "value": 0.824064,
       "framework_id": 1225
     },
     {
@@ -10617,13 +10617,13 @@
     {
       "level": 512,
       "label": "percentile75",
-      "value": 6.876501333333334,
+      "value": 2.752,
       "framework_id": 1216
     },
     {
       "level": 256,
       "label": "total_requests",
-      "value": 444209.3333333333,
+      "value": 1109658.6666666667,
       "framework_id": 1216
     },
     {
@@ -13629,7 +13629,7 @@
     {
       "level": 256,
       "label": "minimum_latency",
-      "value": 0.00004433333333333333,
+      "value": 0.000045333333333333335,
       "framework_id": 1225
     },
     {
@@ -13881,7 +13881,7 @@
     {
       "level": 512,
       "label": "percentile99",
-      "value": 4.597418666666667,
+      "value": 3.9492266666666667,
       "framework_id": 1225
     },
     {
@@ -18801,7 +18801,7 @@
     {
       "level": 512,
       "label": "percentile99999",
-      "value": 11.20256,
+      "value": 11.191637333333333,
       "framework_id": 1225
     },
     {
@@ -19119,7 +19119,7 @@
     {
       "level": 256,
       "label": "percentile50",
-      "value": 4.123306666666667,
+      "value": 2.259797333333333,
       "framework_id": 1216
     },
     {
@@ -19173,7 +19173,7 @@
     {
       "level": 64,
       "label": "percentile99999",
-      "value": 6.569301333333334,
+      "value": 7.025322666666667,
       "framework_id": 1225
     },
     {
@@ -20187,7 +20187,7 @@
     {
       "level": 64,
       "label": "duration_ms",
-      "value": 15001.0,
+      "value": 15001.333333333332,
       "framework_id": 1225
     },
     {
@@ -20433,7 +20433,7 @@
     {
       "level": 64,
       "label": "total_requests",
-      "value": 466291.3333333333,
+      "value": 1114965.0,
       "framework_id": 1216
     },
     {
@@ -20691,7 +20691,7 @@
     {
       "level": 64,
       "label": "standard_deviation",
-      "value": 1.9297615666666665,
+      "value": 1.9878085666666665,
       "framework_id": 1225
     },
     {
@@ -21663,7 +21663,7 @@
     {
       "level": 512,
       "label": "standard_deviation",
-      "value": 1.3705269333333332,
+      "value": 1.2183584333333333,
       "framework_id": 1225
     },
     {
@@ -24837,7 +24837,7 @@
     {
       "level": 256,
       "label": "total_requests_per_s",
-      "value": 30772.20666666667,
+      "value": 80967.41,
       "framework_id": 1216
     },
     {
@@ -24861,7 +24861,7 @@
     {
       "level": 512,
       "label": "standard_deviation",
-      "value": 3.0135259999999997,
+      "value": 1.5793133666666668,
       "framework_id": 1216
     },
     {
@@ -25077,7 +25077,7 @@
     {
       "level": 64,
       "label": "minimum_latency",
-      "value": 0.000041,
+      "value": 0.000069,
       "framework_id": 1216
     },
     {
@@ -26553,7 +26553,7 @@
     {
       "level": 512,
       "label": "total_requests_per_s",
-      "value": 30814.703333333335,
+      "value": 80962.24,
       "framework_id": 1216
     },
     {
@@ -26721,7 +26721,7 @@
     {
       "level": 512,
       "label": "total_bytes_received",
-      "value": 202326613.66666666,
+      "value": 198747376.66666666,
       "framework_id": 1225
     },
     {
@@ -28383,7 +28383,7 @@
     {
       "level": 64,
       "label": "average_latency",
-      "value": 2.3707741666666666,
+      "value": 2.486953933333333,
       "framework_id": 1225
     },
     {
@@ -32949,7 +32949,7 @@
     {
       "level": 512,
       "label": "average_latency",
-      "value": 1.4631224,
+      "value": 1.2292840333333335,
       "framework_id": 1225
     },
     {
@@ -33159,7 +33159,7 @@
     {
       "level": 64,
       "label": "average_latency",
-      "value": 4.2562147,
+      "value": 2.8469108000000003,
       "framework_id": 1216
     },
     {
@@ -34401,7 +34401,7 @@
     {
       "level": 64,
       "label": "percentile75",
-      "value": 6.862848,
+      "value": 4.625066666666667,
       "framework_id": 1216
     },
     {
@@ -36759,7 +36759,7 @@
     {
       "level": 256,
       "label": "percentile90",
-      "value": 8.673962666666666,
+      "value": 5.834752,
       "framework_id": 1216
     },
     {
@@ -37341,7 +37341,7 @@
     {
       "level": 256,
       "label": "percentile99",
-      "value": 9.725269333333333,
+      "value": 7.047168,
       "framework_id": 1216
     },
     {
@@ -37845,7 +37845,7 @@
     {
       "level": 512,
       "label": "total_requests_per_s",
-      "value": 90980.97,
+      "value": 89111.28,
       "framework_id": 1225
     },
     {
@@ -39081,7 +39081,7 @@
     {
       "level": 64,
       "label": "total_requests_per_s",
-      "value": 98315.37666666666,
+      "value": 92702.89,
       "framework_id": 1225
     },
     {
@@ -39351,7 +39351,7 @@
     {
       "level": 256,
       "label": "percentile99999",
-      "value": 9.856341333333333,
+      "value": 7.276544,
       "framework_id": 1216
     },
     {
@@ -42687,7 +42687,7 @@
     {
       "level": 64,
       "label": "total_bytes_received",
-      "value": 106312701.0,
+      "value": 254323263.66666666,
       "framework_id": 1216
     },
     {
@@ -47925,7 +47925,7 @@
     {
       "level": 64,
       "label": "total_bytes_received",
-      "value": 215484898.33333334,
+      "value": 205805480.33333334,
       "framework_id": 1225
     },
     {
@@ -49029,7 +49029,7 @@
     {
       "level": 256,
       "label": "percentile75",
-      "value": 3.869696,
+      "value": 4.116138666666667,
       "framework_id": 1225
     },
     {
@@ -51633,7 +51633,7 @@
     {
       "level": 512,
       "label": "total_requests",
-      "value": 1231236.3333333333,
+      "value": 1209469.6666666667,
       "framework_id": 1225
     },
     {
@@ -51897,7 +51897,7 @@
     {
       "level": 512,
       "label": "percentile90",
-      "value": 8.638464,
+      "value": 3.8509226666666665,
       "framework_id": 1216
     },
     {
@@ -52155,7 +52155,7 @@
     {
       "level": 256,
       "label": "percentile99999",
-      "value": 6.319445333333333,
+      "value": 6.689450666666667,
       "framework_id": 1225
     },
     {
@@ -53403,7 +53403,7 @@
     {
       "level": 64,
       "label": "percentile50",
-      "value": 4.0523093333333335,
+      "value": 2.608128,
       "framework_id": 1216
     },
     {
@@ -54081,7 +54081,7 @@
     {
       "level": 512,
       "label": "minimum_latency",
-      "value": 0.000042,
+      "value": 0.00004233333333333333,
       "framework_id": 1225
     },
     {
@@ -54561,7 +54561,7 @@
     {
       "level": 256,
       "label": "percentile90",
-      "value": 5.147989333333333,
+      "value": 5.426517333333333,
       "framework_id": 1225
     },
     {
@@ -55143,7 +55143,7 @@
     {
       "level": 512,
       "label": "duration_ms",
-      "value": 15006.666666666668,
+      "value": 15008.333333333332,
       "framework_id": 1216
     },
     {
@@ -55311,7 +55311,7 @@
     {
       "level": 256,
       "label": "duration_ms",
-      "value": 15003.666666666668,
+      "value": 15004.0,
       "framework_id": 1216
     },
     {
@@ -56007,7 +56007,7 @@
     {
       "level": 64,
       "label": "total_requests",
-      "value": 1311267.0,
+      "value": 1252385.0,
       "framework_id": 1225
     },
     {
@@ -62733,7 +62733,7 @@
     {
       "level": 256,
       "label": "total_requests",
-      "value": 1253084.0,
+      "value": 1211945.6666666667,
       "framework_id": 1225
     },
     {
@@ -66081,7 +66081,7 @@
     {
       "level": 256,
       "label": "average_latency",
-      "value": 2.2695498333333335,
+      "value": 2.428962133333333,
       "framework_id": 1225
     },
     {
@@ -70815,7 +70815,7 @@
     {
       "level": 512,
       "label": "minimum_latency",
-      "value": 0.00004133333333333333,
+      "value": 0.000051,
       "framework_id": 1216
     },
     {
@@ -73071,7 +73071,7 @@
     {
       "level": 256,
       "label": "percentile50",
-      "value": 1.9269973333333332,
+      "value": 2.0974933333333334,
       "framework_id": 1225
     },
     {
@@ -74055,7 +74055,7 @@
     {
       "level": 256,
       "label": "average_latency",
-      "value": 4.313124133333334,
+      "value": 2.6050214,
       "framework_id": 1216
     },
     {
@@ -76089,7 +76089,7 @@
     {
       "level": 512,
       "label": "average_latency",
-      "value": 4.2824689,
+      "value": 1.6093145333333334,
       "framework_id": 1216
     },
     {
@@ -80805,7 +80805,7 @@
     {
       "level": 64,
       "label": "percentile90",
-      "value": 8.576341333333334,
+      "value": 5.90848,
       "framework_id": 1216
     },
     {
@@ -81357,13 +81357,13 @@
     {
       "level": 256,
       "label": "standard_deviation",
-      "value": 1.9112082,
+      "value": 2.023215366666667,
       "framework_id": 1225
     },
     {
       "level": 512,
       "label": "percentile99",
-      "value": 9.708885333333333,
+      "value": 5.587285333333333,
       "framework_id": 1216
     },
     {
@@ -81549,7 +81549,7 @@
     {
       "level": 512,
       "label": "percentile50",
-      "value": 4.073472,
+      "value": 1.1753813333333334,
       "framework_id": 1216
     },
     {
@@ -83367,7 +83367,7 @@
     {
       "level": 512,
       "label": "percentile90",
-      "value": 3.5631786666666665,
+      "value": 3.1337813333333333,
       "framework_id": 1225
     },
     {
@@ -84093,7 +84093,7 @@
     {
       "level": 64,
       "label": "minimum_latency",
-      "value": 0.000048,
+      "value": 0.00005466666666666667,
       "framework_id": 1225
     },
     {
@@ -87123,7 +87123,7 @@
     {
       "level": 512,
       "label": "percentile75",
-      "value": 2.5188693333333334,
+      "value": 2.200064,
       "framework_id": 1225
     },
     {
@@ -87795,7 +87795,7 @@
     {
       "level": 256,
       "label": "total_bytes_received",
-      "value": 205915787.33333334,
+      "value": 199154616.66666666,
       "framework_id": 1225
     },
     {
@@ -91485,13 +91485,13 @@
     {
       "level": 256,
       "label": "percentile75",
-      "value": 6.935210666666666,
+      "value": 4.396714666666667,
       "framework_id": 1216
     },
     {
       "level": 64,
       "label": "percentile90",
-      "value": 5.266773333333333,
+      "value": 5.440170666666667,
       "framework_id": 1225
     },
     {
@@ -92973,7 +92973,7 @@
     {
       "level": 64,
       "label": "duration_ms",
-      "value": 15001.0,
+      "value": 15001.333333333332,
       "framework_id": 1216
     },
     {
@@ -93627,7 +93627,7 @@
     {
       "level": 512,
       "label": "total_bytes_received",
-      "value": 101682026.33333333,
+      "value": 252090353.0,
       "framework_id": 1216
     },
     {
@@ -94041,7 +94041,7 @@
     {
       "level": 64,
       "label": "percentile75",
-      "value": 4.011008,
+      "value": 4.174506666666667,
       "framework_id": 1225
     },
     {
@@ -95205,7 +95205,7 @@
     {
       "level": 64,
       "label": "standard_deviation",
-      "value": 2.998387966666667,
+      "value": 2.1177181333333337,
       "framework_id": 1216
     },
     {
@@ -97491,7 +97491,7 @@
     {
       "level": 256,
       "label": "total_requests_per_s",
-      "value": 92171.11,
+      "value": 89092.05666666667,
       "framework_id": 1225
     },
     {
@@ -99357,7 +99357,7 @@
     {
       "level": 512,
       "label": "total_requests",
-      "value": 445936.0,
+      "value": 1105643.3333333333,
       "framework_id": 1216
     },
     {
@@ -101493,7 +101493,7 @@
     {
       "level": 256,
       "label": "standard_deviation",
-      "value": 3.027681133333333,
+      "value": 2.1711105,
       "framework_id": 1216
     },
     {
@@ -102273,7 +102273,7 @@
     {
       "level": 64,
       "label": "percentile99999",
-      "value": 9.736192,
+      "value": 7.597397333333333,
       "framework_id": 1216
     },
     {
@@ -103095,7 +103095,7 @@
     {
       "level": 512,
       "label": "duration_ms",
-      "value": 15007.666666666668,
+      "value": 15008.333333333332,
       "framework_id": 1225
     },
     {
@@ -108687,7 +108687,7 @@
     {
       "level": 64,
       "label": "percentile99",
-      "value": 9.618773333333333,
+      "value": 7.067648,
       "framework_id": 1216
     },
     {
@@ -110529,7 +110529,7 @@
     {
       "level": 64,
       "label": "total_requests_per_s",
-      "value": 32387.273333333334,
+      "value": 85741.10333333333,
       "framework_id": 1216
     },
     {
@@ -111969,7 +111969,7 @@
     {
       "level": 256,
       "label": "total_bytes_received",
-      "value": 101292609.66666667,
+      "value": 253016579.33333334,
       "framework_id": 1216
     },
     {
@@ -112359,7 +112359,7 @@
     {
       "level": 256,
       "label": "percentile99",
-      "value": 6.135125333333333,
+      "value": 6.524245333333333,
       "framework_id": 1225
     },
     {
@@ -115959,7 +115959,7 @@
     {
       "level": 512,
       "label": "percentile99999",
-      "value": 9.834496,
+      "value": 10.468010666666666,
       "framework_id": 1216
     },
     {
@@ -117993,7 +117993,7 @@
     },
     {
       "id": 1225,
-      "version": 2.0,
+      "version": 12.0,
       "label": "durian.js-fastify",
       "language": "javascript",
       "website": "https://github.com/mario-huang/durian.js"
@@ -120107,7 +120107,7 @@
     },
     {
       "id": 1216,
-      "version": 2.0,
+      "version": 12.0,
       "label": "durian.js",
       "language": "javascript",
       "website": "https://github.com/mario-huang/durian.js"
@@ -120743,7 +120743,7 @@
       "version": 0.16
     }
   ],
-  "updated_at": "2026-09-15 11:13:24 UTC",
+  "updated_at": "2026-09-15 12:09:48 UTC",
   "version": 1,
   "hardware": {
     "cpus": 16,
