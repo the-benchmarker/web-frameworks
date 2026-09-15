@@ -8,7 +8,4 @@ framework:
   binaries:
     - target/benchmark.jar
 
-language:
-  engines:
-    default:
-      command: /usr/bin/java -jar target/benchmark.jar benchmark.App
+  command: /usr/bin/java -jar target/benchmark.jar benchmark.App

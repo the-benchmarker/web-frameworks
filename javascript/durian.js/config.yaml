@@ -3,4 +3,9 @@ framework:
   version: 12.0
   engines:
     - bun
-  command: bun run pm2
+language:
+  engines:
+    bun:
+      bootstrap:
+        - bun install pm2
+      command: bun run pm2

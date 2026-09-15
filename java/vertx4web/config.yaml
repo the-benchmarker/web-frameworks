@@ -8,7 +8,4 @@ framework:
   binaries:
     - target/server.jar
 
-language:
-  engines:
-    default:
-      command: /usr/bin/java -jar /opt/web/target/server.jar -instances $(nproc)
+  command: /usr/bin/java -jar /opt/web/target/server.jar -instances $(nproc)

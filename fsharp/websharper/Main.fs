@@ -1,7 +1,6 @@
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Http
-open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
@@ -23,16 +22,12 @@ module Site =
             | GetUser id -> Content.Text(id, encoding=encoding)
             | User -> Content.Ok)
 
-type Website(config: IConfiguration) =
-    inherit SiteletService<EndPoint>()
-    override val Sitelet = Site.Main
-
 type Startup() =
 
-    member this.ConfigureServices(services: IServiceCollection) = services.AddSitelet<Website>() |> ignore
+    member this.ConfigureServices(services: IServiceCollection) = services.AddWebSharper() |> ignore
 
     member this.Configure(app: IApplicationBuilder) =
-        app.UseWebSharper().Run(fun context ->
+        app.UseWebSharper(fun builder -> builder.Sitelet(Site.Main) |> ignore).Run(fun context ->
            context.Response.StatusCode <- 404
            context.Response.WriteAsync("Page not found"))
 
