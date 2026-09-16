@@ -5,6 +5,9 @@ language:
     - "**/*.php"
     - composer.json
 
+  before_build:
+    - curl -fL --output /tmp/pie https://github.com/php/pie/releases/latest/download/pie.phar && install /tmp/pie /usr/local/bin
+
   bootstrap:
     - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - composer install --no-dev --prefer-dist --classmap-authoritative
@@ -15,46 +18,38 @@ language:
       deps:
         - nginx
     workerman:
+      before_build:
+        - docker-php-ext-install pcntl sockets
       extensions:
-        - event
+        - osmanov/pecl-event
       deps:
         - libevent-dev
         - libssl-dev
-      modules:
-        - pcntl
-        - sockets
       command: php public/index.php start
     road-runner:
       extensions:
-        - protobuf
+        - extport/protobuf
       files:
         - .rr.yaml
       bootstrap:
-        - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-        - composer install --no-dev --prefer-dist --classmap-authoritative
-        - composer dumpautoload -o
         - vendor/bin/rr get-binary
       modules:
         - sockets
       command: ./rr serve
     swoole:
-      extensions:
-        - swoole/6.2.2
+      before_build:
+        - curl -fL --output /usr/local/bin/pie https://github.com/php/pie/releases/latest/download/pie.phar && chmod +x /usr/local/bin/pie && pie install --no-cache swoole/swoole:6.2.2
       command: php public/index.php
       build_deps:
         - libbrotli-dev
         - libssl-dev
     reactphp:
+      extensions:
+        - osmanov/pecl-event
       deps:
         - libevent-dev
         - libicu-dev
         - libssl-dev
-      modules:
-        - intl
-        - sockets
-        - pcntl
-      extensions:
-        - event
 
 framework:
   engines:

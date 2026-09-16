@@ -17,6 +17,11 @@ WORKDIR /usr/src/app
 
 RUN docker-php-ext-install zip
 
+# PHP 8.5 removed this legacy forwarding header, but some PECL extensions
+# still include it instead of Zend/zend_smart_string.h.
+RUN if [ ! -e /usr/local/include/php/ext/standard/php_smart_string.h ]; then \
+  ln -s ../../Zend/zend_smart_string.h /usr/local/include/php/ext/standard/php_smart_string.h; fi
+
 {{#environment}}
   ENV {{{.}}}
 {{/environment}}
@@ -30,9 +35,7 @@ RUN docker-php-ext-install zip
 {{/modules}}
 
 {{#extensions}}
-  RUN mkdir -p /usr/src/php/ext/{{{.}}}
-  RUN curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
-  RUN docker-php-ext-install {{{.}}}
+  RUN pie install --no-cache {{{.}}}
 {{/extensions}}
 
 ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini

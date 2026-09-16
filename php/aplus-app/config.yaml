@@ -25,8 +25,8 @@ framework:
     - gd
 
   extensions:
-    - igbinary
-    - memcached
-    - msgpack
-    - redis
-    - yaml
+    - pie-extensions/igbinary
+    - php-memcached/php-memcached
+    - msgpack/msgpack-php
+    - pie-extensions/redis
+    - pecl/yaml
