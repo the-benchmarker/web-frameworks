@@ -10,6 +10,10 @@ app.set('etag', false);
 // keep-alive is implicit on HTTP/1.1, so the Connection and Keep-Alive headers carry no
 // information: off, which is also what the engine itself answers.
 app.set('connection headers', false);
+// lets a handler that only writes a route parameter back, /user/:id below, be compiled into a
+// uWS declarative response at listen() and answered without entering javascript. Off by default
+// because uWS writes the parameter as it is on the wire, undecoded, which is fine for an id.
+app.set('declarative request values', true);
 
 app.get('/', function (req, res) {
   res.send('');
