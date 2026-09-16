@@ -31,6 +31,22 @@ def cpuset_size(spec)
   end
 end
 
+# The -R of the fixed-rate latency pass (LATENCY_RATE). "N%" is N percent of
+# the closed-loop achieved_rate handed in, nil when that run left no result
+# (the caller decides what to do); a plain integer is an absolute rate, the
+# same for every framework. Anything else is nil.
+def latency_rate_for(spec, achieved)
+  spec = spec.to_s.strip
+  if (m = spec.match(/\A(\d+(?:\.\d+)?)%\z/))
+    return nil unless achieved.is_a?(Numeric) && achieved.positive?
+
+    return [(achieved * m[1].to_f / 100.0).floor, 1].max
+  end
+  return spec.to_i if spec.match?(/\A\d+\z/) && spec.to_i.positive?
+
+  nil
+end
+
 def normalize_shell(shell)
   shell
     .gsub(/\\\s*\n/, " ") # escape newlines

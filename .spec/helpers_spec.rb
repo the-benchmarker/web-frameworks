@@ -44,3 +44,26 @@ RSpec.describe 'cpuset_size' do
     expect(cpuset_size('a')).to be_nil
   end
 end
+
+RSpec.describe 'latency_rate_for' do
+  it 'takes a percentage of the closed-loop rate' do
+    expect(latency_rate_for('50%', 167_504.2)).to eq(83_752)
+    expect(latency_rate_for('12.5%', 80_000)).to eq(10_000)
+  end
+
+  it 'never asks for less than one request per second' do
+    expect(latency_rate_for('1%', 20)).to eq(1)
+  end
+
+  it 'passes an absolute rate through unchanged' do
+    expect(latency_rate_for('20000', nil)).to eq(20_000)
+    expect(latency_rate_for(' 20000 ', 5)).to eq(20_000)
+  end
+
+  it 'is nil for a percentage without a closed-loop rate, and for nonsense' do
+    expect(latency_rate_for('50%', nil)).to be_nil
+    expect(latency_rate_for('50%', 0)).to be_nil
+    expect(latency_rate_for('fast', 100)).to be_nil
+    expect(latency_rate_for('0', 100)).to be_nil
+  end
+end

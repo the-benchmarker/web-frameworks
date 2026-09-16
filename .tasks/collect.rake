@@ -47,6 +47,7 @@ task :collect do
     next if File.basename(file) == 'memory.json'
     next if File.basename(file) == 'memory_idle.json'
     next if File.basename(file) == 'saturation.json'
+    next if File.basename(file).end_with?('_latency.json')
 
     pp file
 
@@ -112,6 +113,30 @@ task :collect do
     concurrency_level_id = upsert_concurrency(db, concurrency)
 
     insert_metric(db, framework_id, :server_cpu_saturation, data[:saturation], concurrency_level_id)
+  end
+
+  # Fixed-rate latency pass (LATENCY_RATE at `rake config`): the closed-loop
+  # run finds the ceiling; this one reports latency at a defined load,
+  # coordinated-omission corrected. Its rates are metrics of their own and
+  # never fold into total_requests_per_s. rate_ratio < 1 means the framework
+  # could not sustain the target, and the latency then includes the backlog.
+  Dir.glob('*/*/.results/*/*_latency.json').each do |file|
+    language, framework, _, concurrency = file.split('/')
+
+    data = JSON.load_file(file, symbolize_names: true)
+    next unless data[:latency_us]
+
+    framework_id = upsert_framework(db, language, framework)
+    concurrency_level_id = upsert_concurrency(db, concurrency)
+
+    {
+      latency_at_rate_target_rps: data[:target_rate],
+      latency_at_rate_achieved_rps: data[:achieved_rate],
+      latency_at_rate_ratio: data[:rate_ratio],
+      latency_at_rate_average: data.dig(:latency_us, :mean) / 1_000_000.0,
+      latency_at_rate_percentile50: data.dig(:latency_us, :p50) / 1_000_000.0,
+      latency_at_rate_percentile99: data.dig(:latency_us, :p99) / 1_000_000.0
+    }.each { |key, value| insert_metric(db, framework_id, key, value, concurrency_level_id) }
   end
 
   # Import per-concurrency memory (peak + average under load)

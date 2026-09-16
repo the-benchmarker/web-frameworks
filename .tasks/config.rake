@@ -145,6 +145,16 @@ def commands_for(language, framework, variant, provider = 'docker')
   # harness did) is a project decision about the workload, not a harness bug.
   duration = ENV.fetch('DURATION', '15s')
 
+  # Optional second pass per route, open loop at a FIXED rate (LATENCY_RATE):
+  # the closed run finds the ceiling and the latency AT that ceiling; this one
+  # reports latency at a defined load, coordinated-omission corrected (zrk
+  # measures from the scheduled send). "50%" takes half of each framework's
+  # own closed-loop rate, so every framework is measured inside what it can
+  # sustain; "20000" is the same absolute rate for everyone. Unset = off, and
+  # the collect commands are byte-identical to the single-pass form. Doubles
+  # the collect time when on. A ramp answers neither question.
+  latency_rate = ENV.fetch('LATENCY_RATE', '').strip
+
   # zrk drives load from 2 threads unless told otherwise, whatever the host,
   # and two threads cap out below what the fast servers deliver. Give it every
   # core it was pinned to (LOAD_CPUS), or THREADS, or the whole host.
@@ -154,6 +164,7 @@ def commands_for(language, framework, variant, provider = 'docker')
   cid_file = File.join(directory, language, framework, "cid-#{variant}.txt")
   sampler = File.join(File.dirname(__FILE__), 'memory_sampler.rb')
   saturation_probe = File.join(File.dirname(__FILE__), 'saturation.rb')
+  latency_probe = File.join(File.dirname(__FILE__), 'latency_rate.rb')
   zrk = "#{taskset}zrk --plain --closed -t #{threads}"
 
   # Warm up at full throttle, like the collect runs. JIT runtimes need real
@@ -175,6 +186,13 @@ def commands_for(language, framework, variant, provider = 'docker')
       method, uri = route.split(':')
       output = File.join(directory, language, framework, '.results', concurrency, "#{uri.tr('/', '_')}.json")
       zrk_cmds << "#{zrk} -c #{concurrency} -d #{duration} -m #{method} --timeout 8s --format json --output #{output} http://`cat #{hostname}`:3000#{uri}"
+      next if latency_rate.empty?
+
+      # The fixed-rate pass reads its -R from the closed run's result at run
+      # time (latency_rate.rb), so it always sits where LATENCY_RATE asked.
+      latency_output = File.join(results_dir, "#{uri.tr('/', '_')}_latency.json")
+      rate = "`ruby #{latency_probe} --closed #{output} --spec #{latency_rate}`"
+      zrk_cmds << "#{taskset}zrk --plain -t #{threads} -c #{concurrency} -R #{rate} -d #{duration} -m #{method} --timeout 8s --format json --output #{latency_output} http://`cat #{hostname}`:3000#{uri}"
     end
 
     # Bracket the run with the measurement-validity probe: two reads of the
