@@ -104,6 +104,14 @@ bundle exec rake config
 ```
 
 Then run the same `collect` target. Route entries use the `METHOD:/path` form.
+
+The load generator runs closed-loop over keep-alive connections: every connection sends its next request as soon as the previous response arrives, so the reported rate is the framework's sustained throughput for the whole run. Three more variables control where that work runs:
+
+- `THREADS` sets how many load threads zrk uses. It defaults to the cores in `LOAD_CPUS`, or every host core when unset. zrk's own default of 2 threads is far too few to saturate a fast server.
+- `SERVER_CPUS` and `LOAD_CPUS` take cpuset specs such as `0-3` and `4-15`. They pin the framework container (`--cpuset-cpus`) and the load generator (`taskset`) to disjoint cores so neither can steal cycles from the other.
+- `LATENCY_RATE` adds a second pass per route at a fixed request rate. The closed-loop run reports throughput and latency at saturation; this pass reports latency at a defined load, with coordinated-omission correction. `LATENCY_RATE=50%` uses half of each framework's own closed-loop rate, so every framework is measured inside what it can sustain; `LATENCY_RATE=20000` uses the same absolute rate for all. The results land in `<route>_latency.json` and are imported as `latency_at_rate_*` metrics, separate from the headline rate. It doubles the collect time and is off by default.
+
+Every `collect` run also writes `.results/<concurrency>/saturation.json`, the share of its allotted CPU the server actually used. Once results are exported to `data.json`, `bundle exec rake db:check_saturation` lists the runs where the server stayed below 50%, which means something else, usually the load generator, was the bottleneck and the number does not describe the framework.
 Create a matching `.results/<concurrency>` directory for every configured concurrency level before collecting results; the batch runner does this automatically for its predefined levels.
 
 > [!CAUTION]
