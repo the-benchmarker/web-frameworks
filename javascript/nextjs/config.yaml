@@ -9,5 +9,8 @@ framework:
     - cluster.mjs
     - package.json
 
+  environment:
+    NEXT_TELEMETRY_DISABLED: 1
+
   bootstrap:
-    - NEXT_TELEMETRY_DISABLED=1 npm run build
+    - npm run build

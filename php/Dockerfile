@@ -1,5 +1,5 @@
 {{#language.version}}
-  FROM php:{{{.}}}-fpm{{#language.distro}}-{{{.}}}{{/language.distro}}
+  FROM php:{{{.}}}-fpm{{#language.dist}}-{{{.}}}{{/language.dist}}
 {{/language.version}}
 {{^language.version}}
   FROM php:8.5-fpm
@@ -15,12 +15,7 @@ RUN apt-get -qq update && \
 
 WORKDIR /usr/src/app
 
-RUN docker-php-ext-install zip
-
-# PHP 8.5 removed this legacy forwarding header, but some PECL extensions
-# still include it instead of Zend/zend_smart_string.h.
-RUN if [ ! -e /usr/local/include/php/ext/standard/php_smart_string.h ]; then \
-  ln -s ../../Zend/zend_smart_string.h /usr/local/include/php/ext/standard/php_smart_string.h; fi
+RUN docker-php-ext-install zip {{#modules}}{{{.}}}{{/modules}}
 
 {{#environment}}
   ENV {{{.}}}
@@ -30,10 +25,6 @@ RUN if [ ! -e /usr/local/include/php/ext/standard/php_smart_string.h ]; then \
   RUN {{{.}}}
 {{/before_build}}
 
-{{#modules}}
-  RUN docker-php-ext-install {{{.}}}
-{{/modules}}
-
 {{#extensions}}
   RUN pie install --no-cache {{{.}}}
 {{/extensions}}
@@ -42,7 +33,6 @@ ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
 RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
   sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
-
 
 {{#files}}
   COPY '{{source}}' '{{target}}'

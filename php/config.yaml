@@ -37,13 +37,15 @@ language:
         - sockets
       command: ./rr serve
     swoole:
-      before_build:
-        - curl -fL --output /usr/local/bin/pie https://github.com/php/pie/releases/latest/download/pie.phar && chmod +x /usr/local/bin/pie && pie install --no-cache swoole/swoole:6.2.2
+      extensions:
+        - swoole/swoole
       command: php public/index.php
       build_deps:
         - libbrotli-dev
         - libssl-dev
     reactphp:
+      modules:
+        - sockets
       extensions:
         - osmanov/pecl-event
       deps:
