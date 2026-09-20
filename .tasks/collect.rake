@@ -113,6 +113,9 @@ task :collect do
     concurrency_level_id = upsert_concurrency(db, concurrency)
 
     insert_metric(db, framework_id, :server_cpu_saturation, data[:saturation], concurrency_level_id)
+    # Absolute cores kept busy, so a single-threaded server (a low share of
+    # many allotted cores, one core pegged) can be told apart from an idle one.
+    insert_metric(db, framework_id, :server_cpu_cores, data[:cores_used], concurrency_level_id) if data[:cores_used]
   end
 
   # Fixed-rate latency pass (LATENCY_RATE at `rake config`): the closed-loop

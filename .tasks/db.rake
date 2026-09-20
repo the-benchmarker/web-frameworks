@@ -48,10 +48,21 @@ namespace :db do
     results = JSON.load_file('data.json', symbolize_names: true)
     frameworks = results[:frameworks].to_h { [it[:id], "#{it[:language]}/#{it[:label]}"] }
 
+    # Two numbers per run: the share of its allotted cores the server burned,
+    # and the cores it kept busy in absolute terms. The share alone misreads a
+    # single-threaded server - one core pegged out of sixteen is 6% - so the
+    # cores column is printed next to it.
+    cores = results[:metrics].filter_map do |m|
+      next unless m[:label] == 'server_cpu_cores'
+
+      [[m[:framework_id], m[:level]], m[:value]]
+    end.to_h
+
     rows = results[:metrics].filter_map do |m|
       next unless m[:label] == 'server_cpu_saturation'
 
-      { name: frameworks[m[:framework_id]], level: m[:level], saturation: m[:value] }
+      { name: frameworks[m[:framework_id]], level: m[:level], saturation: m[:value],
+        cores_used: cores[[m[:framework_id], m[:level]]] }
     end
 
     if rows.empty?
@@ -62,11 +73,17 @@ namespace :db do
     idle = rows.select { it[:saturation] < 0.5 }
     puts format('%<bad>d of %<all>d measurements ran with the server below 50%% of its allotted CPU.',
                 bad: idle.size, all: rows.size)
-    puts 'Those numbers describe the load generator, not the framework:' unless idle.empty?
+    unless idle.empty?
+      puts 'A multi-core server here was not the bottleneck, so the number describes the load generator.'
+      puts 'A single-threaded server that kept one whole core busy is bound on that core instead;'
+      puts 'the cores column tells the two apart:'
+    end
 
     idle.sort_by { it[:saturation] }.first(40).each do |row|
-      puts format('  %<name>-40s c=%<level>-5s server used %<pct>5.1f%% of its CPU',
-                  name: row[:name], level: row[:level], pct: row[:saturation] * 100)
+      busy = row[:cores_used] ? format(', %<n>.1f cores busy', n: row[:cores_used]) : ''
+      allotted = row[:cores_used] && row[:saturation].positive? ? format(' of %<n>.0f', n: row[:cores_used] / row[:saturation]) : ''
+      puts format('  %<name>-40s c=%<level>-5s server used %<pct>5.1f%% of its CPU%<busy>s%<allotted>s',
+                  name: row[:name], level: row[:level], pct: row[:saturation] * 100, busy: busy, allotted: allotted)
     end
   end
 

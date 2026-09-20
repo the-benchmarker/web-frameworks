@@ -105,6 +105,11 @@ result =
       server_cpu_seconds: cpu_seconds.round(3),
       wall_seconds: wall.round(3),
       cores: cores,
+      # Cores the server kept busy, in absolute terms. The share above divides
+      # by the cores it was GIVEN, so a single-threaded server pegging one core
+      # of sixteen reads as 6% - idle by the share, saturated by this number.
+      # Read the two together.
+      cores_used: (cpu_seconds / wall).round(3),
       saturation: saturation&.round(4),
       verdict: verdict
     }
@@ -114,7 +119,9 @@ FileUtils.mkdir_p(File.dirname(options[:out]))
 File.write(options[:out], JSON.generate(result))
 
 if result[:verdict] == 'server-idle'
-  warn "[saturation] server used #{(result[:saturation] * 100).round(1)}% of its allotted CPU " \
-       "(#{result[:server_cpu_seconds]}s across #{result[:cores]} cores over #{result[:wall_seconds]}s). " \
-       'The server was not the bottleneck - this measurement describes the load generator, not the framework.'
+  warn "[saturation] server used #{(result[:saturation] * 100).round(1)}% of its allotted CPU: " \
+       "#{result[:cores_used]} of #{result[:cores]} cores busy over #{result[:wall_seconds]}s. " \
+       'A multi-core server was not the bottleneck here - the number describes the load generator, ' \
+       'not the framework. (A single-threaded server that kept one whole core busy is the exception: ' \
+       'it was bound on that core.)'
 end
