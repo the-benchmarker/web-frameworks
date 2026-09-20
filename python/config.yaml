@@ -95,7 +95,7 @@ language:
           ${PYTHON_APP}
     peregrine:
       bootstrap:
-        - pip install 'peregrine-server>=1.1.5,<1.2'
+        - pip install 'peregrine-server>=1.1.7,<1.2'
       environment:
         INTERFACE: asgi
         PYTHON_APP: server:app
