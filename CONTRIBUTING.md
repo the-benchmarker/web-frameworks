@@ -24,6 +24,30 @@ open a pull request.
 
 ## Adding a framework
 
+Define `bootstrap` as a YAML list of shell commands. Dockerfile generation
+concatenates commands from the root config, the language config (for example,
+`javascript/config.yaml`), then the framework config (for example,
+`javascript/nextjs/config.yaml`). Within each file, commands run in this order:
+top-level bootstrap, language bootstrap, selected language engine bootstrap,
+framework bootstrap, then inline framework engine bootstrap. Command order and
+repeated commands are preserved, so language dependency installation runs before
+framework build commands.
+
+Define `environment` as YAML key/value pairs:
+
+```yaml
+environment:
+  NODE_ENV: production
+  NEXT_TELEMETRY_DISABLED: 1
+```
+
+Environment mappings merge from the root config, then the language config, then
+the framework config. Within each file, the order is top-level environment,
+language environment, selected language engine environment, framework environment,
+then inline framework engine environment. Later values override duplicate keys;
+variables for other engines are excluded. Each resulting pair renders as one
+`ENV KEY=value` instruction in the Dockerfile.
+
 - All frameworks **SHOULD** follow this rules :
 
 | HTTP   | Route       | Status code | Response body         |
