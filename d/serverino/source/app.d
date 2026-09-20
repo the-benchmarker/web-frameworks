@@ -26,5 +26,5 @@ mixin ServerinoMain;
     else if (req.path == "/user" && req.method == Request.Method.Post)
         output.status = 200;
     else if (req.path.startsWith("/user/") && req.method == Request.Method.Get)
-        output ~= req.uri[6..$];
+        output ~= req.path[6..$];
 }

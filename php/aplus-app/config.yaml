@@ -25,7 +25,7 @@ framework:
     - gd
 
   extensions:
-    - pie-extensions/igbinary
+    - pie-extensions/igbinary:3.2.17RC1
     - php-memcached/php-memcached
     - msgpack/msgpack-php
     - pie-extensions/redis

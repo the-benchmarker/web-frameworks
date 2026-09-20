@@ -15,7 +15,7 @@ RUN apt-get -qq update && \
 
 WORKDIR /usr/src/app
 
-RUN docker-php-ext-install zip {{#modules}}{{{.}}}{{/modules}}
+RUN docker-php-ext-install zip {{#modules}}{{{.}}} {{/modules}}
 
 {{#environment}}
   ENV {{{.}}}
