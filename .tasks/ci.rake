@@ -76,7 +76,7 @@ def matrix_for(language)
     next [] if language == 'v' && framework == 'vanilla_io_uring'
 
     ## imi-swoole is in timeout
-    next [] unless framework == 'imi-swoole'
+    next [] unless framework.start_with?('imi')
 
     config = get_config_from(File.join(Dir.pwd, language, framework))
     engines = config.dig('framework', 'engines')
