@@ -1,5 +1,5 @@
 {{#language.version}}
-  FROM php:{{{.}}}-fpm{{#language.distro}}-{{{.}}}{{/language.distro}}
+  FROM php:{{{.}}}-fpm{{#language.dist}}-{{{.}}}{{/language.dist}}
 {{/language.version}}
 {{^language.version}}
   FROM php:8.5-fpm
@@ -15,7 +15,7 @@ RUN apt-get -qq update && \
 
 WORKDIR /usr/src/app
 
-RUN docker-php-ext-install zip
+RUN docker-php-ext-install zip {{#modules}}{{{.}}} {{/modules}}
 
 {{#environment}}
   ENV {{{.}}}
@@ -25,21 +25,14 @@ RUN docker-php-ext-install zip
   RUN {{{.}}}
 {{/before_build}}
 
-{{#modules}}
-  RUN docker-php-ext-install {{{.}}}
-{{/modules}}
-
 {{#extensions}}
-  RUN mkdir -p /usr/src/php/ext/{{{.}}}
-  RUN curl -fsSL https://pecl.php.net/get/{{{.}}} | tar xvz -C "/usr/src/php/ext/{{{.}}}" --strip 1
-  RUN docker-php-ext-install {{{.}}}
+  RUN pie install --no-cache {{{.}}}
 {{/extensions}}
 
 ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
 RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
   sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
-
 
 {{#files}}
   COPY '{{source}}' '{{target}}'

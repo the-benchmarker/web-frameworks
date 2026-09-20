@@ -3,7 +3,7 @@ framework:
   version: 2.0
 
   extensions:
-    - redis
+    - phpredis/phpredis
 
   engines:
     - workerman

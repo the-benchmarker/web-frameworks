@@ -1,4 +1,8 @@
-import { App } from 'uWebSockets.js';
+import { createRequire } from 'node:module';
+
+// Use the CommonJS entry point to bypass the broken ESM wrapper in 20.71.0.
+const require = createRequire(import.meta.url);
+const { App } = require('uWebSockets.js');
 
 // Create a new instance of uWebSockets.js HTTP
 const port = 3000;

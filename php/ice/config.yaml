@@ -1,13 +1,9 @@
-language:
-  version: "8.3"
-  distro: bookworm
-
 framework:
   website: iceframework.org
-  version: 1.11
+  version: 1.12
 
-  extensions:
-    - ice/1.11.0
+  bootstrap:
+    - cd vendor/iceframework/framework && bash install && docker-php-ext-enable ice
 
   nginx_conf:
     - |
