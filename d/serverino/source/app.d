@@ -21,10 +21,10 @@ mixin ServerinoMain;
 
 @safe
 @endpoint void hello(Request req, Output output) {
-    if (req.uri == "/" && req.method == Request.Method.Get)
+    if (req.path == "/" && req.method == Request.Method.Get)
         output.status = 200;
-    else if (req.uri == "/user" && req.method == Request.Method.Post)
+    else if (req.path == "/user" && req.method == Request.Method.Post)
         output.status = 200;
-    else if (req.uri.startsWith("/user/") && req.method == Request.Method.Get)
+    else if (req.path.startsWith("/user/") && req.method == Request.Method.Get)
         output ~= req.uri[6..$];
 }

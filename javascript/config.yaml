@@ -31,6 +31,10 @@ language:
         NODE_APP: app.mjs
       bootstrap:
         - npm install
+      fixes:
+        # v20.71.0's ESM wrapper imports index.js, but the CommonJS entry is uws.js.
+        # Include nested dependencies and run after all framework install steps.
+        - find node_modules -path '*/uWebSockets.js/ESM_wrapper.mjs' -exec sed -i "s|from './index.js'|from './uws.js'|" {} +
       command: node cluster.mjs
     deno:
       bootstrap:
