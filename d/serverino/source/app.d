@@ -16,7 +16,7 @@ mixin ServerinoMain;
         .enableKeepAlive(180.seconds)
         .addListener("0.0.0.0", 3000)
         .setDaemonInstances(totalCPUs)
-        .setWorkers(4);
+        .setWorkers(1);
 }
 
 @safe
