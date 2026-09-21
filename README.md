@@ -117,6 +117,23 @@ Create a matching `.results/<concurrency>` directory for every configured concur
 > [!CAUTION]
 > A full benchmark consumes substantial CPU, memory, time, network bandwidth, and container storage. Start with one implementation and keep the load generator separate from services you care about.
 
+### 🔬 What a run measures
+
+Every number on the board comes from one load model, so it helps to know what it is before comparing two of them.
+
+- **Closed loop over keep-alive connections.** `zrk --closed -c N` opens N connections and each one sends its next request the instant the previous response arrives. The only knob is N. `total_requests_per_s` is `requests / duration` over the whole run, and the latency columns are the per-request service time at that concurrency. Under a closed loop a saturated server queues requests inside the N connections, so latency at c=512 is mostly queueing; that is expected and comparable across frameworks at the same N.
+- **Latency at a defined load** is a separate, optional pass (`LATENCY_RATE`, see above): open loop at a fixed rate, with coordinated-omission correction. It answers a different question and never changes the headline rate.
+- **The generator is sized to saturate the server.** zrk runs `THREADS` load threads (every core in `LOAD_CPUS`, or every host core), and `SERVER_CPUS` / `LOAD_CPUS` keep the two on disjoint cores. Roughly three generator cores per server core are needed before a fast server saturates.
+- **Every run says whether it was valid.** `saturation.json` records the share of its allotted CPU the server burned and the cores it kept busy. Above 75% the server was the bottleneck and the number is the framework's; below 50% something else was, usually the generator or the network path, and the number describes that instead. A single-threaded server pegging one core of many shows a low share while being bound on that core: read the share and the cores together. `bundle exec rake db:check_saturation` lists the runs to distrust.
+
+**Why the figures moved.** The method changed in 2026 and results from different revisions are not comparable, which is what the reading guidance under Results means by "same benchmark revision":
+
+| Period | Generator and load model | What the headline rate meant |
+|---|---|---|
+| until 2026-08 | `oha`, closed loop, a new connection per request | accept + request cost, dominated by connection setup |
+| 2026-09-02 to 2026-09-15 | `zrk`, linear ramp to 500k req/s over keep-alive | the last one-second window of the ramp; latency was schedule backlog |
+| from this revision | `zrk --closed`, keep-alive, sized and pinned generator, validity probe | whole-run sustained rate at N connections, with latency at that N |
+
 ## 🤝 Add or update a framework
 
 Contributions are welcome: new frameworks and variants, dependency updates, correctness fixes, documentation, and benchmarking improvements all help.
