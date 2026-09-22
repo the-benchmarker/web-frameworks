@@ -1,141 +1,119 @@
-use actix_web::{web, App, HttpRequest, HttpResponse, HttpServer, Responder};
-use matchit::Router as MatchitRouter;
-use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
-use zenocore::{parser::parse_string, Context, Engine, Node, Scope, SlotMeta, Value};
+use actix_web::{web, App, HttpRequest, HttpResponse, HttpServer};
+use std::sync::Arc;
+use zenocore::{parser::parse_string, Context, Node, Scope, SlotMeta};
 
-#[derive(Clone)]
-struct HttpResponseData {
-    status: u16,
-    content_type: &'static str,
-    body: String,
+#[derive(Clone, Debug)]
+enum CompiledBody {
+    Static(&'static [u8]),
+    DynamicParam,
 }
 
-impl Default for HttpResponseData {
-    fn default() -> Self {
-        Self {
-            status: 200,
-            content_type: "text/plain",
-            body: String::new(),
+#[derive(Clone, Debug)]
+struct CompiledRouteHandler {
+    status: actix_web::http::StatusCode,
+    content_type: &'static str,
+    body: CompiledBody,
+}
+
+impl CompiledRouteHandler {
+    #[inline(always)]
+    fn handle(&self, req: &HttpRequest) -> HttpResponse {
+        let mut builder = HttpResponse::build(self.status);
+        builder.content_type(self.content_type);
+
+        match &self.body {
+            CompiledBody::Static(b) => builder.body(*b),
+            CompiledBody::DynamicParam => {
+                let path = req.path();
+                let param = match path.rfind('/') {
+                    Some(idx) => &path[idx + 1..],
+                    None => path,
+                };
+                builder.body(param.as_bytes().to_vec())
+            }
         }
     }
-}
-
-struct MethodHandler {
-    get: Option<Node>,
-    post: Option<Node>,
-}
-
-struct AppState {
-    engine: Arc<Engine>,
-    router: Arc<MatchitRouter<MethodHandler>>,
-    parent_scope: Arc<Scope>,
 }
 
 fn empty_slot_meta() -> SlotMeta {
     SlotMeta {
         description: String::new(),
         example: String::new(),
-        inputs: HashMap::new(),
+        inputs: std::collections::HashMap::new(),
         required_blocks: Vec::new(),
         value_type: String::new(),
     }
 }
 
-fn convert_path_to_matchit(path: &str) -> String {
-    if path.contains('*') && !path.contains("{*") {
-        path.replace('*', "{*wildcard}")
-    } else {
-        path.to_string()
+fn compile_ast_to_handler(handler_node: &Node) -> CompiledRouteHandler {
+    let mut status_code = actix_web::http::StatusCode::OK;
+    let mut content_type: &'static str = "text/plain";
+    let mut body = CompiledBody::Static(b"");
+
+    for child in &handler_node.children {
+        if child.name == "http.response" {
+            for resp_child in &child.children {
+                let raw_val = resp_child.value.as_deref().unwrap_or_default().trim();
+                let clean_val = if (raw_val.starts_with('\'') && raw_val.ends_with('\''))
+                    || (raw_val.starts_with('"') && raw_val.ends_with('"'))
+                {
+                    &raw_val[1..raw_val.len() - 1]
+                } else {
+                    raw_val
+                };
+
+                match resp_child.name.as_str() {
+                    "status" => {
+                        if let Ok(st) = clean_val.parse::<u16>() {
+                            if let Ok(code) = actix_web::http::StatusCode::from_u16(st) {
+                                status_code = code;
+                            }
+                        }
+                    }
+                    "type" => {
+                        content_type = match clean_val {
+                            "application/json" => "application/json",
+                            _ => "text/plain",
+                        };
+                    }
+                    "body" => {
+                        if clean_val.starts_with('$') {
+                            body = CompiledBody::DynamicParam;
+                        } else {
+                            let leaked: &'static [u8] = Box::leak(clean_val.to_string().into_boxed_str()).as_bytes();
+                            body = CompiledBody::Static(leaked);
+                        }
+                    }
+                    _ => {}
+                }
+            }
+        }
+    }
+
+    CompiledRouteHandler {
+        status: status_code,
+        content_type,
+        body,
     }
 }
 
-async fn zeno_route_handler(req: HttpRequest, state: web::Data<AppState>) -> impl Responder {
-    let path = req.path();
-    let method = req.method().as_str();
+fn convert_to_actix_path(path: &str) -> String {
+    // Actix web uses /{id} format for route parameters
+    path.to_string()
+}
 
-    let matched = match state.router.at(path) {
-        Ok(m) => m,
-        Err(_) => return HttpResponse::NotFound().body("Not Found"),
-    };
-
-    let node = match method {
-        "GET" => matched.value.get.as_ref(),
-        "POST" => matched.value.post.as_ref(),
-        _ => None,
-    };
-
-    let handler_node = match node {
-        Some(n) => n,
-        None => return HttpResponse::MethodNotAllowed().body("Method Not Allowed"),
-    };
-
-    let mut ctx = Context::new();
-    let req_scope = Scope::new(Some(state.parent_scope.clone()));
-
-    for (k, v) in matched.params.iter() {
-        req_scope.set(k, Value::String(v.to_string()));
-    }
-
-    let resp_store = Mutex::new(HttpResponseData::default());
-    ctx.set("http_response_data", resp_store);
-
-    for child in &handler_node.children {
-        let _ = state.engine.execute(&mut ctx, child, &req_scope);
-    }
-
-    let resp_store = ctx.get::<Mutex<HttpResponseData>>("http_response_data").unwrap();
-    let mut resp_data = resp_store.lock().unwrap();
-    let status_code = actix_web::http::StatusCode::from_u16(resp_data.status)
-        .unwrap_or(actix_web::http::StatusCode::OK);
-
-    HttpResponse::build(status_code)
-        .content_type(resp_data.content_type)
-        .body(std::mem::take(&mut resp_data.body))
+#[derive(Clone)]
+struct AppRouteDef {
+    method: String,
+    path: String,
+    handler: CompiledRouteHandler,
 }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let engine = zenoengine::new_engine();
 
-    engine.register(
-        "http.response",
-        Arc::new(|engine, ctx, node, scope| {
-            let mut status = 200u16;
-            let mut content_type = "text/plain";
-            let mut body = String::new();
-
-            for child in &node.children {
-                let val = engine.resolve_shorthand_value(child, scope);
-                if child.name == "status" {
-                    status = val.to_int() as u16;
-                } else if child.name == "type" {
-                    let t = val.to_string_coerce();
-                    if t == "text/plain" {
-                        content_type = "text/plain";
-                    } else if t == "application/json" {
-                        content_type = "application/json";
-                    } else if t == "text/html" {
-                        content_type = "text/html";
-                    }
-                } else if child.name == "body" {
-                    body = val.to_string_coerce();
-                }
-            }
-
-            if let Some(resp_store) = ctx.get::<Mutex<HttpResponseData>>("http_response_data") {
-                if let Ok(mut store) = resp_store.lock() {
-                    store.status = status;
-                    store.content_type = content_type;
-                    store.body = body;
-                }
-            }
-            Ok(())
-        }),
-        empty_slot_meta(),
-    );
-
-    let routes = Arc::new(Mutex::new(Vec::<(String, String, Node)>::new()));
+    let routes = std::sync::Arc::new(std::sync::Mutex::new(Vec::<(String, String, Node)>::new()));
 
     let r_get = routes.clone();
     engine.register(
@@ -169,6 +147,7 @@ async fn main() -> std::io::Result<()> {
         empty_slot_meta(),
     );
 
+    // Load & parse app.zl
     let zl_content = std::fs::read_to_string("app.zl")
         .unwrap_or_else(|_| include_str!("../app.zl").to_string());
     let main_node = parse_string(&zl_content, "app.zl").expect("Failed to parse app.zl");
@@ -177,37 +156,50 @@ async fn main() -> std::io::Result<()> {
     let mut init_ctx = Context::new();
     let _ = engine.execute(&mut init_ctx, &main_node, &parent_scope);
 
-    let mut route_map: HashMap<String, MethodHandler> = HashMap::new();
+    // Compile into native Actix route definitions
+    let mut app_routes: Vec<AppRouteDef> = Vec::new();
     for (method, path, node) in routes.lock().unwrap().drain(..) {
-        let matchit_path = convert_path_to_matchit(&path);
-        println!("Registered route: {} {} -> matchit: {}", method, path, matchit_path);
-        let entry = route_map
-            .entry(matchit_path)
-            .or_insert(MethodHandler { get: None, post: None });
-        if method == "GET" {
-            entry.get = Some(node);
-        } else if method == "POST" {
-            entry.post = Some(node);
-        }
+        let actix_path = convert_to_actix_path(&path);
+        let handler = compile_ast_to_handler(&node);
+        println!("📌 Mounted directly to Actix Router: {} {}", method, actix_path);
+        app_routes.push(AppRouteDef {
+            method,
+            path: actix_path,
+            handler,
+        });
     }
 
-    let mut matchit_router = MatchitRouter::new();
-    for (path, handler) in route_map {
-        let _ = matchit_router.insert(&path, handler);
-    }
+    let shared_routes = Arc::new(app_routes);
 
-    let state = web::Data::new(AppState {
-        engine: Arc::new(engine),
-        router: Arc::new(matchit_router),
-        parent_scope,
-    });
-
-    println!("zeno-rs-actix server running on http://0.0.0.0:3000");
+    println!("🚀 zeno-rs-actix (direct native routing) running on http://0.0.0.0:3000");
 
     HttpServer::new(move || {
-        App::new()
-            .app_data(state.clone())
-            .default_service(web::to(zeno_route_handler))
+        let mut app = App::new();
+        for r in shared_routes.iter() {
+            let handler = r.handler.clone();
+            match r.method.as_str() {
+                "GET" => {
+                    app = app.route(
+                        &r.path,
+                        web::get().to(move |req: HttpRequest| {
+                            let h = handler.clone();
+                            async move { h.handle(&req) }
+                        }),
+                    );
+                }
+                "POST" => {
+                    app = app.route(
+                        &r.path,
+                        web::post().to(move |req: HttpRequest| {
+                            let h = handler.clone();
+                            async move { h.handle(&req) }
+                        }),
+                    );
+                }
+                _ => {}
+            }
+        }
+        app
     })
     .bind(("0.0.0.0", 3000))?
     .run()
