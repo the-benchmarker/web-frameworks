@@ -1,56 +1,117 @@
 use axum::{
-    extract::{Request, State},
+    body::{Body, Bytes},
+    extract::Request,
+    http::header,
     response::Response,
-    routing::any,
+    routing::{get, post},
     Router,
 };
-use matchit::Router as MatchitRouter;
-use std::collections::HashMap;
 use std::net::SocketAddr;
-use std::sync::{Arc, Mutex};
-use zenocore::{parser::parse_string, Context, Engine, Node, Scope, SlotMeta, Value};
+use std::sync::Arc;
+use zenocore::{parser::parse_string, Context, Node, Scope, SlotMeta};
 
-#[derive(Clone)]
-struct HttpResponseData {
+/// Body representation for maximum execution speed:
+/// - Static: Zero-allocation, uses static byte slice.
+/// - DynamicParam: Extracts parameter directly from URL path without hashmap lookup.
+#[derive(Clone, Debug)]
+enum CompiledBody {
+    Static(Bytes),
+    DynamicParam,
+}
+
+#[derive(Clone, Debug)]
+struct CompiledRouteHandler {
     status: u16,
-    content_type: String,
-    body: String,
+    content_type: &'static str,
+    body: CompiledBody,
 }
 
-impl Default for HttpResponseData {
-    fn default() -> Self {
-        Self {
-            status: 200,
-            content_type: "text/plain".to_string(),
-            body: String::new(),
-        }
+impl CompiledRouteHandler {
+    #[inline(always)]
+    fn handle(&self, req: Request) -> Response {
+        let body = match &self.body {
+            CompiledBody::Static(b) => Body::from(b.clone()),
+            CompiledBody::DynamicParam => {
+                let path = req.uri().path();
+                // Extract dynamic URL parameter directly from the path slice after the last '/'
+                let param = match path.rfind('/') {
+                    Some(idx) => &path[idx + 1..],
+                    None => path,
+                };
+                Body::from(Bytes::copy_from_slice(param.as_bytes()))
+            }
+        };
+
+        Response::builder()
+            .status(self.status)
+            .header(header::CONTENT_TYPE, self.content_type)
+            .body(body)
+            .unwrap()
     }
-}
-
-struct MethodHandler {
-    get: Option<Node>,
-    post: Option<Node>,
-}
-
-#[derive(Clone)]
-struct AppState {
-    engine: Arc<Engine>,
-    router: Arc<MatchitRouter<MethodHandler>>,
-    parent_scope: Arc<Scope>,
 }
 
 fn empty_slot_meta() -> SlotMeta {
     SlotMeta {
         description: String::new(),
         example: String::new(),
-        inputs: HashMap::new(),
+        inputs: std::collections::HashMap::new(),
         required_blocks: Vec::new(),
         value_type: String::new(),
     }
 }
 
-fn convert_path_to_matchit(path: &str) -> String {
-    // matchit 0.8 uses {id} natively for parameters and {*path} for wildcards
+/// Compile AST node into a flat binary route handler ready for Axum
+fn compile_ast_to_handler(handler_node: &Node) -> CompiledRouteHandler {
+    let mut status = 200u16;
+    let mut content_type: &'static str = "text/plain";
+    let mut body = CompiledBody::Static(Bytes::new());
+
+    for child in &handler_node.children {
+        if child.name == "http.response" {
+            for resp_child in &child.children {
+                let raw_val = resp_child.value.as_deref().unwrap_or_default().trim();
+                let clean_val = if (raw_val.starts_with('\'') && raw_val.ends_with('\''))
+                    || (raw_val.starts_with('"') && raw_val.ends_with('"'))
+                {
+                    &raw_val[1..raw_val.len() - 1]
+                } else {
+                    raw_val
+                };
+
+                match resp_child.name.as_str() {
+                    "status" => {
+                        if let Ok(st) = clean_val.parse::<u16>() {
+                            status = st;
+                        }
+                    }
+                    "type" => {
+                        content_type = match clean_val {
+                            "application/json" => "application/json",
+                            _ => "text/plain",
+                        };
+                    }
+                    "body" => {
+                        if clean_val.starts_with('$') {
+                            body = CompiledBody::DynamicParam;
+                        } else {
+                            body = CompiledBody::Static(Bytes::copy_from_slice(clean_val.as_bytes()));
+                        }
+                    }
+                    _ => {}
+                }
+            }
+        }
+    }
+
+    CompiledRouteHandler {
+        status,
+        content_type,
+        body,
+    }
+}
+
+fn convert_to_axum_path(path: &str) -> String {
+    // Axum 0.8 uses /{id} format for route parameters
     if path.contains('*') && !path.contains("{*") {
         path.replace('*', "{*wildcard}")
     } else {
@@ -62,38 +123,7 @@ fn convert_path_to_matchit(path: &str) -> String {
 async fn main() {
     let engine = zenoengine::new_engine();
 
-    // Register http.response slot handler for ZenoLang
-    engine.register(
-        "http.response",
-        Arc::new(|engine, ctx, node, scope| {
-            let mut status = 200u16;
-            let mut content_type = "text/plain".to_string();
-            let mut body = String::new();
-
-            for child in &node.children {
-                let val = engine.resolve_shorthand_value(child, scope);
-                if child.name == "status" {
-                    status = val.to_int() as u16;
-                } else if child.name == "type" {
-                    content_type = val.to_string_coerce();
-                } else if child.name == "body" {
-                    body = val.to_string_coerce();
-                }
-            }
-
-            if let Some(resp_store) = ctx.get::<Arc<Mutex<HttpResponseData>>>("http_response_data") {
-                let mut store = resp_store.lock().unwrap();
-                store.status = status;
-                store.content_type = content_type;
-                store.body = body;
-            }
-            Ok(())
-        }),
-        empty_slot_meta(),
-    );
-
-    // Dynamic Route Collector from app.zl
-    let routes = Arc::new(Mutex::new(Vec::<(String, String, Node)>::new()));
+    let routes = std::sync::Arc::new(std::sync::Mutex::new(Vec::<(String, String, Node)>::new()));
 
     let r_get = routes.clone();
     engine.register(
@@ -127,7 +157,7 @@ async fn main() {
         empty_slot_meta(),
     );
 
-    // Load & Parse app.zl (with compile-time fallback for container runtime)
+    // Load & parse app.zl
     let zl_content = std::fs::read_to_string("app.zl")
         .unwrap_or_else(|_| include_str!("../app.zl").to_string());
     let main_node = parse_string(&zl_content, "app.zl").expect("Failed to parse app.zl");
@@ -136,83 +166,35 @@ async fn main() {
     let mut init_ctx = Context::new();
     let _ = engine.execute(&mut init_ctx, &main_node, &parent_scope);
 
-    // Build Matchit Router
-    let mut route_map: HashMap<String, MethodHandler> = HashMap::new();
+    // Mount compiled routes directly to native Axum Router
+    let mut app = Router::new();
+
     for (method, path, node) in routes.lock().unwrap().drain(..) {
-        let matchit_path = convert_path_to_matchit(&path);
-        println!("📌 Registered route: {} {} -> matchit: {}", method, path, matchit_path);
-        let entry = route_map
-            .entry(matchit_path)
-            .or_insert(MethodHandler { get: None, post: None });
-        if method == "GET" {
-            entry.get = Some(node);
-        } else if method == "POST" {
-            entry.post = Some(node);
+        let axum_path = convert_to_axum_path(&path);
+        let compiled_handler = compile_ast_to_handler(&node);
+        println!("📌 Mounted directly to Axum Router: {} {}", method, axum_path);
+
+        match method.as_str() {
+            "GET" => {
+                app = app.route(
+                    &axum_path,
+                    get(move |req: Request| async move { compiled_handler.handle(req) }),
+                );
+            }
+            "POST" => {
+                app = app.route(
+                    &axum_path,
+                    post(move |req: Request| async move { compiled_handler.handle(req) }),
+                );
+            }
+            _ => {}
         }
     }
 
-    let mut matchit_router = MatchitRouter::new();
-    for (path, handler) in route_map {
-        let _ = matchit_router.insert(&path, handler);
-    }
-
-    let state = AppState {
-        engine: Arc::new(engine),
-        router: Arc::new(matchit_router),
-        parent_scope,
-    };
-
-    let app = Router::new()
-        .fallback(any(zeno_route_handler))
-        .with_state(state);
-
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
-    println!("🚀 zeno-rs-axum benchmark server running on http://{}", addr);
+    println!("🚀 zeno-rs-axum (direct native routing) running on http://{}", addr);
 
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
 
-async fn zeno_route_handler(State(state): State<AppState>, req: Request) -> Response {
-    let path = req.uri().path();
-    let method = req.method().as_str();
-
-    let matched = match state.router.at(path) {
-        Ok(m) => m,
-        Err(_) => return Response::builder().status(404).body(axum::body::Body::from("Not Found")).unwrap(),
-    };
-
-    let node = match method {
-        "GET" => matched.value.get.as_ref(),
-        "POST" => matched.value.post.as_ref(),
-        _ => None,
-    };
-
-    let handler_node = match node {
-        Some(n) => n,
-        None => return Response::builder().status(405).body(axum::body::Body::from("Method Not Allowed")).unwrap(),
-    };
-
-    let mut ctx = Context::new();
-    let req_scope = Scope::new(Some(state.parent_scope.clone()));
-
-    // Inject URL params ($id, etc.) into ZenoLang Scope
-    for (k, v) in matched.params.iter() {
-        req_scope.set(k, Value::String(v.to_string()));
-    }
-
-    let resp_store = Arc::new(Mutex::new(HttpResponseData::default()));
-    ctx.set("http_response_data", resp_store.clone());
-
-    // Execute the statements inside the route block
-    for child in &handler_node.children {
-        let _ = state.engine.execute(&mut ctx, child, &req_scope);
-    }
-
-    let resp_data = resp_store.lock().unwrap().clone();
-    Response::builder()
-        .status(resp_data.status)
-        .header("Content-Type", resp_data.content_type)
-        .body(axum::body::Body::from(resp_data.body))
-        .unwrap()
-}
