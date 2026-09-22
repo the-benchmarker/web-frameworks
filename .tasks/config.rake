@@ -55,7 +55,7 @@ def override_or_merge(*values)
 
     case v
     when Array
-      value = (v + value).uniq
+      value = (value + v).uniq
     when String
       value = v
     end
@@ -313,16 +313,52 @@ end
 def generate_dockerfiles(directory, engines, config)
   language_config = config['language']
   framework_config = config['framework']
+  source_configs = ['../../config.yaml', '../config.yaml', 'config.yaml'].map do |path|
+    YAML.safe_load_file(File.join(directory, path))
+  end
 
   engines.each do |engine|
     engine.each do |name, data|
       variables = custom_config(language_config, framework_config, data)
+      variables['bootstrap'] = bootstrap_commands(source_configs, name)
+      variables['environment'] = environment_variables(source_configs, name)
       variables['files'].each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }.uniq!
       variables['static_files']&.each do |f|
         f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory)
       end&.uniq!
 
       create_dockerfile(directory, name, config.merge(variables))
+    end
+  end
+end
+
+def environment_variables(configs, engine)
+  configs.each_with_object({}) do |config, variables|
+    language = config.fetch('language', {})
+    framework = config.fetch('framework', {})
+    inline_engines = Array(framework['engines']).select { |entry| entry.is_a?(Hash) && entry.key?(engine) }
+
+    environments = [config['environment'], language['environment'], language.dig('engines', engine, 'environment'),
+                    framework['environment'], *inline_engines.map { |entry| entry.dig(engine, 'environment') }]
+    environments.compact.each do |environment|
+      raise ArgumentError, 'environment must be a mapping of keys to values' unless environment.is_a?(Hash)
+
+      variables.merge!(environment)
+    end
+  end
+end
+
+def bootstrap_commands(configs, engine)
+  configs.flat_map do |config|
+    language = config.fetch('language', {})
+    framework = config.fetch('framework', {})
+    inline_engine = Array(framework['engines']).find { |entry| entry.is_a?(Hash) && entry.key?(engine) }
+
+    [config['bootstrap'], language['bootstrap'], language.dig('engines', engine, 'bootstrap'),
+     framework['bootstrap'], inline_engine&.dig(engine, 'bootstrap')].compact.flat_map do |commands|
+      raise ArgumentError, 'bootstrap must be a list of commands' unless commands.is_a?(Array) && commands.all?(String)
+
+      commands
     end
   end
 end

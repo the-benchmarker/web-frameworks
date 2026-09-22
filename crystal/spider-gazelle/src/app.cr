@@ -33,13 +33,14 @@ OptionParser.parse(ARGV.dup) do |parser|
   end
 end
 
-Fiber::ExecutionContext.default.resize(maximum: System.cpu_count)
+# use this for thread based scaling
+# Fiber::ExecutionContext.default.resize(maximum: System.cpu_count)
 
 # Load the routes
 puts "Launching #{APP_NAME} v#{VERSION}"
 server = ActionController::Server.new(port, host)
 
-# Start clustering
+# Start clustering, used for process based scaling
 #  process_count < 1 == `System.cpu_count` but this is not always accurate
 server.cluster(process_count) if process_count != 1
 
