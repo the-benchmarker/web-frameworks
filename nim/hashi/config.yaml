@@ -1,0 +1,20 @@
+framework:
+  github: kaitakeradiology/hashi
+  website: kaitakeradiology.github.io/hashi
+  version: 0.1.2
+  engines:
+    - default
+  build_deps:
+    - git
+    - ca-certificates
+
+# hashi targets Nimony, the Nim 3 compiler, which is pre-release and has no
+# package or release yet: both it and hashi are fetched at a pinned commit and
+# the compiler is bootstrapped with this image's Nim 2, exactly as hashi's own
+# CI does. Everything lands in the build stage; the binary links only libc.
+build_with:
+  - git clone -q https://github.com/nim-lang/nimony /usr/src/nimony && git -C /usr/src/nimony checkout -q 927296de9e9b6d301c8db0b950b4581dc79c3cf0 && cd /usr/src/nimony && nim c -r src/hastur/hastur --release build all
+  - git clone -q --depth 1 --branch v0.1.2 https://github.com/kaitakeradiology/hashi /usr/src/hashi
+
+# `nimony c`, not `nim c`: the suite's default build line is Nim 2's.
+build_command: /usr/src/nimony/bin/nimony c -d:release --path:/usr/src/hashi/src --out:/usr/src/app/server server.nim
