@@ -8,13 +8,16 @@ framework:
     - git
     - ca-certificates
 
-# hashi targets Nimony, the Nim 3 compiler, which is pre-release and has no
-# package or release yet: both it and hashi are fetched at a pinned commit and
-# the compiler is bootstrapped with this image's Nim 2, exactly as hashi's own
-# CI does. Everything lands in the build stage; the binary links only libc.
+# hashi targets Nimony, the Nim 3 compiler, which is pre-release: it has no
+# release to download and no .nimble of its own, so it is cloned at a pinned
+# commit and bootstrapped with this image's Nim 2, exactly as hashi's own CI
+# does. The dependency is declared in server.nimble as usual and resolved by
+# pnak, Nimony's package manager, which reads the same .nimble format and
+# writes the module search path `nimony c` uses.
 build_with:
   - git clone -q https://github.com/nim-lang/nimony /usr/src/nimony && git -C /usr/src/nimony checkout -q 927296de9e9b6d301c8db0b950b4581dc79c3cf0 && cd /usr/src/nimony && nim c -r src/hastur/hastur --release build all
-  - git clone -q --depth 1 --branch v0.1.2 https://github.com/kaitakeradiology/hashi /usr/src/hashi
+  - /usr/src/nimony/bin/pnak fetch server.nimble
 
 # `nimony c`, not `nim c`: the suite's default build line is Nim 2's.
-build_command: /usr/src/nimony/bin/nimony c -d:release --path:/usr/src/hashi/src --out:/usr/src/app/server server.nim
+# -d:release implies --opt:speed here.
+build_command: /usr/src/nimony/bin/nimony c -d:release --out:/usr/src/app/server server.nim

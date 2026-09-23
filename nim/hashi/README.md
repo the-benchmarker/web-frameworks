@@ -11,6 +11,9 @@ This adapter uses the production path: the router with `:param` captures, the
 same `serve()` entry point an application calls, with the per-request access
 log switched off.
 
-Nimony is pre-release, so the build stage clones it at a pinned commit and
-bootstraps it with the image's Nim 2, as hashi's own CI does; hashi itself is
-cloned at a release tag. Both pins are in `config.yaml` and are bumped by hand.
+Nimony is pre-release and has no release to download, so the build stage clones
+it at a pinned commit and bootstraps it with the image's Nim 2, as hashi's own
+CI does. hashi itself is an ordinary dependency in `server.nimble`, resolved by
+`pnak` — Nimony's package manager, which reads the same `.nimble` format as
+Nimble and writes the module search path. Both pins (the compiler commit in
+`config.yaml`, the hashi tag in `server.nimble`) are bumped by hand.
