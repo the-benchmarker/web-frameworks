@@ -71,39 +71,40 @@ namespace :export do
   task :md do
     data = JSON.parse(File.read('data.json'))
 
-    levels = [64, 256, 512]
-    frameworks = data.fetch('frameworks').sort_by do |framework|
-      [framework.fetch('language'), framework.fetch('label')]
-    end
-
-    throughput_by_framework = Hash.new { |hash, key| hash[key] = {} }
+    concurrency = 256
+    frameworks = data.fetch('frameworks')
+    metrics_by_framework = Hash.new { |hash, key| hash[key] = {} }
 
     data.fetch('metrics').each do |metric|
-      next unless metric.fetch('label') == 'total_requests_per_s'
+      next unless metric.fetch('level') == concurrency
 
-      throughput_by_framework[metric.fetch('framework_id')][metric.fetch('level')] = metric.fetch('value')
+      metrics_by_framework[metric.fetch('framework_id')][metric.fetch('label')] = metric.fetch('value')
     end
 
     headers = [
       'language',
       'framework',
-      'req/s for 64 concurrency',
-      'req/s for 256 concurrency',
-      'req/s for 512 concurrency'
+      'req/s',
+      'latency (p99, ms)',
+      'saturation (%)'
     ]
 
-    rows = frameworks.map do |framework|
-      row = [
+    rows = frameworks.sort_by do |framework|
+      reqs = metrics_by_framework.dig(framework.fetch('id'), 'total_requests_per_s')
+      [reqs ? 0 : 1, -(reqs || 0), framework.fetch('language'), framework.fetch('label')]
+    end.map do |framework|
+      metrics = metrics_by_framework[framework.fetch('id')]
+      reqs = metrics['total_requests_per_s']
+      p99 = metrics['percentile99']
+      saturation = metrics['server_cpu_saturation']
+
+      [
         framework.fetch('language'),
-        framework.fetch('label')
+        framework.fetch('label'),
+        reqs ? format('%.2f', reqs) : '',
+        p99 ? format('%.2f', p99 * 1_000) : '',
+        saturation ? format('%.2f', saturation * 100) : ''
       ]
-
-      levels.each do |level|
-        value = throughput_by_framework.dig(framework.fetch('id'), level)
-        row << (value ? format('%.2f', value) : '')
-      end
-
-      row
     end
 
     document = Kramdown::Document.new('')
