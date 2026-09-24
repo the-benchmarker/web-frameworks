@@ -162,7 +162,7 @@ def commands_for(language, framework, variant, provider = 'docker')
 
   hostname = File.join(directory, language, framework, "ip-#{variant}.txt")
   cid_file = File.join(directory, language, framework, "cid-#{variant}.txt")
-  sampler = File.join(File.dirname(__FILE__), 'memory_sampler.rb')
+  File.join(File.dirname(__FILE__), 'memory_sampler.rb')
   saturation_probe = File.join(File.dirname(__FILE__), 'saturation.rb')
   latency_probe = File.join(File.dirname(__FILE__), 'latency_rate.rb')
   zrk = "#{taskset}zrk --plain --closed -t #{threads}"
@@ -177,7 +177,7 @@ def commands_for(language, framework, variant, provider = 'docker')
     commands[target] = [] unless commands.key?(target)
 
     results_dir = File.join(directory, language, framework, '.results', concurrency)
-    memory_out = File.join(results_dir, 'memory.json')
+    File.join(results_dir, 'memory.json')
     saturation_out = File.join(results_dir, 'saturation.json')
     saturation_state = File.join(results_dir, '.saturation-state.json')
     zrk_cmds = []
