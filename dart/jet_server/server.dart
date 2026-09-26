@@ -23,6 +23,31 @@ final _notFoundClose = Uint8List.fromList(
       .codeUnits,
 );
 
+// 'HTTP/1.1 200 OK\r\nContent-Length: '
+final _userPrefix = Uint8List.fromList(
+  'HTTP/1.1 200 OK\r\nContent-Length: '.codeUnits,
+);
+
+// '\r\nConnection: keep-alive\r\n\r\n'
+final _userMidKeepAlive = Uint8List.fromList(
+  '\r\nConnection: keep-alive\r\n\r\n'.codeUnits,
+);
+
+// '\r\nConnection: close\r\n\r\n'
+final _userMidClose = Uint8List.fromList(
+  '\r\nConnection: close\r\n\r\n'.codeUnits,
+);
+
+// ASCII length digits.
+final _lengthDigits = List<Uint8List>.generate(128, (i) {
+  if (i < 10) return Uint8List.fromList([0x30 + i]);
+  return Uint8List.fromList(i.toString().codeUnits);
+});
+
+@pragma('vm:always-consider-inlining')
+Uint8List _digits(int n) =>
+    n < 128 ? _lengthDigits[n] : Uint8List.fromList(n.toString().codeUnits);
+
 Uint8List handleRequest(HttpRequest req) {
   final buf = req.buffer;
   final methodLen = req.method.len;
@@ -48,15 +73,21 @@ Uint8List handleRequest(HttpRequest req) {
         buf[pathStart + 4] == 0x72 &&
         buf[pathStart + 5] == 0x2F) {
       final idLen = pathLen - 6;
-      final conn = req.keepAlive ? 'keep-alive' : 'close';
-      final headerStr =
-          'HTTP/1.1 200 OK\r\nContent-Length: $idLen\r\nConnection: $conn\r\n\r\n';
-      final headerBytes = headerStr.codeUnits;
-      final totalLen = headerBytes.length + idLen;
-      final res = Uint8List(totalLen)..setAll(0, headerBytes);
+      final mid = req.keepAlive ? _userMidKeepAlive : _userMidClose;
+      final digits = _digits(idLen);
+      final res = Uint8List(
+        _userPrefix.length + digits.length + mid.length + idLen,
+      );
+      var o = 0;
+      res.setRange(o, o + _userPrefix.length, _userPrefix);
+      o += _userPrefix.length;
+      res.setRange(o, o + digits.length, digits);
+      o += digits.length;
+      res.setRange(o, o + mid.length, mid);
+      o += mid.length;
       final idStart = pathStart + 6;
       for (var i = 0; i < idLen; i++) {
-        res[headerBytes.length + i] = buf[idStart + i];
+        res[o + i] = buf[idStart + i];
       }
       return res;
     }
