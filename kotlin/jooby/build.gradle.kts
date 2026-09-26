@@ -35,8 +35,6 @@ dependencies {
 
 
 kotlin {
-    jvmToolchain(25)
-
     compilerOptions {
         javaParameters = true
     }

@@ -1,5 +1,6 @@
-# Frameworks pin a JDK 25 Gradle toolchain (Kotlin 2.3 cannot target 26); runtime uses language.java.version
-FROM gradle:jdk25 AS build
+FROM gradle:jdk{{{language.java.version}}} AS build
+
+ENV ORG_GRADLE_PROJECT_jvmTarget={{{language.java.version}}}
 
 WORKDIR /usr/src/app
 

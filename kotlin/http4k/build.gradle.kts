@@ -15,12 +15,6 @@ buildscript {
     }
 }
 
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(25))
-    }
-}
-
 application {
 	mainClass = "org.http4k.benchmark.BenchmarkServerKt"
 }
