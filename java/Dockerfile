@@ -1,6 +1,6 @@
 
 {{#language.compiler.gradle}}
-  FROM gradle:9-jdk25 AS build
+  FROM gradle:9-jdk{{{language.version}}} AS build
 {{/language.compiler.gradle}}
 
 {{#language.compiler.maven}}
