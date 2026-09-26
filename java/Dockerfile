@@ -45,6 +45,7 @@ WORKDIR /usr/src/web
 
 {{#graalvm}}
   FROM ghcr.io/graalvm/jdk-community:25
+
   RUN microdnf install -y curl tar && microdnf clean all
 {{/graalvm}}
 
