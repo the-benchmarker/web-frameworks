@@ -41,7 +41,7 @@ config.yaml                  # provider and global settings
 
 ## 📊 Results
 
-The latest published results are available on the [Web Frameworks Benchmark dashboard](https://web-frameworks-benchmark.netlify.app/). Each result should be read in the context of its framework version, runtime or server variant, concurrency, benchmark revision, and hardware.
+The latest published results are available on the [Web Frameworks Benchmark dashboard](https://web-frameworks-benchmark.vercel.app). Each result should be read in the context of its framework version, runtime or server variant, concurrency, benchmark revision, and hardware.
 
 For a fair interpretation:
 
@@ -104,10 +104,35 @@ bundle exec rake config
 ```
 
 Then run the same `collect` target. Route entries use the `METHOD:/path` form.
+
+The load generator runs closed-loop over keep-alive connections: every connection sends its next request as soon as the previous response arrives, so the reported rate is the framework's sustained throughput for the whole run. Three more variables control where that work runs:
+
+- `THREADS` sets how many load threads zrk uses. It defaults to the cores in `LOAD_CPUS`, or every host core when unset. zrk's own default of 2 threads is far too few to saturate a fast server.
+- `SERVER_CPUS` and `LOAD_CPUS` take cpuset specs such as `0-3` and `4-15`. They pin the framework container (`--cpuset-cpus`) and the load generator (`taskset`) to disjoint cores so neither can steal cycles from the other.
+- `LATENCY_RATE` adds a second pass per route at a fixed request rate. The closed-loop run reports throughput and latency at saturation; this pass reports latency at a defined load, with coordinated-omission correction. `LATENCY_RATE=50%` uses half of each framework's own closed-loop rate, so every framework is measured inside what it can sustain; `LATENCY_RATE=20000` uses the same absolute rate for all. The results land in `<route>_latency.json` and are imported as `latency_at_rate_*` metrics, separate from the headline rate. It doubles the collect time and is off by default.
+
+Every `collect` run also writes `.results/<concurrency>/saturation.json`: the share of its allotted CPU the server actually used, and the number of cores it kept busy. Once results are exported to `data.json`, `bundle exec rake db:check_saturation` lists the runs where the server stayed below 50%, which for a multi-core server means something else, usually the load generator, was the bottleneck and the number does not describe the framework. Read the share together with the cores: a single-threaded server pegging one core of sixteen shows a 6% share while being bound on that core.
 Create a matching `.results/<concurrency>` directory for every configured concurrency level before collecting results; the batch runner does this automatically for its predefined levels.
 
 > [!CAUTION]
 > A full benchmark consumes substantial CPU, memory, time, network bandwidth, and container storage. Start with one implementation and keep the load generator separate from services you care about.
+
+### 🔬 What a run measures
+
+Every number on the board comes from one load model, so it helps to know what it is before comparing two of them.
+
+- **Closed loop over keep-alive connections.** `zrk --closed -c N` opens N connections and each one sends its next request the instant the previous response arrives. The only knob is N. `total_requests_per_s` is `requests / duration` over the whole run, and the latency columns are the per-request service time at that concurrency. Under a closed loop a saturated server queues requests inside the N connections, so latency at c=512 is mostly queueing; that is expected and comparable across frameworks at the same N.
+- **Latency at a defined load** is a separate, optional pass (`LATENCY_RATE`, see above): open loop at a fixed rate, with coordinated-omission correction. It answers a different question and never changes the headline rate.
+- **The generator is sized to saturate the server.** zrk runs `THREADS` load threads (every core in `LOAD_CPUS`, or every host core), and `SERVER_CPUS` / `LOAD_CPUS` keep the two on disjoint cores. Roughly three generator cores per server core are needed before a fast server saturates.
+- **Every run says whether it was valid.** `saturation.json` records the share of its allotted CPU the server burned and the cores it kept busy. Above 75% the server was the bottleneck and the number is the framework's; below 50% something else was, usually the generator or the network path, and the number describes that instead. A single-threaded server pegging one core of many shows a low share while being bound on that core: read the share and the cores together. `bundle exec rake db:check_saturation` lists the runs to distrust.
+
+**Why the figures moved.** The method changed in 2026 and results from different revisions are not comparable, which is what the reading guidance under Results means by "same benchmark revision":
+
+| Period | Generator and load model | What the headline rate meant |
+|---|---|---|
+| until 2026-08 | `oha`, closed loop, a new connection per request | accept + request cost, dominated by connection setup |
+| 2026-09-02 to 2026-09-15 | `zrk`, linear ramp to 500k req/s over keep-alive | the last one-second window of the ramp; latency was schedule backlog |
+| from this revision | `zrk --closed`, keep-alive, sized and pinned generator, validity probe | whole-run sustained rate at N connections, with latency at that N |
 
 ## 🤝 Add or update a framework
 

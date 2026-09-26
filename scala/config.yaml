@@ -4,6 +4,7 @@ language:
     - "**/*.gradle"
     - "**/*.scala"
     - "**/*.sbt"
+    - project/build.properties
     - "**/*.conf"
 
   engines:

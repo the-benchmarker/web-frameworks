@@ -12,6 +12,13 @@ def dockerfile?(path)
   File.basename(path).match?(/(?:^|\.)Dockerfile(?:\.|$)/i)
 end
 
+def language_shared_file?(path, language)
+  parts = path.split(File::SEPARATOR)
+  return false unless parts.length == 2 && parts.first == language
+
+  dockerfile?(path) || File.basename(path) == 'config.yaml'
+end
+
 def all_languages
   Dir.glob(File.join('*', 'config.yaml')).map { |path| language_for(path) }.sort
 end
@@ -42,7 +49,7 @@ def selected_frameworks(language)
   return all_frameworks(language) if files.intersect?(%w[data.json data.min.json])
 
   return all_frameworks(language) if language_files.any? do |path|
-    dockerfile?(path) || path == "#{language}/config.yaml"
+    language_shared_file?(path, language)
   end
 
   language_files.filter_map do |path|
@@ -57,35 +64,38 @@ def selected_frameworks(language)
 end
 
 def matrix_for(language)
-  selected_frameworks(language).filter_map do |framework|
+  rows = selected_frameworks(language).flat_map do |framework|
     file = File.join(language, framework, 'config.yaml')
-    next unless File.exist?(file)
+    next [] unless File.exist?(file)
 
     # Skip v/vanilla_io_uring in CI: io_uring_setup/io_uring_enter are blocked by
     # Docker's default seccomp profile on the GitHub Actions runners, so the
     # server builds but never becomes HTTP-ready. The framework code is kept in
     # the tree; remove this line once io_uring is allowed under the CI sandbox.
     # See https://github.com/the-benchmarker/web-frameworks/issues/9467
-    next if language == 'v' && framework == 'vanilla_io_uring'
-
-    ## imi-swoole is in timeout
-    next if language == 'php' && framework == 'imi-swoole'
+    next [] if language == 'v' && framework == 'vanilla_io_uring'
 
     config = get_config_from(File.join(Dir.pwd, language, framework))
-    engine = config.dig('framework', 'engines')&.first
+    engines = config.dig('framework', 'engines')
 
-    unless engine
+    unless engines && !engines.empty?
       warn "Configuration for #{language}/#{framework} is not correct"
-      next
+      next []
     end
 
-    {
-      language:,
-      framework:,
-      directory: File.join(language, framework),
-      engine:
-    }
-  end.uniq.take(256)
+    engines.map do |engine|
+      {
+        language:,
+        framework:,
+        directory: File.join(language, framework),
+        engine:
+      }
+    end
+  end.uniq
+
+  raise "CI matrix for #{language} exceeds 256 jobs (#{rows.length})" if rows.length > 256
+
+  rows
 end
 
 namespace :ci do

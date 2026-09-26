@@ -16,13 +16,37 @@ open a pull request.
 - **Docker**, to build and run each framework
 - **Ruby** + `bundle install`, for the `rake` tasks that generate the
   per-framework `.Dockerfile`/`.Makefile`
-- **[zrk](https://github.com/zoxy-io/zrk) >= 2.2.0**, the load generator the
+- **[zrk](https://github.com/zoxy-io/zrk) >= 2.4.0**, the load generator the
   `collect` targets shell out to. `brew install zoxy-io/tap/zrk`, or grab a
   static binary from the [releases](https://github.com/zoxy-io/zrk/releases).
-  It must be on `PATH`. 2.2.0 is the minimum because the harness runs it in
-  `--closed` mode, which older versions do not have.
+  It must be on `PATH`. The harness runs it in `--closed` mode (added in
+  2.2.0) and is validated on 2.4.x; `run.sh` enforces the minimum.
 
 ## Adding a framework
+
+Define `bootstrap` as a YAML list of shell commands. Dockerfile generation
+concatenates commands from the root config, the language config (for example,
+`javascript/config.yaml`), then the framework config (for example,
+`javascript/nextjs/config.yaml`). Within each file, commands run in this order:
+top-level bootstrap, language bootstrap, selected language engine bootstrap,
+framework bootstrap, then inline framework engine bootstrap. Command order and
+repeated commands are preserved, so language dependency installation runs before
+framework build commands.
+
+Define `environment` as YAML key/value pairs:
+
+```yaml
+environment:
+  NODE_ENV: production
+  NEXT_TELEMETRY_DISABLED: 1
+```
+
+Environment mappings merge from the root config, then the language config, then
+the framework config. Within each file, the order is top-level environment,
+language environment, selected language engine environment, framework environment,
+then inline framework engine environment. Later values override duplicate keys;
+variables for other engines are excluded. Each resulting pair renders as one
+`ENV KEY=value` instruction in the Dockerfile.
 
 - All frameworks **SHOULD** follow this rules :
 

@@ -3,5 +3,8 @@ framework:
   version: 3.4
   files:
     - .env.dist
+    - app
+  bootstrap:
+    - cp .env.dist .env
   engines:
     - road-runner

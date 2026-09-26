@@ -39,7 +39,7 @@ language:
         PYTHON_APP: server:app
       build_deps:
         - gcc
-        - libpcre3-dev
+        - libpcre2-dev
       bootstrap:
         - pip install uwsgi
       command: uwsgi --http 0.0.0.0:3000 --module ${PYTHON_APP}
@@ -89,6 +89,20 @@ language:
         granian \
           --log-level critical \
           --interface ${INTERFACE} \
+          --host 0.0.0.0 \
+          --port 3000 \
+          --workers $(nproc) \
+          ${PYTHON_APP}
+    peregrine:
+      bootstrap:
+        - pip install 'peregrine-server>=1.1.5,<1.2'
+      environment:
+        INTERFACE: asgi
+        PYTHON_APP: server:app
+      command: >
+        peregrine \
+          --log-level error \
+          --protocol ${INTERFACE} \
           --host 0.0.0.0 \
           --port 3000 \
           --workers $(nproc) \

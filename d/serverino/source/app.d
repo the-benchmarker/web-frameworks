@@ -3,28 +3,29 @@ module app;
 import serverino;
 import std.datetime: Duration, seconds;
 import std.array: split;
-import std.algorithm: startsWith;
+import std.algorithm: startsWith, max;
 import std.parallelism: totalCPUs;
 
 mixin ServerinoMain;
 
 @onServerInit ServerinoConfig configure()
 {
-	return ServerinoConfig
+    return ServerinoConfig
         .create()
         .setHttpTimeout(10.seconds)
         .enableKeepAlive(180.seconds)
         .addListener("0.0.0.0", 3000)
-        .setDaemonInstances(totalCPUs)
-        .setWorkers(4);
+        .setDaemonInstances(max(1, totalCPUs * 3 / 4))
+        .setWorkers(1)
+        .enableWorkerBacklog(16);
 }
 
 @safe
 @endpoint void hello(Request req, Output output) {
-    if (req.uri == "/" && req.method == Request.Method.Get)
+    if (req.path == "/" && req.method == Request.Method.Get)
         output.status = 200;
-    else if (req.uri == "/user" && req.method == Request.Method.Post)
+    else if (req.path == "/user" && req.method == Request.Method.Post)
         output.status = 200;
-    else if (req.uri.startsWith("/user/") && req.method == Request.Method.Get)
-        output ~= req.uri[6..$];
+    else if (req.path.startsWith("/user/") && req.method == Request.Method.Get)
+        output ~= req.path[6..$];
 }

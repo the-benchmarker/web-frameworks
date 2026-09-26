@@ -9,7 +9,7 @@ run / fork := true
 lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++= Seq(
-	"com.lihaoyi" %% "cask" % CaskVersion
+      "com.lihaoyi" %% "cask" % CaskVersion
     )
   )
   .enablePlugins(JavaAppPackaging)

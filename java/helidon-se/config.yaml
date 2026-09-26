@@ -17,7 +17,8 @@ framework:
   binaries:
     - target/helidon.webserver-jri
 
-language:
+  command: /opt/web/target/helidon.webserver-jri/bin/start
+
+  # The jlink distribution includes its own JVM.
   engines:
-    default:
-      command: /opt/web/target/helidon.webserver-jri/bin/start
+    - default
