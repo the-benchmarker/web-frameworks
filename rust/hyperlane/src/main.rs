@@ -12,6 +12,7 @@ fn init_request_config() -> RequestConfig {
     RequestConfig::low_security()
 }
 
+#[route("/")]
 struct Index;
 
 impl ServerHook for Index {
@@ -35,6 +36,7 @@ impl ServerHook for Index {
     }
 }
 
+#[route("/user")]
 struct User;
 
 impl ServerHook for User {
@@ -58,6 +60,7 @@ impl ServerHook for User {
     }
 }
 
+#[route("/user/{id}")]
 struct UserId;
 
 impl ServerHook for UserId {
@@ -82,14 +85,12 @@ impl ServerHook for UserId {
     }
 }
 
+#[hyperlane(server: Server)]
 #[tokio::main]
 async fn main() {
-    Server::default()
+    server
         .server_config(init_server_config())
         .request_config(init_request_config())
-        .route::<Index>("/")
-        .route::<User>("/user")
-        .route::<UserId>("/user/{id}")
         .run()
         .await
         .unwrap()
