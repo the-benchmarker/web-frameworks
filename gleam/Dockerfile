@@ -1,4 +1,4 @@
-FROM ghcr.io/gleam-lang/gleam:v1.15.2-scratch AS gleam
+FROM ghcr.io/gleam-lang/gleam:v1.17.0-scratch AS gleam
 
 
 
@@ -28,6 +28,4 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}
 
-{{#options}}
-  CMD {{{.}}}
-{{/options}}
+CMD {{{options}}}

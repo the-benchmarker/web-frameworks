@@ -7,5 +7,9 @@ framework:
     - liblzma-dev
     - libbz2-dev
 
+  runtime_deps:
+    - libyaml-0-2
+    - libmagic1
+
 environment:
   ATHENA_ENV: production

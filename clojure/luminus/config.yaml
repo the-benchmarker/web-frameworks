@@ -14,7 +14,10 @@ framework:
   binaries:
     - target/uberjar/luminus.jar
 
-  command: java -jar target/uberjar/luminus.jar 3000
 language:
   compiler: lein
-  java: 21
+  java:
+    version: 21
+  engines:
+    default:
+      command: java -jar target/uberjar/luminus.jar 3000

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from "@nestjs/common";
+import { Controller, Get, HttpCode, Param, Post } from "@nestjs/common";
 
 @Controller()
 export class AppController {
@@ -13,6 +13,7 @@ export class AppController {
   }
 
   @Post("/user")
+  @HttpCode(200)
   postUser(): string {
     return "";
   }

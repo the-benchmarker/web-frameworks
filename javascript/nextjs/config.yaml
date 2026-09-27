@@ -1,0 +1,16 @@
+framework:
+  website: nextjs.org
+  github: vercel/next.js
+  version: 16.3
+
+  files:
+    - app
+    - app.mjs
+    - cluster.mjs
+    - package.json
+
+  environment:
+    NEXT_TELEMETRY_DISABLED: 1
+
+  bootstrap:
+    - npm run build

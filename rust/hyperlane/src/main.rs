@@ -2,14 +2,8 @@ use hyperlane::*;
 
 fn init_server_config() -> ServerConfig {
     let mut server_config: ServerConfig = ServerConfig::default();
+    server_config.set_address(Server::format_bind_address(DEFAULT_HOST, 3000));
     server_config
-        .set_address(Server::format_bind_address(DEFAULT_HOST, 3000))
-        .set_nodelay(Some(false));
-    server_config
-}
-
-fn init_request_config() -> RequestConfig {
-    RequestConfig::low_security()
 }
 
 #[route("/")]

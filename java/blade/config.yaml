@@ -10,5 +10,10 @@ framework:
     - target/benchmark-1.0.0-jar-with-dependencies.jar
 
   command: /usr/bin/java -jar /opt/web/target/benchmark-1.0.0-jar-with-dependencies.jar
+
+  # Blade requires Java 11.
+  engines:
+    - default
+
 language:
-  java: 11
+  version: 11

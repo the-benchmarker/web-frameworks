@@ -1,0 +1,33 @@
+framework:
+  github: dumblepy/nim-basolato/
+  version: 0.16
+
+  build_deps:
+    - gcc
+    - openssl
+    - openssh-client
+    - libpcre3-dev
+
+  build_command: nim c --mm:orc --threads:off -d:ssl -d:release --opt:speed -o:main main.nim
+
+  runtime_deps:
+    - libpcre3
+
+  command: ./main
+
+  custom_files:
+    - main
+    - .env
+
+language:
+  engines:
+    default:
+      command: ./main
+  files:
+    - main
+    - "**/*.json"
+    - config.nims
+    - "**/*.nim"
+    - "**/*.nimble"
+    - "**/*.cfg"
+    - .env

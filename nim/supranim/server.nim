@@ -1,22 +1,21 @@
+# This is a simplified server setup for the Supranim framework
+# https://github.com/supranim/supranim
+
 import std/[httpcore, macros, macrocache, options]
-import pkg/kapsis/[cli, runtime]
+
+import pkg/kapsis/[framework, runtime]
 import pkg/supranim
 import pkg/supranim/controller
 import pkg/supranim/core/[request, router, response]
 
-
 include ./routes
+
 import ./controller/[pages, errors]
 
 initApplication()
 initHttpRouter()
 
-proc startupCallback() {.gcsafe.} =
-  {.gcsafe.}:
-    initRouter()
-    Router.errorHandler(Http404, get4xx)
+App.configs = newOrderedTable[string, YAMLObject]()
+App.configs["server"] = parseYAML("port: 3000")
 
-App.configs = newOrderedTable[string, Document]()
-App.configs["server"] = yaml("port: 3000").toJson
-
-App.run
+App.run()

@@ -1,6 +1,6 @@
 
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "2.3.+"
+    id "org.jetbrains.kotlin.jvm" version "2.4.+"
 }
 
 ext {
@@ -10,12 +10,6 @@ ext {
 
 apply(from: "$gradleScripts/kotlin.gradle")
 apply(from: "$gradleScripts/application.gradle")
-
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("25"))
-    }
-}
 
 defaultTasks("installDist")
 

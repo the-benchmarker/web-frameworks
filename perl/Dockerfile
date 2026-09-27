@@ -1,4 +1,4 @@
-FROM perl:5.43-slim
+FROM perl:5.45-slim
 
 WORKDIR /usr/src/app
 

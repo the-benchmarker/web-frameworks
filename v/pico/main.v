@@ -27,7 +27,7 @@ fn callback(data voidptr, req picohttpparser.Request, mut res picohttpparser.Res
 	}
 	if req.method == 'POST' {
 		if req.path == '/user' {
-			res.write_string('HTTP/1.1 200 OK\r\n')
+			res.write_string('HTTP/1.1 201 Created\r\n')
 			res.header('Connection', 'keep-alive')
 			res.header('Content-Type', 'text/plain')
 			res.header('Content-Length', '0')

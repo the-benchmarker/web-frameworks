@@ -8,7 +8,9 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "rootDir": "./src",
+    "types": ["node"],
+    "skipLibCheck": true,
     "incremental": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true

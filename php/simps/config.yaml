@@ -1,5 +1,7 @@
 language:
-  version: 8.4
+  engines:
+    swoole:
+      command: php sbin/simps.php http:start
 
 framework:
   github: simple-swoole/simps
@@ -7,5 +9,3 @@ framework:
 
   engines:
     - swoole
-
-  command: php sbin/simps.php http:start

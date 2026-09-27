@@ -1,9 +1,14 @@
 language:
-  version: 3.8
+  version: 3.9
+
+  java:
+    version: 26
+
   files:
     - "**/*.gradle"
     - "**/*.scala"
     - "**/*.sbt"
+    - project/build.properties
     - "**/*.conf"
 
   engines:

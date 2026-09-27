@@ -1,4 +1,4 @@
-FROM crystallang/crystal:1.19 AS build
+FROM crystallang/crystal:{{language.version}} AS build
 
 {{#build_deps.length}}
   ARG DEBIAN_FRONTEND=noninteractive
@@ -20,7 +20,7 @@ RUN --mount=type=cache,id=shards-lib-{{language.version}},target=lib \
   shards install --production
 
 RUN --mount=type=cache,id=shards-lib-{{language.version}},target=lib \
-  shards build --release --static --no-debug
+  shards build --release --no-debug
 
 
 

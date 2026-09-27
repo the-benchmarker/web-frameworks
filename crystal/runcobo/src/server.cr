@@ -26,10 +26,5 @@ class Users::ShowUser < BaseAction
   end
 end
 
-System.cpu_count.times do |_|
-  Process.fork do
-    Runcobo.start(reuse_port: true)
-  end
-end
-
-sleep
+Fiber::ExecutionContext.default.resize(maximum: System.cpu_count)
+Runcobo.start(reuse_port: true)

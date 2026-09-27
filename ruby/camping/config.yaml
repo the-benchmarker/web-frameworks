@@ -1,7 +1,8 @@
 language:
   version: 3.4
+  engines:
+    puma:
+      command: bundle exec camping -p 3000 -h 0.0.0.0
 framework:
   github: camping/camping
   version: 3.2
-
-  command: bundle exec camping -p 3000 -h 0.0.0.0

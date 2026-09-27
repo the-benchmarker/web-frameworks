@@ -3,13 +3,12 @@ framework:
   version: 2.0
 
   extensions:
-    - redis
+    - phpredis/phpredis
 
   engines:
     - swoole
 
 language:
-  version: 8.4
   engines:
     swoole:
       command: php vendor/bin/imi-swoole swoole/start

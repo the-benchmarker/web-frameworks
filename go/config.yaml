@@ -1,10 +1,14 @@
 language:
-  version: 1.25
+  version: 1.27
 
   engines:
     net-http:
       command: /go/bin/app
     fasthttp:
+      command: /go/bin/app
+    gogo:
+      command: /go/bin/app
+    gnet:
       command: /go/bin/app
 
 framework:

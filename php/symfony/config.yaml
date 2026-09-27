@@ -1,6 +1,6 @@
 framework:
   website: symfony.com
-  version: 8.0
+  version: 8.1
 
   files:
     - bin/console
@@ -8,6 +8,9 @@ framework:
     - .env.local.php
 
   bootstrap:
+    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
     - mkdir -p var/log && chown www-data var/log
     - mkdir -p var/cache && chown www-data var/cache
     - php bin/console cache:warmup --no-debug

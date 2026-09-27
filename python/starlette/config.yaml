@@ -1,8 +1,7 @@
 framework:
   website: www.starlette.io
   github: encode/starlette
-  version: 1.0
-
+  version: 1.6
   engines:
     - uvicorn
     - hypercorn

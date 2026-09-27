@@ -26,5 +26,16 @@ Layout/LineLength:
 
 Style/FrozenStringLiteralComment:
   Enabled: true
-  Exclude:
-    - ruby/**/*
+  EnforcedStyle: never
+
+Style/OneClassPerFile:
+  Enabled: false
+
+Style/CombinableLoops:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false

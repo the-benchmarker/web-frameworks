@@ -1,8 +1,6 @@
-language:
-  version: 8.4
 framework:
   github: chubbyphp/chubbyphp-framework
-  version: 6.0
+  version: 6.1
 
   engines:
     - swoole

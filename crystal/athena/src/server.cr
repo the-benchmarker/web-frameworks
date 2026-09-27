@@ -17,10 +17,5 @@ class BenchmarkController < ATH::Controller
   end
 end
 
-System.cpu_count.times do
-  Process.fork do
-    ATH.run reuse_port: true
-  end
-end
-
-sleep
+Fiber::ExecutionContext.default.resize(maximum: System.cpu_count)
+ATH.run reuse_port: true

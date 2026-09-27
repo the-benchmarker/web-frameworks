@@ -27,6 +27,7 @@ fn (mut app App) get_user_id(mut ctx Context, id string) veb.Result {
 
 @['/user'; post]
 fn (mut app App) post_user(mut ctx Context) veb.Result {
+	ctx.res.set_status(.created)
 	ctx.set_header(.connection, 'keep-alive')
 	ctx.set_header(.content_length, '0')
 	return ctx.text('')

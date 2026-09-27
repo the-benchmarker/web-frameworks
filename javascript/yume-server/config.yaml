@@ -1,0 +1,9 @@
+language:
+  node:
+    version: 24-trixie-slim
+
+framework:
+  github: TheVegeta/Yume
+  version: 0.0
+  engines:
+    - uwebsockets

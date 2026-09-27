@@ -1,5 +1,5 @@
 language:
-  version: 1.15
+  version: 1.17
   website: gleam.run
 
   files:
@@ -8,7 +8,8 @@ language:
 
   engines:
     default:
-      command: /app/entrypoint.sh run
+      command: /app/entrypoint.sh
+      options: run
 
 framework:
   engines:

@@ -1,0 +1,25 @@
+# Benchmark Endpoints (Web Frameworks Benchmark compatible)
+
+http.get: '/' {
+    http.response: {
+        status: 200
+        type: 'text/plain'
+        body: ''
+    }
+}
+
+http.post: '/user' {
+    http.response: {
+        status: 200
+        type: 'text/plain'
+        body: ''
+    }
+}
+
+http.get: '/user/{id}' {
+    http.response: {
+        status: 200
+        type: 'text/plain'
+        body: $id
+    }
+}

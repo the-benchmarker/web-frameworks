@@ -3,7 +3,6 @@ import multiprocessing
 from sanic import Sanic
 from sanic.response import text
 
-
 app = Sanic("benchmark")
 
 

@@ -6,4 +6,4 @@ requires = ["flit_core"]
 name='server'
 version = '1.0.0'
 description = "Simple benchmark implementation"
-dependencies = [ "fastpysgi>=0.4,<0.5" ]
+dependencies = [ "fastpysgi>=0.6,<0.7" ]

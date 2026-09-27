@@ -1,11 +1,6 @@
 FROM curlimages/curl AS curl
 
-{{#image}}
-  FROM {{{.}}}
-{{/image}}
-{{^image}}
-  FROM alpine:latest
-{{/image}}
+FROM openresty/openresty:1.31-alpine-fat AS build
 
 WORKDIR /usr/src/app
 

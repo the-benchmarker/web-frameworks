@@ -18,4 +18,5 @@ post "/user" do |env|
   nil
 end
 
+Fiber::ExecutionContext.default.resize(maximum: System.cpu_count)
 Kemal.run
