@@ -1,0 +1,30 @@
+name: Renovate
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: renovate
+  cancel-in-progress: false
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    container:
+      image: ghcr.io/renovatebot/renovate:44.115.10
+    env:
+      RENOVATE_PLATFORM: github
+      RENOVATE_REPOSITORIES: ${{ github.repository }}
+      RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
+      RENOVATE_ONBOARDING: "false"
+    steps:
+      - name: Check Renovate token
+        run: test -n "$RENOVATE_TOKEN"
+      - name: Check for dependency updates
+        run: renovate
