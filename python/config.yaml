@@ -107,6 +107,20 @@ language:
           --port 3000 \
           --workers $(nproc) \
           ${PYTHON_APP}
+    weft:
+      bootstrap:
+        - pip install 'weft-server>=0.1,<0.2'
+      environment:
+        INTERFACE: asgi
+        PYTHON_APP: server:app
+      command: >
+        weft \
+          --log-level error \
+          --protocol ${INTERFACE} \
+          --host 0.0.0.0 \
+          --port 3000 \
+          --workers $(nproc) \
+          ${PYTHON_APP}
 
 framework:
   engines:
