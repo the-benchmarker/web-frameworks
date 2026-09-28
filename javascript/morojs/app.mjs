@@ -1,5 +1,5 @@
 import { availableParallelism } from 'node:os';
-import { createApp } from '@morojs/moro';
+import { createApp, param } from '@morojs/moro';
 
 process.env.LOG_LEVEL = 'error';
 process.env.NODE_ENV = 'production';
@@ -28,12 +28,11 @@ const app = await createApp({
 
 // A literal body in place of a handler is answered inside @morojs/engine
 // without entering JS, the same way elysia-bun's literal handlers are served
-// by Bun's static routes.
+// by Bun's static routes. param('id') is the same for a path parameter: the
+// engine echoes the segment as the body, as res.end(req.params.id) would.
 app.get('/').handler('');
 
-app.get('/user/:id').handler(({ params }, res) => {
-  res.end(params.id);
-});
+app.get('/user/:id').handler(param('id'));
 
 app.post('/user').handler('');
 
