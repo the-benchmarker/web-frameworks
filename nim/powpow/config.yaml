@@ -1,6 +1,8 @@
 framework:
   github: openpeeps/powpow
-  version: 0.1
+  version: 0.2
+  build_opts:
+    - "-d:powpowPewPew"
 
   build_deps:
     - libssl-dev

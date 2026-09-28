@@ -15,16 +15,18 @@ app.set('connection headers', false);
 // because uWS writes the parameter as it is on the wire, undecoded, which is fine for an id.
 app.set('declarative request values', true);
 
+// end() is node's, so no Content-Type goes out: send('') would write text/html on an empty body,
+// as Express does, and that is 40 bytes per response the benchmark never reads
 app.get('/', function (req, res) {
-  res.send('');
+  res.end('');
 });
 
 app.get('/user/:id', function (req, res) {
-  res.send(req.params.id);
+  res.end(req.params.id);
 });
 
 app.post('/user', function (req, res) {
-  res.send('');
+  res.end('');
 });
 
 // this file runs again in every worker, and the primary only forks: the listen below happens once

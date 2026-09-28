@@ -1,5 +1,52 @@
 # frozen_string_literal: true
 
+# Prefix that pins the load generator to a CPU set so it cannot contend with the
+# server under test. Empty string when LOAD_CPUS is unset, which leaves the
+# command byte-identical to the unpinned form.
+#
+# The probe runs through a real shell: `command` is a builtin, so system() with
+# a single string would exec a binary named "command" and always report false.
+def load_generator_prefix(load_cpus)
+  return '' unless load_cpus
+
+  unless system('sh', '-c', 'command -v taskset', out: File::NULL, err: File::NULL)
+    warn "LOAD_CPUS=#{load_cpus} was set but taskset is not available; load generator will NOT be pinned."
+    return ''
+  end
+
+  "taskset -c #{load_cpus} "
+end
+
+# Number of CPUs named by a cpuset spec such as "0-3,8" (the syntax of both
+# --cpuset-cpus and taskset -c). nil when the spec is unset or unreadable, so
+# the caller can fall back rather than pin a wrong thread count.
+def cpuset_size(spec)
+  return nil if spec.nil? || spec.strip.empty?
+
+  spec.split(',').sum do |part|
+    first, last = part.strip.split('-', 2)
+    return nil unless first&.match?(/\A\d+\z/) && (last.nil? || last.match?(/\A\d+\z/))
+
+    last ? last.to_i - first.to_i + 1 : 1
+  end
+end
+
+# The -R of the fixed-rate latency pass (LATENCY_RATE). "N%" is N percent of
+# the closed-loop achieved_rate handed in, nil when that run left no result
+# (the caller decides what to do); a plain integer is an absolute rate, the
+# same for every framework. Anything else is nil.
+def latency_rate_for(spec, achieved)
+  spec = spec.to_s.strip
+  if (m = spec.match(/\A(\d+(?:\.\d+)?)%\z/))
+    return nil unless achieved.is_a?(Numeric) && achieved.positive?
+
+    return [(achieved * m[1].to_f / 100.0).floor, 1].max
+  end
+  return spec.to_i if spec.match?(/\A\d+\z/) && spec.to_i.positive?
+
+  nil
+end
+
 def normalize_shell(shell)
   shell
     .gsub(/\\\s*\n/, " ") # escape newlines

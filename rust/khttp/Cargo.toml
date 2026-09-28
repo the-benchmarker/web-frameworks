@@ -4,7 +4,7 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-khttp = "0.2"
+khttp = { version = "0.2", features = ["epoll"] }
 
 [profile.release]
 opt-level = 3

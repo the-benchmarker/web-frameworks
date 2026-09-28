@@ -16,11 +16,11 @@ open a pull request.
 - **Docker**, to build and run each framework
 - **Ruby** + `bundle install`, for the `rake` tasks that generate the
   per-framework `.Dockerfile`/`.Makefile`
-- **[zrk](https://github.com/zoxy-io/zrk) >= 2.2.0**, the load generator the
+- **[zrk](https://github.com/zoxy-io/zrk) >= 2.4.0**, the load generator the
   `collect` targets shell out to. `brew install zoxy-io/tap/zrk`, or grab a
   static binary from the [releases](https://github.com/zoxy-io/zrk/releases).
-  It must be on `PATH`. 2.2.0 is the minimum because the harness runs it in
-  `--closed` mode, which older versions do not have.
+  It must be on `PATH`. The harness runs it in `--closed` mode (added in
+  2.2.0) and is validated on 2.4.x; `run.sh` enforces the minimum.
 
 ## Adding a framework
 
