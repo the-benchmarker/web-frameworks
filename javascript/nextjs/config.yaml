@@ -2,7 +2,7 @@ framework:
   website: nextjs.org
   github: vercel/next.js
   # renovate: datasource=npm depName=next
-  version: 16.3.6
+  version: 16.3
 
   files:
     - app
