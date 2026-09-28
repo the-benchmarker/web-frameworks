@@ -1,0 +1,14 @@
+framework:
+  website: metacpan.org/dist/Feersum
+  version: 1.507
+
+  bootstrap:
+    - apt-get update && apt-get install -y --no-install-recommends ragel && rm -rf /var/lib/apt/lists/*
+
+  engines:
+    - feersum
+
+language:
+  engines:
+    feersum:
+      command: perl app.pl
