@@ -6,6 +6,7 @@ fn init_server_config() -> ServerConfig {
     server_config
 }
 
+#[route("/")]
 struct Index;
 
 impl ServerHook for Index {
@@ -14,13 +15,22 @@ impl ServerHook for Index {
     }
 
     async fn handle(self, stream: &mut Stream, ctx: &mut Context) -> Status {
-        ctx.get_mut_response().set_status_code(200);
+        ctx.get_mut_response().set_header(CONNECTION, KEEP_ALIVE);
+        if ctx.get_request().get_method().is_get() {
+            ctx.get_mut_response().set_status_code(200);
+        } else {
+            ctx.get_mut_response().set_status_code(404);
+        }
         let data: Vec<u8> = ctx.get_mut_response().build();
-        let _ = stream.try_send(data).await;
+        if stream.try_send(data).await.is_err() {
+            stream.set_closed(true);
+            return Status::Reject;
+        }
         Status::Continue
     }
 }
 
+#[route("/user")]
 struct User;
 
 impl ServerHook for User {
@@ -29,13 +39,22 @@ impl ServerHook for User {
     }
 
     async fn handle(self, stream: &mut Stream, ctx: &mut Context) -> Status {
-        ctx.get_mut_response().set_status_code(200);
+        ctx.get_mut_response().set_header(CONNECTION, KEEP_ALIVE);
+        if ctx.get_request().get_method().is_post() {
+            ctx.get_mut_response().set_status_code(200);
+        } else {
+            ctx.get_mut_response().set_status_code(404);
+        }
         let data: Vec<u8> = ctx.get_mut_response().build();
-        let _ = stream.try_send(data).await;
+        if stream.try_send(data).await.is_err() {
+            stream.set_closed(true);
+            return Status::Reject;
+        }
         Status::Continue
     }
 }
 
+#[route("/user/{id}")]
 struct UserId;
 
 impl ServerHook for UserId {
@@ -44,21 +63,28 @@ impl ServerHook for UserId {
     }
 
     async fn handle(self, stream: &mut Stream, ctx: &mut Context) -> Status {
-        let id: String = ctx.try_get_route_param("id").unwrap_or_default();
-        ctx.get_mut_response().set_status_code(200).set_body(id);
+        ctx.get_mut_response().set_header(CONNECTION, KEEP_ALIVE);
+        if ctx.get_request().get_method().is_get() {
+            let id: String = ctx.try_get_route_param("id").unwrap_or_default();
+            ctx.get_mut_response().set_status_code(200).set_body(id);
+        } else {
+            ctx.get_mut_response().set_status_code(404);
+        }
         let data: Vec<u8> = ctx.get_mut_response().build();
-        let _ = stream.try_send(data).await;
+        if stream.try_send(data).await.is_err() {
+            stream.set_closed(true);
+            return Status::Reject;
+        }
         Status::Continue
     }
 }
 
+#[hyperlane(server: Server)]
 #[tokio::main]
 async fn main() {
-    Server::default()
+    server
         .server_config(init_server_config())
-        .route::<Index>("/")
-        .route::<User>("/user")
-        .route::<UserId>("/user/{id}")
+        .request_config(init_request_config())
         .run()
         .await
         .unwrap()
