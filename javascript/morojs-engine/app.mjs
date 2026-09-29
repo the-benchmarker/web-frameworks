@@ -12,11 +12,16 @@ const USER_PREFIX = '/user/';
 
 const server = engine.serve(
   {
-    // GET "/user/:id" => 200 with "id" as body; anything else unmatched => 404
+    // Reached only by what the engine does not answer itself (see below):
+    // GET "/user/:id" on an engine without parameter routes, and anything
+    // unmatched, which is a 404.
     onRequest(reqId, methodIdx, path) {
       if (methodIdx === GET && path.startsWith(USER_PREFIX)) {
-        engine.respond(reqId, 200, null, path.slice(USER_PREFIX.length));
-        return;
+        const id = path.slice(USER_PREFIX.length);
+        if (id.length > 0 && !id.includes('/')) {
+          engine.respond(reqId, 200, null, id);
+          return;
+        }
       }
       engine.respond(reqId, 404, null, null);
     },
@@ -31,6 +36,14 @@ const server = engine.serve(
 // engine's static routes: answered inside the engine, no JS per request.
 engine.setStaticRoute(server, GET, '/', 200, null, '');
 engine.setStaticRoute(server, POST, '/user', 200, null, '');
+
+// GET "/user/:id" => 200 with "id" as body. On an engine with parameter
+// routes (>= 1.1.9) the segment after "/user/" is echoed inside the engine
+// too, so no request of this benchmark enters JS; older engines take the
+// onRequest path above.
+if (engine.probe().capabilities?.paramRoutes) {
+  engine.setParamRoute(server, GET, USER_PREFIX, '', 200, null);
+}
 
 // Start the server on port 3000
 engine.listen(server, '0.0.0.0', 3000);
