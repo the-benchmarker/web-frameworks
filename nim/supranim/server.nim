@@ -15,7 +15,7 @@ import ./controller/[pages, errors]
 initApplication()
 initHttpRouter()
 
-App.configs = newOrderedTable[string, YAMLObject]()
-App.configs["server"] = parseYAML("port: 3000")
+App.configs = newOrderedTable[string, Configuration]()
+App.configs["server"] = parseConfiguration(".yml", "port: 3000")
 
 App.run()
