@@ -1,0 +1,11 @@
+framework:
+  github: mario-huang/durian.js
+  version: 12.0
+  engines:
+    - bun
+language:
+  engines:
+    bun:
+      bootstrap:
+        - bun install pm2
+      command: bun run pm2

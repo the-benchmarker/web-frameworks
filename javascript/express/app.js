@@ -1,6 +1,8 @@
-var express = require('express');
-var app = express();
+import express from 'express';
+
+const app = express();
 app.set('etag', false);
+app.set('x-powered-by', false);
 
 app.get('/', function (req, res) {
   res.send('');
@@ -14,4 +16,4 @@ app.post('/user', function (req, res) {
   res.send('');
 });
 
-app.listen(3000, function () {});
+export default app;

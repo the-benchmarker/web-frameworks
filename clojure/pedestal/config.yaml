@@ -2,12 +2,16 @@ framework:
   github: pedestal/pedestal
   version: "0.6"
 
-  image: "clojure:temurin-21-lein"
-
   build:
     - lein uberjar
 
   binaries:
     - target/the-benchmarker-pedestal-0.0.1-SNAPSHOT-standalone.jar
 
-  command: java -jar target/the-benchmarker-pedestal-0.0.1-SNAPSHOT-standalone.jar
+language:
+  compiler: lein
+  java:
+    version: 21
+  engines:
+    default:
+      command: java -jar target/the-benchmarker-pedestal-0.0.1-SNAPSHOT-standalone.jar

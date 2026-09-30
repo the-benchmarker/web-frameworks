@@ -1,23 +1,28 @@
 framework:
-  github: itsumura-h/nim-basolato
-  version: 0.15
+  github: dumblepy/nim-basolato/
+  version: 0.16
 
-  deps:
+  build_deps:
     - gcc
     - openssl
     - openssh-client
-    - pcre-dev
+    - libpcre3-dev
 
-  build_command: "ducere build -p 3000"
+  build_command: nim c --mm:orc --threads:off -d:ssl -d:release --opt:speed -o:main main.nim
 
-  command: "./startServer.sh"
+  runtime_deps:
+    - libpcre3
+
+  command: ./main
 
   custom_files:
     - main
-    - startServer.sh
     - .env
 
 language:
+  engines:
+    default:
+      command: ./main
   files:
     - main
     - "**/*.json"

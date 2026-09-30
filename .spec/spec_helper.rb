@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "net/http"
-require "yaml"
+require 'net/http'
+require 'yaml'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -16,6 +16,10 @@ RSpec.configure do |config|
 end
 
 def http
-  ip = File.read(File.join(ENV["LANGUAGE"], ENV["FRAMEWORK"], "ip-#{ENV["ENGINE"]}.txt")).strip
+  language = ENV.fetch('LANGUAGE', nil)
+  framework = ENV.fetch('FRAMEWORK', nil)
+  engine = ENV.fetch('ENGINE', nil)
+
+  ip = File.read(File.join(language, framework, "ip-#{engine}.txt")).strip
   Net::HTTP.new(ip, 3000)
 end

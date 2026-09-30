@@ -1,9 +1,12 @@
 language:
-  version: 8.3
+  version: 8.5
 
   files:
     - "**/*.php"
     - composer.json
+
+  before_build:
+    - curl -fL --output /tmp/pie https://github.com/php/pie/releases/latest/download/pie.phar && install /tmp/pie /usr/local/bin
 
   bootstrap:
     - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -15,16 +18,17 @@ language:
       deps:
         - nginx
     workerman:
+      before_build:
+        - docker-php-ext-install pcntl sockets
       extensions:
-        - event
+        - osmanov/pecl-event
       deps:
         - libevent-dev
         - libssl-dev
-      modules:
-        - pcntl
-        - sockets
       command: php public/index.php start
     road-runner:
+      extensions:
+        - extport/protobuf
       files:
         - .rr.yaml
       bootstrap:
@@ -34,21 +38,20 @@ language:
       command: ./rr serve
     swoole:
       extensions:
-        - swoole/5.1.3
+        - swoole/swoole
       command: php public/index.php
       build_deps:
         - libbrotli-dev
+        - libssl-dev
     reactphp:
+      modules:
+        - sockets
+      extensions:
+        - osmanov/pecl-event
       deps:
         - libevent-dev
         - libicu-dev
         - libssl-dev
-      modules:
-        - intl
-        - sockets
-        - pcntl
-      extensions:
-        - event
 
 framework:
   engines:

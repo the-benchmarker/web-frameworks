@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE aspectran PUBLIC "-//ASPECTRAN//DTD Aspectran 9.0//EN"
+        "https://aspectran.com/dtd/aspectran-9.dtd">
+<aspectran>
+
+    <description>
+        Defines the core settings for the Undertow embedded web server, including the HTTP listener.
+    </description>
+
+    <environment>
+        <property name="tow.server.listener.http.port" valueType="int">3000</property>
+        <property name="tow.server.listener.http.host">0.0.0.0</property>
+    </environment>
+
+    <bean id="tow.server" class="com.aspectran.undertow.server.DefaultTowServer">
+        <property name="httpListeners" type="array">
+            <bean class="com.aspectran.undertow.server.HttpListenerConfig">
+                <property name="port" valueType="int">%{tow.server.listener.http.port}</property>
+                <property name="host">%{tow.server.listener.http.host}</property>
+            </bean>
+        </property>
+        <property name="serverOptions">
+            <bean class="com.aspectran.undertow.server.TowOptions">
+                <property name="decodeUrl" valueType="boolean">true</property>
+                <property name="urlCharset">UTF-8</property>
+            </bean>
+        </property>
+        <property name="workerOptions">
+            <bean class="com.aspectran.undertow.server.TowOptions">
+                <property name="workerName">TOW</property>
+            </bean>
+        </property>
+        <property name="requestHandlerFactory">
+            <bean class="com.aspectran.undertow.server.handler.LightRequestHandlerFactory"/>
+        </property>
+    </bean>
+
+</aspectran>

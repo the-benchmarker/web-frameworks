@@ -13,3 +13,5 @@ app
     res.end('');
   })
   .listen(3000);
+
+console.info(`Worker PID ${process.pid} is listening at http://localhost:3000`);

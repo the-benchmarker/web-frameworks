@@ -8,14 +8,17 @@
     <version>1.0.0</version>
 
     <properties>
-        <maven.compiler.release>21</maven.compiler.release>  
+        <maven.compiler.release>25</maven.compiler.release>  
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.main.class>com.networknt.server.Server</project.main.class>
-        <version.light-4j>[2.1,2.2)</version.light-4j>
-        <version.jackson>[1.0,)</version.jackson>
-        <version.undertow>2.3.16.Final</version.undertow>
+        <version.light-4j>[2.3,2.4)</version.light-4j>
+	<version.jackson>2.21.3</version.jackson>
+        <version.undertow>2.4.3.Final</version.undertow>
+	<version.jackson-annotations>2.21</version.jackson-annotations>
+	<version.jackson-annotations>2.22</version.jackson-annotations>
+	<version.jackson>2.22.3</version.jackson>
         <version.json-schema-validator>[1.0,)</version.json-schema-validator>
-        <version.fastscanner>[1.0,)</version.fastscanner>
+	<version.classgraph>[4.0,)</version.classgraph>
     </properties>
 
     <dependencies>
@@ -178,7 +181,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>${version.jackson}</version>
+            <version>${version.jackson-annotations}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -191,9 +194,9 @@
             <version>${version.undertow}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.lukehutch</groupId>
-            <artifactId>fast-classpath-scanner</artifactId>
-            <version>${version.fastscanner}</version>
+	    <groupId>io.github.classgraph</groupId>
+            <artifactId>classgraph</artifactId>
+            <version>${version.classgraph}</version>
         </dependency>
         
     </dependencies>
@@ -204,8 +207,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>25</source>
+                    <target>25</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -218,6 +221,34 @@
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
 

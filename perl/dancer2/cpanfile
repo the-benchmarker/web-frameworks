@@ -1,13 +1,1 @@
-requires 'Dancer2', '>= 0.4, < 0.5';
-# Gazelle or Starman
-requires 'Gazelle';
-
-# XS speed-ups
-requires 'Class::XSAccessor';
-requires 'Crypt::URandom';
-requires 'HTTP::XSHeaders';
-requires 'Math::Random::ISAAC::XS';
-requires 'MooX::TypeTiny';
-requires 'Scope::Upper';
-requires 'Type::Tiny::XS';
-requires 'URL::Encode::XS';
+requires 'Dancer2', '>= 1.1.0, < 1.2.0';

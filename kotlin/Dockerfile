@@ -1,4 +1,6 @@
-FROM gradle:jdk21 AS build
+FROM gradle:jdk{{{language.java.version}}} AS build
+
+ENV ORG_GRADLE_PROJECT_jvmTarget={{{language.java.version}}}
 
 WORKDIR /usr/src/app
 
@@ -8,11 +10,17 @@ WORKDIR /usr/src/app
 
 RUN gradle build
 
-FROM eclipse-temurin:21.0.4_7-jre
+
+FROM eclipse-temurin:{{{language.java.version}}}-jre
 
 WORKDIR /usr/src/app
 
+RUN apt-get -qq update && \
+  apt-get -qy install --no-install-recommends curl && \
+  rm -rf /var/lib/apt/lists/*
+
 COPY --from=build /usr/src/app/build/libs/server.jar /usr/src/app/build/libs/server.jar
 
-CMD java -server -jar /usr/src/app/build/libs/server.jar
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
+ENTRYPOINT ["java", "-server", "-jar", "/usr/src/app/build/libs/server.jar"]

@@ -1,5 +1,5 @@
-var Koa = require('koa');
-var Router = require('koa-router');
+import Koa from 'koa';
+import Router from 'koa-router';
 
 var app = new Koa();
 var router = new Router();
@@ -15,4 +15,4 @@ router
     ctx.body = '';
   });
 
-app.use(router.routes()).use(router.allowedMethods()).listen(3000);
+export { app, router };

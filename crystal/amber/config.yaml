@@ -1,9 +1,15 @@
 framework:
   website: amberframework.org
-  version: 1.4
+  version: 1.5
 
   build_deps:
     - libsqlite3-dev
 
+  runtime_deps:
+    - libyaml-dev
+
   static_files:
     - config/environments/production.yml
+
+  environment:
+    AMBER_ENV: production

@@ -1,0 +1,13 @@
+framework:
+  website: djangoproject.com
+  version: 6.1
+
+  engines:
+    - peregrine
+
+language:
+  engines:
+    peregrine:
+      environment:
+        INTERFACE: wsgi
+        PYTHON_APP: app.wsgi:application

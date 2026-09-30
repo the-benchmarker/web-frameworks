@@ -11,8 +11,9 @@ Gemfile.lock
 # git temporary files
 *.orig
 
-# GoLand IDE
-.idea
+# IntelliJ / GoLand IDE
+.idea/
+*.iml
 
 # Temporary files
 FRAMEWORKS.yaml
@@ -57,3 +58,6 @@ __pycache__/
 
 # Gradle
 */*/gradle
+
+
+.results

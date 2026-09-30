@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	err := aurora.Run(&Server{aurora.New(aurora.Debug())})
+	err := aurora.Run(&Server{aurora.New()})
 	if err != nil {
 		fmt.Println(err)
 		return

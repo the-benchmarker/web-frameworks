@@ -11,12 +11,18 @@ framework:
     - swoole
 
   extensions:
-    - redis
+    - pie-extensions/redis
 
   modules:
     - pcntl
 
   bootstrap:
+    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
     - mkdir storage/logs -p
 
-  command: php engineer server:start
+language:
+  engines:
+    swoole:
+      command: php engineer server:start

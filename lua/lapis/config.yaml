@@ -1,12 +1,17 @@
 framework:
-  website: leafo.net/lapis/
-  version: 1.16
+  website: leafo.net/lapis
+  version: 1.19
 
   image: openresty/openresty:alpine-fat
 
+  build_deps:
+    - openssl-dev
+
   build:
-    - apk add --no-cache openssl-dev
     - /usr/local/openresty/luajit/bin/luarocks install lapis
     - lapis new
 
-  command: lapis server production
+language:
+  engines:
+    default:
+      command: lapis server production

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Endpoint\Web;
 
-use Exception;
-use Spiral\Prototype\Traits\PrototypeTrait;
 use Spiral\Router\Annotation\Route;
 
 /**
@@ -14,13 +12,6 @@ use Spiral\Router\Annotation\Route;
  */
 final class HomeController
 {
-    /**
-     * Read more about Prototyping:
-     * @link https://spiral.dev/docs/basics-prototype/#installation
-     */
-    use PrototypeTrait;
-
-
     #[Route(route: '/', name: 'index', methods: "GET")]
     public function index(): string
     {

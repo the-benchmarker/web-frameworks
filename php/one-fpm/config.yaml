@@ -1,5 +1,4 @@
 language:
-  version: 8.1
   engines:
     php-fpm:
       bootstrap:
@@ -8,7 +7,7 @@ language:
 
 framework:
   github: lizhichao/one
-  version: 2.3
+  version: 3.1
 
   engines:
     - php-fpm

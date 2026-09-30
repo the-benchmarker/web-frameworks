@@ -2,6 +2,7 @@ require "amber"
 
 require "../src/controllers/application_controller"
 require "../src/controllers/**"
+require "./routes"
 
 # About Application.cr File
 #

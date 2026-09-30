@@ -65,7 +65,7 @@ $app = new Application([
 
 $server = new Worker('http://0.0.0.0:3000');
 
-$server->count = shell_exec('nproc') ? shell_exec('nproc') : 32;
+$server->count = shell_exec('nproc') ? intval(shell_exec('nproc')) : 32;
 
 $server->onMessage = new OnMessage(
     new PsrRequestFactory(

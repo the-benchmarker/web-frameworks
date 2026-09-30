@@ -1,0 +1,16 @@
+language:
+  version: 1.17
+  website: gleam.run
+
+  files:
+    - gleam.toml
+    - "**/*.gleam"
+
+  engines:
+    default:
+      command: /app/entrypoint.sh
+      options: run
+
+framework:
+  engines:
+    - default

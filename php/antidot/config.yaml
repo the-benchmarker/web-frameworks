@@ -1,7 +1,8 @@
 language:
+  version: 8.3
   engines:
     reactphp:
-      command: bin/console serve
+      command: php bin/console serve
       environment:
         COMPOSER_ALLOW_SUPERUSER: 1
 

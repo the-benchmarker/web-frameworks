@@ -1,0 +1,27 @@
+framework:
+  website: adonisjs.com
+  version: 7.0
+
+  bootstrap:
+    - npm install
+    - node ace.js build
+
+  files:
+    - adonisrc.ts
+    - ace.js
+    - package.json
+    - '**/*.ts'
+    - cluster.mjs
+    - tsconfig.json
+
+language:
+  engines:
+    node:
+      environment:
+        HOST: 0.0.0.0
+        PORT: 3000
+        APP_KEY: awesomesecretkey
+        DRIVE_DISK: local
+        SESSION_DRIVER: memory
+        LOG_LEVEL: error
+        NODE_APP: build/bin/server.js

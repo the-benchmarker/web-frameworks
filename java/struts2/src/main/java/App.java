@@ -1,6 +1,6 @@
 
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.ee10.webapp.WebAppContext;
 
 import java.net.URL;
 import java.security.ProtectionDomain;

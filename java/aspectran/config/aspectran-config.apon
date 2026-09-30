@@ -1,0 +1,42 @@
+context: {
+    name: root
+    rules: [
+        /config/app-description.xml
+        /config/tow-server.xml
+        /config/web-rules.xml
+    ]
+    resources: [
+    ]
+    scan: [
+    ]
+    profiles: {
+        default: [
+            dev
+        ]
+    }
+    autoReload: {
+        scanIntervalSeconds: 5
+        enabled: false
+    }
+    singleton: false
+}
+daemon: {
+    polling: {
+        enabled: false
+    }
+    session: {
+        enabled: false
+    }
+    acceptable: {
+        -: /**
+    }
+}
+web: {
+    uriDecoding: utf-8
+    defaultServletName: none
+    trailingSlashRedirect: true
+    legacyHeadHandling: true
+    acceptable: {
+        +: /**
+    }
+}

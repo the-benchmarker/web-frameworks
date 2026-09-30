@@ -1,6 +1,6 @@
 framework:
   github: aplus-framework/app
-  version: 23.0
+  version: 25.1
   website: aplus-framework.com/packages/app
 
   bootstrap:
@@ -25,8 +25,8 @@ framework:
     - gd
 
   extensions:
-    - igbinary
-    - memcached
-    - msgpack
-    - redis
-    - yaml
+    - pie-extensions/igbinary:3.2.17RC1
+    - php-memcached/php-memcached
+    - msgpack/msgpack-php
+    - pie-extensions/redis
+    - pecl/yaml

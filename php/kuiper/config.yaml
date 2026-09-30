@@ -5,4 +5,7 @@ framework:
   engines:
     - swoole
 
-  command: php src/index.php start
+language:
+  engines:
+    swoole:
+      command: php src/index.php start

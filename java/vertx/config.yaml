@@ -1,6 +1,6 @@
 framework:
   website: vertx.io/docs/vertx-core/java/
-  version: 4.5
+  version: 5.1
 
   build:
     - mvn package
@@ -11,4 +11,4 @@ framework:
   binaries:
     - target/server.jar
 
-  command: /usr/bin/java -jar /opt/web/target/server.jar -instances `nproc`
+  command: /usr/bin/java -jar /opt/web/target/server.jar -instances $(nproc)

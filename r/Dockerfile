@@ -1,11 +1,15 @@
-FROM r-base:4.4.1
+FROM r-base:4.6.1
+
 WORKDIR /usr/src/app
 
-RUN apt-get -qq update
+ARG DEBIAN_FRONTEND=noninteractive
 
-{{#deps}}
-  RUN apt-get -y install {{{.}}}
-{{/deps}}
+RUN apt-get -qq update && \
+  apt-get -qy install --no-install-recommends \
+    apt-utils \
+    ca-certificates \
+    libssl-dev {{#build_deps}}{{{.}}} {{/build_deps}} && \
+  rm -rf /var/lib/apt/lists/*
 
 RUN R  -e 'install.packages("remotes")'
 
@@ -15,5 +19,6 @@ RUN R  -e 'install.packages("remotes")'
 
 RUN R -e 'remotes::install_deps()'
 
-CMD {{{command}}}
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
+ENTRYPOINT {{{command}}}

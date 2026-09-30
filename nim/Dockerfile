@@ -1,25 +1,22 @@
-FROM akito13/nim:2.0.8-alpine
+FROM nimlang/nim:2.2 AS build
 
-RUN apk update
 
-{{#deps}}
-  RUN apk add {{{.}}}
-{{/deps}}
-
-## set working directory
 WORKDIR /usr/src/app
 
-## Nim environment
-ENV NIM_ENV=production
-ENV NIMBLE_DIR=/home/nim/.nimble
-ENV PATH=$PATH:/home/nim/.nimble/bin
+{{#build_deps.length}}
+  ARG DEBIAN_FRONTEND=noninteractive
+  RUN apt-get -qq update && \
+    apt-get -y install {{#build_deps}}{{{.}}} {{/build_deps}} && \
+    rm -rf /var/lib/apt/lists/*
+{{/build_deps.length}}
 
+ENV NIM_ENV=production \
+  NIMBLE_DIR=/home/nim/.nimble \
+  PATH=$PATH:/home/nim/.nimble/bin:/root/.nimble/bin
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
-
-ENV PATH $PATH:/root/.nimble/bin
 
 {{#build_with}}
   RUN {{{.}}}
@@ -43,24 +40,29 @@ ENV PATH $PATH:/root/.nimble/bin
     server.nim
 {{/build_command}}
 
-FROM alpine:latest
+
+# Build image is still debian bookworm
+# @see https://github.com/nim-lang/docker-images/blob/develop/dockerfiles/2.2.12/Dockerfile
+FROM debian:bookworm-slim
 
 WORKDIR /usr/src/app
 
-RUN apk update
-
-RUN apk add openssl-dev pcre-dev
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get -qq update && \
+  apt-get -qy install --no-install-recommends \
+    libssl-dev \
+    libpcre2-dev \
+    curl \
+    {{#runtime_deps}}{{{.}}} {{/runtime_deps}} && \
+  rm -rf /var/lib/apt/lists/*
 
 {{#custom_files}}
-  COPY --from=0 /usr/src/app/{{{.}}} /usr/src/app/{{{.}}}
+  COPY --from=build /usr/src/app/{{{.}}} /usr/src/app/{{{.}}}
 {{/custom_files}}
 {{^custom_files}}
-  COPY --from=0 /usr/src/app/server /usr/src/app/server
+  COPY --from=build /usr/src/app/server /usr/src/app/server
 {{/custom_files}}
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
-{{^command}}
-  CMD /usr/src/app/server
-{{/command}}
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+
+ENTRYPOINT {{{command}}}

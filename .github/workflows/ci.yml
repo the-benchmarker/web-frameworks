@@ -1,65 +1,54 @@
 name: CI
 
 on:
-  - pull_request
-jobs:
-  matrix:
-    runs-on: ubuntu-latest
+  pull_request:
 
+jobs:
+  changes:
+    # Do not run on sync PSs
+    # Sync PRs only contain changes already tested on master.
+    if: >-
+      ${{ !(github.event.pull_request.base.ref == 'develop' &&
+            github.event.pull_request.head.ref == 'master' &&
+            github.event.pull_request.head.repo.full_name == github.repository) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      files: ${{ steps.file_changes.outputs.files }}
+      languages: ${{ steps.set-languages.outputs.languages }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - id: file_changes
-        uses: trilom/file-changes-action@v1.2.4
-      - uses: ruby/setup-ruby@v1
+      - name: File changes
+        id: file_changes
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          files=$(git diff --name-only -z "$BASE_SHA" "$HEAD_SHA" | jq -Rsc 'split("\u0000") | map(select(length > 0))')
+          echo "files=$files" >> "$GITHUB_OUTPUT"
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0
+          ruby-version: "4.0.7"
           bundler-cache: true
       - name: Install deps
         run: bundle install --jobs 4 --retry 3
-      - id: set-matrix
-        run: echo "matrix=$(bundle exec rake ci:matrix)" >> "$GITHUB_OUTPUT"
+      - name: Set languages
+        id: set-languages
+        run: echo "languages=$(bundle exec rake ci:languages)" >> "$GITHUB_OUTPUT"
         env:
           FILES: ${{ steps.file_changes.outputs.files }}
 
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-
-  test:
-    needs: matrix
-
-    runs-on: ubuntu-22.04
-
+  frameworks:
+    needs: changes
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.matrix.outputs.matrix)}}
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-ruby@v1
-      - name: Install deps
-        run: bundle install --jobs 4 --retry 3
-
-      - name: Docker version
-        run: docker -v
-
-      - name: Configure
-        run: bundle exec rake config
-
-      - name: Build
-        run: |
-          make "build"  -f "${DIRECTORY}/.Makefile"
-        env:
-          DIRECTORY: ${{ matrix.directory }}
-          ENGINE: ${{ matrix.engine }}
-
-      - name: Wait
-        run: sleep 1
-
-      - name: Test
-        run: bundle exec rspec .spec
-        env:
-          LANGUAGE: ${{ matrix.language }}
-          FRAMEWORK: ${{ matrix.framework }}
-          ENGINE: ${{ matrix.engine }}
+      matrix: ${{ fromJson(needs.changes.outputs.languages) }}
+    uses: ./.github/workflows/ci-language.yml
+    with:
+      language: ${{ matrix.language }}
+      files: ${{ needs.changes.outputs.files }}

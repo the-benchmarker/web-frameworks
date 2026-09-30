@@ -1,22 +1,3 @@
-import { wrap } from "jsr:@vixeny/core@0.1.42";
+import app from './server.ts';
 
-const app  = wrap()()
-  .stdPetition({
-    path: '/',
-    f: () => null
-  })
-  .stdPetition({
-    path: '/user/:id',
-    param: {
-      unique: true
-    },
-    f: ctx => ctx.param
-  })
-  .stdPetition({
-    method: 'POST',
-    path: '/user',
-    f: () => null
-  })
-  .compose()
-
-Deno.serve({port: 3000}, app)
+export default { fetch: await app.compose() };

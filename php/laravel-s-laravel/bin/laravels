@@ -144,7 +144,7 @@ class Psr4Autoloader
     }
 }
 
-$basePath = dirname(__DIR__) . '/';
+$basePath = dirname(__DIR__);
 $loader = new Psr4Autoloader();
 $loader->register();
 
@@ -158,6 +158,7 @@ $loader->addNamespace('Symfony\Polyfill\Php80', $basePath . '/vendor/symfony/pol
 $loader->requireFile($basePath . '/vendor/symfony/polyfill-php80/bootstrap.php');
 
 $loader->addNamespace('Symfony\Component\Console', $basePath . '/vendor/symfony/console');
+$loader->addNamespace('Symfony\Component\String', $basePath . '/vendor/symfony/string');
 $loader->addNamespace('Symfony\Contracts\Service', $basePath . '/vendor/symfony/service-contracts');
 $loader->addNamespace('Symfony\Contracts', $basePath . '/vendor/symfony/contracts');
 

@@ -1,14 +1,17 @@
 framework:
   github: sanic-org/sanic
-  version: 24.6
+  version: 25.12
 
   engines:
     - sanic
-    - uvicorn
     - gunicorn
+    - uvicorn
     - hypercorn
 
 language:
   engines:
     sanic:
       command: python server.py
+    gunicorn:
+      environment:
+        WORKER_CLASS: asgi

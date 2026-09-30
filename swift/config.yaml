@@ -1,10 +1,10 @@
 language:
-  version: "5.10"
+  version: 6.3
   files:
     - "**/*.swift"
   engines:
     default:
-      command: /usr/src/app/.build/release/server
+      command: /app/.build/release/server
 
 framework:
   engines:

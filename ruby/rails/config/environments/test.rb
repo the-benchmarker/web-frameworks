@@ -1,4 +1,4 @@
-require 'active_support/core_ext/integer/time'
+require "active_support/core_ext/integer/time"
 
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
@@ -15,12 +15,12 @@ Rails.application.configure do
   # this is usually not necessary, and can slow down your test suite. However, it's
   # recommended that you enable it in continuous integration systems to ensure eager
   # loading is working properly before deploying your code.
-  config.eager_load = ENV['CI'].present?
+  config.eager_load = ENV["CI"].present?
 
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
   config.public_file_server.headers = {
-    'Cache-Control' => "public, max-age=#{1.hour.to_i}"
+    "Cache-Control" => "public, max-age=#{1.hour.to_i}",
   }
 
   # Show full error reports and disable caching.
@@ -33,9 +33,6 @@ Rails.application.configure do
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
-
-  # Store uploaded files on the local file system in a temporary directory.
-  config.active_storage.service = :test
 
   config.action_mailer.perform_caching = false
 

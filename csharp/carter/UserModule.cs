@@ -1,21 +1,21 @@
 ﻿namespace web
 {
-    using Carter;
-    using Carter.Request;
-    using Microsoft.AspNetCore.Http;
     using System.Threading.Tasks;
+    using Carter;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Routing;
 
     public class UserModule : CarterModule
     {
-        public UserModule()
+        public override void AddRoutes(IEndpointRouteBuilder app)
         {
-            Get("/user/{id}", async(req, res) =>
+            app.MapGet("/user/{id}", async ([FromRoute] string id) =>
             {
-                var id = req.RouteValues.As<string>("id");
-                await res.WriteAsync(id);
+                return id;
             });
 
-            Post("/user", (req, res) => Task.CompletedTask);
+            app.MapPost("/user", () => Task.CompletedTask);
         }
     }
 }

@@ -1,22 +1,23 @@
 language:
-  version: 21
+  version: 26
   compiler: maven
 
   files:
     - src/**/*.java
     - pom.xml
-    - src/**/*.properties
     - src/**/*.xml
     - src/**/*.yml
     - src/**/*.jsp
-
-  fix:
-    - ln -sfv /usr/local/openjdk-21/bin/java /usr/bin/java
+    - '**/*.kts'
+    - '**/*.properties'
 
   engines:
-    default:
-      command: /usr/bin/java -jar /opt/web/target/benchmark-1.0.0.jar
+    default: {}
+    graalvm:
+      graalvm: true
 
 framework:
+  command: /usr/bin/java -jar /opt/web/target/benchmark-1.0.0.jar
   engines:
     - default
+    - graalvm

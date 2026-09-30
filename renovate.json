@@ -1,4 +1,35 @@
 {
-  "extends": ["config:base", ":preserveSemverRanges"],
-  "separateMultipleMajor": true
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":preserveSemverRanges"],
+  "separateMultipleMajor": true,
+  "reviewers": ["waghanza"],
+  "assignAutomerge": true,
+  "automerge": true,
+  "automergeType": "pr",
+  "platformAutomerge": false,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/config\\.yaml$/"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+version: (?<currentValue>\\S+)"
+      ]
+    },
+    {
+      "customType": "regex",
+      "description": "Update GitHub-hosted Crystal shards",
+      "managerFilePatterns": ["/(^|/)shard\\.yml$/"],
+      "matchStrings": [
+        "(?:^|\\r\\n|\\r|\\n)[ \\t]+(?<depName>[\\w.-]+):[ \\t]*\\r?\\n[ \\t]+github:[ \\t]*(?<packageName>[^\\s#]+)[ \\t]*\\r?\\n[ \\t]+version:[ \\t]*~>[ \\t]*(?<currentValue>\\d+(?:\\.\\d+){1,2})"
+      ],
+      "datasourceTemplate": "github-tags",
+      "extractVersionTemplate": "^v?(?<version>\\d+(?:\\.\\d+){1,2})$"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["next"],
+      "groupName": "Next.js"
+    }
+  ]
 }

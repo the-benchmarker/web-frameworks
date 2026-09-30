@@ -1,8 +1,10 @@
 framework:
   github: walkor/webman
-  version: 1.5
+  version: 2.2
 
   engines:
     - workerman
-
-  command: php start.php start
+language:
+  engines:
+    workerman:
+      command: php start.php start

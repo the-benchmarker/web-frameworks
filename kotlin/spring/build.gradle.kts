@@ -1,18 +1,12 @@
 plugins {
-	id("org.springframework.boot") version "3.3.+"
+	id("org.springframework.boot") version "4.1.+"
 	id("io.spring.dependency-management") version "+"
-	kotlin("jvm") version "2.0.+"
-	kotlin("plugin.spring") version "2.0.+"
+	kotlin("jvm") version "2.4.+"
+	kotlin("plugin.spring") version "2.4.+"
 }
 
 group = "benchmark.spring-boot"
 version = "0.0.1"
-
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
-}
 
 repositories {
 	mavenCentral()

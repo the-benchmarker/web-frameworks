@@ -1,8 +1,7 @@
 package controllers
 
-import javax.inject._
-import play.api._
-import play.api.mvc._
+import javax.inject.{Inject, Singleton}
+import play.api.mvc.*
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the

@@ -1,21 +1,15 @@
 
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "2.0.+"
+    id "org.jetbrains.kotlin.jvm" version "2.4.+"
 }
 
 ext {
-    hexagonVersion = "3.6.6"
+    hexagonVersion = "3.7.4"
     gradleScripts = "https://raw.githubusercontent.com/hexagontk/hexagon/$hexagonVersion/gradle"
 }
 
 apply(from: "$gradleScripts/kotlin.gradle")
 apply(from: "$gradleScripts/application.gradle")
-
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("21"))
-    }
-}
 
 defaultTasks("installDist")
 

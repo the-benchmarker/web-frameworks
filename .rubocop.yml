@@ -1,36 +1,41 @@
-require:
+plugins:
   - rubocop-rake
   - rubocop-rspec
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.2
-  Exclude:
-    - Rakefile
+  TargetRubyVersion: 4.0
+
+Metrics:
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
 
-Naming/AccessorMethodName:
-  Exclude:
-    - ruby/rack-routing/app/route_handler.rb
-
 Lint/ShadowingOuterLocalVariable:
-  Exclude:
-    - .tasks/*.rake
-
-Metrics/BlockLength:
   Exclude:
     - .tasks/*.rake
 
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - .tasks/*.rake
+
 Layout/LineLength:
   Exclude:
     - .tasks/*.rake
-Metrics/ParameterLists:
-  Exclude:
-    - .tasks/*.rake
+
 Style/FrozenStringLiteralComment:
+  Enabled: true
   EnforcedStyle: never
+
+Style/OneClassPerFile:
+  Enabled: false
+
+Style/CombinableLoops:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false

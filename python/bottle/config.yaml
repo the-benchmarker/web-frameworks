@@ -1,11 +1,13 @@
 framework:
   website: bottlepy.org
-  version: 0.12
+  version: 0.13
 
   engines:
-    - gunicorn
+    - cheroot
 
 language:
   engines:
-    gunicorn:
-      command: python server.py 3000 gunicorn
+    cheroot:
+      bootstrap:
+        - pip install cheroot
+      command: python server.py 3000 cheroot

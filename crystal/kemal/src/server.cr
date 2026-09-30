@@ -18,13 +18,5 @@ post "/user" do |env|
   nil
 end
 
-System.cpu_count.times do |i|
-  Process.fork do
-    Kemal.run do |config|
-      server = config.server.not_nil!
-      server.bind_tcp "0.0.0.0", 3000, reuse_port: true
-    end
-  end
-end
-
-sleep
+Fiber::ExecutionContext.default.resize(maximum: System.cpu_count)
+Kemal.run

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,8 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="7.0.*" />
-    <PackageReference Include="Suave" Version="2.6.*" />
+    <PackageReference Include="Suave" Version="3.5.*" />
   </ItemGroup>
 
 </Project>

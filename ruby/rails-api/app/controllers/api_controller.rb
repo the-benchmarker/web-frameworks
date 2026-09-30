@@ -4,7 +4,7 @@ class ApiController < ActionController::API
   end
 
   def user
-    render plain: params['id']
+    render plain: params["id"]
   end
 
   def register_user

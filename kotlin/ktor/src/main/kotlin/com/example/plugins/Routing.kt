@@ -8,13 +8,13 @@ import io.ktor.server.routing.*
 fun Application.configureRouting() {
     routing {
         get("/") {
-            call.respondText("")
+            call.respondText("", contentType = ContentType.Text.Plain)
         }
         get("/user/{id}") {
-            call.respondText(call.parameters["id"].toString())
+            call.respondText(call.parameters["id"].toString(), contentType = ContentType.Text.Plain)
         }
         post("/user") {
-            call.respondText("")
+            call.respondText("", contentType = ContentType.Text.Plain)
         }
     }
 }

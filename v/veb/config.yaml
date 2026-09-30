@@ -1,5 +1,9 @@
 framework:
   github: vlang/v
+  version: 24120e7a80d798a1625a08d5cc02b96e17148bdb
 
   build_deps:
     - libatomic1
+
+  build_flags:
+    - -prod -d new_veb

@@ -1,55 +1,40 @@
 require "grip"
 
-class IndexController < Grip::Controllers::Http
-  def get(context)
-    context.text("")
+class IndexController
+  include Grip::Controllers::HTTP
+
+  def get(context : Context) : Context
+    context.put_status(200).text("").halt
   end
 end
 
-class UserController < Grip::Controllers::Http
-  def get(context)
+class UserController
+  include Grip::Controllers::HTTP
+
+  def get(context : Context) : Context
     id = context.fetch_path_params.["id"]
-
-    context.text(id)
+    context.text(id).halt
   end
 
-  def post(context)
-    context.text("")
+  def post(context : Context) : Context
+    context.put_status(200).text("").halt
   end
 end
 
-class Application < Grip::Application
-  def reuse_port
-    true
-  end
+class Application
+  include Grip::Application
 
-  def port
-    3000
-  end
-
-  def router : Array(HTTP::Handler)
-    [http_handler] of HTTP::Handler
-  end
-
-  def server : HTTP::Server
-    HTTP::Server.new(router)
-  end
+  property handlers : Array(HTTP::Handler) = [
+    Grip::Handlers::HTTP.new,
+  ] of HTTP::Handler
 
   def initialize
-    super(environment: "production", serve_static: false)
-
     get "/", IndexController
+
     get "/user/:id", UserController
     post "/user", UserController
   end
 end
 
-app = Application.new
-
-System.cpu_count.times do |_|
-  Process.fork do
-    app.run
-  end
-end
-
-sleep
+Fiber::ExecutionContext.default.resize(maximum: System.cpu_count)
+Application.new.run

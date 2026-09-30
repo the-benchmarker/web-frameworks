@@ -1,5 +1,3 @@
-# nim r -d:release -d:threadsafe server
-
 import guildenstern/[dispatcher, httpserver]
 
 const ThreadCount = 100
@@ -11,11 +9,7 @@ proc handle() =
       let id = getUri()[6 .. ^1]
       reply(id)
   except: reply(Http500)
-  
-proc run() =
-  let server = newHttpServer(handle, NONE, true, NoBody)
-  server.start(3000, ThreadCount, ThreadCount)
-  joinThread(server.thread)
 
-run()
-
+let server = newHttpServer(handle, loglevel = lvlNone, contenttype = NoBody)
+if not dispatcher.start(server, 3000, ThreadCount, ThreadCount): quit()
+joinThread(server.thread)

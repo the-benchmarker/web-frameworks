@@ -1,6 +1,6 @@
 framework:
   website: doc.networknt.com
-  version: 2.1
+  version: 2.2
 
   build:
     - mvn clean package -Prelease
@@ -11,5 +11,4 @@ framework:
   files:
     - "src/**/*.yml"
 
-  command: >
-    /usr/bin/java -jar target/benchmark-1.0.0.jar
+  command: /usr/bin/java -jar target/benchmark-1.0.0.jar

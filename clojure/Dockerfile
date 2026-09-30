@@ -1,10 +1,20 @@
-{{#image}}
-  FROM {{{.}}}
-{{/image}}
+{{#language.compiler.lein}}
+  {{#language.java.version}}
+    FROM clojure:temurin-{{{.}}}-lein-trixie-slim AS build
+  {{/language.java.version}}
+  {{^language.java.version}}
+    FROM clojure:temurin-26-lein-trixie-slim AS build
+  {{/language.java.version}}
+{{/language.compiler.lein}}
 
-{{^image}}
-  FROM clojure:tools-deps-bookworm-slim
-{{/image}}
+{{^language.compiler.lein}}
+  {{#language.java.version}}
+    FROM clojure:temurin-{{{.}}}-tools-deps-trixie-slim AS build
+  {{/language.java.version}}
+  {{^language.java.version}}
+    FROM clojure:temurin-26-tools-deps-trixie-slim AS build
+  {{/language.java.version}}
+{{/language.compiler.lein}}
 
 WORKDIR /usr/src/app
 
@@ -20,7 +30,18 @@ WORKDIR /usr/src/app
   RUN clojure -Auberjar
 {{/build}}
 
-FROM eclipse-temurin:21.0.4_7-jre
+
+{{#language.java.version}}
+  FROM eclipse-temurin:{{{.}}}-jre
+{{/language.java.version}}
+
+{{^language.java.version}}
+  FROM eclipse-temurin:26-jre
+{{/language.java.version}}
+
+RUN apt-get -qq update && \
+  apt-get -qy install --no-install-recommends curl && \
+  rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/bin
 
@@ -29,9 +50,9 @@ WORKDIR /opt/bin
 {{/environment}}
 
 {{#binaries}}
-  COPY --from=0 /usr/src/app/{{{.}}} /opt/bin/{{{.}}} 
+  COPY --from=build /usr/src/app/{{{.}}} ./{{{.}}}
 {{/binaries}}
 
-{{#command}}
-  CMD {{{.}}}
-{{/command}}
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+
+ENTRYPOINT {{{command}}}

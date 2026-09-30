@@ -1,6 +1,6 @@
 framework:
   website: vertx.io/docs/vertx-web/java/
-  version: 4.5
+  version: 5.1
 
   files:
     - target/server.jar
@@ -8,4 +8,4 @@ framework:
   binaries:
     - target/server.jar
 
-  command: /usr/bin/java -jar /opt/web/target/server.jar -instances `nproc`
+  command: /usr/bin/java -jar /opt/web/target/server.jar -instances $(nproc)

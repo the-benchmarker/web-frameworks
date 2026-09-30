@@ -1,18 +1,18 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'activesupport'
-gem 'bigdecimal'
-gem 'csv'
-gem 'dotenv'
-gem 'git'
-gem 'mustache'
-gem 'open3'
-gem 'pg'
-gem 'rake'
+gem "activesupport"
+gem "bigdecimal"
+gem "dotenv"
+gem "kramdown"
+gem "mustache"
+gem "net-ssh", "~> 7.3"
+gem "pg"
+gem "rake"
+gem "shellwords"
 
 group :development, :test do
-  gem 'rspec'
-  gem 'rubocop'
-  gem 'rubocop-rake'
-  gem 'rubocop-rspec'
+  gem "rspec"
+  gem "rubocop", require: false
+  gem "rubocop-rake", require: false
+  gem "rubocop-rspec", require: false
 end

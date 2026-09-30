@@ -1,14 +1,10 @@
 framework:
   github: sunrise-php/http-router
-  version: 2.16
-
+  version: 3.4
+  files:
+    - .env.dist
+    - app
+  bootstrap:
+    - cp .env.dist .env
   engines:
     - road-runner
-
-  deps:
-    - libevent-dev
-    - libsodium-dev
-
-  modules:
-    - sodium
-    - sockets

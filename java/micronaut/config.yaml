@@ -1,9 +1,6 @@
-language:
-  compiler: gradle
-
 framework:
   website: micronaut.io
-  version: 4.2
+  version: 5.0
 
   build:
     - gradle build --project-cache-dir ~/.gradle
@@ -13,10 +10,6 @@ framework:
     - RUN chown -R gradle .
     - USER gradle
 
-  files:
-    - "**/*.kts"
-    - "**/*.properties"
-
   binaries:
     - build/distributions/web-0.1.tar
 
@@ -24,3 +17,6 @@ framework:
     - tar -xvf build/distributions/web-0.1.tar
 
   command: /opt/web/web-0.1/bin/web
+
+language:
+  compiler: gradle

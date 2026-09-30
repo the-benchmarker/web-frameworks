@@ -1,10 +1,11 @@
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder();
+
 builder.WebHost.ConfigureKestrel(c => c.AddServerHeader = false);
 builder.Logging.ClearProviders();
 
-var app = builder.Build();
+builder.Services.AddCodeBehind();
 
-SetCodeBehind.CodeBehindCompiler.Initialization(true);
+var app = builder.Build();
 
 app.UseCodeBehindRoute();
 
