@@ -1,4 +1,5 @@
 import pkg/supranim/controller
+import std/httpcore
 
 ctrl getHomepage:
   ## renders the home page
