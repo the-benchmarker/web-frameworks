@@ -1,8 +1,27 @@
+language:
+  version: 27
+
 framework:
   website: spring.io/projects/spring-boot
-  version: 4.1
+  version: 4.1.1
+
+  # The shared Java template uses Temurin images, which do not yet have Java 27
+  # tags. Keep its supported base and copy the released OpenJDK 27 into both
+  # build and runtime stages. GraalVM does not yet provide a Java 27 variant.
+  engines:
+    - default:
+        language:
+          version: 25
+          compiler: maven
+        dockerfile:
+          before_framework_files:
+            - COPY test.bin /test.bin
+            - COPY --from=container-registry.oracle.com/java/openjdk:27-oraclelinux9 /usr/java/jdk-27 /opt/java/jdk-27
+            - ENV JAVA_HOME=/opt/java/jdk-27
+            - ENV PATH=/opt/java/jdk-27/bin:$PATH
 
   binaries:
     - target/benchmark-1.0.0.jar
 
   command: /usr/bin/java -jar /opt/web/target/benchmark-1.0.0.jar
+  run_as_user: "10001:10001"

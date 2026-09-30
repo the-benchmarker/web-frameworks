@@ -9,7 +9,8 @@ language:
     - src/**/*.yml
     - src/**/*.jsp
     - '**/*.kts'
-    - '**/*.properties'
+    - src/**/*.properties
+    - '*.properties'
 
   engines:
     default: {}

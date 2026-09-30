@@ -6,41 +6,28 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>[3.3,3.4)</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <!-- Stay on the latest stable 4.1 release, before the 4.2 milestones. -->
+        <version>[4.1.1,4.2.0-M1)</version>
+        <relativePath/>
     </parent>
     <groupId>benchmark.spring-boot</groupId>
     <artifactId>benchmark</artifactId>
     <version>1.0.0</version>
     <name>benchmark</name>
-    <description>Benchmark for Spring Web Mvc (thread per request model)</description>
+    <description>REST API benchmark for Spring MVC</description>
 
     <properties>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.release>27</maven.compiler.release>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.34</version>
-            <scope>provided</scope>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-community-dialects</artifactId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
     </dependencies>
 

@@ -70,6 +70,10 @@ RUN ln -sfv "$JAVA_HOME/bin/java" /usr/bin/java
   ENV {{{.}}}
 {{/environment}}
 
+{{#run_as_user}}
+USER {{{run_as_user}}}
+{{/run_as_user}}
+
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}

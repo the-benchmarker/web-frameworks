@@ -28,7 +28,7 @@ Every implementation is expected to listen on port `3000` and provide the same r
 | `GET` | `/user/:id` | `2xx` | The `id` path parameter |
 | `POST` | `/user` | `2xx` | Empty |
 
-Before an implementation is benchmarked, the shared [RSpec contract](.spec/route_spec.rb) verifies these routes. The default generated benchmark runs `GET /` for 15 seconds, disables keep-alive, applies latency correction, and records an `oha` JSON report. Concurrency and routes are configurable.
+Before an implementation is benchmarked, the shared [RSpec contract](.spec/route_spec.rb) verifies these routes. The generated benchmark uses `zrk` with keep-alive connections and a 15-second run per route. Most frameworks use these three routes; Java/Spring uses the full REST workload listed in [CONTRIBUTING.md](CONTRIBUTING.md). The routes and request fixtures are fixed in [`.tasks/config.rake`](.tasks/config.rake).
 
 Collected fields include requests per second, total data received, run duration, and the p50, p75, p90, and p99 latency percentiles. Benchmark configuration is generated from three YAML layers:
 
@@ -86,7 +86,7 @@ Then choose an implementation—for example, `javascript/fastify`—and use its 
 make -f javascript/fastify/.Makefile build
 make -f javascript/fastify/.Makefile test
 make -f javascript/fastify/.Makefile warmup
-mkdir -p javascript/fastify/.results/10
+mkdir -p javascript/fastify/.results/{64,256,512}
 make -f javascript/fastify/.Makefile collect
 make -f javascript/fastify/.Makefile unbuild
 ```
@@ -95,15 +95,28 @@ Results are written beneath `<language>/<framework>/.results/`. Generated target
 
 ### 🎛️ Customize a run
 
-The generator accepts comma-separated concurrency levels and routes. Set them while generating the Makefiles:
+The generator accepts comma-separated concurrency levels. Set them while generating the Makefiles:
 
 ```bash
-CONCURRENCIES=64,256,512 \
-ROUTES='GET:/,GET:/user/42,POST:/user' \
-bundle exec rake config
+CONCURRENCIES=64,256,512 bundle exec rake config
 ```
 
-Then run the same `collect` target. Route entries use the `METHOD:/path` form.
+Then run the same `collect` target. Java/Spring runs all six REST workload
+routes; other frameworks use the three legacy routes. Both warmup and
+collection run every assigned route, and each method and route gets its own
+JSON result file. The route lists are constants in `.tasks/config.rake`.
+
+For `POST /upload`, the generator reads the 4,096-byte [`test.bin`](test.bin) fixture from
+the repository root and sends it to the container as a multipart `file` field
+named `test.bin`. The generated multipart body lives under that implementation's
+`.results` directory. `bundle exec rake config` also copies `test.bin` into each
+framework build context. The shared instruction in [`config.yaml`](config.yaml)
+places it at `/test.bin` before framework files in every image stage.
+`POST /deserialization` and `POST /compute` use the JSON request bodies in
+`.tasks/fixtures/`. Their fixtures are declared beside the routes in
+`.tasks/config.rake`. `/deserialization` parses the request
+and returns an empty body; `GET /serialization` generates its JSON response
+without parsing a request body.
 
 The load generator runs closed-loop over keep-alive connections: every connection sends its next request as soon as the previous response arrives, so the reported rate is the framework's sustained throughput for the whole run. Three more variables control where that work runs:
 

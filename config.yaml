@@ -1,3 +1,9 @@
+dockerfile:
+  context_files:
+    - test.bin
+  before_framework_files:
+    - COPY test.bin /test.bin
+
 cloud:
   config:
     package_update: true
