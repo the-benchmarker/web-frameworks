@@ -2,8 +2,8 @@ framework:
   website: metacpan.org/pod/Plack::Handler::Feersum
   version: 1.507
 
-  bootstrap:
-    - apt-get update && apt-get install -y --no-install-recommends ragel && rm -rf /var/lib/apt/lists/*
+  bin_deps:
+    - ragel
 
   engines:
     - feersum
