@@ -1,3 +1,4 @@
+use v5.45;
 use warnings;
 use strict;
 
