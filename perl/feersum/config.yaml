@@ -1,0 +1,14 @@
+framework:
+  website: metacpan.org/dist/Feersum
+  version: 1.507
+
+  bin_deps:
+    - ragel
+
+  engines:
+    - feersum
+
+language:
+  engines:
+    feersum:
+      command: perl app.pl
