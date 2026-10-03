@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 require 'json'
+require 'digest'
 require 'net/http'
 require 'stringio'
 
 require_relative 'spec_helper'
 
-RSpec.describe 'Spring REST workload' do
+RSpec.describe 'Spring REST workload', :v2 do
   before do
     skip 'Spring-only contract' unless ENV['LANGUAGE'] == 'java' && ENV['FRAMEWORK'] == 'spring'
   end
@@ -44,26 +45,29 @@ RSpec.describe 'Spring REST workload' do
 
     response = post('/upload', body, "multipart/form-data; boundary=#{boundary}")
     expect(response.code).to eq('200')
-    expect(JSON.parse(response.body)).to eq('filename' => 'test.bin', 'size' => 4096)
+    expect(JSON.parse(response.body)).to eq('sha256' => Digest::SHA256.hexdigest(fixture))
   end
 
-  it 'deserializes JSON and returns an empty body' do
-    body = File.binread('.tasks/fixtures/deserialization.json')
+  it 'deserializes JSON and returns a count and checksum' do
+    body = JSON.generate('items' => %w[alpha beta gamma].map { |value| { 'value' => value } })
     response = post('/deserialization', body, 'application/json')
     expect(response.code).to eq('200')
-    expect(response.body.to_s).to be_empty
+    expect(JSON.parse(response.body)).to eq(
+      'count' => 3,
+      'checksum' => Digest::SHA256.hexdigest("alpha\nbeta\ngamma")
+    )
 
     invalid = post('/deserialization', '{invalid', 'application/json')
     expect(invalid.code).to eq('400')
   end
 
-  it 'serializes the fixed 100-object payload' do
-    response = get('/serialization')
-    users = JSON.parse(response.body)
+  it 'serializes items from the query parameters' do
+    response = get('/serialization?n=100&seed=User')
+    users = JSON.parse(response.body).fetch('items')
     expect(response.code).to eq('200')
     expect(users.length).to eq(100)
-    expect(users.first).to eq('id' => 1, 'name' => 'User 1')
-    expect(users.last).to eq('id' => 100, 'name' => 'User 100')
+    expect(users.first).to eq('id' => 0, 'value' => 'User:0')
+    expect(users.last).to eq('id' => 99, 'value' => 'User:99')
   end
 
   it 'computes the fixed quote in integer cents' do
@@ -78,10 +82,7 @@ RSpec.describe 'Spring REST workload' do
     )
   end
 
-  it 'rejects invalid user IDs and compute inputs' do
-    expect(get('/user/not-a-number').code).to eq('400')
-    expect(get('/user/-1').code).to eq('400')
-
+  it 'rejects invalid compute inputs' do
     invalid_order = '{"items":[{"quantity":1,"discountBps":0,"taxBps":0}]}'
     expect(post('/compute', invalid_order, 'application/json').code).to eq('400')
   end

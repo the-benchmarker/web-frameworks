@@ -16,13 +16,13 @@ CUSTOM_CONFIG_KEYS = %w[version engines website github].freeze
 
 # Each route is run during warmup and collection. Spring implements the full
 # REST workload; other frameworks retain the shared three-route contract.
-LEGACY_BENCHMARK_ROUTES = [
+OLD_ROUTES = [
   { method: 'GET', uri: '/' },
   { method: 'GET', uri: '/user/0' },
   { method: 'POST', uri: '/user' }
 ].map(&:freeze).freeze
 
-SPRING_BENCHMARK_ROUTES = [
+NEW_ROUTES = [
   { method: 'GET', uri: '/health' },
   { method: 'GET', uri: '/user/42' },
   { method: 'POST', uri: '/upload', multipart_file: 'test.bin' },
@@ -94,7 +94,7 @@ def custom_config(dict1, dict2, dict3)
 end
 
 def benchmark_routes(language, framework)
-  language == 'java' && framework == 'spring' ? SPRING_BENCHMARK_ROUTES : LEGACY_BENCHMARK_ROUTES
+  language == 'java' && framework == 'spring' ? NEW_ROUTES : OLD_ROUTES
 end
 
 def benchmark_route_name(method, uri)

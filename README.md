@@ -28,7 +28,7 @@ Every implementation is expected to listen on port `3000` and provide the same r
 | `GET` | `/user/:id` | `2xx` | The `id` path parameter |
 | `POST` | `/user` | `2xx` | Empty |
 
-Before an implementation is benchmarked, the shared [RSpec contract](.spec/route_spec.rb) verifies these routes. The generated benchmark uses `zrk` with keep-alive connections and a 15-second run per route. Most frameworks use these three routes; Java/Spring uses the full REST workload listed in [CONTRIBUTING.md](CONTRIBUTING.md). The routes and request fixtures are fixed in [`.tasks/config.rake`](.tasks/config.rake).
+Before an implementation is benchmarked, the shared [RSpec contract](.spec/v1/route_spec.rb) verifies these routes. The generated benchmark uses `zrk` with keep-alive connections and a 15-second run per route. Most frameworks use these three routes; Java/Spring uses the full REST workload listed in [CONTRIBUTING.md](CONTRIBUTING.md). The routes and request fixtures are fixed in [`.tasks/config.rake`](.tasks/config.rake).
 
 Collected fields include requests per second, total data received, run duration, and the p50, p75, p90, and p99 latency percentiles. Benchmark configuration is generated from three YAML layers:
 
