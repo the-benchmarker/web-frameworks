@@ -1,6 +1,6 @@
 framework:
   website: rubyonrails.org
-  version: 8.1.4
+  version: 8.1
 
   bootstrap:
     - mkdir -p tmp/pids
@@ -12,7 +12,5 @@ framework:
 
   environment:
     RAILS_ENV: production
-    # This API has no sessions or signed cookies; Rails still requires a secret.
     SECRET_KEY_BASE_DUMMY: "1"
-    # Rails enables YJIT after the app has initialized
     RUBY_YJIT_ENABLE: 0
