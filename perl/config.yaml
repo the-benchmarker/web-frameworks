@@ -9,6 +9,8 @@ language:
       bootstrap:
         - cpanm --install Gazelle --notest
       command: plackup -s Gazelle --port 3000 --env production --app d2app.psgi
+    feersum:
+      command: perl app.pl
 
 framework:
   engines:

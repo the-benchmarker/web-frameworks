@@ -10,6 +10,9 @@
 max_threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
+quiet
+custom_logger File.open(File::NULL, "w")
+stdout_redirect File::NULL, File::NULL
 
 # Specifies that the worker count should equal the number of processors in production.
 if ENV["RAILS_ENV"] == "production"

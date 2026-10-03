@@ -16,4 +16,4 @@ rpath = false
 strip = false
 
 [dependencies]
-tako-rs = { version = "2.2", features = ["per-thread"] }
+tako-rs = { version = "2.4", features = ["per-thread"] }
