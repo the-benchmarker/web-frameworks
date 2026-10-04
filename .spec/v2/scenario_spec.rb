@@ -38,18 +38,15 @@ RSpec.describe 'benchmark scenario', :v2 do
   end
 
   it 'serializes the requested number of items from the seed' do
-    response = http.request(Net::HTTP::Get.new('/serialization?n=2&seed=demo'))
+    response = http.request(Net::HTTP::Get.new('/serialization?n=42&seed=bar'))
 
     expect(expect_json(response)).to eq(
-      'items' => [
-        { 'id' => 0, 'value' => 'demo:0' },
-        { 'id' => 1, 'value' => 'demo:1' }
-      ]
+      'items' => (0...42).map { |id| { 'id' => id, 'value' => "bar:#{id}" } }
     )
   end
 
   it 'supports an empty serialization result and a different seed' do
-    empty = http.request(Net::HTTP::Get.new('/serialization?n=0&seed=demo'))
+    empty = http.request(Net::HTTP::Get.new('/serialization?n=0&seed=bar'))
     other = http.request(Net::HTTP::Get.new('/serialization?n=3&seed=other'))
 
     expect(expect_json(empty)).to eq('items' => [])
@@ -58,13 +55,16 @@ RSpec.describe 'benchmark scenario', :v2 do
     )
   end
 
-  it 'rejects missing and out-of-range serialization parameters' do
+  it 'rejects invalid serialization parameters' do
     [
-      '/serialization?n=-1&seed=demo',
-      '/serialization?n=1001&seed=demo',
-      '/serialization?n=2&seed=',
-      '/serialization?seed=demo',
-      '/serialization?n=2'
+      '/serialization?n=-1&seed=bar',
+      '/serialization?n=abc&seed=bar',
+      '/serialization?n=42x&seed=bar',
+      '/serialization?n=1001&seed=bar',
+      '/serialization?n=42&seed=',
+      '/serialization?n=42&seed[name]=bar',
+      '/serialization?seed=bar',
+      '/serialization?n=42'
     ].each do |path|
       expect(http.request(Net::HTTP::Get.new(path)).code).to eq('400')
     end

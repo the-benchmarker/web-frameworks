@@ -62,12 +62,12 @@ RSpec.describe 'Spring REST workload', :v2 do
   end
 
   it 'serializes items from the query parameters' do
-    response = get('/serialization?n=100&seed=User')
+    response = get('/serialization?n=42&seed=user')
     users = JSON.parse(response.body).fetch('items')
     expect(response.code).to eq('200')
-    expect(users.length).to eq(100)
-    expect(users.first).to eq('id' => 0, 'value' => 'User:0')
-    expect(users.last).to eq('id' => 99, 'value' => 'User:99')
+    expect(users.length).to eq(42)
+    expect(users.first).to eq('id' => 0, 'value' => 'user:0')
+    expect(users.last).to eq('id' => 41, 'value' => 'user:41')
   end
 
   it 'computes the fixed quote in integer cents' do
