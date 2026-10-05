@@ -21,7 +21,7 @@ Bundler.require(*Rails.groups)
 module Benchmark
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 8.0
+    config.load_defaults 8.1
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -40,5 +40,11 @@ module Benchmark
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.api_only = true
+    # Preserve null array entries so the request validator can reject them.
+    config.action_dispatch.perform_deep_munge = false
+    config.action_controller.perform_caching = false
+    config.cache_store = :null_store
+    config.force_ssl = false
+    config.logger = ActiveSupport::Logger.new(File::NULL)
   end
 end

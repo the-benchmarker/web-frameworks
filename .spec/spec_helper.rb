@@ -16,6 +16,8 @@ RSpec.configure do |config|
 end
 
 def http
+  return Net::HTTP.new(ENV.fetch('BENCHMARK_HOST'), 3000) if ENV.key?('BENCHMARK_HOST')
+
   language = ENV.fetch('LANGUAGE', nil)
   framework = ENV.fetch('FRAMEWORK', nil)
   engine = ENV.fetch('ENGINE', nil)

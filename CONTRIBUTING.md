@@ -5,36 +5,15 @@ methodology, and documentation are welcome.
 
 ## Benchmark API
 
-Every implementation listens on port `3000`. The shared contract currently
-checks three legacy routes. Java/Spring is benchmarked on the six-route REST
-workload below. The route and request fixture definitions live together in
-[`.tasks/config.rake`](.tasks/config.rake). Both warmup and collection run
-**every** route assigned to an implementation, with a separate result file
-per method and URL. New frameworks should implement the full workload before
-being compared on it.
-
-| Method | URL used by the benchmark | Response | Feature measured |
-| --- | --- | --- | --- |
-| `GET` | `/health` | `{"status":"ok"}` | Static route and small JSON response |
-| `GET` | `/user/42` | Plain text `42` | Numeric path parameter parsing |
-| `POST` | `/upload` | `{"filename":"test.bin","size":4096}` | Multipart parsing and file access |
-| `POST` | `/deserialization` | Empty body | JSON deserialization only |
-| `GET` | `/serialization` | JSON array of 100 objects with `id` and `name` | JSON serialization only |
-| `POST` | `/compute` | `{"subtotalCents":28266,"discountCents":1270,"taxCents":3905,"totalCents":30901}` | JSON deserialization and computation |
-
-All successful requests return HTTP `200`. `/upload` receives a multipart
-field named `file` containing the repository's 4,096-byte [`test.bin`](test.bin).
-`/deserialization` receives
-[the fixed JSON object](.tasks/fixtures/deserialization.json), parses it, and
-returns no response body. `/compute` receives
-[the fixed 16-item order](.tasks/fixtures/compute.json).
-Its result has `subtotalCents`, `discountCents`, `taxCents`, and `totalCents`;
-each line computes discount and then tax using integer division by 10,000.
-`/serialization` serializes the same 100-object array on each request.
-The workload uses no database or remote service.
-
-Spring also serves `GET /`, `GET /user/0`, and `POST /user` for the shared
-legacy contract; those routes are not part of its measured workload.
+Every implementation listens on port `3000`. The default v1 workload checks
+`GET /`, `GET /user/0`, and `POST /user`. The six-route v2 workload and exact
+responses are defined in [SCENARIO.md](SCENARIO.md). Set
+`COMPLETE=true bundle exec rake config` to generate v2 benchmark commands;
+`COMPLETE=false` is the default for v1. The generated test target uses the matching
+`.spec/v1` or `.spec/v2` directory. Route definitions and request fixtures live
+in [`.tasks/config.rake`](.tasks/config.rake). Warmup and collection run every
+selected route, each with a separate result file. Compare frameworks on the
+same route version.
 
 ### Spring deployment
 

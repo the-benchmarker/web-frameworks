@@ -1,6 +1,6 @@
 framework:
   website: rubyonrails.org
-  version: 8.1
+  version: 8.1.4
 
   bootstrap:
     - mkdir -p tmp/pids
@@ -12,6 +12,5 @@ framework:
 
   environment:
     RAILS_ENV: production
-    RAILS_LOG_LEVEL: fatal
-    # Rails enables YJIT after the app has initialized
+    SECRET_KEY_BASE_DUMMY: "1"
     RUBY_YJIT_ENABLE: 0

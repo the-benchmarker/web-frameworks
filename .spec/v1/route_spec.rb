@@ -2,7 +2,7 @@
 
 require 'net/http'
 
-require_relative 'spec_helper'
+require_relative '../spec_helper'
 
 RSpec.describe 'routes' do
   context 'GET : /' do

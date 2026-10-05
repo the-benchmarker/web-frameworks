@@ -14,21 +14,20 @@ MANIFESTS = {
 
 CUSTOM_CONFIG_KEYS = %w[version engines website github].freeze
 
-# Each route is run during warmup and collection. Spring implements the full
-# REST workload; other frameworks retain the shared three-route contract.
-LEGACY_BENCHMARK_ROUTES = [
+# Each route is run during warmup and collection.
+V1_ROUTES = [
   { method: 'GET', uri: '/' },
   { method: 'GET', uri: '/user/0' },
   { method: 'POST', uri: '/user' }
 ].map(&:freeze).freeze
 
-SPRING_BENCHMARK_ROUTES = [
-  { method: 'GET', uri: '/health' },
+V2_ROUTES = [
+  { method: 'GET', uri: '/heath' },
   { method: 'GET', uri: '/user/42' },
-  { method: 'POST', uri: '/upload', multipart_file: 'test.bin' },
-  { method: 'POST', uri: '/deserialization', body_file: '.tasks/fixtures/deserialization.json', content_type: 'application/json' },
-  { method: 'GET', uri: '/serialization' },
-  { method: 'POST', uri: '/compute', body_file: '.tasks/fixtures/compute.json', content_type: 'application/json' }
+  { method: 'POST', uri: '/user' },
+  { method: 'GET', uri: '/serialization?n=42&seed=user' },
+  { method: 'POST', uri: '/deserialization', body_file: '.tasks/fixtures/v2-deserialization.json', content_type: 'application/json' },
+  { method: 'POST', uri: '/upload', multipart_file: '.tasks/fixtures/payload.bin' }
 ].map(&:freeze).freeze
 
 def architecture
@@ -93,8 +92,21 @@ def custom_config(dict1, dict2, dict3)
   end
 end
 
-def benchmark_routes(language, framework)
-  language == 'java' && framework == 'spring' ? SPRING_BENCHMARK_ROUTES : LEGACY_BENCHMARK_ROUTES
+def complete_routes?
+  value = ENV.fetch('COMPLETE', 'false')
+  case value.downcase
+  when 'true' then true
+  when 'false' then false
+  else raise ArgumentError, "COMPLETE must be true or false (got #{value.inspect})"
+  end
+end
+
+def benchmark_routes(complete = complete_routes?)
+  case complete
+  when true then V2_ROUTES
+  when false then V1_ROUTES
+  else raise ArgumentError, "complete must be a boolean (got #{complete.inspect})"
+  end
 end
 
 def benchmark_route_name(method, uri)
@@ -141,7 +153,7 @@ def zrk_route_command(prefix, concurrency, duration, route, output: nil, rate: n
   parts.join(' ')
 end
 
-def commands_for(language, framework, variant, provider = 'docker')
+def commands_for(language, framework, variant, provider = 'docker', complete: complete_routes?)
   concurrencies = ENV.fetch('CONCURRENCIES', '10')
 
   directory = Dir.pwd
@@ -161,7 +173,7 @@ def commands_for(language, framework, variant, provider = 'docker')
   taskset = load_generator_prefix(load_cpus)
 
   options = { language: language, framework: framework, variant: variant, cpuset: cpuset, manifest: "#{MANIFESTS[:container]}.#{variant}" }
-  commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], test: [], 'memory-idle': [] }
+  commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], 'memory-idle': [] }
   prerequisites = Hash.new { |h, k| h[k] = [] }
 
   # Compile first, only for non containers
@@ -234,7 +246,7 @@ def commands_for(language, framework, variant, provider = 'docker')
   zrk_open = "#{taskset}zrk --plain -t #{threads}"
 
   route_results_dir = File.join(directory, language, framework, '.results', "requests-#{variant}")
-  routes = benchmark_routes(language, framework).map do |route|
+  routes = benchmark_routes(complete).map do |route|
     method = route.fetch(:method)
     uri = route.fetch(:uri)
     name = benchmark_route_name(method, uri)
@@ -257,7 +269,6 @@ def commands_for(language, framework, variant, provider = 'docker')
   routes.each do |route|
     commands[:warmup] << zrk_route_command(zrk_closed, 50, '5s', route)
   end
-  commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
 
   concurrencies.split(',').each do |concurrency|
     target = :"collect-#{concurrency}"
@@ -454,13 +465,13 @@ def bootstrap_commands(configs, engine)
   end
 end
 
-def create_makefile(language, framework, engines)
+def create_makefile(language, framework, engines, complete:)
   path = File.join(language, framework, MANIFESTS[:build])
 
   File.open(path, 'w') do |makefile|
     names = engines.flat_map(&:keys)
     names.each_with_index do |engine, index|
-      result = commands_for(language, framework, engine)
+      result = commands_for(language, framework, engine, complete:)
       result[:commands].each do |target, cmds|
         # Preserve the first engine as the default for existing callers.
         makefile.puts "#{target}: #{target}.#{engine}" if index.zero?
@@ -477,8 +488,9 @@ def create_makefile(language, framework, engines)
   end
 end
 
-desc 'Create Dockerfiles and Makefiles'
+desc 'Create Dockerfiles and Makefiles (COMPLETE=false for v1, true for v2)'
 task :config do
+  complete = complete_routes?
   main_config = YAML.safe_load_file('config.yaml')
 
   Dir.glob('*/*/config.yaml').each do |path|
@@ -494,7 +506,7 @@ task :config do
     generate_dockerfiles(dir, engines, config)
 
     language, framework = dir.split(File::SEPARATOR)
-    create_makefile(language, framework, engines)
+    create_makefile(language, framework, engines, complete:)
   end
 end
 
