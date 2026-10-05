@@ -14,6 +14,7 @@ class SerializationsController < ApplicationController
     end
 
     @count = count.to_i
+    head :bad_request unless @count.positive?
     head :bad_request if @count > 1000
   end
 end
