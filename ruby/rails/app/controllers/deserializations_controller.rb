@@ -1,11 +1,8 @@
-require "digest"
-
 class DeserializationsController < ApplicationController
   before_action :set_items, only: :create
 
   def create
-    values = @items.map { |item| item[:value] }
-    render json: { count: @items.length, checksum: Digest::SHA256.hexdigest(values.join("\n")) }
+    render json: DeserializationSummary.call(items: @items).to_json
   end
 
   private
@@ -13,6 +10,8 @@ class DeserializationsController < ApplicationController
   def set_items
     raw_items = params[:items]
     return head :bad_request unless raw_items.is_a?(Array)
+
+    return @items = [] if raw_items.empty?
 
     @items = params.expect(items: [[:value]])
     head :bad_request unless @items.length == raw_items.length &&

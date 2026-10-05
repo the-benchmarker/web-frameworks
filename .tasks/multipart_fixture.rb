@@ -9,7 +9,7 @@ payload = File.binread(source)
 abort "expected a 4096-byte upload fixture, got #{payload.bytesize} bytes" unless payload.bytesize == 4096
 
 body = +"--#{boundary}\r\n"
-body << "Content-Disposition: form-data; name=\"file\"; filename=\"test.bin\"\r\n"
+body << "Content-Disposition: form-data; name=\"file\"; filename=\"#{File.basename(source)}\"\r\n"
 body << "Content-Type: application/octet-stream\r\n\r\n"
 body = body.b
 body << payload

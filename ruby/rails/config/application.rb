@@ -40,6 +40,11 @@ module Benchmark
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.api_only = true
+    # Preserve null array entries so the request validator can reject them.
+    config.action_dispatch.perform_deep_munge = false
+    config.action_controller.perform_caching = false
+    config.cache_store = :null_store
+    config.force_ssl = false
     config.logger = ActiveSupport::Logger.new(File::NULL)
   end
 end

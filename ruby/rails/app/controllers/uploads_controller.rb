@@ -1,10 +1,8 @@
-require "digest"
-
 class UploadsController < ApplicationController
   before_action :set_file, only: :create
 
   def create
-    render json: { sha256: Digest::SHA256.file(@file.tempfile.path).hexdigest }
+    render json: UploadChecksum.call(file: @file).to_json
   end
 
   private
