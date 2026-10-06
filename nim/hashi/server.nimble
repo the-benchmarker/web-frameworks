@@ -10,4 +10,4 @@ license = "MIT"
 # is required by URL at a release tag. pnak, Nimony's package manager, reads
 # this file and writes the module search path.
 
-requires "https://github.com/kaitakeradiology/hashi#v0.1.3"
+requires "https://github.com/kaitakeradiology/hashi#v0.1.6"

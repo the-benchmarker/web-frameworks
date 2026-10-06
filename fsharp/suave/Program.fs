@@ -17,6 +17,7 @@ let app  : WebPart = router {
 let config =
     { defaultConfig with
         bindings =
-            [ HttpBinding.createSimple HTTP "0.0.0.0" 3000 ];}
+            [ HttpBinding.createSimple HTTP "0.0.0.0" 3000 ]
+        hideHeader = true }
 
 startWebServer config app
