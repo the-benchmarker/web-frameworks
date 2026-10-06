@@ -15,7 +15,7 @@ framework:
 # pnak, Nimony's package manager, which reads the same .nimble format and
 # writes the module search path `nimony c` uses.
 build_with:
-  - git clone -q https://github.com/nim-lang/nimony /usr/src/nimony && git -C /usr/src/nimony checkout -q 564d789e648ce664feba352298fa5505bd1e1120 && cd /usr/src/nimony && nim c -r src/hastur/hastur --release build all
+  - git clone -q https://github.com/nim-lang/nimony /usr/src/nimony && git -C /usr/src/nimony checkout -q 1f232868e254eaefbbd825f86ffc97572da65416 && cd /usr/src/nimony && nim c -r src/hastur/hastur --release build all
   - /usr/src/nimony/bin/pnak fetch server.nimble
 
 # `nimony c`, not `nim c`: the suite's default build line is Nim 2's.
