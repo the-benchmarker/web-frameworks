@@ -11,7 +11,7 @@ framework:
     - swoole
 
   extensions:
-    - redis
+    - pie-extensions/redis
 
   modules:
     - pcntl

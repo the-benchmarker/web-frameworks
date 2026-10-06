@@ -6,7 +6,7 @@ framework:
     - swoole
 
   extensions:
-    - redis
+    - phpredis/phpredis
 
   modules:
     - pcntl

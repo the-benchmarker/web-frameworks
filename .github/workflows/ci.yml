@@ -5,7 +5,14 @@ on:
 
 jobs:
   changes:
+    # Do not run on sync PSs
+    # Sync PRs only contain changes already tested on master.
+    if: >-
+      ${{ !(github.event.pull_request.base.ref == 'develop' &&
+            github.event.pull_request.head.ref == 'master' &&
+            github.event.pull_request.head.repo.full_name == github.repository) }}
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     outputs:
       files: ${{ steps.file_changes.outputs.files }}
       languages: ${{ steps.set-languages.outputs.languages }}
@@ -26,7 +33,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "4.0.6"
+          ruby-version: "4.0.7"
           bundler-cache: true
       - name: Install deps
         run: bundle install --jobs 4 --retry 3

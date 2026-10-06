@@ -6,11 +6,10 @@ WORKDIR /usr/src/app
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN sbt universal:packageZipTarball
+RUN sbt "Universal / packageZipTarball"
 
 
-
-FROM eclipse-temurin:25.0.4_7-jre
+FROM eclipse-temurin:{{{language.java.version}}}-jre
 
 WORKDIR /usr/src/app
 
@@ -20,9 +19,9 @@ RUN apt-get -qq update && \
 
 COPY --from=build /usr/src/app/target target
 
-RUN tar -xvzf target/universal/server-0.1.0-SNAPSHOT.tgz
+# sbt 1 and sbt 2 place the packaged application in different target directories.
+RUN tar -xvzf "$(find target -name server-0.1.0-SNAPSHOT.tgz)"
 
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 ENTRYPOINT {{{command}}}
-

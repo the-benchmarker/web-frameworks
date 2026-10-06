@@ -8,7 +8,4 @@ framework:
   binaries:
     - target/benchmark-1.0.0-jar-with-dependencies.jar
 
-language:
-  engines:
-    default:
-      command: /usr/bin/java -cp target/benchmark-1.0.0-jar-with-dependencies.jar benchmark.javalin.Bench
+  command: /usr/bin/java -cp target/benchmark-1.0.0-jar-with-dependencies.jar benchmark.javalin.Bench

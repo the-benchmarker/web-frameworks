@@ -1,0 +1,45 @@
+name: Sync master to develop
+
+on:
+  pull_request_target:
+    branches: [master]
+    types: [closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: sync-master-to-develop
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Open sync PR if needed
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          existing_pr=$(gh pr list --base develop --head master --state open --json number --jq '.[0].number // empty')
+          if [[ -n "$existing_pr" ]]; then
+            echo "Sync PR #$existing_pr already exists."
+            exit 0
+          fi
+
+          ahead=$(gh api "repos/$GH_REPO/compare/develop...master" --jq '.ahead_by')
+          if [[ "$ahead" -eq 0 ]]; then
+            echo "develop already contains master."
+            exit 0
+          fi
+
+          gh pr create \
+            --base develop \
+            --head master \
+            --title "Sync master into develop" \
+            --body "Automatically sync changes merged into master back into develop. CI is skipped for this branch pair."

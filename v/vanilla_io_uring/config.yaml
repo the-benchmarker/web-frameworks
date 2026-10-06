@@ -1,5 +1,6 @@
 framework:
   github: vlang/v
+  version: 1822cbb4b5316f433df4805bb68560fadd4df385
 
   # Install as the `vanilla` module (import vanilla.http_server). `v install <url>`
   # now namespaces by owner (~/.vmodules/enghitalo/vanilla), so clone to the

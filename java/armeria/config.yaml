@@ -11,7 +11,4 @@ framework:
   binaries:
     - target/benchmark.jar
 
-language:
-  engines:
-    default:
-      command: /usr/bin/java -jar /opt/web/target/benchmark.jar
+  command: /usr/bin/java -jar /opt/web/target/benchmark.jar

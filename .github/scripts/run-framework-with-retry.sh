@@ -49,13 +49,13 @@ run_once() (
   set -euo pipefail
 
   cleanup() {
-    make -f "${DIRECTORY}/.Makefile" unbuild || true
-    make -f "${DIRECTORY}/.Makefile" clean || true
+    make -f "${DIRECTORY}/.Makefile" "unbuild.${ENGINE}" || true
+    make -f "${DIRECTORY}/.Makefile" "clean.${ENGINE}" || true
   }
 
   trap cleanup EXIT
 
-  run_with_timeout "${COMMAND_TIMEOUT_SECONDS}" make -f "${DIRECTORY}/.Makefile" build
+  run_with_timeout "${COMMAND_TIMEOUT_SECONDS}" make -f "${DIRECTORY}/.Makefile" "build.${ENGINE}"
   wait_for_framework
   run_with_timeout "${COMMAND_TIMEOUT_SECONDS}" bundle exec rspec .spec
 )

@@ -15,12 +15,6 @@ buildscript {
     }
 }
 
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(25))
-    }
-}
-
 application {
 	mainClass = "org.http4k.benchmark.BenchmarkServerKt"
 }
@@ -51,7 +45,7 @@ tasks {
 }
 
 dependencies {
-    implementation(platform("org.http4k:http4k-bom:6.58.+"))
+    implementation(platform("org.http4k:http4k-bom:6.59.+"))
     implementation("org.http4k:http4k-core")
     implementation("org.http4k:http4k-server-undertow")
 }

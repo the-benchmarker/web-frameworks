@@ -3,9 +3,9 @@
 #     - API Reference: https://openpeeps.github.io/powpow
 
 import pkg/powpow
-import std/[httpcore, strutils]
+import std/[httpcore, net, strutils]
 
-let server = newMultiThreadHttpServer()
+let server = newHttpServer()
 
 proc handler(req: HttpRequest, res: HttpResponse) =
   {.gcsafe.}:
@@ -35,4 +35,4 @@ proc handler(req: HttpRequest, res: HttpResponse) =
         res.sendError(Http404,
           "404 Not Found: " & $httpMethod & " " & path) 
 
-server.start(handler, "0.0.0.0", 3000)
+server.start(handler, "0.0.0.0", Port(3000))

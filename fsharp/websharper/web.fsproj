@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <WebSharperProject>Website</WebSharperProject>
+    <WebSharperProject>web</WebSharperProject>
     <WebProjectOutputDir>$(MSBuildThisFileDirectory)/wwwroot</WebProjectOutputDir>
   </PropertyGroup>
 
@@ -12,9 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="WebSharper.Core" Version="9.1.*" />
-    <PackageReference Include="WebSharper" Version="9.1.*" />
-    <PackageReference Include="WebSharper.AspNetCore" Version="9.1.*" />
+    <PackageReference Include="WebSharper.Core" Version="10.1.*" />
+    <PackageReference Include="WebSharper" Version="10.1.*" />
+    <PackageReference Include="WebSharper.FSharp" Version="10.1.*" />
+    <PackageReference Include="WebSharper.AspNetCore" Version="10.1.*" />
   </ItemGroup>
 
 </Project>

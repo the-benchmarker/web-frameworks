@@ -1,5 +1,5 @@
 language:
-  version: 5.43
+  version: 5.45
   files:
     - "**/*.psgi"
     - "**/*.pl"
@@ -9,6 +9,8 @@ language:
       bootstrap:
         - cpanm --install Gazelle --notest
       command: plackup -s Gazelle --port 3000 --env production --app d2app.psgi
+    feersum:
+      command: perl app.pl
 
 framework:
   engines:

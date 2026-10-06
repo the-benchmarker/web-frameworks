@@ -5,10 +5,10 @@ framework:
     - "--mm:atomicArc"
     - "-d:webapp"
     - "-d:httpbench"
+    - "-d:features.emitter.powpow"
 
-build_deps:
-  - libevent-dev
-  - libsodium23
+  build_deps:
+    - libssl-dev
 
-runtime_deps:
-  - libsodium23
+  runtime_deps:
+    - libssl3
