@@ -3,7 +3,10 @@ FROM perl:5.45-slim
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update && \
-  apt-get -qy install --no-install-recommends build-essential curl && \
+  apt-get -qy install --no-install-recommends \
+    build-essential \
+    curl \
+    {{#bin_deps}}{{{.}}} {{/bin_deps}} && \
   rm -rf /var/lib/apt/lists/*
 
 {{#files}}
