@@ -29,8 +29,14 @@
         </dependency>
         <dependency>
             <groupId>com.aspectran</groupId>
-            <artifactId>aspectran-with-undertow</artifactId>
+            <artifactId>aspectran-with-netty</artifactId>
             <version>${aspectran.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>2.0.20</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
@@ -67,5 +73,4 @@
               </plugin>
         </plugins>
     </build>
-
 </project>
