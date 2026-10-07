@@ -7,14 +7,13 @@
   "automerge": true,
   "automergeType": "pr",
   "platformAutomerge": false,
+  "postUpgradeTasks": {
+    "commands": ["node .github/scripts/update-renovate-config-version.mjs"],
+    "dataFileTemplate": "{{{toJSON upgrades}}}",
+    "executionMode": "branch",
+    "fileFilters": ["**/config.yaml"]
+  },
   "customManagers": [
-    {
-      "customType": "regex",
-      "managerFilePatterns": ["/config\\.yaml$/"],
-      "matchStrings": [
-        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+version: (?<currentValue>\\S+)"
-      ]
-    },
     {
       "customType": "regex",
       "description": "Update GitHub-hosted Crystal shards",

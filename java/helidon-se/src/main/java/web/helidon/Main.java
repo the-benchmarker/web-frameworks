@@ -1,6 +1,5 @@
 package web.helidon;
 
-import io.helidon.logging.common.LogConfig;
 import io.helidon.config.Config;
 import io.helidon.webserver.WebServer;
 import io.helidon.webserver.http.HttpRouting;
@@ -12,9 +11,6 @@ public class Main {
     public static void main(String[] args) {
 
         Config config = Config.create();
-        Config.global(config);
-
-
         WebServer server = WebServer.builder()
                 .config(config.get("server"))
                 .routing(Main::routing)
@@ -22,7 +18,7 @@ public class Main {
                 .build()
                 .start();
 
-        System.out.println("WEB server is up! http://localhost:" + server.port() + "/simple-greet");
+        System.out.println("WEB server is up! http://localhost:" + server.port() + "/");
 
     }
 

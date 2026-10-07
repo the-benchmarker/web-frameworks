@@ -1,4 +1,4 @@
-use v5.40;
+use v5.45;
 use warnings;
 use Plack::Handler::Feersum;
 use Router::Ragel;

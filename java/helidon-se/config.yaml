@@ -1,24 +1,18 @@
 framework:
   website: helidon.io
-  version: 4.5
-
-  #build_deps:
-  #  - openjdk-25-jdk-headless
-
-  #build_fix:
-  #  - cp -fr /usr/lib/jvm/java-25-openjdk-amd64/jmods /opt/java/openjdk/
+  version: 27
 
   build:
-    - mvn clean install -Pjlink-image
-
-  files:
-    - target/helidon.webserver-jri/
+    - mvn clean package
 
   binaries:
-    - target/helidon.webserver-jri
+    - target/classes
+    - target/libs
 
-  command: /opt/web/target/helidon.webserver-jri/bin/start
+  command: /usr/bin/java -cp '/opt/web/target/classes:/opt/web/target/libs/*' web.helidon.Main
 
-  # The jlink distribution includes its own JVM.
   engines:
     - default
+
+language:
+  version: 27

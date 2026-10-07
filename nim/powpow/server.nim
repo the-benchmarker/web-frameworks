@@ -3,9 +3,9 @@
 #     - API Reference: https://openpeeps.github.io/powpow
 
 import pkg/powpow
-import std/[httpcore, net, strutils]
+import std/[cpuinfo, httpcore, net, strutils]
 
-let server = newHttpServer()
+let server = newHttpServer(countProcessors())
 
 proc handler(req: HttpRequest, res: HttpResponse) =
   {.gcsafe.}:
