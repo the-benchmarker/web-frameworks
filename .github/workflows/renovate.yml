@@ -25,6 +25,9 @@ jobs:
       RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
       RENOVATE_GIT_AUTHOR: "renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>"
       RENOVATE_ONBOARDING: "false"
+      RENOVATE_PR_CREATION: immediate
+      RENOVATE_PR_HOURLY_LIMIT: "0"
+      RENOVATE_PR_CONCURRENT_LIMIT: "0"
       RENOVATE_ALLOWED_COMMANDS: '^node \.github/scripts/update-renovate-config-version\.mjs$'
     steps:
       - name: Check Renovate token
