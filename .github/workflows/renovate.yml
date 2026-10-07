@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     container:
-      image: ghcr.io/renovatebot/renovate:44.115.10
+      image: ghcr.io/renovatebot/renovate:44.142.1
     env:
       RENOVATE_PLATFORM: github
       RENOVATE_REPOSITORIES: ${{ github.repository }}
