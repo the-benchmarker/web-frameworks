@@ -23,6 +23,7 @@ jobs:
       RENOVATE_PLATFORM: github
       RENOVATE_REPOSITORIES: ${{ github.repository }}
       RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
+      RENOVATE_GIT_AUTHOR: "renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>"
       RENOVATE_ONBOARDING: "false"
       RENOVATE_ALLOWED_COMMANDS: '^node \.github/scripts/update-renovate-config-version\.mjs$'
     steps:
