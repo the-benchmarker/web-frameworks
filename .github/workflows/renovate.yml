@@ -19,6 +19,7 @@ jobs:
     container:
       image: ghcr.io/renovatebot/renovate:44.115.10
     env:
+      LOG_LEVEL: debug
       RENOVATE_PLATFORM: github
       RENOVATE_REPOSITORIES: ${{ github.repository }}
       RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
