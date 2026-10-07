@@ -2,11 +2,13 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const dataFile = process.env.RENOVATE_POST_UPGRADE_COMMAND_DATA_FILE;
+console.log('[post-upgrade] Starting framework version update');
 if (!dataFile) {
   throw new Error('RENOVATE_POST_UPGRADE_COMMAND_DATA_FILE is required');
 }
 
 const upgrades = JSON.parse(readFileSync(dataFile, 'utf8'));
+console.log(`[post-upgrade] Received ${upgrades.length} upgrade(s)`);
 const versionParts = (value) => /^(?:v)?(\d+)\.(\d+)(?:\.\d+)?$/.exec(value ?? '');
 const normalize = (value) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
 const genericRepositoryNames = new Set(['core', 'engine', 'framework', 'server', 'web']);
@@ -81,21 +83,32 @@ function isFrameworkPackage(upgrade, names) {
 }
 
 const candidates = new Map();
+let updatedConfigs = 0;
 
 for (const upgrade of upgrades) {
   const { packageFile, currentVersion, newVersion } = upgrade;
+  const context = JSON.stringify({ packageFile, depName: upgrade.depName, currentVersion, newVersion });
   // Framework configuration lives at <language>/<framework>/config.yaml.
   const location = /^([^/.][^/]*)\/([^/.][^/]*)\//.exec(packageFile ?? '');
   const oldVersion = versionParts(currentVersion);
   const nextVersion = versionParts(newVersion);
-  if (!location || !oldVersion || !nextVersion || packageFile.endsWith('/config.yaml')) continue;
+  if (!location || !oldVersion || !nextVersion || packageFile.endsWith('/config.yaml')) {
+    console.log(`[post-upgrade] Skipping unsupported path or version: ${context}`);
+    continue;
+  }
 
   const configPath = join(location[1], location[2], 'config.yaml');
-  if (!existsSync(configPath)) continue;
+  if (!existsSync(configPath)) {
+    console.log(`[post-upgrade] Skipping missing ${configPath}: ${context}`);
+    continue;
+  }
 
   const oldMajorMinor = `${oldVersion[1]}.${oldVersion[2]}`;
   const newMajorMinor = `${nextVersion[1]}.${nextVersion[2]}`;
-  if (oldMajorMinor === newMajorMinor) continue;
+  if (oldMajorMinor === newMajorMinor) {
+    console.log(`[post-upgrade] Skipping unchanged major/minor version: ${context}`);
+    continue;
+  }
 
   const updates = candidates.get(configPath) ?? [];
   updates.push({ oldMajorMinor, newMajorMinor, upgrade });
@@ -107,6 +120,7 @@ for (const [configPath, updates] of candidates) {
   const names = frameworkNames(configPath, contents);
   const lines = contents.split(/(?<=\n)/);
   let inFramework = false;
+  let foundVersion = false;
 
   for (let index = 0; index < lines.length; index++) {
     const body = lines[index].replace(/\r?\n$/, '');
@@ -119,6 +133,7 @@ for (const [configPath, updates] of candidates) {
 
     const match = /^(  version:\s*)(['"]?)(\d+\.\d+(?:\.\d+)?)(\2)(\s*(?:#.*)?)$/.exec(body);
     if (!match) continue;
+    foundVersion = true;
 
     const currentMajorMinor = versionParts(match[3]);
     const desired = new Set(
@@ -136,8 +151,16 @@ for (const [configPath, updates] of candidates) {
         lines[index] = `${match[1]}${match[2]}${version}${match[4]}${match[5]}${lines[index].slice(body.length)}`;
         writeFileSync(configPath, lines.join(''));
         console.log(`Updated ${configPath} to ${version}`);
+        updatedConfigs++;
       }
+    } else {
+      console.log(`[post-upgrade] No matching framework dependency for ${configPath} at version ${match[3]}; candidates: ${JSON.stringify(updates.map(({ upgrade }) => ({ depName: upgrade.depName, packageName: upgrade.packageName, currentVersion: upgrade.currentVersion, newVersion: upgrade.newVersion })))}`);
     }
     break;
   }
+  if (!foundVersion) {
+    console.log(`[post-upgrade] No supported framework.version field in ${configPath}`);
+  }
 }
+
+console.log(`[post-upgrade] Finished: ${updatedConfigs} config file(s) updated`);
