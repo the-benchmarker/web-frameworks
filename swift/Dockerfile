@@ -2,7 +2,7 @@
   FROM swift:{{{.}}} AS build
 {{/language.version}}
 {{^language.version}}
-  FROM swift:6.3 AS build
+  FROM swift:6.4 AS build
 {{/language.version}}
 
 WORKDIR /usr/src/app
@@ -29,7 +29,7 @@ RUN swift build -c release -Xswiftc -enforce-exclusivity=unchecked
   FROM swift:{{{.}}}-slim
 {{/language.version}}
 {{^language.version}}
-  FROM swift:6.3-slim
+  FROM swift:6.4-slim
 {{/language.version}}
 
 WORKDIR /app
