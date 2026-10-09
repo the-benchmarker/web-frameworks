@@ -84,6 +84,7 @@ impl ServerHook for UserId {
 async fn main() {
     server
         .server_config(init_server_config())
+        .request_config(RequestConfig::default())
         .run()
         .await
         .unwrap()
