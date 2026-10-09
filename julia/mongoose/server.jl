@@ -3,22 +3,21 @@ Pkg.activate(pwd())
 
 using Mongoose
 
-server = Server()
+app = App(; workers = 0)
 
-function getroot(request::Request)
-    return Response("")
+const EMPTY = Response(200, Pair{String, String}[], "")
+
+get!(app, "/") do req
+    EMPTY
 end
 
-function getuserid(request::Request, id::String)
-    return Response(id)
+get!(app, "/user/:id") do req, id
+    Response(200, Pair{String, String}[], id)
 end
 
-function postuser(request::Request)
-    return Response("")
+post!(app, "/user") do req
+    EMPTY
 end
 
-route!(server, :get, "/", getroot)
-route!(server, :get, "/user/:id", getuserid)
-route!(server, :post, "/user", postuser)
-
-start!(server, host = "0.0.0.0", port = 3000)
+freeze!(app)
+start!(app; host = "0.0.0.0", port = 3000)
