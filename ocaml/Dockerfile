@@ -1,4 +1,4 @@
-FROM ocaml/opam:debian-13-ocaml-5.2
+FROM ocaml/opam:debian-ocaml-5.5
 
 WORKDIR /usr/src/app
 
