@@ -155,6 +155,20 @@ make -f <language>/<framework>/.Makefile unbuild
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request, and follow the [Code of Conduct](CODE_OF_CONDUCT.md). If you maintain the framework you are adding, mention that in the PR—it helps reviewers evaluate idiomatic configuration and tuning.
 
+Dependency updates run daily through the open source Renovate CLI. To activate the
+workflow, add a repository Actions secret named `RENOVATE_TOKEN` containing a
+dedicated bot account's token (not `@waghanza`); a classic PAT needs `repo` and
+`workflow` scopes to update both dependencies and GitHub Actions.
+The workflow can also be started from the Actions tab. Renovate scans every
+supported manifest in the repository, including npm, Cargo, Composer, Bundler,
+Go, Maven, Gradle, Python, Dart, Swift, and Mix files. A custom rule covers
+GitHub-hosted Crystal shards. Renovate opens PRs,
+requests `@waghanza` as a reviewer, and merges PRs after checks pass and any
+required review is approved. Framework `config.yaml` versions annotated with a
+`renovate:` comment are updated alongside their dependency manifests.
+DUB, Nimble, and Julia package manifests still need manual updates because
+Renovate has no built-in manager for those formats.
+
 ## 🗂️ Repository map
 
 | Path | Purpose |

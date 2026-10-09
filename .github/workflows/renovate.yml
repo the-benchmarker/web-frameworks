@@ -1,0 +1,36 @@
+name: Renovate
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: renovate
+  cancel-in-progress: false
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    container:
+      image: ghcr.io/renovatebot/renovate:44.148.3
+    env:
+      LOG_LEVEL: debug
+      RENOVATE_PLATFORM: github
+      RENOVATE_REPOSITORIES: ${{ github.repository }}
+      RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
+      RENOVATE_GIT_AUTHOR: "renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>"
+      RENOVATE_ONBOARDING: "false"
+      RENOVATE_PR_CREATION: immediate
+      RENOVATE_PR_HOURLY_LIMIT: "0"
+      RENOVATE_PR_CONCURRENT_LIMIT: "0"
+      RENOVATE_ALLOWED_COMMANDS: '^node \.github/scripts/update-renovate-config-version\.mjs$'
+    steps:
+      - name: Check Renovate token
+        run: test -n "$RENOVATE_TOKEN"
+      - name: Check for dependency updates
+        run: renovate
