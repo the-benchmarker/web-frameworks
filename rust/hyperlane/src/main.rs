@@ -6,6 +6,10 @@ fn init_server_config() -> ServerConfig {
     server_config
 }
 
+fn init_request_config() -> RequestConfig {
+    RequestConfig::low_security()
+}
+
 #[route("/")]
 struct Index;
 
@@ -84,7 +88,7 @@ impl ServerHook for UserId {
 async fn main() {
     server
         .server_config(init_server_config())
-        .request_config(RequestConfig::default())
+        .request_config(init_request_config())
         .run()
         .await
         .unwrap()
