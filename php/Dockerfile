@@ -49,7 +49,7 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 RUN if [ ! -f php.ini ] ; then \
   cp ./php.ini /usr/local/etc/php/conf.d/99-opcache.ini \
-  else cp ./php.ini /usr/local/etc/php/conf.d/99-opcache.ini \
+  else cp ./php.ini /usr/local/etc/php/conf.d/99-opcache.ini && \
        cat php.ini >> /usr/local/etc/php/conf.d/99-opcache.ini; fi
 
 {{#command}}
