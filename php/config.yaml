@@ -9,7 +9,6 @@ language:
     - curl -fL --output /tmp/pie https://github.com/php/pie/releases/latest/download/pie.phar && install /tmp/pie /usr/local/bin
 
   bootstrap:
-    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - composer install --no-dev --prefer-dist --classmap-authoritative
     - composer dumpautoload -o
 
