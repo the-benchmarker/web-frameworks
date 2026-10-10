@@ -16,6 +16,7 @@ RUN apt-get -qq update && \
 WORKDIR /usr/src/app
 
 RUN docker-php-ext-install zip {{#modules}}{{{.}}} {{/modules}}
+COPY --from=composer/composer:latest-bin --link /composer /usr/local/bin/composer
 
 {{#environment}}
   ENV {{{.}}}
@@ -45,6 +46,11 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
 {{/framework.standalone}}
 
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+
+RUN if [ ! -f php.ini ] ; then \
+  cp ./php.ini /usr/local/etc/php/conf.d/99-opcache.ini \
+  else cp ./php.ini /usr/local/etc/php/conf.d/99-opcache.ini && \
+       cat php.ini >> /usr/local/etc/php/conf.d/99-opcache.ini; fi
 
 {{#command}}
   ENTRYPOINT {{{.}}}
@@ -89,16 +95,6 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
       {{/nginx_conf}}
   }\n'\
   > /etc/nginx/conf.d/server.conf
-
-  RUN echo 'opcache.enable=1\n\
-  opcache.enable_cli=1\n\
-  opcache.memory_consumption=512\n\
-  opcache.interned_strings_buffer=64\n\
-  opcache.max_accelerated_sources=32531\n\
-  opcache.validate_timestamps=0\n\
-  opcache.save_comments=1\n\
-  opcache.fast_shutdown=0\n'\
-  >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
   ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
 {{/command}}
