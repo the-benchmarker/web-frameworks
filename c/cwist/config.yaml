@@ -22,7 +22,7 @@ framework:
     - libnghttp2-dev
 
   download:
-    - git clone --depth 1 --branch v3.9 --recurse-submodules --shallow-submodules https://github.com/c4punks/CWIST.git cwist
+    - git clone --depth 1 --branch v3.9.1 --recurse-submodules --shallow-submodules https://github.com/c4punks/CWIST.git cwist
 
   build:
     - cd cwist && make -j$(nproc)
