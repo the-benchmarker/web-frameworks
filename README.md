@@ -28,7 +28,7 @@ Every implementation is expected to listen on port `3000` and provide the same r
 | `GET` | `/user/:id` | `2xx` | The `id` path parameter |
 | `POST` | `/user` | `2xx` | Empty |
 
-Before an implementation is benchmarked, the shared [v1 RSpec contract](.spec/v1/route_spec.rb) verifies these routes. The generated benchmark uses `zrk` with keep-alive connections and a 15-second run per route. Select the [v2 scenario](SCENARIO.md) with `COMPLETE=true` as described below. The routes and request fixtures are fixed in [`.tasks/config.rake`](.tasks/config.rake).
+Before an implementation is benchmarked, the shared [v1 RSpec contract](.spec/v1/route_spec.rb) verifies these routes. The generated benchmark uses `zrk` with keep-alive connections and a 15-second run per route. Select the [v2 stateless API scenario](SCENARIO.md) with `COMPLETE=true` to exercise JSON and multipart handling; Rails provides the reference implementation. The routes and request fixtures are fixed in [`.tasks/config.rake`](.tasks/config.rake).
 
 Collected fields include requests per second, total data received, run duration, and the p50, p75, p90, and p99 latency percentiles. Benchmark configuration is generated from three YAML layers:
 
@@ -101,17 +101,27 @@ The generator accepts comma-separated concurrency levels. Set them while generat
 CONCURRENCIES=64,256,512 bundle exec rake config
 ```
 
-Then run the same `collect` target. `COMPLETE` defaults to `false`, selecting
-the three v1 routes. Set `COMPLETE=true bundle exec rake config` to select the
-[v2 scenario](SCENARIO.md) and its tests. Other values stop generation with
-an error. Warmup and collection run
-every route in the selected version, with a separate JSON result file per route;
-the generated `test` target runs `.spec/v1` or `.spec/v2` accordingly.
+Then run the same `collect` target. `COMPLETE=false` (the default) selects the
+three v1 routes. `COMPLETE=true` selects the six-route [v2 scenario](SCENARIO.md).
+To prepare just Rails:
+
+```bash
+LANGUAGE=ruby FRAMEWORK=rails COMPLETE=true bundle exec rake config
+```
+
+`COMPLETE` is the only route-version selector; invalid values stop generation.
+The generator sets the selected mode in the Dockerfiles and container startup
+commands. Use the generated `build`, `test`, `warmup`, and `collect` targets to
+run the implementation in Docker. Warmup and collection run every selected route
+separately; `test` runs only `.spec/v1` or `.spec/v2`, matching the selection.
+Regenerate and rebuild to switch versions, and keep their results separate.
 
 The v2 upload uses the 4,096-byte [payload fixture](.tasks/fixtures/payload.bin)
-as a multipart `file` named `payload.bin`. Its JSON request body is in
-[v2-deserialization.json](.tasks/fixtures/v2-deserialization.json). The generator
-writes the multipart body beneath each implementation's `.results` directory.
+as a multipart `file` named `payload.bin`, together with a `seed` form field.
+The JSON request is [v2-deserialization.json](.tasks/fixtures/v2-deserialization.json),
+and responses use the shared [serialization dataset](.tasks/fixtures/serialization.json).
+The generator writes multipart requests beneath each implementation's `.results`
+directory.
 
 The load generator runs closed-loop over keep-alive connections: every connection sends its next request as soon as the previous response arrives, so the reported rate is the framework's sustained throughput for the whole run. Three more variables control where that work runs:
 

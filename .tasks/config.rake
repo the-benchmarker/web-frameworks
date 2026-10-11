@@ -173,7 +173,7 @@ def commands_for(language, framework, variant, provider = 'docker', complete: co
   taskset = load_generator_prefix(load_cpus)
 
   options = { language: language, framework: framework, variant: variant, cpuset: cpuset, manifest: "#{MANIFESTS[:container]}.#{variant}" }
-  commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], 'memory-idle': [] }
+  commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], 'memory-idle': [], test: ["ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"] }
   prerequisites = Hash.new { |h, k| h[k] = [] }
 
   # Compile first, only for non containers

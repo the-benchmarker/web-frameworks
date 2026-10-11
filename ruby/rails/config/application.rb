@@ -1,50 +1,36 @@
-require_relative "boot"
+require_relative 'boot'
+require_relative '../lib/request_body_limit'
+require_relative '../lib/upload_tempfile_cleanup'
 
-require "rails"
-# Pick the frameworks you want:
-require "active_model/railtie"
-require "active_job/railtie"
-# require "active_record/railtie"
-# require "active_storage/engine"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-# require "action_mailbox/engine"
-# require "action_text/engine"
-require "action_view/railtie"
-require "action_cable/engine"
-require "rails/test_unit/railtie"
+require 'rails'
+require 'active_model/railtie'
+require 'action_controller/railtie'
+require 'rack/bad_request'
+require 'rack/conditional_get'
+require 'rack/etag'
 
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module Benchmark
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
-
-    # Please, add to the `ignore` list any other `lib` subdirectories that do
-    # not contain `.rb` files, or that should not be reloaded or eager loaded.
-    # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
-
-    # Remove some middleware that is not needed for an API-only Rails app
-    config.middleware.delete ActionDispatch::Cookies
-    config.middleware.delete ActionDispatch::Session::CookieStore
-
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
     config.api_only = true
+    config.x.complete = ENV.fetch('COMPLETE', 'false').casecmp?('true')
+
+    config.middleware.insert_before 0, RequestBodyLimit
+    # API-only Rails omits this middleware; uploads still need deterministic cleanup.
+    config.middleware.use UploadTempfileCleanup
+    config.middleware.delete Rack::ConditionalGet
+    config.middleware.delete Rack::ETag
+
     # Preserve null array entries so the request validator can reject them.
     config.action_dispatch.perform_deep_munge = false
     config.action_controller.perform_caching = false
+    config.action_controller.action_on_unpermitted_parameters = false
     config.cache_store = :null_store
     config.force_ssl = false
+    config.assume_ssl = false
     config.logger = ActiveSupport::Logger.new(File::NULL)
   end
 end

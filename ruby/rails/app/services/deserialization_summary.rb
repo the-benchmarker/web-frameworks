@@ -1,8 +1,5 @@
-require "digest"
-
 class DeserializationSummary
-  def self.call(items:)
-    values = items.map { |item| item.fetch(:value) }
-    { count: values.length, checksum: Digest::SHA256.hexdigest(values.join("\n")) }
+  def self.call(seed:, items:)
+    { seed: seed, count: items.length, idSum: items.sum { |item| item.fetch(:id) } }
   end
 end

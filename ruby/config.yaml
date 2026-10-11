@@ -4,7 +4,10 @@ language:
   engines:
     puma:
       bootstrap:
-        - bundle add puma
+        # Preserve a framework's existing Puma dependency and version constraint.
+        - >-
+          ruby -rbundler -e 'exit(Bundler.definition.dependencies.any? { |gem| gem.name == "puma" } ? 0 : 1)'
+          || bundle add puma
       command: bundle exec puma -p 3000 -w $(nproc)
     falcon:
       bootstrap:

@@ -1,95 +1,211 @@
-# Benchmark scenario
+# Stateless API benchmark (v2)
 
-Every implementation must pass this HTTP contract before results for this
-scenario are compared. Requests go to port `3000`. A successful response has status
-`200`; an empty response has a zero-length body. JSON responses use
-`Content-Type: application/json` and are compared as parsed JSON, so object key
-order and whitespace do not matter. SHA-256 digests are lowercase hexadecimal.
+This scenario measures six HTTP workloads through a framework's normal request
+and response facilities. Applications listen on port `3000`. Requests carry
+their own input; the application needs no database, authentication, session,
+cache, template, external service, or background job.
 
-The route is spelled `/heath` in this scenario. The existing `GET /` route remains
-in use by the current benchmark runner during migration.
-
-| # | Request | Purpose | Response |
+| # | Request | Feature | Successful response |
 |---|---|---|---|
-| 1 | `GET /heath` | Static routing | Empty body |
-| 2 | `GET /user/{user}` | Dynamic path routing | The decoded `user` value as UTF-8 plain text |
-| 3 | `POST /user` | Compatibility with the existing benchmark | Empty body |
-| 4 | `GET /serialization?n={n}&seed={seed}` | JSON serialization | An `items` array of exactly `n` objects derived from `seed` |
-| 5 | `POST /deserialization` | JSON deserialization | Item count and SHA-256 checksum of the `value` fields |
-| 6 | `POST /upload` | Multipart parsing and file hashing | SHA-256 checksum of the uploaded file bytes |
+| 1 | `GET /health` | Static routing | Empty body |
+| 2 | `GET /user/{user}` | Dynamic routing and path decoding | Decoded path value as plain text |
+| 3 | `POST /user` | HTTP method dispatch | Empty body |
+| 4 | `GET /serialization?seed={seed}` | Query extraction and JSON serialization | Seed and 100 fixed records |
+| 5 | `POST /deserialization` | JSON decoding and access to parsed values | Seed, item count, and ID sum |
+| 6 | `POST /upload` | Multipart parsing and form/file binding | Seed, file metadata, size, and two byte samples |
 
-## Exact requests and responses
+All successful responses have status `200`. Empty bodies have zero bytes.
+JSON responses use `Content-Type: application/json` and are compared as parsed
+JSON: whitespace and object key order do not matter. Array order does matter.
+Every seed is a **string of exactly eight ASCII digits**, such as `"00000042"`.
 
-### 1. Static route
+## Try the Rails reference
 
-`GET /heath` returns `200` with an empty body.
+Run these commands from the repository root after installing Ruby, Bundler,
+Docker, and the root Gemfile dependencies:
 
-### 2. Dynamic route
-
-`GET /user/{user}` returns `200` with the decoded path segment as plain text. Test
-with at least two distinct values, including a nonnumeric value such as
-`/user/alice`; `/user/42` must return `42`.
-
-### 3. Legacy POST route
-
-`POST /user` with an empty request body returns `200` with an empty body.
-
-### 4. Serialization
-
-The `/serialization` route requires a non-null `n` query parameter that parses
-as a non-negative base-10 integer from `0` through `1000`, inclusive. `seed`
-must be a non-null, nonempty simple string (a scalar value, not an array or
-object). For each index `i` from `0` to `n - 1`, emit an object whose `id` is
-the integer `i` and whose `value` is the decoded seed followed by `:` and the
-decimal representation of `i`. Return the objects in index order with
-`Content-Type: application/json`:
-
-```http
-GET /serialization?n=2&seed=demo
+```bash
+LANGUAGE=ruby FRAMEWORK=rails COMPLETE=true bundle exec rake config
+make -f ruby/rails/.Makefile build.puma
+export BENCHMARK_URL="http://$(cat ruby/rails/ip-puma.txt):3000"
+make -f ruby/rails/.Makefile test.puma
 ```
+
+The generator prepares the shared dataset, Dockerfiles, requests, and Makefile
+for Rails and starts the container in v2 mode. The test target runs
+[.spec/v2](.spec/v2) against the container. See the
+[Rails README](ruby/rails/README.md) for the full Docker workflow.
+Run the request examples below while the container is running, using its
+`BENCHMARK_URL` from the command above.
+Stop the container afterward with `make -f ruby/rails/.Makefile unbuild.puma`.
+
+## 1. Static routing
+
+`GET /health` returns `200` with an empty body.
+
+```bash
+curl -i "$BENCHMARK_URL/health"
+```
+
+## 2. Dynamic routing
+
+`GET /user/{user}` returns the decoded UTF-8 path segment with
+`Content-Type: text/plain; charset=utf-8`.
+
+| Request | Response body |
+|---|---|
+| `GET /user/00000042` | `00000042` |
+| `GET /user/alice` | `alice` |
+| `GET /user/alice.smith` | `alice.smith` |
+| `GET /user/caf%C3%A9` | `café` |
+
+Extract the route parameter through the framework. Correctness checks use
+multiple values, including Unicode. Varying-input load runs use fixed-width
+numeric values so response sizes stay equal.
+
+## 3. Method dispatch
+
+`POST /user` with an empty body returns `200` with an empty body.
+It intentionally stores no user; it exercises dispatch by HTTP method.
+
+```bash
+curl -i -X POST "$BENCHMARK_URL/user"
+```
+
+## 4. JSON serialization
+
+`GET /serialization?seed=00000042` returns a JSON object with:
+
+- `seed`: the supplied seed string.
+- `items`: all 100 objects in the [shared dataset](.tasks/fixtures/serialization.json),
+  in their original order.
+
+Load the dataset once as immutable objects. Encode the response through the
+framework's ordinary JSON response facility on every request. Copy the seed
+once into the response; do not generate or transform each record.
+
+The first object in `items` is:
 
 ```json
-{"items":[{"id":0,"value":"demo:0"},{"id":1,"value":"demo:1"}]}
+{"id":0,"name":"User 0","active":true,"tags":["api","benchmark"],"profile":{"score":0,"note":null}}
 ```
 
-For `n=0`, return `{"items":[]}`. Test more than one `n` and more than one
-`seed` to verify that both parameters affect the response. A missing or invalid
-parameter, or an `n` outside the specified range, returns `400`.
+The fixture exercises integers, strings, booleans, arrays, nested objects, and
+null. IDs run from `0` through `99`. The record count is always 100;
+this workload has no `n` parameter.
 
-### 5. Deserialization
+Missing, invalid, array/object, or repeated query seeds return `400`.
+Correctness compares every fixture field and verifies that changing the seed
+changes the response seed.
 
-Send this fixed JSON body with `Content-Type: application/json`:
+## 5. JSON deserialization
+
+`POST /deserialization` accepts `Content-Type: application/json` with an
+object containing a valid seed and an `items` array of zero through 100 objects.
+Every item must have an integer `id` from `0` through `1000000`, inclusive.
+Other item fields are parsed normally and may be ignored in the summary.
+
+```bash
+curl "$BENCHMARK_URL/deserialization" \
+  -H 'Content-Type: application/json' \
+  -d '{"seed":"00000042","items":[{"id":2},{"id":7}]}'
+```
+
+Expected response:
 
 ```json
-{"items":[{"value":"alpha"},{"value":"beta"},{"value":"gamma"}]}
+{"seed":"00000042","count":2,"idSum":9}
 ```
 
-Count the objects in `items`. Compute SHA-256 over the UTF-8 bytes of their
-`value` fields joined in order by a single line-feed byte (`0A`), with no
-trailing line feed. For the request above, the hashed bytes are
-`alpha\nbeta\ngamma`. Return:
+The [performance request](.tasks/fixtures/v2-deserialization.json) contains the
+100 fixture records and produces:
 
 ```json
-{"count":3,"checksum":"f3220283d05d1ff2ae350cfe9e0e367cb5aef46e10efb203c8a53c678e2218c8"}
+{"seed":"00000042","count":100,"idSum":4950}
 ```
 
-### 6. Upload
+An empty array produces `count: 0` and `idSum: 0`.
+The small ID sum demonstrates access to decoded input without a hashing workload.
 
-Send `Content-Type: multipart/form-data` with one file part named `file`, filename
-`payload.bin`, and part content type `application/octet-stream`. Its contents are
-the four ASCII bytes `abcd` repeated `1024` times, for a total of `4096` bytes.
-Hash only the file part's raw bytes, not the multipart headers or boundaries.
-Return:
+Return `400` for malformed JSON, missing required fields, invalid seeds,
+non-array or oversized `items`, non-object items, or invalid IDs.
+Strings, booleans, null, and fractional/float IDs are rejected rather than coerced.
+Required values come from the body; query parameters cannot fill missing fields.
+Unsupported request media types return `415`.
+
+## 6. Multipart parsing
+
+`POST /upload` accepts `multipart/form-data` containing exactly one text
+field named `seed` and one file part named `file`. Read both through the
+framework's normal parsed-parameter and uploaded-file APIs. Query parameters
+cannot provide the required body fields.
+
+The performance file is [payload.bin](.tasks/fixtures/payload.bin): 4096 bytes
+consisting of `abcd` repeated 1024 times.
+
+```bash
+curl "$BENCHMARK_URL/upload" \
+  -F 'seed=00000042' \
+  -F 'file=@.tasks/fixtures/payload.bin;filename=payload.bin;type=application/octet-stream'
+```
+
+Expected response:
 
 ```json
-{"sha256":"1f91053dcf43206eb082c0962785d35d86d4f629345f8bff25be7394416db908"}
+{"seed":"00000042","filename":"payload.bin","contentType":"application/octet-stream","size":4096,"firstByte":97,"lastByte":100}
 ```
 
-## Validation
+`size` counts only file bytes, excluding multipart headers and boundaries.
+The two byte samples are unsigned integers from `0` through `255`; an empty
+file returns zero size and null for both samples. Read the samples from the file,
+rather than inferring them from its filename or declared media type.
 
-Run `bundle exec rspec .spec` against each implementation before comparing its
-scenario results. The shared `.spec/v2/scenario_spec.rb` verifies all six requests,
-including status, response body, JSON structure, item order, and digest values.
-The existing `.spec/v1/route_spec.rb` also checks the legacy `GET /` route.
-During migration, `.spec/v2/spec_helper.rb` lists the implementations that run
-the v2 tests; other implementations skip them.
+There is no hashing or application-managed file storage. Normal parser buffering
+to a temporary file is part of the measured stack and must be documented.
+Correctness varies the seed, boundary, filename, size, and binary byte samples.
+
+Malformed multipart data, invalid seeds, or missing/repeated required parts
+return `400`. Unsupported request media types return `415`.
+An entry without supported multipart handling reports this scenario as N/A.
+
+## Implementing and comparing frameworks
+
+Use each framework's ordinary routing, parameter extraction, JSON, and multipart
+facilities. Record the server/runtime and parsing/encoding components, including
+their versions. A framework may delegate to its server or a documented library;
+the result measures that configured HTTP stack. Do not substitute handwritten
+parsers or precomputed JSON/HTTP responses.
+
+Compare results per scenario, using the same fixtures, input sequence, payload
+sizes, hardware, concurrency, and benchmark revision. Show implementation status
+as passed, pending, unsupported, or failed; only passing scenarios receive
+performance results. Do not reward missing features through a reduced aggregate.
+
+Validate positive and negative cases before collecting results. The shared tests
+include changing inputs at the same URL, invalid fields, duplicate query/form
+values, and chunked JSON/multipart bodies. Error bodies follow the framework's
+normal error handling; their byte representation is not prescribed.
+
+Rails additionally limits JSON and multipart bodies to 64 KiB, including chunked
+requests; larger bodies return `413`. It emits `Cache-Control: no-store` on
+normal controller responses and uses Rack's temporary-upload cleanup.
+See [the Rails implementation notes](ruby/rails/README.md).
+
+## Scenario versions and load inputs
+
+There are two versions: v1 is the original three-route baseline, and v2 is
+this six-route contract. Select v2 with `COMPLETE=true bundle exec rake config`;
+omitting `COMPLETE` or setting it to `false` selects v1. `COMPLETE` is the only
+route-version selector. The generator configures Docker startup and selects
+the matching test suite and JSON/multipart requests. Regenerate and rebuild
+the container when switching versions.
+
+Rails implements both versions. Its `GET /` compatibility route is outside
+the six v2 workloads; the v2 health route is `/health`.
+Keep results from different versions separate.
+
+The current generated load commands use fixed inputs. Varied correctness checks
+catch hardcoded answers, but cannot rule out a correctly keyed response cache.
+When the pinned load generator supports varying inputs, use the same reproducible,
+fixed-size sequence of path values, seeds, JSON IDs, and upload samples for every
+entry. Label fixed-input runs accordingly.

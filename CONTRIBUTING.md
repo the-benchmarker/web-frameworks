@@ -6,14 +6,23 @@ methodology, and documentation are welcome.
 ## Benchmark API
 
 Every implementation listens on port `3000`. The default v1 workload checks
-`GET /`, `GET /user/0`, and `POST /user`. The six-route v2 workload and exact
-responses are defined in [SCENARIO.md](SCENARIO.md). Set
-`COMPLETE=true bundle exec rake config` to generate v2 benchmark commands;
-`COMPLETE=false` is the default for v1. The generated test target uses the matching
-`.spec/v1` or `.spec/v2` directory. Route definitions and request fixtures live
-in [`.tasks/config.rake`](.tasks/config.rake). Warmup and collection run every
-selected route, each with a separate result file. Compare frameworks on the
-same route version.
+`GET /`, `GET /user/0`, and `POST /user`. The six-route stateless v2 workload
+and exact responses are defined in [SCENARIO.md](SCENARIO.md). Set
+`LANGUAGE=ruby FRAMEWORK=rails COMPLETE=true bundle exec rake config` to prepare
+the Rails reference. The generated test target uses the matching contract in
+`.spec/v1` or `.spec/v2`. `COMPLETE=false` (the default) selects v1 and
+`COMPLETE=true` selects v2; this is the only route-version selector.
+The generated Dockerfiles and startup commands carry that mode into the container.
+Route definitions and fixtures live in [`.tasks/config.rake`](.tasks/config.rake).
+Warmup and collection run every selected route separately. Compare frameworks
+on the same scenario version and keep their results separate.
+
+### Rails reference
+
+Rails implements v1 and v2 through conventional API controllers, callbacks,
+strong parameters, and small response services. JSON and multipart request
+bodies have a 64 KiB limit, including chunked requests. See the
+[Rails README](ruby/rails/README.md) for Docker testing and implementation notes.
 
 ### Spring deployment
 
@@ -31,9 +40,8 @@ at its ingress. These controls are outside the fixed endpoint workload.
 
 Keep responses and request fixtures deterministic. Parse values through the
 framework's ordinary HTTP and JSON facilities, then perform the specified
-work. Avoid caching the completed response or replacing a parse with a fixed
-answer: that changes the feature being measured. Return an error for malformed
-JSON and invalid compute inputs.
+work. Avoid caching completed responses or replacing parsing with a fixed
+answer. Return errors for malformed input as defined by the selected contract.
 
 ## Adding a framework
 
@@ -59,10 +67,11 @@ fixture into each Docker build context.
 
 Add a target for the implementation in `Makefile` and `neph.yaml`, and its
 repository metadata in `benchmarker.cr`. Use the shared route spec to check
-the legacy contract. When the full workload is implemented, add the framework
-to the route selection in `.tasks/config.rake` and verify every route over HTTP.
+the v1 contract. When v2 is implemented, add the framework to the enabled
+implementations in `.spec/v2/spec_helper.rb` and verify every route over HTTP
+against its Docker container.
 
-## Running locally
+## Running in Docker
 
 Install Docker, Ruby and Bundler, `jq`, and
 [`zrk`](https://github.com/zoxy-io/zrk) 2.4 or newer. Generate the manifests:
