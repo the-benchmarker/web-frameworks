@@ -15,7 +15,6 @@ RUN apt-get -qq update && \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
   rm -rf /var/lib/apt/lists/*
 
-<<<<<<< HEAD
 #COPY ../php.ini /usr/local/etc/php/conf.d/99-php.ini;
 RUN echo 'opcache.memory_consumption=512\n\
 opcache.interned_strings_buffer=64\n\
@@ -27,11 +26,6 @@ opcache.jit_buffer_size=256M\n'\
   >> /usr/local/etc/php/conf.d/90-php.ini
 RUN if [ -f php.ini ] ; then \
        cp php.ini /usr/local/etc/php/conf.d/99-php.ini; fi
-=======
-COPY ../php.ini /usr/local/etc/php/conf.d/99-php.ini;
-RUN if [ -f php.ini ] ; then \
-       cat php.ini >> /usr/local/etc/php/conf.d/99-php.ini; fi
->>>>>>> c1e5e53 (Move php.ini copy)
 
 WORKDIR /usr/src/app
 
