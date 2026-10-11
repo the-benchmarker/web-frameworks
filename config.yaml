@@ -45,7 +45,9 @@ providers:
 
     unbuild:
       - docker stop `cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt`
+      - echo "**********************************************"
       - docker logs `cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt`
+      - echo "**********************************************"
 
   digitalocean:
     build:
