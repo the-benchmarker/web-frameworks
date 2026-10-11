@@ -23,9 +23,9 @@ opcache.validate_timestamps=0\n\
 opcache.save_comments=1\n\
 opcache.jit=tracing\n\
 opcache.jit_buffer_size=256M\n'\
-  >> /usr/local/etc/php/conf.d/99-php.ini
+  >> /usr/local/etc/php/conf.d/90-php.ini
 RUN if [ -f php.ini ] ; then \
-       cat php.ini >> /usr/local/etc/php/conf.d/99-php.ini; fi
+       cp php.ini /usr/local/etc/php/conf.d/99-php.ini; fi
 
 WORKDIR /usr/src/app
 
@@ -43,6 +43,11 @@ COPY --from=composer/composer:latest-bin --link /composer /usr/local/bin/compose
 {{#extensions}}
   RUN pie install --no-cache {{{.}}}
 {{/extensions}}
+
+ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
+RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
+  rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
+  sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
