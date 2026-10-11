@@ -13,6 +13,10 @@ RUN apt-get -qq update && \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
   rm -rf /var/lib/apt/lists/*
 
+COPY ../php.ini /usr/local/etc/php/conf.d/99-php.ini;
+RUN if [ -f php.ini ] ; then \
+       cat php.ini >> /usr/local/etc/php/conf.d/99-php.ini; fi
+
 WORKDIR /usr/src/app
 
 RUN docker-php-ext-install zip {{#modules}}{{{.}}} {{/modules}}
@@ -46,10 +50,6 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
 {{/framework.standalone}}
 
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
-
-COPY ../php.ini /usr/local/etc/php/conf.d/99-php.ini;
-RUN if [ -f php.ini ] ; then \
-       cat php.ini >> /usr/local/etc/php/conf.d/99-php.ini; fi
 
 {{#command}}
   ENTRYPOINT {{{.}}}
