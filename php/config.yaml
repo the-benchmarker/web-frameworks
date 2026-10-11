@@ -25,6 +25,9 @@ language:
       deps:
         - libevent-dev
         - libssl-dev
+      bootstrap:
+        - php -r \
+          "if (!extension_loaded('event')) { file_put_contents('/usr/local/etc/php/conf.d/event.ini', 'extension=event'); }"
       command: php public/index.php start
     road-runner:
       extensions:
