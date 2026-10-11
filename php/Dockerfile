@@ -22,7 +22,7 @@ opcache.max_accelerated_sources=32531\n\
 opcache.validate_timestamps=0\n\
 opcache.save_comments=1\n\
 opcache.jit=tracing\n\
-opcache.jit_buffer_size=256M\n'\
+opcache.jit_buffer_size=128M\n'\
   >> /usr/local/etc/php/conf.d/90-php.ini
 RUN if [ -f php.ini ] ; then \
        cp php.ini /usr/local/etc/php/conf.d/99-php.ini; fi
