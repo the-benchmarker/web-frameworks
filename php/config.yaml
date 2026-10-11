@@ -6,9 +6,6 @@ language:
     - composer.json
     - php.ini
 
-  before_build:
-    - curl -fL --output /tmp/pie https://github.com/php/pie/releases/latest/download/pie.phar && install /tmp/pie /usr/local/bin
-
   bootstrap:
     - composer install --no-dev --prefer-dist --classmap-authoritative
     - composer dumpautoload -o
