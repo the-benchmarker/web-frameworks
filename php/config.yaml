@@ -27,7 +27,7 @@ language:
         - libssl-dev
       bootstrap:
         - php -r \
-          "if (!extension_loaded('event')) { file_put_contents('/usr/local/etc/php/conf.d/event.ini', 'extension=event'); }"
+          "if (!extension_loaded('event')) { file_put_contents('/usr/local/etc/php/conf.d/20-event.ini', 'extension=event'); }"
         - php -r \
           "if (extension_loaded('event')) {echo 'Event extension is loaded.'; }"
       command: php public/index.php start
@@ -59,7 +59,7 @@ language:
         - libssl-dev
       bootstrap:
         - php -r \
-          "if (!extension_loaded('event')) { file_put_contents('/usr/local/etc/php/conf.d/event.ini', 'extension=event'); }"
+          "if (!extension_loaded('event')) { file_put_contents('/usr/local/etc/php/conf.d/20-event.ini', 'extension=event'); }"
         - php -r \
           "if (extension_loaded('event')) {echo 'Event extension is loaded.'; }"
 
