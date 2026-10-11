@@ -2,7 +2,7 @@ language:
   version: 3.9
 
   java:
-    version: 26
+    version: 27
 
   files:
     - "**/*.gradle"
