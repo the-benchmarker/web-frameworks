@@ -9,13 +9,29 @@ RUN apt-get -qq update && \
   apt-get -y install --no-install-recommends \
     libzip-dev \
     curl \
+    libtool \
+    unzip \
     {{#deps}}{{{.}}} {{/deps}} \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
   rm -rf /var/lib/apt/lists/*
 
+#COPY ../php.ini /usr/local/etc/php/conf.d/99-php.ini;
+RUN echo 'opcache.memory_consumption=512\n\
+opcache.interned_strings_buffer=64\n\
+opcache.max_accelerated_sources=32531\n\
+opcache.validate_timestamps=0\n\
+opcache.save_comments=1\n\
+opcache.jit=tracing\n\
+opcache.jit_buffer_size=256M\n'\
+  >> /usr/local/etc/php/conf.d/90-php.ini
+RUN if [ -f php.ini ] ; then \
+       cp php.ini /usr/local/etc/php/conf.d/99-php.ini; fi
+
 WORKDIR /usr/src/app
 
 RUN docker-php-ext-install zip {{#modules}}{{{.}}} {{/modules}}
+COPY --from=composer/composer:latest-bin --link /composer /usr/local/bin/composer
+COPY --from=ghcr.io/php/pie:bin /pie /usr/bin/pie
 
 {{#environment}}
   ENV {{{.}}}
@@ -89,16 +105,6 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
       {{/nginx_conf}}
   }\n'\
   > /etc/nginx/conf.d/server.conf
-
-  RUN echo 'opcache.enable=1\n\
-  opcache.enable_cli=1\n\
-  opcache.memory_consumption=512\n\
-  opcache.interned_strings_buffer=64\n\
-  opcache.max_accelerated_sources=32531\n\
-  opcache.validate_timestamps=0\n\
-  opcache.save_comments=1\n\
-  opcache.fast_shutdown=0\n'\
-  >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
   ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
 {{/command}}

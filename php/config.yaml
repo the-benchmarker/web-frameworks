@@ -4,12 +4,9 @@ language:
   files:
     - "**/*.php"
     - composer.json
-
-  before_build:
-    - curl -fL --output /tmp/pie https://github.com/php/pie/releases/latest/download/pie.phar && install /tmp/pie /usr/local/bin
+    - php.ini
 
   bootstrap:
-    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - composer install --no-dev --prefer-dist --classmap-authoritative
     - composer dumpautoload -o
 
@@ -25,6 +22,9 @@ language:
       deps:
         - libevent-dev
         - libssl-dev
+      bootstrap:
+        - php -r \
+          "if (extension_loaded('event')) {echo 'Event extension is loaded.'; }"
       command: php public/index.php start
     road-runner:
       extensions:
@@ -52,6 +52,9 @@ language:
         - libevent-dev
         - libicu-dev
         - libssl-dev
+      bootstrap:
+        - php -r \
+          "if (extension_loaded('event')) {echo 'Event extension is loaded.'; }"
 
 framework:
   engines:
