@@ -13,7 +13,15 @@ RUN apt-get -qq update && \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
   rm -rf /var/lib/apt/lists/*
 
-COPY ../php.ini /usr/local/etc/php/conf.d/99-php.ini;
+#COPY ../php.ini /usr/local/etc/php/conf.d/99-php.ini;
+RUN echo 'opcache.memory_consumption=512\n\
+opcache.interned_strings_buffer=64\n\
+opcache.max_accelerated_sources=32531\n\
+opcache.validate_timestamps=0\n\
+opcache.save_comments=1\n\
+opcache.jit=tracing\n\
+opcache.jit_buffer_size=256M\n'\
+  >> /usr/local/etc/php/conf.d/99-php.ini
 RUN if [ -f php.ini ] ; then \
        cat php.ini >> /usr/local/etc/php/conf.d/99-php.ini; fi
 
