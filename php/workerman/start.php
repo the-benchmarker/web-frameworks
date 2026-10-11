@@ -6,6 +6,7 @@ use Workerman\Worker;
 
 $worker = new Worker('http://0.0.0.0:3000');
 $worker->count = shell_exec('nproc') ?: 32;
+$worker->reusePort = true;
 $worker->onMessage = static function ($connection, $request) {
     $path = $request->path();
     match ($path) {
