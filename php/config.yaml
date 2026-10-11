@@ -57,6 +57,11 @@ language:
         - libevent-dev
         - libicu-dev
         - libssl-dev
+      bootstrap:
+        - php -r \
+          "if (!extension_loaded('event')) { file_put_contents('/usr/local/etc/php/conf.d/event.ini', 'extension=event'); }"
+        - php -r \
+          "if (extension_loaded('event')) {echo 'Event extension is loaded.'; }"
 
 framework:
   engines:
