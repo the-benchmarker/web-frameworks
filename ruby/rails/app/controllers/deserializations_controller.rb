@@ -19,9 +19,12 @@ class DeserializationsController < ApplicationController
 
     return bad_request unless valid_seed?(@seed) && raw_items.is_a?(Array) && raw_items.length <= 100
 
+    # Validate the original shape before strong parameters can discard entries.
+    return bad_request unless raw_items.all?(ActionController::Parameters)
+
     # expect treats an empty array as missing; the contract explicitly allows it.
     @items = raw_items.empty? ? [] : input.expect(items: [[:id]])
-    valid_items = @items.length == raw_items.length && @items.all? do |item|
+    valid_items = @items.all? do |item|
       item[:id].is_a?(Integer) && item[:id].between?(0, 1_000_000)
     end
     bad_request unless valid_items

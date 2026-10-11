@@ -23,9 +23,9 @@ V1_ROUTES = [
 
 V2_ROUTES = [
   { method: 'GET', uri: '/heath' },
-  { method: 'GET', uri: '/user/42' },
+  { method: 'GET', uri: '/user/0000042' },
   { method: 'POST', uri: '/user' },
-  { method: 'GET', uri: '/serialization?n=42&seed=user' },
+  { method: 'GET', uri: '/serialization?count=42&seed=foobarbaz' },
   { method: 'POST', uri: '/deserialization', body_file: '.tasks/fixtures/v2-deserialization.json', content_type: 'application/json' },
   { method: 'POST', uri: '/upload', multipart_file: '.tasks/fixtures/payload.bin' }
 ].map(&:freeze).freeze
@@ -491,14 +491,10 @@ end
 desc 'Create Dockerfiles and Makefiles (COMPLETE=false for v1, true for v2)'
 task :config do
   complete = complete_routes?
-  main_config = YAML.safe_load_file('config.yaml')
+  YAML.safe_load_file('config.yaml')
 
   Dir.glob('*/*/config.yaml').each do |path|
     dir = File.dirname(path)
-
-    Array(main_config.dig('dockerfile', 'context_files')).each do |file|
-      FileUtils.cp(file, File.join(dir, File.basename(file)))
-    end
 
     config = get_config_from(dir, engines_as_list: false)
     engines = config.dig('framework', 'engines')

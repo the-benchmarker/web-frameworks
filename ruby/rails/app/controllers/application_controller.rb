@@ -12,10 +12,6 @@ class ApplicationController < ActionController::API
 
   private
 
-  def valid_seed?(seed)
-    seed.is_a?(String) && seed.match?(/\A[0-9]{8}\z/)
-  end
-
   def prevent_response_caching
     response.headers['Cache-Control'] = 'no-store'
   end

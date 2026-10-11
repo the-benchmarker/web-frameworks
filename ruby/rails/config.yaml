@@ -1,21 +1,11 @@
 framework:
   website: rubyonrails.org
-  version: 8.1.4
-
-  files:
-    - "**/*.rb"
-    - config/*.yml
-    - Gemfile
-    - Rakefile
-    - config.ru
-    - bin/rails
-    - serialization.json
+  version: 8.1
 
   bootstrap:
     - mkdir -p tmp/pids
 
   build_deps:
-    - libsqlite3-dev
     - libyaml-dev
     - pkg-config
 
@@ -23,8 +13,3 @@ framework:
     RAILS_ENV: production
     SECRET_KEY_BASE_DUMMY: "1"
     RUBY_YJIT_ENABLE: 0
-
-dockerfile:
-  context_files:
-    - test.bin
-    - .tasks/fixtures/serialization.json
