@@ -63,7 +63,7 @@ RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
 {{#command}}
-  ENTRYPOINT {{{.}}} >> "$GITHUB_OUTPUT"
+  ENTRYPOINT {{{.}}}
 {{/command}}
 {{^command}}
   {{#slasheddocroot}}
