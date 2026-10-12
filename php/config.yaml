@@ -55,6 +55,18 @@ language:
       bootstrap:
         - php -r \
           "if (extension_loaded('event')) {echo 'Event extension is loaded.'; }"
+    adapterman:
+      before_build:
+        - docker-php-ext-install pcntl sockets
+      extensions:
+        - osmanov/pecl-event
+      deps:
+        - libevent-dev
+        - libssl-dev
+      bootstrap:
+        - php -r \
+          "if (extension_loaded('event')) {echo 'Event extension is loaded.'; }"
+      command: php server.php start
 
 framework:
   engines:
