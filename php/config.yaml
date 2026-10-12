@@ -64,6 +64,7 @@ language:
         - libevent-dev
         - libssl-dev
       bootstrap:
+        - cp php.ini /usr/local/etc/php/conf.d/99-custom.ini
         - php -r \
           "if (extension_loaded('event')) {echo 'Event extension is loaded.'; }"
       command: php server.php start
