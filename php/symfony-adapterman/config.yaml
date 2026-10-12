@@ -12,7 +12,7 @@ framework:
     - composer dumpautoload -o
     - mkdir -p var/log
     - mkdir -p var/cache
-    - php bin/console cache:warmup --no-debug
+    #- php bin/console cache:warmup --no-debug
 
   engines:
     - adapterman
