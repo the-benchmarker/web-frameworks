@@ -45,7 +45,7 @@ COPY --from=ghcr.io/php/pie:bin /pie /usr/bin/pie
   RUN pie install --no-cache {{{.}}}
 {{/extensions}}
 
-ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
+ENV EVENT_EXT_FILE=/usr/local/etc/php/conf.d/docker-php-ext-event.ini
 RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
   sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
