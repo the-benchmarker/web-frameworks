@@ -68,6 +68,7 @@ language:
           >> /usr/local/etc/php/conf.d/99-adapterman.ini
         - php -r \
           "if (extension_loaded('event')) {echo 'Event extension is loaded.'; }"
+        - php -i | grep -E 'opcache\.(jit|jit_buffer_size)'
       command: php server.php start
 
 framework:
