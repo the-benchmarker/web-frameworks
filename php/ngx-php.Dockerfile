@@ -19,7 +19,7 @@ RUN apt-get -qq update && \
     libxml2-dev \
     systemtap-sdt-dev \
     zlib1g-dev libpcre2-dev libargon2-dev libsodium-dev libkrb5-dev \
-    php-cli php-dev libphp-embed \
+    php-cli php-zip php-dev libphp-embed \
     {{#deps}}{{{.}}} {{/deps}} \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
   rm -rf /var/lib/apt/lists/*
@@ -42,7 +42,6 @@ EOT
 RUN if [ -f php.ini ] ; then \
        cp php.ini /usr/local/etc/php/conf.d/99-php.ini; fi
 
-RUN docker-php-ext-install zip embed dev {{#modules}}{{{.}}} {{/modules}}
 COPY --from=composer/composer:latest-bin --link /composer /usr/local/bin/composer
 COPY --from=ghcr.io/php/pie:bin /pie /usr/bin/pie
 
