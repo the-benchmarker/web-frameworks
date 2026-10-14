@@ -64,7 +64,7 @@ language:
     ngx-php:
       env:
         #- NGINX_VERSION=1.30.5
-        #- NGX_PHP_VERSION=v0.0.30
+        - NGX_PHP_VERSION=master
 
 framework:
   engines:
