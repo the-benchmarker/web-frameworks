@@ -33,7 +33,7 @@ RUN if [ -f php.ini ] ; then \
 
 WORKDIR /usr/src/app
 
-RUN docker-php-ext-install zip {{#modules}}{{{.}}} {{/modules}}
+RUN docker-php-ext-install -j$(nproc) zip {{#modules}}{{{.}}} {{/modules}}
 COPY --from=composer/composer:latest-bin --link /composer /usr/local/bin/composer
 COPY --from=ghcr.io/php/pie:bin /pie /usr/bin/pie
 
