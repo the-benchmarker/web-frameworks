@@ -7,7 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
   ENV PHP_VERSION={{{.}}}
 {{/language.version}}
 {{^language.version}}
-  ENV PHP_VERSION=8.5
+  ENV PHP_VERSION=8.4
 {{/language.version}}
 
 RUN apt-get -qq update && \
