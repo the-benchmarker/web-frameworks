@@ -10,6 +10,8 @@ ARG DEBIAN_FRONTEND=noninteractive
   ENV PHP_VERSION=8.4
 {{/language.version}}
 
+RUN apt-get update -yqq && apt-get install -yqq software-properties-common > /dev/null
+
 RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php > /dev/null && \
     apt-get update -yqq > /dev/null && apt-get upgrade -yqq > /dev/null
 
@@ -20,7 +22,7 @@ RUN apt-get -qq update && \
     wget \
     git \
     libxml2-dev systemtap-sdt-dev ca-certificates \
-    software-properties-common build-essential \
+    build-essential \
     zlib1g-dev libpcre3-dev libargon2-dev libsodium-dev libkrb5-dev \
     php${PHP_VERSION}-cli php${PHP_VERSION}-zip php${PHP_VERSION}-dev libphp${PHP_VERSION}-embed \
     {{#deps}}{{{.}}} {{/deps}} \
