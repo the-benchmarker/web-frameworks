@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ubuntu:26.04
+FROM ubuntu:24.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -10,6 +10,9 @@ ARG DEBIAN_FRONTEND=noninteractive
   ENV PHP_VERSION=8.4
 {{/language.version}}
 
+RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php > /dev/null && \
+    apt-get update -yqq > /dev/null && apt-get upgrade -yqq > /dev/null
+
 RUN apt-get -qq update && \
   apt-get -y install --no-install-recommends \
     libzip-dev \
@@ -18,8 +21,8 @@ RUN apt-get -qq update && \
     git \
     libxml2-dev systemtap-sdt-dev ca-certificates \
     software-properties-common build-essential \
-    zlib1g-dev libpcre2-dev libargon2-dev libsodium-dev libkrb5-dev \
-    php-cli php-zip php-dev libphp-embed \
+    zlib1g-dev libpcre3-dev libargon2-dev libsodium-dev libkrb5-dev \
+    php${PHP_VERSION}-cli php${PHP_VERSION}-zip php${PHP_VERSION}-dev libphp${PHP_VERSION}-embed \
     {{#deps}}{{{.}}} {{/deps}} \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
   rm -rf /var/lib/apt/lists/*
