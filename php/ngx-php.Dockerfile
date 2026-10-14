@@ -1,9 +1,13 @@
 # syntax=docker/dockerfile:1
+FROM ubuntu:26.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+
 {{#language.version}}
-  FROM php:{{{.}}}-cli{{#language.dist}}-{{{.}}}{{/language.dist}}
+  ENV PHP_VERSION={{{.}}}
 {{/language.version}}
 {{^language.version}}
-  FROM php:8.5-cli
+  ENV PHP_VERSION=8.5
 {{/language.version}}
 
 RUN apt-get -qq update && \
@@ -18,7 +22,12 @@ RUN apt-get -qq update && \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
   rm -rf /var/lib/apt/lists/*
 
-#COPY ../php.ini /usr/local/etc/php/conf.d/99-php.ini;
+# php
+RUN apt-get -y install \
+    zlib1g-dev libpcre2-dev libargon2-dev libsodium-dev libkrb5-dev \
+    php${PHP_VERSION}-cli php${PHP_VERSION}-dev libphp${PHP_VERSION}-embed > /dev/null
+
+# php.ini
 COPY <<'EOT' /usr/local/etc/php/conf.d/90-php.ini
 opcache.enable=1
 opcache.enable_cli=1
@@ -27,6 +36,7 @@ opcache.interned_strings_buffer=64
 opcache.max_accelerated_sources=32531
 opcache.validate_timestamps=0
 opcache.save_comments=1
+
 opcache.jit=tracing
 opcache.jit_buffer_size=128M
 EOT
