@@ -63,7 +63,7 @@ language:
       command: php server.php start
     ngx-php:
       env:
-        #- NGINX_VERSION=1.30.5
+        - NGINX_VERSION=1.30.5
         - NGX_PHP_VERSION=master
 
 framework:
