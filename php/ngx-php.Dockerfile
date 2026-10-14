@@ -45,12 +45,11 @@ RUN if [ -f php.ini ] ; then \
 COPY --from=composer/composer:latest-bin --link /composer /usr/local/bin/composer
 COPY --from=ghcr.io/php/pie:bin /pie /usr/bin/pie
 
+#default environment variables
+ENV NGINX_VERSION=1.30.5
+ENV NGX_PHP_VERSION=v0.0.30
 {{#environment}}
   ENV {{{.}}}
-{{/environment}}
-{{^environment}}
-  ENV NGINX_VERSION=1.30.5
-  ENV NGX_PHP_VERSION=v0.0.30
 {{/environment}}
 
 {{#before_build}}
