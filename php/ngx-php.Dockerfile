@@ -19,6 +19,7 @@ RUN apt-get -qq update && \
     libxml2-dev \
     systemtap-sdt-dev \
     ca-certificates \
+    software-properties-common \
     zlib1g-dev libpcre2-dev libargon2-dev libsodium-dev libkrb5-dev \
     php-cli php-zip php-dev libphp-embed \
     {{#deps}}{{{.}}} {{/deps}} \
