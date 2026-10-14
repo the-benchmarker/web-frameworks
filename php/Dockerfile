@@ -15,7 +15,7 @@ RUN apt-get -qq update && \
   rm -rf /var/lib/apt/lists/*
 
 # php.ini
-COPY <<'EOT' > /usr/local/etc/php/conf.d/90-php.ini
+COPY <<'EOT' /usr/local/etc/php/conf.d/90-php.ini
 opcache.enable=1
 opcache.enable_cli=1
 opcache.memory_consumption=512
