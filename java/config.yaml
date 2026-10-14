@@ -1,7 +1,7 @@
 language:
-  version: '27.0'
+  version: '27'
   graalvm_java:
-    version: '25.0'
+    version: '25'
   compiler: maven
 
   files:

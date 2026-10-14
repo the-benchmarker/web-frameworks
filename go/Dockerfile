@@ -1,4 +1,9 @@
+{{#language.version}}
+FROM golang:{{{.}}} AS build
+{{/language.version}}
+{{^language.version}}
 FROM golang:1.27 AS build
+{{/language.version}}
 
 WORKDIR /go/src/app
 
@@ -33,11 +38,11 @@ ENV CGO_ENABLED=1 \
   RUN {{{.}}}
 {{/bootstrap}}
 
-RUN --mount=type=cache,id=gomod-1.27,target=/go/pkg/mod \
+RUN --mount=type=cache,id=gomod-{{language.version}},target=/go/pkg/mod \
   go get
 
-RUN --mount=type=cache,id=gomod-1.27,target=/go/pkg/mod \
-  --mount=type=cache,id=gobuild-1.27,target=/root/.cache/go-build \
+RUN --mount=type=cache,id=gomod-{{language.version}},target=/go/pkg/mod \
+  --mount=type=cache,id=gobuild-{{language.version}},target=/root/.cache/go-build \
   go build -trimpath {{#build_tags}} -tags {{{.}}} {{/build_tags}} -o /go/bin/app ./
 
 

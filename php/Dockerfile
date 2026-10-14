@@ -1,4 +1,4 @@
-FROM php:8.5-fpm
+FROM php:{{language.version}}-fpm
 
 RUN apt-get -qq update && \
   apt-get -y install --no-install-recommends \

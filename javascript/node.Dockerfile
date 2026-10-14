@@ -1,5 +1,5 @@
 {{#language.node.version}}
-FROM node:{{{.}}}-slim
+FROM node:{{{.}}}{{#language.node.distribution}}-{{{.}}}{{/language.node.distribution}}-slim
 {{/language.node.version}}
 {{^language.node.version}}
 FROM node:26-slim

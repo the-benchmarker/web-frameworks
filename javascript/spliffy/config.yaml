@@ -1,3 +1,8 @@
+language:
+  node:
+    version: '24'
+    distribution: trixie
+
 framework:
   website: srfnstack.github.io/spliffy/
   github: SRFNStack/spliffy
