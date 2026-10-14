@@ -25,7 +25,7 @@ RUN apt-get -qq update && \
 # php
 RUN apt-get -y install \
     zlib1g-dev libpcre2-dev libargon2-dev libsodium-dev libkrb5-dev \
-    php${PHP_VERSION}-cli php${PHP_VERSION}-dev php${PHP_VERSION}-embed > /dev/null
+    php-cli php-dev libphp-embed > /dev/null
 
 # php.ini
 COPY <<'EOT' /usr/local/etc/php/conf.d/90-php.ini
