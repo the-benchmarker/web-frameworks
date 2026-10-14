@@ -10,8 +10,6 @@ RUN apt-get -qq update && \
   apt-get -y install --no-install-recommends \
     libzip-dev \
     curl \
-    libtool \
-    unzip \
     {{#deps}}{{{.}}} {{/deps}} \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
   rm -rf /var/lib/apt/lists/*
