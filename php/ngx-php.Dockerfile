@@ -18,14 +18,11 @@ RUN apt-get -qq update && \
     git \
     libxml2-dev \
     systemtap-sdt-dev \
+    zlib1g-dev libpcre2-dev libargon2-dev libsodium-dev libkrb5-dev \
+    php-cli php-dev libphp-embed \
     {{#deps}}{{{.}}} {{/deps}} \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
   rm -rf /var/lib/apt/lists/*
-
-# php
-RUN apt-get -y install \
-    zlib1g-dev libpcre2-dev libargon2-dev libsodium-dev libkrb5-dev \
-    php-cli php-dev libphp-embed > /dev/null
 
 # php.ini
 COPY <<'EOT' /usr/local/etc/php/conf.d/90-php.ini
@@ -36,6 +33,7 @@ opcache.interned_strings_buffer=64
 opcache.max_accelerated_sources=32531
 opcache.validate_timestamps=0
 opcache.save_comments=1
+display_startup_errors = Off
 
 opcache.jit=tracing
 opcache.jit_buffer_size=128M
