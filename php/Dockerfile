@@ -25,6 +25,7 @@ opcache.interned_strings_buffer=64
 opcache.max_accelerated_sources=32531
 opcache.validate_timestamps=0
 opcache.save_comments=1
+
 opcache.jit=tracing
 opcache.jit_buffer_size=128M
 EOT
