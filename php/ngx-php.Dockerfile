@@ -19,7 +19,7 @@ RUN apt-get -qq update && \
   rm -rf /var/lib/apt/lists/*
 
 #COPY ../php.ini /usr/local/etc/php/conf.d/99-php.ini;
-COPY <<'EOT' > /usr/local/etc/php/conf.d/90-php.ini
+COPY <<'EOT' /usr/local/etc/php/conf.d/90-php.ini
 opcache.enable=1
 opcache.enable_cli=1
 opcache.memory_consumption=512
@@ -79,7 +79,7 @@ WORKDIR /usr/src/app
   {{/bootstrap}}
 {{/framework.standalone}}
 
-COPY <<'EOT' > /usr/src/nginx.conf
+COPY <<'EOT' /usr/src/nginx.conf
 user www-data;
 worker_cpu_affinity auto;
 worker_processes  auto;
@@ -122,11 +122,11 @@ http {
 EOT
 
 #default values
-COPY <<'EOT' > /usr/src/root.conf
+COPY <<'EOT' /usr/src/root.conf
         root /;
 EOT
 
-COPY <<'EOT' > /usr/src/location.conf
+COPY <<'EOT' /usr/src/location.conf
         location = / {
             content_by_php '
                 echo "";
