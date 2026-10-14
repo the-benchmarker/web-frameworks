@@ -1,0 +1,11 @@
+framework:
+  website: harrisonerd.com/wred
+  version: "0.3"
+  engines:
+    - granian
+
+language:
+  engines:
+    granian:
+      environment:
+        INTERFACE: asginl
