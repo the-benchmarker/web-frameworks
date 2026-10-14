@@ -19,7 +19,7 @@ RUN apt-get -qq update && \
   rm -rf /var/lib/apt/lists/*
 
 #COPY ../php.ini /usr/local/etc/php/conf.d/99-php.ini;
-RUN cat <<'EOT' > /usr/local/etc/php/conf.d/90-php.ini
+COPY <<'EOT' > /usr/local/etc/php/conf.d/90-php.ini
 opcache.enable=1
 opcache.enable_cli=1
 opcache.memory_consumption=512
@@ -33,8 +33,6 @@ EOT
 
 RUN if [ -f php.ini ] ; then \
        cp php.ini /usr/local/etc/php/conf.d/99-php.ini; fi
-
-#WORKDIR /usr/src/app
 
 RUN docker-php-ext-install zip embed dev {{#modules}}{{{.}}} {{/modules}}
 COPY --from=composer/composer:latest-bin --link /composer /usr/local/bin/composer
@@ -81,7 +79,7 @@ WORKDIR /usr/src/app
   {{/bootstrap}}
 {{/framework.standalone}}
 
-RUN cat <<'EOT' > /usr/src/nginx.conf
+COPY <<'EOT' > /usr/src/nginx.conf
 user www-data;
 worker_cpu_affinity auto;
 worker_processes  auto;
@@ -141,7 +139,7 @@ COPY <<'EOT' > /usr/src/location.conf
             ';
         }
 
-        location = /user/ {
+        location /user/ {
             content_by_php '
                 echo explode("/", ngx_request_uri())[2];
             ';
@@ -162,5 +160,5 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
   ENTRYPOINT {{{.}}}
 {{/command}}
 {{^command}}
-  ENTRYPOINT /nginx/sbin/nginx -c /usr/src/nginx.conf
+  ENTRYPOINT ["/nginx/sbin/nginx", "-c", "/usr/src/nginx.conf"]
 {{/command}}
