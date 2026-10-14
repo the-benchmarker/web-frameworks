@@ -1,10 +1,20 @@
 
 {{#language.compiler.gradle}}
-  FROM gradle:9-jdk{{{language.version}}} AS build
+  {{#graalvm}}
+    FROM gradle:9-jdk25 AS build
+  {{/graalvm}}
+  {{^graalvm}}
+    FROM gradle:9-jdk27 AS build
+  {{/graalvm}}
 {{/language.compiler.gradle}}
 
 {{#language.compiler.maven}}
-  FROM maven:3-eclipse-temurin-{{{language.version}}} AS build
+  {{#graalvm}}
+    FROM maven:3-eclipse-temurin-25 AS build
+  {{/graalvm}}
+  {{^graalvm}}
+    FROM maven:3-eclipse-temurin-27 AS build
+  {{/graalvm}}
 {{/language.compiler.maven}}
 
 WORKDIR /usr/src/web
@@ -43,7 +53,7 @@ WORKDIR /usr/src/web
 {{/graalvm}}
 
 {{^graalvm}}
-  FROM eclipse-temurin:{{{language.version}}}-jre
+  FROM eclipse-temurin:27-jre
 
 RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends curl && \

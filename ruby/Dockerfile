@@ -1,4 +1,4 @@
-FROM ruby:{{language.version}}-slim
+FROM ruby:4.0-slim
 
 WORKDIR /usr/src/app
 
@@ -24,7 +24,7 @@ ENV BUNDLE_PATH="/usr/local/bundle" \
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN --mount=type=cache,id=bundler-gems-{{language.version}},target=${BUNDLE_PATH}/cache \
+RUN --mount=type=cache,id=bundler-gems-4.0,target=${BUNDLE_PATH}/cache \
   bundle install
 
 {{#bootstrap}}

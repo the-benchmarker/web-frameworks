@@ -24,6 +24,31 @@ open a pull request.
 
 ## Adding a framework
 
+Pin image and toolchain versions directly in the language Dockerfiles. Store
+language and runtime `version` values in the language `config.yaml` as quoted
+`X.Y` strings, for example `version: '1.20'`. Image patch versions and distribution
+suffixes are omitted from this metadata. Each framework inherits the language's
+shared runtime version. Keep language standards and runtime names in separate
+`standard` and `runtime` fields.
+
+Renovate synchronizes language metadata after updating Dockerfiles and checks
+that build and runtime pins agree before running. In the Renovate container,
+run `ruby .github/scripts/sync-language-versions.rb --check` to verify the pins,
+or omit `--check` to synchronize metadata.
+
+Set `reviewers` as a top-level list of GitHub usernames in
+`<language>/config.yaml` for language defaults or
+`<language>/<framework>/config.yaml` for framework-specific reviewers:
+
+```yaml
+reviewers:
+  - your-github-username
+```
+
+Framework reviewers override language reviewers. Renovate uses `@waghanza`
+when neither config defines reviewers. An empty list disables reviewer requests
+for that language or framework. Reviewer requests also apply to auto-merge PRs.
+
 Define `bootstrap` as a YAML list of shell commands. Dockerfile generation
 concatenates commands from the root config, the language config (for example,
 `javascript/config.yaml`), then the framework config (for example,
