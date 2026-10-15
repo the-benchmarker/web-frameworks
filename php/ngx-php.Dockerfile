@@ -141,21 +141,18 @@ EOT
 COPY <<'EOT' /usr/src/location.conf
         location = / {
             content_by_php '
-                ngx_header_set("Content-Type", "text/html");
                 echo "";
             ';
         }
 
         location = /user {
             content_by_php '
-                ngx_header_set("Content-Type", "text/html");
                 echo "";
             ';
         }
 
         location /user/ {
             content_by_php '
-                ngx_header_set("Content-Type", "text/html");
                 echo explode("/", ngx_request_uri())[2];
             ';
         }
