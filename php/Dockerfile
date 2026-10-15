@@ -166,6 +166,8 @@ EOT
         }
 EOT
 
+  COPY /etc/nginx/fastcgi_params /usr/src/fastcgi_params
+
   {{#docroot}}
     COPY "root {{{.}}};" /usr/src/root.conf
   {{/docroot}}
