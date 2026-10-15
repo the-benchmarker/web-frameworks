@@ -199,7 +199,9 @@ EOT
   {{/docroot}}
   
   {{#nginx_conf}}
-    RUN echo "{{{.}}}" > /usr/src/location.conf
+    COPY <<'EOT' /usr/src/location.conf
+{{{.}}}
+EOT
   {{/nginx_conf}}
 
   ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -c /usr/src/nginx.conf
