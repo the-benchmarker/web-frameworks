@@ -4,9 +4,9 @@ require 'net/http'
 
 require_relative 'spec_helper'
 
-RSpec.describe 'routes' do
+RSpec.describe 'routes', :http do
   context 'GET : /' do
-    subject(:response) { http.request(Net::HTTP::Get.new('/')) }
+    subject(:response) { perform_request(Net::HTTP::Get.new('/')) }
 
     it 'returns successfully' do
       expect(response).to be_a(Net::HTTPSuccess)
@@ -18,7 +18,7 @@ RSpec.describe 'routes' do
   end
 
   context 'GET : /user/0' do
-    subject(:response) { http.request(Net::HTTP::Get.new('/user/0')) }
+    subject(:response) { perform_request(Net::HTTP::Get.new('/user/0')) }
 
     it 'returns successfully' do
       expect(response).to be_a(Net::HTTPSuccess)
@@ -34,7 +34,7 @@ RSpec.describe 'routes' do
 
     before { request['Content-Type'] = 'text/plain' }
 
-    subject(:response) { http.request(request) }
+    subject(:response) { perform_request(request) }
 
     it 'returns successfully' do
       expect(response).to be_a(Net::HTTPSuccess)
