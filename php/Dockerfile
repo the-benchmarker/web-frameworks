@@ -195,11 +195,11 @@ fastcgi_param  REDIRECT_STATUS    200;
 EOT
 
   {{#docroot}}
-    RUN echo "root {{{.}}};" >> /usr/src/root.conf
+    RUN echo "root {{{.}}};" > /usr/src/root.conf
   {{/docroot}}
   
   {{#nginx_conf}}
-    RUN echo "{{{.}}}" >> /usr/src/location.conf
+    RUN echo "{{{.}}}" > /usr/src/location.conf
   {{/nginx_conf}}
 
   ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -c /usr/src/nginx.conf
