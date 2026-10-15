@@ -192,7 +192,7 @@ def commands_for(language, framework, variant, provider = 'docker')
       # time (latency_rate.rb), so it always sits where LATENCY_RATE asked.
       latency_output = File.join(results_dir, "#{uri.tr('/', '_')}_latency.json")
       rate = "`ruby #{latency_probe} --closed #{output} --spec #{latency_rate}`"
-      zrk_cmds << "#{taskset}zrk --plain -t #{threads} -c #{concurrency} -R #{rate} -d #{duration} -m #{method} --timeout 8s --format json --output #{latency_output} http://`cat #{hostname}`:3000#{uri}"
+      zrk_cmds << "#{taskset}zrk --plain -t #{threads} -c #{concurrency} -R #{rate} -d #{duration} -m #{method} --timeout 8s --format json --output #{latency_output} -H 'Accept-Encoding:identity http://`cat #{hostname}`:3000#{uri}"
     end
 
     # Bracket the run with the measurement-validity probe: two reads of the
