@@ -174,5 +174,5 @@ EOT
        COPY {{{.}}} /usr/src/location.conf
   {{/nginx_conf}}
 
-  ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; -c /usr/src/nginx.conf
+  ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -c /usr/src/nginx.conf
 {{/command}}
