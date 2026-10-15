@@ -1,3 +1,6 @@
 framework:
   website: slimframework.com
   version: 4.15
+
+  bootstrap:
+    - cat /etc/nginx/*
