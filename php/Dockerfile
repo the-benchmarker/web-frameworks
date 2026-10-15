@@ -136,7 +136,7 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
       fastcgi_socket_keepalive on;
 
       upstream fastcgi_backend {
-          server unix:/var/run/php/php-fpm.sock;
+          server unix:/var/run/php-fpm.sock;
           keepalive 36;
       }
 
@@ -144,19 +144,10 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
           listen       3000 reuseport;
           server_name  localhost;
 
-          root /kumbiaphp/bench/public/;
+          include /usr/src/root.conf;
           index  index.php;
 
-          location / {
-              fastcgi_pass   fastcgi_backend;
-              fastcgi_param  SCRIPT_FILENAME    $document_root/index.php;
-              fastcgi_param  PATH_INFO          $uri;
-              fastcgi_param  QUERY_STRING       $query_string;
-              fastcgi_param  REQUEST_METHOD     $request_method;
-              fastcgi_param  CONTENT_TYPE       $content_type;
-              fastcgi_param  CONTENT_LENGTH     $content_length;
-              #include        /etc/nginx/fastcgi_params;
-          }
+          include /usr/src/location.conf;
       }
   }
 EOT
@@ -168,8 +159,8 @@ EOT
 
   COPY <<'EOT' /usr/src/location.conf
         location / {
-          try_files $uri $uri/ /index.php;
-          fastcgi_pass unix:/var/run/php-fpm.sock;
+          fastcgi_pass   fastcgi_backend;
+          fastcgi_index  index.php;
           fastcgi_param  SCRIPT_FILENAME   $document_root/index.php;
           include fastcgi_params;
         }
