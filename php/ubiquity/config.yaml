@@ -16,11 +16,11 @@ framework:
 
   nginx_conf:
     - |
-      location /{
-          rewrite ^/(.*)$ /index.php?c=$1 last;
-      }
-      location = /index.php {
-        fastcgi_pass unix:/var/run/php-fpm.sock;
-        fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;
-        include fastcgi_params;
-      }
+      location /{\n\
+          rewrite ^/(.*)$ /index.php?c=$1 last;\n\
+      }\n\
+      location = /index.php {\n\
+        fastcgi_pass unix:/var/run/php-fpm.sock;\n\
+        fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
+        include fastcgi_params;\n\
+      }\n\

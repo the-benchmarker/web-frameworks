@@ -10,7 +10,6 @@ framework:
       location /{\n\
           rewrite ^/(.*)$ /index.php?_url=/$1 last;\n\
       }\n\
-    - |
       location = /index.php {\n\
         fastcgi_pass unix:/var/run/php-fpm.sock;\n\
         fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
