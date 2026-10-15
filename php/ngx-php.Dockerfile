@@ -140,7 +140,7 @@ EOT
 
 COPY <<'EOT' /usr/src/location.conf
         location = / {
-            
+            content_by_php '';
         }
 
         location = /user {
