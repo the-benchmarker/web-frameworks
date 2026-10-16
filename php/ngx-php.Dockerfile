@@ -155,11 +155,13 @@ COPY <<'EOT' /usr/src/location.conf
 EOT
 
 {{#docroot}}
-    COPY "root {{{.}}};" /usr/src/root.conf
+    RUN echo "root {{{.}}};" > /usr/src/root.conf
 {{/docroot}}
 
 {{#nginx_conf}}
-       COPY {{{.}}} /usr/src/location.conf
+    COPY <<'EOT' /usr/src/location.conf
+{{{.}}}
+EOT
 {{/nginx_conf}}
 
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
