@@ -9,3 +9,6 @@
 #create:
 #  path: /user
 #  controller: App\Controller\ApplicationController::create
+
+controllers:
+    resource: routing.controllers
