@@ -7,10 +7,6 @@ MAX_ATTEMPTS=${MAX_ATTEMPTS:-2}
 COMMAND_TIMEOUT_SECONDS=${COMMAND_TIMEOUT_SECONDS:-2700}
 RETRY_DELAY_SECONDS=${RETRY_DELAY_SECONDS:-15}
 
-REPOSITORY_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
-source "${REPOSITORY_ROOT}/.tasks/framework_runtime.sh"
-lock_framework_port
-
 IP_FILE="${DIRECTORY}/ip-${ENGINE}.txt"
 CID_FILE="${DIRECTORY}/cid-${ENGINE}.txt"
 
@@ -30,6 +26,25 @@ run_with_timeout() {
   return "${status}"
 }
 
+wait_for_framework() {
+  local ip waited=0 max_wait=120
+
+  ip=$(tr -d '[:space:]' < "${IP_FILE}")
+  echo "Waiting for http://${ip}:3000/ to respond (timeout ${max_wait}s)..."
+
+  until curl -s -f "http://${ip}:3000/" > /dev/null; do
+    sleep 1
+    waited=$((waited + 1))
+
+    if [ "${waited}" -ge "${max_wait}" ]; then
+      echo "Container did not become ready in ${max_wait} seconds!"
+      echo "---- Container logs ----"
+      docker logs "$(tr -d '[:space:]' < "${CID_FILE}")" || true
+      return 1
+    fi
+  done
+}
+
 run_once() (
   set -euo pipefail
 
@@ -41,7 +56,7 @@ run_once() (
   trap cleanup EXIT
 
   run_with_timeout "${COMMAND_TIMEOUT_SECONDS}" make -f "${DIRECTORY}/.Makefile" "build.${ENGINE}"
-  wait_for_framework "${CID_FILE}" "${IP_FILE}"
+  wait_for_framework
   run_with_timeout "${COMMAND_TIMEOUT_SECONDS}" bundle exec rspec .spec
 )
 
