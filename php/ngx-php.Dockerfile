@@ -140,17 +140,17 @@ EOT
 
 COPY <<'EOT' /usr/src/location.conf
         location = / {
-            content_by_php '';
+            content_by_php_block {}
         }
 
         location = /user {
-            content_by_php '';
+            content_by_php_block {}
         }
 
         location /user/ {
-            content_by_php '
+            content_by_php_block {
                 echo explode("/", ngx_request_uri())[2];
-            ';
+            }
         }
 EOT
 
