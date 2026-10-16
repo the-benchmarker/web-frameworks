@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 {{#language.version}}
   FROM php:{{{.}}}-fpm{{#language.dist}}-{{{.}}}{{/language.dist}}
 {{/language.version}}
@@ -9,29 +10,30 @@ RUN apt-get -qq update && \
   apt-get -y install --no-install-recommends \
     libzip-dev \
     curl \
-    libtool \
-    unzip \
     {{#deps}}{{{.}}} {{/deps}} \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
   rm -rf /var/lib/apt/lists/*
 
-#COPY ../php.ini /usr/local/etc/php/conf.d/99-php.ini;
-RUN echo 'opcache.enable=1\n\
-opcache.enable_cli=1\n\
-opcache.memory_consumption=512\n\
-opcache.interned_strings_buffer=64\n\
-opcache.max_accelerated_sources=32531\n\
-opcache.validate_timestamps=0\n\
-opcache.save_comments=1\n\
-opcache.jit=tracing\n\
-opcache.jit_buffer_size=128M\n'\
-  >> /usr/local/etc/php/conf.d/90-php.ini
+# php.ini
+COPY <<'EOT' /usr/local/etc/php/conf.d/90-php.ini
+opcache.enable=1
+opcache.enable_cli=1
+opcache.memory_consumption=512
+opcache.interned_strings_buffer=64
+opcache.max_accelerated_sources=32531
+opcache.validate_timestamps=0
+opcache.save_comments=1
+
+opcache.jit=tracing
+opcache.jit_buffer_size=128M
+EOT
+
 RUN if [ -f php.ini ] ; then \
        cp php.ini /usr/local/etc/php/conf.d/99-php.ini; fi
 
 WORKDIR /usr/src/app
 
-RUN docker-php-ext-install zip {{#modules}}{{{.}}} {{/modules}}
+RUN docker-php-ext-install -j$(nproc) zip {{#modules}}{{{.}}} {{/modules}}
 COPY --from=composer/composer:latest-bin --link /composer /usr/local/bin/composer
 COPY --from=ghcr.io/php/pie:bin /pie /usr/bin/pie
 
