@@ -73,7 +73,8 @@ RUN wget -q http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && \
             --with-ld-opt="-Wl,-rpath,$PHP_LIB" \
             --add-module=/ngx-php/third_party/ngx_devel_kit \
             --add-module=/ngx-php > /dev/null && \
-    make > /dev/null && make install > /dev/null
+            --with-cc-opt="-O3 -march=native -DNDEBUG" && \
+    make -j$(nproc) > /dev/null && make install > /dev/null
 
 {{#extensions}}
   RUN pie install --no-cache {{{.}}}
