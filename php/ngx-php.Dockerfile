@@ -71,7 +71,7 @@ RUN wget -q http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && \
     ./configure --user=www --group=www \
             --prefix=/nginx \
             --with-cc-opt="-O3 -march=native -DNDEBUG" \
-            --with-ld-opt="-Wl,-rpath,$PHP_LIB" \
+            --with-ld-opt="-Wl,-z,relro,-rpath,$PHP_LIB" \
             --add-module=/ngx-php/third_party/ngx_devel_kit \
             --add-module=/ngx-php > /dev/null && \
     make -j$(nproc) > /dev/null && make install > /dev/null
