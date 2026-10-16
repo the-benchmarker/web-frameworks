@@ -6,7 +6,4 @@ requires = ["flit_core"]
 name = "server"
 version = "1.0.0"
 description = "the-benchmarker entry for mq-bridge-py"
-# mq-bridge-py itself is built and installed from git by the config.yaml
-# bootstrap steps (it is not published on PyPI), so it is intentionally not
-# listed here.
-dependencies = []
+dependencies = ['mq-bridge>=0.4.0,<0.5.0']

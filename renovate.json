@@ -3,18 +3,16 @@
   "extends": ["config:recommended", ":preserveSemverRanges"],
   "separateMultipleMajor": true,
   "reviewers": ["waghanza"],
-  "assignAutomerge": true,
-  "automerge": true,
-  "automergeType": "pr",
-  "platformAutomerge": false,
+  "postUpgradeTasks": {
+    "commands": [
+      "ruby .github/scripts/update-renovate-config-version.rb",
+      "ruby .github/scripts/sync-language-versions.rb"
+    ],
+    "dataFileTemplate": "{{{toJSON upgrades}}}",
+    "executionMode": "branch",
+    "fileFilters": ["**/config.yaml"]
+  },
   "customManagers": [
-    {
-      "customType": "regex",
-      "managerFilePatterns": ["/config\\.yaml$/"],
-      "matchStrings": [
-        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+version: (?<currentValue>\\S+)"
-      ]
-    },
     {
       "customType": "regex",
       "description": "Update GitHub-hosted Crystal shards",

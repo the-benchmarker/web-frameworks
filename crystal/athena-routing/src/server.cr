@@ -1,3 +1,4 @@
+require "http/server"
 require "athena-routing"
 
 handler = ART::RoutingHandler.new

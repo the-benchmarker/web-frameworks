@@ -1,19 +1,23 @@
-{{#language.version}}
-  FROM swift:{{{.}}} AS build
-{{/language.version}}
-{{^language.version}}
-  FROM swift:6.3 AS build
-{{/language.version}}
+FROM swift:6.3 AS build
 
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update && \
-  apt-get -qy install libssl-dev zlib1g-dev libcurl4-openssl-dev uuid-dev && \
+  apt-get -qy install libssl-dev zlib1g-dev libcurl4-openssl-dev uuid-dev {{#patches.length}}patch{{/patches.length}} && \
   rm -rf /var/lib/apt/lists/*
 
 COPY Package.swift ./
 
+{{#dependency_lockfile}}
+COPY '{{.}}' ./Package.resolved
+{{/dependency_lockfile}}
+
 RUN swift package resolve
+
+{{#patches}}
+COPY '{{.}}' '/tmp/{{.}}'
+RUN chmod -R u+w .build/checkouts && patch --batch --forward -p1 < '/tmp/{{.}}'
+{{/patches}}
 
 COPY Sources/ ./Sources/
 
@@ -25,12 +29,7 @@ RUN swift build -c release -Xswiftc -enforce-exclusivity=unchecked
 
 
 
-{{#language.version}}
-  FROM swift:{{{.}}}-slim
-{{/language.version}}
-{{^language.version}}
-  FROM swift:6.3-slim
-{{/language.version}}
+FROM swift:6.3-slim
 
 WORKDIR /app
 

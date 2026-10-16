@@ -1,4 +1,4 @@
-FROM python:{{language.version}}-slim
+FROM python:3.14-slim
 
 WORKDIR /usr/src/app
 
@@ -15,7 +15,7 @@ RUN apt-get -qq update && \
   COPY {{source}} {{target}}
 {{/files}}
 
-RUN --mount=type=cache,id=pip-cache-{{language.version}},target=/root/.cache/pip \
+RUN --mount=type=cache,id=pip-cache-3.14,target=/root/.cache/pip \
   pip install .
 
 {{#bootstrap}}

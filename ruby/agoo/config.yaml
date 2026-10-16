@@ -2,6 +2,9 @@ framework:
   github: ohler55/agoo
   version: 2.15
 
+  bootstrap:
+    - bundle exec ruby patch_agoo.rb
+
   engines:
     - agoo
 

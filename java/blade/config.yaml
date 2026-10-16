@@ -1,3 +1,6 @@
+language:
+  version: "11"
+
 framework:
   website: lets-blade.github.io
   github: lets-blade/blade
@@ -14,6 +17,3 @@ framework:
   # Blade requires Java 11.
   engines:
     - default
-
-language:
-  version: 11

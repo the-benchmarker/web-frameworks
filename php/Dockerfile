@@ -1,21 +1,34 @@
-{{#language.version}}
-  FROM php:{{{.}}}-fpm{{#language.dist}}-{{{.}}}{{/language.dist}}
-{{/language.version}}
-{{^language.version}}
-  FROM php:8.5-fpm
-{{/language.version}}
+FROM php:{{language.version}}-fpm
 
 RUN apt-get -qq update && \
   apt-get -y install --no-install-recommends \
     libzip-dev \
     curl \
+    libtool \
+    unzip \
     {{#deps}}{{{.}}} {{/deps}} \
     {{#build_deps}}{{{.}}} {{/build_deps}} && \
   rm -rf /var/lib/apt/lists/*
 
+#COPY ../php.ini /usr/local/etc/php/conf.d/99-php.ini;
+RUN echo 'opcache.enable=1\n\
+opcache.enable_cli=1\n\
+opcache.memory_consumption=512\n\
+opcache.interned_strings_buffer=64\n\
+opcache.max_accelerated_sources=32531\n\
+opcache.validate_timestamps=0\n\
+opcache.save_comments=1\n\
+opcache.jit=tracing\n\
+opcache.jit_buffer_size=128M\n'\
+  >> /usr/local/etc/php/conf.d/90-php.ini
+RUN if [ -f php.ini ] ; then \
+       cp php.ini /usr/local/etc/php/conf.d/99-php.ini; fi
+
 WORKDIR /usr/src/app
 
 RUN docker-php-ext-install zip {{#modules}}{{{.}}} {{/modules}}
+COPY --from=composer/composer:2.9.5-bin --link /composer /usr/local/bin/composer
+COPY --from=ghcr.io/php/pie:bin@sha256:a254c78b51ca34daef0541fa1cf0147385c93ba5ca799868392275d947f00fe7 /pie /usr/bin/pie
 
 {{#environment}}
   ENV {{{.}}}
@@ -29,7 +42,7 @@ RUN docker-php-ext-install zip {{#modules}}{{{.}}} {{/modules}}
   RUN pie install --no-cache {{{.}}}
 {{/extensions}}
 
-ENV EVENT_EXT_FILE /usr/local/etc/php/conf.d/docker-php-ext-event.ini
+ENV EVENT_EXT_FILE=/usr/local/etc/php/conf.d/docker-php-ext-event.ini
 RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
   rm -fr /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini ; \
   sed -i -e '1i extension=sockets.so' /usr/local/etc/php/conf.d/docker-php-ext-event.ini ; fi
@@ -89,16 +102,6 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
       {{/nginx_conf}}
   }\n'\
   > /etc/nginx/conf.d/server.conf
-
-  RUN echo 'opcache.enable=1\n\
-  opcache.enable_cli=1\n\
-  opcache.memory_consumption=512\n\
-  opcache.interned_strings_buffer=64\n\
-  opcache.max_accelerated_sources=32531\n\
-  opcache.validate_timestamps=0\n\
-  opcache.save_comments=1\n\
-  opcache.fast_shutdown=0\n'\
-  >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
   ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -g "daemon off;"
 {{/command}}

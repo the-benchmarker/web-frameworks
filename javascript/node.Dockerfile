@@ -1,4 +1,10 @@
-FROM node:{{language.node.version}}
+{{#language.node.version}}
+FROM node:{{{.}}}{{#language.node.distribution}}-{{{.}}}{{/language.node.distribution}}-slim
+{{/language.node.version}}
+{{^language.node.version}}
+FROM node:26-slim
+{{/language.node.version}}
+
 
 WORKDIR /usr/src/app
 
