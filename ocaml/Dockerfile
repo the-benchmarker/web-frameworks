@@ -16,6 +16,9 @@ RUN apt-get -qq update && \
 
 USER opam
 
+# The image's default repository is a bundled, outdated local Git snapshot.
+RUN opam repository set-url default https://opam.ocaml.org && opam update
+
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
