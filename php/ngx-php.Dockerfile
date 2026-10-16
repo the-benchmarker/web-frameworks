@@ -70,7 +70,7 @@ RUN wget -q http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && \
     export PHP_LIB=/usr/lib && \
     ./configure --user=www --group=www \
             --prefix=/nginx \
-            --with-cc-opt="-O3 -march=native -DNDEBUG" \
+            --with-cc-opt="-O2 -march=native -DNDEBUG" \
             --with-ld-opt="-Wl,-z,relro,-rpath,$PHP_LIB" \
             --add-module=/ngx-php/third_party/ngx_devel_kit \
             --add-module=/ngx-php > /dev/null && \
