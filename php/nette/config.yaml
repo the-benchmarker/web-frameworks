@@ -8,3 +8,12 @@ framework:
   bootstrap:
     - mkdir -p temp/cache
     - chmod 777 -R temp
+
+  nginx_conf:
+    - |
+      location / {
+          try_files $uri $uri/ /index.php;
+          fastcgi_pass unix:/var/run/php-fpm.sock;
+          fastcgi_param   SCRIPT_FILENAME     $document_root/index.php;
+          include fastcgi_params;
+      }

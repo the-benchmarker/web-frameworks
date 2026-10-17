@@ -6,7 +6,7 @@ require_relative 'spec_helper'
 
 RSpec.describe 'routes', :http do
   context 'GET : /' do
-    subject(:response) { perform_request(Net::HTTP::Get.new('/')) }
+    subject(:response) { http.request(Net::HTTP::Get.new('/', 'Accept-Encoding' => 'identity')) }
 
     it 'returns successfully' do
       expect(response).to be_a(Net::HTTPSuccess)
@@ -18,7 +18,8 @@ RSpec.describe 'routes', :http do
   end
 
   context 'GET : /user/0' do
-    subject(:response) { perform_request(Net::HTTP::Get.new('/user/0')) }
+    subject(:response) { http.request(Net::HTTP::Get.new('/user/0', 'Accept-Encoding' => 'identity')) }
+
 
     it 'returns successfully' do
       expect(response).to be_a(Net::HTTPSuccess)
@@ -30,7 +31,7 @@ RSpec.describe 'routes', :http do
   end
 
   context 'POST : /user' do
-    let!(:request) { Net::HTTP::Post.new('/user') }
+    let!(:request) { Net::HTTP::Post.new('/user', 'Accept-Encoding' => 'identity') }
 
     before { request['Content-Type'] = 'text/plain' }
 
