@@ -29,6 +29,19 @@ RSpec.describe 'routes' do
     end
   end
 
+  # Check cached responses
+  context 'GET : /user/22' do
+    subject(:response) { http.request(Net::HTTP::Get.new('/user/22', 'Accept-Encoding' => 'identity')) }
+
+    it 'returns successfully' do
+      expect(response).to be_a(Net::HTTPSuccess)
+    end
+
+    it 'returns the expected param' do
+      expect(response.body.to_s).to eq('22')
+    end
+  end
+
   context 'POST : /user' do
     let!(:request) { Net::HTTP::Post.new('/user', 'Accept-Encoding' => 'identity') }
 
