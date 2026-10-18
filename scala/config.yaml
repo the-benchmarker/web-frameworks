@@ -1,8 +1,12 @@
+reviewers:
+  - whiplash
 language:
-  version: 3.9
+  version: '3.10'
+  sbt:
+    version: '1.13'
 
   java:
-    version: 26
+    version: '25.0'
 
   files:
     - "**/*.gradle"

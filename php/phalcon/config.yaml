@@ -1,18 +1,20 @@
+reviewers:
+  - ruudboon
+
 framework:
   website: phalcon.io
-  version: 5.22
+  version: 5.23
 
   extensions:
     - phalcon/cphalcon
 
   nginx_conf:
     - |
-      location /{\n\
-          rewrite ^/(.*)$ /index.php?_url=$1 last;\n\
-      }\n\
-    - |
-      location = /index.php {\n\
-        fastcgi_pass unix:/var/run/php-fpm.sock;\n\
-        fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
-        include fastcgi_params;\n\
-      }\n\
+      location /{
+          rewrite ^/(.*)$ /index.php?_url=$1 last;
+      }
+      location = /index.php {
+        fastcgi_pass unix:/var/run/php-fpm.sock;
+        fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;
+        include fastcgi_params;
+      }

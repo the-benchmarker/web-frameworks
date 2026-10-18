@@ -7,10 +7,18 @@ framework:
     - main/config.yaml
 
   bootstrap:
-    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - composer install --no-dev --prefer-dist --classmap-authoritative
     - composer dumpautoload -o
     - mkdir -p var/cache && chown www-data var/cache
     - mkdir -p var/gate && chown www-data var/gate
     - chown www-data public
     - php vendor/bin/sky warm # generate cache before start
+
+  nginx_conf:
+    - |
+      location / {
+          try_files $uri $uri/ /index.php;
+          fastcgi_pass unix:/var/run/php-fpm.sock;
+          fastcgi_param   SCRIPT_FILENAME     $document_root/index.php;
+          include fastcgi_params;
+      }

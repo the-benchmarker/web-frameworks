@@ -1,8 +1,8 @@
 language:
-  version: 1.12
+  version: '1.12'
 
   java:
-    version: 26
+    version: '26.0'
 
   files:
     - "**/*.clj"

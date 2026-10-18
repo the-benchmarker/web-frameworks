@@ -1,5 +1,8 @@
+reviewers:
+  - an-tao
+
 language:
-  version: 14/17
+  standard: 14/17
   engines:
     default:
       command: /opt/web/build/drogon_benchmark /opt/web/config.json
@@ -26,7 +29,7 @@ framework:
     - build/drogon_benchmark
 
   download:
-    - git clone --branch v1.9.13 https://github.com/drogonframework/drogon
+    - git clone --branch v1.9.14 https://github.com/drogonframework/drogon
     - cd drogon && git submodule update --init
 
   build:
