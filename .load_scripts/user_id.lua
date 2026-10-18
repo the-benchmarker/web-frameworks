@@ -1,4 +1,4 @@
--- user_id.lua: a different id on every request, fixed width (7 digits)
+-- user_id.lua: a different id on every request, fixed width (8 digits)
 local threads = 0
 function setup(thread)
   threads = threads + 1
