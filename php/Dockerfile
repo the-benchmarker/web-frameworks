@@ -32,15 +32,9 @@ RUN if [ -f php.ini ] ; then \
 
 WORKDIR /usr/src/app
 
-<<<<<<< HEAD
-RUN docker-php-ext-install zip {{#modules}}{{{.}}} {{/modules}}
-COPY --from=composer/composer:2.9.5-bin --link /composer /usr/local/bin/composer
-COPY --from=ghcr.io/php/pie:bin@sha256:a254c78b51ca34daef0541fa1cf0147385c93ba5ca799868392275d947f00fe7 /pie /usr/bin/pie
-=======
 RUN docker-php-ext-install -j$(nproc) zip {{#modules}}{{{.}}} {{/modules}}
 COPY --from=composer/composer:latest-bin --link /composer /usr/local/bin/composer
 COPY --from=ghcr.io/php/pie:bin /pie /usr/bin/pie
->>>>>>> origin/develop
 
 {{#environment}}
   ENV {{{.}}}
