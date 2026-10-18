@@ -4,9 +4,3 @@ reviewers:
 framework:
   github: fastsitephp/fastsitephp
   version: 1.5
-
-  build_deps:
-    - patch
-
-  patches:
-    - php85.patch

@@ -1,7 +1,3 @@
 framework:
   website: kitura.dev
   version: 3.0
-
-  dependency_lockfile: Package.resolved
-  patches:
-    - swift6-linux.patch

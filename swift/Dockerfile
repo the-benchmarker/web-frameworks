@@ -3,21 +3,12 @@ FROM swift:6.3 AS build
 WORKDIR /usr/src/app
 
 RUN apt-get -qq update && \
-  apt-get -qy install libssl-dev zlib1g-dev libcurl4-openssl-dev uuid-dev {{#patches.length}}patch{{/patches.length}} && \
+  apt-get -qy install libssl-dev zlib1g-dev libcurl4-openssl-dev uuid-dev && \
   rm -rf /var/lib/apt/lists/*
 
 COPY Package.swift ./
 
-{{#dependency_lockfile}}
-COPY '{{.}}' ./Package.resolved
-{{/dependency_lockfile}}
-
 RUN swift package resolve
-
-{{#patches}}
-COPY '{{.}}' '/tmp/{{.}}'
-RUN chmod -R u+w .build/checkouts && patch --batch --forward -p1 < '/tmp/{{.}}'
-{{/patches}}
 
 COPY Sources/ ./Sources/
 

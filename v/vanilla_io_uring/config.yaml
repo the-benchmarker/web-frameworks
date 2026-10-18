@@ -2,18 +2,6 @@ framework:
   github: vlang/v
   version: 1822cbb4b5316f433df4805bb68560fadd4df385
 
-  docker_run_args:
-    - --security-opt
-    - seccomp=v/vanilla_io_uring/seccomp.json
-    - --ulimit
-    - memlock=-1:-1
-
-  files:
-    - reuseaddr.patch
-
-  bootstrap:
-    - patch --batch --forward --directory="$HOME/.vmodules/vanilla" -p1 < reuseaddr.patch
-
   # Install as the `vanilla` module (import vanilla.http_server). `v install <url>`
   # now namespaces by owner (~/.vmodules/enghitalo/vanilla), so clone to the
   # expected path instead.

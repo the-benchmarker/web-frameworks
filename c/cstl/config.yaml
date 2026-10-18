@@ -1,14 +1,14 @@
 framework:
   github: facil-io/cstl
   website: facil.io
-  version: latest
+  version: 0.8
 
   build_deps:
     - ca-certificates
 
   # Follow the moving latest stable release tag; do not vendor fio-stl.h.
   download:
-    - wget -q https://codeload.github.com/facil-io/cstl/tar.gz/refs/tags/latest -O cstl.tar.gz
+    - wget -q https://codeload.github.com/facil-io/cstl/tar.gz/refs/tags/0.8.1 -O cstl.tar.gz
     - mkdir cstl && tar xzf cstl.tar.gz -C cstl --strip-components=1
 
   build:

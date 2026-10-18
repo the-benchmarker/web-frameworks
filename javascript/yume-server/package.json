@@ -1,10 +1,5 @@
 {
   "dependencies": {
     "yume-server": "~0.0.7"
-  },
-  "overrides": {
-    "yume-server": {
-      "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.71.0"
-    }
   }
 }
