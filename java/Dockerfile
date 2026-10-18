@@ -1,10 +1,20 @@
 
 {{#language.compiler.gradle}}
-  FROM gradle:9-jdk{{{language.version}}} AS build
+  {{#graalvm}}
+    FROM gradle:9-jdk{{language.graalvm_java.version}} AS build
+  {{/graalvm}}
+  {{^graalvm}}
+    FROM gradle:9-jdk{{language.version}} AS build
+  {{/graalvm}}
 {{/language.compiler.gradle}}
 
 {{#language.compiler.maven}}
-  FROM maven:3-eclipse-temurin-{{{language.version}}} AS build
+  {{#graalvm}}
+    FROM maven:3-eclipse-temurin-{{language.graalvm_java.version}} AS build
+  {{/graalvm}}
+  {{^graalvm}}
+    FROM maven:3-eclipse-temurin-{{language.version}} AS build
+  {{/graalvm}}
 {{/language.compiler.maven}}
 
 WORKDIR /usr/src/web
@@ -38,12 +48,12 @@ WORKDIR /usr/src/web
 
 
 {{#graalvm}}
-  FROM ghcr.io/graalvm/jdk-community:25
+  FROM ghcr.io/graalvm/jdk-community:{{language.graalvm_java.version}}
   RUN microdnf install -y curl tar && microdnf clean all
 {{/graalvm}}
 
 {{^graalvm}}
-  FROM eclipse-temurin:{{{language.version}}}-jre
+  FROM eclipse-temurin:{{language.version}}-jre
 
 RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends curl && \

@@ -28,7 +28,7 @@ Every implementation is expected to listen on port `3000` and provide the same r
 | `GET` | `/user/:id` | `2xx` | The `id` path parameter |
 | `POST` | `/user` | `2xx` | Empty |
 
-Before an implementation is benchmarked, the shared [RSpec contract](.spec/route_spec.rb) verifies these routes. The default generated benchmark runs `GET /` for 15 seconds, disables keep-alive, applies latency correction, and records an `oha` JSON report. Concurrency and routes are configurable.
+Before an implementation is benchmarked, the shared [RSpec contract](.spec/route_spec.rb) verifies these routes. The default generated benchmark runs `GET /` for 15 seconds using `zrk --closed` and keep-alive, and records a JSON report. Concurrency and routes are configurable.
 
 Collected fields include requests per second, total data received, run duration, and the p50, p75, p90, and p99 latency percentiles. Benchmark configuration is generated from three YAML layers:
 
@@ -67,7 +67,7 @@ The project is evolving from a focused HTTP performance benchmark into a broader
 
 - Git
 - Docker
-- Ruby and Bundler (CI currently uses Ruby 4)
+- Ruby and Bundler (CI uses Ruby 4)
 - [`zrk`](https://github.com/zoxy-io/zrk) on `PATH`
 - `jq`
 
@@ -78,6 +78,13 @@ git clone https://github.com/the-benchmarker/web-frameworks.git
 cd web-frameworks
 bundle install
 bundle exec rake config
+```
+
+Run the helper tests and check language version metadata with:
+
+```bash
+bundle exec rspec .spec/helpers_spec.rb
+ruby .github/scripts/sync-language-versions.rb --check
 ```
 
 Then choose an implementation—for example, `javascript/fastify`—and use its generated Makefile:
@@ -162,9 +169,13 @@ dedicated bot account's token (not `@waghanza`); a classic PAT needs `repo` and
 The workflow can also be started from the Actions tab. Renovate scans every
 supported manifest in the repository, including npm, Cargo, Composer, Bundler,
 Go, Maven, Gradle, Python, Dart, Swift, and Mix files. A custom rule covers
-GitHub-hosted Crystal shards. Renovate opens PRs,
-requests `@waghanza` as a reviewer, and merges PRs after checks pass and any
-required review is approved. Framework `config.yaml` versions annotated with a
+GitHub-hosted Crystal shards. Renovate opens PRs and requests reviewers listed
+in the language or framework `config.yaml`, falling back to `@waghanza` when
+neither config lists reviewers. Framework reviewers override language reviewers.
+The action enables GitHub auto-merge; enable **Allow auto-merge** in the repository
+settings and configure required status checks and reviews in branch protection.
+GitHub merges each PR when those requirements are met.
+Framework `config.yaml` versions annotated with a
 `renovate:` comment are updated alongside their dependency manifests.
 DUB, Nimble, and Julia package manifests still need manual updates because
 Renovate has no built-in manager for those formats.

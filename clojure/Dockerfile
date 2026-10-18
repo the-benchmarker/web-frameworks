@@ -1,19 +1,9 @@
 {{#language.compiler.lein}}
-  {{#language.java.version}}
-    FROM clojure:temurin-{{{.}}}-lein-trixie-slim AS build
-  {{/language.java.version}}
-  {{^language.java.version}}
-    FROM clojure:temurin-26-lein-trixie-slim AS build
-  {{/language.java.version}}
+  FROM clojure:temurin-26-lein-trixie-slim AS build
 {{/language.compiler.lein}}
 
 {{^language.compiler.lein}}
-  {{#language.java.version}}
-    FROM clojure:temurin-{{{.}}}-tools-deps-trixie-slim AS build
-  {{/language.java.version}}
-  {{^language.java.version}}
-    FROM clojure:temurin-26-tools-deps-trixie-slim AS build
-  {{/language.java.version}}
+  FROM clojure:temurin-26-tools-deps-trixie-slim AS build
 {{/language.compiler.lein}}
 
 WORKDIR /usr/src/app
@@ -31,13 +21,7 @@ WORKDIR /usr/src/app
 {{/build}}
 
 
-{{#language.java.version}}
-  FROM eclipse-temurin:{{{.}}}-jre
-{{/language.java.version}}
-
-{{^language.java.version}}
-  FROM eclipse-temurin:26-jre
-{{/language.java.version}}
+FROM eclipse-temurin:26-jre
 
 RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends curl && \

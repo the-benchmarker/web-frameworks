@@ -1,6 +1,6 @@
 framework:
   website: www.gnu.org/software/guile
-  version: 3.0
+  version: '3.0'
   engines:
     - default
   files:
@@ -12,6 +12,7 @@ framework:
   bootstrap:
     - guild compile -O3 server.scm -o server.go
 language:
+  version: '3.0'
   engines:
     default:
       command: guile -L . -e "($GUILE_APP)" -c '' $@

@@ -1,6 +1,7 @@
 language:
   node:
-    version: 24-trixie-slim
+    version: '24'
+
 framework:
   website: srfnstack.github.io/spliffy/
   github: SRFNStack/spliffy

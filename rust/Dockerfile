@@ -20,7 +20,7 @@ RUN cargo build --release  \
 
 
 
-FROM debian:stable-slim
+FROM debian:13-slim
 
 RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends curl && \
