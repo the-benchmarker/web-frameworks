@@ -181,18 +181,26 @@ def commands_for(language, framework, variant, provider = 'docker')
     saturation_out = File.join(results_dir, 'saturation.json')
     saturation_state = File.join(results_dir, '.saturation-state.json')
     zrk_cmds = []
+    zrk_args = {}
 
     routes.split(',').each do |route|
       method, uri = route.split(':')
       output = File.join(directory, language, framework, '.results', concurrency, "#{uri.tr('/', '_')}.json")
-      zrk_cmds << "#{zrk} -c #{concurrency} -d #{duration} -m #{method} --timeout 8s --format json --output #{output} http://`cat #{hostname}`:3000#{uri}"
+      zrk_args['connections '] = concurrency
+      zrk_args['duration'] = duration
+      zrk_args['script'] = File.join(Dir.pwd, '.load_scripts/user_id.lua') if uri == '/user/42'
+      zrk_args['method'] = method
+      zrk_args['timeout'] = '8s'
+      zrk_args['format'] = 'json'
+      args = zrk_args.map { |k, v| "--#{k} #{v}" }.join(' ')
+      zrk_cmds << "#{zrk} #{args} --output #{output} http://`cat #{hostname}`:3000#{uri}"
       next if latency_rate.empty?
 
       # The fixed-rate pass reads its -R from the closed run's result at run
       # time (latency_rate.rb), so it always sits where LATENCY_RATE asked.
       latency_output = File.join(results_dir, "#{uri.tr('/', '_')}_latency.json")
       rate = "`ruby #{latency_probe} --closed #{output} --spec #{latency_rate}`"
-      zrk_cmds << "#{taskset}zrk --plain -t #{threads} -c #{concurrency} -R #{rate} -d #{duration} -m #{method} --timeout 8s --format json --output #{latency_output} -H Accept-Encoding:identity http://`cat #{hostname}`:3000#{uri}"
+      zrk_cmds << "#{taskset}zrk #{args} --plain -t #{threads} -R #{rate} --output #{latency_output} -H Accept-Encoding:identity http://`cat #{hostname}`:3000#{uri}"
     end
 
     # Bracket the run with the measurement-validity probe: two reads of the
