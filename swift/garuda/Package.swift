@@ -7,7 +7,7 @@ let package = Package(
     name: "server",
     platforms: [.macOS(.v15)],
     dependencies: [
-        .package(url: "https://github.com/grepjava/garuda.git", from: "2.0.0"),
+        .package(url: "https://github.com/grepjava/garuda.git", from: "2.1.1"),
     ],
     targets: [
         .executableTarget(
