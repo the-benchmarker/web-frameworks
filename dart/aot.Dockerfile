@@ -1,4 +1,4 @@
-FROM curlimages/curl:8.17.0 AS curl
+FROM curlimages/curl:8.23.0 AS curl
 
 FROM dart:3.13 AS build
 
