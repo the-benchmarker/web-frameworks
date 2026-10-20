@@ -13,3 +13,4 @@ framework:
     RAILS_ENV: production
     SECRET_KEY_BASE_DUMMY: "1"
     RUBY_YJIT_ENABLE: 0
+    PUMA_DISABLE_SSL: "1"

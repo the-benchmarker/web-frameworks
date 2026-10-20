@@ -4,8 +4,6 @@ require 'mustache'
 require 'shellwords'
 require 'json'
 require 'etc'
-require 'digest'
-require 'fileutils'
 
 MANIFESTS = {
   container: '.Dockerfile',
@@ -13,22 +11,6 @@ MANIFESTS = {
 }.freeze
 
 CUSTOM_CONFIG_KEYS = %w[version engines website github].freeze
-
-# Each route is run during warmup and collection.
-V1_ROUTES = [
-  { method: 'GET', uri: '/' },
-  { method: 'GET', uri: '/user/0' },
-  { method: 'POST', uri: '/user' }
-].map(&:freeze).freeze
-
-V2_ROUTES = [
-  { method: 'GET', uri: '/heath' },
-  { method: 'GET', uri: '/user/0000042' },
-  { method: 'POST', uri: '/user' },
-  { method: 'GET', uri: '/serialization?count=42&seed=foobarbaz' },
-  { method: 'POST', uri: '/deserialization', body_file: '.tasks/fixtures/v2-deserialization.json', content_type: 'application/json' },
-  { method: 'POST', uri: '/upload', multipart_file: '.tasks/fixtures/payload.bin' }
-].map(&:freeze).freeze
 
 def architecture
   RUBY_PLATFORM.start_with?('aarch64') ? 'arm64' : 'amd64'
@@ -92,69 +74,9 @@ def custom_config(dict1, dict2, dict3)
   end
 end
 
-def complete_routes?
-  value = ENV.fetch('COMPLETE', 'false')
-  case value.downcase
-  when 'true' then true
-  when 'false' then false
-  else raise ArgumentError, "COMPLETE must be true or false (got #{value.inspect})"
-  end
-end
-
-def benchmark_routes(complete = complete_routes?)
-  case complete
-  when true then V2_ROUTES
-  when false then V1_ROUTES
-  else raise ArgumentError, "complete must be a boolean (got #{complete.inspect})"
-  end
-end
-
-def benchmark_route_name(method, uri)
-  path = uri.split('?', 2).first
-  name = "#{method.downcase}#{path.gsub(/[^A-Za-z0-9_-]/, '_')}"
-  return name unless uri.match?(%r{[^A-Za-z0-9_/-]})
-
-  "#{name}__#{Digest::SHA256.hexdigest(uri)[0, 8]}"
-end
-
-def benchmark_request(route, directory, results_dir, route_name)
-  return { preparation: nil, options: [] } unless route.key?(:multipart_file) || route.key?(:body_file)
-
-  if route[:multipart_file]
-    boundary = 'web-frameworks-benchmark'
-    source = File.join(directory, route.fetch(:multipart_file))
-    raise ArgumentError, "Missing benchmark file: #{source}" unless File.file?(source)
-
-    body = File.join(results_dir, "#{route_name}.multipart")
-    script = File.join(directory, '.tasks', 'multipart_fixture.rb')
-    preparation = ['ruby', script, source, body, boundary].map { |arg| Shellwords.escape(arg) }.join(' ')
-    content_type = "multipart/form-data; boundary=#{boundary}"
-  elsif route[:body_file]
-    body = File.join(directory, route.fetch(:body_file))
-    raise ArgumentError, "Missing benchmark body: #{body}" unless File.file?(body)
-
-    preparation = nil
-    content_type = route.fetch(:content_type)
-  end
-
-  {
-    preparation:,
-    options: ["-H #{Shellwords.escape("Content-Type: #{content_type}")}", "-b #{Shellwords.escape("@#{body}")}"]
-  }
-end
-
-def zrk_route_command(prefix, concurrency, duration, route, output: nil, rate: nil)
-  parts = [prefix, "-c #{concurrency}", "-d #{duration}", "-m #{route[:method]}"]
-  parts.concat(route[:options])
-  parts << "-R #{rate}" if rate
-  parts << '--timeout 8s' if output
-  parts << "--format json --output #{Shellwords.escape(output)}" if output
-  parts << route[:url]
-  parts.join(' ')
-end
-
-def commands_for(language, framework, variant, provider = 'docker', complete: complete_routes?)
+def commands_for(language, framework, variant, provider = 'docker')
   concurrencies = ENV.fetch('CONCURRENCIES', '10')
+  routes = ENV.fetch('ROUTES', 'GET:/')
 
   directory = Dir.pwd
 
@@ -173,7 +95,7 @@ def commands_for(language, framework, variant, provider = 'docker', complete: co
   taskset = load_generator_prefix(load_cpus)
 
   options = { language: language, framework: framework, variant: variant, cpuset: cpuset, manifest: "#{MANIFESTS[:container]}.#{variant}" }
-  commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], 'memory-idle': [], test: ["ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"] }
+  commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], test: [], 'memory-idle': [] }
   prerequisites = Hash.new { |h, k| h[k] = [] }
 
   # Compile first, only for non containers
@@ -240,51 +162,27 @@ def commands_for(language, framework, variant, provider = 'docker', complete: co
 
   hostname = File.join(directory, language, framework, "ip-#{variant}.txt")
   cid_file = File.join(directory, language, framework, "cid-#{variant}.txt")
+  File.join(File.dirname(__FILE__), 'memory_sampler.rb')
   saturation_probe = File.join(File.dirname(__FILE__), 'saturation.rb')
   latency_probe = File.join(File.dirname(__FILE__), 'latency_rate.rb')
-  zrk_closed = "#{taskset}zrk --plain --closed -t #{threads}"
-  zrk_open = "#{taskset}zrk --plain -t #{threads}"
-
-  route_results_dir = File.join(directory, language, framework, '.results', "requests-#{variant}")
-  routes = benchmark_routes(complete).map do |route|
-    method = route.fetch(:method)
-    uri = route.fetch(:uri)
-    name = benchmark_route_name(method, uri)
-    request = benchmark_request(route, directory, route_results_dir, name)
-    route.merge(
-      name:,
-      url: "http://`cat #{hostname}`:3000#{Shellwords.escape(uri)}",
-      options: request.fetch(:options),
-      preparation: request.fetch(:preparation)
-    )
-  end
-  names = routes.map { |route| route.fetch(:name) }
-  raise ArgumentError, 'Benchmark routes need distinct result names' unless names.uniq.size == names.size
-
-  preparations = routes.filter_map { |route| route[:preparation] }.uniq
+  zrk = "#{taskset}zrk --plain --closed -t #{threads}"
 
   # Warm up at full throttle, like the collect runs. JIT runtimes need real
   # load to reach steady state; zrk's paced default of 1000 req/s does not.
-  commands[:warmup].concat(preparations)
-  routes.each do |route|
-    commands[:warmup] << zrk_route_command(zrk_closed, 50, '5s', route)
-  end
+  commands[:warmup] << "#{zrk} -c 50 -d 5s http://`cat #{hostname}`:3000/"
+  commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
 
   concurrencies.split(',').each do |concurrency|
     target = :"collect-#{concurrency}"
     commands[target] = [] unless commands.key?(target)
 
     results_dir = File.join(directory, language, framework, '.results', concurrency)
+    File.join(results_dir, 'memory.json')
     saturation_out = File.join(results_dir, 'saturation.json')
     saturation_state = File.join(results_dir, '.saturation-state.json')
     zrk_cmds = []
     zrk_args = {}
 
-<<<<<<< HEAD
-    routes.each do |route|
-      output = File.join(results_dir, "#{route.fetch(:name)}.json")
-      zrk_cmds << zrk_route_command(zrk_closed, concurrency, duration, route, output:)
-=======
     routes.split(',').each do |route|
       method, uri = route.split(':')
       output = File.join(directory, language, framework, '.results', concurrency, "#{uri.tr('/', '_')}.json")
@@ -296,28 +194,23 @@ def commands_for(language, framework, variant, provider = 'docker', complete: co
       zrk_args['format'] = 'json'
       args = zrk_args.map { |k, v| "--#{k} #{v}" }.join(' ')
       zrk_cmds << "#{zrk} #{args} --output #{output} http://`cat #{hostname}`:3000#{uri}"
->>>>>>> origin/develop
       next if latency_rate.empty?
 
       # The fixed-rate pass reads its -R from the closed run's result at run
       # time (latency_rate.rb), so it always sits where LATENCY_RATE asked.
-      latency_output = File.join(results_dir, "#{route.fetch(:name)}_latency.json")
+      latency_output = File.join(results_dir, "#{uri.tr('/', '_')}_latency.json")
       rate = "`ruby #{latency_probe} --closed #{output} --spec #{latency_rate}`"
-<<<<<<< HEAD
-      zrk_cmds << zrk_route_command(zrk_open, concurrency, duration, route, output: latency_output, rate:)
-=======
       zrk_cmds << "#{taskset}zrk #{args} --plain -t #{threads} -R #{rate} --output #{latency_output} -H Accept-Encoding:identity http://`cat #{hostname}`:3000#{uri}"
->>>>>>> origin/develop
     end
-
-    commands[target].concat(preparations)
 
     # Bracket the run with the measurement-validity probe: two reads of the
     # container's cumulative CPU counter, so it adds no sampling load of its own
     # to the host whose contention it exists to detect.
     commands[target] << "ruby #{saturation_probe} --cid #{cid_file} --start --state #{saturation_state}"
 
-    commands[target].concat(zrk_cmds)
+    # Start memory sampler in background, run all zrk calls, then stop sampler
+    # commands[target] << "ruby #{sampler} --cid #{cid_file} --out #{memory_out} & SAMPLER_PID=$$!; #{zrk_cmds.join('; ')}; kill $$SAMPLER_PID"
+    commands[target] << zrk_cmds.join('; ')
 
     commands[target] << "ruby #{saturation_probe} --cid #{cid_file} --stop --state #{saturation_state} --out #{saturation_out}"
   end
@@ -381,13 +274,7 @@ def create_dockerfile(directory, engine, config)
     "#{k}=#{v}"
   end)
 
-  shared_instructions = Array(config.dig('dockerfile', 'before_framework_files'))
-  rendered = Mustache.render(template, config).lines.flat_map do |line|
-    next [line] unless line.match?(/^\s*FROM\s/i)
-
-    [line, *shared_instructions.map { |instruction| "#{instruction}\n" }]
-  end.join
-  File.write(File.join(directory, ".Dockerfile.#{engine}"), rendered)
+  File.write(File.join(directory, ".Dockerfile.#{engine}"), Mustache.render(template, config))
 end
 
 # This method returns a hash with variables usable in dockerfiles
@@ -484,13 +371,13 @@ def bootstrap_commands(configs, engine)
   end
 end
 
-def create_makefile(language, framework, engines, complete:)
+def create_makefile(language, framework, engines)
   path = File.join(language, framework, MANIFESTS[:build])
 
   File.open(path, 'w') do |makefile|
     names = engines.flat_map(&:keys)
     names.each_with_index do |engine, index|
-      result = commands_for(language, framework, engine, complete:)
+      result = commands_for(language, framework, engine)
       result[:commands].each do |target, cmds|
         # Preserve the first engine as the default for existing callers.
         makefile.puts "#{target}: #{target}.#{engine}" if index.zero?
@@ -507,11 +394,8 @@ def create_makefile(language, framework, engines, complete:)
   end
 end
 
-desc 'Create Dockerfiles and Makefiles (COMPLETE=false for v1, true for v2)'
+desc 'Create Dockerfiles and Makefiles'
 task :config do
-  complete = complete_routes?
-  YAML.safe_load_file('config.yaml')
-
   Dir.glob('*/*/config.yaml').each do |path|
     dir = File.dirname(path)
 
@@ -521,7 +405,7 @@ task :config do
     generate_dockerfiles(dir, engines, config)
 
     language, framework = dir.split(File::SEPARATOR)
-    create_makefile(language, framework, engines, complete:)
+    create_makefile(language, framework, engines)
   end
 end
 

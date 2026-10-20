@@ -1,26 +1,23 @@
 class SerializationsController < ApplicationController
-  before_action :set_count, :set_seed, only: :show
+  before_action :set_seed, only: :show
 
   def show
-    render json: SerializedItems.call(count: @count, seed: @seed)
+    render json: SerializedItems.call(seed: @seed)
   end
 
   private
 
-  def valid_seed?(seed)
-    seed.is_a?(String) && seed.match?(/\A[\w]{9}\z/)
-  end
-
-  def set_count
-    @count = params.expect(:count).to_i
-
-    bad_request unless @count.positive?
-  end
-
-
   def set_seed
+    self.params = request.query_parameters
     @seed = params.expect(:seed)
+    return bad_request unless validate_seed?(@seed)
 
-    bad_request unless @seed.match?(/\A[\w]{8}\z/)
+    # Use Rails' decoded query pairs before repeated keys are collapsed.
+    pairs = ActionDispatch::QueryParser.each_pair(request.query_string)
+    bad_request unless pairs.one? { |key, _| key == 'seed' }
+  end
+
+  def validate_seed?(seed)
+    seed.is_a?(String) && seed.match?(/\A[a-z0-9]{8}\z/)
   end
 end

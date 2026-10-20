@@ -13,10 +13,11 @@ class UploadsController < ApplicationController
   end
 
   def set_upload_parameters
-    input = ActionController::Parameters.new(request.request_parameters)
-    seed, file = input.expect(:seed, :file)
+    self.params = request.request_parameters
+    seed, file = params.expect(:seed, :file)
 
-    return bad_request unless valid_seed?(seed) && file.is_a?(ActionDispatch::Http::UploadedFile)
+    return bad_request unless seed.is_a?(String) && seed.match?(/\A[a-z0-9]{8}\z/)
+    return bad_request unless file.is_a?(ActionDispatch::Http::UploadedFile)
 
     # Rack preserves the parsed pairs before Rails collapses repeated names.
     pairs = request.request_parameters_list
@@ -29,6 +30,6 @@ class UploadsController < ApplicationController
   def close_uploaded_file
     yield
   ensure
-    @file&.close
+    @file&.close(true)
   end
 end

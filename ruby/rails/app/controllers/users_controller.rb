@@ -12,6 +12,6 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = ActionController::Parameters.new(request.path_parameters).expect(:user)
+    @user = params.expect(:user)
   end
 end
