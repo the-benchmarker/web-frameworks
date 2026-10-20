@@ -22,6 +22,8 @@ class RequestBodyLimit
     body = env['rack.input'].read(MAX_BYTES + 1).to_s
     return too_large if body.bytesize > MAX_BYTES
 
+    # Expose the buffered length even when a server omits CONTENT_LENGTH.
+    env['CONTENT_LENGTH'] = body.bytesize.to_s
     env['rack.input'] = StringIO.new(body)
     @app.call(env)
   end

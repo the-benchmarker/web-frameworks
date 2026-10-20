@@ -11,8 +11,7 @@ language:
     - src/**/*.yml
     - src/**/*.jsp
     - '**/*.kts'
-    - src/**/*.properties
-    - '*.properties'
+    - '**/*.properties'
 
   engines:
     default: {}

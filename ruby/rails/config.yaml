@@ -1,3 +1,18 @@
+language:
+  engines:
+    puma:
+      environment:
+        PUMA_DISABLE_SSL: "1"
+    iodine:
+      command: bundle exec iodine -b http://0.0.0.0:3000 -w $(nproc) --no-dynamic-deflate --config config/iodine.rb > /dev/null 2>&1
+      environment:
+        IODINE_MTLS: "0"
+    falcon:
+      command: bundle exec falcon host config/falcon.rb
+      environment:
+        # Console levels run from debug (0) to fatal (4).
+        CONSOLE_LEVEL: "5"
+
 framework:
   website: rubyonrails.org
   version: 8.1
@@ -13,4 +28,3 @@ framework:
     RAILS_ENV: production
     SECRET_KEY_BASE_DUMMY: "1"
     RUBY_YJIT_ENABLE: 0
-    PUMA_DISABLE_SSL: "1"

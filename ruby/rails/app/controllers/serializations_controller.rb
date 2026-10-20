@@ -18,6 +18,6 @@ class SerializationsController < ApplicationController
   end
 
   def validate_seed?(seed)
-    seed.is_a?(String) && seed.match?(/\A[a-z0-9]{8}\z/)
+    seed.is_a?(String) && seed.match?(/\A[a-z]{8}\z/)
   end
 end

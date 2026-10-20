@@ -1,10 +1,8 @@
 require_relative 'boot'
 require_relative '../lib/request_body_limit'
-require_relative '../lib/response_cache_control'
 require_relative '../lib/upload_tempfile_cleanup'
 
 require 'rails'
-require 'active_model/railtie'
 require 'action_controller/railtie'
 require 'rack/bad_request'
 require 'rack/conditional_get'
@@ -21,7 +19,6 @@ module Benchmark
     config.x.complete = ENV.fetch('COMPLETE', 'false').casecmp?('true')
 
     config.middleware.insert_before 0, RequestBodyLimit
-    config.middleware.insert_before 0, ResponseCacheControl
     # API-only Rails omits this middleware; uploads still need deterministic cleanup.
     config.middleware.use UploadTempfileCleanup
     config.middleware.delete Rack::ConditionalGet

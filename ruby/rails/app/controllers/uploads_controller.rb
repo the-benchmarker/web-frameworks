@@ -16,7 +16,7 @@ class UploadsController < ApplicationController
     self.params = request.request_parameters
     seed, file = params.expect(:seed, :file)
 
-    return bad_request unless seed.is_a?(String) && seed.match?(/\A[a-z0-9]{8}\z/)
+    return bad_request unless seed.is_a?(String) && seed.match?(/\A[a-z]{8}\z/)
     return bad_request unless file.is_a?(ActionDispatch::Http::UploadedFile)
 
     # Rack preserves the parsed pairs before Rails collapses repeated names.
