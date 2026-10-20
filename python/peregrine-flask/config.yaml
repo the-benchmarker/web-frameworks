@@ -6,6 +6,7 @@ framework:
     - peregrine
 
 language:
+  version: 3.14
   engines:
     peregrine:
       environment:
