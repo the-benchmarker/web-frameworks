@@ -1,6 +1,6 @@
 import hashi
 
-logLevel = error
+setLogLevel(error)
 
 proc root(req: Request): Response {.nimcall, raises.} =
   newResponse(200, "")
@@ -15,4 +15,4 @@ get("/", root)
 get("/user/:id", userById)
 post("/user", createUser)
 
-serve(3000'u16)
+serve(3000'u16, bindAddr = "::")

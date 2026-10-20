@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update && \
-  apt-get -qy install --no-install-recommends curl && \
+  apt-get -qy install --no-install-recommends curl guile-3.0 && \
   {{#build_deps.length}}
   apt-get -y install {{#build_deps}}{{{.}}} {{/build_deps}} && \
   {{/build_deps.length}}

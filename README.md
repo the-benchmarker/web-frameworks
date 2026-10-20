@@ -28,7 +28,7 @@ Every implementation is expected to listen on port `3000` and provide the same r
 | `GET` | `/user/:id` | `2xx` | The `id` path parameter |
 | `POST` | `/user` | `2xx` | Empty |
 
-Before an implementation is benchmarked, the shared [v1 RSpec contract](.spec/v1/route_spec.rb) verifies these routes. The generated benchmark uses `zrk` with keep-alive connections and a 15-second run per route. Select the [v2 stateless API scenario](SCENARIO.md) with `COMPLETE=true` to exercise JSON and multipart handling; Rails provides the reference implementation. The routes and request fixtures are fixed in [`.tasks/config.rake`](.tasks/config.rake).
+Before an implementation is benchmarked, the shared [RSpec contract](.spec/route_spec.rb) verifies these routes. The default generated benchmark runs `GET /` for 15 seconds using `zrk --closed` and keep-alive, and records a JSON report. Concurrency and routes are configurable.
 
 Collected fields include requests per second, total data received, run duration, and the p50, p75, p90, and p99 latency percentiles. Benchmark configuration is generated from three YAML layers:
 
@@ -67,7 +67,7 @@ The project is evolving from a focused HTTP performance benchmark into a broader
 
 - Git
 - Docker
-- Ruby and Bundler (CI currently uses Ruby 4)
+- Ruby and Bundler (CI uses Ruby 4)
 - [`zrk`](https://github.com/zoxy-io/zrk) on `PATH`
 - `jq`
 
@@ -80,13 +80,20 @@ bundle install
 bundle exec rake config
 ```
 
+Run the helper tests and check language version metadata with:
+
+```bash
+bundle exec rspec .spec/helpers_spec.rb
+ruby .github/scripts/sync-language-versions.rb --check
+```
+
 Then choose an implementation—for example, `javascript/fastify`—and use its generated Makefile:
 
 ```bash
 make -f javascript/fastify/.Makefile build
 make -f javascript/fastify/.Makefile test
 make -f javascript/fastify/.Makefile warmup
-mkdir -p javascript/fastify/.results/{64,256,512}
+mkdir -p javascript/fastify/.results/10
 make -f javascript/fastify/.Makefile collect
 make -f javascript/fastify/.Makefile unbuild
 ```
@@ -95,33 +102,15 @@ Results are written beneath `<language>/<framework>/.results/`. Generated target
 
 ### 🎛️ Customize a run
 
-The generator accepts comma-separated concurrency levels. Set them while generating the Makefiles:
+The generator accepts comma-separated concurrency levels and routes. Set them while generating the Makefiles:
 
 ```bash
-CONCURRENCIES=64,256,512 bundle exec rake config
+CONCURRENCIES=64,256,512 \
+ROUTES='GET:/,GET:/user/42,POST:/user' \
+bundle exec rake config
 ```
 
-Then run the same `collect` target. `COMPLETE=false` (the default) selects the
-three v1 routes. `COMPLETE=true` selects the six-route [v2 scenario](SCENARIO.md).
-To prepare just Rails:
-
-```bash
-LANGUAGE=ruby FRAMEWORK=rails COMPLETE=true bundle exec rake config
-```
-
-`COMPLETE` is the only route-version selector; invalid values stop generation.
-The generator sets the selected mode in the Dockerfiles and container startup
-commands. Use the generated `build`, `test`, `warmup`, and `collect` targets to
-run the implementation in Docker. Warmup and collection run every selected route
-separately; `test` runs only `.spec/v1` or `.spec/v2`, matching the selection.
-Regenerate and rebuild to switch versions, and keep their results separate.
-
-The v2 upload uses the 4,096-byte [payload fixture](.tasks/fixtures/payload.bin)
-as a multipart `file` named `payload.bin`, together with a `seed` form field.
-The JSON request is [v2-deserialization.json](.tasks/fixtures/v2-deserialization.json),
-and responses use the shared [serialization dataset](.tasks/fixtures/serialization.json).
-The generator writes multipart requests beneath each implementation's `.results`
-directory.
+Then run the same `collect` target. Route entries use the `METHOD:/path` form.
 
 The load generator runs closed-loop over keep-alive connections: every connection sends its next request as soon as the previous response arrives, so the reported rate is the framework's sustained throughput for the whole run. Three more variables control where that work runs:
 
@@ -180,9 +169,13 @@ dedicated bot account's token (not `@waghanza`); a classic PAT needs `repo` and
 The workflow can also be started from the Actions tab. Renovate scans every
 supported manifest in the repository, including npm, Cargo, Composer, Bundler,
 Go, Maven, Gradle, Python, Dart, Swift, and Mix files. A custom rule covers
-GitHub-hosted Crystal shards. Renovate opens PRs,
-requests `@waghanza` as a reviewer, and merges PRs after checks pass and any
-required review is approved. Framework `config.yaml` versions annotated with a
+GitHub-hosted Crystal shards. Renovate opens PRs and requests reviewers listed
+in the language or framework `config.yaml`, falling back to `@waghanza` when
+neither config lists reviewers. Framework reviewers override language reviewers.
+The action enables GitHub auto-merge; enable **Allow auto-merge** in the repository
+settings and configure required status checks and reviews in branch protection.
+GitHub merges each PR when those requirements are met.
+Framework `config.yaml` versions annotated with a
 `renovate:` comment are updated alongside their dependency manifests.
 DUB, Nimble, and Julia package manifests still need manual updates because
 Renovate has no built-in manager for those formats.

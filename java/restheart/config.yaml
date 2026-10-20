@@ -1,6 +1,9 @@
+reviewers:
+  - ujibang
+
 framework:
   website: restheart.org
-  version: 9.8
+  version: 9.11
 
   build:
     - mvn package

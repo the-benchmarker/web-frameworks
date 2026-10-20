@@ -1,6 +1,9 @@
+reviewers:
+  - tiangolo
+
 framework:
   website: fastapi.tiangolo.com
-  version: 0.141
+  version: 0.143
 
   engines:
     - uvicorn
