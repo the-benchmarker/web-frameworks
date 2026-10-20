@@ -1,12 +1,8 @@
-# frozen_string_literal: true
-
-require 'net/http'
-
 require_relative 'spec_helper'
 
-RSpec.describe 'routes' do
+RSpec.describe 'legacy routes', :legacy do
   context 'GET : /' do
-    subject(:response) { http.request(Net::HTTP::Get.new('/', 'Accept-Encoding' => 'identity')) }
+    subject(:response) { send_request('GET', '/') }
 
     it 'returns successfully' do
       expect(response).to be_a(Net::HTTPSuccess)
@@ -18,7 +14,7 @@ RSpec.describe 'routes' do
   end
 
   context 'GET : /user/0' do
-    subject(:response) { http.request(Net::HTTP::Get.new('/user/0', 'Accept-Encoding' => 'identity')) }
+    subject(:response) { send_request('GET', '/user/0') }
 
     it 'returns successfully' do
       expect(response).to be_a(Net::HTTPSuccess)
@@ -30,11 +26,7 @@ RSpec.describe 'routes' do
   end
 
   context 'POST : /user' do
-    let!(:request) { Net::HTTP::Post.new('/user', 'Accept-Encoding' => 'identity') }
-
-    before { request['Content-Type'] = 'text/plain' }
-
-    subject(:response) { http.request(request) }
+    subject(:response) { send_request('POST', '/user', body: '', content_type: 'text/plain') }
 
     it 'returns successfully' do
       expect(response).to be_a(Net::HTTPSuccess)
@@ -42,6 +34,15 @@ RSpec.describe 'routes' do
 
     it 'returns an empty string' do
       expect(response.body.to_s).to be_empty
+    end
+  end
+
+  [['GET', '/', ''], ['GET', '/user/0', '0'], ['POST', '/user', '']].each do |method, path, body|
+    it "keeps #{method} #{path} uncompressed when compression is advertised" do
+      response = send_request(method, path, body: method == 'POST' ? '' : nil, encoding: 'gzip, br, zstd')
+
+      expect(response).to be_a(Net::HTTPSuccess)
+      expect(response.body.to_s).to eq(body)
     end
   end
 end

@@ -17,8 +17,8 @@ hashing, and per-record seed arithmetic are outside this contract. Loading
 fixtures once and encoding them on each request exercises framework features
 without adding an application algorithm to the comparison.
 
-Full v2 implementation and validation remain pending in this revision. See
-[Implementation status](#implementation-status) before attempting a run.
+Shared v2 specs and load scripts implement this contract. Individual frameworks
+must pass the selected suite before their results are collected.
 
 | # | Request | Feature | Successful response |
 |---|---|---|---|
@@ -26,16 +26,16 @@ Full v2 implementation and validation remain pending in this revision. See
 | 2 | `GET /user/{user}` | Dynamic routing and path decoding | Decoded path value as plain text |
 | 3 | `POST /user` | HTTP method dispatch | Empty body |
 | 4 | `GET /serialization?seed={seed}` | Query extraction and JSON serialization | Seed and 100 fixed records |
-| 5 | `POST /deserialization` | JSON decoding and access to parsed values | Seed, item count, and ID sum |
+| 5 | `POST /deserialization` | JSON decoding and access to parsed values | Item count and ID sum |
 | 6 | `POST /upload` | Multipart parsing and form/file binding | Seed, file metadata, size, and two byte samples |
 
 All successful responses have status `200`. Empty bodies have zero bytes.
 JSON responses use `Content-Type: application/json`, with an optional UTF-8
 charset parameter, and are compared as parsed JSON: whitespace and object key
 order do not matter. Array order and every fixture field do matter.
-Every seed is a **string of exactly eight lowercase ASCII letters or digits**
-(`[a-z0-9]{8}`), such as `"00000042"` or `"abc12345"`. Preserve seed strings,
-including leading zeros, and reject other types rather than coercing them.
+Seeds for serialization and upload are **strings of exactly eight lowercase
+ASCII letters** (`[a-z]{8}`), such as `"abcdefgh"`. Reject other types and
+characters rather than coercing them. Deserialization has no seed.
 
 ## HTTP transport and compression
 
@@ -98,7 +98,7 @@ curl -i -X POST -H 'Accept-Encoding: identity' "$BENCHMARK_URL/user"
 
 ## 4. JSON serialization
 
-`GET /serialization?seed=00000042` returns a JSON object with:
+`GET /serialization?seed=abcdefgh` returns a JSON object with:
 
 - `seed`: the supplied seed string.
 - `items`: all 100 objects in the [shared dataset](serialization.json),
@@ -120,8 +120,8 @@ The first object in `items` is:
 
 The fixture exercises integers, strings, booleans, arrays, nested objects, and
 null. IDs run from `0` through `99`. The record count is always 100;
-there is no `n` or `count` parameter. Other query keys may be ignored but must
-not change the item count or records.
+there is no `n` or `count` parameter. Accept exactly one query parameter, `seed`;
+additional query keys and repeated seeds return `400`.
 
 Missing, invalid, array/object, or repeated query seeds return `400`.
 Validation must compare every fixture field and verify that changing the seed
@@ -129,40 +129,38 @@ changes the response seed.
 
 ## 5. JSON deserialization
 
-`POST /deserialization` accepts `Content-Type: application/json` with an
-object containing a valid seed and an `items` array of zero through 100 objects.
+`POST /deserialization` has no query parameters. It accepts
+`Content-Type: application/json` with an object containing an `items` array of
+exactly 100 objects. It does not require or return a seed.
 Every item must have a JSON numeric `id` with an integral value from `0` through
 `1000000`, inclusive. Validate the numeric value independently of the runtime's
 integer/float representation: `2` and `2.0` both represent a valid ID of two.
 Other item fields are parsed normally and may be ignored in the summary.
 
 ```bash
+ruby -rjson -e 'puts JSON.generate(items: JSON.parse(File.read("serialization.json")))' | \
 curl "$BENCHMARK_URL/deserialization" \
   -H 'Accept-Encoding: identity' \
   -H 'Content-Type: application/json' \
-  -d '{"seed":"00000042","items":[{"id":2},{"id":7}]}'
+  --data-binary @-
 ```
 
 Expected response:
 
 ```json
-{"seed":"00000042","count":2,"idSum":9}
+{"count":100,"idSum":4950}
 ```
 
-The performance request must contain `"seed":"00000042"` and an `items` array
-equal to all 100 records in the shared serialization dataset. Its response is:
+The [deserialization Lua script](.load_scripts/deserialization.lua) loads all 100
+shared records on the client and prepares equal-sized bodies with different
+three-digit IDs. It sends only the JSON body, without query parameters or seed.
+All other fixture fields are preserved.
 
-```json
-{"seed":"00000042","count":100,"idSum":4950}
-```
-
-An empty array produces `count: 0` and `idSum: 0`. Compute the count and sum
-from the parsed body on each request. The sum requires at most 100 additions
+Compute the count and sum from the parsed body on each request. The sum requires 100 additions
 and is bounded by `100000000`, avoiding large-number arithmetic or hashing.
-The current request fixture still needs alignment; see Implementation status.
 
-Return `400` for malformed JSON, missing required fields, invalid seeds,
-non-array or oversized `items`, non-object items, or invalid IDs.
+Return `400` for query parameters, malformed JSON, missing required fields,
+non-array `items`, any array length other than 100, non-object items, or invalid IDs.
 String, boolean, null, and non-integral IDs are rejected rather than coerced.
 Required values come from the body; query parameters cannot fill missing fields.
 Unsupported request media types return `415`.
@@ -174,20 +172,21 @@ field named `seed` and one file part named `file`. Read both through the
 framework's normal parsed-parameter and uploaded-file APIs. Query parameters
 cannot provide the required body fields.
 
-The performance file is [payload.bin](.tasks/fixtures/payload.bin): 4096 bytes
-consisting of `abcd` repeated 1024 times.
+The [upload Lua script](.load_scripts/upload.lua) creates a 4096-byte file body
+consisting of `abcd` repeated 1024 times on the client, without a separate fixture file.
 
 ```bash
+ruby -e 'STDOUT.write("abcd" * 1024)' | \
 curl "$BENCHMARK_URL/upload" \
   -H 'Accept-Encoding: identity' \
-  -F 'seed=00000042' \
-  -F 'file=@.tasks/fixtures/payload.bin;filename=payload.bin;type=application/octet-stream'
+  -F 'seed=abcdefgh' \
+  -F 'file=@-;filename=payload.bin;type=application/octet-stream'
 ```
 
 Expected response:
 
 ```json
-{"seed":"00000042","filename":"payload.bin","contentType":"application/octet-stream","size":4096,"firstByte":97,"lastByte":100}
+{"seed":"abcdefgh","filename":"payload.bin","contentType":"application/octet-stream","size":4096,"firstByte":97,"lastByte":100}
 ```
 
 `size` counts only file bytes, excluding multipart headers and boundaries.
@@ -284,10 +283,10 @@ may retain `GET /` for v1 compatibility, outside the six v2 workloads. Keep
 versions separate and record load-model or input changes as well; an unchanged
 route name alone does not make historical results comparable.
 
-V2 adoption is optional per workload during rollout. `COMPLETE=false` (the
-default) and `COMPLETE=true` are the intended v1/v2 generation selectors in
-[.tasks/config.rake](.tasks/config.rake). Generation, startup, fixtures, and
-validation must agree on the selected version before publishing results.
+`COMPLETE=false` (the default) and `COMPLETE=true` select v1/v2 generation in
+[.tasks/config.rake](.tasks/config.rake). The generated container startup and
+RSpec commands use the same mode. The full selected contract must pass;
+`ROUTES` can select a subset of workloads to measure.
 
 Label runs as **fixed-input** or **varying-input**. Fixed-input runs must be
 identified as susceptible to response caching. Varied correctness checks catch
@@ -295,34 +294,29 @@ hardcoded answers but cannot rule out a cache keyed on the full request. The
 requirement to parse and encode each request still applies.
 
 For varying-input runs, prepare the same reproducible sequence for every entry
-outside the measured server work. Keep path values and seeds eight digits wide,
-JSON IDs within fixed digit widths, and uploaded files at 4096 bytes so payload
+outside the measured server work. Keep path values eight digits wide and seeds
+eight lowercase letters wide, JSON IDs within fixed digit widths, and uploaded files at 4096 bytes so payload
 sizes remain equal. Vary upload byte samples without adding hashing. Pin the
 load-generator version and script, and verify sufficient generator capacity.
 Do not mix fixed-input and varying-input results in the same comparison.
 
 ## Implementation status
 
-This document specifies the target contract. The checked-in dataset and upload
-file match the sizes and values above, but full v2 execution and validation
-remain pending. The current checkout has these gaps:
+The shared specs live in [.spec](.spec), with the legacy suite selected by
+default and the complete suite selected by `COMPLETE=true`. They cover all six
+workloads, invalid inputs, media types, chunked requests, the 64 KiB body limit,
+and responses that stay uncompressed when compression is advertised.
 
-- [.tasks/config.rake](.tasks/config.rake) contains unresolved merge markers,
-  uses `/heath` instead of `/health`, and sends a serialization query with a
-  `count` parameter and a nonconforming seed.
-- [v2-deserialization.json](.tasks/fixtures/v2-deserialization.json) contains
-  three `value` records without the required seed or IDs; it must be replaced
-  with the specified seeded 100-record request before measuring this workload.
-- [multipart_fixture.rb](.tasks/multipart_fixture.rb) generates a file part but
-  omits the required seed part.
-- [The shared HTTP tests](.spec/route_spec.rb) check the legacy routes. The
-  previously referenced `.spec/v1` and `.spec/v2` suites are absent; generation
-  currently targets `.spec`, so v2 validation coverage must be added and selected.
-- Rails implements the six routes; its configuration and direct-run instructions
-  are documented in the [Rails README](ruby/rails/README.md). Shared v2 test
-  coverage remains pending; tests belong in the common contract rather than
-  individual framework directories.
+Request generation lives in [.load_scripts](.load_scripts/README.md), with no
+framework-local copies of the JSON fixture or upload payload. Warmup, closed-loop
+collection, and optional latency passes use the same per-workload scripts.
 
-Passing status requires HTTP validation of the specific implementation revision
-and configuration, including the no-compression checks. Run instructions can
-be published once generation and the shared v2 contract checks work together.
+To validate an already running complete implementation:
+
+```bash
+COMPLETE=true BENCHMARK_URL=http://127.0.0.1:3000 bundle exec rspec .spec
+```
+
+Other implementations may still need v2 support. Do not publish their complete
+scenario results until this suite passes for the measured revision and server
+configuration. Specs belong in `.spec`, never in individual framework directories.

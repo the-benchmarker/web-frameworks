@@ -27,12 +27,15 @@ run_with_timeout() {
 }
 
 wait_for_framework() {
-  local ip waited=0 max_wait=120
+  local ip waited=0 max_wait=120 route=/ complete=${COMPLETE:-false}
+  if [[ "${complete,,}" == "true" ]]; then
+    route=/health
+  fi
 
   ip=$(tr -d '[:space:]' < "${IP_FILE}")
-  echo "Waiting for http://${ip}:3000/ to respond (timeout ${max_wait}s)..."
+  echo "Waiting for http://${ip}:3000${route} to respond (timeout ${max_wait}s)..."
 
-  until curl -s -f "http://${ip}:3000/" > /dev/null; do
+  until curl -s -f -H 'Accept-Encoding: identity' "http://${ip}:3000${route}" > /dev/null; do
     sleep 1
     waited=$((waited + 1))
 

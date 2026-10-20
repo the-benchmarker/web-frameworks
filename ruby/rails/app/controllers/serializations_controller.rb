@@ -12,9 +12,9 @@ class SerializationsController < ApplicationController
     @seed = params.expect(:seed)
     return bad_request unless validate_seed?(@seed)
 
-    # Use Rails' decoded query pairs before repeated keys are collapsed.
+    # Reject repeated seeds and additional query parameters before keys collapse.
     pairs = ActionDispatch::QueryParser.each_pair(request.query_string)
-    bad_request unless pairs.one? { |key, _| key == 'seed' }
+    bad_request unless pairs.one?
   end
 
   def validate_seed?(seed)

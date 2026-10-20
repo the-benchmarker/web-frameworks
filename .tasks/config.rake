@@ -4,6 +4,7 @@ require 'mustache'
 require 'shellwords'
 require 'json'
 require 'etc'
+require_relative 'workloads'
 
 MANIFESTS = {
   container: '.Dockerfile',
@@ -76,7 +77,8 @@ end
 
 def commands_for(language, framework, variant, provider = 'docker')
   concurrencies = ENV.fetch('CONCURRENCIES', '10')
-  routes = ENV.fetch('ROUTES', 'GET:/')
+  routes = BenchmarkWorkloads.routes
+  complete = BenchmarkWorkloads.complete?.to_s
 
   directory = Dir.pwd
 
@@ -94,7 +96,7 @@ def commands_for(language, framework, variant, provider = 'docker')
   cpuset = server_cpus ? "--cpuset-cpus=#{server_cpus} " : ''
   taskset = load_generator_prefix(load_cpus)
 
-  options = { language: language, framework: framework, variant: variant, cpuset: cpuset, manifest: "#{MANIFESTS[:container]}.#{variant}" }
+  options = { language: language, framework: framework, variant: variant, cpuset: cpuset, complete: complete, manifest: "#{MANIFESTS[:container]}.#{variant}" }
   commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], test: [], 'memory-idle': [] }
   prerequisites = Hash.new { |h, k| h[k] = [] }
 
@@ -169,8 +171,13 @@ def commands_for(language, framework, variant, provider = 'docker')
 
   # Warm up at full throttle, like the collect runs. JIT runtimes need real
   # load to reach steady state; zrk's paced default of 1000 req/s does not.
-  commands[:warmup] << "#{zrk} -c 50 -d 5s http://`cat #{hostname}`:3000/"
-  commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
+  routes.each do |method, uri|
+    request = BenchmarkWorkloads.request(method, uri, root: directory)
+    args = ['--connections', '50', '--duration', '5s', *request[:options]].shelljoin
+    url = "http://`cat #{Shellwords.escape(hostname)}`:3000#{Shellwords.escape(uri)}"
+    commands[:warmup] << "#{zrk} #{args} #{url} #{request[:arguments].shelljoin}".rstrip
+  end
+  commands[:test] << "COMPLETE=#{complete} ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
 
   concurrencies.split(',').each do |concurrency|
     target = :"collect-#{concurrency}"
@@ -181,26 +188,20 @@ def commands_for(language, framework, variant, provider = 'docker')
     saturation_out = File.join(results_dir, 'saturation.json')
     saturation_state = File.join(results_dir, '.saturation-state.json')
     zrk_cmds = []
-    zrk_args = {}
-
-    routes.split(',').each do |route|
-      method, uri = route.split(':')
+    routes.each do |method, uri|
       output = File.join(directory, language, framework, '.results', concurrency, "#{uri.tr('/', '_')}.json")
-      zrk_args['connections '] = concurrency
-      zrk_args['duration'] = duration
-      zrk_args['script'] = File.join(Dir.pwd, '.load_scripts/user_id.lua') if uri == '/user/42'
-      zrk_args['method'] = method
-      zrk_args['timeout'] = '8s'
-      zrk_args['format'] = 'json'
-      args = zrk_args.map { |k, v| "--#{k} #{v}" }.join(' ')
-      zrk_cmds << "#{zrk} #{args} --output #{output} http://`cat #{hostname}`:3000#{uri}"
+      request = BenchmarkWorkloads.request(method, uri, root: directory)
+      args = ['--connections', concurrency, '--duration', duration, '--timeout', '8s', '--format', 'json', *request[:options]].shelljoin
+      url = "http://`cat #{Shellwords.escape(hostname)}`:3000#{Shellwords.escape(uri)}"
+      script_arguments = request[:arguments].shelljoin
+      zrk_cmds << "#{zrk} #{args} --output #{Shellwords.escape(output)} #{url} #{script_arguments}".rstrip
       next if latency_rate.empty?
 
       # The fixed-rate pass reads its -R from the closed run's result at run
       # time (latency_rate.rb), so it always sits where LATENCY_RATE asked.
       latency_output = File.join(results_dir, "#{uri.tr('/', '_')}_latency.json")
       rate = "`ruby #{latency_probe} --closed #{output} --spec #{latency_rate}`"
-      zrk_cmds << "#{taskset}zrk #{args} --plain -t #{threads} -R #{rate} --output #{latency_output} -H Accept-Encoding:identity http://`cat #{hostname}`:3000#{uri}"
+      zrk_cmds << "#{taskset}zrk #{args} --plain -t #{threads} -R #{rate} --output #{Shellwords.escape(latency_output)} #{url} #{script_arguments}".rstrip
     end
 
     # Bracket the run with the measurement-validity probe: two reads of the
@@ -210,7 +211,7 @@ def commands_for(language, framework, variant, provider = 'docker')
 
     # Start memory sampler in background, run all zrk calls, then stop sampler
     # commands[target] << "ruby #{sampler} --cid #{cid_file} --out #{memory_out} & SAMPLER_PID=$$!; #{zrk_cmds.join('; ')}; kill $$SAMPLER_PID"
-    commands[target] << zrk_cmds.join('; ')
+    commands[target] << zrk_cmds.join(' && ')
 
     commands[target] << "ruby #{saturation_probe} --cid #{cid_file} --stop --state #{saturation_state} --out #{saturation_out}"
   end

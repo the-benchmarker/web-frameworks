@@ -1,8 +1,8 @@
 class DeserializationsController < ApplicationController
-  before_action :require_json, :set_deserialization_parameters, only: :create
+  before_action :require_json, :set_items, only: :create
 
   def create
-    render json: DeserializationSummary.call(seed: @seed, items: @items)
+    render json: DeserializationSummary.call(items: @items)
   end
 
   private
@@ -11,20 +11,13 @@ class DeserializationsController < ApplicationController
     unsupported_media_type unless request.content_mime_type&.json?
   end
 
-  def set_deserialization_parameters
-    # Use body parameters so query values cannot supply missing JSON fields.
-    self.params = request.request_parameters
-    @seed = params.expect(:seed)
-    raw_items = params[:items]
+  def set_items
+    return bad_request unless request.query_string.empty?
 
-    return bad_request unless @seed.is_a?(String) && @seed.match?(/\A[a-z]{8}\z/)
-    return bad_request unless raw_items.is_a?(Array) && raw_items.length == 100
+    @items = request.request_parameters['items']
+    return bad_request unless @items.is_a?(Array) && @items.length == 100
 
-    # Validate the original shape before strong parameters can discard entries.
-    return bad_request unless raw_items.all?(ActionController::Parameters)
-
-    @items = params.expect(items: [[:id]])
-    bad_request unless @items.length == 100 && @items.all? { |item| valid_id?(item[:id]) }
+    bad_request unless @items.all? { |item| item.is_a?(Hash) && valid_id?(item['id']) }
   end
 
   def valid_id?(id)

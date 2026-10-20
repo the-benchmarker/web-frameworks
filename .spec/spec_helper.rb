@@ -1,9 +1,9 @@
-# frozen_string_literal: true
-
-require 'net/http'
-require 'yaml'
+require_relative 'support/http_helpers'
 
 RSpec.configure do |config|
+  config.include HttpHelpers
+  config.filter_run_excluding(ENV.fetch('COMPLETE', 'false').casecmp?('true') ? { legacy: true } : { complete: true })
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
@@ -13,13 +13,4 @@ RSpec.configure do |config|
   end
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
-end
-
-def http
-  language = ENV.fetch('LANGUAGE', nil)
-  framework = ENV.fetch('FRAMEWORK', nil)
-  engine = ENV.fetch('ENGINE', nil)
-
-  ip = File.read(File.join(language, framework, "ip-#{engine}.txt")).strip
-  Net::HTTP.new(ip, 3000)
 end
