@@ -28,10 +28,11 @@ run_with_timeout() {
 
 wait_for_framework() {
   local ip waited=0 max_wait=120
+
   ip=$(tr -d '[:space:]' < "${IP_FILE}")
   echo "Waiting for http://${ip}:3000/ to respond (timeout ${max_wait}s)..."
 
-  until curl -s -f -H 'Accept-Encoding: identity' "http://${ip}:3000/" > /dev/null; do
+  until curl -s -f "http://${ip}:3000/" > /dev/null; do
     sleep 1
     waited=$((waited + 1))
 
@@ -56,7 +57,7 @@ run_once() (
 
   run_with_timeout "${COMMAND_TIMEOUT_SECONDS}" make -f "${DIRECTORY}/.Makefile" "build.${ENGINE}"
   wait_for_framework
-  run_with_timeout "${COMMAND_TIMEOUT_SECONDS}" bundle exec rspec
+  run_with_timeout "${COMMAND_TIMEOUT_SECONDS}" bundle exec rspec .spec
 )
 
 attempt=1
