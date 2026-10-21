@@ -1,0 +1,10 @@
+framework:
+  github: Tuntii/viltrum
+  version: a75dcf8199c09e937e6c6539928bcbb52337d8f2
+
+  # Installed as the `viltrum` module (import viltrum), pinned to the v1.2.1 release.
+  download:
+    - mkdir -p $HOME/.vmodules && git clone https://github.com/Tuntii/viltrum $HOME/.vmodules/viltrum && git -C $HOME/.vmodules/viltrum checkout a75dcf8199c09e937e6c6539928bcbb52337d8f2
+
+  build_flags:
+    - -prod
