@@ -1,6 +1,6 @@
-require_relative 'spec_helper'
+require_relative '../spec_helper'
 
-RSpec.describe 'legacy routes', :legacy do
+RSpec.describe 'legacy routes' do
   context 'GET : /' do
     subject(:response) { send_request('GET', '/') }
 

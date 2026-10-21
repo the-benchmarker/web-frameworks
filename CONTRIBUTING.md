@@ -7,21 +7,21 @@ methodology, and documentation are welcome.
 
 Every implementation listens on port `3000`. The default v1 workload checks
 `GET /`, `GET /user/0`, and `POST /user`. The six-route stateless v2 workload
-and exact responses are defined in [SCENARIO.md](SCENARIO.md). Set
-`LANGUAGE=ruby FRAMEWORK=rails COMPLETE=true bundle exec rake config` to prepare
-the Rails reference. The generated test target uses the matching contract in
-`.spec/v1` or `.spec/v2`. `COMPLETE=false` (the default) selects v1 and
-`COMPLETE=true` selects v2; this is the only route-version selector.
-The generated Dockerfiles and startup commands carry that mode into the container.
-Route definitions and fixtures live in [`.tasks/config.rake`](.tasks/config.rake).
+and exact responses are defined in [SCENARIO.md](SCENARIO.md). Set a top-level
+`specs: v1` or `specs: v2` in the framework's `config.yaml`; v1 is the default
+and Rails currently selects v2. Run `bundle exec rake config` to generate commands.
+The generated test target runs `bundle exec rspec`; RSpec reads the framework
+config and excludes the other version's suite in `.spec/v1` or `.spec/v2`.
+Route definitions live in [`.tasks/workloads.rb`](.tasks/workloads.rb), and
+request fixtures live at the repository root.
 Warmup and collection run every selected route separately. Compare frameworks
 on the same scenario version and keep their results separate.
 
 ### Rails reference
 
-Rails implements v1 and v2 through conventional API controllers, callbacks,
-strong parameters, and small response services. JSON and multipart request
-bodies have a 64 KiB limit, including chunked requests. See the
+Rails implements v2 through API controllers, callbacks, and small response
+services. JSON and multipart request bodies have a 64 KiB limit, including
+chunked requests. See the
 [Rails README](ruby/rails/README.md) for Docker testing and implementation notes.
 
 ### Spring deployment
@@ -67,9 +67,8 @@ fixture into each Docker build context.
 
 Add a target for the implementation in `Makefile` and `neph.yaml`, and its
 repository metadata in `benchmarker.cr`. Use the shared route spec to check
-the v1 contract. When v2 is implemented, add the framework to the enabled
-implementations in `.spec/v2/spec_helper.rb` and verify every route over HTTP
-against its Docker container.
+the v1 contract. When v2 is implemented, set `specs: v2` in its `config.yaml`
+and verify every route over HTTP against its Docker container.
 
 ## Running in Docker
 
@@ -93,6 +92,6 @@ make -f java/spring/.Makefile unbuild
 ```
 
 `CONCURRENCIES`, `DURATION`, `THREADS`, `SERVER_CPUS`, `LOAD_CPUS`, and
-`LATENCY_RATE` control the run. Routes are fixed in `.tasks/config.rake` so a
-benchmark run does not silently omit an endpoint. Compare measurements made
+`LATENCY_RATE` control the run. The selected spec suite validates the full
+contract even when `ROUTES` limits the measured workloads. Compare measurements made
 with the same benchmark revision, hardware, runtime variant, and workload.

@@ -14,11 +14,11 @@ function common.seed(number)
   return table.concat(characters)
 end
 
-function common.fixture(root)
-  local file = assert(io.open(root .. "/serialization.json", "rb"))
-  local json = file:read("*a")
+function common.fixture(root, name)
+  local file = assert(io.open(root .. "/" .. name, "rb"))
+  local body = file:read("*a")
   file:close()
-  return json
+  return body
 end
 
 return common

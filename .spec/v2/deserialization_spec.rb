@@ -1,12 +1,12 @@
-require_relative 'spec_helper'
+require_relative '../spec_helper'
 
-RSpec.describe 'JSON deserialization', :complete do
+RSpec.describe 'JSON deserialization' do
   let(:items) { fixture_items }
 
   %w[identity gzip,br,zstd].each do |encoding|
     [false, true].each do |chunked|
       it "decodes 100 items, chunked=#{chunked}, Accept-Encoding: #{encoding}" do
-        response = send_request('POST', '/deserialization', body: json_body(items),
+        response = send_request('POST', '/deserialization', body: fixture_body,
                                                             content_type: 'application/json', chunked: chunked,
                                                             encoding: encoding)
 
@@ -55,7 +55,7 @@ RSpec.describe 'JSON deserialization', :complete do
     end
   end
 
-  [nil, false, 'item', 7, {}].each do |value|
+  [nil, false, [], 'item', 7, {}].each do |value|
     it "rejects an invalid item: #{value.inspect}" do
       items[50] = value
       response = send_request('POST', '/deserialization', body: json_body(items), content_type: 'application/json')

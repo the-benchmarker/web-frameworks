@@ -1,15 +1,13 @@
 module BenchmarkWorkloads
-  COMPLETE_ROUTES = [
-    ['GET', '/health'], ['GET', '/user/00000042'], ['POST', '/user'],
+  V2_ROUTES = [
+    ['GET', '/'], ['GET', '/user/00000042'], ['POST', '/user'],
     ['GET', '/serialization'], ['POST', '/deserialization'], ['POST', '/upload']
   ].freeze
 
-  def self.complete?
-    ENV.fetch('COMPLETE', 'false').casecmp?('true')
-  end
+  def self.routes(specs: 'v1')
+    raise ArgumentError, 'specs must be v1 or v2' unless %w[v1 v2].include?(specs)
 
-  def self.routes
-    return complete? ? COMPLETE_ROUTES : [['GET', '/']] unless ENV.key?('ROUTES')
+    return specs == 'v2' ? V2_ROUTES : [['GET', '/']] unless ENV.key?('ROUTES')
 
     ENV.fetch('ROUTES').split(',').map do |route|
       method, path = route.split(':', 2)

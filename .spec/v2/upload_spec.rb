@@ -1,6 +1,6 @@
-require_relative 'spec_helper'
+require_relative '../spec_helper'
 
-RSpec.describe 'multipart uploads', :complete do
+RSpec.describe 'multipart uploads' do
   let(:boundary) { 'benchmark-boundary' }
   let(:media_type) { "multipart/form-data; boundary=#{boundary}" }
 
@@ -16,15 +16,15 @@ RSpec.describe 'multipart uploads', :complete do
   end
 
   [
-    { seed: 'zzzzzzzz', bytes: '', filename: 'empty.bin', content_type: 'application/octet-stream' },
-    { seed: 'ijklmnop', bytes: "\x00\x80\xff".b, filename: 'bytes.bin', content_type: 'application/octet-stream' },
-    { seed: 'qrstuvwx', bytes: 'different contents', filename: 'sample.txt', content_type: 'text/plain' }
+    { bytes: '', filename: 'empty.bin', content_type: 'application/octet-stream' },
+    { bytes: "\x00\x80\xff".b, filename: 'bytes.bin', content_type: 'application/octet-stream' },
+    { bytes: 'different contents', filename: 'sample.txt', content_type: 'text/plain' }
   ].each do |attributes|
-    it "uses the body metadata and bytes for #{attributes.fetch(:filename)}" do
+    it "uses the uploaded bytes for #{attributes.fetch(:filename)}" do
       response = send_request('POST', '/upload', body: multipart_body(upload_parts(**attributes)),
                                                  content_type: media_type)
 
-      expect_json_response(response, upload_summary(**attributes))
+      expect_json_response(response, upload_summary(bytes: attributes.fetch(:bytes)))
     end
   end
 
@@ -35,35 +35,45 @@ RSpec.describe 'multipart uploads', :complete do
     expect_json_response(response, upload_summary)
   end
 
-  %w[abcdefg abcdefghi abcdefg1 12345678 ABCDEFGH].each do |seed|
-    it "rejects invalid upload seed #{seed}" do
-      response = send_request('POST', '/upload', body: multipart_body(upload_parts(seed: seed)),
+  it 'checks every uploaded byte even when size and edge bytes remain unchanged' do
+    changed = upload_bytes.dup
+    changed.setbyte(changed.bytesize / 2, 0)
+    expect(changed.bytesize).to eq(upload_bytes.bytesize)
+    expect(changed.getbyte(0)).to eq(upload_bytes.getbyte(0))
+    expect(changed.getbyte(-1)).to eq(upload_bytes.getbyte(-1))
+
+    [upload_bytes, changed].each do |bytes|
+      response = send_request('POST', '/upload', body: multipart_body(upload_parts(bytes: bytes)),
                                                  content_type: media_type)
 
-      expect_status(response, 400)
+      expect_json_response(response, upload_summary(bytes: bytes))
     end
+    expect(upload_summary(bytes: changed).fetch('checksum')).not_to eq(upload_summary.fetch('checksum'))
   end
 
-  %w[seed file].each do |name|
-    it "rejects a missing #{name} part without substituting query values" do
-      parts = upload_parts.reject { |part| part.fetch(:name) == name }
-      response = send_request('POST', '/upload?seed=abcdefgh&file=payload.bin', body: multipart_body(parts),
-                                                                                content_type: media_type)
+  it 'rejects a missing file without substituting a query value' do
+    response = send_request('POST', '/upload?file=payload.bin', body: multipart_body([]),
+                                                                content_type: media_type)
 
-      expect_status(response, 400)
-    end
+    expect_status(response, 400)
+  end
 
-    it "rejects repeated #{name} parts" do
-      parts = upload_parts
-      parts << parts.find { |part| part.fetch(:name) == name }.dup
-      response = send_request('POST', '/upload', body: multipart_body(parts), content_type: media_type)
+  it 'rejects repeated file parts' do
+    parts = upload_parts * 2
+    response = send_request('POST', '/upload', body: multipart_body(parts), content_type: media_type)
 
-      expect_status(response, 400)
-    end
+    expect_status(response, 400)
+  end
+
+  it 'rejects a file part with the wrong name' do
+    parts = upload_parts.map { |part| part.merge(name: 'other') }
+    response = send_request('POST', '/upload', body: multipart_body(parts), content_type: media_type)
+
+    expect_status(response, 400)
   end
 
   it 'rejects a text field in place of the uploaded file' do
-    parts = [upload_parts.first, { name: 'file', body: 'not a file' }]
+    parts = [{ name: 'file', body: 'not a file' }]
     response = send_request('POST', '/upload', body: multipart_body(parts), content_type: media_type)
 
     expect_status(response, 400)

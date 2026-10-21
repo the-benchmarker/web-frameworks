@@ -28,19 +28,21 @@ Every implementation is expected to listen on port `3000` and provide the same r
 | `GET` | `/user/:id` | `2xx` | The `id` path parameter |
 | `POST` | `/user` | `2xx` | Empty |
 
-Before an implementation is benchmarked, the shared [RSpec contract](.spec/route_spec.rb) verifies these routes. The default generated benchmark runs `GET /` for 15 seconds using `zrk --closed` and keep-alive, and records a JSON report. Concurrency and routes are configurable.
+Before a v1 implementation is benchmarked, the shared [RSpec contract](.spec/v1/route_spec.rb) verifies these routes. The default v1 benchmark runs `GET /` for 15 seconds using `zrk --closed` and keep-alive, and records a JSON report. Concurrency and routes are configurable.
 
-`COMPLETE=true` selects the six-workload [complete scenario](SCENARIO.md) and its
-shared specs in `.spec/`: routing, JSON serialization/deserialization, and
-multipart uploads. Generate that mode before building the implementation:
+Each framework's `config.yaml` selects its contract with a top-level `specs: v1`
+or `specs: v2`. The default is v1; Rails currently selects the six-workload
+[v2 scenario](SCENARIO.md): routing, JSON serialization/deserialization, and
+multipart uploads. Generate the commands before building the implementation:
 
 ```bash
-COMPLETE=true bundle exec rake config
+bundle exec rake config
 make -f ruby/rails/.Makefile build
 make -f ruby/rails/.Makefile test
 ```
 
-The generated commands use the matching container environment and test mode.
+The generated commands use the workloads selected by the config. RSpec reads the
+framework config and excludes the other version's specs automatically.
 Request bodies and varying inputs are controlled by Lua scripts in
 [`.load_scripts/`](.load_scripts/README.md), shared by warmup and both measurement
 passes. Deserialization has no query parameters or seed: its JSON body contains
@@ -51,11 +53,11 @@ verify that responses stay uncompressed.
 To test an already running implementation directly:
 
 ```bash
-COMPLETE=true BENCHMARK_URL=http://127.0.0.1:3000 bundle exec rspec .spec
+LANGUAGE=ruby FRAMEWORK=rails BENCHMARK_URL=http://127.0.0.1:3000 bundle exec rspec
 ```
 
-Leave `COMPLETE` unset for the legacy three-route contract. An implementation
-must pass the full selected correctness suite before its results are collected;
+Set `LANGUAGE` and `FRAMEWORK` to the server under test. An implementation must
+pass the full selected correctness suite before its results are collected;
 `ROUTES` only limits which workloads are measured.
 
 Collected fields include requests per second, total data received, run duration, and the p50, p75, p90, and p99 latency percentiles. Benchmark configuration is generated from three YAML layers:

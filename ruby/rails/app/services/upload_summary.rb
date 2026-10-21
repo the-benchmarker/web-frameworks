@@ -1,5 +1,7 @@
+require 'digest'
+
 class UploadSummary
-  def self.call(seed:, file:)
+  def self.call(file:)
     size = file.size
     first_byte = last_byte = nil
 
@@ -11,12 +13,9 @@ class UploadSummary
     end
 
     {
-      seed: seed,
-      filename: file.original_filename,
-      contentType: file.content_type,
-      size: size,
-      firstByte: first_byte,
-      lastByte: last_byte
+      first_byte: first_byte,
+      last_byte: last_byte,
+      checksum: Digest::SHA256.file(file.tempfile.path).hexdigest
     }
   end
 end

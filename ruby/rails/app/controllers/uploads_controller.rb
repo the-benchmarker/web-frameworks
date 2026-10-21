@@ -3,7 +3,7 @@ class UploadsController < ApplicationController
   before_action :require_multipart, :set_upload_parameters, only: :create
 
   def create
-    render json: UploadSummary.call(seed: @seed, file: @file)
+    render json: UploadSummary.call(file: @file)
   end
 
   private
@@ -13,18 +13,14 @@ class UploadsController < ApplicationController
   end
 
   def set_upload_parameters
-    self.params = request.request_parameters
-    seed, file = params.expect(:seed, :file)
-
-    return bad_request unless seed.is_a?(String) && seed.match?(/\A[a-z]{8}\z/)
+    file = request.request_parameters['file']
     return bad_request unless file.is_a?(ActionDispatch::Http::UploadedFile)
+
+    @file = file
 
     # Rack preserves the parsed pairs before Rails collapses repeated names.
     pairs = request.request_parameters_list
-    return bad_request unless pairs.one? { |key, _| key == 'seed' } && pairs.one? { |key, _| key == 'file' }
-
-    @seed = seed
-    @file = file
+    bad_request unless pairs.one? { |key, _| key == 'file' }
   end
 
   def close_uploaded_file

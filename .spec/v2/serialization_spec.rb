@@ -1,12 +1,12 @@
-require_relative 'spec_helper'
+require_relative '../spec_helper'
 
-RSpec.describe 'JSON serialization', :complete do
+RSpec.describe 'JSON serialization' do
   %w[abcdefgh zzzzzzzz].each do |seed|
     %w[identity gzip,br,zstd].each do |encoding|
-      it "serializes all fixture fields for seed #{seed} with Accept-Encoding: #{encoding}" do
+      it "serializes 100 objects for seed #{seed} with Accept-Encoding: #{encoding}" do
         response = send_request('GET', "/serialization?seed=#{seed}", encoding: encoding)
 
-        expect_json_response(response, { 'seed' => seed, 'items' => fixture_items })
+        expect_json_response(response, Array.new(100) { { 'seed' => seed } })
       end
     end
   end
@@ -25,7 +25,7 @@ RSpec.describe 'JSON serialization', :complete do
   it 'does not use a conditional request to bypass serialization' do
     response = send_request('GET', '/serialization?seed=abcdefgh', headers: { 'If-None-Match' => '*' })
 
-    expect_json_response(response, { 'seed' => 'abcdefgh', 'items' => fixture_items })
+    expect_json_response(response, Array.new(100) { { 'seed' => 'abcdefgh' } })
   end
 
   it 'does not use a JSON body in place of the query seed' do
@@ -33,5 +33,12 @@ RSpec.describe 'JSON serialization', :complete do
                                                      content_type: 'application/json')
 
     expect_status(response, 400)
+  end
+
+  it 'uses the query seed when the JSON body contains another seed' do
+    response = send_request('GET', '/serialization?seed=abcdefgh', body: JSON.generate(seed: 'zzzzzzzz'),
+                                                                   content_type: 'application/json')
+
+    expect_json_response(response, Array.new(100) { { 'seed' => 'abcdefgh' } })
   end
 end

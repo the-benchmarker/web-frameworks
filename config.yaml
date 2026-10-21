@@ -1,3 +1,5 @@
+specs: v1
+
 cloud:
   config:
     package_update: true
@@ -35,7 +37,7 @@ providers:
       - cd {{{language}}}/{{{framework}}} && docker build -f {{{manifest}}} -t {{{language}}}.{{{framework}}}.{{{variant}}} . && cd -
 
     metadata:
-      - docker run -td --network host --mount type=bind,source="$$(pwd)/serialization.json",target=/serialization.json,readonly --env SERIALIZATION_FIXTURE=/serialization.json --env COMPLETE={{{complete}}} {{{cpuset}}}{{{language}}}.{{{framework}}}.{{{variant}}} > {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt
+      - docker run -td --network host --mount type=bind,source="$$(pwd)/deserialization.json",target=/deserialization.json,readonly --mount type=bind,source="$$(pwd)/upload.bin",target=/upload.bin,readonly {{{cpuset}}}{{{language}}}.{{{framework}}}.{{{variant}}} > {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt
       # - "timeout 60 sh -c 'until [ \"$(docker inspect $(cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt) | jq -r \".[0].State.Health.Status // \\\"none\\\"\")\" = \"healthy\" ]; do sleep 1; done' || echo \"Warning: Container health check timeout after 60 seconds\""
       - echo "127.0.0.1" > {{{language}}}/{{{framework}}}/ip-{{{variant}}}.txt   
 

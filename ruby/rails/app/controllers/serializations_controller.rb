@@ -8,16 +8,10 @@ class SerializationsController < ApplicationController
   private
 
   def set_seed
-    self.params = request.query_parameters
-    @seed = params.expect(:seed)
-    return bad_request unless validate_seed?(@seed)
+    @seed = request.query_parameters['seed']
+    return bad_request unless @seed.is_a?(String) && @seed.match?(/\A[a-z]{8}\z/)
 
-    # Reject repeated seeds and additional query parameters before keys collapse.
-    pairs = ActionDispatch::QueryParser.each_pair(request.query_string)
-    bad_request unless pairs.one?
-  end
-
-  def validate_seed?(seed)
-    seed.is_a?(String) && seed.match?(/\A[a-z]{8}\z/)
+    # Inspect the pairs before Rails collapses repeated query keys.
+    bad_request unless ActionDispatch::QueryParser.each_pair(request.query_string).one?
   end
 end

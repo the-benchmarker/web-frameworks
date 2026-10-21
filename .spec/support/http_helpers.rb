@@ -1,3 +1,4 @@
+require 'digest'
 require 'json'
 require 'net/http'
 require 'stringio'
@@ -62,8 +63,16 @@ module HttpHelpers
     expect(JSON.parse(response.body)).to eq(expected)
   end
 
+  def fixture_body
+    File.binread(File.join(ROOT, 'deserialization.json'))
+  end
+
+  def upload_bytes
+    File.binread(File.join(ROOT, 'upload.bin'))
+  end
+
   def fixture_items
-    JSON.parse(File.read(File.join(ROOT, 'serialization.json')))
+    JSON.parse(fixture_body).fetch('items')
   end
 
   def json_body(items = fixture_items, **fields)
@@ -71,15 +80,11 @@ module HttpHelpers
   end
 
   def deserialization_summary(items)
-    { 'count' => items.length, 'idSum' => items.sum { |item| item.fetch('id').to_i } }
+    { 'count' => items.length, 'checksum' => items.sum { |item| item.fetch('id').to_i } }
   end
 
-  def upload_parts(seed: 'abcdefgh', bytes: 'abcd' * 1024, filename: 'payload.bin',
-                   content_type: 'application/octet-stream')
-    [
-      { name: 'seed', body: seed },
-      { name: 'file', body: bytes, filename: filename, content_type: content_type }
-    ]
+  def upload_parts(bytes: upload_bytes, filename: 'payload.bin', content_type: 'application/octet-stream')
+    [{ name: 'file', body: bytes, filename: filename, content_type: content_type }]
   end
 
   def multipart_body(parts = upload_parts, boundary: 'benchmark-boundary')
@@ -92,11 +97,10 @@ module HttpHelpers
     end.join.b + "--#{boundary}--\r\n".b
   end
 
-  def upload_summary(seed: 'abcdefgh', bytes: 'abcd' * 1024, filename: 'payload.bin',
-                     content_type: 'application/octet-stream')
+  def upload_summary(bytes: upload_bytes)
     {
-      'seed' => seed, 'filename' => filename, 'contentType' => content_type,
-      'size' => bytes.bytesize, 'firstByte' => bytes.getbyte(0), 'lastByte' => bytes.getbyte(-1)
+      'first_byte' => bytes.getbyte(0), 'last_byte' => bytes.getbyte(-1),
+      'checksum' => Digest::SHA256.hexdigest(bytes)
     }
   end
 end
