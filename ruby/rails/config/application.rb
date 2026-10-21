@@ -6,7 +6,6 @@ require 'action_controller/railtie'
 require 'rack/bad_request'
 require 'rack/conditional_get'
 require 'rack/etag'
-require 'rack/deflater'
 
 Bundler.require(*Rails.groups)
 
@@ -20,16 +19,15 @@ module Benchmark
     config.middleware.use UploadTempfileCleanup
     config.middleware.delete Rack::ConditionalGet
     config.middleware.delete Rack::ETag
+    config.middleware.delete Rack::Sendfile
+    config.middleware.delete Rack::Runtime
+    config.middleware.delete ActionDispatch::RequestId
     config.middleware.delete Rails::Rack::Logger
-    # Keep all responses uncompressed, including errors and clients advertising gzip.
-    config.middleware.delete Rack::Deflater
 
     # Preserve null array entries so the request validator can reject them.
     config.action_dispatch.perform_deep_munge = false
     config.action_controller.perform_caching = false
     config.cache_store = :null_store
-    config.force_ssl = false
-    config.assume_ssl = false
     config.logger = ActiveSupport::BroadcastLogger.new
 
     # NullStore also installs a request-local cache; remove it after initialization.

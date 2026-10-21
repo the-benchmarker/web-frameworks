@@ -27,11 +27,10 @@ module BenchmarkWorkloads
              when ['POST', '/deserialization'] then 'deserialization.lua'
              when ['POST', '/upload'] then 'upload.lua'
              else
-               'user_id.lua' if method == 'GET' && path.match?(%r{\A/user/[^/]+\z})
+               method == 'GET' && path.match?(%r{\A/user/[^/]+\z}) ? 'user_id.lua' : 'default.lua'
              end
 
-    options = ['--method', method, '--header', 'Accept-Encoding:identity']
-    options += ['--script', File.join(root, '.load_scripts', script)] if script
-    { options: options, arguments: script ? [root] : [] }
+    options = ['--method', method, '--script', File.join(root, '.load_scripts', script)]
+    { options: options, arguments: [root] }
   end
 end

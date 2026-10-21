@@ -1,5 +1,5 @@
 class SerializedItems
   def self.call(seed:)
-    Array.new(100) { { seed: seed } }
+    100.times.map { { seed: seed } }
   end
 end

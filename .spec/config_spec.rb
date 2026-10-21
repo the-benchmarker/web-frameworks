@@ -35,7 +35,7 @@ RSpec.describe 'benchmark request generation' do
     commands = generated_commands('sinatra')
 
     expect(commands.fetch(:warmup).length).to eq(1)
-    expect(commands.fetch(:warmup).first).to end_with(':3000/')
+    expect(commands.fetch(:warmup).first).to include('/.load_scripts/default.lua', ':3000/ ')
     expect(commands.fetch(:test).first).to eq('ENGINE=puma LANGUAGE=ruby FRAMEWORK=sinatra bundle exec rspec')
   end
 
@@ -43,7 +43,7 @@ RSpec.describe 'benchmark request generation' do
     commands = generated_commands
 
     expect(commands.fetch(:warmup).length).to eq(6)
-    expect(commands.fetch(:warmup).first).to end_with(':3000/')
+    expect(commands.fetch(:warmup).first).to include('/.load_scripts/default.lua', ':3000/ ')
     expect(commands.fetch(:test).first).to eq('ENGINE=puma LANGUAGE=ruby FRAMEWORK=rails bundle exec rspec')
   end
 
@@ -64,10 +64,9 @@ RSpec.describe 'benchmark request generation' do
     ENV['ROUTES'] = 'GET:/user/00000042,GET:/,POST:/deserialization,GET:/serialization,POST:/upload,POST:/user'
     requests = collected_requests
 
-    %w[user_id deserialization serialization upload].zip([0, 2, 3, 4]).each do |script, index|
+    %w[user_id default deserialization serialization upload default].each_with_index do |script, index|
       expect(requests.fetch(index)).to include("/.load_scripts/#{script}.lua")
     end
-    [1, 5].each { |index| expect(requests.fetch(index)).not_to include('--script') }
   end
 
   it 'injects both shared fixtures through read-only runtime mounts' do
@@ -90,9 +89,10 @@ RSpec.describe 'benchmark request generation' do
     commands = generated_commands
     requests = commands.fetch(:warmup) + commands.fetch(:'collect-2').fetch(1).split(' && ')
 
-    expect(requests).to all(include('--header Accept-Encoding:identity'))
-    %w[serialization deserialization upload].each do |script|
-      expect(requests.count { |command| command.include?("/.load_scripts/#{script}.lua") }).to eq(3)
+    expect(requests.grep(/--header|Accept-Encoding/)).to be_empty
+    script_counts = { 'default' => 6, 'user_id' => 3, 'serialization' => 3, 'deserialization' => 3, 'upload' => 3 }
+    script_counts.each do |script, count|
+      expect(requests.count { |command| command.include?("/.load_scripts/#{script}.lua") }).to eq(count)
     end
   end
 
@@ -108,7 +108,7 @@ RSpec.describe 'benchmark request generation' do
     ENV['ROUTES'] = 'GET:/upload'
 
     expect(collected_requests.first).to include('--method GET')
-    expect(collected_requests.first).not_to include('--script')
+    expect(collected_requests.first).to include('/.load_scripts/default.lua')
   end
 
   it 'rejects malformed route entries before writing runnable commands' do

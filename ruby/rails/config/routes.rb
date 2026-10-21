@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get '/', to: 'health#show'
+  root 'root#index'
   get '/user/:id', to: 'users#show', format: false
   post '/user', to: 'users#create'
   get '/serialization', to: 'serializations#show'

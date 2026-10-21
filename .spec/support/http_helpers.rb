@@ -5,7 +5,6 @@ require 'stringio'
 require 'uri'
 
 module HttpHelpers
-  BODY_LIMIT = 65_536
   ROOT = File.expand_path('../..', __dir__)
 
   def http
@@ -75,8 +74,8 @@ module HttpHelpers
     JSON.parse(fixture_body).fetch('items')
   end
 
-  def json_body(items = fixture_items, **fields)
-    JSON.generate({ items: items }.merge(fields))
+  def json_body(items = fixture_items)
+    JSON.generate(items: items)
   end
 
   def deserialization_summary(items)

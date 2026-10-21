@@ -1,5 +1,4 @@
 class UploadsController < ApplicationController
-  around_action :close_uploaded_file, only: :create
   before_action :require_multipart, :set_upload_parameters, only: :create
 
   def create
@@ -21,11 +20,5 @@ class UploadsController < ApplicationController
     # Rack preserves the parsed pairs before Rails collapses repeated names.
     pairs = request.request_parameters_list
     bad_request unless pairs.one? { |key, _| key == 'file' }
-  end
-
-  def close_uploaded_file
-    yield
-  ensure
-    @file&.close(true)
   end
 end

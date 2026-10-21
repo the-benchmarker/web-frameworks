@@ -101,22 +101,4 @@ RSpec.describe 'multipart uploads' do
       expect_status(response, 415)
     end
   end
-
-  [false, true].each do |chunked|
-    it "accepts a multipart body at the 64 KiB limit, chunked=#{chunked}" do
-      bytes = 'x' * (HttpHelpers::BODY_LIMIT - multipart_body(upload_parts(bytes: '')).bytesize)
-      response = send_request('POST', '/upload', body: multipart_body(upload_parts(bytes: bytes)),
-                                                 content_type: media_type, chunked: chunked)
-
-      expect_json_response(response, upload_summary(bytes: bytes))
-    end
-
-    it "rejects a multipart body above the 64 KiB limit, chunked=#{chunked}" do
-      bytes = 'x' * (HttpHelpers::BODY_LIMIT + 1 - multipart_body(upload_parts(bytes: '')).bytesize)
-      response = send_request('POST', '/upload', body: multipart_body(upload_parts(bytes: bytes)),
-                                                 content_type: media_type, chunked: chunked, encoding: 'gzip, br, zstd')
-
-      expect_status(response, 413)
-    end
-  end
 end

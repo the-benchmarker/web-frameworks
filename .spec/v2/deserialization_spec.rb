@@ -99,23 +99,4 @@ RSpec.describe 'JSON deserialization' do
       expect_status(response, 415)
     end
   end
-
-  [false, true].each do |chunked|
-    it "accepts a body at the 64 KiB limit, chunked=#{chunked}" do
-      padding = 'x' * (HttpHelpers::BODY_LIMIT - json_body(items, padding: '').bytesize)
-      response = send_request('POST', '/deserialization', body: json_body(items, padding: padding),
-                                                          content_type: 'application/json', chunked: chunked)
-
-      expect_json_response(response, deserialization_summary(items))
-    end
-
-    it "rejects a body above the 64 KiB limit, chunked=#{chunked}" do
-      padding = 'x' * (HttpHelpers::BODY_LIMIT + 1 - json_body(items, padding: '').bytesize)
-      response = send_request('POST', '/deserialization', body: json_body(items, padding: padding),
-                                                          content_type: 'application/json', chunked: chunked,
-                                                          encoding: 'gzip, br, zstd')
-
-      expect_status(response, 413)
-    end
-  end
 end

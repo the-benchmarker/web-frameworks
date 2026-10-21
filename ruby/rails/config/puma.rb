@@ -15,5 +15,5 @@ stdout_redirect File::NULL, File::NULL
 # Keep the listener on plain HTTP, including when CLI binds are supplied.
 clear_binds!
 port ENV.fetch('PORT', 3000)
-environment 'production'
+environment ENV.fetch('RAILS_ENV', 'production')
 pidfile ENV['PIDFILE'] if ENV['PIDFILE']
