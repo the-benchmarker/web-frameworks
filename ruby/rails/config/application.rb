@@ -1,4 +1,5 @@
 require_relative 'boot'
+require_relative '../lib/json_body_length'
 require_relative '../lib/upload_tempfile_cleanup'
 
 require 'rails'
@@ -17,18 +18,23 @@ module Benchmark
 
     # API-only Rails omits this middleware; uploads still need deterministic cleanup.
     config.middleware.use UploadTempfileCleanup
+    config.middleware.use JsonBodyLength
     config.middleware.delete Rack::ConditionalGet
     config.middleware.delete Rack::ETag
     config.middleware.delete Rack::Sendfile
     config.middleware.delete Rack::Runtime
     config.middleware.delete ActionDispatch::RequestId
-    config.middleware.delete Rails::Rack::Logger
 
     # Preserve null array entries so the request validator can reject them.
     config.action_dispatch.perform_deep_munge = false
     config.action_controller.perform_caching = false
     config.cache_store = :null_store
-    config.logger = ActiveSupport::BroadcastLogger.new
+
+    unless ENV.fetch('RAILS_LOG_ENABLED', 'false') == 'true'
+      config.middleware.delete Rails::Rack::Logger
+      config.log_level = :unknown
+      config.logger = ActiveSupport::Logger.new(nil)
+    end
 
     # NullStore also installs a request-local cache; remove it after initialization.
     initializer 'benchmark.disable_request_cache', after: :initialize_cache, before: :build_middleware_stack do |app|

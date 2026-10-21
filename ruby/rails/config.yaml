@@ -3,6 +3,7 @@ specs: v2
 language:
   engines:
     puma:
+      command: bundle exec puma -C config/puma.rb
       environment:
         PUMA_DISABLE_SSL: "1"
     iodine:
@@ -27,5 +28,6 @@ framework:
 
   environment:
     RAILS_ENV: production
+    RAILS_LOG_ENABLED: "false"
     SECRET_KEY_BASE_DUMMY: "1"
     RUBY_YJIT_ENABLE: 0

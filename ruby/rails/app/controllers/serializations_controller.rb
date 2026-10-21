@@ -8,10 +8,10 @@ class SerializationsController < ApplicationController
   private
 
   def set_seed
-    @seed = request.query_parameters['seed']
-    return bad_request unless @seed.is_a?(String) && @seed.match?(/\A[a-z]{8}\z/)
+    # Rails collapses duplicate keys; reject extra pairs before extracting the seed.
+    return bad_request if request.query_string.include?('&')
 
-    # Inspect the pairs before Rails collapses repeated query keys.
-    bad_request unless ActionDispatch::QueryParser.each_pair(request.query_string).one?
+    @seed = request.query_parameters['seed']
+    bad_request unless @seed.is_a?(String) && @seed.match?(/\A[a-z]{8}\z/)
   end
 end
