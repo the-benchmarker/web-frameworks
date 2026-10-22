@@ -28,7 +28,7 @@
 
     // Tracks the earliest Zig version that the package considers to be a
     // supported use case.
-    .minimum_zig_version = "0.16.0",
+    .minimum_zig_version = "0.17.0",
 
     // This field is optional.
     // Each dependency must either provide a `url` and `hash`, or a `path`.
@@ -37,8 +37,8 @@
     // internet connectivity.
     .dependencies = .{
         .zzz = .{
-            .url = "git+https://github.com/tardy-org/zzz?ref=v0.3.2#2f437b635ca8d8faa8d3b187b05423fc942f57a8",
-            .hash = "zzz-0.3.2-4HoaJu9WAgCcagVKv9jhG9Cvzpu28l7lP9nDf9xNHLxV",
+            .url = "git+https://github.com/tardy-org/zzz?ref=main#3dadef97aba25d5fdc031f1aec1828f926c6a2fe",
+            .hash = "zzz-0.3.2-dev-4HoaJmpUAgBxKwvfmTtw9w4e0Ywab1MgIJaY5juA5TIE",
         },
     },
     .paths = .{
