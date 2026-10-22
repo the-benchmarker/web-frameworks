@@ -1,5 +1,4 @@
 require_relative 'boot'
-require_relative '../lib/json_body_length'
 require_relative '../lib/upload_tempfile_cleanup'
 
 require 'rails'
@@ -18,7 +17,6 @@ module Benchmark
 
     # API-only Rails omits this middleware; uploads still need deterministic cleanup.
     config.middleware.use UploadTempfileCleanup
-    config.middleware.use JsonBodyLength
     config.middleware.delete Rack::ConditionalGet
     config.middleware.delete Rack::ETag
     config.middleware.delete Rack::Sendfile

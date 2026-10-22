@@ -98,6 +98,10 @@ missing seed or replace a valid query seed. For example, a query seed of
 `application/json; charset=utf-8`, and no query parameters. A missing or
 unsupported `Content-Type` returns `415`, even if `Accept: application/json`
 is present: `Accept` describes the desired response, not the request body.
+Only `application/json` is supported; aliases such as `text/x-json` and
+structured types such as `application/problem+json` return `415`. Check the
+media type before parsing the body, so malformed bodies with an unsupported
+media type also return `415`.
 
 Parse the supplied body as a JSON object containing an `items` array of exactly
 100 objects.
@@ -121,6 +125,8 @@ also returns `400`. No seed is required or accepted in the query.
 `POST /upload` accepts `Content-Type: multipart/form-data; boundary=...`.
 A missing or unsupported media type returns `415`. A multipart media type
 with a missing or invalid boundary, or a malformed multipart body, returns `400`.
+Check the media type before parsing the body; an unsupported media type still
+returns `415` when its body is malformed.
 Accept different valid boundaries; do not hard-code the fixture's boundary.
 
 Require exactly one part named `file`, and it must be an uploaded file.
@@ -129,6 +135,11 @@ may be ignored; no seed is required. A query parameter or text field cannot
 supply the file. Missing or repeated `file` parts return `400`; do not silently
 select the first or last repeated part. The uploaded filename and file media
 type may differ from those of the fixture.
+
+Parts with `filename=""` represent unselected file inputs and may be ignored,
+including when counting repeated `file` parts. If no uploaded file remains,
+return `400`. A zero-byte file with a nonempty filename is an uploaded file
+and must be accepted.
 
 Read the first and last file bytes as unsigned integers from `0` to `255` and
 compute a lowercase SHA-256 digest of every uploaded byte. Hash only the file

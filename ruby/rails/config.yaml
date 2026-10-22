@@ -30,4 +30,5 @@ framework:
     RAILS_ENV: production
     RAILS_LOG_ENABLED: "false"
     SECRET_KEY_BASE_DUMMY: "1"
+    # Keep YJIT off during boot; Rails enables it after production initialization.
     RUBY_YJIT_ENABLE: 0

@@ -1,8 +1,11 @@
 require 'rack/multipart'
 require 'rack/tempfile_reaper'
+require 'rack/media_type'
 
 class UploadTempfileCleanup < Rack::TempfileReaper
   def call(env)
+    return @app.call(env) unless Rack::MediaType.type(env['CONTENT_TYPE']) == 'multipart/form-data'
+
     tempfiles = env['rack.tempfiles'] ||= []
     factory = env['rack.multipart.tempfile_factory'] || Rack::Multipart::Parser::TEMPFILE_FACTORY
 

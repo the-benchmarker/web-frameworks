@@ -12,8 +12,4 @@ class ApplicationController < ActionController::API
   def bad_request
     head :bad_request
   end
-
-  def unsupported_media_type
-    head :unsupported_media_type
-  end
 end

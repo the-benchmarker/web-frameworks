@@ -1,15 +1,14 @@
 class DeserializationsController < ApplicationController
-  before_action :require_json, :set_items, only: :create
+  use RequestMediaType, 'application/json', only: :create
+  use JsonBodyLength, only: :create
+
+  before_action :set_items, only: :create
 
   def create
     render json: DeserializationSummary.call(items: @items)
   end
 
   private
-
-  def require_json
-    unsupported_media_type unless request.content_mime_type&.json?
-  end
 
   def set_items
     return bad_request unless request.query_string.empty?
