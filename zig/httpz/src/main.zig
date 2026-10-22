@@ -6,10 +6,10 @@ pub fn main(init: std.process.Init) !void {
     var gpa = std.heap.DebugAllocator(.{}){};
 
     defer {
-        if (build_mode == .Debug) _ = gpa.deinit();
+        if (build_mode == .debug) _ = gpa.deinit();
     }
 
-    const allocator = if (build_mode == .Debug) gpa.allocator() else std.heap.smp_allocator;
+    const allocator = if (build_mode == .debug) gpa.allocator() else std.heap.smp_allocator;
     const cpu_count = try std.Thread.getCpuCount();
 
     var server = try httpz.Server(void).init(init.io,allocator, .{ .address = .all(3000), .workers = .{

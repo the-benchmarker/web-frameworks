@@ -1,0 +1,17 @@
+.{
+    .name = .anole_bench,
+    .version = "0.1.0",
+    .fingerprint = 0xb5c1fa0ec9d559ce,
+    .minimum_zig_version = "0.17.0",
+    .dependencies = .{
+        .anole = .{
+            .url = "git+https://github.com/xuckless/anole?ref=v0.1.2#b0f2eb0c257a885f626189eab758cb31afa66da6",
+            .hash = "anole-0.1.2-WO_-F19VYgBmLKH0ibJxywZYNKvBZ9Cv5KHLWDPwi5vt",
+        },
+    },
+    .paths = .{
+        "src/",
+        "build.zig",
+        "build.zig.zon",
+    },
+}
