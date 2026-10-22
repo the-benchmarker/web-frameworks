@@ -20,7 +20,7 @@ From established full-stack platforms to small HTTP routers, this repository put
 
 ## 🧪 Benchmark contract
 
-Every implementation is expected to listen on port `3000` and provide the same responses:
+Every implementation listens on port `3000`. The v1 contract defines these routes:
 
 | Method | Route | Expected status | Expected body |
 |:--|:--|:--:|:--|
@@ -31,7 +31,8 @@ Every implementation is expected to listen on port `3000` and provide the same r
 Before a v1 implementation is benchmarked, the shared [RSpec contract](.spec/v1/route_spec.rb) verifies these routes. The default v1 benchmark runs `GET /` for 15 seconds using `zrk --closed` and keep-alive, and records a JSON report. Concurrency and routes are configurable.
 
 Each framework's `config.yaml` selects its contract with a top-level `specs: v1`
-or `specs: v2`. The default is v1; Rails currently selects the six-workload
+or `specs: v2`. The default is v2; every framework except Rails currently opts
+into v1 explicitly. Rails selects the six-workload
 [v2 scenario](SCENARIO.md): routing, JSON serialization/deserialization, and
 multipart uploads. Generate the commands before building the implementation:
 

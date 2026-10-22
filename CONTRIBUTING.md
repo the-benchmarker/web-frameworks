@@ -5,11 +5,12 @@ methodology, and documentation are welcome.
 
 ## Benchmark API
 
-Every implementation listens on port `3000`. The default v1 workload checks
+Every implementation listens on port `3000`. The v1 contract checks
 `GET /`, `GET /user/0`, and `POST /user`. The six-route stateless v2 workload
 and exact responses are defined in [SCENARIO.md](SCENARIO.md). Set a top-level
-`specs: v1` or `specs: v2` in the framework's `config.yaml`; v1 is the default
-and Rails currently selects v2. Run `bundle exec rake config` to generate commands.
+`specs: v1` or `specs: v2` in the framework's `config.yaml`; v2 is the default.
+Rails selects v2, and every other framework explicitly selects v1.
+Run `bundle exec rake config` to generate commands.
 The generated test target runs `bundle exec rspec`; RSpec reads the framework
 config and excludes the other version's suite in `.spec/v1` or `.spec/v2`.
 Route definitions live in [`.tasks/workloads.rb`](.tasks/workloads.rb), and
@@ -20,9 +21,10 @@ on the same scenario version and keep their results separate.
 ### Rails reference
 
 Rails implements v2 through API controllers, callbacks, and small response
-services. JSON and multipart request bodies have a 64 KiB limit, including
-chunked requests. See the
-[Rails README](ruby/rails/README.md) for Docker testing and implementation notes.
+services. It parses the supplied JSON and multipart bodies, hashes uploaded
+tempfiles in chunks, and cleans up temporary uploads after each request. The
+Rails application does not configure a 64 KiB request-body limit. See
+[SCENARIO.md](SCENARIO.md) for validation and load payloads.
 
 ### Spring deployment
 
@@ -40,8 +42,9 @@ at its ingress. These controls are outside the fixed endpoint workload.
 
 Keep responses and request fixtures deterministic. Parse values through the
 framework's ordinary HTTP and JSON facilities, then perform the specified
-work. Avoid caching completed responses or replacing parsing with a fixed
-answer. Return errors for malformed input as defined by the selected contract.
+work. Load scripts vary the POST bodies at a fixed size while specs retain the
+shared fixtures. Avoid caching completed responses or replacing parsing with a
+fixed answer. Return errors for malformed input as defined by the selected contract.
 
 ## Adding a framework
 
@@ -66,14 +69,15 @@ Dockerfiles, before framework files. `bundle exec rake config` copies the
 fixture into each Docker build context.
 
 Add a target for the implementation in `Makefile` and `neph.yaml`, and its
-repository metadata in `benchmarker.cr`. Use the shared route spec to check
-the v1 contract. When v2 is implemented, set `specs: v2` in its `config.yaml`
-and verify every route over HTTP against its Docker container.
+repository metadata in `benchmarker.cr`. New implementations default to v2;
+set `specs: v1` explicitly for implementations of the legacy contract. When
+migrating to v2, remove that override or set `specs: v2`, and verify every route
+over HTTP against the framework's Docker container.
 
 ## Running in Docker
 
 Install Docker, Ruby and Bundler, `jq`, and
-[`zrk`](https://github.com/zoxy-io/zrk) 2.4 or newer. Generate the manifests:
+[`zrk`](https://github.com/zoxy-io/zrk) 3.0.0 or newer for Lua support. Generate the manifests:
 
 ```bash
 bundle install

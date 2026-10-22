@@ -4,7 +4,7 @@ module BenchmarkWorkloads
     ['GET', '/serialization'], ['POST', '/deserialization'], ['POST', '/upload']
   ].freeze
 
-  def self.routes(specs: 'v1')
+  def self.routes(specs: 'v2')
     raise ArgumentError, 'specs must be v1 or v2' unless %w[v1 v2].include?(specs)
 
     return specs == 'v2' ? V2_ROUTES : [['GET', '/']] unless ENV.key?('ROUTES')

@@ -94,8 +94,10 @@ including validation and parsing failures.
 
 ## Validation and load requests
 
-Set `specs: v2` at the top level of the framework's `config.yaml` to select this
-contract. Rails currently uses v2; other frameworks default to `specs: v1`.
+This contract is the default when a framework's `config.yaml` omits `specs`.
+Set `specs: v1` explicitly to use the legacy contract, or `specs: v2` to select
+this contract explicitly. Rails currently uses v2; every other framework
+explicitly selects v1. RSpec also defaults to v2 when no framework is selected.
 RSpec loads [.spec](.spec) and selects [.spec/v1](.spec/v1) or [.spec/v2](.spec/v2)
 from the framework config, excluding the other suite. To validate a running Rails server:
 
@@ -103,10 +105,28 @@ from the framework config, excluding the other suite. To validate a running Rail
 LANGUAGE=ruby FRAMEWORK=rails BENCHMARK_URL=http://127.0.0.1:3000 bundle exec rspec
 ```
 
-The Lua scripts in [.load_scripts](.load_scripts/README.md) generate load requests.
-They vary path IDs and serialization seeds, and send the exact root
-`deserialization.json` and `upload.bin` bytes for the POST workloads. The server
-must process the supplied bodies, rather than read these fixtures itself.
+The Lua scripts in [.load_scripts](.load_scripts) generate load requests using
+zrk 3.0.0 or newer. They vary path IDs, serialization seeds, and POST bodies:
+
+- Deserialization preserves the 100-item fixture structure and other fields,
+  converts every ID to a six-digit number, and varies five IDs using a random
+  prefix, thread ID, and counter. IDs stay between `100000` and `999999`; JSON
+  numbers cannot be padded with leading zeros. The body length stays constant.
+- Upload repeats the 4 KiB fixture to produce a 256 KiB file, replacing its first
+  30 bytes with the same kind of fixed-width token on each request. Both the file
+  size and multipart framing stay constant.
+
+The counter prevents repeated bodies within a thread, the thread ID separates
+threads, and a random prefix read once per Lua state separates runs. Fixture
+files and their expected spec responses remain unchanged. The server must
+process the supplied bodies, rather than read these fixtures itself.
+
+These workloads use `setup(thread)`, `init(args)`, and `request()` without a
+`response()` hook. Check client CPU usage and zrk's `workload.next` and
+`workload.thread_share` metrics when measuring generator overhead; those hook
+metrics exclude zrk's request copying/parsing and lock waiting. Use HTTP/1.1 or
+HTTP/2 for uploads: zrk 3.0.0 limits HTTP/3 requests to about 4 KiB including
+headers. See the [zrk release notes](https://github.com/zoxy-io/zrk/releases/tag/v3.0.0).
 
 The v1 suite keeps the historical contract (`GET /`, `GET /user/0`, and
 `POST /user`). Servers without a supported framework facility report that workload as

@@ -6,9 +6,9 @@ RSpec.configure do |config|
 
   specs = if ENV['LANGUAGE'] && ENV['FRAMEWORK']
             path = File.join(HttpHelpers::ROOT, ENV.fetch('LANGUAGE'), ENV.fetch('FRAMEWORK'), 'config.yaml')
-            YAML.safe_load_file(path).fetch('specs', 'v1')
+            YAML.safe_load_file(path).fetch('specs', 'v2')
           else
-            'v1'
+            'v2'
           end
   raise ArgumentError, 'specs must be v1 or v2' unless %w[v1 v2].include?(specs)
 

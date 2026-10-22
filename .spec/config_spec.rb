@@ -26,17 +26,32 @@ RSpec.describe 'benchmark request generation' do
 
   def stub_framework_specs(version)
     path = File.join(HttpHelpers::ROOT, 'ruby', 'rails', 'config.yaml')
-    config = YAML.safe_load_file(path).merge('specs' => version)
+    config = YAML.safe_load_file(path).except('specs')
+    config['specs'] = version unless version.nil?
     allow(YAML).to receive(:safe_load_file).and_call_original
     allow(YAML).to receive(:safe_load_file).with(path).and_return(config)
   end
 
-  it 'uses v1 workloads by default' do
+  it 'honors the explicit v1 selection for Sinatra' do
     commands = generated_commands('sinatra')
 
     expect(commands.fetch(:warmup).length).to eq(1)
     expect(commands.fetch(:warmup).first).to include('/.load_scripts/default.lua', ':3000/ ')
     expect(commands.fetch(:test).first).to eq('ENGINE=puma LANGUAGE=ruby FRAMEWORK=sinatra bundle exec rspec')
+  end
+
+  it 'uses v2 workloads when the framework does not specify a version' do
+    stub_framework_specs(nil)
+
+    expect(generated_commands.fetch(:warmup).length).to eq(6)
+  end
+
+  it 'defaults to v2 workloads when no config layer specifies a version' do
+    allow(YAML).to receive(:safe_load_file).and_wrap_original do |method, *args|
+      method.call(*args).except('specs')
+    end
+
+    expect(generated_commands.fetch(:warmup).length).to eq(6)
   end
 
   it 'uses all six workloads for Rails' do
