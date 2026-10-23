@@ -4,17 +4,17 @@ const log = std.log.scoped(.@"examples/basic");
 pub const std_options: std.Options = .{ .log_level = .err };
 
 const zzz = @import("zzz");
-const http = zzz.HTTP;
+const http = zzz.http;
+const Secsock = zzz.Secsock;
 
 const tardy = zzz.tardy;
 const Tardy = tardy.Tardy(.epoll);
 const Runtime = tardy.Runtime;
-const Socket = tardy.Socket;
 
 const Server = http.Server;
 const Router = http.Router;
 const Context = http.Context;
-const Route = http.Route;
+const Route = http.Router.Route;
 const Respond = http.Respond;
 
 fn signal_handler(sig: std.os.linux.SIG) callconv(.c) void {
@@ -63,14 +63,13 @@ pub fn main(init: std.process.Init) !void {
     var router = try Router.init(init.gpa, &.{ Route.init("/").get({}, base_handler).layer(), Route.init("/user/%s").get({}, user_id).layer(), Route.init("/user").post({}, user).layer() }, .{});
     defer router.deinit(init.gpa);
 
-    var socket = try Socket.init(init.io, .{ .tcp = .{ .host = host, .port = port } });
-    defer socket.close_blocking();
-    try socket.bind();
-    try socket.listen(4096);
+    const transport: Secsock.Unsecured = .empty;
+    const socket = try transport.tcp(init.gpa, .{ .host = host, .port = port, .backlog = 4096 });
+    defer socket.deinit(init.gpa);
 
     const EntryParams = struct {
         router: *const Router,
-        socket: Socket,
+        socket: *const Secsock,
     };
 
 
@@ -79,16 +78,17 @@ pub fn main(init: std.process.Init) !void {
     try stdout.writeStreamingAll(init.io, "Ready to serve!\n");
 
     try t.entry(
-        EntryParams{ .router = &router, .socket = socket },
+        EntryParams{ .router = &router, .socket = &socket },
         struct {
             fn entry(rt: *Runtime, p: EntryParams) !void {
                 var server = Server.init(.{
-                    .stack_size = 1024 * 1024 * 4,
-                    .socket_buffer_bytes = 1024 * 2,
-                    .keepalive_count_max = null,
-                    .connection_count_max = 512,
+                    .stack_size = .@"4MiB",
+                    .socket_buffer_size = .@"2KiB",
+                    .max_keepalive_count = null,
+                    .max_connection_count = 512,
                 });
-                server.serve(rt, p.router, .{ .normal = p.socket }) catch |err| {
+                defer server.deinit();
+                server.serve(rt, p.router, p.socket) catch |err| {
                     if (err == error.FileDescriptorClosed or err == error.OperationAborted) {
                         return; // Exit gracefully
                     }
