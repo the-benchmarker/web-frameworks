@@ -1,6 +1,6 @@
-using Verstappen;
+using CallMeJerry;
 
-var app = new Max();
+var app = new JerryServer();
 
 app.Get("/", static _ => { });
 
