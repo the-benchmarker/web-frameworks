@@ -5,7 +5,7 @@ class DeserializationsController < ApplicationController
   before_action :set_items, only: :create
 
   def create
-    render json: DeserializationSummary.call(items: @items)
+    render json: { count: @items.length, checksum: @items.sum { |item| item.fetch('id').to_i } }
   end
 
   private

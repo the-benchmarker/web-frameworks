@@ -1,10 +1,25 @@
+require 'digest'
+
 class UploadsController < ApplicationController
   use RequestMediaType, 'multipart/form-data', only: :create
 
   before_action :set_upload_parameters, only: :create
 
   def create
-    render json: UploadSummary.call(file: @file)
+    first_byte = last_byte = nil
+
+    unless @file.size.zero?
+      @file.rewind
+      first_byte = @file.read(1).getbyte(0)
+      @file.tempfile.seek(-1, IO::SEEK_END)
+      last_byte = @file.read(1).getbyte(0)
+    end
+
+    render json: {
+      first_byte: first_byte,
+      last_byte: last_byte,
+      checksum: Digest::SHA256.file(@file.tempfile.path).hexdigest
+    }
   end
 
   private

@@ -2,7 +2,7 @@ class SerializationsController < ApplicationController
   before_action :set_seed, only: :show
 
   def show
-    render json: SerializedItems.call(seed: @seed)
+    render json: 100.times.map { { seed: @seed } }
   end
 
   private
