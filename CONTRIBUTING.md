@@ -1,64 +1,60 @@
-## How to contribute ?
+# Contributing
 
-Contributions of any kind a :heart: accepted
+Contributions to framework implementations, correctness checks, benchmark
+methodology, and documentation are welcome.
 
-- Adding new frameworks
-- Fix some frameworks
-- Update dependencies
-- Discuss best practices
+## Benchmark API
 
-## Running the benchmarks
+Every implementation listens on port `3000`. The v1 contract checks
+`GET /`, `GET /user/0`, and `POST /user`. The six-route stateless v2 workload
+and exact responses are defined in [SCENARIO.md](SCENARIO.md). Set a top-level
+`specs: v1` or `specs: v2` in the framework's `config.yaml`; v2 is the default.
+Rails selects v2, and every other framework explicitly selects v1.
+Run `bundle exec rake config` to generate commands.
+The generated test target runs `bundle exec rspec`; RSpec reads the framework
+config and excludes the other version's suite in `.spec/v1` or `.spec/v2`.
+Route definitions live in [`.tasks/workloads.rb`](.tasks/workloads.rb), and
+request fixtures live at the repository root.
+Warmup and collection run every selected route separately. Compare frameworks
+on the same scenario version and keep their results separate.
 
-Only needed to run benchmarks locally (`./run.sh`) — CI builds each framework
-and checks its routes, but never benchmarks, so none of this is required to
-open a pull request.
+### Rails reference
 
-- **Docker**, to build and run each framework
-- **Ruby** + `bundle install`, for the `rake` tasks that generate the
-  per-framework `.Dockerfile`/`.Makefile`
-- **[zrk](https://github.com/zoxy-io/zrk) >= 2.4.0**, the load generator the
-  `collect` targets shell out to. `brew install zoxy-io/tap/zrk`, or grab a
-  static binary from the [releases](https://github.com/zoxy-io/zrk/releases).
-  It must be on `PATH`. The harness runs it in `--closed` mode (added in
-  2.2.0) and is validated on 2.4.x; `run.sh` enforces the minimum.
+Rails implements v2 through API controllers, callbacks, and small response
+services. It parses the supplied JSON and multipart bodies, hashes uploaded
+tempfiles in chunks, and cleans up temporary uploads after each request. The
+Rails application does not configure a 64 KiB request-body limit. See
+[SCENARIO.md](SCENARIO.md) for validation and load payloads.
+
+### Spring deployment
+
+The Spring implementation uses Spring Boot 4.1.1 on Java 25 LTS and validates
+numeric user IDs, compute inputs, and upload filenames. JSON bodies for
+`/deserialization` and `/compute` are limited to 64 KiB, including requests
+sent with chunked transfer encoding;
+multipart requests are limited to 64 KiB. Invalid input receives an HTTP error
+with Spring's Problem Details response. The generated container runs as UID
+10001, and the server allows up to 20 seconds for graceful shutdown.
+
+The benchmark requests are unauthenticated. Deploy the benchmark service on a
+private network; a public deployment needs TLS, access control, and rate limits
+at its ingress. These controls are outside the fixed endpoint workload.
+
+Keep responses and request fixtures deterministic. Parse values through the
+framework's ordinary HTTP and JSON facilities, then perform the specified
+work. Load scripts vary the POST bodies at a fixed size while specs retain the
+shared fixtures. Avoid caching completed responses or replacing parsing with a
+fixed answer. Return errors for malformed input as defined by the selected contract.
 
 ## Adding a framework
 
-Pin image and toolchain versions directly in the language Dockerfiles. Store
-language and runtime `version` values in the language `config.yaml` as quoted
-`X.Y` strings, for example `version: '1.20'`. Image patch versions and distribution
-suffixes are omitted from this metadata. Each framework inherits the language's
-shared runtime version. Keep language standards and runtime names in separate
-`standard` and `runtime` fields.
+Add the implementation under `<language>/<framework>/` and its `config.yaml`.
+The root, language, and framework configs are merged in that order. Define
+`bootstrap` as a YAML list of shell commands. Dockerfile generation applies
+root commands, language commands, selected engine commands, framework commands,
+then inline framework engine commands. Their order and repetitions are kept.
 
-Renovate synchronizes language metadata after updating Dockerfiles and checks
-that build and runtime pins agree before running. In the Renovate container,
-run `ruby .github/scripts/sync-language-versions.rb --check` to verify the pins,
-or omit `--check` to synchronize metadata.
-
-Set `reviewers` as a top-level list of GitHub usernames in
-`<language>/config.yaml` for language defaults or
-`<language>/<framework>/config.yaml` for framework-specific reviewers:
-
-```yaml
-reviewers:
-  - your-github-username
-```
-
-Framework reviewers override language reviewers. Renovate uses `@waghanza`
-when neither config defines reviewers. An empty list disables reviewer requests
-for that language or framework. Reviewer requests also apply to auto-merge PRs.
-
-Define `bootstrap` as a YAML list of shell commands. Dockerfile generation
-concatenates commands from the root config, the language config (for example,
-`javascript/config.yaml`), then the framework config (for example,
-`javascript/nextjs/config.yaml`). Within each file, commands run in this order:
-top-level bootstrap, language bootstrap, selected language engine bootstrap,
-framework bootstrap, then inline framework engine bootstrap. Command order and
-repeated commands are preserved, so language dependency installation runs before
-framework build commands.
-
-Define `environment` as YAML key/value pairs:
+Define `environment` as YAML key/value pairs when needed:
 
 ```yaml
 environment:
@@ -66,25 +62,40 @@ environment:
   NEXT_TELEMETRY_DISABLED: 1
 ```
 
-Environment mappings merge from the root config, then the language config, then
-the framework config. Within each file, the order is top-level environment,
-language environment, selected language engine environment, framework environment,
-then inline framework engine environment. Later values override duplicate keys;
-variables for other engines are excluded. Each resulting pair renders as one
-`ENV KEY=value` instruction in the Dockerfile.
+Later config layers override earlier values. Each resulting pair becomes an
+`ENV KEY=value` instruction in the Dockerfile. The root config adds
+`COPY test.bin /test.bin` immediately after every `FROM` in generated
+Dockerfiles, before framework files. `bundle exec rake config` copies the
+fixture into each Docker build context.
 
-- All frameworks **SHOULD** follow this rules :
+Add a target for the implementation in `Makefile` and `neph.yaml`, and its
+repository metadata in `benchmarker.cr`. New implementations default to v2;
+set `specs: v1` explicitly for implementations of the legacy contract. When
+migrating to v2, remove that override or set `specs: v2`, and verify every route
+over HTTP against the framework's Docker container.
 
-| HTTP   | Route       | Status code | Response body         |
-| ------ | ----------- | ----------- | --------------------- |
-| `GET`  | `/`         | `200`       | **Empty**             |
-| `GET`  | `/user/:id` | `200`       | **id** given as param |
-| `POST` | `/user`     | `200`       | **Empty**             |
+## Running in Docker
 
-- All framework **SHOULD** contain a `Dockerfile`
+Install Docker, Ruby and Bundler, `jq`, and
+[`zrk`](https://github.com/zoxy-io/zrk) 3.0.0 or newer for Lua support. Generate the manifests:
 
-- All framework **SHOULD** be referenced in :
-  - `Makefile`, a target group for the language, and a target for the framework
-  - `neph.yaml`, a target group for the language, and a target for the framework
-  - `benchmarker.cr`, a hash for language containing all frameworks an
-    repository information
+```bash
+bundle install
+bundle exec rake config
+```
+
+Then use the generated `.Makefile` for one framework. For example:
+
+```bash
+make -f java/spring/.Makefile build
+make -f java/spring/.Makefile test
+make -f java/spring/.Makefile warmup
+mkdir -p java/spring/.results/{64,256,512}
+make -f java/spring/.Makefile collect
+make -f java/spring/.Makefile unbuild
+```
+
+`CONCURRENCIES`, `DURATION`, `THREADS`, `SERVER_CPUS`, `LOAD_CPUS`, and
+`LATENCY_RATE` control the run. The selected spec suite validates the full
+contract even when `ROUTES` limits the measured workloads. Compare measurements made
+with the same benchmark revision, hardware, runtime variant, and workload.

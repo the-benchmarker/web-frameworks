@@ -20,7 +20,7 @@ From established full-stack platforms to small HTTP routers, this repository put
 
 ## 🧪 Benchmark contract
 
-Every implementation is expected to listen on port `3000` and provide the same responses:
+Every implementation listens on port `3000`. The v1 contract defines these routes:
 
 | Method | Route | Expected status | Expected body |
 |:--|:--|:--:|:--|
@@ -28,7 +28,38 @@ Every implementation is expected to listen on port `3000` and provide the same r
 | `GET` | `/user/:id` | `2xx` | The `id` path parameter |
 | `POST` | `/user` | `2xx` | Empty |
 
-Before an implementation is benchmarked, the shared [RSpec contract](.spec/route_spec.rb) verifies these routes. The default generated benchmark runs `GET /` for 15 seconds using `zrk --closed` and keep-alive, and records a JSON report. Concurrency and routes are configurable.
+Before a v1 implementation is benchmarked, the shared [RSpec contract](.spec/v1/route_spec.rb) verifies these routes. The default v1 benchmark runs `GET /` for 15 seconds using `zrk --closed` and keep-alive, and records a JSON report. Concurrency and routes are configurable.
+
+Each framework's `config.yaml` selects its contract with a top-level `specs: v1`
+or `specs: v2`. The default is v2; every framework except Rails currently opts
+into v1 explicitly. Rails selects the six-workload
+[v2 scenario](SCENARIO.md): routing, JSON serialization/deserialization, and
+multipart uploads. Generate the commands before building the implementation:
+
+```bash
+bundle exec rake config
+make -f ruby/rails/.Makefile build
+make -f ruby/rails/.Makefile test
+```
+
+The generated commands use the workloads selected by the config. RSpec reads the
+framework config and excludes the other version's specs automatically.
+Request bodies and varying inputs are controlled by Lua scripts in
+[`.load_scripts/`](.load_scripts/README.md), shared by warmup and both measurement
+passes. Deserialization has no query parameters or seed: its JSON body contains
+exactly 100 items. Serialization takes only an eight-letter lowercase `seed`.
+Every request advertises identity encoding; specs also advertise compression to
+verify that responses stay uncompressed.
+
+To test an already running implementation directly:
+
+```bash
+LANGUAGE=ruby FRAMEWORK=rails BENCHMARK_URL=http://127.0.0.1:3000 bundle exec rspec
+```
+
+Set `LANGUAGE` and `FRAMEWORK` to the server under test. An implementation must
+pass the full selected correctness suite before its results are collected;
+`ROUTES` only limits which workloads are measured.
 
 Collected fields include requests per second, total data received, run duration, and the p50, p75, p90, and p99 latency percentiles. Benchmark configuration is generated from three YAML layers:
 
@@ -83,7 +114,7 @@ bundle exec rake config
 Run the helper tests and check language version metadata with:
 
 ```bash
-bundle exec rspec .spec/helpers_spec.rb
+bundle exec rspec .spec/helpers_spec.rb .spec/config_spec.rb
 ruby .github/scripts/sync-language-versions.rb --check
 ```
 
@@ -186,6 +217,7 @@ Renovate has no built-in manager for those formats.
 |:--|:--|
 | `<language>/<framework>/` | Framework implementation and configuration |
 | `.spec/` | Shared HTTP correctness contract |
+| `.load_scripts/` | Lua scripts for request bodies and varying inputs |
 | `.tasks/` | Configuration, CI, collection, cloud, and database tasks |
 | `.github/workflows/ci.yml` | Changed-implementation CI matrix |
 | `config.yaml` | Global providers and execution templates |

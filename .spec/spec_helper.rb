@@ -1,25 +1,24 @@
-# frozen_string_literal: true
-
-require 'net/http'
 require 'yaml'
+require_relative 'support/http_helpers'
 
 RSpec.configure do |config|
-  config.expect_with :rspec do |expectations|
-    expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+  config.include HttpHelpers
+
+  specs = if ENV['LANGUAGE'] && ENV['FRAMEWORK']
+            path = File.join(HttpHelpers::ROOT, ENV.fetch('LANGUAGE'), ENV.fetch('FRAMEWORK'), 'config.yaml')
+            YAML.safe_load_file(path).fetch('specs', 'v2')
+          else
+            'v2'
+          end
+  raise ArgumentError, 'specs must be v1 or v2' unless %w[v1 v2].include?(specs)
+
+  suite_path = %r{/\.spec/(v[12])/}
+  config.define_derived_metadata(file_path: suite_path) do |metadata|
+    metadata[:specs] = metadata[:file_path][suite_path, 1]
   end
+  config.filter_run_excluding specs: specs == 'v2' ? 'v1' : 'v2'
 
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
   end
-
-  config.shared_context_metadata_behavior = :apply_to_host_groups
-end
-
-def http
-  language = ENV.fetch('LANGUAGE', nil)
-  framework = ENV.fetch('FRAMEWORK', nil)
-  engine = ENV.fetch('ENGINE', nil)
-
-  ip = File.read(File.join(language, framework, "ip-#{engine}.txt")).strip
-  Net::HTTP.new(ip, 3000)
 end
