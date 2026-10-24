@@ -6,4 +6,4 @@ requires = ["flit_core"]
 name = "server"
 version = "1.0.0"
 description = "the-benchmarker entry for mq-bridge-py"
-dependencies = ['mq-bridge>=1.0.1,<1.1.0']
+dependencies = ['mq-bridge>=1.1.0,<1.2.0']
