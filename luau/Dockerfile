@@ -15,7 +15,7 @@ RUN ARCH=$(echo "$TARGETARCH" | sed -e 's/arm64/aarch64/' -e 's/amd64/x86_64/') 
 
 
 
-FROM gcr.io/distroless/cc-debian13@sha256:b2e43dc72acf58a146ed6feaf350806ae3bf4243eb5c68062d06bc13228ca2bd
+FROM gcr.io/distroless/cc-debian13@sha256:d74d144baa124dd9defd01d71872bb56c49d4441dba6153ccf790364f97e64b1
 
 ARG LUTE_VERSION
 ENV LUTE_VERSION=${LUTE_VERSION}
