@@ -32,7 +32,7 @@ RUN chown -R ziguser src
 # Switch to the non-root user
 USER ziguser
 
-RUN zig build -Doptimize=ReleaseFast
+RUN zig build -Doptimize=ReleaseSafe
 
 
 
