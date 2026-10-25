@@ -3,11 +3,11 @@ reviewers:
 
 framework:
   github: Tuntii/viltrum
-  version: 1.12
+  version: 1.13
 
   # Installed as the `viltrum` module (import viltrum).
   download:
-    - mkdir -p $HOME/.vmodules && git clone --depth 1 --branch v1.12.0 https://github.com/Tuntii/viltrum $HOME/.vmodules/viltrum
+    - mkdir -p $HOME/.vmodules && git clone --depth 1 --branch v1.13.0 https://github.com/Tuntii/viltrum $HOME/.vmodules/viltrum
 
   build_flags:
     - -prod

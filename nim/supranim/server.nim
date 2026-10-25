@@ -11,11 +11,11 @@ import pkg/supranim/core/[request, router, response]
 include ./routes
 
 import ./controller/[pages, errors]
+import ./configs
 
 initApplication()
 initHttpRouter()
 
-App.configs = newOrderedTable[string, Configuration]()
-App.configs["server"] = parseConfiguration(".yml", "port: 3000")
+App.configureServer()
 
 App.run()
