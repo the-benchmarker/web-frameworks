@@ -1,4 +1,4 @@
-FROM debian:stable-slim AS build
+FROM debian:13-slim AS build
 
 WORKDIR /opt/vlang
 
@@ -29,7 +29,7 @@ ENV PATH=/opt/vlang:$PATH \
 # run `fresh_tcc` first, while it still applies.
 RUN git clone https://github.com/vlang/v /opt/vlang && \
     cd /opt/vlang && \
-    git checkout 7647ce1c6fad63b5578bc07883139906de74b2f8 && \
+    git checkout 0.5.2 && \
     make fresh_tcc && \
     git clone --filter=blob:none https://github.com/vlang/vc ./vc && \
     git -C ./vc checkout 7eb8c54a3843e5107d5af06d7a8c3e928f322475 && \
@@ -55,7 +55,7 @@ RUN v {{#build_flags}} {{{.}}} {{/build_flags}} . -o server
 
 
 
-FROM debian:stable-slim
+FROM debian:13-slim
 
 WORKDIR /app
 

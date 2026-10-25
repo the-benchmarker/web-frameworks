@@ -13,7 +13,7 @@ framework:
     - mkdir -p var/gate && chown www-data var/gate
     - chown www-data public
     - php vendor/bin/sky warm # generate cache before start
-  
+
   nginx_conf:
     - |
       location / {

@@ -1,9 +1,8 @@
-# syntax=docker/dockerfile:1
 {{#language.version}}
-  FROM php:{{{.}}}-fpm{{#language.dist}}-{{{.}}}{{/language.dist}}
+FROM php:{{language.version}}-fpm
 {{/language.version}}
 {{^language.version}}
-  FROM php:8.5-fpm
+FROM php:8.5-fpm
 {{/language.version}}
 
 RUN apt-get -qq update && \

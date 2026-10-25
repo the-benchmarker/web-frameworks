@@ -1,4 +1,4 @@
-FROM crystallang/crystal:{{language.version}} AS build
+FROM crystallang/crystal:1.22 AS build
 
 {{#build_deps.length}}
   ARG DEBIAN_FRONTEND=noninteractive
@@ -15,11 +15,11 @@ WORKDIR /usr/src/app
 
 RUN shards lock
 
-RUN --mount=type=cache,id=shards-lib-{{language.version}},target=lib \
-  --mount=type=cache,id=shards-cache-{{language.version}},target=/root/.cache/shards \
+RUN --mount=type=cache,id=shards-lib-1.22,target=lib \
+  --mount=type=cache,id=shards-cache-1.22,target=/root/.cache/shards \
   shards install --production
 
-RUN --mount=type=cache,id=shards-lib-{{language.version}},target=lib \
+RUN --mount=type=cache,id=shards-lib-1.22,target=lib \
   shards build --release --no-debug
 
 

@@ -1,6 +1,6 @@
 ARG LUTE_VERSION=1.0.0
 
-FROM buildpack-deps:curl AS bin
+FROM buildpack-deps:trixie-curl AS bin
 
 RUN apt-get update && apt-get install -y --no-install-recommends unzip \
     && rm -rf /var/lib/apt/lists/*
@@ -15,7 +15,7 @@ RUN ARCH=$(echo "$TARGETARCH" | sed -e 's/arm64/aarch64/' -e 's/amd64/x86_64/') 
 
 
 
-FROM gcr.io/distroless/cc-debian13
+FROM gcr.io/distroless/cc-debian13@sha256:d74d144baa124dd9defd01d71872bb56c49d4441dba6153ccf790364f97e64b1
 
 ARG LUTE_VERSION
 ENV LUTE_VERSION=${LUTE_VERSION}

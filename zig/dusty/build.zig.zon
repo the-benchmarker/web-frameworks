@@ -2,15 +2,15 @@
     .name = .dusty_bench,
     .version = "0.1.0",
     .fingerprint = 0x5e0c4112e8839e83,
-    .minimum_zig_version = "0.16.0",
+    .minimum_zig_version = "0.17.0",
     .dependencies = .{
         .dusty = .{
-            .url = "git+https://github.com/lalinsky/dusty?ref=v0.4.0#ae164fac083fa09b9d38a1c0e0390334fca73268",
-            .hash = "dusty-0.4.0-Qdw7RhP6IQCs3kBJp-Dry4lnydsZ0d5Hl31uCZKK83ii",
+            .url = "git+https://github.com/lalinsky/dusty?ref=v0.4.0#9f74f97b91774c1f6e8c66da03403deb89be05a3",
+            .hash = "dusty-0.4.0-Qdw7RoP5IQC_GLRxQ4dU6Y0RyXRx6YAjP16tVT9sowy4",
         },
         .zio = .{
-            .url = "git+https://github.com/lalinsky/zio?ref=v0.19.1#4daa0c0a9522a37c4d28e3dcec2515cc955abe71",
-            .hash = "zio-0.19.1-xHbVVJXzKwAKLRAABWeDvQG9Dg1kf9FM3haWG0YqtScn",
+            .url = "git+https://github.com/lalinsky/zio?ref=main#e6e7b546f135bf50a3757f78994fd7edfa2fac60",
+            .hash = "zio-0.19.0-xHbVVBk2LQC-Vxp1X6o0y0rI0qGck1Uy2ctsd-kQoHR8",
         },
     },
     .paths = .{

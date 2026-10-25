@@ -1,7 +1,4 @@
 defmodule Server do
-  @compile :native
-  @compile {:hipe, [:verbose, :o3]}
-
   def init(%{method: "GET", path: "/"} = request, state) do
     {:ok, :cowboy_req.reply(200, %{}, "", request), state}
   end

@@ -1,7 +1,12 @@
 language:
-  version: ES2019
+  standard: ES2019
+  version: '26.0'
   node:
-    version: 26-slim
+    version: '26.0'
+  bun:
+    version: '1.4'
+  deno:
+    version: '2.9'
 
   engines:
     node:
