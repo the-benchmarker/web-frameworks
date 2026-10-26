@@ -12,4 +12,8 @@ class ApplicationController < ActionController::API
   def bad_request
     head :bad_request
   end
+
+  def require_media_type(expected_type)
+    head :unsupported_media_type unless request.media_type == expected_type
+  end
 end

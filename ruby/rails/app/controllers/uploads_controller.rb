@@ -1,8 +1,7 @@
 require 'digest'
 
 class UploadsController < ApplicationController
-  use RequestMediaType, 'multipart/form-data', only: :create
-
+  before_action -> { require_media_type('multipart/form-data') }, only: :create
   before_action :set_upload_parameters, only: :create
 
   def create

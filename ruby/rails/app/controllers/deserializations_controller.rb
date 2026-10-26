@@ -1,7 +1,7 @@
 class DeserializationsController < ApplicationController
-  use RequestMediaType, 'application/json', only: :create
   use JsonBodyLength, only: :create
 
+  before_action -> { require_media_type('application/json') }, only: :create
   before_action :set_items, only: :create
 
   def create
