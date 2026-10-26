@@ -24,3 +24,4 @@ language:
   engines:
     robyn:
       command: python /usr/src/app/server.py --workers=$(nproc) --processes=$(nproc) --log-level=CRITICAL
+  version: 3.14

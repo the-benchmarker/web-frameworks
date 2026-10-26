@@ -3,13 +3,6 @@ specs: v1
 reviewers:
   - dominikzogg
 
-language:
-  engines:
-    road-runner:
-      bootstrap:
-        - composer install --no-dev --prefer-dist --classmap-authoritative
-        - composer dumpautoload -o
-        - vendor/bin/rr get-binary
 framework:
   github: chubbyphp/chubbyphp-framework
   version: 6.1

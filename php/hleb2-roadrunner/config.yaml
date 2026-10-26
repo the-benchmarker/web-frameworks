@@ -4,11 +4,8 @@ language:
   engines:
     road-runner:
       bootstrap:
-        - composer install --no-dev --prefer-dist --classmap-authoritative
-        - composer dumpautoload -o
         - php console --generate-key
         - php console --routes-upd
-        - vendor/bin/rr get-binary
 
 framework:
   website: hleb2framework.ru

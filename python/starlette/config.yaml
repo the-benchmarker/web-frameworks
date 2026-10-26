@@ -3,7 +3,7 @@ specs: v1
 framework:
   website: www.starlette.io
   github: encode/starlette
-  version: 1.8
+  version: "1.10"
   engines:
     - uvicorn
     - hypercorn
