@@ -1,4 +1,9 @@
+{{#language.version}}
+FROM python:{{{.}}}-slim
+{{/language.version}}
+{{^language.version}}
 FROM python:3.15-slim
+{{/language.version}}
 
 WORKDIR /usr/src/app
 
