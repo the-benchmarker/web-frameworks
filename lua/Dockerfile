@@ -1,4 +1,4 @@
-FROM curlimages/curl:8.17.0 AS curl
+FROM curlimages/curl:8.23.0 AS curl
 
 FROM openresty/openresty:1.31-alpine-fat AS build
 

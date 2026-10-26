@@ -5,10 +5,7 @@
   "assignees": ["waghanza"],
   "reviewers": ["waghanza"],
   "postUpgradeTasks": {
-    "commands": [
-      "ruby .github/scripts/update-renovate-config-version.rb",
-      "ruby .github/scripts/sync-language-versions.rb"
-    ],
+    "commands": ["node .github/scripts/update-renovate-config-version.mjs"],
     "dataFileTemplate": "{{{toJSON upgrades}}}",
     "executionMode": "branch",
     "fileFilters": ["**/config.yaml"]
