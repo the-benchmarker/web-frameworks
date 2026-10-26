@@ -14,6 +14,6 @@ class ApplicationController < ActionController::API
   end
 
   def require_media_type(expected_type)
-    head :unsupported_media_type unless request.media_type == expected_type
+    head :unsupported_media_type unless request.content_mime_type == Mime::Type.lookup(expected_type)
   end
 end
