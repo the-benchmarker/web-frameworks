@@ -13,8 +13,8 @@ proc userHandler(req: var Request, res: var Response) {.nimcall, gcsafe.} =
   let id = req.params["id"]
   req.resp(Http200, id)
 
-import ./controller/[pages, errors]
-import ./configs
+proc createUserHandler(req: var Request, res: var Response) {.nimcall, gcsafe.} =
+  req.send(200)
 
 var appRouter = newHttpRouter()
 appRouter.get("/", homeHandler)
