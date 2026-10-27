@@ -9,7 +9,7 @@
     {
       "level": 512,
       "label": "average_latency",
-      "value": 0.17809096666666668,
+      "value": 0.17991951666666664,
       "framework_id": 1
     },
     {
@@ -27,37 +27,37 @@
     {
       "level": 512,
       "label": "percentile50",
-      "value": 0.17818666666666666,
+      "value": 0.176944,
       "framework_id": 1
     },
     {
       "level": 512,
       "label": "duration_ms",
-      "value": 15011.333333333332,
+      "value": 15013.0,
       "framework_id": 1
     },
     {
       "level": 256,
       "label": "percentile75",
-      "value": 0.09161866666666667,
+      "value": 0.09428,
       "framework_id": 1
     },
     {
       "level": 64,
       "label": "total_requests_per_s",
-      "value": 8182.235,
+      "value": 8159.005,
       "framework_id": 1
     },
     {
       "level": 512,
       "label": "total_bytes_received",
-      "value": 73119594.0,
+      "value": 72804063.0,
       "framework_id": 1
     },
     {
       "level": 512,
       "label": "total_requests_per_s",
-      "value": 7878.446666666667,
+      "value": 7834.223333333333,
       "framework_id": 1
     },
     {
@@ -69,13 +69,13 @@
     {
       "level": 512,
       "label": "server_cpu_cores",
-      "value": 3.753,
+      "value": 3.754,
       "framework_id": 1
     },
     {
       "level": 256,
       "label": "percentile99",
-      "value": 0.156748,
+      "value": 0.11668266666666667,
       "framework_id": 1
     },
     {
@@ -87,19 +87,19 @@
     {
       "level": 512,
       "label": "server_cpu_saturation",
-      "value": 0.9383,
+      "value": 0.9384,
       "framework_id": 1
     },
     {
       "level": 512,
       "label": "standard_deviation",
-      "value": 0.056899450000000004,
+      "value": 0.05172561666666667,
       "framework_id": 1
     },
     {
       "level": 512,
       "label": "total_requests",
-      "value": 118213.66666666667,
+      "value": 117550.33333333333,
       "framework_id": 1
     },
     {
@@ -111,13 +111,13 @@
     {
       "level": 64,
       "label": "percentile90",
-      "value": 0.028517,
+      "value": 0.032558666666666666,
       "framework_id": 1
     },
     {
       "level": 256,
       "label": "total_requests_per_s",
-      "value": 8121.0216666666665,
+      "value": 8107.3516666666665,
       "framework_id": 1
     },
     {
@@ -135,13 +135,13 @@
     {
       "level": 256,
       "label": "percentile50",
-      "value": 0.077552,
+      "value": 0.08867733333333333,
       "framework_id": 1
     },
     {
       "level": 64,
       "label": "percentile99999",
-      "value": 0.10064533333333334,
+      "value": 0.11933866666666666,
       "framework_id": 1
     },
     {
@@ -153,25 +153,25 @@
     {
       "level": 64,
       "label": "percentile75",
-      "value": 0.024845666666666665,
+      "value": 0.025989666666666668,
       "framework_id": 1
     },
     {
       "level": 64,
       "label": "standard_deviation",
-      "value": 0.005947016666666667,
+      "value": 0.008151833333333334,
       "framework_id": 1
     },
     {
       "level": 512,
       "label": "percentile99999",
-      "value": 1.1688533333333333,
+      "value": 1.0266453333333334,
       "framework_id": 1
     },
     {
       "level": 256,
       "label": "total_bytes_received",
-      "value": 74942476.33333333,
+      "value": 74843363.83333333,
       "framework_id": 1
     },
     {
@@ -183,25 +183,25 @@
     {
       "level": 64,
       "label": "total_bytes_received",
-      "value": 74947442.66666667,
+      "value": 74782003.16666667,
       "framework_id": 1
     },
     {
       "level": 256,
       "label": "total_requests",
-      "value": 121838.5,
+      "value": 121633.0,
       "framework_id": 1
     },
     {
       "level": 256,
       "label": "minimum_latency",
-      "value": 0.0021,
+      "value": 0.0045316666666666665,
       "framework_id": 1
     },
     {
       "level": 512,
       "label": "percentile75",
-      "value": 0.19245866666666667,
+      "value": 0.196336,
       "framework_id": 1
     },
     {
@@ -213,37 +213,37 @@
     {
       "level": 256,
       "label": "server_cpu_saturation",
-      "value": 0.9474,
+      "value": 0.9466,
       "framework_id": 1
     },
     {
       "level": 256,
       "label": "standard_deviation",
-      "value": 0.03543221666666667,
+      "value": 0.015510499999999998,
       "framework_id": 1
     },
     {
       "level": 64,
       "label": "percentile99",
-      "value": 0.037654,
+      "value": 0.04240133333333333,
       "framework_id": 1
     },
     {
       "level": 64,
       "label": "minimum_latency",
-      "value": 0.0012463333333333332,
+      "value": 0.001307,
       "framework_id": 1
     },
     {
       "level": 512,
       "label": "percentile99",
-      "value": 0.32665866666666665,
+      "value": 0.2872346666666667,
       "framework_id": 1
     },
     {
       "level": 256,
       "label": "average_latency",
-      "value": 0.08868581666666667,
+      "value": 0.08864403333333333,
       "framework_id": 1
     },
     {
@@ -261,13 +261,13 @@
     {
       "level": 256,
       "label": "percentile90",
-      "value": 0.13724933333333333,
+      "value": 0.09932133333333333,
       "framework_id": 1
     },
     {
       "level": 64,
       "label": "duration_ms",
-      "value": 15002.0,
+      "value": 15002.166666666668,
       "framework_id": 1
     },
     {
@@ -279,25 +279,25 @@
     {
       "level": 512,
       "label": "minimum_latency",
-      "value": 0.0027838333333333335,
+      "value": 0.004373166666666667,
       "framework_id": 1
     },
     {
       "level": 64,
       "label": "total_requests",
-      "value": 122742.16666666667,
+      "value": 122393.16666666667,
       "framework_id": 1
     },
     {
       "level": 256,
       "label": "percentile99999",
-      "value": 0.511136,
+      "value": 0.41308266666666665,
       "framework_id": 1
     },
     {
       "level": 256,
       "label": "server_cpu_cores",
-      "value": 3.79,
+      "value": 3.786,
       "framework_id": 1
     },
     {
@@ -309,13 +309,13 @@
     {
       "level": 64,
       "label": "average_latency",
-      "value": 0.021773933333333332,
+      "value": 0.02165365,
       "framework_id": 1
     },
     {
       "level": 64,
       "label": "percentile50",
-      "value": 0.0212425,
+      "value": 0.019610666666666665,
       "framework_id": 1
     },
     {
@@ -339,7 +339,7 @@
     {
       "level": 512,
       "label": "percentile90",
-      "value": 0.20243466666666668,
+      "value": 0.21570933333333334,
       "framework_id": 1
     }
   ],
@@ -358,7 +358,7 @@
       "version": "4.0"
     }
   ],
-  "updated_at": "2026-10-27 18:22:26 UTC",
+  "updated_at": "2026-10-27 19:00:07 UTC",
   "version": 1,
   "hardware": {
     "cpus": 16,

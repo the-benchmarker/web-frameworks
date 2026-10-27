@@ -35,8 +35,12 @@ RSpec.describe 'benchmark request generation' do
   it 'honors the explicit v1 selection for Sinatra' do
     commands = generated_commands('sinatra')
 
-    expect(commands.fetch(:warmup).length).to eq(1)
-    expect(commands.fetch(:warmup).first).to include('/.load_scripts/default.lua', ':3000/ ')
+    expect(commands.fetch(:warmup).length).to eq(3)
+    expect(commands.fetch(:warmup)).to all(include('/.load_scripts/default.lua'))
+    expect(commands.fetch(:warmup)[0]).to include(':3000/ ')
+    expect(commands.fetch(:warmup)[1]).to include(':3000/user/42 ')
+    expect(commands.fetch(:warmup)[2]).to include(':3000/user ')
+    expect(commands.fetch(:'collect-2').fetch(1).split(' && ')).to all(include('/.load_scripts/default.lua'))
     expect(commands.fetch(:test).first).to eq('ENGINE=puma LANGUAGE=ruby FRAMEWORK=sinatra bundle exec rspec')
   end
 
@@ -65,7 +69,7 @@ RSpec.describe 'benchmark request generation' do
   it 'honors an explicit v1 selection in the framework config' do
     stub_framework_specs('v1')
 
-    expect(generated_commands.fetch(:warmup).length).to eq(1)
+    expect(generated_commands.fetch(:warmup).length).to eq(3)
     expect(generated_commands.fetch(:test).first).to end_with('bundle exec rspec')
   end
 
