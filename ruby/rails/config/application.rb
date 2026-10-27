@@ -1,19 +1,32 @@
 require_relative 'boot'
-require_relative '../lib/upload_tempfile_cleanup'
+require_relative '../lib/middleware/upload_tempfile_cleanup'
+require_relative '../lib/middleware/require_media_type'
 
 require 'rails'
 require 'action_controller/railtie'
 require 'rack/bad_request'
+require 'rack/config'
 require 'rack/conditional_get'
 require 'rack/etag'
+require 'stringio'
 
 Bundler.require(*Rails.groups)
 
 module Benchmark
   class Application < Rails::Application
     config.load_defaults 8.1
-    config.autoload_lib(ignore: %w[assets tasks])
+    # Middleware instances survive reloads, so load their classes explicitly above.
+    config.autoload_lib(ignore: %w[assets tasks middleware])
     config.api_only = true
+
+    if defined?(Iodine)
+      # Iodine 0.8.3 misnames CONTENT_LENGTH and its input cannot rewind normally.
+      # Normalize its Rack interface so Rails can read and parse bodies itself.
+      config.middleware.use Rack::Config do |env|
+        env['CONTENT_LENGTH'] ||= env.delete('HTTP_CONTENT_LENGTH')
+        env['rack.input'] = StringIO.new(env['rack.input'].read.to_s) if env['rack.input']
+      end
+    end
 
     # API-only Rails omits this middleware; uploads still need deterministic cleanup.
     config.middleware.use UploadTempfileCleanup

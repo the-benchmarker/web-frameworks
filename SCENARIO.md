@@ -11,7 +11,7 @@ Every implementation must satisfy these requirements during measurement:
 - Disable application and HTTP server logging, including access and error logs.
 - Serve plain HTTP on port `3000`. Disable TLS and redirects to HTTPS.
 - Disable response compression. Do not send a `Content-Encoding` header
-- Compute data-dependent responses from each request. Do not cache anything
+- Compute data-dependent responses from each request.
 
 ## Response and request conventions
 
@@ -52,8 +52,9 @@ with other inputs must produce the corresponding results.
 containing only `id`. For example, `/user/00000042` returns
 `{"id":"00000042"}`.
 
-Require exactly eight ASCII digits (`0` through `9`). Keep the ID as a string
-so leading zeros survive. Decode percent-encoded path characters before
+Require an eight-character string of ASCII digits (`0` through `9`), including
+`00000000`. IDs do not have to represent strictly positive numbers. Keep the ID
+as a string so leading zeros survive. Decode percent-encoded path characters before
 validation: `/user/%30%30%30%30%30%30%34%32` has ID `00000042`.
 
 Reject invalid IDs with `400`, or `404` if routing rejects the path. Read the ID
@@ -77,14 +78,16 @@ collapses them into a single value, including percent-encoded names such as
 
 ## 5. JSON deserialization
 
-`POST /deserialization` accepts `Content-Type: application/json`, including
-`application/json; charset=utf-8`, and no query parameters. A missing or
+`POST /deserialization` accepts JSON request bodies and no query parameters.
+Accept all standard JSON media types: `application/json` and media types using
+the `+json` structured syntax suffix, such as `application/problem+json`.
+Also accept the legacy JSON aliases `text/x-json` and `application/jsonrequest`.
+Accept `application/json; charset=utf-8` as well. These media types all use the
+same benchmark body schema below. A missing or
 unsupported `Content-Type` returns `415`, even if `Accept: application/json`
 is present: `Accept` describes the desired response, not the request body.
-Only `application/json` is supported; aliases such as `text/x-json` and
-structured types such as `application/problem+json` return `415`. Check the
-media type before parsing the body, so malformed bodies with an unsupported
-media type also return `415`.
+Check the media type before parsing the body, so malformed bodies with an
+unsupported media type also return `415`.
 
 Parse the supplied body as a JSON object containing an `items` array of exactly
 100 objects.
@@ -136,3 +139,23 @@ contents, excluding multipart headers and boundaries. Return only `first_byte`,
 For an empty file, both byte samples are `null` and the checksum is the SHA-256
 of an empty byte string. Clean up temporary upload files after each request,
 including validation and parsing failures.
+
+## Load payloads
+
+The shared fixtures provide correctness examples. Measurement uses the following
+payloads, whose contents vary between requests:
+
+- JSON deserialization: the shared fixture is 10,332 bytes. The
+  [load script](.load_scripts/deserialization.lua) expands every ID to six digits
+  and replaces the first five IDs with values from a per-request token. The
+  resulting request body is 10,742 bytes and still contains exactly 100 items.
+  Compute the checksum from the supplied IDs, not the fixture's example sum.
+- Multipart upload: the shared file is 4,096 bytes. The
+  [load script](.load_scripts/upload.lua) repeats it 64 times to create a
+  262,144-byte (256 KiB) file and replaces its first 30 bytes with a per-request
+  token. The HTTP request body is larger because it includes multipart headers
+  and boundaries. Request-size limits must accommodate the file plus this
+  framing. Compute byte samples and the digest from the uploaded contents.
+
+These sizes describe the current load scripts; they are not maximum accepted
+request sizes.
