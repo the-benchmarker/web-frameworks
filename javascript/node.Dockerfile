@@ -1,5 +1,10 @@
 {{#language.node.version}}
-FROM node:{{{.}}}-slim
+{{#language.node.dist}}
+FROM node:{{language.node.version}}-{{language.node.dist}}-slim
+{{/language.node.dist}}
+{{^language.node.dist}}
+FROM node:{{language.node.version}}-slim
+{{/language.node.dist}}
 {{/language.node.version}}
 {{^language.node.version}}
 FROM node:26-slim

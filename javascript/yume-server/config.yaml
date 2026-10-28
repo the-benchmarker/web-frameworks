@@ -3,3 +3,7 @@ framework:
   version: 0.0
   engines:
     - uwebsockets
+language:
+  node:
+    version: 25
+    dist: trixie
