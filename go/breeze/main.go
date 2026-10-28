@@ -32,6 +32,7 @@ func main() {
 	})
 
 	app := breeze.New(router, breeze.NewEventLoopWorkerPool(runtime.NumCPU()))
-
+	app.SetPollYield(breeze.PollYieldNever)
+	app.SetZeroCopyHeaders(true)
 	app.Run(3000, true)
 }
