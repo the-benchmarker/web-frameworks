@@ -7,7 +7,6 @@ use Swoole\Http\Response;
 $server = new Server('0.0.0.0', 3000, SWOOLE_BASE);
 $server->set([
     'worker_num'        => swoole_cpu_num(),
-    'log_level'         => SWOOLE_LOG_ERROR,
     'enable_reuse_port' => true,
     'http_compression'  => false,
     'enable_coroutine'  => false,
