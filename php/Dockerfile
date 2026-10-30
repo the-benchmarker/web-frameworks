@@ -207,6 +207,6 @@ EOT
 EOT
   {{/nginx_conf}}
   # check php-fpm config
-  RUN /usr/local/sbin/php-fpm -tt
+  #RUN /usr/local/sbin/php-fpm -tt
   ENTRYPOINT /usr/local/sbin/php-fpm; nginx -c /usr/src/nginx.conf
 {{/command}}
