@@ -86,7 +86,7 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
   # use static pm
   RUN sed -i 's/\(pm =\).*/\1 static/g' /usr/local/etc/php-fpm.d/www.conf
   # disable access log
-  RUN sed -i 's/\(access\.log =\).*/\1 \/dev\/null/g' /usr/local/etc/php-fpm.d/www.conf
+  RUN sed -i 's/^;\? *access\.log.*/access.log = \/dev\/null/' /usr/local/etc/php-fpm.d/www.conf
 
   RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 
