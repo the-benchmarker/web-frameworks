@@ -9,7 +9,7 @@ $server->set([
     'worker_num'        => swoole_cpu_num(),
     'log_level'         => SWOOLE_LOG_ERROR,
     'enable_reuse_port' => true,
-    'http_compression'  => false
+    'http_compression'  => false,
     'enable_coroutine'  => false,
 ]);
 $server->on('request', function (Request $request, Response $response) {
