@@ -83,8 +83,7 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
   RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
   # pm.max_children set according to nproc
   RUN if [ $(nproc) = 1 ] ; then sed -i 's/\(pm\.max_children =\).*/\1 512/g' /usr/local/etc/php-fpm.d/www.conf ; else sed -i 's/\(pm\.max_children =\).*/\1 1024/g' /usr/local/etc/php-fpm.d/www.conf ; fi
-  # after 15 seconds warm-up, half of the 'idle' children are not killed
-  RUN if [ $(nproc) = 1 ] ; then sed -i 's/\(pm\.max_spare_servers =\).*/\1 256/g' /usr/local/etc/php-fpm.d/www.conf ; else sed -i 's/\(pm\.max_spare_servers =\).*/\1 512/g' /usr/local/etc/php-fpm.d/www.conf ; fi
+  RUN sed -i 's/\;\(pm =\).*/\1 static/g' /usr/local/etc/php-fpm.d/www.conf
 
   RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 
@@ -206,5 +205,5 @@ EOT
   {{/nginx_conf}}
   # check php-fpm config
   RUN /usr/local/sbin/php-fpm -tt
-  ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -c /usr/src/nginx.conf
+  ENTRYPOINT /usr/local/sbin/php-fpm; nginx -c /usr/src/nginx.conf
 {{/command}}
