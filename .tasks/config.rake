@@ -4,6 +4,7 @@ require 'mustache'
 require 'shellwords'
 require 'json'
 require 'etc'
+require_relative 'workloads'
 
 MANIFESTS = {
   container: '.Dockerfile',
@@ -76,19 +77,18 @@ end
 
 def commands_for(language, framework, variant, provider = 'docker')
   concurrencies = ENV.fetch('CONCURRENCIES', '10')
-  routes = ENV.fetch('ROUTES', 'GET:/')
-
   directory = Dir.pwd
 
-  main_config = YAML.safe_load_file(File.join('config.yaml'))
+  main_config = YAML.safe_load_file('config.yaml')
   language_config = YAML.safe_load_file(File.join(directory, language, 'config.yaml'))
   framework_config = YAML.safe_load_file(File.join(directory, language, framework, 'config.yaml'))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
+  # The framework's specs value selects the three v1 routes or the six v2
+  # workloads. ROUTES may narrow or replace either default list.
+  specs = app_config.fetch('specs', 'v2')
+  routes = BenchmarkWorkloads.routes(specs: specs)
 
-  # CPU isolation between the server under test and the load generator. Both
-  # unset => no pinning, byte-identical to previous behaviour. The generator
-  # needs roughly 3x the server's cores before the server actually saturates;
-  # saturation.rb reports whether the split you chose achieved that.
+  # Pin the server and load generator independently when CPU sets are supplied.
   server_cpus = ENV.fetch('SERVER_CPUS', nil)
   load_cpus = ENV.fetch('LOAD_CPUS', nil)
   cpuset = server_cpus ? "--cpuset-cpus=#{server_cpus} " : ''
@@ -131,86 +131,57 @@ def commands_for(language, framework, variant, provider = 'docker')
     commands[:build] << main_config.dig('providers', provider, 'reboot')
   end
 
-  # --closed: each connection sends its next request the instant its previous
-  # response completes (the wrk/ab model). -c is the only load knob and
-  # achieved_rate is the framework's real sustained throughput over the whole
-  # run. The open-loop ramp this replaces (-R1000:500000) was not a throughput
-  # test: zrk >= 2.4.2 reports a ramp's achieved_rate as the LAST --interval
-  # only, so the headline was one second out of fifteen, and every latency
-  # figure was schedule backlog measured from the intended send time (p50 in
-  # the hundreds of ms for servers whose real p50 is about 1 ms).
-  #
-  # Keep-alive stays on, which is zrk's default. Whether the headline should
-  # instead reopen a connection per request (--disable-keepalive, as the oha
-  # harness did) is a project decision about the workload, not a harness bug.
+  # Closed-loop runs send each connection's next request after its response.
   duration = ENV.fetch('DURATION', '15s')
 
-  # Optional second pass per route, open loop at a FIXED rate (LATENCY_RATE):
-  # the closed run finds the ceiling and the latency AT that ceiling; this one
-  # reports latency at a defined load, coordinated-omission corrected (zrk
-  # measures from the scheduled send). "50%" takes half of each framework's
-  # own closed-loop rate, so every framework is measured inside what it can
-  # sustain; "20000" is the same absolute rate for everyone. Unset = off, and
-  # the collect commands are byte-identical to the single-pass form. Doubles
-  # the collect time when on. A ramp answers neither question.
+  # An optional latency pass uses a fixed rate or a percentage of measured throughput.
   latency_rate = ENV.fetch('LATENCY_RATE', '').strip
 
-  # zrk drives load from 2 threads unless told otherwise, whatever the host,
-  # and two threads cap out below what the fast servers deliver. Give it every
-  # core it was pinned to (LOAD_CPUS), or THREADS, or the whole host.
+  # Use the assigned CPUs unless the thread count is explicitly overridden.
   threads = ENV.fetch('THREADS') { cpuset_size(load_cpus) || Etc.nprocessors }
 
   hostname = File.join(directory, language, framework, "ip-#{variant}.txt")
   cid_file = File.join(directory, language, framework, "cid-#{variant}.txt")
-  File.join(File.dirname(__FILE__), 'memory_sampler.rb')
   saturation_probe = File.join(File.dirname(__FILE__), 'saturation.rb')
   latency_probe = File.join(File.dirname(__FILE__), 'latency_rate.rb')
   zrk = "#{taskset}zrk --plain --closed -t #{threads}"
 
-  # Warm up at full throttle, like the collect runs. JIT runtimes need real
-  # load to reach steady state; zrk's paced default of 1000 req/s does not.
-  commands[:warmup] << "#{zrk} -c 50 -d 5s http://`cat #{hostname}`:3000/"
-  commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
+  # Warm up with the same request scripts and closed-loop load as collection.
+  routes.each do |method, uri|
+    request = BenchmarkWorkloads.request(method, uri, root: directory)
+    args = ['--connections', '50', '--duration', '5s', *request[:options]].shelljoin
+    url = "http://`cat #{Shellwords.escape(hostname)}`:3000#{Shellwords.escape(uri)}"
+    commands[:warmup] << "#{zrk} #{args} #{url} #{request[:arguments].shelljoin}".rstrip
+  end
+  commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec"
 
   concurrencies.split(',').each do |concurrency|
     target = :"collect-#{concurrency}"
     commands[target] = [] unless commands.key?(target)
 
     results_dir = File.join(directory, language, framework, '.results', concurrency)
-    File.join(results_dir, 'memory.json')
     saturation_out = File.join(results_dir, 'saturation.json')
     saturation_state = File.join(results_dir, '.saturation-state.json')
     zrk_cmds = []
-    zrk_args = {}
-
-    routes.split(',').each do |route|
-      method, uri = route.split(':')
+    routes.each do |method, uri|
       output = File.join(directory, language, framework, '.results', concurrency, "#{uri.tr('/', '_')}.json")
-      zrk_args['connections '] = concurrency
-      zrk_args['duration'] = duration
-      zrk_args['script'] = File.join(Dir.pwd, '.load_scripts/user_id.lua') if uri == '/user/42'
-      zrk_args['method'] = method
-      zrk_args['timeout'] = '8s'
-      zrk_args['format'] = 'json'
-      args = zrk_args.map { |k, v| "--#{k} #{v}" }.join(' ')
-      zrk_cmds << "#{zrk} #{args} --output #{output} http://`cat #{hostname}`:3000#{uri}"
+      request = BenchmarkWorkloads.request(method, uri, root: directory)
+      args = ['--connections', concurrency, '--duration', duration, '--timeout', '8s', '--format', 'json', *request[:options]].shelljoin
+      url = "http://`cat #{Shellwords.escape(hostname)}`:3000#{Shellwords.escape(uri)}"
+      script_arguments = request[:arguments].shelljoin
+      zrk_cmds << "#{zrk} #{args} --output #{Shellwords.escape(output)} #{url} #{script_arguments}".rstrip
       next if latency_rate.empty?
 
-      # The fixed-rate pass reads its -R from the closed run's result at run
-      # time (latency_rate.rb), so it always sits where LATENCY_RATE asked.
+      # Resolve percentage rates from the completed throughput run.
       latency_output = File.join(results_dir, "#{uri.tr('/', '_')}_latency.json")
       rate = "`ruby #{latency_probe} --closed #{output} --spec #{latency_rate}`"
-      zrk_cmds << "#{taskset}zrk #{args} --plain -t #{threads} -R #{rate} --output #{latency_output} -H Accept-Encoding:identity http://`cat #{hostname}`:3000#{uri}"
+      zrk_cmds << "#{taskset}zrk #{args} --plain -t #{threads} -R #{rate} --output #{Shellwords.escape(latency_output)} #{url} #{script_arguments}".rstrip
     end
 
-    # Bracket the run with the measurement-validity probe: two reads of the
-    # container's cumulative CPU counter, so it adds no sampling load of its own
-    # to the host whose contention it exists to detect.
+    # Sample CPU usage before and after collection.
     commands[target] << "ruby #{saturation_probe} --cid #{cid_file} --start --state #{saturation_state}"
 
-    # Start memory sampler in background, run all zrk calls, then stop sampler
-    # commands[target] << "ruby #{sampler} --cid #{cid_file} --out #{memory_out} & SAMPLER_PID=$$!; #{zrk_cmds.join('; ')}; kill $$SAMPLER_PID"
-    commands[target] << zrk_cmds.join('; ')
+    commands[target] << zrk_cmds.join(' && ')
 
     commands[target] << "ruby #{saturation_probe} --cid #{cid_file} --stop --state #{saturation_state} --out #{saturation_out}"
   end
@@ -236,8 +207,6 @@ def create_dockerfile(directory, engine, config)
   path = File.join(Dir.pwd, directory, '..', "#{engine}.Dockerfile")
   path = File.readlink(path) if File.symlink?(path)
   path = File.join(Dir.pwd, directory, '..', 'Dockerfile') unless File.exist?(path)
-
-  # Path to remove stability suffix (stable, beta, alpha, or version) of php extensions
 
   files = []
 

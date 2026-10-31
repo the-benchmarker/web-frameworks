@@ -1,44 +1,55 @@
-require_relative "boot"
+require_relative 'boot'
+require_relative '../lib/middleware/upload_tempfile_cleanup'
+require_relative '../lib/middleware/require_media_type'
 
-require "rails"
-# Pick the frameworks you want:
-require "active_model/railtie"
-require "active_job/railtie"
-# require "active_record/railtie"
-# require "active_storage/engine"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-# require "action_mailbox/engine"
-# require "action_text/engine"
-require "action_view/railtie"
-require "action_cable/engine"
-require "rails/test_unit/railtie"
+require 'rails'
+require 'action_controller/railtie'
+require 'rack/bad_request'
+require 'rack/config'
+require 'rack/conditional_get'
+require 'rack/etag'
+require 'stringio'
 
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module Benchmark
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 8.0
-
-    # Please, add to the `ignore` list any other `lib` subdirectories that do
-    # not contain `.rb` files, or that should not be reloaded or eager loaded.
-    # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w[assets tasks])
-
-    # Remove some middleware that is not needed for an API-only Rails app
-    config.middleware.delete ActionDispatch::Cookies
-    config.middleware.delete ActionDispatch::Session::CookieStore
-
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.load_defaults 8.1
+    # Middleware instances survive reloads, so load their classes explicitly above.
+    config.autoload_lib(ignore: %w[assets tasks middleware])
     config.api_only = true
+
+    if defined?(Iodine)
+      # Iodine 0.8.3 misnames CONTENT_LENGTH and its input cannot rewind normally.
+      # Normalize its Rack interface so Rails can read and parse bodies itself.
+      config.middleware.use Rack::Config do |env|
+        env['CONTENT_LENGTH'] ||= env.delete('HTTP_CONTENT_LENGTH')
+        env['rack.input'] = StringIO.new(env['rack.input'].read.to_s) if env['rack.input']
+      end
+    end
+
+    # API-only Rails omits this middleware; uploads still need deterministic cleanup.
+    config.middleware.use UploadTempfileCleanup
+    config.middleware.delete Rack::ConditionalGet
+    config.middleware.delete Rack::ETag
+    config.middleware.delete Rack::Sendfile
+    config.middleware.delete Rack::Runtime
+    config.middleware.delete ActionDispatch::RequestId
+
+    # Preserve null array entries so the request validator can reject them.
+    config.action_dispatch.perform_deep_munge = false
+    config.action_controller.perform_caching = false
+    config.cache_store = :null_store
+
+    unless ENV.fetch('RAILS_LOG_ENABLED', 'false') == 'true'
+      config.middleware.delete Rails::Rack::Logger
+      config.log_level = :unknown
+      config.logger = ActiveSupport::Logger.new(nil)
+    end
+
+    # NullStore also installs a request-local cache; remove it after initialization.
+    initializer 'benchmark.disable_request_cache', after: :initialize_cache, before: :build_middleware_stack do |app|
+      app.config.middleware.delete Rails.cache.middleware
+    end
   end
 end

@@ -1,13 +1,15 @@
 class ApplicationController < ActionController::API
-  def index
-    head 200
-  end
+  # The contract specifies root JSON fields rather than Rails model wrappers.
+  wrap_parameters false
 
-  def user
-    render plain: params["id"]
-  end
+  rescue_from ActionController::BadRequest,
+              ActionDispatch::Http::Parameters::ParseError,
+              Rack::BadRequest,
+              with: :bad_request
 
-  def register_user
-    head 200
+  private
+
+  def bad_request
+    head :bad_request
   end
 end

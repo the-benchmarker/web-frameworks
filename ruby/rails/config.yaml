@@ -1,3 +1,20 @@
+specs: v2
+
+language:
+  engines:
+    puma:
+      command: bundle exec puma -C config/puma.rb
+      environment:
+        PUMA_DISABLE_SSL: "1"
+    iodine:
+      command: bundle exec iodine -b http://0.0.0.0:3000 -w $(nproc) --no-dynamic-deflate > /dev/null 2>&1
+      environment:
+        IODINE_MTLS: "0"
+    falcon:
+      environment:
+        # Console levels run from debug (0) to fatal (4).
+        CONSOLE_LEVEL: "5"
+
 framework:
   website: rubyonrails.org
   version: 8.1
@@ -6,12 +23,12 @@ framework:
     - mkdir -p tmp/pids
 
   build_deps:
-    - libsqlite3-dev
     - libyaml-dev
     - pkg-config
 
   environment:
     RAILS_ENV: production
-    RAILS_LOG_LEVEL: fatal
-    # Rails enables YJIT after the app has initialized
+    RAILS_LOG_ENABLED: "false"
+    SECRET_KEY_BASE_DUMMY: "1"
+    # Keep YJIT off during boot; Rails enables it after production initialization.
     RUBY_YJIT_ENABLE: 0
