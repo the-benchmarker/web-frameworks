@@ -1,0 +1,4 @@
+module = "github.com/the-benchmarker/web-frameworks/go/spine"
+entrypoint = "."
+composition = "./internal/application"
+port = 3000
