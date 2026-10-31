@@ -1,0 +1,11 @@
+framework:
+  website: spine.na2ru2.me
+  github: NARUBROWN/spine
+  version: '0.5.2'
+  files:
+    - '**/*.go'
+    - go.mod
+    - go.sum
+
+reviewers:
+  - NARUBROWN
