@@ -13,8 +13,11 @@ HTTP 어댑터인 Echo에 직접 라우트를 등록하거나 기본 HTTP 보호
 기본 포트는 `3000`이며 `SPINE_PORT`로 변경할 수 있습니다.
 데이터베이스, 메시지 브로커와 외부 서비스는 사용하지 않습니다.
 
-이 디렉터리에서 `go mod download` 후 `spine contract check --json`과
-`spine verify --json`으로 정적 계약과 Go 검증을 실행할 수 있습니다.
+애플리케이션 빌드·실행과 아래의 공통 컨테이너 검증에는 Spine CLI가 필요하지 않습니다.
+
+`spine contract check --json`과 `spine verify --json`은 별도로 설치하는
+[Spine CLI](https://github.com/NARUBROWN/spine-cli)가 제공하는 선택적 개발 검증 명령입니다.
+Go 모듈 의존성을 설치하는 것만으로 `spine` 명령이 설치되지는 않습니다.
 
 WFB 저장소 루트에서 공식 컨테이너 검증을 실행합니다.
 
