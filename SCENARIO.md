@@ -1,8 +1,20 @@
-# Benchmark scenario (v2)
+# Benchmark scenario
 
 Implement these six routes on port `3000` using the framework's normal routing,
 parameter extraction, JSON, and multipart facilities. No database, authentication,
 session, external service, or background job is needed.
+
+##### Disclaimer
+
+This project is in heavy development. The existing UI https://web-frameworks-benchmark.vercel.app correspond to 3 routes
+
+- GET / -> Empty body
+- POST /user -> Empty body
+- GET /user/:id -> Return the :id
+
+The first two routes are mainly overhead, just testing **routing** feature of a framework. Some work have been done in https://github.com/the-benchmarker/web-frameworks/pull/9864 to update this current scenario.
+
+This two routes are only here for compatibility with the results in current UI, but any new implementation must define 6 routes.
 
 ## Runtime requirements
 
