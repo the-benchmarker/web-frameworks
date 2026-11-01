@@ -1,10 +1,11 @@
 {
   "type": "module",
   "dependencies": {
-    "@chubbyts/chubbyts-framework": "^3.0.1",
-    "@chubbyts/chubbyts-framework-router-path-to-regexp": "^3.0.0",
-    "@chubbyts/chubbyts-undici-server": "^1.0.1",
-    "@chubbyts/chubbyts-undici-server-uwebsockets": "^1.0.1",
+    "@chubbyts/chubbyts-framework": "^4.0.2",
+    "@chubbyts/chubbyts-framework-router-path-to-regexp": "^4.0.0",
+    "@chubbyts/chubbyts-http": "^3.1.0",
+    "@chubbyts/chubbyts-http-types": "^4.1.0",
+    "@chubbyts/chubbyts-http-uwebsockets": "^1.0.0",
     "@types/node": "^26.0.0"
   },
   "engines": {
