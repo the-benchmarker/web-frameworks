@@ -77,7 +77,7 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
     RUN sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /usr/local/etc/php-fpm.d/www.conf
   {{/slasheddocroot}}
 
-  RUN sed -i 's/\;\(listen =\).*/\1 \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
+  RUN sed -i 's/\;\(listen =\).*/\1 \/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.owner.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.group.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
@@ -139,7 +139,7 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
       fastcgi_socket_keepalive on;
 
       upstream fastcgi_backend {
-          server unix:/var/run/php-fpm.sock;
+          server unix:/run/php-fpm.sock;
           keepalive 36;
       }
 
