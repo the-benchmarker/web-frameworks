@@ -1,6 +1,7 @@
 # Spine WFB 구현
 
-공개 릴리스 `github.com/NARUBROWN/spine v0.5.2`를 사용하는 최소 HTTP 앱입니다.
+공개 릴리스 `github.com/NARUBROWN/spine v0.6.0`과
+`github.com/NARUBROWN/spine-echo-platform v0.1.0`을 사용하는 최소 HTTP 앱입니다.
 모든 요청은 Spine의 라우팅, 생성자 주입, 인자 해석, 컨트롤러와 응답 처리를 거칩니다.
 HTTP 어댑터인 Echo에 직접 라우트를 등록하거나 기본 HTTP 보호 설정을 변경하지 않습니다.
 
@@ -12,6 +13,16 @@ HTTP 어댑터인 Echo에 직접 라우트를 등록하거나 기본 HTTP 보호
 
 기본 포트는 `3000`이며 `SPINE_PORT`로 변경할 수 있습니다.
 데이터베이스, 메시지 브로커와 외부 서비스는 사용하지 않습니다.
+
+Spine CLI의 기본 `layered-v1` 구조에 따라 역할을 나눕니다.
+
+```text
+main.go                                   # 구성 검증과 서버 실행
+internal/application/application.go       # platform.New(), 생성자 연결과 실행 옵션
+src/controller/benchmark_controller.go    # 벤치마크 응답 처리
+src/route/route.go                        # 세 HTTP 경로 등록
+spine.toml                               # layered-v1과 Echo 플랫폼 설정
+```
 
 애플리케이션 빌드·실행과 아래의 공통 컨테이너 검증에는 Spine CLI가 필요하지 않습니다.
 
@@ -29,5 +40,6 @@ make -f go/spine/.Makefile unbuild
 ```
 
 공통 언어 템플릿이 `.Dockerfile.net-http`와 `.Makefile`을 생성합니다.
-`config.yaml`은 `go.sum`도 빌드에 포함하도록 지정합니다.
+공통 Go 설정에 따라 `.go` 파일과 `go.mod`를 복사하고, `go get`으로 컨테이너 안에서
+필요한 `go.sum`을 생성한 뒤 빌드합니다. 로컬 개발용 `go.sum`은 저장소에 유지합니다.
 응답 계약 검증은 성능 측정과 구분하며, 자체 측정값을 공개 순위로 간주하지 않습니다.

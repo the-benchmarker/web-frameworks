@@ -2,3 +2,5 @@ module = "github.com/the-benchmarker/web-frameworks/go/spine"
 entrypoint = "."
 composition = "./internal/application"
 port = 3000
+layout = "layered-v1"
+platform = "echo"
