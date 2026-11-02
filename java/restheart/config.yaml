@@ -3,7 +3,7 @@ reviewers:
 
 framework:
   website: restheart.org
-  version: 9.11
+  version: 9.13
 
   build:
     - mvn package
