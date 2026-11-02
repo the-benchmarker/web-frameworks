@@ -2,7 +2,7 @@ module github.com/the-benchmarker/web-frameworks/go/spine
 
 go 1.25.5
 
-require github.com/NARUBROWN/spine v0.5.2
+require github.com/NARUBROWN/spine v0.6.0
 
 require (
 	github.com/gorilla/websocket v1.5.3 // indirect
