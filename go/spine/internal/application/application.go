@@ -10,7 +10,7 @@ import (
 	"github.com/the-benchmarker/web-frameworks/go/spine/src/route"
 )
 
-// BuildApplication은 생성자와 라우트를 연결하고 실행 옵션을 구성합니다.
+// BuildApplication wires constructors and routes and configures runtime options.
 func BuildApplication() (spine.App, boot.Options, error) {
 	app := spine.New(echoplatform.Option())
 	app.Constructor(controller.NewBenchmarkController)
