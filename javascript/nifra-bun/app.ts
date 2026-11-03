@@ -1,7 +1,7 @@
 import { server } from '@nifrajs/core/server';
 
 server()
-  .get('/', () => '')
-  .get('/user/:id', (c) => c.params.id)
-  .post('/user', () => '')
+  .get('/', (c) => c.text(''))
+  .get('/user/:id', (c) => c.text(c.params.id))
+  .post('/user', (c) => c.text(''))
   .listen(3000, { reusePort: true });
