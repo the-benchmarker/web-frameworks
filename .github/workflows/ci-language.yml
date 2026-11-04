@@ -59,6 +59,7 @@ jobs:
       - name: Run framework with retry
         run: bash .github/scripts/run-framework-with-retry.sh
         env:
+          CI: "true"
           DIRECTORY: ${{ matrix.directory }}
           ENGINE: ${{ matrix.engine }}
           MAX_ATTEMPTS: 2
