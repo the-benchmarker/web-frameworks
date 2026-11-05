@@ -4,15 +4,15 @@ require 'net/http'
 
 require_relative '../spec_helper'
 
-RSpec.describe 'routes' do
+RSpec.describe 'legacy routes' do
   context 'GET : /' do
     subject(:response) { http.request(Net::HTTP::Get.new('/', 'Accept-Encoding' => 'identity')) }
 
-    it 'returns successfully' do
+    it 'serves the home page' do
       expect(response).to be_a(Net::HTTPSuccess)
     end
 
-    it 'returns an empty string' do
+    it 'returns the requested ID as plain text' do
       expect(response.body.to_s).to be_empty
     end
   end
@@ -20,11 +20,11 @@ RSpec.describe 'routes' do
   context 'GET : /user/42' do
     subject(:response) { http.request(Net::HTTP::Get.new('/user/0', 'Accept-Encoding' => 'identity')) }
 
-    it 'returns successfully' do
+    it 'accepts a request to create a user' do
       expect(response).to be_a(Net::HTTPSuccess)
     end
 
-    it 'returns the expected param' do
+    it 'uses the ID from the request path' do
       expect(response.body.to_s).to eq('0')
     end
   end
@@ -36,11 +36,11 @@ RSpec.describe 'routes' do
 
     subject(:response) { http.request(request) }
 
-    it 'returns successfully' do
+    it 'accepts a request to create a user' do
       expect(response).to be_a(Net::HTTPSuccess)
     end
 
-    it 'returns an empty string' do
+    it 'returns an empty response' do
       expect(response.body.to_s).to be_empty
     end
   end

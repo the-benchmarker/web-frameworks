@@ -1,22 +1,22 @@
 require_relative '../spec_helper'
 
-RSpec.describe 'GET /serialization' do
+RSpec.describe 'serialization' do
   %w[abcdefgh aaaaaaaa zzzzzzzz azbycxdw].each do |seed|
-    it "returns exactly 100 objects containing only seed #{seed}" do
+    it "returns 100 objects containing only the requested seed #{seed}" do
       response = send_request('GET', "/serialization?seed=#{seed}")
 
       expect_json_response(response, Array.new(100) { { 'seed' => seed } })
     end
   end
 
-  it 'also serves clients requesting identity encoding' do
+  it 'returns the requested objects without requiring special request headers' do
     response = send_request('GET', '/serialization?seed=abcdefgh')
 
     expect_json_response(response, Array.new(100) { { 'seed' => 'abcdefgh' } })
   end
 
   ['%73eed=abcdefgh', 'seed=%61%62%63%64%65%66%67%68'].each do |query|
-    it "accepts the decoded query #{query}" do
+    it "accepts the valid seed #{query} when it is percent-encoded" do
       expect_json_response(send_request('GET', "/serialization?#{query}"), Array.new(100) { { 'seed' => 'abcdefgh' } })
     end
   end
@@ -35,7 +35,7 @@ RSpec.describe 'GET /serialization' do
     'scalar and array' => 'seed=abcdefgh&seed[]=zzzzzzzz',
     'extra parameter' => 'seed=abcdefgh&count=100', 'extra empty parameter' => 'seed=abcdefgh&other='
   }.each do |description, query|
-    it "rejects #{description} with 400" do
+    it "rejects a request with #{description}" do
       path = query.nil? ? '/serialization' : "/serialization?#{query}"
 
       expect_status(send_request('GET', path), 400)
@@ -48,14 +48,14 @@ RSpec.describe 'GET /serialization' do
     end
   end
 
-  it 'does not substitute a JSON body for a missing query seed' do
+  it 'requires the seed in the query even when the body includes one' do
     response = send_request('GET', '/serialization', body: JSON.generate(seed: 'abcdefgh'),
                                                      content_type: 'application/json')
 
     expect_status(response, 400)
   end
 
-  it 'uses the query seed when the body supplies a different seed' do
+  it 'uses the query seed when the body includes a different seed' do
     response = send_request('GET', '/serialization?seed=abcdefgh', body: JSON.generate(seed: 'zzzzzzzz'),
                                                                    content_type: 'application/json')
 
