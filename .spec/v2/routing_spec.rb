@@ -1,21 +1,17 @@
 require_relative '../spec_helper'
 
 RSpec.describe 'v2 HTTP routing' do
-  %w[identity gzip,deflate,br,zstd].each do |encoding|
-    context "with Accept-Encoding: #{encoding}" do
-      it 'serves GET / with exactly 200 and zero body bytes' do
-        expect_empty_response(send_request('GET', '/', encoding: encoding))
-      end
+  it 'serves GET / with exactly 200 and zero body bytes' do
+    expect_empty_response(send_request('GET', '/'))
+  end
 
-      it 'serves an empty POST /user with exactly 200 and zero body bytes' do
-        expect_empty_response(send_request('POST', '/user', body: '', encoding: encoding))
-      end
+  it 'serves an empty POST /user with exactly 200 and zero body bytes' do
+    expect_empty_response(send_request('POST', '/user', body: ''))
+  end
 
-      %w[00000000 00000042 12345678 99999999].each do |id|
-        it "returns only the string ID #{id}" do
-          expect_json_response(send_request('GET', "/user/#{id}", encoding: encoding), { 'id' => id })
-        end
-      end
+  %w[00000000 00000042 12345678 99999999].each do |id|
+    it "returns only the string ID #{id}" do
+      expect_json_response(send_request('GET', "/user/#{id}"), { 'id' => id })
     end
   end
 

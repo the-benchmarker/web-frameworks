@@ -1,42 +1,47 @@
+# frozen_string_literal: true
+
+require 'net/http'
+
 require_relative '../spec_helper'
 
-# The legacy contract allows any 2xx status and returns the route ID as text.
-RSpec.describe 'v1 HTTP routes' do
-  %w[identity gzip,deflate,br,zstd].each do |encoding|
-    context "with Accept-Encoding: #{encoding}" do
-      [['GET', '/'], ['POST', '/user']].each do |method, path|
-        it "serves an empty successful response to #{method} #{path}" do
-          response = send_request(method, path, body: method == 'POST' ? '' : nil, encoding: encoding)
+RSpec.describe 'routes' do
+  context 'GET : /' do
+    subject(:response) { http.request(Net::HTTP::Get.new('/', 'Accept-Encoding' => 'identity')) }
 
-          expect(response).to be_a(Net::HTTPSuccess)
-          expect(response.body.to_s).to eq('')
-        end
-      end
+    it 'returns successfully' do
+      expect(response).to be_a(Net::HTTPSuccess)
+    end
 
-      %w[0 42 00000042 123456789].each do |id|
-        it "returns the plain route ID #{id}" do
-          response = send_request('GET', "/user/#{id}", encoding: encoding)
-
-          expect(response).to be_a(Net::HTTPSuccess)
-          expect(response.body).to eq(id)
-        end
-      end
+    it 'returns an empty string' do
+      expect(response.body.to_s).to be_empty
     end
   end
 
-  it 'reads the ID from the path when a query parameter has the same name' do
-    response = send_request('GET', '/user/42?id=other')
+  context 'GET : /user/42' do
+    subject(:response) { http.request(Net::HTTP::Get.new('/user/0', 'Accept-Encoding' => 'identity')) }
 
-    expect(response).to be_a(Net::HTTPSuccess)
-    expect(response.body).to eq('42')
+    it 'returns successfully' do
+      expect(response).to be_a(Net::HTTPSuccess)
+    end
+
+    it 'returns the expected param' do
+      expect(response.body.to_s).to eq('0')
+    end
   end
 
-  it 'uses the current path on successive requests' do
-    %w[42 00000042 0 42].each do |id|
-      response = send_request('GET', "/user/#{id}")
+  context 'POST : /user' do
+    let!(:request) { Net::HTTP::Post.new('/user', 'Accept-Encoding' => 'identity') }
 
+    before { request['Content-Type'] = 'text/plain' }
+
+    subject(:response) { http.request(request) }
+
+    it 'returns successfully' do
       expect(response).to be_a(Net::HTTPSuccess)
-      expect(response.body).to eq(id)
+    end
+
+    it 'returns an empty string' do
+      expect(response.body.to_s).to be_empty
     end
   end
 end

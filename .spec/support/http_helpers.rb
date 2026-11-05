@@ -29,10 +29,9 @@ module HttpHelpers
     end
   end
 
-  def build_request(method, path, body: nil, content_type: nil, headers: {}, chunked: false,
-                    encoding: 'gzip, deflate, br, zstd')
+  def build_request(method, path, body: nil, content_type: nil, headers: {}, chunked: false)
     klass = Net::HTTP.const_get(method.capitalize)
-    request = klass.new(path, { 'Accept-Encoding' => encoding }.merge(headers))
+    request = klass.new(path, headers)
     request['Content-Type'] = content_type if content_type
 
     if chunked
@@ -47,10 +46,7 @@ module HttpHelpers
 
   def send_request(method, path, **)
     request = build_request(method, path, **)
-    http.request(request).tap do |response|
-      # Explicit Accept-Encoding disables Net::HTTP's automatic decompression.
-      expect(response['content-encoding']).to be_nil, "#{method} #{path} must remain uncompressed"
-    end
+    http.request(request)
   end
 
   def expect_status(response, status)

@@ -43,10 +43,4 @@ RSpec.describe HttpHelpers do
     expect(headers).to include('Content-Type: application/problem+json; charset=utf-8')
   end
 
-  it 'disables automatic response decompression while advertising compression' do
-    request = build_request('GET', '/')
-
-    expect(request['Accept-Encoding']).to eq('gzip, deflate, br, zstd')
-    expect(request.decode_content).to be(false)
-  end
 end

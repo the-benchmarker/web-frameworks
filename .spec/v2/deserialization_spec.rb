@@ -15,7 +15,7 @@ RSpec.describe 'POST /deserialization' do
       end
 
       it 'accepts items containing only an ID, with identity encoding' do
-        expect_json_response(deserialize(encoding: 'identity'), { 'count' => 100, 'checksum' => 4950 })
+        expect_json_response(deserialize, { 'count' => 100, 'checksum' => 4950 })
       end
 
       [0, 1_000_000, 2.0].each do |id|

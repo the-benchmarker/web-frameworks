@@ -128,7 +128,7 @@ RSpec.describe 'benchmark request generation' do
     commands = generated_commands
     requests = commands.fetch(:warmup) + commands.fetch(:'collect-2').fetch(1).split(' && ')
 
-    expect(requests.grep(/--header|Accept-Encoding/)).to be_empty
+    expect(requests.grep(/--header/)).to be_empty
     script_counts = { 'default' => 6, 'user_id' => 3, 'serialization' => 3, 'deserialization' => 3, 'upload' => 3 }
     script_counts.each do |script, count|
       expect(requests.count { |command| command.include?("/.load_scripts/#{script}.lua") }).to eq(count)

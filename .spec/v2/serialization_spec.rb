@@ -10,7 +10,7 @@ RSpec.describe 'GET /serialization' do
   end
 
   it 'also serves clients requesting identity encoding' do
-    response = send_request('GET', '/serialization?seed=abcdefgh', encoding: 'identity')
+    response = send_request('GET', '/serialization?seed=abcdefgh')
 
     expect_json_response(response, Array.new(100) { { 'seed' => 'abcdefgh' } })
   end

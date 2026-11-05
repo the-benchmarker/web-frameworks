@@ -18,7 +18,7 @@ RSpec.describe 'POST /upload' do
       end
 
       it 'also serves clients requesting identity encoding' do
-        expect_json_response(upload(encoding: 'identity'), upload_summary)
+        expect_json_response(upload, upload_summary)
       end
 
       {
