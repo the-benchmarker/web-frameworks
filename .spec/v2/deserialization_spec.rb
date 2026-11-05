@@ -1,102 +1,153 @@
 require_relative '../spec_helper'
 
-RSpec.describe 'JSON deserialization' do
-  let(:items) { fixture_items }
+RSpec.describe 'POST /deserialization' do
+  [false, true].each do |chunked|
+    context "with #{chunked ? 'HTTP/1.1 chunked transfer' : 'Content-Length'}" do
+      let(:items) { Array.new(100) { |id| { 'id' => id } } }
+      let(:chunked) { chunked }
 
-  %w[identity gzip,br,zstd].each do |encoding|
-    [false, true].each do |chunked|
-      it "decodes 100 items, chunked=#{chunked}, Accept-Encoding: #{encoding}" do
-        response = send_request('POST', '/deserialization', body: fixture_body,
-                                                            content_type: 'application/json', chunked: chunked,
-                                                            encoding: encoding)
-
-        expect_json_response(response, deserialization_summary(items))
+      def deserialize(body = json_body(items), type: 'application/json', path: '/deserialization', **)
+        send_request('POST', path, body: body, content_type: type, chunked: chunked, **)
       end
-    end
-  end
 
-  it 'uses the current body when the same URL receives different IDs' do
-    [100, 1_000_000].each do |id|
-      items.last['id'] = id
-      response = send_request('POST', '/deserialization', body: json_body(items), content_type: 'application/json')
+      it 'returns only count and checksum for the shared fixture' do
+        expect_json_response(deserialize(fixture_body), { 'count' => 100, 'checksum' => 4950 })
+      end
 
-      expect_json_response(response, deserialization_summary(items))
-    end
-  end
+      it 'accepts items containing only an ID, with identity encoding' do
+        expect_json_response(deserialize(encoding: 'identity'), { 'count' => 100, 'checksum' => 4950 })
+      end
 
-  it 'accepts integral floating-point IDs without requiring a seed' do
-    items.each { |item| item['id'] = item.fetch('id').to_f }
-    response = send_request('POST', '/deserialization', body: json_body(items), content_type: 'application/json')
+      [0, 1_000_000, 2.0].each do |id|
+        it "accepts 100 repeated IDs equal to #{id.inspect}" do
+          items.each { |item| item['id'] = id }
 
-    expect_json_response(response, deserialization_summary(items))
-  end
+          expect_json_response(deserialize, { 'count' => 100, 'checksum' => (100 * id).to_i })
+        end
+      end
 
-  it 'accepts a JSON charset parameter' do
-    response = send_request('POST', '/deserialization', body: json_body(items),
-                                                        content_type: 'application/json; charset=utf-8')
+      it 'accepts numeric integral exponent notation' do
+        records = Array.new(100, '{"id":2e0}').join(',')
+        body = "{\"items\":[#{records}]}"
 
-    expect_json_response(response, deserialization_summary(items))
-  end
+        expect_json_response(deserialize(body), { 'count' => 100, 'checksum' => 200 })
+      end
 
-  [0, 1, 99, 101].each do |count|
-    it "rejects #{count} items" do
-      records = Array.new(count) { |id| { 'id' => id } }
-      response = send_request('POST', '/deserialization', body: json_body(records), content_type: 'application/json')
+      it 'accepts additional object and item fields without counting their IDs' do
+        items.each { |item| item.merge!('name' => 'example', 'nested' => { 'id' => 1_000_000 }) }
+        body = JSON.generate(items: items, id: 1_000_000, metadata: { items: [1, 2, 3] })
 
-      expect_status(response, 400)
-    end
-  end
+        expect_json_response(deserialize(body), { 'count' => 100, 'checksum' => 4950 })
+      end
 
-  [nil, false, {}, 'items'].each do |value|
-    it "rejects a non-array items value: #{value.inspect}" do
-      response = send_request('POST', '/deserialization', body: json_body(value), content_type: 'application/json')
+      it 'computes a new checksum for successive bodies at the same URL' do
+        [999_999, 0, 42].each do |id|
+          items.last['id'] = id
 
-      expect_status(response, 400)
-    end
-  end
+          expect_json_response(deserialize, { 'count' => 100, 'checksum' => 4851 + id })
+        end
+      end
 
-  [nil, false, [], 'item', 7, {}].each do |value|
-    it "rejects an invalid item: #{value.inspect}" do
-      items[50] = value
-      response = send_request('POST', '/deserialization', body: json_body(items), content_type: 'application/json')
+      it 'accepts the full 10,742-byte workload with changing six-digit IDs' do
+        [123_456, 987_654].each do |token|
+          index = -1
+          body = fixture_body.gsub(/("id"\s*:\s*)(\d+)/) do
+            index += 1
+            value = index < 5 ? token : 100_000 + Regexp.last_match(2).to_i
+            "#{Regexp.last_match(1)}#{value}"
+          end
 
-      expect_status(response, 400)
-    end
-  end
+          expect(body.bytesize).to eq(10_742)
+          expect_json_response(deserialize(body), { 'count' => 100, 'checksum' => 9_504_940 + (5 * token) })
+        end
+      end
 
-  [nil, false, true, '2', 1.5, -1, 1_000_001, [], {}].each do |id|
-    it "rejects an invalid ID: #{id.inspect}" do
-      items[50]['id'] = id
-      response = send_request('POST', '/deserialization', body: json_body(items), content_type: 'application/json')
+      ['application/json', 'application/json; charset=utf-8', 'application/problem+json',
+       'application/vnd.api+json', 'application/vnd.benchmark+json; charset=utf-8',
+       'text/x-json', 'application/jsonrequest'].each do |type|
+        it "accepts #{type}" do
+          expect_json_response(deserialize(type: type), { 'count' => 100, 'checksum' => 4950 })
+        end
 
-      expect_status(response, 400)
-    end
-  end
+        it "rejects malformed JSON with supported media type #{type}" do
+          expect_status(deserialize('{', type: type), 400)
+        end
+      end
 
-  ['', '{', '{"items":[', '{}', 'null', '[]'].each do |body|
-    it "rejects malformed JSON or missing items: #{body.inspect}" do
-      response = send_request('POST', '/deserialization', body: body, content_type: 'application/json',
-                                                          encoding: 'gzip, br, zstd')
+      [0, 1, 99, 101, 200].each do |count|
+        it "rejects an array containing #{count} items" do
+          expect_status(deserialize(json_body(Array.new(count) { |id| { 'id' => id } })), 400)
+        end
+      end
 
-      expect_status(response, 400)
-    end
-  end
+      [nil, false, true, 100, {}, 'items'].each do |value|
+        it "rejects non-array items #{value.inspect}" do
+          expect_status(deserialize(json_body(value)), 400)
+        end
+      end
 
-  %w[seed=abcdefgh items=100 other=value format=json].each do |query|
-    it "rejects query parameters: #{query}" do
-      response = send_request('POST', "/deserialization?#{query}", body: json_body(items),
-                                                                   content_type: 'application/json')
+      [nil, false, true, [], 'item', 7, {}].each do |value|
+        it "rejects invalid item #{value.inspect}" do
+          items[50] = value
 
-      expect_status(response, 400)
-    end
-  end
+          expect_status(deserialize, 400)
+        end
+      end
 
-  [nil, 'text/plain', 'application/xml', 'application/x-www-form-urlencoded'].each do |type|
-    it "rejects unsupported media type #{type.inspect} even when JSON is requested" do
-      response = send_request('POST', '/deserialization', body: json_body(items), content_type: type,
-                                                          headers: { 'Accept' => 'application/json' })
+      [nil, false, true, '2', 1.5, -1, 1_000_001, [], {}].each do |id|
+        [0, 50, 99].each do |position|
+          it "rejects ID #{id.inspect} at item #{position}" do
+            items[position]['id'] = id
 
-      expect_status(response, 415)
+            expect_status(deserialize, 400)
+          end
+        end
+      end
+
+      {
+        'empty body' => '', 'whitespace' => " \r\n\t", 'truncated object' => '{',
+        'truncated array' => '{"items":[', 'missing items' => '{}', 'null' => 'null',
+        'array' => '[]', 'boolean' => 'true', 'number' => '42', 'string' => '"text"',
+        'trailing garbage' => '{"items":[]} garbage', 'two objects' => '{}{}',
+        'non-JSON keys' => '{items:[]}', 'trailing comma' => '{"items":[],}'
+      }.each do |description, body|
+        it "rejects #{description}" do
+          expect_status(deserialize(body), 400)
+        end
+      end
+
+      it 'rejects 100 items in a top-level array without the object wrapper' do
+        expect_status(deserialize(JSON.generate(items)), 400)
+      end
+
+      %w[seed=abcdefgh items=100 other=value format=json %73eed=abcdefgh other= other].each do |query|
+        it "rejects query parameters #{query}" do
+          expect_status(deserialize(path: "/deserialization?#{query}"), 400)
+        end
+      end
+
+      it 'does not substitute query items for a missing body field' do
+        expect_status(deserialize('{}', path: '/deserialization?items[0][id]=1'), 400)
+      end
+
+      [nil, 'text/plain', 'application/xml', 'application/x-www-form-urlencoded', 'application/jsonp'].each do |type|
+        it "returns 415 for #{type.inspect} even when Accept requests JSON" do
+          expect_status(deserialize(type: type, headers: { 'Accept' => 'application/json' }), 415)
+        end
+
+        it "checks #{type.inspect} before attempting to parse malformed JSON" do
+          expect_status(deserialize('{', type: type), 415)
+        end
+
+        it "returns 415 for an empty body with #{type.inspect}" do
+          expect_status(deserialize('', type: type), 415)
+        end
+      end
+
+      it 'can process a valid request after a validation error' do
+        expect_status(deserialize('{}'), 400)
+        expect_json_response(deserialize, { 'count' => 100, 'checksum' => 4950 })
+      end
     end
   end
 end

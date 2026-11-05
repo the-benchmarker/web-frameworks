@@ -31,8 +31,8 @@ Every implementation listens on port `3000`. The v1 contract defines these route
 Before a v1 implementation is benchmarked, the shared [RSpec contract](.spec/v1/route_spec.rb) verifies these routes. The default v1 benchmark runs all three routes for 15 seconds each using `zrk --closed` and keep-alive, and records JSON reports. Concurrency and routes are configurable.
 
 Each framework's `config.yaml` selects its contract with a top-level `specs: v1`
-or `specs: v2`. The default is v2; every framework except Rails currently opts
-into v1 explicitly. Rails selects the six-workload
+or `specs: v2`. Without `specs: v2`, only v1 tests and workloads run.
+Rails selects the six-workload
 [v2 scenario](SCENARIO.md): routing, JSON serialization/deserialization, and
 multipart uploads. Generate the commands before building the implementation:
 
@@ -43,7 +43,8 @@ make -f ruby/rails/.Makefile test
 ```
 
 The generated commands use the workloads selected by the config. RSpec reads the
-framework config and excludes the other version's specs automatically.
+framework config, runs shared tests for both versions, and selects the matching
+contract checks. v2 fixture mounts are included only for `specs: v2`.
 Request bodies and varying inputs are controlled by Lua scripts in
 [`.load_scripts/`](.load_scripts/), shared by warmup and both measurement
 passes. Deserialization has no query parameters or seed: its JSON body contains

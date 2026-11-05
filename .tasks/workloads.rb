@@ -15,7 +15,7 @@ module BenchmarkWorkloads
     'upload.lua' => [['POST', '/upload']]
   }.freeze
 
-  def self.routes(specs: 'v2')
+  def self.routes(specs: 'v1')
     raise ArgumentError, 'specs must be v1 or v2' unless %w[v1 v2].include?(specs)
 
     return specs == 'v1' ? V1_ROUTES : V2_ROUTES unless ENV.key?('ROUTES')

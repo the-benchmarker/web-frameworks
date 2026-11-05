@@ -1,48 +1,42 @@
 require_relative '../spec_helper'
 
-RSpec.describe 'legacy routes' do
-  context 'GET : /' do
-    subject(:response) { send_request('GET', '/') }
+# The legacy contract allows any 2xx status and returns the route ID as text.
+RSpec.describe 'v1 HTTP routes' do
+  %w[identity gzip,deflate,br,zstd].each do |encoding|
+    context "with Accept-Encoding: #{encoding}" do
+      [['GET', '/'], ['POST', '/user']].each do |method, path|
+        it "serves an empty successful response to #{method} #{path}" do
+          response = send_request(method, path, body: method == 'POST' ? '' : nil, encoding: encoding)
 
-    it 'returns successfully' do
-      expect(response).to be_a(Net::HTTPSuccess)
-    end
+          expect(response).to be_a(Net::HTTPSuccess)
+          expect(response.body.to_s).to eq('')
+        end
+      end
 
-    it 'returns an empty string' do
-      expect(response.body.to_s).to be_empty
-    end
-  end
+      %w[0 42 00000042 123456789].each do |id|
+        it "returns the plain route ID #{id}" do
+          response = send_request('GET', "/user/#{id}", encoding: encoding)
 
-  context 'GET : /user/0' do
-    subject(:response) { send_request('GET', '/user/0') }
-
-    it 'returns successfully' do
-      expect(response).to be_a(Net::HTTPSuccess)
-    end
-
-    it 'returns the expected param' do
-      expect(response.body.to_s).to eq('0')
-    end
-  end
-
-  context 'POST : /user' do
-    subject(:response) { send_request('POST', '/user', body: '', content_type: 'text/plain') }
-
-    it 'returns successfully' do
-      expect(response).to be_a(Net::HTTPSuccess)
-    end
-
-    it 'returns an empty string' do
-      expect(response.body.to_s).to be_empty
+          expect(response).to be_a(Net::HTTPSuccess)
+          expect(response.body).to eq(id)
+        end
+      end
     end
   end
 
-  [['GET', '/', ''], ['GET', '/user/0', '0'], ['POST', '/user', '']].each do |method, path, body|
-    it "keeps #{method} #{path} uncompressed when compression is advertised" do
-      response = send_request(method, path, body: method == 'POST' ? '' : nil, encoding: 'gzip, br, zstd')
+  it 'reads the ID from the path when a query parameter has the same name' do
+    response = send_request('GET', '/user/42?id=other')
+
+    expect(response).to be_a(Net::HTTPSuccess)
+    expect(response.body).to eq('42')
+  end
+
+  it 'uses the current path on successive requests' do
+    %w[42 00000042 0 42].each do |id|
+      response = send_request('GET', "/user/#{id}")
 
       expect(response).to be_a(Net::HTTPSuccess)
-      expect(response.body.to_s).to eq(body)
+      expect(response.body).to eq(id)
     end
   end
 end

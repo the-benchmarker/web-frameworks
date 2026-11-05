@@ -41,21 +41,21 @@ RSpec.describe 'benchmark request generation' do
     expect(commands.fetch(:warmup)[1]).to include(':3000/user/42 ')
     expect(commands.fetch(:warmup)[2]).to include(':3000/user ')
     expect(commands.fetch(:'collect-2').fetch(1).split(' && ')).to all(include('/.load_scripts/default.lua'))
-    expect(commands.fetch(:test).first).to eq('ENGINE=puma LANGUAGE=ruby FRAMEWORK=sinatra bundle exec rspec')
+    expect(commands.fetch(:test).first).to eq('ENGINE=puma LANGUAGE=ruby FRAMEWORK=sinatra bundle exec rspec .spec')
   end
 
-  it 'uses v2 workloads when the framework does not specify a version' do
+  it 'uses only v1 workloads when the framework does not specify a version' do
     stub_framework_specs(nil)
 
-    expect(generated_commands.fetch(:warmup).length).to eq(6)
+    expect(generated_commands.fetch(:warmup).length).to eq(3)
   end
 
-  it 'defaults to v2 workloads when no config layer specifies a version' do
+  it 'defaults to v1 workloads when no config layer specifies a version' do
     allow(YAML).to receive(:safe_load_file).and_wrap_original do |method, *args|
       method.call(*args).except('specs')
     end
 
-    expect(generated_commands.fetch(:warmup).length).to eq(6)
+    expect(generated_commands.fetch(:warmup).length).to eq(3)
   end
 
   it 'uses all six workloads for Rails' do
@@ -63,14 +63,14 @@ RSpec.describe 'benchmark request generation' do
 
     expect(commands.fetch(:warmup).length).to eq(6)
     expect(commands.fetch(:warmup).first).to include('/.load_scripts/default.lua', ':3000/ ')
-    expect(commands.fetch(:test).first).to eq('ENGINE=puma LANGUAGE=ruby FRAMEWORK=rails bundle exec rspec')
+    expect(commands.fetch(:test).first).to eq('ENGINE=puma LANGUAGE=ruby FRAMEWORK=rails bundle exec rspec .spec')
   end
 
   it 'honors an explicit v1 selection in the framework config' do
     stub_framework_specs('v1')
 
     expect(generated_commands.fetch(:warmup).length).to eq(3)
-    expect(generated_commands.fetch(:test).first).to end_with('bundle exec rspec')
+    expect(generated_commands.fetch(:test).first).to end_with('bundle exec rspec .spec')
   end
 
   it 'rejects an unknown spec version before generating commands' do
@@ -97,6 +97,26 @@ RSpec.describe 'benchmark request generation' do
     expect(container).not_to include('target=/serialization.json,', 'SERIALIZATION_FIXTURE')
   end
 
+  [nil, 'v1'].each do |version|
+    it "skips v2 fixture mounts and collection for specs: #{version.inspect}" do
+      stub_framework_specs(version)
+      commands = generated_commands
+      container = commands.fetch(:build).find { |command| command.start_with?('docker run ') }
+
+      expect(container).not_to include('--mount', 'deserialization.json', 'upload.bin')
+      expect(commands.fetch(:'collect-2').fetch(1).split(' && ').length).to eq(3)
+      expect(commands.fetch(:warmup)).to all(include('/.load_scripts/default.lua'))
+    end
+  end
+
+  it 'requires framework opt-in even if the root config selects v2' do
+    stub_framework_specs(nil)
+    main_config = YAML.safe_load_file('config.yaml').merge('specs' => 'v2')
+    allow(YAML).to receive(:safe_load_file).with('config.yaml').and_return(main_config)
+
+    expect(generated_commands.fetch(:warmup).length).to eq(3)
+  end
+
   it 'supplies the repository location to Lua when the generator uses an absolute script path' do
     ENV['ROUTES'] = 'POST:/deserialization'
 
@@ -120,7 +140,7 @@ RSpec.describe 'benchmark request generation' do
 
     expect(generated_commands.fetch(:warmup).length).to eq(1)
     expect(collected_requests.first).to include('/.load_scripts/upload.lua')
-    expect(generated_commands.fetch(:test).first).to end_with('bundle exec rspec')
+    expect(generated_commands.fetch(:test).first).to end_with('bundle exec rspec .spec')
   end
 
   it 'does not change the request method when a matching path has another method' do

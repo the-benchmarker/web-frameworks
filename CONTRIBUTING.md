@@ -8,11 +8,13 @@ methodology, and documentation are welcome.
 Every implementation listens on port `3000`. The v1 contract checks
 `GET /`, `GET /user/0`, and `POST /user`. The six-route stateless v2 workload
 and exact responses are defined in [SCENARIO.md](SCENARIO.md). Set a top-level
-`specs: v1` or `specs: v2` in the framework's `config.yaml`; v2 is the default.
+`specs: v2` in the framework's `config.yaml` to enable v2; omission or
+`specs: v1` selects v1.
 Rails selects v2, and every other framework explicitly selects v1.
 Run `bundle exec rake config` to generate commands.
-The generated test target runs `bundle exec rspec`; RSpec reads the framework
-config and excludes the other version's suite in `.spec/v1` or `.spec/v2`.
+The generated test target runs `bundle exec rspec .spec`; RSpec reads the framework
+config and runs shared tests plus the selected contract checks. v2-only tests,
+workloads, and fixture mounts are skipped unless `specs: v2` is present.
 Route definitions live in [`.tasks/workloads.rb`](.tasks/workloads.rb), and
 request fixtures live at the repository root.
 Warmup and collection run every selected route separately. Compare frameworks
@@ -69,9 +71,8 @@ Dockerfiles, before framework files. `bundle exec rake config` copies the
 fixture into each Docker build context.
 
 Add a target for the implementation in `Makefile` and `neph.yaml`, and its
-repository metadata in `benchmarker.cr`. New implementations default to v2;
-set `specs: v1` explicitly for implementations of the legacy contract. When
-migrating to v2, remove that override or set `specs: v2`, and verify every route
+repository metadata in `benchmarker.cr`. New implementations default to v1. When
+migrating to v2, set `specs: v2`, and verify every route
 over HTTP against the framework's Docker container.
 
 ## Running in Docker
