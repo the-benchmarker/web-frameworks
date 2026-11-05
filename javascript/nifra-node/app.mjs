@@ -1,9 +1,9 @@
-import { server } from '@nifrajs/core/server';
+import { server, staticResponse } from '@nifrajs/core/server';
 import { serve } from '@nifrajs/node';
 
 const app = server()
-  .get('/', () => new Response(''))
+  .get('/', staticResponse())
   .get('/user/:id', (c) => new Response(c.params.id))
-  .post('/user', () => new Response(''));
+  .post('/user', staticResponse());
 
 await serve(app, { port: 3000 });

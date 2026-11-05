@@ -4,7 +4,7 @@ reviewers:
 
 framework:
   website: doc.networknt.com
-  version: 2.2
+  version: 2.5
 
   build:
     - mvn clean package -Prelease
