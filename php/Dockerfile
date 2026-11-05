@@ -50,8 +50,8 @@ COPY --from=ghcr.io/php/pie:bin /pie /usr/bin/pie
 
 ENV EVENT_EXT_FILE=/usr/local/etc/php/conf.d/docker-php-ext-event.ini
 RUN if [ -f "${EVENT_EXT_FILE}" ] ; then \
-  mv docker-php-ext-event.ini 10-docker-php-ext-event.ini ; \
-  mv docker-php-ext-sockets.ini 20-docker-php-ext-sockets.ini ;  fi
+  mv /usr/local/etc/php/conf.d/docker-php-ext-event.ini /usr/local/etc/php/conf.d/10-docker-php-ext-event.ini ; \
+  mv /usr/local/etc/php/conf.d/docker-php-ext-sockets.ini /usr/local/etc/php/conf.d/20-docker-php-ext-sockets.ini ;  fi
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
