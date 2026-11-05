@@ -4,34 +4,19 @@ import (
 	"os"
 
 	"github.com/NARUBROWN/spine"
+	echoplatform "github.com/NARUBROWN/spine-echo-platform"
 	"github.com/NARUBROWN/spine/pkg/boot"
-	"github.com/NARUBROWN/spine/pkg/httpx"
-	"github.com/NARUBROWN/spine/pkg/path"
+	"github.com/the-benchmarker/web-frameworks/go/spine/src/controller"
+	"github.com/the-benchmarker/web-frameworks/go/spine/src/route"
 )
 
-type BenchmarkController struct{}
-
-func NewBenchmarkController() *BenchmarkController { return &BenchmarkController{} }
-
-func (c *BenchmarkController) Index() httpx.Response[string] {
-	return httpx.Response[string]{Body: ""}
-}
-
-func (c *BenchmarkController) User(id path.String) httpx.Response[string] {
-	return httpx.Response[string]{Body: id.Value}
-}
-
-func (c *BenchmarkController) CreateUser() httpx.Response[string] {
-	return httpx.Response[string]{Body: ""}
-}
-
-// BuildApplication은 서버 실행, 계약 검사와 오프라인 검증이 함께 사용하는 composition root입니다.
+// BuildApplication wires constructors and routes and configures runtime options.
 func BuildApplication() (spine.App, boot.Options, error) {
-	app := spine.New()
-	app.Constructor(NewBenchmarkController)
-	app.Route("GET", "/", (*BenchmarkController).Index)
-	app.Route("GET", "/user/:id", (*BenchmarkController).User)
-	app.Route("POST", "/user", (*BenchmarkController).CreateUser)
+	app := spine.New(echoplatform.Option())
+	app.Constructor(controller.NewBenchmarkController)
+	if err := route.Register(app); err != nil {
+		return nil, boot.Options{}, err
+	}
 
 	address := ":3000"
 	if port := os.Getenv("SPINE_PORT"); port != "" {

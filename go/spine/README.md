@@ -1,25 +1,40 @@
-# Spine WFB 구현
+# Spine WFB implementation
 
-공개 릴리스 `github.com/NARUBROWN/spine v0.5.2`를 사용하는 최소 HTTP 앱입니다.
-모든 요청은 Spine의 라우팅, 생성자 주입, 인자 해석, 컨트롤러와 응답 처리를 거칩니다.
-HTTP 어댑터인 Echo에 직접 라우트를 등록하거나 기본 HTTP 보호 설정을 변경하지 않습니다.
+A minimal HTTP application using the public releases of
+`github.com/NARUBROWN/spine v0.6.5` and
+`github.com/NARUBROWN/spine-echo-platform v0.1.0`.
+Every request passes through Spine routing, constructor injection, argument resolution,
+controller execution, and response handling. The application does not register routes
+directly with Echo or change the default HTTP protections.
 
-| 요청 | 상태 | 본문 |
+| Request | Status | Body |
 | --- | --- | --- |
-| `GET /` | 200 | 빈 본문 |
-| `GET /user/:id` | 200 | 전달받은 `id` |
-| `POST /user` | 200 | 빈 본문 |
+| `GET /` | 200 | Empty body |
+| `GET /user/:id` | 200 | The supplied `id` |
+| `POST /user` | 200 | Empty body |
 
-기본 포트는 `3000`이며 `SPINE_PORT`로 변경할 수 있습니다.
-데이터베이스, 메시지 브로커와 외부 서비스는 사용하지 않습니다.
+The default port is `3000`; set `SPINE_PORT` to override it.
+The application uses no database, message broker, or external service.
+It selects only an HTTP implementation and registers no WebSocket, event, or validator implementation.
 
-애플리케이션 빌드·실행과 아래의 공통 컨테이너 검증에는 Spine CLI가 필요하지 않습니다.
+The project follows Spine CLI's default `layered-v1` layout:
 
-`spine contract check --json`과 `spine verify --json`은 별도로 설치하는
-[Spine CLI](https://github.com/NARUBROWN/spine-cli)가 제공하는 선택적 개발 검증 명령입니다.
-Go 모듈 의존성을 설치하는 것만으로 `spine` 명령이 설치되지는 않습니다.
+```text
+main.go                                   # Validate configuration and run the server
+internal/application/application.go       # Compose spine.New(echoplatform.Option()), constructors, and runtime options
+src/controller/benchmark_controller.go    # Handle benchmark responses
+src/route/route.go                        # Register the three HTTP routes
+spine.toml                               # Configure layered-v1, Echo, and the v0.6.5 recipe
+```
 
-WFB 저장소 루트에서 공식 컨테이너 검증을 실행합니다.
+Spine CLI is not required to build or run the application or to run the shared container checks below.
+
+`spine contract check --json` and `spine verify --json` are optional development checks
+provided by the separately installed
+[Spine CLI v0.4.2](https://github.com/NARUBROWN/spine-cli/releases/tag/v0.4.2).
+Installing Go module dependencies does not install the `spine` command.
+
+Run the shared container checks from the WFB repository root:
 
 ```sh
 bundle exec rake config
@@ -28,6 +43,9 @@ make -f go/spine/.Makefile test
 make -f go/spine/.Makefile unbuild
 ```
 
-공통 언어 템플릿이 `.Dockerfile.net-http`와 `.Makefile`을 생성합니다.
-`config.yaml`은 `go.sum`도 빌드에 포함하도록 지정합니다.
-응답 계약 검증은 성능 측정과 구분하며, 자체 측정값을 공개 순위로 간주하지 않습니다.
+The shared language templates generate `.Dockerfile.net-http` and `.Makefile`.
+The shared Go configuration copies `.go` files and `go.mod`, then runs `go get`
+inside the container to generate the required checksums before building.
+Keep `go.sum` tracked for local development.
+Response-contract checks are separate from performance measurements;
+local measurements are not official benchmark rankings.
