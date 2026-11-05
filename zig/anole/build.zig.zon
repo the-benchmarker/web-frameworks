@@ -5,8 +5,8 @@
     .minimum_zig_version = "0.17.0",
     .dependencies = .{
         .anole = .{
-            .url = "git+https://github.com/xuckless/anole?ref=v0.5.1#28398433b5c78a272067ce9869d3d2dc6709a7cc",
-            .hash = "anole-0.5.1-WO_-F2QW5wCj8XuMBII-ypw1SmvgAsRxNHENiMmvNaQK",
+            .url = "git+https://github.com/xuckless/anole?ref=v0.5.2#2e7200e87625e62bb110c5742ce462bca468f396",
+            .hash = "anole-0.5.2-WO_-F10z6gBbTn1eVUCVKCBJeYihPrvFwruSEJR2RYE4",
         },
     },
     .paths = .{
