@@ -6,5 +6,9 @@ framework:
   github: Stephan-MC/ruvel
   version: 0.2.0
 
-  environment:
-    PORT: 3000
+language:
+  engines:
+    default:
+      command: sh -c "PORT=3000 /usr/src/app/target/release/server"
+      environment:
+        PORT: 3000
