@@ -7,7 +7,7 @@ framework:
     - ca-certificates
 
   download:
-    - wget -q https://codeload.github.com/facil-io/cstl/tar.gz/refs/tags/0.8.2 -O cstl.tar.gz
+    - wget -q https://codeload.github.com/facil-io/cstl/tar.gz/refs/tags/0.8.4 -O cstl.tar.gz
     - mkdir cstl && tar xzf cstl.tar.gz -C cstl --strip-components=1
 
   build:

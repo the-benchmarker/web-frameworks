@@ -1,0 +1,9 @@
+module = "github.com/the-benchmarker/web-frameworks/go/spine"
+entrypoint = "."
+composition = "./internal/application"
+port = 3000
+layout = "layered-v1"
+platform = "echo"
+recipe = "platform-contracts-v0.6.5"
+validator = "none"
+websocket_platform = "none"

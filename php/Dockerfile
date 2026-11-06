@@ -32,7 +32,7 @@ RUN if [ -f php.ini ] ; then \
 
 WORKDIR /usr/src/app
 
-RUN docker-php-ext-install -j$(nproc) zip {{#modules}}{{{.}}} {{/modules}}
+RUN docker-php-ext-install zip {{#modules}}{{{.}}} {{/modules}}
 COPY --from=composer/composer:latest-bin --link /composer /usr/local/bin/composer
 COPY --from=ghcr.io/php/pie:bin /pie /usr/bin/pie
 
@@ -77,14 +77,16 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
     RUN sed -i 's/\;prefix.*/prefix = \/usr\/src\/app\/public/g' /usr/local/etc/php-fpm.d/www.conf
   {{/slasheddocroot}}
 
-  RUN sed -i 's/\;\(listen =\).*/\1 \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
+  RUN sed -i 's/\;\(listen =\).*/\1 \/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.owner.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.group.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
   RUN sed -i 's/\;\(listen\.mode.*\).*/\1/g' /usr/local/etc/php-fpm.d/www.conf
   # pm.max_children set according to nproc
   RUN if [ $(nproc) = 1 ] ; then sed -i 's/\(pm\.max_children =\).*/\1 512/g' /usr/local/etc/php-fpm.d/www.conf ; else sed -i 's/\(pm\.max_children =\).*/\1 1024/g' /usr/local/etc/php-fpm.d/www.conf ; fi
-  # after 15 seconds warm-up, half of the 'idle' children are not killed
-  RUN if [ $(nproc) = 1 ] ; then sed -i 's/\(pm\.max_spare_servers =\).*/\1 256/g' /usr/local/etc/php-fpm.d/www.conf ; else sed -i 's/\(pm\.max_spare_servers =\).*/\1 512/g' /usr/local/etc/php-fpm.d/www.conf ; fi
+  # use static pm
+  RUN sed -i 's/\(pm =\).*/\1 static/g' /usr/local/etc/php-fpm.d/www.conf
+  # disable access log
+  RUN sed -i 's/^;\? *access\.log.*/access.log = \/dev\/null/' /usr/local/etc/php-fpm.d/www.conf
 
   RUN rm -fr /usr/local/etc/php-fpm.d/zz-docker.conf
 
@@ -137,7 +139,7 @@ HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
       fastcgi_socket_keepalive on;
 
       upstream fastcgi_backend {
-          server unix:/var/run/php-fpm.sock;
+          server unix:/run/php-fpm.sock;
           keepalive 36;
       }
 
@@ -204,6 +206,7 @@ EOT
 {{{.}}}
 EOT
   {{/nginx_conf}}
-
-  ENTRYPOINT /usr/local/sbin/php-fpm --daemonize; nginx -c /usr/src/nginx.conf
+  # check php-fpm config
+  #RUN /usr/local/sbin/php-fpm -tt
+  ENTRYPOINT /usr/local/sbin/php-fpm; nginx -c /usr/src/nginx.conf
 {{/command}}
