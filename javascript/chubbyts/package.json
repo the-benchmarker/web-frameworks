@@ -1,11 +1,11 @@
 {
   "type": "module",
   "dependencies": {
-    "@chubbyts/chubbyts-framework": "^4.0.2",
+    "@chubbyts/chubbyts-framework": "^4.1.2",
     "@chubbyts/chubbyts-framework-router-path-to-regexp": "^4.0.0",
     "@chubbyts/chubbyts-http": "^3.1.0",
-    "@chubbyts/chubbyts-http-node": "^1.0.0",
-    "@chubbyts/chubbyts-http-types": "^4.1.0",
+    "@chubbyts/chubbyts-http-node": "^1.1.2",
+    "@chubbyts/chubbyts-http-types": "^4.2.2",
     "@types/node": "^26.0.0"
   },
   "engines": {
