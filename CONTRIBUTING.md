@@ -10,10 +10,12 @@ Every implementation listens on port `3000`. The v1 contract checks
 and exact responses are defined in [SCENARIO.md](SCENARIO.md). Set a top-level
 `specs: v2` in the framework's `config.yaml` to enable v2; omission or
 `specs: v1` selects v1.
-Rails selects v2, and every other framework explicitly selects v1.
+Rails selects v2 workloads and is checked against both contract suites. Every
+other framework explicitly selects v1 and runs only the v1 suite.
 Run `bundle exec rake config` to generate commands.
-The generated test target runs `bundle exec rspec .spec`; RSpec reads the framework
-config and runs shared tests plus the selected contract checks. v2-only tests,
+The generated test target runs `bundle exec ruby .spec/run.rb`; it reads the
+framework config and runs the selected Gherkin features with Cucumber.
+Repository unit tests live in `spec/` and run with `bundle exec rspec spec`. v2-only tests,
 workloads, and fixture mounts are skipped unless `specs: v2` is present.
 Route definitions live in [`.tasks/workloads.rb`](.tasks/workloads.rb), and
 request fixtures live at the repository root.

@@ -153,7 +153,7 @@ def commands_for(language, framework, variant, provider = 'docker')
     url = "http://`cat #{Shellwords.escape(hostname)}`:3000#{Shellwords.escape(uri)}"
     commands[:warmup] << "#{zrk} #{args} #{url} #{request[:arguments].shelljoin}".rstrip
   end
-  commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec .spec"
+  commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec ruby .spec/run.rb"
 
   concurrencies.split(',').each do |concurrency|
     target = :"collect-#{concurrency}"
