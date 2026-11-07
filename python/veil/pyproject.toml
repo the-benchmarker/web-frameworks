@@ -6,4 +6,4 @@ requires = ["flit_core"]
 name = "server"
 version = "1.0.0"
 description = "Simple benchmark implementation"
-dependencies = ["veil-api==0.10.1"]
+dependencies = ["veil-api==0.11.0"]
