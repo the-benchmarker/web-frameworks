@@ -4,11 +4,4 @@ reviewers:
 framework:
   website: github.com/Stephan-MC/ruvel-ui
   github: Stephan-MC/ruvel
-  version: 0.2.0
-
-language:
-  engines:
-    default:
-      command: sh -c "PORT=3000 /usr/src/app/target/release/server"
-      environment:
-        PORT: 3000
+  version: 0.3.0
