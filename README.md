@@ -32,7 +32,7 @@ Before a v1 implementation is benchmarked, the shared [Gherkin contract](.spec/v
 
 Each framework's `config.yaml` selects its contract with a top-level `specs: v1`
 or `specs: v2`. Only the selected contract's tests and workloads run; omitting
-`specs` defaults to v2. Rails selects the six-workload
+`specs` defaults to v2. Rails selects the four-workload
 [v2 scenario](SCENARIO.md): routing, JSON serialization/deserialization, and
 multipart uploads. Generate the commands before building the implementation:
 
@@ -60,8 +60,11 @@ verify that responses stay uncompressed.
 | `deserialization.lua` | `POST /deserialization` |
 | `upload.lua` | `POST /upload` |
 
-The v1 default runs its three routes; v2 runs all six routes. The exact mapping used by
-command generation is in [`.tasks/workloads.rb`](.tasks/workloads.rb).
+The v1 default measures its three routes. V2 measures dynamic routing, JSON
+serialization, JSON deserialization, and multipart uploads. `GET /` and
+`POST /user` are still required and checked by the v2 correctness suite.
+The exact mapping used by command generation is in
+[`.tasks/workloads.rb`](.tasks/workloads.rb).
 
 To test an already running implementation directly:
 

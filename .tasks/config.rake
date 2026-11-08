@@ -83,7 +83,7 @@ def commands_for(language, framework, variant, provider = 'docker')
   language_config = YAML.safe_load_file(File.join(directory, language, 'config.yaml'))
   framework_config = YAML.safe_load_file(File.join(directory, language, framework, 'config.yaml'))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-  # The framework's specs value selects the three v1 routes or the six v2
+  # The framework's specs value selects the three v1 routes or the four v2
   # workloads. ROUTES may narrow or replace either default list.
   specs = framework_config.fetch('specs', 'v2')
   routes = BenchmarkWorkloads.routes(specs: specs)

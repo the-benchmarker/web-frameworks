@@ -25,6 +25,10 @@ parameter extraction, JSON, and multipart facilities. No database, authenticatio
 session, external service, or background job is needed. All requirements below
 apply to v2. New implementations should implement this version.
 
+Performance measurements use dynamic routing, JSON serialization, JSON
+deserialization, and multipart uploads. `GET /` and `POST /user` are required
+for correctness but are excluded from the default v2 performance workloads.
+
 ## Runtime requirements
 
 Every implementation must satisfy these requirements during measurement:
