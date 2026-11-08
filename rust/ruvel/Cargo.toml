@@ -21,7 +21,7 @@ path = "main.rs"
 
 [dependencies]
 async-trait = "0.1.92"
-ruvel = "0.1.4"
+ruvel = "0.3.0"
 tokio = { version = "1.54.1", features = ["full"] }
 
 [lints.clippy]
