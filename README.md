@@ -31,9 +31,8 @@ Every implementation listens on port `3000`. The v1 contract defines these route
 Before a v1 implementation is benchmarked, the shared [Gherkin contract](.spec/v1/routing.feature) verifies these routes. The default v1 benchmark runs all three routes for 15 seconds each using `zrk --closed` and keep-alive, and records JSON reports. Concurrency and routes are configurable.
 
 Each framework's `config.yaml` selects its contract with a top-level `specs: v1`
-or `specs: v2`. Without `specs: v2`, only v1 tests and workloads run. Rails is checked against
-both independent contract suites; its measurement workloads remain v2.
-Rails selects the six-workload
+or `specs: v2`. Only the selected contract's tests and workloads run; omitting
+`specs` defaults to v2. Rails selects the six-workload
 [v2 scenario](SCENARIO.md): routing, JSON serialization/deserialization, and
 multipart uploads. Generate the commands before building the implementation:
 

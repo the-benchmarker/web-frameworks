@@ -1,7 +1,7 @@
 # Benchmark scenarios
 
 The suite has two independent HTTP contracts. Each framework's `config.yaml`
-selects its version with `specs: v1` or `specs: v2`; omission selects v1.
+selects its version with `specs: v1` or `specs: v2`; omission selects v2.
 The executable contracts live in [.spec/v1](.spec/v1) and [.spec/v2](.spec/v2).
 
 ## V1: legacy routing
