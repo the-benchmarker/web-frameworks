@@ -3,4 +3,12 @@ reviewers:
 
 framework:
   website: github.com/Stephan-MC/ruvel-ui
-  version: 0.1.1
+  github: Stephan-MC/ruvel
+  version: 0.3.0
+
+language:
+  engines:
+    default:
+      command: /usr/src/app/target/release/server
+      environment:
+        PORT: 3000
