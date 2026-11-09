@@ -1,11 +1,9 @@
 framework:
-  github: georgelemon/concarne
+  github: getcarne/concarne
   version: 0.1.0
 
   engines:
     - carne
 
-# Pinned by commit: concarne is installed from its git URL until it lands
-# in the carne package registry.
 bootstrap:
-  - carne pkg install concarne#706382e4b59dcbbc4fc4616d1d484dd88fb96876 --url=https://github.com/georgelemon/concarne
+  - carne pkg install concarne
