@@ -7,6 +7,8 @@ language:
     version: '1.4'
   deno:
     version: '2.9'
+  carne:
+    version: '0.1.2'
 
   engines:
     node:
@@ -56,7 +58,6 @@ language:
       files:
         - bunfig.toml
     carne:
-      version: '0.1.2'
       command: carne run app.js
 
 framework:

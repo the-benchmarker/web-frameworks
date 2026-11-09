@@ -17,7 +17,7 @@ RUN apt-get -qq update && \
 # Carne runtime, pinned by language.engines.carne.version.
 RUN ARCH=$(uname -m); \
   if [ "$ARCH" = "x86_64" ]; then CARNE_ARCH="x86_64"; else CARNE_ARCH="arm64"; fi; \
-  curl -fsSL -o /tmp/carne.tar.gz https://github.com/openpeeps/carne/releases/download/{{language.engines.carne.version}}/carne_linux-${CARNE_ARCH}.tar.gz && \
+  curl -fsSL -o /tmp/carne.tar.gz https://github.com/openpeeps/carne/releases/download/{{language.carne.version}}/carne_linux-${CARNE_ARCH}.tar.gz && \
   tar -xzf /tmp/carne.tar.gz -C /tmp && \
   mv /tmp/carne_linux-${CARNE_ARCH}/carne /usr/local/bin/carne && \
   rm -rf /tmp/carne.tar.gz /tmp/carne_linux-${CARNE_ARCH} && \
