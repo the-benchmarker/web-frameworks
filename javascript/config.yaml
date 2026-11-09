@@ -55,6 +55,9 @@ language:
       command: bun run cluster.ts
       files:
         - bunfig.toml
+    carne:
+      version: '0.1.1'
+      command: carne run app.js
 
 framework:
   engines:
