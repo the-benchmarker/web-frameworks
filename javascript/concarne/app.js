@@ -3,12 +3,13 @@
 var concarne = require("pkg/concarne");
 var os = require("std/os");
 
-// Size the worker pool to the host, like the node/bun cluster wrappers.
-// concarne serves every worker from an isolated runtime sharing port 3000.
+// Use every CPU core, like the node/bun cluster wrappers: concarne
+// serves each worker from an isolated runtime sharing port 3000.
+// std/http supports 1..64 workers, so clamp large hosts to 64.
 var workers = 1;
 try {
   var n = parseInt(os.exec("nproc").output.trim(), 10);
-  if (n >= 1 && n <= 64) workers = n;
+  if (n >= 1) workers = Math.min(n, 64);
 } catch (e) {}
 
 var app = concarne();
