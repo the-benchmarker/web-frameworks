@@ -48,6 +48,8 @@ reviewers:
 Framework reviewers override language reviewers. Renovate uses `@waghanza`
 when neither config defines reviewers. An empty list disables reviewer requests
 for that language or framework. Reviewer requests also apply to auto-merge PRs.
+The reviewer workflow runs only when an original PR targeting `develop` is opened.
+Release PRs and `master`-to-`develop` sync PRs do not trigger reviewer requests.
 
 Define `bootstrap` as a YAML list of shell commands. Dockerfile generation
 concatenates commands from the root config, the language config (for example,
