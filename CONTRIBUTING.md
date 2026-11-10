@@ -58,6 +58,26 @@ The root, language, and framework configs are merged in that order. Define
 root commands, language commands, selected engine commands, framework commands,
 then inline framework engine commands. Their order and repetitions are kept.
 
+Renovate synchronizes language metadata after updating Dockerfiles and checks
+that build and runtime pins agree before running. In the Renovate container,
+run `ruby .github/scripts/sync-language-versions.rb --check` to verify the pins,
+or omit `--check` to synchronize metadata.
+
+Set `reviewers` as a top-level list of GitHub usernames in
+`<language>/config.yaml` for language defaults or
+`<language>/<framework>/config.yaml` for framework-specific reviewers:
+
+```yaml
+reviewers:
+  - your-github-username
+```
+
+Framework reviewers override language reviewers. Renovate uses `@waghanza`
+when neither config defines reviewers. An empty list disables reviewer requests
+for that language or framework. Reviewer requests also apply to auto-merge PRs.
+The reviewer workflow runs only when an original PR targeting `develop` is opened.
+Release PRs and `master`-to-`develop` sync PRs do not trigger reviewer requests.
+
 Define `environment` as YAML key/value pairs when needed:
 
 ```yaml
