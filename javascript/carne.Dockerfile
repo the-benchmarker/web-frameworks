@@ -20,7 +20,7 @@ RUN case "$(uname -m)" in \
       aarch64|arm64) CARNE_ARCH="arm64" ;; \
       *) echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;; \
     esac; \
-    curl -fsSL -o /tmp/carne.tar.gz "https://github.com/openpeeps/carne/releases/download/{{language.carne.version}}/carne_linux-${CARNE_ARCH}.tar.gz" && \
+    curl -fsSL -o /tmp/carne.tar.gz "https://github.com/getcarne/carne/releases/download/{{language.carne.version}}/carne_linux-${CARNE_ARCH}.tar.gz" && \
     tar -xzf /tmp/carne.tar.gz -C /tmp && \
     mv "/tmp/carne_linux-${CARNE_ARCH}/carne" /usr/local/bin/carne && \
     rm -rf /tmp/carne.tar.gz "/tmp/carne_linux-${CARNE_ARCH}" && \
