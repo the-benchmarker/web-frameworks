@@ -1,9 +1,6 @@
-// Concarne benchmark app: must answer the harness routes.
-// GET / -> 200 empty, GET /user/:id -> 200 id, POST /user -> 200 empty.
-var concarne = require("pkg/concarne");
-var os = require("std/os");
-
-var app = concarne();
+const concarne = require("pkg/concarne");
+const os = require("std/os");
+const app = concarne();
 
 app.get("/", function (req, res) {
   res.send("");
