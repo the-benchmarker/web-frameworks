@@ -74,9 +74,4 @@ app.uwsLite.post('/upload', { body: 'multipart', limit: '1mb' }, function (req, 
   });
 });
 
-// the default handler logs, and the scenario wants the logging off
-app.use(function (err, req, res, next) {
-  res.sendStatus(err.status ?? 500);
-});
-
 app.listen(3000);
