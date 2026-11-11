@@ -20,18 +20,14 @@ function isJson(type) {
   return mime === 'application/json' || mime.endsWith('+json') || mime === 'text/x-json' || mime === 'application/jsonrequest';
 }
 
-app.uwsLite.get('/', function (req, res) {
-  res.end('');
-});
+// the same empty 200 every time: written once at startup, and µWS answers without entering JavaScript
+app.uws.get('/', new express.uWS.DeclarativeResponse().end(''));
+app.uws.post('/user', new express.uWS.DeclarativeResponse().end(''));
 
 app.uwsLite.get('/user/:id', function (req, res) {
   const { id } = req.params;
   if (!ID.test(id)) return res.sendStatus(400);
   res.json({ id });
-});
-
-app.uwsLite.post('/user', function (req, res) {
-  res.end('');
 });
 
 app.uwsLite.get('/serialization', function (req, res) {
@@ -64,9 +60,9 @@ app.uwsLite.post('/deserialization', { body: 'text', limit: '1mb', headers: ['co
   res.json({ count: 100, checksum });
 });
 
-// the body parsers do not run on a lite route yet, so multipart stays an Express route
-app.post('/upload', express.multipart({ limit: '1mb' }), function (req, res) {
-  if (req.body === undefined) return res.sendStatus(req.is('multipart/form-data') === false ? 415 : 400);
+// a body that is not multipart/form-data is not read and leaves req.body undefined, a malformed one is a 400
+app.uwsLite.post('/upload', { body: 'multipart', limit: '1mb' }, function (req, res) {
+  if (req.body === undefined) return res.sendStatus(415);
   const uploads = req.files.filter((file) => file.fieldname === 'file');
   // a part named file with no filename is a text field, and lands in req.body
   if (uploads.length !== 1 || req.body.file !== undefined) return res.sendStatus(400);
