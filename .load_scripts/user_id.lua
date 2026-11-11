@@ -1,4 +1,5 @@
--- A different path value on every request, always eight digits wide.
+-- v2: a different path value on every request, always eight digits wide.
+-- v1's fixed /user/42 request uses default.lua instead.
 local n = 0
 local threads = 0
 function setup(thread)
@@ -12,6 +13,6 @@ function init(args)
   n = (tid or 0) * 1000003
 end
 function request()
-  n = (n + 7919) % 10000000
+  n = (n + 7919) % 100000000
   return wrk.format("GET", string.format("/user/%08d", n))
 end

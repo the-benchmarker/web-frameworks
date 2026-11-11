@@ -29,6 +29,8 @@ framework:
   environment:
     RAILS_ENV: production
     RAILS_LOG_ENABLED: "false"
+    # Build-time placeholder so Rails can initialize without a real production secret.
+    # Supply SECRET_KEY_BASE securely at runtime for signing and encrypting cookies and sessions.
     SECRET_KEY_BASE_DUMMY: "1"
     # Keep YJIT off during boot; Rails enables it after production initialization.
     RUBY_YJIT_ENABLE: 0

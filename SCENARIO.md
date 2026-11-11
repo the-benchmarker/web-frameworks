@@ -1,20 +1,33 @@
-# Benchmark scenario
+# Benchmark scenarios
+
+The suite has two independent HTTP contracts. Each framework's `config.yaml`
+selects its version with `specs: v1` or `specs: v2`; omission selects v2.
+The executable contracts live in [.spec/v1](.spec/v1) and [.spec/v2](.spec/v2).
+
+## V1: legacy routing
+
+The original benchmark and existing UI use these three routes on port `3000`:
+
+| Request | Successful response (HTTP 2xx) |
+| --- | --- |
+| `GET /` | Empty body |
+| `GET /user/{id}` | The ID from the path as plain text (for example, `0` or `42`) |
+| `POST /user` | Empty body |
+
+The POST request has an empty body. The dynamic route reads the ID from the
+path and returns it for each request. V1 does not require the v2 JSON response,
+eight-digit ID validation, or the three additional payload routes.
+
+## V2: six-route scenario
 
 Implement these six routes on port `3000` using the framework's normal routing,
 parameter extraction, JSON, and multipart facilities. No database, authentication,
-session, external service, or background job is needed.
+session, external service, or background job is needed. All requirements below
+apply to v2. New implementations should implement this version.
 
-##### Disclaimer
-
-This project is in heavy development. The existing UI https://web-frameworks-benchmark.vercel.app correspond to 3 routes
-
-- GET / -> Empty body
-- POST /user -> Empty body
-- GET /user/:id -> Return the :id
-
-The first two routes are mainly overhead, just testing **routing** feature of a framework. Some work have been done in https://github.com/the-benchmarker/web-frameworks/pull/9864 to update this current scenario.
-
-This two routes are only here for compatibility with the results in current UI, but any new implementation must define 6 routes.
+Performance measurements use dynamic routing, JSON serialization, JSON
+deserialization, and multipart uploads. `GET /` and `POST /user` are required
+for correctness but are excluded from the default v2 performance workloads.
 
 ## Runtime requirements
 

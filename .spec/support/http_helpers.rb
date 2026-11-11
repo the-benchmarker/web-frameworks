@@ -6,7 +6,6 @@ require 'uri'
 
 module HttpHelpers
   ROOT = File.expand_path('../..', __dir__)
-
   def http
     if ENV['BENCHMARK_URL']
       uri = URI(ENV.fetch('BENCHMARK_URL'))
@@ -25,12 +24,14 @@ module HttpHelpers
     Net::HTTP.new(host, port, nil).tap do |client|
       client.open_timeout = 3
       client.read_timeout = 5
+      client.write_timeout = 5
+      client.max_retries = 0
     end
   end
 
-  def send_request(method, path, body: nil, content_type: nil, headers: {}, chunked: false, encoding: 'identity')
+  def build_request(method, path, body: nil, content_type: nil, headers: {}, chunked: false)
     klass = Net::HTTP.const_get(method.capitalize)
-    request = klass.new(path, { 'Accept-Encoding' => encoding }.merge(headers))
+    request = klass.new(path, headers)
     request['Content-Type'] = content_type if content_type
 
     if chunked
@@ -40,14 +41,17 @@ module HttpHelpers
       request.body = body
     end
 
-    http.request(request).tap do |response|
-      # Explicit Accept-Encoding disables Net::HTTP's automatic decompression.
-      expect(response['content-encoding']).to be_nil
-    end
+    request
+  end
+
+  def send_request(method, path, **)
+    request = build_request(method, path, **)
+    http.request(request)
   end
 
   def expect_status(response, status)
-    expect(response.code.to_i).to eq(status)
+    detail = response.body.to_s.byteslice(0, 500)
+    expect(response.code.to_i).to eq(status), "expected HTTP #{status}, got #{response.code}: #{detail}"
   end
 
   def expect_empty_response(response)
@@ -70,16 +74,8 @@ module HttpHelpers
     File.binread(File.join(ROOT, 'upload.bin'))
   end
 
-  def fixture_items
-    JSON.parse(fixture_body).fetch('items')
-  end
-
-  def json_body(items = fixture_items)
+  def json_body(items)
     JSON.generate(items: items)
-  end
-
-  def deserialization_summary(items)
-    { 'count' => items.length, 'checksum' => items.sum { |item| item.fetch('id').to_i } }
   end
 
   def upload_parts(bytes: upload_bytes, filename: 'payload.bin', content_type: 'application/octet-stream')

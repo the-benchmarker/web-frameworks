@@ -8,11 +8,15 @@ methodology, and documentation are welcome.
 Every implementation listens on port `3000`. The v1 contract checks
 `GET /`, `GET /user/0`, and `POST /user`. The six-route stateless v2 workload
 and exact responses are defined in [SCENARIO.md](SCENARIO.md). Set a top-level
-`specs: v1` or `specs: v2` in the framework's `config.yaml`; v2 is the default.
-Rails selects v2, and every other framework explicitly selects v1.
+`specs: v2` in the framework's `config.yaml` to enable v2; omission or
+`specs: v1` selects v1.
+Rails selects v2 workloads and is checked against both contract suites. Every
+other framework explicitly selects v1 and runs only the v1 suite.
 Run `bundle exec rake config` to generate commands.
-The generated test target runs `bundle exec rspec`; RSpec reads the framework
-config and excludes the other version's suite in `.spec/v1` or `.spec/v2`.
+The generated test target runs `bundle exec ruby .spec/run.rb`; it reads the
+framework config and runs the selected Gherkin features with Cucumber.
+Repository unit tests live in `spec/` and run with `bundle exec rspec spec`. v2-only tests,
+workloads, and fixture mounts are skipped unless `specs: v2` is present.
 Route definitions live in [`.tasks/workloads.rb`](.tasks/workloads.rb), and
 request fixtures live at the repository root.
 Warmup and collection run every selected route separately. Compare frameworks
@@ -54,6 +58,26 @@ The root, language, and framework configs are merged in that order. Define
 root commands, language commands, selected engine commands, framework commands,
 then inline framework engine commands. Their order and repetitions are kept.
 
+Renovate synchronizes language metadata after updating Dockerfiles and checks
+that build and runtime pins agree before running. In the Renovate container,
+run `ruby .github/scripts/sync-language-versions.rb --check` to verify the pins,
+or omit `--check` to synchronize metadata.
+
+Set `reviewers` as a top-level list of GitHub usernames in
+`<language>/config.yaml` for language defaults or
+`<language>/<framework>/config.yaml` for framework-specific reviewers:
+
+```yaml
+reviewers:
+  - your-github-username
+```
+
+Framework reviewers override language reviewers. Renovate uses `@waghanza`
+when neither config defines reviewers. An empty list disables reviewer requests
+for that language or framework. Reviewer requests also apply to auto-merge PRs.
+The reviewer workflow runs only when an original PR targeting `develop` is opened.
+Release PRs and `master`-to-`develop` sync PRs do not trigger reviewer requests.
+
 Define `environment` as YAML key/value pairs when needed:
 
 ```yaml
@@ -69,9 +93,8 @@ Dockerfiles, before framework files. `bundle exec rake config` copies the
 fixture into each Docker build context.
 
 Add a target for the implementation in `Makefile` and `neph.yaml`, and its
-repository metadata in `benchmarker.cr`. New implementations default to v2;
-set `specs: v1` explicitly for implementations of the legacy contract. When
-migrating to v2, remove that override or set `specs: v2`, and verify every route
+repository metadata in `benchmarker.cr`. New implementations default to v1. When
+migrating to v2, set `specs: v2`, and verify every route
 over HTTP against the framework's Docker container.
 
 ## Running in Docker

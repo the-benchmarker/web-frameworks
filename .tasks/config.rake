@@ -83,9 +83,9 @@ def commands_for(language, framework, variant, provider = 'docker')
   language_config = YAML.safe_load_file(File.join(directory, language, 'config.yaml'))
   framework_config = YAML.safe_load_file(File.join(directory, language, framework, 'config.yaml'))
   app_config = main_config.recursive_merge(language_config).recursive_merge(framework_config)
-  # The framework's specs value selects the three v1 routes or the six v2
+  # The framework's specs value selects the three v1 routes or the four v2
   # workloads. ROUTES may narrow or replace either default list.
-  specs = app_config.fetch('specs', 'v2')
+  specs = framework_config.fetch('specs', 'v2')
   routes = BenchmarkWorkloads.routes(specs: specs)
 
   # Pin the server and load generator independently when CPU sets are supplied.
@@ -94,7 +94,7 @@ def commands_for(language, framework, variant, provider = 'docker')
   cpuset = server_cpus ? "--cpuset-cpus=#{server_cpus} " : ''
   taskset = load_generator_prefix(load_cpus)
 
-  options = { language: language, framework: framework, variant: variant, cpuset: cpuset, manifest: "#{MANIFESTS[:container]}.#{variant}" }
+  options = { language: language, framework: framework, variant: variant, cpuset: cpuset, v2: specs == 'v2', manifest: "#{MANIFESTS[:container]}.#{variant}" }
   commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], test: [], 'memory-idle': [] }
   prerequisites = Hash.new { |h, k| h[k] = [] }
 
@@ -153,7 +153,7 @@ def commands_for(language, framework, variant, provider = 'docker')
     url = "http://`cat #{Shellwords.escape(hostname)}`:3000#{Shellwords.escape(uri)}"
     commands[:warmup] << "#{zrk} #{args} #{url} #{request[:arguments].shelljoin}".rstrip
   end
-  commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec rspec"
+  commands[:test] << "ENGINE=#{variant} LANGUAGE=#{language} FRAMEWORK=#{framework} bundle exec ruby .spec/run.rb"
 
   concurrencies.split(',').each do |concurrency|
     target = :"collect-#{concurrency}"

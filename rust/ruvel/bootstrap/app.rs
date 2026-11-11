@@ -1,12 +1,10 @@
-use crate::app;
+use crate::routes::web;
 use ruvel::foundation::Application;
 
-pub async fn create_app() -> Result<(), Box<dyn std::error::Error>> {
+pub async fn create_app() -> Application {
     // 1. Initialize Application and register providers (Like bootstrap/app.php)
-    let app = Application::new()
-        .register_provider(app::providers::RouteServiceProvider)
-        .await;
-
-    // 2. Start server
-    app.listen(3000).await
+    Application::configure("")
+        // .with_provider(app::providers::RouteServiceProvider)
+        .with_routing(web::routes)
+        .create()
 }

@@ -1,7 +1,8 @@
 module BenchmarkWorkloads
   V1_ROUTES = [['GET', '/'], ['GET', '/user/42'], ['POST', '/user']].freeze
+  # GET / and POST /user remain required by the v2 correctness contract.
   V2_ROUTES = [
-    ['GET', '/'], ['GET', '/user/00000042'], ['POST', '/user'],
+    ['GET', '/user/00000042'],
     ['GET', '/serialization'], ['POST', '/deserialization'], ['POST', '/upload']
   ].freeze
 
