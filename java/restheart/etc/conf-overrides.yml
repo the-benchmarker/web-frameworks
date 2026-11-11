@@ -13,3 +13,6 @@
 /ping/enabled: false
 /xPoweredBy/enabled: false
 /dateHeader/enabled: false
+
+# responses are never compressed: the benchmark forbids Content-Encoding
+/core/response-compression: false

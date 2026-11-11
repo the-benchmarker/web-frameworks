@@ -7,8 +7,9 @@
   <packaging>jar</packaging>
 
   <properties>
-    <maven.compiler.release>25</maven.compiler.release>
-    <restheart.version>9.14.0</restheart.version>
+    <!-- the Java version of the JDK that runs Maven, i.e. the one of the container -->
+    <maven.compiler.release>${java.specification.version}</maven.compiler.release>
+    <restheart.version>9.15.1</restheart.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
