@@ -4,6 +4,20 @@ on:
   pull_request:
 
 jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0.9"
+          bundler-cache: true
+      - name: Test repository helpers and contract selection
+        run: bundle exec rspec spec
+      - name: Validate both Gherkin suites
+        run: bundle exec cucumber --publish-quiet --require .spec/support --require .spec/step_definitions .spec/v1 .spec/v2 --dry-run
+
   changes:
     # Do not run on sync PSs
     # Sync PRs only contain changes already tested on master.

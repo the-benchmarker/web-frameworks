@@ -11,6 +11,7 @@ gem "rake"
 gem "shellwords"
 
 group :development, :test do
+  gem "cucumber"
   gem "rspec"
   gem "rubocop", require: false
   gem "rubocop-rake", require: false

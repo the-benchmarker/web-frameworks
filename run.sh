@@ -1,5 +1,24 @@
 BASEDIR=`pwd`
 
+# Host-networked benchmark servers share port 3000, including wildcard listeners
+# that accept connections to 127.0.0.1. Clear it before starting each framework.
+release_benchmark_port() {
+  listeners=$(ss -H -ltn 'sport = :3000') || return 1
+  [ -z "$listeners" ] && return 0
+
+  echo "Releasing TCP port 3000 for 127.0.0.1"
+  fuser -k -n tcp 3000 || return 1
+
+  for attempt in 1 2 3 4 5; do
+    listeners=$(ss -H -ltn 'sport = :3000') || return 1
+    [ -z "$listeners" ] && return 0
+    sleep 1
+  done
+
+  echo "TCP port 3000 is still in use." >&2
+  return 1
+}
+
 # zrk is the load generator every `collect` target shells out to, and nothing
 # in this repo installs it. Without this check a missing zrk surfaces as a
 # "command not found" per framework, hours into a run, with empty .results and
@@ -43,6 +62,13 @@ if [ "`printf '%s\n%s\n' "$ZRK_MIN" "$ZRK_VERSION" | sort -V | head -n1`" != "$Z
 	exit 1
 fi
 
+for tool in ss fuser; do
+  if ! command -v "$tool" > /dev/null 2>&1; then
+    echo "$tool is required to release TCP port 3000 before each benchmark." >&2
+    exit 1
+  fi
+done
+
 if [ "$#" -eq 0 ]; then
 	find . -mindepth 3 -type f -name config.yaml | grep -Ev 'imi-swoole' > ~/list.txt
 else
@@ -61,6 +87,10 @@ while read line ; do
   echo "*********** ${line} *************"
   LANGUAGE=`echo $line | awk -F '/' '{print $(NF-2)}'`
   FRAMEWORK=`echo $line | awk -F '/' '{print $(NF-1)}'`
+  if ! release_benchmark_port; then
+    echo "Cannot release TCP port 3000; check permissions to terminate its owner." >&2
+    exit 1
+  fi
   rm -fr  ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results
   mkdir -p ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.results/{64,256,512}
   make -f ${BASEDIR}/${LANGUAGE}/${FRAMEWORK}/.Makefile build
