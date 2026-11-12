@@ -68,11 +68,17 @@ const isJsonType = type => JSON_TYPES.has(type) || (type.startsWith('application
 function deserialization(reqId, query) {
   if (!isJsonType(mediaType(engine.getHeader(reqId, 'content-type')))) return status(reqId, 415);
   if (query) return status(reqId, 400);
-  const raw = engine.getBody(reqId);
-  if (!raw || raw.byteLength === 0) return status(reqId, 400);
+  // getBodyText hands an all-ASCII body over as an ordinary heap string (the
+  // load bodies are); anything else is read as bytes and decoded as UTF-8.
+  let text = engine.getBodyText(reqId);
+  if (text === null) {
+    const raw = engine.getBody(reqId);
+    if (!raw || raw.byteLength === 0) return status(reqId, 400);
+    text = Buffer.from(raw).toString('utf8');
+  }
   let doc;
   try {
-    doc = JSON.parse(Buffer.from(raw).toString('utf8'));
+    doc = JSON.parse(text);
   } catch {
     return status(reqId, 400);
   }
@@ -161,7 +167,10 @@ function upload(reqId) {
   if (mediaType(contentType) !== 'multipart/form-data') return status(reqId, 415);
   const boundary = boundaryOf(contentType);
   if (!boundary) return status(reqId, 400);
-  const raw = engine.getBody(reqId);
+  // The upload is hashed and answered before this function returns and
+  // nothing of it is kept, so the body is borrowed: getBodyLent copies
+  // nothing and the engine takes the bytes back when the response completes.
+  const raw = engine.getBodyLent(reqId);
   if (!raw || raw.byteLength === 0) return status(reqId, 400);
   const parts = parseMultipart(Buffer.from(raw), boundary);
   if (!parts) return status(reqId, 400);
