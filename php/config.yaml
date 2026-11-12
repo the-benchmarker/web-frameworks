@@ -1,5 +1,6 @@
 language:
   version: '8.5'
+  docker_run_options: '--ulimit nofile=65535:65535'
 
   files:
     - "**/*.php"
