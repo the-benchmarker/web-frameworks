@@ -1,5 +1,3 @@
-use std::env;
-
 mod app;
 mod bootstrap;
 mod routes;
