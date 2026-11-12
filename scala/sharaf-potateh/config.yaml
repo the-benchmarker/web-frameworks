@@ -2,6 +2,9 @@ reviewers:
   - sake92
 language:
   version: '3.9'
+  engines:
+    sharaf-potateh-native:
+      command: /usr/local/bin/sharaf-potateh
 framework:
   website: github.com/sake92/sharaf
   version: '0.21.0'
@@ -9,5 +12,4 @@ framework:
     - deder.pkl
     - '**/*.scala'
   engines:
-    - sharaf-potateh-native:
-        command: /usr/local/bin/sharaf-potateh
+    - sharaf-potateh-native
