@@ -7,7 +7,6 @@ framework:
   version: '0.21.0'
   files:
     - deder.pkl
-    - LICENSE
     - '**/*.scala'
   engines:
     - sharaf-potateh-native:
