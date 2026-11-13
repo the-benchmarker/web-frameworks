@@ -2,6 +2,6 @@
   "type": "module",
   "dependencies": {
     "koa": "~3.3.0",
-    "koa-router": "*"
+    "@koa/router": "~15.7.0"
   }
 }

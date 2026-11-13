@@ -1,0 +1,21 @@
+framework:
+  github: uNetworking/uWebSockets
+  version: 20.81
+
+  build_deps:
+    - zlib1g-dev
+
+  bin_deps:
+    - zlib1g
+
+  binaries:
+    - simple
+
+  download:
+    - git clone --depth=1 --branch v20.81.0 https://github.com/uNetworking/uWebSockets
+    - cd uWebSockets && git submodule update --init --depth=1 uSockets
+
+  build:
+    - mkdir build
+    - cd build && cmake -DCMAKE_BUILD_TYPE=Release ..
+    - cd build && make

@@ -1,0 +1,7 @@
+framework:
+  github: Cornices/cornice
+  version: 6.1
+
+  engines:
+    - gunicorn
+    - uwsgi

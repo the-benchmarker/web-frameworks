@@ -1,0 +1,15 @@
+framework:
+  github: http-kit/http-kit
+  version: 2.8
+
+  build:
+    - lein uberjar
+
+  binaries:
+    - target/uberjar/http-kit.jar
+
+language:
+  compiler: lein
+  engines:
+    default:
+      command: java -jar target/uberjar/http-kit.jar

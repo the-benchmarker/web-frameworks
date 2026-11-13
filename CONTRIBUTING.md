@@ -83,6 +83,10 @@ variables for other engines are excluded. Each resulting pair renders as one
 | `GET`  | `/user/:id` | `200`       | **id** given as param |
 | `POST` | `/user`     | `200`       | **Empty**             |
 
+- All frameworks **SHOULD** listen on port `3000` on every interface (host
+  `0.0.0.0`, not only `localhost`). CI, the test suite and the load generator
+  all reach the container at `127.0.0.1:3000`.
+
 - All framework **SHOULD** contain a `Dockerfile`
 
 - All framework **SHOULD** be referenced in :

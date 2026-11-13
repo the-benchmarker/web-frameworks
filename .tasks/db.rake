@@ -157,12 +157,7 @@ namespace :db do
     data.merge!(
       updated_at: Time.now.utc,
       version: 1,
-      hardware: {
-        cpus: Etc.nprocessors,
-        memory: 7_733_008,
-        cpu_name: 'M1 Eight-Core Processor',
-        os: Etc.uname
-      }
+      hardware: host_hardware
     )
 
     File.write('data.json', JSON.pretty_generate(data))

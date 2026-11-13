@@ -100,6 +100,12 @@ make -f javascript/fastify/.Makefile unbuild
 
 Results are written beneath `<language>/<framework>/.results/`. Generated targets also include `clean` for removing the framework container.
 
+To debug an implementation by hand, `run` builds its image and keeps the container in the foreground, listening on port `3000`, until you press `Ctrl+C`:
+
+```bash
+make -f javascript/fastify/.Makefile run
+```
+
 ### 🎛️ Customize a run
 
 The generator accepts comma-separated concurrency levels and routes. Set them while generating the Makefiles:

@@ -1,0 +1,11 @@
+framework:
+  website: mojolicious.org
+  version: 9.54
+
+  engines:
+    - prefork
+
+language:
+  engines:
+    prefork:
+      command: perl app.pl prefork -m production -l 'http://*:3000' -w $(nproc)

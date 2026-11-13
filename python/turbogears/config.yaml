@@ -1,0 +1,8 @@
+framework:
+  website: turbogears.org
+  github: TurboGears/tg2
+  version: 2.5
+
+  engines:
+    - gunicorn
+    - uwsgi
