@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@foal/core": "~5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "typescript": "~5.9.3"
+  },
+  "engines": {
+    "node": "26.x"
+  }
+}
