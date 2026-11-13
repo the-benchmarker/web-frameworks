@@ -1,0 +1,11 @@
+specs: v1
+
+framework:
+  website: cakephp.org
+  version: 5.4
+
+  build_deps:
+    - libicu-dev
+
+  modules:
+    - intl
