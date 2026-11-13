@@ -11,6 +11,8 @@ language:
       environment:
         IODINE_MTLS: "0"
     falcon:
+      bootstrap:
+        - bundle add falcon-rails
       environment:
         # Console levels run from debug (0) to fatal (4).
         CONSOLE_LEVEL: "5"

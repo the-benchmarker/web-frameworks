@@ -25,6 +25,10 @@ ENV BUNDLE_PATH="/usr/local/bundle" \
   ENV {{{.}}}
 {{/environment}}
 
+{{#is_falcon}}
+RUN printf '%s' '{{{falcon_config}}}' | base64 -d > falcon.rb && chmod +x falcon.rb
+{{/is_falcon}}
+
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}

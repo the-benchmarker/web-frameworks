@@ -3,6 +3,7 @@ require 'yaml'
 require 'mustache'
 require 'shellwords'
 require 'json'
+require 'base64'
 require 'etc'
 require_relative 'workloads'
 
@@ -224,6 +225,21 @@ def create_dockerfile(directory, engine, config)
     files << { source: source.gsub("#{directory}/", ''), target: target }
   end
 
+  # Files in a framework's .<engine> directory are copied to the image root
+  # and override the generic files generated for that engine.
+  engine_directory = File.join(directory, ".#{engine}")
+  engine_files = Dir.glob(File.join(engine_directory, '**', '*'), File::FNM_DOTMATCH)
+                    .select { |file| File.file?(file) }
+                    .map do |file|
+    {
+      source: file.delete_prefix("#{directory}/"),
+      target: file.delete_prefix("#{engine_directory}/")
+    }
+  end
+
+  files.reject! { |file| engine_files.any? { |engine_file| engine_file[:target] == file[:target] } }
+  files.concat(engine_files)
+
   static_files = []
 
   if config['static_files']
@@ -297,6 +313,11 @@ def generate_dockerfiles(directory, engines, config)
   engines.each do |engine|
     engine.each do |name, data|
       variables = custom_config(language_config, framework_config, data)
+      language = directory.split(File::SEPARATOR, 2).first
+      variables['is_falcon'] = language == 'ruby' && name == 'falcon'
+      if variables['is_falcon']
+        variables['falcon_config'] = Base64.strict_encode64(File.read(File.join(language, '.falcon', 'falcon.rb')))
+      end
       variables['bootstrap'] = bootstrap_commands(source_configs, name)
       variables['environment'] = environment_variables(source_configs, name)
       variables['files'].each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }.uniq!

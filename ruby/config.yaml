@@ -9,7 +9,7 @@ language:
     falcon:
       bootstrap:
         - bundle add falcon
-      command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
+      command: bundle exec falcon host
       build_deps:
         - libssl-dev
     iodine:
