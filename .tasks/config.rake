@@ -93,9 +93,11 @@ def commands_for(language, framework, variant, provider = 'docker')
   server_cpus = ENV.fetch('SERVER_CPUS', nil)
   load_cpus = ENV.fetch('LOAD_CPUS', nil)
   cpuset = server_cpus ? "--cpuset-cpus=#{server_cpus} " : ''
+  docker_run_options = app_config.dig('language', 'docker_run_options').to_s
   taskset = load_generator_prefix(load_cpus)
 
-  options = { language: language, framework: framework, variant: variant, cpuset: cpuset, v2: specs == 'v2', manifest: "#{MANIFESTS[:container]}.#{variant}" }
+  options = { language: language, framework: framework, variant: variant, cpuset: cpuset,
+              docker_run_options: docker_run_options, v2: specs == 'v2', manifest: "#{MANIFESTS[:container]}.#{variant}" }
   commands = { build: [], collect: [], clean: [], warmup: [], unbuild: [], test: [], 'memory-idle': [] }
   prerequisites = Hash.new { |h, k| h[k] = [] }
 
