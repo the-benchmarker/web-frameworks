@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21.0.11_10-jdk-noble AS build
+FROM eclipse-temurin:21.0.13_9-jdk-noble AS build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     clang libunwind-dev libgc-dev curl ca-certificates && \
