@@ -1,0 +1,16 @@
+specs: v1
+
+framework:
+  github: ithewei/libhv
+  version: 1.3
+
+  binaries:
+    - simple
+
+  download:
+    - git clone --depth=1 --branch v1.3.4 https://github.com/ithewei/libhv
+
+  build:
+    - mkdir build
+    - cd build && cmake -DCMAKE_BUILD_TYPE=Release ..
+    - cd build && make
