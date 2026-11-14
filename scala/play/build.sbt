@@ -3,8 +3,10 @@ val TargetJavaVersion = "25"
 initialize := {
   val _ = initialize.value
   val actualJavaVersion = sys.props.getOrElse("java.specification.version", "unknown")
-  if (actualJavaVersion != TargetJavaVersion)
-    sys.error("Expected Java " + TargetJavaVersion + ", got " + actualJavaVersion)
+  require(
+    actualJavaVersion == TargetJavaVersion,
+    s"Expected Java $TargetJavaVersion, got $actualJavaVersion"
+  )
 }
 
 lazy val root = (project in file("."))
