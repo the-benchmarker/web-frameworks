@@ -20,7 +20,7 @@ From established full-stack platforms to small HTTP routers, this repository put
 
 ## 🧪 Benchmark contract
 
-Every implementation is expected to listen on port `3000` and provide the same responses:
+Every implementation listens on port `3000`. The v1 contract defines these routes:
 
 | Method | Route | Expected status | Expected body |
 |:--|:--|:--:|:--|
@@ -28,7 +28,53 @@ Every implementation is expected to listen on port `3000` and provide the same r
 | `GET` | `/user/:id` | `2xx` | The `id` path parameter |
 | `POST` | `/user` | `2xx` | Empty |
 
-Before an implementation is benchmarked, the shared [RSpec contract](.spec/route_spec.rb) verifies these routes. The default generated benchmark runs `GET /` for 15 seconds using `zrk --closed` and keep-alive, and records a JSON report. Concurrency and routes are configurable.
+Before a v1 implementation is benchmarked, the shared [Gherkin contract](.spec/v1/routing.feature) verifies these routes. The default v1 benchmark runs all three routes for 15 seconds each using `zrk --closed` and keep-alive, and records JSON reports. Concurrency and routes are configurable.
+
+Each framework's `config.yaml` selects its contract with a top-level `specs: v1`
+or `specs: v2`. Only the selected contract's tests and workloads run; omitting
+`specs` defaults to v2. Rails selects the four-workload
+[v2 scenario](SCENARIO.md): routing, JSON serialization/deserialization, and
+multipart uploads. Generate the commands before building the implementation:
+
+```bash
+bundle exec rake config
+make -f ruby/rails/.Makefile build
+make -f ruby/rails/.Makefile test
+```
+
+The generated commands use the workloads selected by the config. The contract
+runner reads the framework config and executes the matching Gherkin features
+with Cucumber. Repository unit tests run separately with `bundle exec rspec spec`. v2 fixture mounts are included only for `specs: v2`.
+Request bodies and varying inputs are controlled by Lua scripts in
+[`.load_scripts/`](.load_scripts/), shared by warmup and both measurement
+passes. Deserialization has no query parameters or seed: its JSON body contains
+exactly 100 items. Serialization takes only an eight-letter lowercase `seed`.
+Every request advertises identity encoding; specs also advertise compression to
+verify that responses stay uncompressed.
+
+| Lua script | Routes |
+|:--|:--|
+| `default.lua` | `GET /`, `GET /user/42` (v1), `POST /user` |
+| `user_id.lua` | `GET /user/:id` |
+| `serialization.lua` | `GET /serialization` |
+| `deserialization.lua` | `POST /deserialization` |
+| `upload.lua` | `POST /upload` |
+
+The v1 default measures its three routes. V2 measures dynamic routing, JSON
+serialization, JSON deserialization, and multipart uploads. `GET /` and
+`POST /user` are still required and checked by the v2 correctness suite.
+The exact mapping used by command generation is in
+[`.tasks/workloads.rb`](.tasks/workloads.rb).
+
+To test an already running implementation directly:
+
+```bash
+LANGUAGE=ruby FRAMEWORK=rails BENCHMARK_URL=http://127.0.0.1:3000 bundle exec ruby .spec/run.rb
+```
+
+Set `LANGUAGE` and `FRAMEWORK` to the server under test. An implementation must
+pass the full selected correctness suite before its results are collected;
+`ROUTES` only limits which workloads are measured.
 
 Collected fields include requests per second, total data received, run duration, and the p50, p75, p90, and p99 latency percentiles. Benchmark configuration is generated from three YAML layers:
 
@@ -83,7 +129,7 @@ bundle exec rake config
 Run the helper tests and check language version metadata with:
 
 ```bash
-bundle exec rspec .spec/helpers_spec.rb
+bundle exec rspec spec
 ruby .github/scripts/sync-language-versions.rb --check
 ```
 
@@ -186,6 +232,7 @@ Renovate has no built-in manager for those formats.
 |:--|:--|
 | `<language>/<framework>/` | Framework implementation and configuration |
 | `.spec/` | Shared HTTP correctness contract |
+| `.load_scripts/` | Lua scripts for request bodies and varying inputs |
 | `.tasks/` | Configuration, CI, collection, cloud, and database tasks |
 | `.github/workflows/ci.yml` | Changed-implementation CI matrix |
 | `config.yaml` | Global providers and execution templates |

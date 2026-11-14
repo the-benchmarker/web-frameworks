@@ -61,3 +61,6 @@ __pycache__/
 
 
 .results
+
+# Copied into framework Docker build contexts by `rake config`
+/*/*/test.bin
