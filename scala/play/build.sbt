@@ -4,7 +4,7 @@ lazy val root = (project in file("."))
     name := "server",
     organization := "com.example",
     version := "0.1.0-SNAPSHOT",
-    scalaVersion := "3.10.0",
+    scalaVersion := "3.10.1",
     libraryDependencies ++= Seq(
       guice
     )
