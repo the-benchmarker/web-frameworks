@@ -2,9 +2,10 @@
 # frozen_string_literal: true
 
 require "falcon/environment/rack"
+require "etc"
 
 hostname = File.basename(__dir__)
-worker_count = ENV.fetch("WEB_CONCURRENCY") { `nproc`.strip }
+worker_count = ENV.fetch("WEB_CONCURRENCY") { Etc.nprocessors }
 
 service hostname do
 	include Falcon::Environment::Rack

@@ -42,4 +42,9 @@ RUN --mount=type=cache,id=bundler-gems-{{language.version}},target=${BUNDLE_PATH
 
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 
+{{#is_falcon}}
+CMD {{{command}}}
+{{/is_falcon}}
+{{^is_falcon}}
 ENTRYPOINT {{{command}}}
+{{/is_falcon}}

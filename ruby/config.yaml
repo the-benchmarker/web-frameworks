@@ -5,7 +5,7 @@ language:
     puma:
       bootstrap:
         - bundle add puma
-      command: bundle exec puma -p 3000 -w $(nproc)
+      command: bundle exec puma -p 3000
     falcon:
       bootstrap:
         - bundle add falcon
