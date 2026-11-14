@@ -122,6 +122,14 @@ def commands_for(language, framework, variant, provider = 'docker')
     commands[:build] << Mustache.render(cmd, options).to_s
   end
 
+  # `run` builds the image and keeps the container in the foreground until
+  # Ctrl+C, for poking at one framework by hand. It writes no cid/ip file, so
+  # it is independent of build/test/collect/unbuild.
+  if main_config['providers'][provider].key?('run')
+    run_commands = main_config['providers'][provider]['build'] + main_config['providers'][provider]['run']
+    commands[:run] = run_commands.map { |cmd| Mustache.render(cmd, options).to_s }
+  end
+
   if app_config.key?('bootstrap') && main_config['providers'][provider].key?('exec')
     remote_command = main_config['providers'][provider]['exec']
     app_config['bootstrap'].each do |cmd|

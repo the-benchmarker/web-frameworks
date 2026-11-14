@@ -1,5 +1,5 @@
 import Koa from 'koa';
-import Router from 'koa-router';
+import Router from '@koa/router';
 
 var app = new Koa();
 var router = new Router();
