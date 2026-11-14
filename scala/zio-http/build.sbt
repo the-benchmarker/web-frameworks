@@ -2,7 +2,7 @@ val ZioHttpVersion = "3.11.6"
 
 name := "server"
 
-val JavaVersion = "26"
+val JavaVersion = "25"
 
 initialize := {
   val _ = initialize.value
@@ -12,6 +12,9 @@ initialize := {
 }
 
 scalaVersion := "3.10.1"
+
+scalacOptions += s"-release:$JavaVersion"
+javacOptions ++= Seq("--release", JavaVersion)
 
 lazy val root = (project in file("."))
   .settings(

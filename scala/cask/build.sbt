@@ -2,7 +2,7 @@ val CaskVersion = "[0.11,0.12)"
 
 name := "server"
 
-val JavaVersion = "26"
+val JavaVersion = "25"
 
 initialize := {
   val _ = initialize.value
@@ -12,6 +12,9 @@ initialize := {
 }
 
 scalaVersion := "3.10.1"
+
+scalacOptions += s"-release:$JavaVersion"
+javacOptions ++= Seq("--release", JavaVersion)
 
 run / fork := true
 

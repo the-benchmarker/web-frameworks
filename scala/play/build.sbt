@@ -1,4 +1,4 @@
-val JavaVersion = "26"
+val JavaVersion = "25"
 
 initialize := {
   val _ = initialize.value
@@ -14,6 +14,8 @@ lazy val root = (project in file("."))
     organization := "com.example",
     version := "0.1.0-SNAPSHOT",
     scalaVersion := "3.10.1",
+    scalacOptions += s"-release:$JavaVersion",
+    javacOptions ++= Seq("--release", JavaVersion),
     libraryDependencies ++= Seq(
       guice
     )
