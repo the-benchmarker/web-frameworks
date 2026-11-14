@@ -2,7 +2,7 @@ specs: v1
 
 framework:
   website: docs.mezzio.dev
-  version: 3.27
+  version: 3.29
 
   bootstrap:
     - mkdir /usr/src/app/data

@@ -2,7 +2,7 @@ specs: v1
 
 framework:
   website: veloceframework.com
-  version: "0.20"
+  version: "0.22"
   engines:
     - uvicorn
     - hypercorn

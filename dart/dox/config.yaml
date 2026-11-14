@@ -1,0 +1,10 @@
+language:
+  engines:
+    dox:
+      command: /app/bin/server
+framework:
+  github: dartondox/dox
+  website: dartondox.dev
+  version: 3.2
+  engines:
+    - dox
