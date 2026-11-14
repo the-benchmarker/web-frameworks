@@ -1,6 +1,6 @@
 FROM curlimages/curl:8.23.0 AS curl
 
-FROM dart:3.13 AS build
+FROM dart:3.14 AS build
 
 # Set the working directory
 WORKDIR /app
