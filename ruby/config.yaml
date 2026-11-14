@@ -9,7 +9,7 @@ language:
     falcon:
       bootstrap:
         - bundle add falcon
-      command: bundle exec falcon host
+      command: bundle exec falcon serve -p 3000
       build_deps:
         - libssl-dev
     iodine:
