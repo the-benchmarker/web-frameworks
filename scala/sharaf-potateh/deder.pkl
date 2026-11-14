@@ -1,0 +1,19 @@
+amends "https://sake92.github.io/deder/config/v0.22.2/DederProject.pkl"
+
+modules {
+  new ScalaNativeModule {
+    id = "server"
+    root = "."
+    scalaVersion = "3.9.0"
+    javaVersion = "21"
+    javaHome = read("env:JAVA_HOME")
+    scalacOptions { "-release:21"; "-Yretain-trees" }
+    scalaNativeVersion = "0.5.12"
+    multithreading = true
+    mode = "release-full"
+    deps {
+      "ba.sake::sharaf-potateh::0.21.0"
+    }
+    mainClass = "Main"
+  }
+}

@@ -2,7 +2,8 @@ name: Request framework reviewers
 
 on:
   pull_request_target:
-    types: [opened, reopened, synchronize, ready_for_review]
+    branches: [develop]
+    types: [opened]
 
 permissions:
   contents: read
@@ -10,6 +11,10 @@ permissions:
 
 jobs:
   request-reviewers:
+    # Release PRs target master; skip the reverse sync into develop as well.
+    if: >-
+      ${{ !(github.event.pull_request.head.ref == 'master' &&
+            github.event.pull_request.head.repo.full_name == github.repository) }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout trusted base revision

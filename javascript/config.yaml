@@ -7,6 +7,8 @@ language:
     version: '1.4'
   deno:
     version: '2.9'
+  carne:
+    version: '0.1.2'
 
   engines:
     node:
@@ -55,6 +57,8 @@ language:
       command: bun run cluster.ts
       files:
         - bunfig.toml
+    carne:
+      command: carne run app.js
 
 framework:
   engines:
