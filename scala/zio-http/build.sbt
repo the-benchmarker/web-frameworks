@@ -2,19 +2,19 @@ val ZioHttpVersion = "3.11.6"
 
 name := "server"
 
-val JavaVersion = "25"
+val TargetJavaVersion = "25"
 
 initialize := {
   val _ = initialize.value
   val actualJavaVersion = sys.props.getOrElse("java.specification.version", "unknown")
-  if (actualJavaVersion != JavaVersion)
-    sys.error("Expected Java " + JavaVersion + ", got " + actualJavaVersion)
+  if (actualJavaVersion != TargetJavaVersion)
+    sys.error("Expected Java " + TargetJavaVersion + ", got " + actualJavaVersion)
 }
 
 scalaVersion := "3.10.1"
 
-scalacOptions += ("-release:" + JavaVersion)
-javacOptions ++= Seq("--release", JavaVersion)
+scalacOptions += ("-release:" + TargetJavaVersion)
+javacOptions ++= Seq("--release", TargetJavaVersion)
 
 lazy val root = (project in file("."))
   .settings(
