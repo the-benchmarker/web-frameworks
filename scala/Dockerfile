@@ -1,15 +1,21 @@
-FROM sbtscala/scala-sbt:eclipse-temurin-alpine-25.0.4_7_1.13.0_3.10.0 AS build
+FROM eclipse-temurin:26.0.2_10-jdk-noble AS build
 
 WORKDIR /usr/src/app
+
+RUN apt-get -qq update && \
+  apt-get -qy install --no-install-recommends curl && \
+  curl -fsSL https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt -o /usr/local/bin/sbt && \
+  chmod +x /usr/local/bin/sbt && \
+  rm -rf /var/lib/apt/lists/*
 
 {{#files}}
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN sbt "Universal / packageZipTarball"
+RUN sbt -sbt-version 1.13.1 "Universal / packageZipTarball"
 
 
-FROM eclipse-temurin:25.0.5_8-jre
+FROM eclipse-temurin:26.0.2_10-jre-noble
 
 WORKDIR /usr/src/app
 

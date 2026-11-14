@@ -2,7 +2,16 @@ val CaskVersion = "[0.11,0.12)"
 
 name := "server"
 
-scalaVersion := "3.10.0"
+val JavaVersion = "26"
+
+initialize := {
+  val _ = initialize.value
+  val actualJavaVersion = sys.props.getOrElse("java.specification.version", "unknown")
+  if (actualJavaVersion != JavaVersion)
+    sys.error(s"Expected Java $JavaVersion, got $actualJavaVersion")
+}
+
+scalaVersion := "3.10.1"
 
 run / fork := true
 

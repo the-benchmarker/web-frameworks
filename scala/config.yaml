@@ -6,7 +6,7 @@ language:
     version: '1.13'
 
   java:
-    version: '25.0'
+    version: '26.0'
 
   files:
     - "**/*.gradle"
