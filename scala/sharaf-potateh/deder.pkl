@@ -4,7 +4,7 @@ modules {
   new ScalaNativeModule {
     id = "server"
     root = "."
-    scalaVersion = "3.9.0"
+    scalaVersion = "3.10.0"
     javaVersion = "21"
     javaHome = read("env:JAVA_HOME")
     scalacOptions { "-release:21"; "-Yretain-trees" }
@@ -12,7 +12,7 @@ modules {
     multithreading = true
     mode = "release-full"
     deps {
-      "ba.sake::sharaf-potateh::0.21.0"
+      "ba.sake::sharaf-potateh::0.22.0"
     }
     mainClass = "Main"
   }
