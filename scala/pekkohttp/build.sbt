@@ -16,7 +16,7 @@ scalaVersion := "3.10.1"
 scalacOptions += ("-release:" + TargetJavaVersion)
 javacOptions ++= Seq("--release", TargetJavaVersion)
 
-val PekkoVersion = "1.7.1"
+val PekkoVersion = "[2.0,2.1]"
 val PekkoHttpVersion = "[2.0,2.1]"
 libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-actor-typed" % PekkoVersion,
