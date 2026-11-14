@@ -23,17 +23,14 @@ final _notFoundClose = Uint8List.fromList(
       .codeUnits,
 );
 
-// 'HTTP/1.1 200 OK\r\nContent-Length: '
 final _userPrefix = Uint8List.fromList(
   'HTTP/1.1 200 OK\r\nContent-Length: '.codeUnits,
 );
 
-// '\r\nConnection: keep-alive\r\n\r\n'
 final _userMidKeepAlive = Uint8List.fromList(
   '\r\nConnection: keep-alive\r\n\r\n'.codeUnits,
 );
 
-// '\r\nConnection: close\r\n\r\n'
 final _userMidClose = Uint8List.fromList(
   '\r\nConnection: close\r\n\r\n'.codeUnits,
 );
