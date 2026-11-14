@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21.0.13_9-jdk-noble AS build
+FROM eclipse-temurin:25.0.5_8-jdk-noble AS build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     clang libunwind-dev libgc-dev curl ca-certificates && \
@@ -12,7 +12,7 @@ COPY {{source}} {{target}}
 {{/files}}
 RUN java -jar /opt/deder-client.jar exec -t nativeLink
 
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgc1 libunwind8 libstdc++6 curl && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/src/app/.deder/out/server/nativeLink/server /usr/local/bin/sharaf-potateh
