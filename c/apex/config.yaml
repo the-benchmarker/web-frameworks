@@ -6,7 +6,7 @@ framework:
     - ca-certificates
 
   download:
-    - wget -q https://github.com/xdearboy/apex/archive/refs/tags/v1.2.0.tar.gz -O apex.tar.gz
+    - wget -q https://github.com/xdearboy/apex/archive/refs/tags/v1.2.1.tar.gz -O apex.tar.gz
     - mkdir -p apex && tar xzf apex.tar.gz -C apex --strip-components=1
     - cd apex && make
 
