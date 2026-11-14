@@ -6,9 +6,6 @@ language:
       command: /usr/local/bin/sharaf-potateh
 framework:
   website: github.com/sake92/sharaf
-  version: 0.22
-  files:
-    - deder.pkl
-    - '**/*.scala'
+  version: 0.22.0
   engines:
     - sharaf-potateh-native
