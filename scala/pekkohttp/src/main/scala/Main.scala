@@ -20,6 +20,6 @@ object Main {
           complete(id)
         }
 
-    Http().bindAndHandle(route, "0.0.0.0", 3000)
+    Http().newServerAt("0.0.0.0", 3000).bind(route)
   }
 }
