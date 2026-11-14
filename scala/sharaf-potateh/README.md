@@ -1,6 +1,6 @@
 # Sharaf with Potateh on Scala Native
 
-Uses Sharaf–Potateh 0.22.0, Scala 3.10.0, sbt 1.13 and Scala Native 0.5.12.
+Uses Sharaf–Potateh 0.22.0, Scala 3.10.1, sbt 1.13 and Scala Native 0.5.12.
 The executable is linked in `release-full` mode and uses Potateh's default
 cached executor with a connection limit of 1024. The runtime image has no JVM.
 
