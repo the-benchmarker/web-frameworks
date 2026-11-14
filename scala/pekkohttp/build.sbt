@@ -6,12 +6,12 @@ initialize := {
   val _ = initialize.value
   val actualJavaVersion = sys.props.getOrElse("java.specification.version", "unknown")
   if (actualJavaVersion != JavaVersion)
-    sys.error(s"Expected Java $JavaVersion, got $actualJavaVersion")
+    sys.error("Expected Java " + JavaVersion + ", got " + actualJavaVersion)
 }
 
 scalaVersion := "3.10.1"
 
-scalacOptions += s"-release:$JavaVersion"
+scalacOptions += ("-release:" + JavaVersion)
 javacOptions ++= Seq("--release", JavaVersion)
 
 val PekkoVersion = "1.7.1"
