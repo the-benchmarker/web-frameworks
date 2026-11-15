@@ -1,0 +1,7 @@
+{
+  "require": {
+    "amphp/http-server": "~3.4.0",
+    "amphp/http-server-router": "~2.0.0",
+    "amphp/cluster": "~2.1.0"
+  }
+}
