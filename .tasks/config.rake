@@ -3,8 +3,8 @@ require 'yaml'
 require 'mustache'
 require 'shellwords'
 require 'json'
-require 'base64'
 require 'etc'
+require 'fileutils'
 require_relative 'workloads'
 
 MANIFESTS = {
@@ -316,9 +316,11 @@ def generate_dockerfiles(directory, engines, config)
     engine.each do |name, data|
       variables = custom_config(language_config, framework_config, data)
       language = directory.split(File::SEPARATOR, 2).first
-      variables['is_falcon'] = language == 'ruby' && name == 'falcon'
-      if variables['is_falcon']
-        variables['falcon_config'] = Base64.strict_encode64(File.read(File.join(language, '.falcon', 'falcon.rb')))
+      if language == 'ruby' && name == 'falcon'
+        FileUtils.cp(File.join(language, '.falcon', 'falcon.rb'), File.join(directory, 'falcon.rb'))
+      end
+      if language == 'ruby' && name == 'puma'
+        FileUtils.cp(File.join(language, '.puma', 'puma.rb'), File.join(directory, 'puma.rb'))
       end
       variables['bootstrap'] = bootstrap_commands(source_configs, name)
       variables['environment'] = environment_variables(source_configs, name)

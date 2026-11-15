@@ -64,3 +64,5 @@ __pycache__/
 
 # Copied into framework Docker build contexts by `rake config`
 /*/*/test.bin
+/ruby/*/falcon.rb
+/ruby/*/puma.rb

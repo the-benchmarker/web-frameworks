@@ -2,10 +2,6 @@ specs: v2
 
 language:
   engines:
-    puma:
-      command: bundle exec puma -C config/puma.rb
-      environment:
-        PUMA_DISABLE_SSL: "1"
     iodine:
       command: bundle exec iodine -b http://0.0.0.0:3000 -w $(nproc) --no-dynamic-deflate > /dev/null 2>&1
       environment:
