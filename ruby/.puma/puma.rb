@@ -1,3 +1,5 @@
+require 'etc'
+#
 # This configuration file will be evaluated by Puma. The top-level methods that
 # are invoked here are part of Puma's configuration DSL. For more information
 # about methods provided by the DSL, see https://puma.io/puma/Puma/DSL.html.
@@ -26,7 +28,7 @@
 # threads. This includes Active Record's `pool` parameter in `database.yml`.
 threads_count = ENV.fetch('RAILS_MAX_THREADS', 3)
 threads threads_count, threads_count
-workers ENV.fetch('WEB_CONCURRENCY', 'auto')
+workers ENV.fetch('WEB_CONCURRENCY') { Etc.nprocessors }
 
 # Disable request, server, and error logging for the benchmark.
 log_requests false
