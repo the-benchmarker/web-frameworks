@@ -9,7 +9,7 @@ COPY {{source}} {{target}}
 {{/files}}
 RUN sbt -batch nativeLink
 
-FROM ubuntu:26.04
+FROM eclipse-temurin:27-jre
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgc1 libunwind8 libstdc++6 curl && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/src/app/target/native/server /usr/local/bin/sharaf-potateh

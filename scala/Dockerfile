@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 RUN sbt "Universal / packageZipTarball"
 
 
-FROM eclipse-temurin:25-jre-noble
+FROM eclipse-temurin:27-jre
 
 WORKDIR /usr/src/app
 
