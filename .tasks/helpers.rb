@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'etc'
+
 # Prefix that pins the load generator to a CPU set so it cannot contend with the
 # server under test. Empty string when LOAD_CPUS is unset, which leaves the
 # command byte-identical to the unpinned form.
@@ -45,6 +47,32 @@ def latency_rate_for(spec, achieved)
   return spec.to_i if spec.match?(/\A\d+\z/) && spec.to_i.positive?
 
   nil
+end
+
+# Total RAM in kB from the text of /proc/meminfo, nil when it has no MemTotal.
+def memory_kb_from(meminfo)
+  meminfo.to_s[/^MemTotal:\s+(\d+)\s*kB/, 1]&.to_i
+end
+
+# CPU model from the text of /proc/cpuinfo. x86 kernels print "model name";
+# nil where the kernel does not (arm64), so the caller can fall back.
+def cpu_name_from(cpuinfo)
+  cpuinfo.to_s[/^model name\s*:\s*(.+)$/, 1]&.strip
+end
+
+# What the machine exporting the results actually is, for data.json's hardware
+# block. Linux reads /proc; macOS asks sysctl. The architecture stands in for a
+# CPU name the kernel does not report.
+def host_hardware
+  read = ->(path) { File.exist?(path) ? File.read(path) : '' }
+  sysctl = ->(key) { `sysctl -n #{key} 2>/dev/null`.strip }
+  linux = File.exist?('/proc/meminfo')
+
+  memory = linux ? memory_kb_from(read.call('/proc/meminfo')) : sysctl.call('hw.memsize').to_i / 1024
+  cpu_name = linux ? cpu_name_from(read.call('/proc/cpuinfo')) : sysctl.call('machdep.cpu.brand_string')
+  cpu_name = Etc.uname[:machine] if cpu_name.nil? || cpu_name.empty?
+
+  { cpus: Etc.nprocessors, memory: memory, cpu_name: cpu_name, os: Etc.uname }
 end
 
 def normalize_shell(shell)

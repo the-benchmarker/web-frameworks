@@ -49,6 +49,10 @@ providers:
       - docker logs `cat {{{language}}}/{{{framework}}}/cid-{{{variant}}}.txt`
       - echo "**********************************************"
 
+    # Foreground container for local debugging, attached until Ctrl+C
+    run:
+      - docker run --rm -it --init --network host {{#v2}}--mount type=bind,source="$$(pwd)/deserialization.json",target=/deserialization.json,readonly --mount type=bind,source="$$(pwd)/upload.bin",target=/upload.bin,readonly {{/v2}}{{{cpuset}}}{{#docker_run_options}}{{{docker_run_options}}} {{/docker_run_options}}{{{language}}}.{{{framework}}}.{{{variant}}}
+
   digitalocean:
     build:
       - rm -fr ~/.ssh/known_hosts
