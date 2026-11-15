@@ -19,7 +19,7 @@ language:
         - libssl-dev
     iodine:
       bootstrap:
-        - bundle add iodine --version 0.7.60
+        - bundle add iodine # --version 0.7.60
       command: bundle exec iodine
       environment:
         PORT: 3000
