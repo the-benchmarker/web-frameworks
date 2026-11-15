@@ -2,6 +2,7 @@
 
 require "falcon/environment/rack"
 require "etc"
+require "stringio"
 
 hostname = File.basename(__dir__)
 worker_count = ENV.fetch("WEB_CONCURRENCY") { Etc.nprocessors }
@@ -16,7 +17,15 @@ service hostname do
 
 	# Keep Falcon's optional middleware without automatic response compression.
 	middleware do
-		app = Protocol::Rack::Adapter.new(rack_app)
+		rack_application = rack_app
+		app = Protocol::Rack::Adapter.new(proc do |env|
+			if env["rack.input"] && !env["CONTENT_LENGTH"] && !env["HTTP_TRANSFER_ENCODING"]
+				body = env["rack.input"].read.to_s
+				env["rack.input"] = StringIO.new(body)
+				env["CONTENT_LENGTH"] = body.bytesize.to_s
+			end
+			rack_application.call(env)
+		end)
 		logging = verbose
 		caching = cache
 

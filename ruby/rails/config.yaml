@@ -2,10 +2,6 @@ specs: v2
 
 language:
   engines:
-    iodine:
-      command: bundle exec iodine -b http://0.0.0.0:3000 -w $(nproc) --no-dynamic-deflate > /dev/null 2>&1
-      environment:
-        IODINE_MTLS: "0"
     falcon:
       bootstrap:
         - bundle add falcon-rails
