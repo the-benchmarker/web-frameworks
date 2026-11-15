@@ -2,7 +2,7 @@ val ZioHttpVersion = "3.11.6"
 
 name := "server"
 
-val TargetJavaVersion = "25"
+val TargetJavaVersion = "27"
 
 initialize := {
   val _ = initialize.value

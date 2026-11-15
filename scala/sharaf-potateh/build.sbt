@@ -2,7 +2,7 @@ import scala.scalanative.build.Mode
 
 name := "server"
 
-val TargetJavaVersion = "25"
+val TargetJavaVersion = "27"
 
 initialize := {
   val _ = initialize.value

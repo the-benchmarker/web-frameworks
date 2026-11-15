@@ -2,7 +2,7 @@ val CaskVersion = "[0.11,0.12)"
 
 name := "server"
 
-val TargetJavaVersion = "25"
+val TargetJavaVersion = "27"
 
 initialize := {
   val _ = initialize.value

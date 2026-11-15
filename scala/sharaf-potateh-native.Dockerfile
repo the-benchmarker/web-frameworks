@@ -1,4 +1,4 @@
-FROM sbtscala/scala-sbt:eclipse-temurin-25.0.5_8_1.x AS build
+FROM sbtscala/scala-sbt:eclipse-temurin-27_2.x AS build
 
 RUN apt-get update && apt-get install -y --no-install-recommends clang gcc && \
     rm -rf /var/lib/apt/lists/*

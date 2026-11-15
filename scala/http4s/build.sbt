@@ -2,7 +2,7 @@ val Http4sVersionRange = "[0.23,0.24)"
 
 name := "server"
 
-val TargetJavaVersion = "25"
+val TargetJavaVersion = "27"
 
 initialize := {
   val _ = initialize.value
