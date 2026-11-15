@@ -20,7 +20,7 @@ language:
     iodine:
       bootstrap:
         - bundle add iodine --version 0.7.60
-      command: bundle exec iodine --no-dynamic-deflate
+      command: bundle exec iodine iodine.ru
       environment:
         PORT: 3000
         IODINE_MTLS: "0"
