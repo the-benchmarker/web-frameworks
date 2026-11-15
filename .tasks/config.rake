@@ -322,11 +322,6 @@ def generate_dockerfiles(directory, engines, config)
       if language == 'ruby' && name == 'puma'
         FileUtils.cp(File.join(language, '.puma', 'puma.rb'), File.join(directory, 'puma.rb'))
       end
-      if language == 'ruby' && name == 'iodine' && directory == 'ruby/rails'
-        %w[iodine.rb iodine.ru].each do |file|
-          FileUtils.cp(File.join(language, '.iodine', file), File.join(directory, file))
-        end
-      end
       variables['bootstrap'] = bootstrap_commands(source_configs, name)
       variables['environment'] = environment_variables(source_configs, name)
       variables['files'].each { |f| f.prepend(directory, File::SEPARATOR) unless f.start_with?(directory) }.uniq!

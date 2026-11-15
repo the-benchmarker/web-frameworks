@@ -19,8 +19,8 @@ language:
         - libssl-dev
     iodine:
       bootstrap:
-        - bundle add iodine --version 0.7.60
-      command: bundle exec iodine iodine.ru
+        - bundle add iodine --version 0.8.6
+      command: bundle exec iodine --no-dynamic-deflate
       environment:
         PORT: 3000
         IODINE_MTLS: "0"
@@ -37,7 +37,6 @@ framework:
     - Gemfile
     - Rakefile
     - config.ru
-    - iodine.ru
 
   environment:
     RUBY_YJIT_ENABLE: 1

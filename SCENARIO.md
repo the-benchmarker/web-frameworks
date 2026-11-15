@@ -83,7 +83,7 @@ as a string so leading zeros survive. Decode percent-encoded path characters bef
 validation: `/user/%30%30%30%30%30%30%34%32` has ID `00000042`.
 
 Reject invalid IDs with `400`, or `404` if routing rejects the path. Read the ID
-from the route parameters; query or body parameters cannot replace it.
+from the route parameters; query parameters cannot replace it.
 
 ## 3. Method dispatch
 

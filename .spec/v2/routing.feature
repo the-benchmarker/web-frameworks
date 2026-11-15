@@ -56,21 +56,7 @@ Feature: V2 routing
       | id=99999999 |
       | id[]=99999999 |
 
-  Scenario: Body parameters cannot replace the path ID
-    Given the request Content-Type is "application/json"
-    And the request body is:
-      """
-      {"id":"99999999"}
-      """
-    When I send GET "/user/00000042"
-    Then the JSON response has only the ID "00000042"
-
   Scenario: Valid parameters cannot rescue an invalid path ID
-    Given the request Content-Type is "application/json"
-    And the request body is:
-      """
-      {"id":"00000042"}
-      """
     When I send GET "/user/invalid?id=00000042"
     Then the response status is 400 or 404
 

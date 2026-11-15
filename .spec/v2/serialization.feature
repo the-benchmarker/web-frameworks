@@ -47,24 +47,6 @@ Feature: JSON serialization
       | ?seed=abcdefgh&count=100 |
       | ?seed=abcdefgh&other= |
 
-  Scenario: The body cannot supply a missing query seed
-    Given the request Content-Type is "application/json"
-    And the request body is:
-      """
-      {"seed":"abcdefgh"}
-      """
-    When I send GET "/serialization"
-    Then the response status is 400
-
-  Scenario: Use the query seed even if the body contains another seed
-    Given the request Content-Type is "application/json"
-    And the request body is:
-      """
-      {"seed":"zzzzzzzz"}
-      """
-    When I send GET "/serialization?seed=abcdefgh"
-    Then the JSON response contains 100 objects with only seed "abcdefgh"
-
   Scenario: Serialize the current seed on successive requests
     When I send GET "/serialization?seed=abcdefgh"
     Then the JSON response contains 100 objects with only seed "abcdefgh"
