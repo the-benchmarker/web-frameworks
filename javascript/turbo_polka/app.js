@@ -1,5 +1,6 @@
-import polka from 'polka';
-import turbo from 'turbo-http';
+const polka = require('polka');
+
+const turbo = require('turbo-http');
 const server = turbo.createServer();
 
 polka({ server })
