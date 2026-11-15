@@ -1,15 +1,13 @@
-import { spawn } from 'bun';
+import { spawn, Subprocess } from 'bun';
 
 const cpus = navigator.hardwareConcurrency;
-const buns = new Array(cpus);
+const buns = new Array<Subprocess>(cpus);
 
 for (let i = 0; i < cpus; i++) {
   buns[i] = spawn({
     cmd: ['bun', './app.ts'],
     stdio: ['inherit', 'inherit', 'inherit'],
   });
-
-  console.log(`Worker ${buns[i].pid} started`);
 }
 
 function kill() {
