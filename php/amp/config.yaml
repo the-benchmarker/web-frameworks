@@ -5,17 +5,17 @@ framework:
   version: 3.4
 
   engines:
-    - amp
+    - revolt
 
 language:
   engines:
-    amp:
+    revolt:
       modules:
         - pcntl
         - sockets
-      extensions:
-        - osmanov/pecl-event
       deps:
         - libevent-dev
         - libssl-dev
+      extensions:
+        - osmanov/pecl-event
       command: php vendor/bin/cluster --workers $(nproc) --log error server.php
