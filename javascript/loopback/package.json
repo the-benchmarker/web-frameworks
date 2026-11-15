@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@loopback/core": "~7.0.0",
+    "@loopback/rest": "~16.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "typescript": "~6.0.2"
+  },
+  "engines": {
+    "node": "26.x"
+  }
+}
