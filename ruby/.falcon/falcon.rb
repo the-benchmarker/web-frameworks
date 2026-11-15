@@ -14,6 +14,19 @@ service hostname do
 	count worker_count.to_i
 	port {ENV.fetch("PORT", 3000).to_i}
 
+	# Keep Falcon's optional middleware without automatic response compression.
+	middleware do
+		app = Protocol::Rack::Adapter.new(rack_app)
+		logging = verbose
+		caching = cache
+
+		Protocol::HTTP::Middleware.build do
+			use Falcon::Middleware::Verbose if logging
+			use Async::HTTP::Cache::General if caching
+			run app
+		end
+	end
+
 	endpoint do
 		Async::HTTP::Endpoint
 			.parse("http://0.0.0.0:#{port}")

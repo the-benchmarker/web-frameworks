@@ -59,6 +59,7 @@ jobs:
 
   frameworks:
     needs: changes
+    if: ${{ fromJson(needs.changes.outputs.languages).include[0] != null }}
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.changes.outputs.languages) }}
