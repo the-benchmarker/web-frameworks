@@ -1,4 +1,4 @@
-FROM sbtscala/scala-sbt:eclipse-temurin-25.0.5_8_1.x AS build
+FROM sbtscala/scala-sbt:eclipse-temurin-27_2.x AS build
 
 WORKDIR /usr/src/app
 
@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 RUN sbt "Universal / packageZipTarball"
 
 
-FROM eclipse-temurin:25-jre-noble
+FROM eclipse-temurin:27-jre
 
 WORKDIR /usr/src/app
 

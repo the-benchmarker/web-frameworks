@@ -1,9 +1,9 @@
 reviewers:
   - whiplash
 language:
-  version: '3.10'
+  version: "3.10"
   java:
-    version: 25
+    version: 27
 
   files:
     - "**/*.gradle"
