@@ -1,4 +1,4 @@
-import Koa from 'koa'
+import Koa from 'koa';
 import Router from '@koa/router';
 
 const app = new Koa();
@@ -15,7 +15,4 @@ router
     ctx.body = '';
   });
 
-app
-  .use(router.routes())
-  .use(router.allowedMethods())
-  .listen(3000);
+app.use(router.routes()).use(router.allowedMethods()).listen(3000);
