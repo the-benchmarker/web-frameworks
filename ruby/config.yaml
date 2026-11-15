@@ -20,8 +20,9 @@ language:
     iodine:
       bootstrap:
         - bundle add iodine --version 0.7.60
-      command: bundle exec iodine -b http://0.0.0.0:3000 -w $(nproc)
+      command: bundle exec iodine
       environment:
+        PORT: 3000
         IODINE_MTLS: "0"
 
 framework:
