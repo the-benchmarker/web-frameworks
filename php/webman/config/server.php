@@ -13,13 +13,6 @@
  */
 
 return [
-    'listen'               => 'http://0.0.0.0:3000',
-    'transport'            => 'tcp',
-    'context'              => [],
-    'name'                 => 'webman',
-    'count'                => cpu_count(),
-    'user'                 => '',
-    'group'                => '',
     'pid_file'             => runtime_path() . '/webman.pid',
     'stdout_file'          => runtime_path() . '/logs/stdout.log',
     'log_file'             => runtime_path() . '/logs/workerman.log',
