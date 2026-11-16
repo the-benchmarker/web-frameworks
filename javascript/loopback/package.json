@@ -3,7 +3,7 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@loopback/core": "~7.0.0",
+    "@loopback/core": "~8.0.0",
     "@loopback/rest": "~16.0.0"
   },
   "devDependencies": {
