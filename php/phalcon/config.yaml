@@ -1,25 +1,20 @@
+reviewers:
+  - ruudboon
+
 framework:
   website: phalcon.io
-  version: 5.18
+  version: 5.23
 
   extensions:
-    - psr
-
-  before_build:
-    - mkdir -p /usr/src/php/ext/phalcon
-    - curl -fsSL https://github.com/phalcon/cphalcon/releases/download/v5.18.2/phalcon-pecl.tgz | tar xvz -C /usr/src/php/ext/phalcon --strip 1
-
-  modules:
-    - phalcon
+    - phalcon/cphalcon
 
   nginx_conf:
     - |
-      location /{\n\
-          rewrite ^/(.*)$ /index.php?_url=$1 last;\n\
-      }\n\
-    - |
-      location = /index.php {\n\
-        fastcgi_pass unix:/var/run/php-fpm.sock;\n\
-        fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;\n\
-        include fastcgi_params;\n\
-      }\n\
+      location /{
+          rewrite ^/(.*)$ /index.php?_url=$1 last;
+      }
+      location = /index.php {
+        fastcgi_pass unix:/run/php-fpm.sock;
+        fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;
+        include fastcgi_params;
+      }

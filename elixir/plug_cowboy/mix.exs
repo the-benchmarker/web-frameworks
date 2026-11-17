@@ -5,7 +5,7 @@ defmodule Server.MixProject do
     [
       app: :server,
       version: "0.1.0",
-      elixir: "~> 1.19",
+      elixir: "~> 1.20",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       releases: [server: [include_executables_for: [:unix]]]
@@ -16,7 +16,7 @@ defmodule Server.MixProject do
 
   defp deps do
     [
-      {:plug, "~> 1.20.0"},
+      {:plug, "~> 1.20.3"},
       {:plug_cowboy, "~> 2.9.0"}
     ]
   end

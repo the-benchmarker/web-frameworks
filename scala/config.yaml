@@ -1,9 +1,15 @@
+reviewers:
+  - whiplash
 language:
-  version: 3.8
+  version: "3.10"
+  java:
+    version: 27
+
   files:
     - "**/*.gradle"
     - "**/*.scala"
     - "**/*.sbt"
+    - project/build.properties
     - "**/*.conf"
 
   engines:

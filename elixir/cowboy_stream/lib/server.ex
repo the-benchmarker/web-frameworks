@@ -2,8 +2,6 @@ defmodule Server do
   @behaviour :cowboy_stream
 
   @compile {:inline, response: 0, response: 1}
-  @compile :native
-  @compile {:hipe, [:verbose, :o3]}
 
   @impl :cowboy_stream
   def init(_stream_id, %{method: "GET", path: "/"}, _opts) do

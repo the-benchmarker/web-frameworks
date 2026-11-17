@@ -1,4 +1,6 @@
-FROM gradle:jdk25 AS build
+FROM gradle:9-jdk26 AS build
+
+ENV ORG_GRADLE_PROJECT_jvmTarget=26
 
 WORKDIR /usr/src/app
 
@@ -9,8 +11,7 @@ WORKDIR /usr/src/app
 RUN gradle build
 
 
-
-FROM eclipse-temurin:25.0.3_9-jre
+FROM eclipse-temurin:26-jre
 
 WORKDIR /usr/src/app
 

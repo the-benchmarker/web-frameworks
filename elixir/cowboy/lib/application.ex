@@ -1,9 +1,6 @@
 defmodule Server.Application do
   use Application
 
-  @compile :native
-  @compile {:hipe, [:verbose, :o3]}
-
   def start(_type, _args) do
     Supervisor.start_link([cowboy_child_spec()], strategy: :one_for_one, name: Server.Supervisor)
   end

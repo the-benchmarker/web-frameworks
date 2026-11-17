@@ -1,6 +1,6 @@
 framework:
   website: armeria.dev
-  version: "1.40"
+  version: 1.43
 
   build:
     - mvn package
@@ -11,7 +11,4 @@ framework:
   binaries:
     - target/benchmark.jar
 
-language:
-  engines:
-    default:
-      command: /usr/bin/java -jar /opt/web/target/benchmark.jar
+  command: /usr/bin/java -jar /opt/web/target/benchmark.jar

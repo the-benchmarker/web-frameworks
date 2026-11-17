@@ -1,5 +1,7 @@
 language:
-  version: 1.17
+  version: '1.19'
+  erlang:
+    version: '29.0'
   website: gleam.run
 
   files:

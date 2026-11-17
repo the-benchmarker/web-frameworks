@@ -33,10 +33,10 @@ $app->post('/user', function (Request $request, Response $response): Response {
 $server = new Server('0.0.0.0', 3000);
 
 $server->set([
-    'worker_num' => swoole_cpu_num() * 2,
+    'worker_num' => swoole_cpu_num(),
     'enable_coroutine' => false,
-    'log_file' => '/dev/null',
-    'log_level' => SWOOLE_LOG_ERROR,
+    'enable_reuse_port' => true,
+    'http_compression'  => false,
 ]);
 
 $server->on('request', new OnRequest(

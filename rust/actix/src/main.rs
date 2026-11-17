@@ -13,6 +13,7 @@ async fn main() -> std::io::Result<()> {
             .route("/user", web::post().to(|| HttpResponse::Ok()))
             .service(get_user)
     })
+    .tcp_nodelay(true)
     .bind(("0.0.0.0", 3000))?
     .run()
     .await

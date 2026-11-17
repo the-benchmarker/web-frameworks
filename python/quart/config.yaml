@@ -1,8 +1,10 @@
+reviewers:
+  - pgjones
+
 framework:
   website: quart.palletsprojects.com
   github: pallets/quart
-  version: 0.19
-
+  version: 0.23
   engines:
     - uvicorn
     - hypercorn

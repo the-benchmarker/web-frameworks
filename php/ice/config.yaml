@@ -1,0 +1,20 @@
+reviewers:
+  - mruz
+
+framework:
+  website: iceframework.org
+  version: 1.12
+
+  bootstrap:
+    - cd vendor/iceframework/framework && bash install && docker-php-ext-enable ice
+
+  nginx_conf:
+    - |
+      location /{
+          rewrite ^/(.*)$ /index.php?_url=/$1 last;
+      }
+      location = /index.php {
+        fastcgi_pass unix:/run/php-fpm.sock;
+        fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;
+        include fastcgi_params;
+      }

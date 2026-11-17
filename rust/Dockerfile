@@ -1,4 +1,4 @@
-FROM rust:1.97-slim AS build
+FROM rust:1.100-slim AS build
 
 WORKDIR /usr/src/app
 
@@ -20,7 +20,10 @@ RUN cargo build --release  \
 
 
 
-FROM debian:stable-slim
+FROM debian:13-slim
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
 
 RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends curl && \

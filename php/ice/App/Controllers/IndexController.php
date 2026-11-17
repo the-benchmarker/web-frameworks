@@ -8,9 +8,9 @@ class IndexController extends \Ice\Mvc\Controller
     {
     }
 
-    public function getUserAction()
+    public function getUserAction($id)
     {
-        echo $this->dispatcher->getParam('id');
+        echo $id;
     }
 
     public function postUserAction()

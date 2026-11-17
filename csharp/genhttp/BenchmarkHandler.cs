@@ -1,51 +1,51 @@
 ﻿using GenHTTP.Api.Content;
+using GenHTTP.Api.Infrastructure;
 using GenHTTP.Api.Protocol;
 
-using Strings = GenHTTP.Modules.IO.Strings;
+using GenHTTP.Modules.IO;
 
 namespace web;
 
 internal sealed class BenchmarkHandler : IHandler
 {
-    private static readonly FlexibleContentType _TextType = FlexibleContentType.Get(ContentType.TextPlain);
+    private static readonly ReadOnlyMemory<byte> EmptyContent = new();
 
-    private static readonly Strings.StringContent _EmptyContent = new("");
+    private static readonly PathSegment UserSegment = new("user");
 
-    public ValueTask PrepareAsync() => new();
+    public ValueTask PrepareAsync(IServer server) => new();
 
     public ValueTask<IResponse> HandleAsync(IRequest request)
     {
         IResponse response = null;
 
-        var target = request.Target;
+        var target = request.Header.Target;
 
-        if (target.Ended)
+        if (target.Current == null)
         {
-            response = GetEmptyResponse(request);
+            response = GetResponse(request);
         }
-        else if (target.Current.Original == "user")
+        else if (target.Current.Value == UserSegment)
         {
             target.Advance();
 
-            if (target.Ended)
+            if (target.Current == null)
             {
-                response = GetEmptyResponse(request);
+                response = GetResponse(request);
             }
             else
             {
-                response = GetEmptyResponse(request, new Strings.StringContent(target.Current.Original));
+                response = GetResponse(request, target.Current.Value.Bytes);
             }
         }
 
         return new(response);
     }
 
-    private static IResponse GetEmptyResponse(IRequest request, Strings.StringContent content = null)
+    private static IResponse GetResponse(IRequest request, ReadOnlyMemory<byte>? content = null)
     {
         return request.Respond()
-                      .Type(_TextType)
-                      .Content(content ?? _EmptyContent)
+                      .Content(content ?? EmptyContent, ContentType.TextPlain)
                       .Build();
-    } 
+    }
 
 }

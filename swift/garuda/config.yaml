@@ -1,0 +1,11 @@
+reviewers:
+  - grepjava
+
+framework:
+  github: grepjava/garuda
+  version: 2.1
+  name: garuda
+
+environment:
+  SERVER_HOSTNAME: 0.0.0.0
+  SERVER_PORT: 3000

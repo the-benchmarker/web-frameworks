@@ -1,5 +1,9 @@
 language:
   version: 3.4
+
+reviewers:
+  - adamluzsi
+
 framework:
   github: rack-app/rack-app
   website: github.com/rack-app/rack-app

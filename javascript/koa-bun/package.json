@@ -1,7 +1,10 @@
 {
   "type": "module",
   "dependencies": {
-    "koa": "~3.2.0",
-    "koa-router": "*"
+    "koa": "~3.3.0",
+    "@koa/router": "^15.7.1"
+  },
+  "devDependencies": {
+    "@types/koa": "^3.0.3"
   }
 }

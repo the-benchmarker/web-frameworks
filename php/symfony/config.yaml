@@ -8,7 +8,6 @@ framework:
     - .env.local.php
 
   bootstrap:
-    - curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - composer install --no-dev --prefer-dist --classmap-authoritative
     - composer dumpautoload -o
     - mkdir -p var/log && chown www-data var/log

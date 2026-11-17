@@ -1,0 +1,11 @@
+reviewers:
+  - sake92
+language:
+  engines:
+    sharaf-potateh-native:
+      command: /usr/local/bin/sharaf-potateh
+framework:
+  website: github.com/sake92/sharaf
+  version: 0.22.0
+  engines:
+    - sharaf-potateh-native

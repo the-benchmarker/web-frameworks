@@ -1,4 +1,5 @@
-FROM nimlang/nim:2.2 AS build
+FROM nimlang/nim:2.4 AS build
+
 
 WORKDIR /usr/src/app
 
@@ -40,7 +41,9 @@ ENV NIM_ENV=production \
 {{/build_command}}
 
 
-FROM debian:trixie-slim
+# Build image is still debian bookworm
+# @see https://github.com/nim-lang/docker-images/blob/develop/dockerfiles/2.2.12/Dockerfile
+FROM debian:bookworm-slim
 
 WORKDIR /usr/src/app
 

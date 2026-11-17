@@ -1,0 +1,18 @@
+framework:
+  website: symfony.com
+  version: 8.1
+
+  files:
+    - bin/console
+    - config/**/*.yaml
+    - .env.local.php
+
+  bootstrap:
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
+    - mkdir -p var/log
+    - mkdir -p var/cache
+    #- php bin/console cache:warmup --no-debug
+
+  engines:
+    - adapterman

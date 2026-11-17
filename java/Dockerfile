@@ -1,14 +1,20 @@
 
 {{#language.compiler.gradle}}
-  FROM gradle:9-jdk25 AS build
+  {{#graalvm}}
+    FROM gradle:9-jdk{{language.graalvm_java.version}} AS build
+  {{/graalvm}}
+  {{^graalvm}}
+    FROM gradle:9-jdk{{language.version}} AS build
+  {{/graalvm}}
 {{/language.compiler.gradle}}
+
 {{#language.compiler.maven}}
-  {{#language.java}}
-    FROM maven:3-eclipse-temurin-{{{.}}} AS build
-  {{/language.java}}
-  {{^language.java}}
-    FROM maven:3-eclipse-temurin-25 AS build
-  {{/language.java}}
+  {{#graalvm}}
+    FROM maven:3-eclipse-temurin-{{language.graalvm_java.version}} AS build
+  {{/graalvm}}
+  {{^graalvm}}
+    FROM maven:3-eclipse-temurin-{{language.version}} AS build
+  {{/graalvm}}
 {{/language.compiler.maven}}
 
 WORKDIR /usr/src/web
@@ -41,17 +47,18 @@ WORKDIR /usr/src/web
 {{/build}}
 
 
+{{#graalvm}}
+  FROM ghcr.io/graalvm/jdk-community:{{language.graalvm_java.version}}
+  RUN microdnf install -y curl tar && microdnf clean all
+{{/graalvm}}
 
-{{#language.java}}
-  FROM eclipse-temurin:{{{.}}}-jre
-{{/language.java}}
-{{^language.java}}
-  FROM eclipse-temurin:25.0.3_9-jre
-{{/language.java}}
+{{^graalvm}}
+  FROM eclipse-temurin:{{language.version}}-jre
 
 RUN apt-get -qq update && \
   apt-get -qy install --no-install-recommends curl && \
   rm -rf /var/lib/apt/lists/*
+{{/graalvm}}
 
 WORKDIR /opt/web
 
@@ -63,7 +70,7 @@ WORKDIR /opt/web
   COPY '{{source}}' '{{target}}'
 {{/static_files}}
 
-RUN ln -sfv /opt/java/openjdk/bin/java /usr/bin/java
+RUN ln -sfv "$JAVA_HOME/bin/java" /usr/bin/java
 
 {{#bootstrap}}
   RUN {{{.}}}

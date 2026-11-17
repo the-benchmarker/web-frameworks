@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/bnkamalesh/webgo/v6"
+	"github.com/naughtygopher/webgo/v7"
 )
 
 func empty(w http.ResponseWriter, r *http.Request) {

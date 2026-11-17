@@ -19,7 +19,7 @@ pub fn build(b: *std.Build) void {
 
     root_mod.addImport("httpz", httpz_mod);
     const exe = b.addExecutable(.{
-        .name = "httpz",
+        .name = "server",
         .root_module = root_mod,
     });
 

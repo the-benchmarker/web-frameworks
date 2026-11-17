@@ -1,0 +1,12 @@
+framework:
+  github: grepjava/weft
+  version: 0.1
+
+  engines:
+    - weft
+
+language:
+  engines:
+    weft:
+      environment:
+        INTERFACE: wsgi

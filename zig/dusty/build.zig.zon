@@ -1,0 +1,21 @@
+.{
+    .name = .dusty_bench,
+    .version = "0.1.0",
+    .fingerprint = 0x5e0c4112e8839e83,
+    .minimum_zig_version = "0.17.1",
+    .dependencies = .{
+        .dusty = .{
+            .url = "git+https://github.com/lalinsky/dusty?ref=v0.6.0#96e117fed9f29d6b96bd320c6c482a4b64560529",
+            .hash = "dusty-0.6.0-Qdw7Rm0DJwCnKnGFl-JqMhvxkAR5rbFyW7RnL97vE-9V",
+        },
+        .zio = .{
+            .url = "git+https://github.com/lalinsky/zio?ref=v0.20.1#9bef33d67424737f864d9131e5b6c0e2526a6704",
+            .hash = "zio-0.20.1-xHbVVM88LwBqscEtY3Q_kCycBkXSqI7kyHdHmR60_3Ov",
+        },
+    },
+    .paths = .{
+        "src/",
+        "build.zig",
+        "build.zig.zon",
+    },
+}

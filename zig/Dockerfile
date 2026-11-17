@@ -12,7 +12,7 @@ RUN apt-get -qq update && \
   rm -rf /var/lib/apt/lists/*
 
 # Download the specified Zig binary from the official website
-ARG ZIG_VERSION=0.16.0
+ARG ZIG_VERSION=0.17.1
 
 RUN wget https://ziglang.org/download/$ZIG_VERSION/zig-{{arch}}-linux-$ZIG_VERSION.tar.xz && \
   tar -xvf zig-{{arch}}-linux-$ZIG_VERSION.tar.xz && \
@@ -32,9 +32,7 @@ RUN chown -R ziguser src
 # Switch to the non-root user
 USER ziguser
 
-RUN zig build -Doptimize=ReleaseFast
-
-
+RUN zig build -Doptimize=ReleaseSafe 
 
 FROM debian:13-slim
 
@@ -42,7 +40,7 @@ RUN apt-get -qq update && \
   apt-get -y install --no-install-recommends ca-certificates curl && \
   rm -rf /var/lib/apt/lists/*
 
-COPY --from=build /home/ziguser/zig-out/bin/httpz /server
+COPY --from=build /home/ziguser/zig-out/bin/server /server
 
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit
 

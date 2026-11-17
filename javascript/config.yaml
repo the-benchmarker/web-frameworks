@@ -1,5 +1,14 @@
 language:
-  version: ES2019
+  standard: ES2019
+  version: '26.0'
+  node:
+    version: '26.0'
+  bun:
+    version: '1.4'
+  deno:
+    version: '2.9'
+  carne:
+    version: 0.1
 
   engines:
     node:
@@ -29,6 +38,10 @@ language:
         NODE_APP: app.mjs
       bootstrap:
         - npm install
+      fixes:
+        # v20.71.0's ESM wrapper imports index.js, but the CommonJS entry is uws.js.
+        # Include nested dependencies and run after all framework install steps.
+        - find node_modules -path '*/uWebSockets.js/ESM_wrapper.mjs' -exec sed -i "s|from './index.js'|from './uws.js'|" {} +
       command: node cluster.mjs
     deno:
       bootstrap:
@@ -44,6 +57,8 @@ language:
       command: bun run cluster.ts
       files:
         - bunfig.toml
+    carne:
+      command: carne run app.js
 
 framework:
   engines:

@@ -1,0 +1,13 @@
+specs: v1
+
+framework:
+  website: dropwizard.io
+  version: 5.0
+
+  build:
+    - mvn package
+
+  binaries:
+    - target/benchmark-1.0.0.jar
+
+  command: /usr/bin/java -jar /opt/web/target/benchmark-1.0.0.jar

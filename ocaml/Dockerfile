@@ -1,4 +1,4 @@
-FROM ocaml/opam:debian-13-ocaml-5.2
+FROM ocaml/opam:debian-ocaml-5.5
 
 WORKDIR /usr/src/app
 
@@ -15,6 +15,9 @@ RUN apt-get -qq update && \
   rm -rf /var/lib/apt/lists/*
 
 USER opam
+
+# The image's default repository is a bundled, outdated local Git snapshot.
+RUN opam repository set-url default https://opam.ocaml.org && opam update
 
 {{#files}}
   COPY '{{source}}' '{{target}}'

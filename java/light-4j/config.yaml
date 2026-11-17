@@ -1,6 +1,10 @@
+reviewers:
+  - tsuilouis
+  - stevehu
+
 framework:
   website: doc.networknt.com
-  version: 2.2
+  version: 2.5
 
   build:
     - mvn clean package -Prelease
@@ -11,7 +15,4 @@ framework:
   files:
     - "src/**/*.yml"
 
-language:
-  engines:
-    default:
-      command: /usr/bin/java -jar target/benchmark-1.0.0.jar
+  command: /usr/bin/java -jar target/benchmark-1.0.0.jar

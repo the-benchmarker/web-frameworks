@@ -1,7 +1,9 @@
+import multiprocessing
 from oxapy import Oxapy, Router, get, post
 
 
 def main():
+    cpu_count = multiprocessing.cpu_count()
     (
         Oxapy(("0.0.0.0", 3000))
         .attach(
@@ -10,7 +12,7 @@ def main():
             .route(get("/user/{id:int}", lambda _, id: str(id)))
             .route(post("/user", lambda _: ""))
         )
-        .run()
+        .run(processes=cpu_count)
     )
 
 

@@ -1,0 +1,13 @@
+reviewers:
+  - jkyberneees
+
+language:
+  node:
+    version: 22
+
+framework:
+  github: jkyberneees/low-http-server
+  version: 4.2
+
+  engines:
+    - uwebsockets

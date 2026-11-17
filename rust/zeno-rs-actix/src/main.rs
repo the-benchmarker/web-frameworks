@@ -7,7 +7,7 @@ use zenocore::{parser::parse_string, Context, Engine, Node, Scope, SlotMeta, Val
 #[derive(Clone)]
 struct HttpResponseData {
     status: u16,
-    content_type: String,
+    content_type: &'static str,
     body: String,
 }
 
@@ -15,7 +15,7 @@ impl Default for HttpResponseData {
     fn default() -> Self {
         Self {
             status: 200,
-            content_type: "text/plain".to_string(),
+            content_type: "text/plain",
             body: String::new(),
         }
     }
@@ -77,20 +77,21 @@ async fn zeno_route_handler(req: HttpRequest, state: web::Data<AppState>) -> imp
         req_scope.set(k, Value::String(v.to_string()));
     }
 
-    let resp_store = Arc::new(Mutex::new(HttpResponseData::default()));
-    ctx.set("http_response_data", resp_store.clone());
+    let resp_store = Mutex::new(HttpResponseData::default());
+    ctx.set("http_response_data", resp_store);
 
     for child in &handler_node.children {
         let _ = state.engine.execute(&mut ctx, child, &req_scope);
     }
 
-    let resp_data = resp_store.lock().unwrap().clone();
+    let resp_store = ctx.get::<Mutex<HttpResponseData>>("http_response_data").unwrap();
+    let mut resp_data = resp_store.lock().unwrap();
     let status_code = actix_web::http::StatusCode::from_u16(resp_data.status)
         .unwrap_or(actix_web::http::StatusCode::OK);
 
     HttpResponse::build(status_code)
         .content_type(resp_data.content_type)
-        .body(resp_data.body)
+        .body(std::mem::take(&mut resp_data.body))
 }
 
 #[actix_web::main]
@@ -101,7 +102,7 @@ async fn main() -> std::io::Result<()> {
         "http.response",
         Arc::new(|engine, ctx, node, scope| {
             let mut status = 200u16;
-            let mut content_type = "text/plain".to_string();
+            let mut content_type = "text/plain";
             let mut body = String::new();
 
             for child in &node.children {
@@ -109,17 +110,25 @@ async fn main() -> std::io::Result<()> {
                 if child.name == "status" {
                     status = val.to_int() as u16;
                 } else if child.name == "type" {
-                    content_type = val.to_string_coerce();
+                    let t = val.to_string_coerce();
+                    if t == "text/plain" {
+                        content_type = "text/plain";
+                    } else if t == "application/json" {
+                        content_type = "application/json";
+                    } else if t == "text/html" {
+                        content_type = "text/html";
+                    }
                 } else if child.name == "body" {
                     body = val.to_string_coerce();
                 }
             }
 
-            if let Some(resp_store) = ctx.get::<Arc<Mutex<HttpResponseData>>>("http_response_data") {
-                let mut store = resp_store.lock().unwrap();
-                store.status = status;
-                store.content_type = content_type;
-                store.body = body;
+            if let Some(resp_store) = ctx.get::<Mutex<HttpResponseData>>("http_response_data") {
+                if let Ok(mut store) = resp_store.lock() {
+                    store.status = status;
+                    store.content_type = content_type;
+                    store.body = body;
+                }
             }
             Ok(())
         }),
@@ -171,7 +180,7 @@ async fn main() -> std::io::Result<()> {
     let mut route_map: HashMap<String, MethodHandler> = HashMap::new();
     for (method, path, node) in routes.lock().unwrap().drain(..) {
         let matchit_path = convert_path_to_matchit(&path);
-        println!("📌 Registered route: {} {} -> matchit: {}", method, path, matchit_path);
+        println!("Registered route: {} {} -> matchit: {}", method, path, matchit_path);
         let entry = route_map
             .entry(matchit_path)
             .or_insert(MethodHandler { get: None, post: None });
@@ -193,7 +202,7 @@ async fn main() -> std::io::Result<()> {
         parent_scope,
     });
 
-    println!("🚀 zeno-rs-actix benchmark server running on http://0.0.0.0:3000");
+    println!("zeno-rs-actix server running on http://0.0.0.0:3000");
 
     HttpServer::new(move || {
         App::new()

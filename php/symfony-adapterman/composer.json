@@ -1,0 +1,14 @@
+{
+  "require": {
+    "symfony/framework-bundle": "~8.1.0",
+    "symfony/console": "@stable",
+    "symfony/dotenv": "@stable",
+    "symfony/yaml": "@stable",
+    "joanhey/adapterman": "^0.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}

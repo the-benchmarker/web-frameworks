@@ -1,49 +1,50 @@
-import { createApplication } from '@chubbyts/chubbyts-framework/dist/application';
-import { createErrorMiddleware } from '@chubbyts/chubbyts-framework/dist/middleware/error-middleware';
-import { createRouteMatcherMiddleware } from '@chubbyts/chubbyts-framework/dist/middleware/route-matcher-middleware';
-import { createGetRoute, createPostRoute } from '@chubbyts/chubbyts-framework/dist/router/route';
-import { createRoutesByName } from '@chubbyts/chubbyts-framework/dist/router/routes-by-name';
-import { createPathToRegexpRouteMatcher } from '@chubbyts/chubbyts-framework-router-path-to-regexp/dist/path-to-regexp-router';
-import { createServer, STATUS_CODES } from 'http';
-import { Response, ServerRequest } from '@chubbyts/chubbyts-undici-server/dist/server';
+import { createApplication } from '@chubbyts/chubbyts-framework/application';
+import { createErrorMiddleware } from '@chubbyts/chubbyts-framework/middleware/error-middleware';
+import { createRouteMatcherMiddleware } from '@chubbyts/chubbyts-framework/middleware/route-matcher-middleware';
+import { createGetRoute, createPostRoute } from '@chubbyts/chubbyts-framework/router/route';
+import { createRoutesByName } from '@chubbyts/chubbyts-framework/router/routes-by-name';
+import { createPathToRegexpMatch } from '@chubbyts/chubbyts-framework-router-path-to-regexp/path-to-regexp-router';
 import {
-  createNodeRequestToUndiciRequestFactory,
-  createUndiciResponseToNodeResponseEmitter,
-} from '@chubbyts/chubbyts-undici-server-node/dist/node';
+  createResponseFactory,
+  createServerRequestFactory,
+  createStreamFactory,
+  createUriFactory,
+} from '@chubbyts/chubbyts-http/message-factory';
+import { createServerRequestHelpers } from '@chubbyts/chubbyts-http/message-helper';
+import type { Response, ServerRequest } from '@chubbyts/chubbyts-http-types/message';
+import {
+  createNodeRequestToServerRequestFactory,
+  createResponseToNodeResponseEmitter,
+} from '@chubbyts/chubbyts-http-node/node';
+import { createServer } from 'http';
+
+const bodyFactory = createStreamFactory();
+const responseFactory = createResponseFactory(bodyFactory);
 
 const app = createApplication([
-  createErrorMiddleware(true),
+  createErrorMiddleware(responseFactory, bodyFactory, true),
   createRouteMatcherMiddleware(
-    createPathToRegexpRouteMatcher(
+    createPathToRegexpMatch(
       createRoutesByName([
         createGetRoute({
           path: '/',
           name: 'index',
           handler: async (): Promise<Response> => {
-            return new Response(null, {
-              status: 200,
-              statusText: STATUS_CODES[200],
-            });
+            return responseFactory(200);
           },
         }),
         createGetRoute({
           path: '/user/:id',
           name: 'user_view',
-          handler: async (request: ServerRequest<{ id: string }>): Promise<Response> => {
-            return new Response(request.attributes.id, {
-              status: 200,
-              statusText: STATUS_CODES[200],
-            });
+          handler: async (request: ServerRequest): Promise<Response> => {
+            return { ...responseFactory(200), body: bodyFactory(request.attributes.id as string) };
           },
         }),
         createPostRoute({
           path: '/user',
           name: 'user_create',
           handler: async (): Promise<Response> => {
-            return new Response(null, {
-              status: 200,
-              statusText: STATUS_CODES[200],
-            });
+            return responseFactory(200);
           },
         }),
       ]),
@@ -51,11 +52,15 @@ const app = createApplication([
   ),
 ]);
 
-const nodeRequestToUndiciRequestFactory = createNodeRequestToUndiciRequestFactory();
-const undiciResponseToNodeResponseEmitter = createUndiciResponseToNodeResponseEmitter();
+const nodeRequestToServerRequestFactory = createNodeRequestToServerRequestFactory(
+  createUriFactory(),
+  createServerRequestFactory(),
+  createServerRequestHelpers(),
+);
+const responseToNodeResponseEmitter = createResponseToNodeResponseEmitter();
 
 const server = createServer(async (req, res) => {
-  undiciResponseToNodeResponseEmitter(await app(nodeRequestToUndiciRequestFactory(req)), res);
+  responseToNodeResponseEmitter(await app(nodeRequestToServerRequestFactory(req, res)), res);
 });
 
 const host = '0.0.0.0';

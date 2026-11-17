@@ -1,9 +1,8 @@
 {
   "name": "server",
   "dependencies": {
-    "vibe-d": "~>0.10",
-    "vibe-http": "*",
-    "vibe-stream:tls": "*"
+    "vibe-http": "~>1.5.1",
+    "vibe-stream:tls": "~>1.4.1"
   },
   "versions": [
     "VibeManualMemoryManagement",

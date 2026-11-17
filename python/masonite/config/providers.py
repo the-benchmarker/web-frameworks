@@ -12,7 +12,6 @@ from masonite.providers import (
     EventProvider,
 )
 
-
 PROVIDERS = [
     FrameworkProvider,
     RouteProvider,

@@ -1,36 +1,36 @@
 # frozen_string_literal: true
 
-require 'fileutils'
-require 'json'
-require 'optparse'
+require "fileutils"
+require "json"
+require "optparse"
 
 options = {}
 OptionParser.new do |opts|
-  opts.on('--cid PATH', 'Path to container ID file') { |v| options[:cid] = v }
-  opts.on('--out PATH', 'Path to output JSON file') { |v| options[:out] = v }
-  opts.on('--idle', 'Take a single idle snapshot instead of continuous sampling') { options[:idle] = true }
+  opts.on("--cid PATH", "Path to container ID file") { |v| options[:cid] = v }
+  opts.on("--out PATH", "Path to output JSON file") { |v| options[:out] = v }
+  opts.on("--idle", "Take a single idle snapshot instead of continuous sampling") { options[:idle] = true }
 end.parse!
 
-raise '--cid is required' unless options[:cid]
-raise '--out is required' unless options[:out]
+raise "--cid is required" unless options[:cid]
+raise "--out is required" unless options[:out]
 
 container_id = File.read(options[:cid]).strip
 
 UNITS = {
-  'B'   => 1,
-  'kB'  => 1_000,
-  'MB'  => 1_000_000,
-  'GB'  => 1_000_000_000,
-  'TB'  => 1_000_000_000_000,
-  'KiB' => 1_024,
-  'MiB' => 1_024 ** 2,
-  'GiB' => 1_024 ** 3,
-  'TiB' => 1_024 ** 4
+  "B" => 1,
+  "kB" => 1_000,
+  "MB" => 1_000_000,
+  "GB" => 1_000_000_000,
+  "TB" => 1_000_000_000_000,
+  "KiB" => 1_024,
+  "MiB" => 1_024 ** 2,
+  "GiB" => 1_024 ** 3,
+  "TiB" => 1_024 ** 4,
 }.freeze
 
 def parse_memory(mem_usage)
   # MemUsage format: "45.3MiB / 7.6GiB" — we only want the left side
-  used = mem_usage.split('/').first.strip
+  used = mem_usage.split("/").first.strip
   match = used.match(/^([\d.]+)\s*([A-Za-z]+)$/)
   return 0 unless match
 
@@ -42,7 +42,7 @@ def sample_memory(container_id)
   return nil if raw.empty?
 
   data = JSON.parse(raw)
-  parse_memory(data['MemUsage'])
+  parse_memory(data["MemUsage"])
 rescue JSON::ParserError
   nil
 end
@@ -56,8 +56,8 @@ else
   samples = []
   running = true
 
-  trap('TERM') { running = false }
-  trap('INT')  { running = false }
+  trap("TERM") { running = false }
+  trap("INT") { running = false }
 
   while running
     value = sample_memory(container_id)
@@ -65,7 +65,7 @@ else
     sleep 0.5
   end
 
-  peak    = samples.max || 0
+  peak = samples.max || 0
   average = samples.empty? ? 0 : (samples.sum.to_f / samples.size).round
 
   File.write(options[:out], JSON.generate({ peak_bytes: peak, average_bytes: average, samples: samples.size }))
