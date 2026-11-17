@@ -1,32 +1,14 @@
-import scala.scalanative.build.Mode
+ThisBuild / scalaVersion := "3.10.0"
 
-name := "server"
-
-val TargetJavaVersion = "27"
-
-initialize := {
-  val _ = initialize.value
-  val actualJavaVersion = sys.props.getOrElse("java.specification.version", "unknown")
-  require(
-    actualJavaVersion == TargetJavaVersion,
-    s"Expected Java $TargetJavaVersion, got $actualJavaVersion"
+lazy val root = (project in file("."))
+  .settings(
+    name := "server",
+    libraryDependencies += "ba.sake" %% "sharaf-potateh" % "0.23.0",
+    assembly / mainClass := Some("Main"),
+    assembly / assemblyOutputPath := baseDirectory.value / "target" / "app.jar",
+    assembly / assemblyMergeStrategy := {
+      case PathList("META-INF", "services", _*) => MergeStrategy.concat
+      case PathList("META-INF", _*)             => MergeStrategy.discard
+      case _                                    => MergeStrategy.first
+    }
   )
-}
-
-scalaVersion := "3.10.1"
-
-enablePlugins(ScalaNativePlugin)
-
-Compile / mainClass := Some("Main")
-Compile / crossTarget := baseDirectory.value / "target" / "native"
-
-scalacOptions ++= Seq("-release:" + TargetJavaVersion, "-Yretain-trees")
-javacOptions ++= Seq("--release", TargetJavaVersion)
-
-nativeConfig ~= { config =>
-  config
-    .withMode(Mode.releaseFull)
-    .withMultithreading(true)
-}
-
-libraryDependencies += "ba.sake" %% "sharaf-potateh" % "0.22.0"

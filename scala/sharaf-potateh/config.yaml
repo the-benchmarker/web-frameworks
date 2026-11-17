@@ -2,10 +2,10 @@ reviewers:
   - sake92
 language:
   engines:
-    sharaf-potateh-native:
-      command: /usr/local/bin/sharaf-potateh
+    sharaf-potateh-jvm:
+      command: java -jar /app/app.jar
 framework:
   website: github.com/sake92/sharaf
-  version: 0.22.0
+  version: 0.23.0
   engines:
-    - sharaf-potateh-native
+    - sharaf-potateh-jvm

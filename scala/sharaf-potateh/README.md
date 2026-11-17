@@ -1,17 +1,8 @@
-# Sharaf with Potateh on Scala Native
+# Sharaf with Potateh on the JVM
 
-Uses Sharaf–Potateh 0.22.0, Scala 3.10.1, sbt 2.0.12 and Scala Native 0.5.12.
-The executable is linked in `release-full` mode and uses Potateh's default
-cached executor with a connection limit of 1024. The runtime image has no JVM.
+Uses Sharaf–Potateh 0.23.0, Scala 3.10.0, sbt 2.1.0 and Java 25, with a virtual-thread-per-task executor and a connection limit of 1024.
 
-The Sharaf Potateh adapter and its dependencies resolve from Maven Central.
-
-From `scala/sharaf-potateh`, compile or link the server with:
-
-```sh
-sbt compile
-sbt nativeLink
-```
+From `scala/sharaf-potateh`, build the executable JAR with `sbt assembly`.
 
 From the repository root:
 
