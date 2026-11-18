@@ -2,7 +2,7 @@ import ba.sake.potateh.ServerConfig
 import ba.sake.sharaf.*
 import ba.sake.sharaf.potateh.PotatehSharafServer
 import java.net.InetSocketAddress
-import java.util.concurrent.{CountDownLatch, Executors}
+import java.util.concurrent.Executors
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -19,6 +19,5 @@ object Main {
     val server = PotatehSharafServer.start(config, handler, virtualThreads)
     Runtime.getRuntime.addShutdownHook(new Thread(() => { server.stop(); virtualThreads.shutdownNow(); () }, "sharaf-potateh-shutdown"))
     println("Sharaf listening on port 3000")
-    new CountDownLatch(1).await()
   }
 }
