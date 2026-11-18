@@ -1,20 +1,21 @@
 package main
 
 import (
+	"io"
 	"log"
+	"os"
 
 	"github.com/the-benchmarker/web-frameworks/go/spine/internal/application"
 )
 
 func main() {
-	app, options, err := application.BuildApplication()
-	if err != nil {
-		log.Fatal(err)
-	}
+	log.SetOutput(io.Discard)
+
+	app, options := application.BuildApplication()
 	if err := app.Validate(options); err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 	if err := app.Run(options); err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 }
