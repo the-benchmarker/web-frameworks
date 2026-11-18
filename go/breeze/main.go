@@ -10,24 +10,18 @@ func main() {
 	router := breeze.NewRouter()
 
 	router.Handle(breeze.GET, "/", func(ctx *breeze.Context) error {
-		ctx.Status(200)
 		return ctx.WriteString("")
 	})
-
 	router.Handle(breeze.GET, "/user/", func(ctx *breeze.Context) error {
-		ctx.Status(200)
 		return ctx.WriteString("")
 	})
 	router.Handle(breeze.GET, "/user/:id", func(ctx *breeze.Context) error {
-		ctx.Status(200)
 		return ctx.WriteString(ctx.GetParam("id"))
 	})
 	router.Handle(breeze.POST, "/user/", func(ctx *breeze.Context) error {
-		ctx.Status(200)
 		return ctx.WriteString("")
 	})
 	router.Handle(breeze.POST, "/user/:id", func(ctx *breeze.Context) error {
-		ctx.Status(200)
 		return ctx.WriteString(ctx.GetParam("id"))
 	})
 
