@@ -18,7 +18,7 @@ object Main {
     val handler = SharafHandler.exceptions(SharafHandler.routes(routes), ExceptionMapper.default)
     val server = PotatehSharafServer.start(config, handler, virtualThreads)
     Runtime.getRuntime.addShutdownHook(new Thread(() => { server.stop(); virtualThreads.shutdownNow(); () }, "sharaf-potateh-shutdown"))
-    println("Sharaf with Potateh JVM listening on port 3000")
+    println("Sharaf listening on port 3000")
     new CountDownLatch(1).await()
   }
 }
