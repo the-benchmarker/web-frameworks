@@ -1,0 +1,16 @@
+name: spectre
+version: 0.1.0
+
+authors:
+  - Eyszu <aceoflaguna@gmail.com>
+
+targets:
+  server:
+    main: src/spectre.cr
+
+dependencies:
+  spectre:
+    github: eyszu/spectre
+    branch: main
+
+license: MIT

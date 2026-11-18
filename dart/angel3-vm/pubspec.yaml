@@ -1,0 +1,8 @@
+name: angel3_app
+
+environment:
+  sdk: "^3.13.0"
+
+dependencies:
+  angel3_framework: ^10.0.1
+  logging: any
