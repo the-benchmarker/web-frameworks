@@ -29,4 +29,4 @@ nativeConfig ~= { config =>
     .withMultithreading(true)
 }
 
-libraryDependencies += "ba.sake" %% "sharaf-potateh" % "0.23.0"
+libraryDependencies += "ba.sake" %% "sharaf-potateh" % "0.24.0"
