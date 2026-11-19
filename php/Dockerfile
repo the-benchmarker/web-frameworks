@@ -2,7 +2,7 @@
 FROM php:{{language.version}}-fpm
 {{/language.version}}
 {{^language.version}}
-FROM php:8.5-fpm
+FROM php:8.6-fpm
 {{/language.version}}
 
 RUN apt-get -qq update && \
