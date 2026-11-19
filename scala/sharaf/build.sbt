@@ -1,4 +1,4 @@
-val SharafVersion = "0.23.0"
+val SharafVersion = "0.24.0"
 
 name := "server"
 
