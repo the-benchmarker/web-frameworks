@@ -35,7 +35,6 @@ def selected_languages
 
   files.filter_map do |path|
     language = language_for(path)
-    next unless language == 'ruby'
     next unless Dir.exist?(language)
     next if language.start_with?('.')
 
