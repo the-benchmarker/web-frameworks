@@ -29,12 +29,13 @@ ENV BUNDLE_PATH="/usr/local/bundle" \
   COPY '{{source}}' '{{target}}'
 {{/files}}
 
-RUN --mount=type=cache,id=bundler-gems-{{language.version}},target=${BUNDLE_PATH}/cache \
-  bundle install
-
 {{#bootstrap}}
   RUN {{{.}}}
 {{/bootstrap}}
+
+RUN --mount=type=cache,id=bundler-gems-{{language.version}},target=${BUNDLE_PATH}/cache \
+  bundle install
+
 
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
 

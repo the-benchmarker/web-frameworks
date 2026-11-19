@@ -5,17 +5,25 @@ language:
     puma:
       bootstrap:
         - bundle add puma
-      command: bundle exec puma -p 3000 -w $(nproc)
+      command: bundle exec puma -C puma.rb
+      environment:
+        PORT: 3000
+        PUMA_DISABLE_SSL: "1"
     falcon:
       bootstrap:
         - bundle add falcon
-      command: bundle exec falcon serve --bind http://0.0.0.0:3000 --count $(nproc)
+      environment:
+        PORT: 3000
+      command: bundle exec falcon host
       build_deps:
         - libssl-dev
     iodine:
       bootstrap:
-        - bundle add iodine
-      command: bundle exec iodine -p 3000 -w $(nproc)
+        - bundle add iodine --version 0.8.6
+      command: bundle exec iodine --no-dynamic-deflate
+      environment:
+        PORT: 3000
+        IODINE_MTLS: "0"
 
 framework:
   engines:
