@@ -31,7 +31,7 @@ end
 
 def selected_languages
   files = changed_files
-  return all_languages.select { |language| language == 'ruby' } if files.intersect?(%w[data.json data.min.json])
+  return all_languages if files.intersect?(%w[data.json data.min.json])
 
   files.filter_map do |path|
     language = language_for(path)
