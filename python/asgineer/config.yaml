@@ -1,0 +1,13 @@
+specs: v1
+
+reviewers:
+  - almarklein
+
+framework:
+  website: asgineer.readthedocs.io
+  version: 0.9
+
+  engines:
+    - uvicorn
+    - hypercorn
+    - daphne

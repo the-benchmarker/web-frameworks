@@ -1,0 +1,34 @@
+specs: v1
+
+framework:
+  website: masoniteproject.com
+  version: 5.4
+
+  engines:
+    - gunicorn
+    - uwsgi
+    - waitress
+
+  build_deps:
+    - libffi-dev
+    - libssl-dev
+    - curl
+
+  bootstrap:
+    - curl https://sh.rustup.rs > init.sh
+    - sh init.sh -y
+    - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
+    - rustup default nightly
+
+language:
+  engines:
+    gunicorn:
+      environment:
+        PYTHON_APP: wsgi:application
+        WORKER_CLASS: sync
+    uwsgi:
+      environment:
+        PYTHON_APP: wsgi:application
+    waitress:
+      environment:
+        PYTHON_APP: wsgi:application

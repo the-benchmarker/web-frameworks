@@ -1,0 +1,13 @@
+specs: v1
+
+reviewers:
+  - adam-fowler
+
+framework:
+  github: hummingbird-project/hummingbird
+  version: 2.28
+  name: hummingbird
+
+environment:
+  SERVER_HOSTNAME: 0.0.0.0
+  SERVER_PORT: 3000

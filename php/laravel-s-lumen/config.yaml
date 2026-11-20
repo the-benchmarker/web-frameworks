@@ -1,0 +1,31 @@
+specs: v1
+
+language:
+  engines:
+    swoole:
+      command: php bin/laravels start
+framework:
+  github: hhxsv5/laravel-s
+  version: 3.8
+
+  deps:
+    - libicu-dev
+
+  engines:
+    - swoole
+
+  modules:
+    - intl
+    - pcntl
+
+  environment:
+    APP_ENV: production
+    APP_DEBUG: false
+    APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
+
+  bootstrap:
+    - mkdir storage
+
+  files:
+    - artisan
+    - bin/laravels

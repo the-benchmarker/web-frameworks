@@ -1,0 +1,14 @@
+language:
+  version: '9.14'
+  files:
+    - server.cabal
+    - "**/*.hs"
+    - stack.yaml
+
+  engines:
+    default:
+      command: /opt/web/server
+
+framework:
+  engines:
+    - default

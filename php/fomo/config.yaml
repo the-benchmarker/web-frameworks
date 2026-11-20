@@ -1,0 +1,29 @@
+specs: v1
+
+framework:
+  github: fomo-framework/fomo
+  version: 2.4
+
+  files:
+    - "**/*.php"
+    - composer.json
+    - engineer
+
+  engines:
+    - swoole
+
+  extensions:
+    - pie-extensions/redis
+
+  modules:
+    - pcntl
+
+  bootstrap:
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
+    - mkdir storage/logs -p
+
+language:
+  engines:
+    swoole:
+      command: php engineer server:start

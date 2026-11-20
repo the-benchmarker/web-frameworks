@@ -1,0 +1,17 @@
+specs: v1
+
+framework:
+  github: pedestal/pedestal
+  version: "0.6"
+
+  build:
+    - lein uberjar
+
+  binaries:
+    - target/the-benchmarker-pedestal-0.0.1-SNAPSHOT-standalone.jar
+
+language:
+  compiler: lein
+  engines:
+    default:
+      command: java -jar target/the-benchmarker-pedestal-0.0.1-SNAPSHOT-standalone.jar

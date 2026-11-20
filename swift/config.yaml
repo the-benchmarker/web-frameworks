@@ -1,0 +1,11 @@
+language:
+  version: '6.3'
+  files:
+    - "**/*.swift"
+  engines:
+    default:
+      command: /app/.build/release/server
+
+framework:
+  engines:
+    - default

@@ -1,0 +1,19 @@
+specs: v1
+
+framework:
+  website: django-ninja.rest-framework.com
+  version: 1.8
+
+  engines:
+    - uvicorn
+    - hypercorn
+    - daphne
+
+language:
+  engines:
+    uvicorn:
+      command: uvicorn --host 0.0.0.0 --port 3000 --workers $(nproc) app.asgi:application
+    hypercorn:
+      command: hypercorn --bind 0.0.0.0:3000 --workers $(nproc) app.asgi:application
+    daphne:
+      command: daphne -b 0.0.0.0 -p 3000 app.asgi:application

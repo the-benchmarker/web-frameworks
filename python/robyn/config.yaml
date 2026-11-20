@@ -1,0 +1,27 @@
+specs: v1
+
+framework:
+  website: robyn.tech
+  github: sparckles/robyn
+  version: 0.88
+
+  engines:
+    - robyn
+
+  build_deps:
+    - gcc
+    - libffi-dev
+    - curl
+    - libssl-dev
+
+  bootstrap:
+    - curl https://sh.rustup.rs > init.sh
+    - sh init.sh -y
+    - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
+    - rustup default nightly
+
+language:
+  engines:
+    robyn:
+      command: python /usr/src/app/server.py --workers=$(nproc) --processes=$(nproc) --log-level=CRITICAL
+  version: 3.14

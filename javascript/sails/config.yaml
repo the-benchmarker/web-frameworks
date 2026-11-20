@@ -1,0 +1,18 @@
+specs: v1
+
+framework:
+  website: sailsjs.com
+  version: 1.5
+
+  files:
+    - config
+    - .sailsrc
+    - api
+    - app.mjs
+    - package.json
+    - cluster.mjs
+
+  bootstrap:
+    - npm -g install sails
+
+  command: sails lift --prod

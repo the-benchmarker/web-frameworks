@@ -1,0 +1,15 @@
+specs: v1
+
+framework:
+  website: bottlepy.org
+  version: 0.13
+
+  engines:
+    - cheroot
+
+language:
+  engines:
+    cheroot:
+      bootstrap:
+        - pip install cheroot
+      command: python server.py 3000 cheroot

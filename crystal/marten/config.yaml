@@ -1,0 +1,11 @@
+specs: v1
+
+framework:
+  website: martenframework.com
+  github: martenframework/marten
+  version: 0.7
+  runtime_deps:
+    - libyaml-0-2
+
+environment:
+  MARTEN_ENV: production

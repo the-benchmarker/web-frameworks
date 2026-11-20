@@ -1,0 +1,8 @@
+{
+  "name": "server",
+  "dependencies": {
+    "serverino": "~>0.8.7"
+  },
+  "dflags-ldc": ["-mcpu=native"],
+  "license": "MIT"
+}

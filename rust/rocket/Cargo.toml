@@ -1,0 +1,18 @@
+[package]
+name = "server"
+version = "0.0.0"
+edition = "2018"
+
+[dependencies]
+rocket = "0.5.2"
+
+[profile.release]
+opt-level = 3
+debug = false
+debug-assertions = false
+lto = true
+panic = "abort"
+incremental = false
+codegen-units = 1
+rpath = false
+strip = false

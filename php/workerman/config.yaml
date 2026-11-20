@@ -1,0 +1,13 @@
+specs: v1
+
+framework:
+  github: walkor/Workerman
+  version: 5.2
+
+  engines:
+    - workerman
+
+language:
+  engines:
+    workerman:
+      command: php start.php start

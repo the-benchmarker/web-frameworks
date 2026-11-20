@@ -1,0 +1,8 @@
+specs: v1
+
+framework:
+  website: hanamirb.org
+  version: 3.0
+
+  build_deps:
+    - libyaml-dev

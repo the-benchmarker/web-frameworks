@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  pull_request:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0.9"
+          bundler-cache: true
+      - name: Test repository helpers and contract selection
+        run: bundle exec rspec spec
+      - name: Validate both Gherkin suites
+        run: bundle exec cucumber --publish-quiet --require .spec/support --require .spec/step_definitions .spec/v1 .spec/v2 --dry-run
+
+  changes:
+    # Do not run on sync PSs
+    # Sync PRs only contain changes already tested on master.
+    if: >-
+      ${{ !(github.event.pull_request.base.ref == 'develop' &&
+            github.event.pull_request.head.ref == 'master' &&
+            github.event.pull_request.head.repo.full_name == github.repository) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      files: ${{ steps.file_changes.outputs.files }}
+      languages: ${{ steps.set-languages.outputs.languages }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: File changes
+        id: file_changes
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          files=$(git diff --name-only -z "$BASE_SHA" "$HEAD_SHA" | jq -Rsc 'split("\u0000") | map(select(length > 0))')
+          echo "files=$files" >> "$GITHUB_OUTPUT"
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0.10"
+          bundler-cache: true
+      - name: Install deps
+        run: bundle install --jobs 4 --retry 3
+      - name: Set languages
+        id: set-languages
+        run: echo "languages=$(bundle exec rake ci:languages)" >> "$GITHUB_OUTPUT"
+        env:
+          FILES: ${{ steps.file_changes.outputs.files }}
+
+  frameworks:
+    needs: changes
+    if: ${{ fromJson(needs.changes.outputs.languages).include[0] != null }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.changes.outputs.languages) }}
+    uses: ./.github/workflows/ci-language.yml
+    with:
+      language: ${{ matrix.language }}
+      files: ${{ needs.changes.outputs.files }}

@@ -1,0 +1,13 @@
+specs: v1
+
+framework:
+  website: javalin.io
+  version: 7.2
+
+  build:
+    - mvn compile assembly:single
+
+  binaries:
+    - target/benchmark-1.0.0-jar-with-dependencies.jar
+
+  command: /usr/bin/java -cp target/benchmark-1.0.0-jar-with-dependencies.jar benchmark.javalin.Bench

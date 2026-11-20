@@ -1,0 +1,16 @@
+name: orion
+version: 0.1.0
+
+authors:
+  - Marwan Rabbâa <waghanza@gmail.com>
+
+targets:
+  server:
+    main: src/server.cr
+
+dependencies:
+  orion:
+    github: obsidian/orion
+    version: ~> 3.0.5
+
+license: MIT

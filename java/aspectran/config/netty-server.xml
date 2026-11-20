@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE aspectran PUBLIC "-//ASPECTRAN//DTD Aspectran 9.0//EN"
+        "https://aspectran.com/dtd/aspectran-9.dtd">
+<aspectran>
+
+    <description>
+        Defines the core settings for the Netty embedded web server, including the HTTP listener.
+    </description>
+
+    <environment>
+        <property name="netty.server.listener.http.port" valueType="int">3000</property>
+        <property name="netty.server.listener.http.host">0.0.0.0</property>
+    </environment>
+
+    <bean id="netty.server" class="com.aspectran.netty.server.DefaultNettyServer">
+        <property name="listeners" type="array">
+            <bean class="com.aspectran.netty.server.NettyListenerConfig">
+                <property name="port" valueType="int">%{netty.server.listener.http.port}</property>
+                <property name="host">%{netty.server.listener.http.host}</property>
+            </bean>
+        </property>
+        <property name="contexts" type="array">
+            <bean class="com.aspectran.netty.server.NettyContext">
+                <property name="contextPath">/</property>
+            </bean>
+        </property>
+    </bean>
+
+</aspectran>

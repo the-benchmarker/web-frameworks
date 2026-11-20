@@ -1,0 +1,13 @@
+specs: v1
+
+framework:
+  github: gotzmann/comet
+  version: 2.7
+
+  engines:
+    - workerman
+
+language:
+  engines:
+    workerman:
+      command: php start.php start

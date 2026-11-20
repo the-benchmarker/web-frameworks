@@ -1,0 +1,11 @@
+specs: v1
+
+reviewers:
+  - Fenny
+
+framework:
+  website: gofiber.io
+  version: 3.6
+
+  engines:
+    - fasthttp

@@ -1,0 +1,10 @@
+specs: v1
+
+framework:
+  github: cherrypy/cherrypy
+  version: "18.10"
+
+  engines:
+    - gunicorn
+    - uwsgi
+    - waitress

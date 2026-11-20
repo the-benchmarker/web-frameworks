@@ -1,0 +1,43 @@
+specs: v1
+
+reviewers:
+  - an-tao
+
+language:
+  standard: 14/17
+  engines:
+    default:
+      command: /opt/web/build/drogon_benchmark /opt/web/config.json
+
+framework:
+  github: drogonframework/drogon
+  version: 1.9
+
+  build_deps:
+    - libjsoncpp-dev
+    - libssl-dev
+    - zlib1g-dev
+    - libbrotli-dev
+    - uuid-dev
+
+  bin_deps:
+    - libjsoncpp26
+    - openssl
+    - zlib1g
+    - libbrotli1
+    - libuuid1
+
+  binaries:
+    - build/drogon_benchmark
+
+  download:
+    - git clone --branch v1.9.14 https://github.com/drogonframework/drogon
+    - cd drogon && git submodule update --init
+
+  build:
+    - mkdir build
+    - cd build && cmake -DCMAKE_BUILD_TYPE=release ..
+    - cd build && make
+
+  files:
+    - config.json

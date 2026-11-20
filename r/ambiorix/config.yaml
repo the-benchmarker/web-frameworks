@@ -1,0 +1,8 @@
+specs: v1
+
+framework:
+  website: ambiorix.dev
+  version: 2.2
+
+  build_deps:
+    - libcurl4-gnutls-dev

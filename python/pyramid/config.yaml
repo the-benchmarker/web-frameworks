@@ -1,0 +1,9 @@
+specs: v1
+
+framework:
+  website: trypyramid.com
+  version: 2.1
+
+  engines:
+    - gunicorn
+    - uwsgi

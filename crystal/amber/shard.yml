@@ -1,0 +1,16 @@
+name: amber
+version: 0.1.0
+
+authors:
+  - Marwan Rabbâa <waghanza@gmail.com>
+
+license: MIT
+
+targets:
+  server:
+    main: src/amber.cr
+
+dependencies:
+  amber:
+    github: amberframework/amber
+    version: ~> 1.5.0

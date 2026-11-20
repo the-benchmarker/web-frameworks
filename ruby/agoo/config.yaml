@@ -1,0 +1,16 @@
+specs: v1
+
+framework:
+  github: ohler55/agoo
+  version: 2.15
+
+  engines:
+    - agoo
+
+  environment:
+    RACK_ENV: production
+
+language:
+  engines:
+    agoo:
+      command: AGOO_WORKER_COUNT=$(nproc) bundle exec ruby app.rb

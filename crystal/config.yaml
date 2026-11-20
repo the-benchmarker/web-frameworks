@@ -1,0 +1,12 @@
+language:
+  version: '1.22'
+  files:
+    - "**/*.cr"
+    - shard.yml
+  engines:
+    default:
+      command: /app/bin/server
+
+framework:
+  engines:
+    - default

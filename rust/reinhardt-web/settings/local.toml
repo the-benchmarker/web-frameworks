@@ -1,0 +1,16 @@
+# Local Development Settings for server
+#
+# Copy this file to local.toml and fill in the values for your local environment.
+# Do not commit real secrets. Add a project-specific ignore rule for private copies.
+#
+# Uncomment and adjust the settings below as needed.
+
+# [core]
+# debug = true
+# secret_key = "uncomment-this-line-and-replace-with-a-long-random-string"
+# allowed_hosts = ["localhost", "127.0.0.1"]
+
+# [core.security]
+# session_cookie_secure = false
+# csrf_cookie_secure = false
+# secure_ssl_redirect = false

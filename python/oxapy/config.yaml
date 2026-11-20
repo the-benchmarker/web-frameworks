@@ -1,0 +1,13 @@
+specs: v1
+
+framework:
+  github: j03-dev/oxapy
+  website: github.j03-dev.io/oxapy
+  version: 0.11
+  engines:
+    - oxapy
+
+language:
+  engines:
+    oxapy:
+      command: python server.py

@@ -1,0 +1,42 @@
+{{#language.compiler.lein}}
+  FROM clojure:temurin-26-lein-trixie-slim AS build
+{{/language.compiler.lein}}
+
+{{^language.compiler.lein}}
+  FROM clojure:temurin-26-tools-deps-trixie-slim AS build
+{{/language.compiler.lein}}
+
+WORKDIR /usr/src/app
+
+{{#files}}
+  COPY '{{source}}' '{{target}}'
+{{/files}}
+
+{{#build}}
+  RUN {{{.}}}
+{{/build}}
+
+{{^build}}
+  RUN clojure -Auberjar
+{{/build}}
+
+
+FROM eclipse-temurin:26-jre
+
+RUN apt-get -qq update && \
+  apt-get -qy install --no-install-recommends curl && \
+  rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/bin
+
+{{#environment}}
+  ENV {{{.}}}
+{{/environment}}
+
+{{#binaries}}
+  COPY --from=build /usr/src/app/{{{.}}} ./{{{.}}}
+{{/binaries}}
+
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1
+
+ENTRYPOINT {{{command}}}

@@ -1,0 +1,19 @@
+specs: v1
+
+reviewers:
+  - pmlopes
+
+framework:
+  website: vertx.io/docs/vertx-core/java/
+  version: 5.2
+
+  build:
+    - mvn package
+
+  files:
+    - target/server.jar
+
+  binaries:
+    - target/server.jar
+
+  command: /usr/bin/java -jar /opt/web/target/server.jar -instances $(nproc)

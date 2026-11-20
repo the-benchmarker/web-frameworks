@@ -1,0 +1,20 @@
+specs: v1
+
+reviewers:
+  - tsuilouis
+  - stevehu
+
+framework:
+  website: doc.networknt.com
+  version: 2.5
+
+  build:
+    - mvn clean package -Prelease
+
+  binaries:
+    - target/benchmark-1.0.0.jar
+
+  files:
+    - "src/**/*.yml"
+
+  command: /usr/bin/java -jar target/benchmark-1.0.0.jar

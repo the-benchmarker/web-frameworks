@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Antidot\Cli\Application\Console;
+
+set_time_limit(0);
+
+(static function (): void {
+    require __DIR__.'/../vendor/autoload.php';
+    $container = require __DIR__.'/../config/container.php';
+    $console = $container->get(Console::class);
+
+    $console->run();
+})();

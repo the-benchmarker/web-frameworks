@@ -1,0 +1,12 @@
+specs: v1
+
+language:
+  version: "8.4"
+
+framework:
+  website: getlaminas.org
+  version: 3.8
+
+  bootstrap:
+    - mkdir /usr/src/app/data
+    - chmod 777 -R /usr/src/app/data

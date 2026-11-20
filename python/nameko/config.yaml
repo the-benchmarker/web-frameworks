@@ -1,0 +1,18 @@
+specs: v1
+
+framework:
+  github: nameko/nameko
+  version: 2.14
+
+  engines:
+    - nameko
+
+  files:
+    - "**/*.py"
+    - pyproject.toml
+    - nameko.yaml
+
+language:
+  engines:
+    nameko:
+      command: nameko run server --config nameko.yaml

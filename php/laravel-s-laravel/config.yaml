@@ -1,0 +1,36 @@
+specs: v1
+
+language:
+  engines:
+    swoole:
+      command: php bin/laravels start
+framework:
+  github: hhxsv5/laravel-s
+  version: 3.8
+
+  deps:
+    - libicu-dev
+
+  modules:
+    - intl
+    - pcntl
+
+  engines:
+    - swoole
+
+  environment:
+    APP_ENV: production
+    APP_DEBUG: false
+    APP_KEY: base64:txfHNf/SOo222Rm8I39Urb9SmvUy+nuAF98t/ukF0lk=
+
+  files:
+    - artisan
+    - bin/laravels
+
+  bootstrap:
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
+    - mkdir bootstrap/cache
+    - mkdir storage
+    - php artisan config:cache
+    - php artisan route:cache

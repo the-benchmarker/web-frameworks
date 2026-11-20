@@ -1,0 +1,16 @@
+name: kemal
+version: 0.1.0
+
+authors:
+  - tbrand <taichiro0709@gmail.com>
+
+targets:
+  server:
+    main: src/server.cr
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+    version: ~> 1.15.0
+
+license: MIT

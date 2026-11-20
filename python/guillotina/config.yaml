@@ -1,0 +1,25 @@
+specs: v1
+
+framework:
+  website: guillotina.io
+  version: 7.1
+
+  engines:
+    - uvicorn
+    - hypercorn
+
+  build_deps:
+    - libffi-dev
+    - curl
+    - libssl-dev
+    - build-essential
+
+  bootstrap:
+    - curl https://sh.rustup.rs > init.sh
+    - sh init.sh -y
+    - find $HOME/.cargo/bin -type f -exec install {} /usr/local/bin \;
+    - rustup default nightly
+
+  environment:
+    RUSTFLAGS: -C target-feature=-crt-static
+    PYTHON_APP: server:app

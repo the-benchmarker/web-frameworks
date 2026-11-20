@@ -1,0 +1,15 @@
+specs: v1
+
+reviewers:
+  - fenric
+
+framework:
+  github: sunrise-php/http-router
+  version: 3.4
+  files:
+    - .env.dist
+    - app
+  bootstrap:
+    - cp .env.dist .env
+  engines:
+    - road-runner

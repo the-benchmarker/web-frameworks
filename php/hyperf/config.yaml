@@ -1,0 +1,28 @@
+specs: v1
+
+reviewers:
+  - limingxinleo
+  - huangzhhui
+
+framework:
+  website: hyperf.io
+  version: 3.1
+
+  engines:
+    - swoole
+
+  extensions:
+    - phpredis/phpredis
+
+  modules:
+    - pcntl
+
+  bootstrap:
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
+    - echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
+    - php sbin/hyperf.php
+language:
+  engines:
+    swoole:
+      command: php sbin/hyperf.php start

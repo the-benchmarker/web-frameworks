@@ -1,0 +1,13 @@
+specs: v1
+
+reviewers:
+  - pgjones
+
+framework:
+  website: quart.palletsprojects.com
+  github: pallets/quart
+  version: 0.23
+  engines:
+    - uvicorn
+    - hypercorn
+    - daphne

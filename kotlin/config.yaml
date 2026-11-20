@@ -1,0 +1,20 @@
+language:
+  version: '2.4'
+
+  java:
+    version: '26.0'
+
+  files:
+    - "**/*.gradle"
+    - "**/*.kts"
+    - "**/*.kt"
+    - "**/*.conf"
+    - "**/*.properties"
+
+  engines:
+    default:
+      command: java -server -jar /usr/src/app/build/libs/server.jar
+
+framework:
+  engines:
+    - default

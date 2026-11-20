@@ -1,0 +1,13 @@
+specs: v1
+
+language:
+  engines:
+    swoole:
+      command: php sbin/simps.php http:start
+
+framework:
+  github: simple-swoole/simps
+  version: 1.0
+
+  engines:
+    - swoole

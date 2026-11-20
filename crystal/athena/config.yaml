@@ -1,0 +1,17 @@
+specs: v1
+
+framework:
+  github: athena-framework/athena
+  version: 0.21
+
+  build_deps:
+    - libmagic-dev
+    - liblzma-dev
+    - libbz2-dev
+
+  runtime_deps:
+    - libyaml-0-2
+    - libmagic1
+
+environment:
+  ATHENA_ENV: production

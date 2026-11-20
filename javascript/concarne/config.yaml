@@ -1,0 +1,9 @@
+framework:
+  github: getcarne/concarne
+  version: 0.1
+
+  engines:
+    - carne
+
+bootstrap:
+  - carne pkg install concarne

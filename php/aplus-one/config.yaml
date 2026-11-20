@@ -1,0 +1,29 @@
+specs: v1
+
+framework:
+  github: aplus-framework/one
+  version: 25.1
+  website: aplus-framework.com/packages/one
+
+  build_deps:
+    - libsodium-dev
+    - memcached
+    - libmemcached-tools
+    - libmemcached-dev
+    - libssl-dev
+    - libyaml-dev
+    - libicu-dev
+    - libpng-dev
+
+  modules:
+    - sodium
+    - mysqli
+    - intl
+    - gd
+
+  extensions:
+    - pie-extensions/igbinary:3.2.17RC1
+    - php-memcached/php-memcached
+    - msgpack/msgpack-php
+    - pie-extensions/redis
+    - pecl/yaml

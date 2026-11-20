@@ -1,0 +1,8 @@
+{
+  "require": {
+    "slim/slim": "~4.15.0",
+    "slim/psr7": "@stable",
+    "spiral/roadrunner-cli": "@stable",
+    "spiral/roadrunner-http": "@stable"
+  }
+}

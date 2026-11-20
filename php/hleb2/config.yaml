@@ -1,0 +1,15 @@
+specs: v1
+
+framework:
+  website: hleb2framework.ru
+  github: phphleb/hleb
+  version: 2.2
+
+  files:
+    - console
+
+  bootstrap:
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
+    - php console --generate-key
+    - php console --routes-upd

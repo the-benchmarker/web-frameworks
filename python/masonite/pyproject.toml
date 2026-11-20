@@ -1,0 +1,10 @@
+
+[build-system]
+build-backend = "flit_core.buildapi"
+requires = ["flit_core"]
+
+[project]
+dependencies = ["masonite-framework>=5.4,<5.5"]
+name='wsgi'
+version = '1.0.0'
+description = "Simple benchmark implementation"

@@ -1,0 +1,10 @@
+specs: v1
+
+framework:
+  github: mix-php/mix
+  version: 3.0
+
+  engines:
+    - workerman
+
+  command: php bin/workerman.php start

@@ -1,0 +1,21 @@
+specs: v1
+
+reviewers:
+  - michalsn
+
+framework:
+  website: codeigniter.com
+  version: 4.7
+
+  build_deps:
+    - libicu-dev
+
+  modules:
+    - intl
+
+  environment:
+    CI_ENVIRONMENT: production
+
+  bootstrap:
+    - mkdir writable/cache -p
+    - chown -R www-data:www-data writable/cache

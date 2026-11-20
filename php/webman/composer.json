@@ -1,0 +1,24 @@
+{
+  "name": "workerman/webman",
+  "require": {
+    "php": ">=7.2",
+    "workerman/webman-framework": "~2.2.0",
+    "monolog/monolog": "~3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "": "./"
+    },
+    "files": [
+      "./support/helpers.php"
+    ]
+  },
+  "scripts": {
+    "post-package-install": [
+      "support\\Plugin::install"
+    ],
+    "post-package-update": [
+      "support\\Plugin::install"
+    ]
+  }
+}

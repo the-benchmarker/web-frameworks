@@ -1,0 +1,23 @@
+specs: v1
+
+framework:
+  github: bearframework/bearframework
+  version: 1.22
+
+  nginx_conf:
+    - |
+      location / {
+          try_files $uri $uri/ /index.php;
+          fastcgi_pass unix:/run/php-fpm.sock;
+          fastcgi_param   SCRIPT_FILENAME     $document_root/index.php;
+          include fastcgi_params;
+      }
+
+language:
+  engines:
+    php-fpm:
+      modules:
+        - gd
+
+      build_deps:
+        - libpng-dev

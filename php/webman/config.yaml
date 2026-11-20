@@ -1,0 +1,12 @@
+specs: v1
+
+framework:
+  github: walkor/webman
+  version: 2.2
+
+  engines:
+    - workerman
+language:
+  engines:
+    workerman:
+      command: php start.php start

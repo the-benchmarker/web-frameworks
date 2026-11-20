@@ -1,0 +1,72 @@
+language:
+  standard: ES2019
+  version: '26.0'
+  node:
+    version: '26.0'
+  bun:
+    version: '1.4'
+  deno:
+    version: '2.9'
+  carne:
+    version: 0.1
+
+  engines:
+    node:
+      environment:
+        NODE_ENV: production
+        NODE_APP: app.mjs
+      bootstrap:
+        - npm install --omit=dev
+      command: node cluster.mjs
+    turbo:
+      environment:
+        NODE_ENV: production
+      build_deps:
+        - python3
+        - make
+        - gcc
+        - g++
+      bootstrap:
+        - npm install
+      command: node app.js
+    uwebsockets:
+      build_deps:
+        - git
+      environment:
+        NODE_ENV: production
+        EXPERIMENTAL_FASTCALL: 1
+        NODE_APP: app.mjs
+      bootstrap:
+        - npm install
+      fixes:
+        # v20.71.0's ESM wrapper imports index.js, but the CommonJS entry is uws.js.
+        # Include nested dependencies and run after all framework install steps.
+        - find node_modules -path '*/uWebSockets.js/ESM_wrapper.mjs' -exec sed -i "s|from './index.js'|from './uws.js'|" {} +
+      command: node cluster.mjs
+    deno:
+      bootstrap:
+        - deno install
+      command: deno serve --parallel --port 3000 --allow-net --allow-read --allow-env app.ts
+    happyx:
+      bootstrap:
+        - npm install
+      command: node app.js
+    bun:
+      bootstrap:
+        - bun install --production
+      command: bun run cluster.ts
+      files:
+        - bunfig.toml
+    carne:
+      command: carne run app.js
+
+framework:
+  engines:
+    - node
+
+  files:
+    - "**/*.js"
+    - "**/*.cjs"
+    - "**/*.mjs"
+    - "**/*.ts"
+    - "**/*.json"

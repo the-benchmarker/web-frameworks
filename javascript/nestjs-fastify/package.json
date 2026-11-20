@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@nestjs/common": "~12.5.0",
+    "@nestjs/core": "~12.5.0",
+    "@nestjs/platform-fastify": "~12.5.0",
+    "rxjs": "*",
+    "@types/node": "^26.0.0"
+  },
+  "engines": {
+    "node": "26.x"
+  }
+}

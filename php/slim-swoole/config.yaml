@@ -1,0 +1,13 @@
+specs: v1
+
+framework:
+  website: slimframework.com
+  version: 4.15
+
+  engines:
+    - swoole
+
+language:
+  engines:
+    swoole:
+      command: php public/index.php

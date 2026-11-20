@@ -1,0 +1,18 @@
+language:
+  version: '2.113'
+  ldc:
+    version: '1.43'
+
+  files:
+    - "**/*.d"
+    - dub.json
+    - dub.selections.json
+    - dub.sdl
+
+  engines:
+    default:
+      command: /opt/web/server
+
+framework:
+  engines:
+    - default

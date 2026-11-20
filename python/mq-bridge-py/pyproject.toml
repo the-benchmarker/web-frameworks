@@ -1,0 +1,9 @@
+[build-system]
+build-backend = "flit_core.buildapi"
+requires = ["flit_core"]
+
+[project]
+name = "server"
+version = "1.0.0"
+description = "the-benchmarker entry for mq-bridge-py"
+dependencies = ['mq-bridge>=1.6.0,<1.7.0']

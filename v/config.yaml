@@ -1,0 +1,16 @@
+language:
+  version: '0.5'
+  files:
+    - "**/*.v"
+    - server
+  bootstrap:
+    - cd /opt/vlang && v -version && cd /app
+  build_flags:
+
+  engines:
+    default:
+      command: /app/server
+
+framework:
+  engines:
+    - default

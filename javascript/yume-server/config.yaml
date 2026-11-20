@@ -1,0 +1,11 @@
+specs: v1
+
+framework:
+  github: TheVegeta/Yume
+  version: 0.0
+  engines:
+    - uwebsockets
+language:
+  node:
+    version: 25
+    dist: trixie

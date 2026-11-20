@@ -1,0 +1,16 @@
+name: router_cr
+version: 0.1.0
+
+authors:
+  - tbrand <taichiro0709@gmail.com>
+
+targets:
+  server:
+    main: src/server.cr
+
+dependencies:
+  router:
+    github: tbrand/router.cr
+    version: ~> 0.2.8
+
+license: MIT

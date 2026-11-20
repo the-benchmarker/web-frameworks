@@ -1,0 +1,24 @@
+specs: v1
+
+framework:
+  website: micronaut.io
+  version: 5.0
+
+  build:
+    - gradle build --project-cache-dir ~/.gradle
+
+  patch:
+    - USER root
+    - RUN chown -R gradle .
+    - USER gradle
+
+  binaries:
+    - build/distributions/web-0.1.tar
+
+  bootstrap:
+    - tar -xvf build/distributions/web-0.1.tar
+
+  command: /opt/web/web-0.1/bin/web
+
+language:
+  compiler: gradle

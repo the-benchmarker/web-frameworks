@@ -1,0 +1,15 @@
+specs: v1
+
+framework:
+  website: slimframework.com
+  version: 4.15
+
+  engines:
+    - road-runner
+
+  deps:
+    - libsodium-dev
+
+  modules:
+    - sodium
+    - sockets

@@ -1,0 +1,16 @@
+specs: v1
+
+framework:
+  website: armeria.dev
+  version: 1.43
+
+  build:
+    - mvn package
+
+  files:
+    - target/benchmark.jar
+
+  binaries:
+    - target/benchmark.jar
+
+  command: /usr/bin/java -jar /opt/web/target/benchmark.jar

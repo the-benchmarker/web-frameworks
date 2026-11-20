@@ -1,0 +1,11 @@
+specs: v1
+
+reviewers:
+  - lunny
+
+framework:
+  website: gitea.com/lunny/tango
+  version: 0.6
+
+  environment:
+    PORT: 3000

@@ -1,0 +1,28 @@
+specs: v1
+
+framework:
+  website: ubiquity.kobject.net
+  version: 2.5
+
+  bootstrap:
+    - composer update
+    - chmod +x vendor/bin/Ubiquity
+    - mkdir .ubiquity
+    - mkdir app/cache -p
+    - ./vendor/bin/Ubiquity bootstrap prod
+    - composer install --no-dev --prefer-dist --classmap-authoritative
+    - composer dumpautoload -o
+    - mkdir -p public
+
+  docroot: /usr/src/app
+
+  nginx_conf:
+    - |
+      location /{
+          rewrite ^/(.*)$ /index.php?c=$1 last;
+      }
+      location = /index.php {
+        fastcgi_pass unix:/run/php-fpm.sock;
+        fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;
+        include fastcgi_params;
+      }

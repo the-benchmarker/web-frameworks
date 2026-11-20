@@ -1,0 +1,22 @@
+specs: v1
+
+reviewers:
+  - dominikzogg
+
+framework:
+  github: chubbyts/chubbyts-framework
+  version: 4.0
+
+  engines:
+    - uwebsockets
+
+  bootstrap:
+    - npm -g install typescript
+    - npm install
+    - tsc
+
+language:
+  engines:
+    uwebsockets:
+      environment:
+        NODE_APP: app.js

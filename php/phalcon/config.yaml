@@ -1,0 +1,22 @@
+specs: v1
+
+reviewers:
+  - ruudboon
+
+framework:
+  website: phalcon.io
+  version: 5.23
+
+  extensions:
+    - phalcon/cphalcon
+
+  nginx_conf:
+    - |
+      location /{
+          rewrite ^/(.*)$ /index.php?_url=$1 last;
+      }
+      location = /index.php {
+        fastcgi_pass unix:/run/php-fpm.sock;
+        fastcgi_param   SCRIPT_FILENAME         $document_root/index.php;
+        include fastcgi_params;
+      }

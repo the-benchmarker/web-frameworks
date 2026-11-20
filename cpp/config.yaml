@@ -1,0 +1,18 @@
+language:
+  version: '11.0'
+
+  files:
+    - CMakeLists.txt
+    - "**/*.h"
+    - "**/*.hpp"
+    - "**/*.cc"
+    - "**/*.cpp"
+    - "**/*.cmake"
+
+  engines:
+    default:
+      command: /opt/web/simple
+
+framework:
+  engines:
+    - default

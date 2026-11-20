@@ -1,0 +1,17 @@
+specs: v1
+
+framework:
+  github: clue/framework-x
+  website: framework-x.org
+  version: dev-main
+
+  engines:
+    - reactphp
+
+  command: php app.php
+
+language:
+  engines:
+    reactphp:
+      environment:
+        X_LISTEN: "0.0.0.0:3000"

@@ -1,0 +1,21 @@
+specs: v1
+
+language:
+  version: "11"
+
+framework:
+  website: lets-blade.github.io
+  github: lets-blade/blade
+  version: 2.1
+
+  build:
+    - mvn compile assembly:single -q
+
+  binaries:
+    - target/benchmark-1.0.0-jar-with-dependencies.jar
+
+  command: /usr/bin/java -jar /opt/web/target/benchmark-1.0.0-jar-with-dependencies.jar
+
+  # Blade requires Java 11.
+  engines:
+    - default

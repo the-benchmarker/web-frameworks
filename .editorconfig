@@ -1,0 +1,34 @@
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.{rb,rake}]
+indent_style = space
+indent_size = 2
+
+[Rakefile]
+indent_style = space
+indent_size = 2
+
+[*.{js,mjs,ts,mts}]
+indent_style = space
+indent_size = 2
+
+[*.{yml,yaml,json}]
+indent_style = space
+indent_size = 2
+
+[{Dockerfile,*.Dockerfile,.Dockerfile.*}]
+indent_style = space
+indent_size = 2
+
+[{Makefile,.Makefile}]
+indent_size = 4
+indent_style = tab
+
+[*.md]
+trim_trailing_whitespace = false

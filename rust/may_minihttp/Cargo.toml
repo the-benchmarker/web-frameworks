@@ -1,0 +1,16 @@
+[package]
+name = "server"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+may_minihttp = { version = "0.1", default-features = false }
+
+[profile.release]
+opt-level = 3
+codegen-units = 1
+panic = 'abort'
+lto = 'thin'
+debug = false
+incremental = false
+overflow-checks = false

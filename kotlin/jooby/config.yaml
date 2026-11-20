@@ -1,0 +1,10 @@
+specs: v1
+
+framework:
+  website: jooby.io
+  version: 4.5
+
+  command: >
+    /opt/java/openjdk/bin/java -server
+    -Xms2g -Xmx2g -XX:+UseNUMA -XX:+UseParallelGC
+    -jar build/libs/server.jar

@@ -1,0 +1,3 @@
+GET     /                           controllers.HomeController.index
+GET     /user/:id                   controllers.HomeController.g(id: Int)
+POST    /user                       controllers.HomeController.p

@@ -1,0 +1,41 @@
+plugins:
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 4.0
+
+Metrics:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Lint/ShadowingOuterLocalVariable:
+  Exclude:
+    - .tasks/*.rake
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - .tasks/*.rake
+
+Layout/LineLength:
+  Exclude:
+    - .tasks/*.rake
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: never
+
+Style/OneClassPerFile:
+  Enabled: false
+
+Style/CombinableLoops:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false

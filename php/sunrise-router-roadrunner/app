@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use DI\Container;
+use Symfony\Component\Console\Application;
+
+require_once __DIR__ . '/config/bootstrap.php';
+
+/** @var Container $container */
+$container = require_once __DIR__ . '/config/container.php';
+
+$application = new Application(
+    $container->get('app.name'),
+    $container->get('app.version'),
+);
+
+$application->addCommands(
+    $container->get('app.commands'),
+);
+
+$application->run();

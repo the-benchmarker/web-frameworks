@@ -1,0 +1,7 @@
+name: dox_app
+
+environment:
+  sdk: "^3.14.0"
+
+dependencies:
+  dox_core: ^3.2.0

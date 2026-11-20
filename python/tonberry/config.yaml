@@ -1,0 +1,12 @@
+specs: v1
+
+reviewers:
+  - Ayehavgunne
+
+framework:
+  github: Ayehavgunne/Tonberry
+  version: 0.2
+
+  engines:
+    - uvicorn
+    - hypercorn

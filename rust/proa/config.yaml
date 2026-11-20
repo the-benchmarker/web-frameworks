@@ -1,0 +1,9 @@
+specs: v2
+
+framework:
+  github: Proa-Labs/proa
+  website: proa.so
+  version: '0.4'
+  build_deps:
+    - gcc
+    - libc6-dev

@@ -1,0 +1,34 @@
+specs: v1
+
+framework:
+  github: aplus-framework/app
+  version: 25.1
+  website: aplus-framework.com/packages/app
+
+  bootstrap:
+    - mkdir -p storage/logs
+    - chown -R www-data:www-data storage/logs
+
+  build_deps:
+    - libsodium-dev
+    - memcached
+    - libz-dev
+    - libmemcached-tools
+    - libmemcached-dev
+    - libssl-dev
+    - libyaml-dev
+    - libicu-dev
+    - libpng-dev
+
+  modules:
+    - sodium
+    - mysqli
+    - intl
+    - gd
+
+  extensions:
+    - pie-extensions/igbinary:3.2.17RC1
+    - php-memcached/php-memcached
+    - msgpack/msgpack-php
+    - pie-extensions/redis
+    - pecl/yaml

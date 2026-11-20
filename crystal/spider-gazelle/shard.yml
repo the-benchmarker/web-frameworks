@@ -1,0 +1,13 @@
+name: app
+version: 1.0.0
+
+licence: MIT
+
+dependencies:
+  action-controller:
+    github: spider-gazelle/action-controller
+    version: ~> 9.4.0
+
+targets:
+  server:
+    main: src/app.cr

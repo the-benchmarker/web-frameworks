@@ -1,0 +1,21 @@
+reviewers:
+  - whiplash
+language:
+  version: "3.10"
+  java:
+    version: 27
+
+  files:
+    - "**/*.gradle"
+    - "**/*.scala"
+    - "**/*.sbt"
+    - project/build.properties
+    - "**/*.conf"
+
+  engines:
+    default:
+      command: /usr/src/app/server-0.1.0-SNAPSHOT/bin/server
+
+framework:
+  engines:
+    - default

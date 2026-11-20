@@ -1,0 +1,14 @@
+language:
+  version: '4.6'
+
+  files:
+    - "**/*.R"
+    - DESCRIPTION
+
+  engines:
+    default:
+      command: R -e 'source("app.R")'
+
+framework:
+  engines:
+    - default

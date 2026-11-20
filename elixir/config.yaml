@@ -1,0 +1,13 @@
+language:
+  version: '1.20'
+  files:
+    - "mix.exs"
+    - "lib/*.ex"
+    - "config/*.exs"
+  engines:
+    default:
+      command: bin/server start
+
+framework:
+  engines:
+    - default

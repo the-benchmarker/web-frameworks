@@ -1,0 +1,13 @@
+specs: v1
+
+framework:
+  website: playframework.com
+  version: "3.0"
+  files:
+    - "**/*.gradle"
+    - "**/*.scala"
+    - "**/*.sbt"
+    - project/build.properties
+    - "**/*.conf"
+    - conf/routes
+    - conf/logback.xml

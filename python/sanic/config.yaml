@@ -1,0 +1,22 @@
+specs: v1
+
+reviewers:
+  - ahopkins
+
+framework:
+  github: sanic-org/sanic
+  version: 25.12
+
+  engines:
+    - sanic
+    - gunicorn
+    - uvicorn
+    - hypercorn
+
+language:
+  engines:
+    sanic:
+      command: python server.py
+    gunicorn:
+      environment:
+        WORKER_CLASS: asgi

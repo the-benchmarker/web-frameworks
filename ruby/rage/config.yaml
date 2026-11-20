@@ -1,0 +1,18 @@
+specs: v1
+
+framework:
+  github: rage-rb/rage
+  version: 1.29
+  engines:
+    - iodine
+
+  environment:
+    RAGE_ENV: production
+
+  build_deps:
+    - libyaml-dev
+
+language:
+  engines:
+    iodine:
+      command: bundle exec rage s -p 3000 -b 0.0.0.0

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- https://www.playframework.com/documentation/latest/SettingsLogger -->
+
+<!DOCTYPE configuration>
+
+<configuration>
+  <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
+  <import class="ch.qos.logback.classic.AsyncAppender"/>
+  <import class="ch.qos.logback.core.FileAppender"/>
+  <import class="ch.qos.logback.core.ConsoleAppender"/>
+
+  <appender name="FILE" class="FileAppender">
+    <file>${application.home:-.}/logs/application.log</file>
+    <encoder class="PatternLayoutEncoder">
+      <pattern>%date [%level] from %logger in %thread - %message%n%xException</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="STDOUT" class="ConsoleAppender">
+    <encoder class="PatternLayoutEncoder">
+      <pattern>%highlight(%-5level) %logger{15} - %message%n%xException{10}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="ASYNCFILE" class="AsyncAppender">
+    <appender-ref ref="FILE"/>
+  </appender>
+
+  <appender name="ASYNCSTDOUT" class="AsyncAppender">
+    <appender-ref ref="STDOUT"/>
+  </appender>
+
+  <logger name="play" level="ERROR"/>
+  <logger name="application" level="ERROR"/>
+
+  <!-- Off these ones as they are annoying, and anyway we manage configuration ourselves -->
+  <logger name="com.avaje.ebean.config.PropertyMapLoader" level="OFF"/>
+  <logger name="com.avaje.ebeaninternal.server.core.XmlConfigLoader" level="OFF"/>
+  <logger name="com.avaje.ebeaninternal.server.lib.BackgroundThread" level="OFF"/>
+  <logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF"/>
+
+  <root level="WARN">
+    <!--<appender-ref ref="ASYNCFILE"/>-->
+    <appender-ref ref="ASYNCSTDOUT"/>
+  </root>
+
+</configuration>

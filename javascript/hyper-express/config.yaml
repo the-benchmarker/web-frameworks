@@ -1,0 +1,11 @@
+specs: v1
+
+reviewers:
+  - kartikk221
+
+framework:
+  github: kartikk221/hyper-express
+  version: 7.0
+
+  engines:
+    - uwebsockets

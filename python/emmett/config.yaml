@@ -1,0 +1,16 @@
+specs: v1
+
+reviewers:
+  - gi0baro
+
+framework:
+  website: emmett.sh
+  version: 2.7
+
+  engines:
+    - emmett
+
+language:
+  engines:
+    emmett:
+      command: emmett serve --host 0.0.0.0 --port 3000 --workers $(nproc)

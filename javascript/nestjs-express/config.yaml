@@ -1,0 +1,23 @@
+specs: v1
+
+framework:
+  website: nestjs.com
+  version: 12.5
+  files:
+    - nest-cli.json
+    - src/**.ts
+    - tsconfig.build.json
+    - tsconfig.json
+    - package.json
+    - cluster.mjs
+
+  bootstrap:
+    - npm -g install @nestjs/cli
+    - npm install
+    - nest build
+
+language:
+  engines:
+    node:
+      environment:
+        NODE_APP: dist/app.js

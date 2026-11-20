@@ -1,0 +1,16 @@
+name: toro
+version: 0.1.0
+
+authors:
+  - Marwan <waghanza@gmail.com>
+
+targets:
+  server:
+    main: src/toro.cr
+
+dependencies:
+  toro:
+    github: soveran/toro
+    version: ~> 0.5.1
+
+license: MIT

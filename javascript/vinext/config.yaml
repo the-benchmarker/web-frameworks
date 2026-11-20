@@ -1,0 +1,16 @@
+specs: v1
+
+framework:
+  website: vinext.dev
+  github: cloudflare/vinext
+  version: 1.4
+
+  files:
+    - app
+    - app.mjs
+    - cluster.mjs
+    - package.json
+    - vite.config.mjs
+
+  bootstrap:
+    - npm run build

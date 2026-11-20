@@ -1,0 +1,40 @@
+{
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "start": "node bin/server.js",
+    "build": "node ace build"
+  },
+  "imports": {
+    "#controllers/*": "./app/controllers/*.js",
+    "#exceptions/*": "./app/exceptions/*.js",
+    "#models/*": "./app/models/*.js",
+    "#mails/*": "./app/mails/*.js",
+    "#services/*": "./app/services/*.js",
+    "#listeners/*": "./app/listeners/*.js",
+    "#events/*": "./app/events/*.js",
+    "#generated/*": "./.adonisjs/server/*.js",
+    "#middleware/*": "./app/middleware/*.js",
+    "#transformers/*": "./app/transformers/*.js",
+    "#validators/*": "./app/validators/*.js",
+    "#providers/*": "./providers/*.js",
+    "#policies/*": "./app/policies/*.js",
+    "#abilities/*": "./app/abilities/*.js",
+    "#database/*": "./database/*.js",
+    "#tests/*": "./tests/*.js",
+    "#start/*": "./start/*.js",
+    "#config/*": "./config/*.js"
+  },
+  "dependencies": {
+    "@adonisjs/core": "^7.0.0",
+    "reflect-metadata": "^0.2.1"
+  },
+  "devDependencies": {
+    "@adonisjs/assembler": "^8.0.0",
+    "@adonisjs/tsconfig": "^2.0.0",
+    "@poppinss/ts-exec": "^1.4.4",
+    "@types/node": "^26.0.0"
+  },
+  "type": "module"
+}

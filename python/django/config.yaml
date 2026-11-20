@@ -1,0 +1,35 @@
+specs: v1
+
+framework:
+  website: djangoproject.com
+  version: 6.1
+
+  engines:
+    - gunicorn
+    - uwsgi
+    - granian
+    - uvicorn
+    - hypercorn
+    - daphne
+
+language:
+  engines:
+    gunicorn:
+      environment:
+        PYTHON_APP: app.wsgi:application
+    uwsgi:
+      environment:
+        PYTHON_APP: app.wsgi:application
+    granian:
+      environment:
+        INTERFACE: wsgi
+        PYTHON_APP: app.wsgi:application
+    daphne:
+      environment:
+        PYTHON_APP: app.asgi:application
+    uvicorn:
+      environment:
+        PYTHON_APP: app.asgi:application
+    hypercorn:
+      environment:
+        PYTHON_APP: app.asgi:application

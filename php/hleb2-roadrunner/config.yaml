@@ -1,0 +1,19 @@
+specs: v1
+
+language:
+  engines:
+    road-runner:
+      bootstrap:
+        - php console --generate-key
+        - php console --routes-upd
+
+framework:
+  website: hleb2framework.ru
+  github: phphleb/hleb
+  version: 2.2
+
+  files:
+    - console
+
+  engines:
+    - road-runner

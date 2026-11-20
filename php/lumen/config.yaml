@@ -1,0 +1,15 @@
+specs: v1
+
+framework:
+  website: lumen.laravel.com
+  version: 11.1
+
+  files:
+    - artisan
+
+language:
+  engines:
+    swoole:
+      bootstrap:
+        - mkdir storage
+      command: php bin/laravels start
