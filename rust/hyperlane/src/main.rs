@@ -61,10 +61,10 @@ impl ServerHook for Index {
     ///
     /// - `Status` - Whether the pipeline continues.
     async fn handle(self, _: &mut Stream, ctx: &mut Context) -> Status {
-        if ctx.get_request().get_method().is_get() {
-            ctx.get_mut_response().set_status_code(200);
+        if ctx.request.method.is_get() {
+            ctx.response.set_status_code(200);
         } else {
-            ctx.get_mut_response().set_status_code(404);
+            ctx.response.set_status_code(404);
         }
         Status::Continue
     }
@@ -102,10 +102,10 @@ impl ServerHook for User {
     ///
     /// - `Status` - Whether the pipeline continues.
     async fn handle(self, _: &mut Stream, ctx: &mut Context) -> Status {
-        if ctx.get_request().get_method().is_post() {
-            ctx.get_mut_response().set_status_code(200);
+        if ctx.request.method.is_post() {
+            ctx.response.set_status_code(200);
         } else {
-            ctx.get_mut_response().set_status_code(404);
+            ctx.response.set_status_code(404);
         }
         Status::Continue
     }
@@ -143,11 +143,11 @@ impl ServerHook for UserId {
     ///
     /// - `Status` - Whether the pipeline continues.
     async fn handle(self, _: &mut Stream, ctx: &mut Context) -> Status {
-        if ctx.get_request().get_method().is_get() {
-            let id: String = ctx.get_route_param("id");
-            ctx.get_mut_response().set_status_code(200).set_body(id);
+        if ctx.request.method.is_get() {
+            let id: &str = ctx.route_params.get("id").map_or("", String::as_str);
+            ctx.response.set_status_code(200).set_body(id);
         } else {
-            ctx.get_mut_response().set_status_code(404);
+            ctx.response.set_status_code(404);
         }
         Status::Continue
     }
@@ -188,7 +188,7 @@ impl ServerHook for Send {
     ///
     /// - `Status` - Whether the pipeline continues.
     async fn handle(self, stream: &mut Stream, ctx: &mut Context) -> Status {
-        let data: Vec<u8> = ctx.get_mut_response().build();
+        let data: Vec<u8> = ctx.response.build();
         if stream.try_send(data).await.is_err() {
             stream.set_closed(true);
             return Status::Reject;
