@@ -13,6 +13,7 @@ categories = ["network-programming", "web-programming"]
 exclude = ["target", "Cargo.lock", "sh", ".github", "logs", "**/*.log"]
 
 [dependencies]
+sha2 = "0.10"
 hyperlane = "=22.7.0"
 
 [profile.release]
