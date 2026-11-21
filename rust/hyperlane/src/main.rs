@@ -358,6 +358,23 @@ impl ServerHook for Serialization {
     }
 }
 
+/// Checks whether the request carries a query string.
+///
+/// The deserialization route accepts no query parameters, and the raw target
+/// is read so that a query is seen even when it carries no value.
+///
+/// # Arguments
+///
+/// - `&Context` - The context of the request.
+///
+/// # Returns
+///
+/// - `bool` - Whether the request carries a query string.
+fn has_query(ctx: &Context) -> bool {
+    ctx.get_request_target()
+        .is_some_and(|target: String| target.contains('?'))
+}
+
 /// Checks whether a media type names a JSON body.
 ///
 /// The contract accepts the JSON media types, the media types that use the
@@ -421,6 +438,10 @@ impl ServerHook for Deserialization {
     async fn handle(self, _: &mut Stream, ctx: &mut Context) -> Status {
         if !ctx.request.method.is_post() {
             respond_empty(ctx, 404);
+            return Status::Continue;
+        }
+        if has_query(ctx) {
+            respond_empty(ctx, 400);
             return Status::Continue;
         }
         let Some(content_type) = ctx.request.try_get_content_type() else {
