@@ -1,9 +1,11 @@
+specs: v1
+
 reviewers:
   - savsgio
 
 framework:
   website: pkg.go.dev/github.com/valyala/fasthttp
-  version: 1.78
+  version: 1.79
 
   engines:
     - fasthttp

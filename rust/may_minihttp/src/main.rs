@@ -1,6 +1,6 @@
 use std::io;
 
-use may_minihttp::{HttpService, HttpServiceFactory, Request, Response};
+use may_minihttp::{HttpServer, HttpService, Request, Response};
 
 // Routes
 /*
@@ -45,18 +45,8 @@ impl HttpService for WebFramework {
     }
 }
 
-struct HttpServer {}
-
-impl HttpServiceFactory for HttpServer {
-    type Service = WebFramework;
-
-    fn new_service(&self, _: usize) -> Self::Service {
-        WebFramework {}
-    }
-}
-
 fn main() {
-    let http_server = HttpServer {};
+    let http_server = HttpServer(WebFramework);
     let server = http_server.start("0.0.0.0:3000").unwrap();
     server.join().unwrap();
 }
