@@ -25,6 +25,9 @@ opcache.save_comments=1
 
 opcache.jit=tracing
 opcache.jit_buffer_size=128M
+
+; see https://github.com/php/php-src/blob/master/php.ini-production
+zend.assertions=-1
 EOT
 
 RUN if [ -f php.ini ] ; then \

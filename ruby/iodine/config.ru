@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'etc'
+
+Iodine.workers = Etc.nprocessors
+
 module Root
   def self.on_http(event)
     event.finish
