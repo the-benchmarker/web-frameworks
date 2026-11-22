@@ -1,11 +1,9 @@
-specs: v1
-
 reviewers:
   - ujibang
 
 framework:
   website: restheart.org
-  version: 9.17
+  version: 9.15
 
   build:
     - mvn package
