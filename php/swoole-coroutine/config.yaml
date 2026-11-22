@@ -1,3 +1,7 @@
+language:
+  # Swoole does not support PHP 8.6 yet.
+  version: "8.5"
+
 framework:
   github: swoole/swoole-src
   version: 6.1

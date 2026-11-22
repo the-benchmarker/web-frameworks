@@ -22,6 +22,9 @@ framework:
     - mkdir storage/logs -p
 
 language:
+  # Swoole does not support PHP 8.6 yet.
+  version: "8.5"
+
   engines:
     swoole:
       command: php engineer server:start
