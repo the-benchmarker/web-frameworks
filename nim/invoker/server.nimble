@@ -6,4 +6,4 @@ description = "Invoker implementation"
 license = "MIT"
 
 # Dependencies
-requires "https://gitlab.com/aceoflaguna/invoker.git"
+requires "https://gitlab.com/aceoflaguna/invoker.git#0.1.0"
