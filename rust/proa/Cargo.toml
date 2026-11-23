@@ -17,7 +17,7 @@ strip = false
 
 [dependencies]
 aws-lc-rs = "1"
-axum = { version = "0.7", features = ["multipart"] }
+axum = { version = "0.8", features = ["multipart"] }
 base16ct = "0.2"
 form_urlencoded = "1.2"
 hyper = { version = "1", features = ["http1", "server"] }
