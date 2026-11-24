@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:relic/relic.dart';
+import 'package:relic_native/relic_native.dart';
 
 Future<void> main() async {
   final app = RelicApp()
@@ -11,7 +12,7 @@ Future<void> main() async {
       return Response.ok(body: Body.fromString(user));
     });
 
-  await app.serve(
+  await app.serveNative(
     address: InternetAddress.anyIPv4,
     port: 3000,
     noOfIsolates: Platform.numberOfProcessors,

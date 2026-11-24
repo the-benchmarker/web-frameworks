@@ -16,17 +16,17 @@ RUN dart pub get --no-precompile
 
 RUN dart pub get --offline --no-precompile
 
-# AOT compile `server.dart` to server executable
-RUN dart compile exe server.dart -o server
+# AOT compile `server.dart` into build/bundle/{bin,lib}. Unlike
+# `dart compile exe`, `dart build cli` runs build hooks and bundles the
+# native assets they produce into lib/.
+RUN dart build cli -t server.dart -o build
 
-
-
-# Build minimal serving image from AOT-compiled `server` executable
+# Build minimal serving image from the AOT-compiled bundle
 FROM scratch
 
 COPY --from=build /bin/sh /bin/sh
 COPY --from=build /runtime/ /
-COPY --from=build /app/server /app/server
+COPY --from=build /app/build/bundle/ /app/
 
 COPY --from=curl /usr/bin/curl curl
 HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1

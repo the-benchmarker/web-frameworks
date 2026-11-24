@@ -2,7 +2,7 @@ specs: v1
 
 framework:
   website: javalin.io
-  version: 7.2
+  version: 7.3
 
   build:
     - mvn compile assembly:single
