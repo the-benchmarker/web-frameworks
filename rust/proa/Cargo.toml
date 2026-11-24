@@ -24,7 +24,7 @@ hyper = { version = "1", features = ["http1", "server"] }
 hyper-util = { version = "0.1", features = ["service", "tokio"] }
 mime = "0.3"
 mimalloc = { version = "0.1", default-features = false, features = ["v2"] }
-proa = { git = "https://github.com/Proa-Labs/proa.git", rev = "141a0c7d88e312269f0715130f9fceb421dfe3a5", default-features = false, features = ["axum"] }
+proa = { git = "https://github.com/Proa-Labs/proa.git", rev = "3b6e4626121902a56f77fc2dd949e1af292d028f", default-features = false, features = ["axum"] }
 serde = { version = "1", features = ["derive"] }
 socket2 = { version = "0.6", features = ["all"] }
 sonic-rs = "0.5"
