@@ -1,5 +1,6 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "rails", "~> 8.1.0"
-gem "sqlite3", "< 3"
-gem "tzinfo-data"
+gem 'rails', '~> 8.1.4'
+# Rack 3.2.9 raises an unhandled multipart error for empty boundary parameters,
+# turning invalid uploads into 500 responses instead of the required 400.
+gem 'rack', '3.2.8'

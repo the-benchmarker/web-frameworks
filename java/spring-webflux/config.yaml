@@ -1,6 +1,8 @@
+specs: v1
+
 framework:
   website: docs.spring.io/spring-framework/reference/web/webflux.html
-  version: 4.1
+  version: 4.2
 
   binaries:
     - target/benchmark-webflux-1.0.0.jar

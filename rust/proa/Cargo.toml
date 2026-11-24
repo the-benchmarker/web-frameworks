@@ -1,0 +1,31 @@
+[package]
+name = "server"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[profile.release]
+opt-level = 3
+debug = false
+debug-assertions = false
+lto = true
+panic = "abort"
+incremental = false
+codegen-units = 1
+rpath = false
+strip = false
+
+[dependencies]
+aws-lc-rs = "1"
+axum = { version = "0.7", features = ["multipart"] }
+base16ct = "1.0"
+form_urlencoded = "1.2"
+hyper = { version = "1", features = ["http1", "server"] }
+hyper-util = { version = "0.1", features = ["service", "tokio"] }
+mime = "0.3"
+mimalloc = { version = "0.1", default-features = false, features = ["v2"] }
+proa = { git = "https://github.com/Proa-Labs/proa.git", rev = "141a0c7d88e312269f0715130f9fceb421dfe3a5", default-features = false, features = ["axum"] }
+serde = { version = "1", features = ["derive"] }
+socket2 = { version = "0.6", features = ["all"] }
+sonic-rs = "0.5"
+tokio = { version = "1", features = ["net", "rt"] }

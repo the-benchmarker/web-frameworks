@@ -1,5 +1,5 @@
 plugins {
-	id("org.springframework.boot") version "4.1.+"
+	id("org.springframework.boot") version "4.2.+"
 	id("io.spring.dependency-management") version "+"
 	kotlin("jvm") version "2.4.+"
 	kotlin("plugin.spring") version "2.4.+"

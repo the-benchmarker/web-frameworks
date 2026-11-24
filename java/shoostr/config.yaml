@@ -1,0 +1,12 @@
+framework:
+  website: suppierk.github.io/Shoostr
+  version: 2026.11
+
+  build:
+    - mvn package
+
+  binaries:
+    - target/benchmark-1.0.0.jar
+    - target/lib
+
+  command: /usr/bin/java -cp 'target/benchmark-1.0.0.jar:target/lib/*' io.github.suppierk.shoostr.benchmark.Bench
