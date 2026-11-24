@@ -30,6 +30,29 @@ Every implementation listens on port `3000`. The v1 contract defines these route
 
 Before a v1 implementation is benchmarked, the shared [Gherkin contract](.spec/v1/routing.feature) verifies these routes. The default v1 benchmark runs all three routes for 15 seconds each using `zrk --closed` and keep-alive, and records JSON reports. Concurrency and routes are configurable.
 
+### Migrating an implementation to v2
+
+V2 is the default contract. At this revision, **16 of 442 framework
+implementations use v2** and **426 still select v1** in their framework
+`config.yaml` files. To migrate a v1 implementation:
+
+1. Update the app to implement the six routes and validation rules in the
+   [v2 scenario](SCENARIO.md). In particular, `/user/{id}` returns a JSON ID,
+   and v2 adds JSON serialization, JSON deserialization, and multipart upload.
+2. Remove the top-level `specs: v1` line from its `config.yaml`. Omission selects
+   v2; adding `specs: v2` is unnecessary.
+3. Regenerate its commands and run the full correctness suite:
+
+   ```bash
+   bundle exec rake config
+   make -f <language>/<framework>/.Makefile test
+   ```
+
+The test target checks the selected v2 contract before benchmarking. The
+generated default workloads then measure dynamic routing, JSON
+serialization/deserialization, and multipart upload. Keep `specs: v1` only
+while an implementation still follows the legacy contract.
+
 Each framework's `config.yaml` selects its contract with a top-level `specs: v1`
 or `specs: v2`. Only the selected contract's tests and workloads run; omitting
 `specs` defaults to v2. Rails selects the four-workload

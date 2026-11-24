@@ -16,9 +16,7 @@ function seedOf(url: string): string | null {
   const at = url.indexOf('?');
   if (at < 0) return null;
   const pairs = [...new URLSearchParams(url.slice(at + 1))];
-  return pairs.length === 1 && pairs[0]![0] === 'seed' && SEED.test(pairs[0]![1])
-    ? pairs[0]![1]
-    : null;
+  return pairs.length === 1 && pairs[0]![0] === 'seed' && SEED.test(pairs[0]![1]) ? pairs[0]![1] : null;
 }
 
 const BOUNDARY = /^[0-9A-Za-z'()+_,\-./:=?]{1,70}$/;
@@ -37,8 +35,7 @@ function boundaryOf(header: string): string | null {
     if (param.slice(0, eq).trim().toLowerCase() !== 'boundary') continue;
     if (boundary !== null) return null;
     const raw = param.slice(eq + 1).trim();
-    boundary =
-      raw.length > 1 && raw[0] === '"' && raw.at(-1) === '"' ? raw.slice(1, -1) : raw;
+    boundary = raw.length > 1 && raw[0] === '"' && raw.at(-1) === '"' ? raw.slice(1, -1) : raw;
   }
   return boundary !== null && BOUNDARY.test(boundary) ? boundary : null;
 }
@@ -58,11 +55,7 @@ function uploadedFile(body: Buffer, boundary: string): Buffer | null {
     let end = body.indexOf(next, headEnd + 2);
     while (end >= 0) {
       const after = end + next.length;
-      if (
-        (body[after] === 45 && body[after + 1] === 45) ||
-        (body[after] === 13 && body[after + 1] === 10)
-      )
-        break;
+      if ((body[after] === 45 && body[after + 1] === 45) || (body[after] === 13 && body[after + 1] === 10)) break;
       end = body.indexOf(next, end + 1);
     }
     if (end < 0) return null;
