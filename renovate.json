@@ -2,6 +2,9 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", ":preserveSemverRanges"],
   "separateMultipleMajor": true,
+  "automerge": true,
+  "platformAutomerge": true,
+  "assignAutomerge": true,
   "assignees": ["waghanza"],
   "reviewers": ["waghanza"],
   "postUpgradeTasks": {
