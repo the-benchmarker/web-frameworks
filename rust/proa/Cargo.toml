@@ -24,7 +24,7 @@ hyper = { version = "1", features = ["http1", "server"] }
 hyper-util = { version = "0.1", features = ["service", "tokio"] }
 mime = "0.3"
 mimalloc = { version = "0.1", default-features = false, features = ["v2"] }
-proa = { version = "=0.4.0", default-features = false, features = ["axum"] }
+proa = { version = "0.4.0", default-features = false, features = ["axum"] }
 serde = { version = "1", features = ["derive"] }
 socket2 = { version = "0.6", features = ["all"] }
 sonic-rs = "0.5"
