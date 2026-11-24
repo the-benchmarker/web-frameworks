@@ -1,5 +1,6 @@
-use std::{borrow::Cow, env, fmt, io, net::SocketAddr};
+use std::{env, fmt, io, net::SocketAddr};
 
+use arrayvec::ArrayString;
 use aws_lc_rs::digest::{Context, SHA256};
 use axum::{
     Router,
@@ -13,9 +14,10 @@ use hyper::server::conn::http1;
 use hyper_util::{rt::TokioIo, service::TowerToHyperService};
 use proa::axum::{Route, RouteContextLayer, router_from_spec};
 use serde::{
-    Deserialize, Deserializer, Serialize,
+    Deserialize, Deserializer,
     de::{Error, IgnoredAny, MapAccess, SeqAccess, Visitor},
 };
+use simd_json_derive::Serialize;
 use socket2::{Domain, Protocol, Socket, Type};
 use tokio::net::TcpListener;
 
@@ -104,12 +106,13 @@ struct User<'a> {
     id: &'a str,
 }
 
-async fn user(Path(id): Path<String>) -> Result<impl IntoResponse, StatusCode> {
+async fn user(Path(id): Path<ArrayString<8>>) -> Result<impl IntoResponse, StatusCode> {
     if id.len() != 8 || !id.bytes().all(|byte| byte.is_ascii_digit()) {
         return Err(BAD_REQUEST);
     }
     let mut body = Vec::with_capacity(17);
-    sonic_rs::to_writer(&mut body, &User { id: &id })
+    User { id: id.as_str() }
+        .json_write(&mut body)
         .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
     Ok(([(CONTENT_TYPE, APP_JSON)], body))
 }
@@ -149,7 +152,8 @@ async fn serialization(uri: Uri) -> Result<impl IntoResponse, StatusCode> {
     let object_size = br#"{"seed":""}"#.len() + seed.len();
     let capacity = 2 + ITEM_COUNT * object_size + (ITEM_COUNT - 1);
     let mut body = Vec::with_capacity(capacity);
-    sonic_rs::to_writer(&mut body, items.as_slice())
+    items
+        .json_write(&mut body)
         .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
     Ok(([(CONTENT_TYPE, APP_JSON)], body))
 }
@@ -196,6 +200,14 @@ impl<'de> Deserialize<'de> for ItemId {
     }
 }
 
+#[derive(Deserialize)]
+#[serde(field_identifier, rename_all = "lowercase")]
+enum ItemField {
+    Id,
+    #[serde(other)]
+    Other,
+}
+
 struct ItemObject(u32);
 
 impl<'de> Deserialize<'de> for ItemObject {
@@ -211,8 +223,8 @@ impl<'de> Deserialize<'de> for ItemObject {
 
             fn visit_map<M: MapAccess<'de>>(self, mut map: M) -> Result<Self::Value, M::Error> {
                 let mut id = None;
-                while let Some(key) = map.next_key::<Cow<'de, str>>()? {
-                    if key == "id" {
+                while let Some(key) = map.next_key::<ItemField>()? {
+                    if matches!(key, ItemField::Id) {
                         if id.is_some() {
                             return Err(M::Error::duplicate_field("id"));
                         }
@@ -234,6 +246,14 @@ impl<'de> Deserialize<'de> for ItemObject {
 struct Summary {
     count: usize,
     checksum: u32,
+}
+
+#[derive(Deserialize)]
+#[serde(field_identifier, rename_all = "lowercase")]
+enum RootField {
+    Items,
+    #[serde(other)]
+    Other,
 }
 
 struct InputObject(Summary);
@@ -294,8 +314,8 @@ impl<'de> Deserialize<'de> for InputObject {
                 }
 
                 let mut summary = None;
-                while let Some(key) = map.next_key::<Cow<'de, str>>()? {
-                    if key == "items" {
+                while let Some(key) = map.next_key::<RootField>()? {
+                    if matches!(key, RootField::Items) {
                         if summary.is_some() {
                             return Err(M::Error::duplicate_field("items"));
                         }
@@ -349,7 +369,9 @@ async fn deserialization(request: Request) -> Result<impl IntoResponse, StatusCo
         .map_err(|error| error.status())?;
     let InputObject(summary) = sonic_rs::from_slice(&body).map_err(|_| BAD_REQUEST)?;
     let mut out = Vec::with_capacity(32);
-    sonic_rs::to_writer(&mut out, &summary).map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
+    summary
+        .json_write(&mut out)
+        .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
     Ok(([(CONTENT_TYPE, APP_JSON)], out))
 }
 
@@ -405,14 +427,12 @@ async fn upload(request: Request) -> Result<impl IntoResponse, StatusCode> {
     let checksum = base16ct::lower::encode_str(digest.as_ref(), &mut digest_hex)
         .expect("a SHA-256 digest always encodes to 64 hexadecimal bytes");
     let mut out = Vec::with_capacity(128);
-    sonic_rs::to_writer(
-        &mut out,
-        &Upload {
-            first_byte,
-            last_byte,
-            checksum,
-        },
-    )
+    Upload {
+        first_byte,
+        last_byte,
+        checksum,
+    }
+    .json_write(&mut out)
     .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
     Ok(([(CONTENT_TYPE, APP_JSON)], out))
 }
