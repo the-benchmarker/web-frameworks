@@ -64,7 +64,7 @@ language:
       command: php server.php start
     revolt:
       modules:
-        - mbstring
+        - mbstring --disable-mbregex
         - pcntl
         - sockets
       deps:
