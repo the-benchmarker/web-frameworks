@@ -20,7 +20,9 @@ From established full-stack platforms to small HTTP routers, this repository put
 
 ## 🧪 Benchmark contract
 
-Every implementation listens on port `3000`. The v1 contract defines these routes:
+**Framework submissions must implement the [v2 benchmark contract](SCENARIO.md#v2-six-route-scenario). V1 submissions are no longer accepted.**
+
+Every implementation listens on port `3000`. Existing v1 implementations use these legacy routes:
 
 | Method | Route | Expected status | Expected body |
 |:--|:--|:--:|:--|
@@ -50,8 +52,7 @@ implementations use v2** and **426 still select v1** in their framework
 
 The test target checks the selected v2 contract before benchmarking. The
 generated default workloads then measure dynamic routing, JSON
-serialization/deserialization, and multipart upload. Keep `specs: v1` only
-while an implementation still follows the legacy contract.
+serialization/deserialization, and multipart upload.
 
 Each framework's `config.yaml` selects its contract with a top-level `specs: v1`
 or `specs: v2`. Only the selected contract's tests and workloads run; omitting
@@ -223,7 +224,7 @@ Contributions are welcome: new frameworks and variants, dependency updates, corr
 A typical implementation lives in `<language>/<framework>/` and contains:
 
 - a `config.yaml` describing its version, website, files, startup command, and engine variants;
-- the smallest application that fulfills the shared route contract;
+- the smallest application that fulfills the [v2 benchmark contract](SCENARIO.md#v2-six-route-scenario);
 - dependency manifests or lockfiles required for a reproducible container build.
 
 To validate a contribution:
