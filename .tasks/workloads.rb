@@ -17,19 +17,9 @@ module BenchmarkWorkloads
   }.freeze
 
   def self.routes(specs: 'v2')
-    raise ArgumentError, 'specs must be v1 or v2' unless %w[v1 v2].include?(specs)
 
-    return specs == 'v1' ? V1_ROUTES : V2_ROUTES unless ENV.key?('ROUTES')
+    return V1_ROUTES
 
-    ENV.fetch('ROUTES').split(',').map do |route|
-      method, path = route.split(':', 2)
-      unless method && path&.start_with?('/')
-        raise ArgumentError,
-              "Invalid route #{route.inspect}; expected METHOD:/path"
-      end
-
-      [method.upcase, path]
-    end
   end
 
   def self.request(method, uri, root: Dir.pwd)
