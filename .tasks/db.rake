@@ -138,6 +138,7 @@ namespace :db do
             id: framework_id,
             version: config.dig('framework', 'version'),
             label: framework,
+            specs: framework_config.fetch('specs', 'v2'),
             language:,
             website: "#{scheme}://#{website}"
           }
