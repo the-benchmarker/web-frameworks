@@ -78,7 +78,8 @@ verify that responses stay uncompressed.
 
 | Lua script | Routes |
 |:--|:--|
-| `default.lua` | `GET /`, `GET /user/42` (v1), `POST /user` |
+| `default.lua` | `GET /`, `GET /user/42` (v1) |
+| `user_post.lua` | `POST /user` with an empty `text/plain` body |
 | `user_id.lua` | `GET /user/:id` |
 | `serialization.lua` | `GET /serialization` |
 | `deserialization.lua` | `POST /deserialization` |

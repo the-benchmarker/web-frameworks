@@ -9,7 +9,8 @@ module BenchmarkWorkloads
   # Lua script => routes it generates. The v1 /user/42 route keeps its fixed ID;
   # the v2 user ID script varies the ID on every request.
   ROUTES_BY_SCRIPT = {
-    'default.lua' => [['GET', '/'], ['GET', '/user/42'], ['POST', '/user']],
+    'default.lua' => [['GET', '/'], ['GET', '/user/42']],
+    'user_post.lua' => [['POST', '/user']],
     'user_id.lua' => [['GET', %r{\A/user/[^/]+\z}]],
     'serialization.lua' => [['GET', '/serialization']],
     'deserialization.lua' => [['POST', '/deserialization']],
