@@ -109,7 +109,7 @@ language:
           ${PYTHON_APP}
     weft:
       bootstrap:
-        - pip install 'weft-server>=0.1,<0.2'
+        - pip install 'weft-server>=0.2,<0.3'
       environment:
         INTERFACE: asgi
         PYTHON_APP: server:app
