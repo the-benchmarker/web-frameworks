@@ -1,3 +1,4 @@
 source "https://rubygems.org"
 
 gem "roda", "~> 3.110.0"
+gem 'rack', '3.2.8'
