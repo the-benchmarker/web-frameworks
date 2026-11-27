@@ -16,9 +16,12 @@
 use potato::{HttpRequest, HttpResponse};
 use sha2::{Digest, Sha256};
 
-// 本地调试可传端口参数（基准容器内无参数，固定 3000）
-fn port() -> String {
-    std::env::args().nth(1).unwrap_or_else(|| "3000".into())
+// 端口来自 PORT 环境变量（基准容器与本地调试统一），缺省 3000
+fn port() -> u16 {
+    std::env::var("PORT")
+        .ok()
+        .and_then(|p| p.parse().ok())
+        .unwrap_or(3000)
 }
 
 // ---------- 1. 静态路由 / 3. 方法分发 ----------
@@ -268,6 +271,13 @@ fn upload(req: &mut HttpRequest) -> HttpResponse {
 
 #[tokio::main]
 async fn main() {
+    // ultraspeed 参数（opt-in，须在服务开始前设置）：设 POTATO_ULTRASPEED=1
+    // 时响应省略全部默认附加头（Date/Server/Content-Type 等），仅保留
+    // Connection + Content-Length。基准缺省不开启，保证 JSON 响应按 v2
+    // 契约携带 Content-Type: application/json
+    if std::env::var("POTATO_ULTRASPEED").as_deref() == Ok("1") {
+        potato::ServerConfig::set_ultraspeed(true);
+    }
     let mut server = potato::HttpServer::new(format!("0.0.0.0:{}", port()));
     server
         .configure(|ctx| {
