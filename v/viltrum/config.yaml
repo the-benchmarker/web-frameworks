@@ -9,7 +9,7 @@ framework:
 
   # Installed as the `viltrum` module (import viltrum).
   download:
-    - mkdir -p $HOME/.vmodules && git clone --depth 1 --branch v1.18.3 https://github.com/Tuntii/viltrum $HOME/.vmodules/viltrum
+    - mkdir -p $HOME/.vmodules && git clone --depth 1 --branch v1.18.6 https://github.com/Tuntii/viltrum $HOME/.vmodules/viltrum
 
   build_flags:
     - -prod
