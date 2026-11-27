@@ -3,7 +3,7 @@ specs: v1
 framework:
   github: kaitakeradiology/hashi
   website: kaitakeradiology.github.io/hashi
-  version: 0.1
+  version: 0.2
   engines:
     - default
   build_deps:
@@ -17,7 +17,7 @@ framework:
 # pnak, Nimony's package manager, which reads the same .nimble format and
 # writes the module search path `nimony c` uses.
 build_with:
-  - git clone -q https://github.com/nim-lang/nimony /usr/src/nimony && git -C /usr/src/nimony checkout -q b3806c1cea982b85aa280fa872d9328a9f7a0eeb && cd /usr/src/nimony && nim c -r src/hastur/hastur --release build all
+  - git clone -q https://github.com/nim-lang/nimony /usr/src/nimony && git -C /usr/src/nimony checkout -q d5b04a3e6a2e7fda9e2918320b08dc53118192f5 && cd /usr/src/nimony && nim c -r src/hastur/hastur --release build all
   - /usr/src/nimony/bin/pnak fetch server.nimble
 
 # `nimony c`, not `nim c`: the suite's default build line is Nim 2's.
