@@ -3,6 +3,9 @@ specs: v2
 reviewers:
   - macropay-solutions
 
+language:
+  version: '8.5'
+
 framework:
   website: macropay-solutions.github.io/php-framework-docs
   github: macropay-solutions/php-framework
@@ -10,6 +13,14 @@ framework:
 
   files:
     - run
+
+  # the kernel requires ext-bcmath and ext-intl, which the php image does not ship
+  build_deps:
+    - libicu-dev
+
+  modules:
+    - bcmath
+    - intl
 
   environment:
     APP_ENV: production
