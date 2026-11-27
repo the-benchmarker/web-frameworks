@@ -6,16 +6,3 @@ framework:
 
   engines:
     - revolt
-
-language:
-  engines:
-    revolt:
-      modules:
-        - pcntl
-        - sockets
-      deps:
-        - libevent-dev
-        - libssl-dev
-      extensions:
-        - osmanov/pecl-event
-      command: php vendor/bin/cluster --workers $(nproc) --log error server.php

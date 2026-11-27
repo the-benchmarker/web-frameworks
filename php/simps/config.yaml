@@ -1,6 +1,9 @@
 specs: v1
 
 language:
+  # Swoole does not support PHP 8.6 yet.
+  version: "8.5"
+
   engines:
     swoole:
       command: php sbin/simps.php http:start

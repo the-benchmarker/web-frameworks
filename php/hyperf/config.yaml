@@ -23,6 +23,9 @@ framework:
     - echo "swoole.use_shortname = 'Off'" >> /usr/local/etc/php/conf.d/docker-php-ext-swoole.ini
     - php sbin/hyperf.php
 language:
+  # Swoole does not support PHP 8.6 yet.
+  version: "8.5"
+
   engines:
     swoole:
       command: php sbin/hyperf.php start
