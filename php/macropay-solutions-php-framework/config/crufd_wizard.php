@@ -1,0 +1,7 @@
+<?php
+
+return [
+    'LIVE_MODE' => \env('LIVE_MODE'),
+    'REQUEST_GET_FILTERED_MACRO_SHOULD_THROW_ON_FAILURE' =>
+        \env('REQUEST_GET_FILTERED_MACRO_SHOULD_THROW_ON_FAILURE', false),
+];

@@ -1,0 +1,68 @@
+{
+    "name": "macropay-solutions/php-framework",
+    "description": "The Macropay-Solutions php framework template",
+    "keywords": [
+        "framework",
+        "macropay-solutions"
+    ],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": "^8.2",
+        "macropay-solutions/php-crufd-wizard": "^1.0.0",
+        "macropay-solutions/php-crufd-wizard-decorator": "^1.0.0",
+        "macropay-solutions/php-kernel": "^1.9.3"
+    },
+    "suggest": {
+        "php": "8.2-8.5",
+        "ext-pcntl": "Required for php run-warm",
+        "ext-zend-opcache": "*",
+        "league/commonmark": "Required for Markdown mailables (^2.6)",
+        "macropay-solutions/php-crufd-wizard-client": "^1.0.0",
+        "symfony/cache": "Required to use PSR-6 cache bridge (^7.4).",
+        "symfony/mailer": "Required to send emails (^7.4)",
+        "tijsverkoyen/css-to-inline-styles": "Required for HTML email styling (^2.2.5)"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
+            "MacropaySolutions\\Framework\\Traitables\\": [
+                "bootstrap/cache/traitables/",
+                "vendor/macropay-solutions/php-kernel/src/Traitables/"
+            ],
+            "MacropaySolutions\\Framework\\Autowiring\\": "bootstrap/cache/autowiring/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "[ \"$COMPOSER_DEV_MODE\" = \"1\" ] || php run macro:clear || echo run macro:clear failed",
+            "[ \"$COMPOSER_DEV_MODE\" = \"1\" ] || php run merge-cached-files:clear || echo run merge-cached-files:clear failed",
+            "[ \"$COMPOSER_DEV_MODE\" = \"1\" ] || php run config:cache || echo run config:cache failed",
+            "[ \"$COMPOSER_DEV_MODE\" = \"1\" ] || php run commands:cache || echo run commands:cache failed",
+            "[ \"$COMPOSER_DEV_MODE\" = \"1\" ] || php run route:cache || echo run route:cache failed",
+            "[ \"$COMPOSER_DEV_MODE\" = \"1\" ] || php run autowiring:cache || echo run autowiring:cache failed",
+            "[ \"$COMPOSER_DEV_MODE\" = \"1\" ] || php run event:cache || echo run event:cache failed",
+            "[ \"$COMPOSER_DEV_MODE\" = \"1\" ] || php run view:cache || echo run view:cache failed",
+            "[ \"$COMPOSER_DEV_MODE\" = \"1\" ] || php run merge-cached-files:cache || echo run merge-cached-files:cache failed",
+            "[ \"$COMPOSER_DEV_MODE\" = \"1\" ] || php run macro:cache || echo run macro:cache failed"
+        ],
+        "post-root-package-install": [
+            "[ \"$COMPOSER_DEV_MODE\" = \"0\" ] || php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php run key:generate --ansi || echo php run key:generate --ansi failed"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "macropay-solutions/php-kernel-dev": true
+        },
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

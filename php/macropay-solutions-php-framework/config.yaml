@@ -1,0 +1,39 @@
+specs: v2
+
+reviewers:
+  - macropay-solutions
+
+language:
+  version: '8.5'
+
+framework:
+  website: macropay-solutions.github.io/php-framework-docs
+  github: macropay-solutions/php-framework
+  version: 1.1
+
+  files:
+    - run
+
+  # the kernel requires ext-bcmath and ext-intl, which the php image does not ship
+  build_deps:
+    - libicu-dev
+
+  modules:
+    - bcmath
+    - intl
+
+  environment:
+    APP_ENV: production
+    APP_DEBUG: "false"
+
+  bootstrap:
+    # cache directories hold only a .gitignore in the template, so they are not copied into the image
+    - mkdir -p bootstrap/cache storage/app storage/framework/cache/data storage/framework/views storage/logs
+    # documented deployment: the Composer hook builds every cache and the preload script,
+    # then the final class map is frozen without running the hook again
+    - composer dump-autoload --optimize --no-dev
+    - composer dump-autoload --optimize --no-dev --classmap-authoritative --no-scripts
+    # PHP's multipart parser keeps only the last of repeated parts, so /upload reads the raw body
+    - echo 'enable_post_data_reading=0' > /usr/local/etc/php/conf.d/99-php-framework.ini
+    - echo 'opcache.preload=/usr/src/app/bootstrap/cache/preload/preload.php' >> /usr/local/etc/php/conf.d/99-php-framework.ini
+    - echo 'opcache.preload_user=www-data' >> /usr/local/etc/php/conf.d/99-php-framework.ini
