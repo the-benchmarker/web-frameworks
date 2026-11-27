@@ -1,0 +1,26 @@
+name: Redeploy website
+
+# The website builds the /frameworks/* pages and the badges from data.min.json,
+# so it is built again when new results land on master.
+on:
+  push:
+    branches: [master]
+    paths: [data.min.json]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Call the Vercel deploy hook
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "VERCEL_DEPLOY_HOOK is not set, nothing to do"
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK"
