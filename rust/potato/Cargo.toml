@@ -20,6 +20,4 @@ strip = false
 [dependencies]
 anyhow = "1"
 potato = { version = "0.4", default-features = false, features = ["std"] }
-serde_json = "1"
-sha2 = "0.11"
-tokio = { version = "1", features = ["full"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
